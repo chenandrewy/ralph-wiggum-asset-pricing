@@ -1,0 +1,104 @@
+#!/usr/bin/env python3
+"""
+How to run: Imported by tests/referee-*.py referee scripts.
+Inputs: review script path and optional CLI arg --agent-log-mode.
+Outputs: shared utilities for referee execution.
+"""
+
+from __future__ import annotations
+
+import argparse
+import datetime
+import os
+import pathlib
+import subprocess
+import sys
+
+VALID_AGENT_LOG_MODES = ("off", "verbose", "all", "1", "true", "yes")
+
+DEFAULT_AGENT = "claude"
+DEFAULT_MODEL = "opus"
+
+
+def load_agent_model() -> tuple[str, str]:
+    """Read agent and model from RALPH_AGENT/RALPH_MODEL env vars (set by ralph-loop.sh)."""
+    agent = os.environ.get("RALPH_AGENT", DEFAULT_AGENT).strip().lower()
+    model = os.environ.get("RALPH_MODEL", DEFAULT_MODEL).strip().lower()
+    return agent, model
+
+
+def parse_review_cli(default_agent_log_mode: str = "off") -> argparse.Namespace:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--agent-log-mode",
+        choices=VALID_AGENT_LOG_MODES,
+        default=default_agent_log_mode,
+        help="Agent log verbosity passed through to ralph/agent_wrapper.py",
+    )
+    return parser.parse_args()
+
+
+def derive_review_id(script_file: str) -> str:
+    return pathlib.Path(script_file).stem
+
+
+def derive_review_report_path(repo_root: pathlib.Path, review_id: str) -> pathlib.Path:
+    return repo_root / f"test-results/{review_id}.md"
+
+
+def _now_ny() -> str:
+    """Current timestamp in New York time, e.g. '2026-03-09 15:30:42 EDT'."""
+    import zoneinfo
+    tz = zoneinfo.ZoneInfo("America/New_York")
+    return datetime.datetime.now(tz).strftime("%Y-%m-%d %H:%M:%S %Z")
+
+
+def write_fallback_report(
+    report_path: pathlib.Path,
+    reason: str,
+) -> None:
+    """Fallback report written when the agent can't run."""
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+    review_id = report_path.stem
+    text = f"# {review_id}\nREVIEW — {_now_ny()}\n\n## Summary\n\nReview could not be completed: {reason}\n"
+    report_path.write_text(text, encoding="utf-8")
+
+
+def run_review(
+    *,
+    script_file: str,
+    prompt: str,
+    agent: str,
+    model: str | None = None,
+    default_agent_log_mode: str = "off",
+) -> int:
+    """Common review runner. Always returns 0 (reviews never fail the loop)."""
+    args = parse_review_cli(default_agent_log_mode=default_agent_log_mode)
+    review_id = derive_review_id(script_file)
+
+    repo_root = pathlib.Path(script_file).resolve().parents[1]
+    report_path = derive_review_report_path(repo_root, review_id)
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+
+    cmd = [
+        sys.executable,
+        str(repo_root / "ralph/agent_wrapper.py"),
+        "--agent", agent,
+        "--log-mode", args.agent_log_mode,
+        "--failure-log-mode", "off",
+        "--step-label", review_id,
+    ]
+    if model:
+        cmd.extend(["--model", model])
+    cmd.append(prompt)
+
+    result = subprocess.run(cmd, cwd=repo_root, capture_output=True, text=True)
+
+    if result.returncode != 0:
+        write_fallback_report(report_path, f"agent wrapper failed with exit code {result.returncode}")
+
+    # Even if the agent fails or produces no report, reviews always return 0.
+    if not report_path.exists():
+        write_fallback_report(report_path, "agent did not produce a report")
+
+    return 0

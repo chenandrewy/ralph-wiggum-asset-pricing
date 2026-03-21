@@ -1,0 +1,33 @@
+# == Basic loop configuration ==
+run-name:
+max-iter: 2
+
+# Author agents settings
+agent: claude
+model: opus
+
+# Optional pre-loop baseline test run
+test-before-loop: off
+
+# == Test Set ==
+
+test-mode: selected
+
+selected-tests:
+  - spec-compliance
+  - theory-correctness
+
+# Agent log verbosity
+agent-log-mode: verbose
+
+# Delete agent log files older than this many days
+agent-log-retention-days: 1
+
+# == Referee reviews and continual-improvement mode ==
+
+continual-improvement: false
+
+reviews: false
+
+selected-reviews:
+  - referee-top3

@@ -1,0 +1,33 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+
+dev/tmp/
+
+# Ralph transient artifacts (not committed)
+ralph-garage/page-images/page-*.png
+ralph-garage/page-images/exhibit-manifest.json
+ralph-garage/agent-logs/*.log
+ralph-garage/loop.log
+
+# LaTeX build artifacts
+paper/.latex-build.log
+paper/*.aux
+paper/*.bbl
+paper/*.bcf
+paper/*.blg
+paper/*.fdb_latexmk
+paper/*.fls
+paper/*.log
+paper/*.lof
+paper/*.lot
+paper/*.out
+paper/*.run.xml
+paper/*.synctex.gz
+paper/*.toc
+
+# Generated PDFs (commit only for milestones)
+paper/paper.pdf
+
+# History PDFs
+ralph-garage/history/*.pdf
