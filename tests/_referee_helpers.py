@@ -9,22 +9,11 @@ from __future__ import annotations
 
 import argparse
 import datetime
-import os
 import pathlib
 import subprocess
 import sys
 
 VALID_AGENT_LOG_MODES = ("off", "verbose", "all", "1", "true", "yes")
-
-DEFAULT_AGENT = "claude"
-DEFAULT_MODEL = "opus"
-
-
-def load_agent_model() -> tuple[str, str]:
-    """Read agent and model from RALPH_AGENT/RALPH_MODEL env vars (set by ralph-loop.sh)."""
-    agent = os.environ.get("RALPH_AGENT", DEFAULT_AGENT).strip().lower()
-    model = os.environ.get("RALPH_MODEL", DEFAULT_MODEL).strip().lower()
-    return agent, model
 
 
 def parse_review_cli(default_agent_log_mode: str = "off") -> argparse.Namespace:

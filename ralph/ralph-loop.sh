@@ -49,18 +49,8 @@ prune_agent_logs() {
 }
 
 run_latex_build_gate() {
-    local build_rc=0
-
     log "--- build paper ---"
-    if bash "$BUILD_PAPER"; then
-        build_rc=0
-    else
-        build_rc=$?
-    fi
-
-    if RALPH_LATEX_BUILD_GATE=1 \
-        RALPH_LATEX_BUILD_EXIT_CODE="$build_rc" \
-        python3 "$LATEX_BUILD_TEST"; then
+    if bash "$BUILD_PAPER" && python3 "$LATEX_BUILD_TEST"; then
         return 0
     fi
 
@@ -81,15 +71,10 @@ reviews_enabled() {
 commit_iteration() {
     python3 "$COMMIT_SCRIPT" \
         --repo-root "$REPO_ROOT" \
-        --test-results-dir "$TEST_RESULTS_DIR" \
-        --agent-log-mode "$AGENT_LOG_MODE"
+        --test-results-dir "$TEST_RESULTS_DIR"
 }
 
 MAX_ITER="$(python3 "$READ_CONFIG" "$CONFIG_FILE" "max-iter")"
-AGENT="$(python3 "$READ_CONFIG" "$CONFIG_FILE" "agent")"
-MODEL="$(python3 "$READ_CONFIG" "$CONFIG_FILE" "model")"
-export RALPH_AGENT="$AGENT"
-export RALPH_MODEL="$MODEL"
 AGENT_LOG_MODE="$(python3 "$READ_CONFIG" "$CONFIG_FILE" "agent-log-mode" "off")"
 AGENT_LOG_RETENTION_DAYS="$(python3 "$READ_CONFIG" "$CONFIG_FILE" "agent-log-retention-days" "14")"
 TEST_BEFORE_LOOP="$(python3 "$READ_CONFIG" "$CONFIG_FILE" "test-before-loop" "off")"
@@ -99,14 +84,6 @@ RUN_NAME="$(python3 "$READ_CONFIG" "$CONFIG_FILE" "run-name" "")"
 
 if ! [[ "$MAX_ITER" =~ ^[1-9][0-9]*$ ]]; then
     log "ERROR: max-iter must be a positive integer (got: $MAX_ITER)"
-    exit 1
-fi
-if [ "$AGENT" != "claude" ] && [ "$AGENT" != "codex" ]; then
-    log "ERROR: agent must be 'claude' or 'codex' (got: $AGENT)"
-    exit 1
-fi
-if [ -z "$MODEL" ]; then
-    log "ERROR: model must be non-empty"
     exit 1
 fi
 case "${AGENT_LOG_MODE,,}" in
@@ -143,8 +120,6 @@ fi
 mkdir -p "$GARAGE_DIR" "$HISTORY_DIR" "$PAGE_IMAGES_DIR" "$TEST_RESULTS_DIR" "$AGENT_LOGS_DIR"
 LOOP_LOG="$GARAGE_DIR/loop.log"
 exec > >(tee "$LOOP_LOG") 2>&1
-export RALPH_GARAGE_DIR="$GARAGE_DIR"
-export RALPH_AGENT_LOG_DIR="$AGENT_LOGS_DIR"
 CURRENT_BRANCH="$(git branch --show-current)"
 if [ "$CURRENT_BRANCH" = "$RUN_BRANCH_NAME" ]; then
     RUN_BRANCH="$CURRENT_BRANCH"
@@ -178,10 +153,9 @@ else
 fi
 
 if [ -n "$RUN_NAME" ]; then
-    log "=== ralph loop started: $RUN_NAME (branch $RUN_BRANCH, max $MAX_ITER iterations, agent $AGENT, model $MODEL, agent-log-mode $AGENT_LOG_MODE) ==="
-    export RALPH_RUN_NAME="$RUN_NAME"
+    log "=== ralph loop started: $RUN_NAME (branch $RUN_BRANCH, max $MAX_ITER iterations, agent-log-mode $AGENT_LOG_MODE) ==="
 else
-    log "=== ralph loop started (branch $RUN_BRANCH, max $MAX_ITER iterations, agent $AGENT, model $MODEL, agent-log-mode $AGENT_LOG_MODE) ==="
+    log "=== ralph loop started (branch $RUN_BRANCH, max $MAX_ITER iterations, agent-log-mode $AGENT_LOG_MODE) ==="
 fi
 
 if [ "$TEST_BEFORE_LOOP" != "off" ]; then
@@ -226,8 +200,6 @@ while true; do
     log "--- author plan ---"
     python3 "$AUTHOR_PLAN" \
         --repo-root "$REPO_ROOT" \
-        --agent "$AGENT" \
-        --model "$MODEL" \
         --agent-log-mode "$AGENT_LOG_MODE" \
         --iteration "$iteration" || {
         rc=$?
@@ -238,8 +210,6 @@ while true; do
     log "--- author improve ---"
     python3 "$AUTHOR_IMPROVE" \
         --repo-root "$REPO_ROOT" \
-        --agent "$AGENT" \
-        --model "$MODEL" \
         --agent-log-mode "$AGENT_LOG_MODE" \
         --iteration "$iteration" || {
         rc=$?

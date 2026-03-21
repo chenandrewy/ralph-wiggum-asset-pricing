@@ -9,11 +9,14 @@ from __future__ import annotations
 
 import pathlib
 
-from _referee_helpers import load_agent_model, run_review, derive_review_id, derive_review_report_path, write_fallback_report
+from _referee_helpers import run_review, derive_review_id, derive_review_report_path, write_fallback_report
+
+
+AGENT = "claude"
+MODEL = "opus"
 
 
 def main() -> int:
-    AGENT, MODEL = load_agent_model()
     repo_root = pathlib.Path(__file__).resolve().parents[1]
     review_id = derive_review_id(__file__)
     report_path = derive_review_report_path(repo_root, review_id)

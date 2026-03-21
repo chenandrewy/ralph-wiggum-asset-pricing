@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
-# How to run: python3 ralph/commit-iteration.py [--repo-root /path/to/repo] [--test-results-dir /path/to/repo/test-results] [--agent-log-mode off]
+# How to run: python3 ralph/commit-iteration.py [--repo-root /path/to/repo] [--test-results-dir /path/to/repo/test-results]
 # Inputs: test-results/summary.json and changes under paper/ralph-garage.
 # Outputs: One git commit for the iteration created by Claude; exits non-zero if no commit is created.
 
 import argparse
 import json
-import os
 import subprocess
 import tempfile
 from pathlib import Path
+
+from utils import load_config
 
 DEFAULT_ADD_PATHS = [
     "paper",
@@ -16,7 +17,7 @@ DEFAULT_ADD_PATHS = [
     "test-results",
 ]
 COMMIT_PREFIX_BASE = "rloop"
-COMMIT_AGENT = os.environ.get("RALPH_AGENT", "claude").strip().lower()
+COMMIT_AGENT = "claude"
 COMMIT_MODEL = "sonnet"
 COMMIT_AUTHOR_NAME = "Ralph Loop"
 COMMIT_AUTHOR_EMAIL = "noreply@gmail.com"
@@ -47,7 +48,8 @@ DEFAULT_TEST_RESULTS_DIR = DEFAULT_REPO_ROOT / "test-results"
 
 
 def commit_prefix() -> str:
-    run_name = os.environ.get("RALPH_RUN_NAME", "")
+    config = load_config(DEFAULT_REPO_ROOT / "config-ralph.yaml")
+    run_name = str(config.get("run-name", "")).strip()
     if run_name:
         return f"{COMMIT_PREFIX_BASE} [{run_name}]:"
     return f"{COMMIT_PREFIX_BASE}:"
@@ -57,7 +59,6 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Create one Ralph iteration commit.")
     parser.add_argument("--repo-root", default=str(DEFAULT_REPO_ROOT))
     parser.add_argument("--test-results-dir", default=str(DEFAULT_TEST_RESULTS_DIR))
-    parser.add_argument("--agent-log-mode", default="off")
     parser.add_argument("--add-path", action="append")
     return parser.parse_args()
 
@@ -195,7 +196,6 @@ def generate_commit_message(repo_root: Path, prompt: str) -> str:
         text=True,
         capture_output=True,
         check=False,
-        env=os.environ.copy(),
     )
     if proc.returncode != 0:
         raise RuntimeError(
@@ -211,15 +211,6 @@ def generate_commit_message(repo_root: Path, prompt: str) -> str:
 
 
 def commit_with_message(repo_root: Path, message: str) -> None:
-    env = os.environ.copy()
-    env.update(
-        {
-            "GIT_AUTHOR_NAME": COMMIT_AUTHOR_NAME,
-            "GIT_AUTHOR_EMAIL": COMMIT_AUTHOR_EMAIL,
-            "GIT_COMMITTER_NAME": COMMIT_AUTHOR_NAME,
-            "GIT_COMMITTER_EMAIL": COMMIT_AUTHOR_EMAIL,
-        }
-    )
     tmp_path = None
     try:
         with tempfile.NamedTemporaryFile("w", encoding="utf-8", delete=False) as handle:
@@ -228,11 +219,20 @@ def commit_with_message(repo_root: Path, message: str) -> None:
                 handle.write("\n")
             tmp_path = Path(handle.name)
         subprocess.run(
-            ["git", "commit", "--allow-empty", "-F", str(tmp_path)],
+            [
+                "git",
+                "-c",
+                f"user.name={COMMIT_AUTHOR_NAME}",
+                "-c",
+                f"user.email={COMMIT_AUTHOR_EMAIL}",
+                "commit",
+                "--allow-empty",
+                "-F",
+                str(tmp_path),
+            ],
             cwd=repo_root,
             text=True,
             check=True,
-            env=env,
         )
     finally:
         if tmp_path is not None and tmp_path.exists():

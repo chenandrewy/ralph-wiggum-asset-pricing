@@ -14,6 +14,7 @@ from datetime import datetime, timezone
 LOG_SECTION_MAX_BYTES = 500000
 DEFAULT_GARAGE_DIR = "ralph-garage"
 DEFAULT_AGENT_LOG_DIR = "ralph-garage/agent-logs"
+CLAUDE_STREAM_JQ_FILTER = ".result // ."
 VALID_LOG_MODES = ("off", "verbose", "all", "1", "true", "yes")
 VALID_FAILURE_LOG_MODES = ("on", "off", "auto")
 
@@ -22,11 +23,6 @@ def write_log(path, text):
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, 'w', encoding='utf-8') as f:
         f.write(text)
-
-
-def resolve_agent_log_dir():
-    configured = os.environ.get("RALPH_AGENT_LOG_DIR", "").strip()
-    return configured or DEFAULT_AGENT_LOG_DIR
 
 
 def normalize_log_mode(value):
@@ -93,20 +89,12 @@ def split_agent_args(args):
     return agent, step_label, log_mode, failure_log_mode, forwarded
 
 
-def build_bash_command(agent, forwarded_args, log_mode, env_values=None):
-    if env_values is None:
-        env_values = os.environ
+def build_bash_command(agent, forwarded_args, log_mode, stream_capture_path=None):
     args_str = ' '.join(shlex.quote(arg) for arg in forwarded_args)
     if agent == "codex":
         return f"codex exec --sandbox danger-full-access {args_str}"
 
-    output_format = env_values.get('CLAUDE_SAFE_OUTPUT_FORMAT', 'text').strip() or 'text'
-    if agent_logs_enabled(log_mode):
-        output_format = 'stream-json'
-    use_jq_raw = env_values.get('CLAUDE_SAFE_USE_JQ')
-    use_jq = True if use_jq_raw is None else use_jq_raw.strip().lower() in ('1', 'true', 'yes', 'on')
-    jq_filter = env_values.get('CLAUDE_SAFE_JQ_FILTER', '.result // .')
-    stream_capture_path = env_values.get('CLAUDE_STREAM_JSON_CAPTURE', '').strip()
+    output_format = 'stream-json' if agent_logs_enabled(log_mode) else 'text'
 
     base_cmd = (
         f"claude -p --output-format {shlex.quote(output_format)}"
@@ -123,20 +111,15 @@ def build_bash_command(agent, forwarded_args, log_mode, env_values=None):
     )
     if stream_capture_path:
         tee_cmd = f"{stream_cmd} | tee {shlex.quote(stream_capture_path)}"
-        if use_jq and shutil.which('jq'):
-            return f"set -o pipefail; {tee_cmd} | jq -r {shlex.quote(jq_filter)}"
+        if shutil.which('jq'):
+            return f"set -o pipefail; {tee_cmd} | jq -r {shlex.quote(CLAUDE_STREAM_JQ_FILTER)}"
         return f"set -o pipefail; {tee_cmd}"
-    if use_jq and shutil.which('jq'):
-        return f"set -o pipefail; {stream_cmd} | jq -r {shlex.quote(jq_filter)}"
+    if shutil.which('jq'):
+        return f"set -o pipefail; {stream_cmd} | jq -r {shlex.quote(CLAUDE_STREAM_JQ_FILTER)}"
     return stream_cmd
 
 
 def should_echo_output(step_label, rc):
-    mode = os.environ.get('AGENT_STDIO_ECHO', 'auto').strip().lower()
-    if mode in ('1', 'true', 'yes', 'on'):
-        return True
-    if mode in ('0', 'false', 'no', 'off'):
-        return rc != 0
     label = (step_label or '').strip().lower()
     if label.startswith('author-'):
         return rc != 0
@@ -164,8 +147,7 @@ def build_verbose_log_path(agent, model, step_label, ts=None):
     model_label = safe_label(model)
     if ts is None:
         ts = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S.%fZ')
-    agent_log_dir = resolve_agent_log_dir()
-    return os.path.join(agent_log_dir, f"{ts}_{step_label}_{agent}_{model_label}.log")
+    return os.path.join(DEFAULT_AGENT_LOG_DIR, f"{ts}_{step_label}_{agent}_{model_label}.log")
 
 
 def write_verbose_log(agent, model, step_label, log_mode, rc, stdout_text, stderr_text, stream_json_text="", log_path=None):
@@ -264,8 +246,7 @@ def handle_failure(agent, model, step_label, failure_log_mode, rc, stdout_text, 
         f"{snippet}\n"
         f"{'-' * 72}\n"
     )
-    agent_log_dir = resolve_agent_log_dir()
-    write_log(os.path.join(agent_log_dir, "agent-failure.log"), failure_record)
+    write_log(os.path.join(DEFAULT_AGENT_LOG_DIR, "agent-failure.log"), failure_record)
     sys.exit(1)
 
 
@@ -277,20 +258,10 @@ def main():
     agent, step_label, log_mode, failure_log_mode, forwarded_args = split_agent_args(sys.argv[1:])
 
     env = os.environ.copy()
-    if agent == "claude":
-        # Avoid nested Claude Code session guard failures when tests invoke Claude
-        # from within another Claude-hosted runtime.  Clear all CLAUDE* env vars
-        # that may trigger nested session detection.
-        for key in list(env):
-            if key.startswith("CLAUDE") or key == "CLAUDECODE":
-                env.pop(key, None)
     stream_capture_path = None
     if agent == "claude" and agent_logs_enabled(log_mode):
-        # When agent logs are enabled, force stream-json and capture the raw stream.
-        env['CLAUDE_SAFE_OUTPUT_FORMAT'] = 'stream-json'
         fd, stream_capture_path = tempfile.mkstemp(prefix='ralph-stream-json-', suffix='.log')
         os.close(fd)
-        env['CLAUDE_STREAM_JSON_CAPTURE'] = stream_capture_path
 
     args = forwarded_args
     model = "unknown"
@@ -300,7 +271,7 @@ def main():
             break
 
     # Build the command for the selected agent.
-    bash_command = build_bash_command(agent, forwarded_args, log_mode, env)
+    bash_command = build_bash_command(agent, forwarded_args, log_mode, stream_capture_path)
 
     live_log_path = None
     if agent_logs_enabled(log_mode):

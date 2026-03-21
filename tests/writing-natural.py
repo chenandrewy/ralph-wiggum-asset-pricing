@@ -17,8 +17,10 @@ import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
-from _test_helpers import build_test_context, fail_test, load_agent_model, require_paths, run_test
+from _test_helpers import build_test_context, fail_test, require_paths, run_test
 
+AGENT = "claude"
+MODEL = "opus"
 SUB_AGENT_MODEL = "sonnet"
 
 
@@ -120,7 +122,6 @@ Here is the section to review:
 
 def main() -> int:
     context = build_test_context(__file__)
-    AGENT, MODEL = load_agent_model()
 
     paper_path = context.repo_root / "paper/paper.tex"
     spec_path = context.repo_root / "spec/paper-spec.md"

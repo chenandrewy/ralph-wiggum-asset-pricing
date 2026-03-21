@@ -1,10 +1,6 @@
 # == Basic loop configuration ==
-run-name:
+run-name: testing-refactor
 max-iter: 2
-
-# Author agents settings
-agent: claude
-model: opus
 
 # Optional pre-loop baseline test run
 test-before-loop: off

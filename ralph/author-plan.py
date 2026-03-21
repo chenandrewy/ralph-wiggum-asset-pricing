@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# How to run: python3 ralph/author-plan.py --repo-root /path/to/repo --agent claude --model opus --agent-log-mode verbose --iteration 1
+# How to run: python3 ralph/author-plan.py --repo-root /path/to/repo --agent-log-mode verbose --iteration 1
 # Inputs: spec/paper-spec.md, paper/, test-results/
 # Outputs: ralph-garage/improvement-plan.md
 
@@ -15,6 +15,8 @@ import sys
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 from utils import summary_results_instruction
 
+AGENT = "claude"
+MODEL = "opus"
 
 AUTHOR_PLAN_PROMPT_TEMPLATE = """You are an author planning improvements to an academic asset pricing theory paper.
 
@@ -49,8 +51,6 @@ Guidance:
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run the Ralph author planning step.")
     parser.add_argument("--repo-root", required=True)
-    parser.add_argument("--agent", required=True)
-    parser.add_argument("--model", required=True)
     parser.add_argument("--agent-log-mode", required=True)
     parser.add_argument("--iteration", type=int, required=True)
     return parser.parse_args()
@@ -103,13 +103,13 @@ def main() -> int:
         sys.executable,
         str(repo_root / "ralph/agent_wrapper.py"),
         "--agent",
-        args.agent,
+        AGENT,
         "--log-mode",
         args.agent_log_mode,
         "--step-label",
         f"author-plan-iter-{args.iteration:03d}",
         "--model",
-        args.model,
+        MODEL,
         build_author_plan_prompt(repo_root),
     ]
 

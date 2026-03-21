@@ -10,7 +10,6 @@ from __future__ import annotations
 import argparse
 import datetime
 import json
-import os
 import pathlib
 import subprocess
 import sys
@@ -19,17 +18,6 @@ from zoneinfo import ZoneInfo
 
 VALID_AGENT_LOG_MODES = ("off", "verbose", "all", "1", "true", "yes")
 NEW_YORK_TZ = ZoneInfo("America/New_York")
-TEST_STARTED_AT_ENV = "RALPH_TEST_STARTED_AT_UTC"
-
-DEFAULT_AGENT = "claude"
-DEFAULT_MODEL = "opus"
-
-
-def load_agent_model() -> tuple[str, str]:
-    """Read agent and model from RALPH_AGENT/RALPH_MODEL env vars (set by ralph-loop.sh)."""
-    agent = os.environ.get("RALPH_AGENT", DEFAULT_AGENT).strip().lower()
-    model = os.environ.get("RALPH_MODEL", DEFAULT_MODEL).strip().lower()
-    return agent, model
 
 
 @dataclass(frozen=True)
@@ -65,11 +53,7 @@ def build_test_context(script_file: str) -> TestContext:
     script_path = pathlib.Path(script_file).resolve()
     repo_root = script_path.parents[1]
     test_id = script_path.stem
-    started_at_env = os.environ.get(TEST_STARTED_AT_ENV, "").strip()
-    if started_at_env:
-        started_at_utc = datetime.datetime.fromisoformat(started_at_env)
-    else:
-        started_at_utc = datetime.datetime.now(datetime.timezone.utc)
+    started_at_utc = datetime.datetime.now(datetime.timezone.utc)
     return TestContext(
         script_file=script_path,
         repo_root=repo_root,

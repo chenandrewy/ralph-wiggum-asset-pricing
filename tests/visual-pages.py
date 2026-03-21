@@ -7,12 +7,15 @@ Outputs: test-results/visual-pages.md and process exit code (0=PASS, 1=FAIL)
 
 from __future__ import annotations
 
-from _test_helpers import build_test_context, load_agent_model, require_page_images, require_paths, run_test
+from _test_helpers import build_test_context, require_page_images, require_paths, run_test
+
+
+AGENT = "claude"
+MODEL = "opus"
 
 
 def main() -> int:
     context = build_test_context(__file__)
-    AGENT, MODEL = load_agent_model()
 
     spec_path = context.repo_root / "spec/paper-spec.md"
     images_dir = context.repo_root / "ralph-garage/page-images"

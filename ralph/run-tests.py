@@ -10,7 +10,6 @@ from __future__ import annotations
 import argparse
 import concurrent.futures
 import json
-import os
 import pathlib
 import subprocess
 import sys
@@ -26,7 +25,6 @@ IGNORED_TEST_FILENAMES = {"__init__.py"}
 NEW_YORK_TZ = ZoneInfo("America/New_York")
 PAGE_IMAGES_DIR = "ralph-garage/page-images"
 EXHIBIT_MANIFEST = "ralph-garage/page-images/exhibit-manifest.json"
-TEST_STARTED_AT_ENV = "RALPH_TEST_STARTED_AT_UTC"
 
 
 def parse_args() -> argparse.Namespace:
@@ -111,9 +109,7 @@ def run_single_test(
     test_script = tests_dir / f"{test_name}.py"
     cmd = [sys.executable, str(test_script), "--agent-log-mode", agent_log_mode]
     started_at_utc = datetime.now(timezone.utc)
-    env = os.environ.copy()
-    env[TEST_STARTED_AT_ENV] = started_at_utc.isoformat()
-    result = subprocess.run(cmd, cwd=repo_root, capture_output=True, text=True, env=env)
+    result = subprocess.run(cmd, cwd=repo_root, capture_output=True, text=True)
     finished_at_utc = datetime.now(timezone.utc)
     return {
         "name": test_name,

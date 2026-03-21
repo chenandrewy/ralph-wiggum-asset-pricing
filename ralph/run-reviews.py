@@ -2,7 +2,7 @@
 """
 How to run: python ralph/run-reviews.py [--agent-log-mode MODE]
 Inputs: config-ralph.yaml, tests/referee-*.py
-Outputs: test-results/summary.json (referee section)
+Outputs: test-results/summary.json (reviews section)
 """
 
 from __future__ import annotations
@@ -40,8 +40,6 @@ def discover_reviews(reviews_dir: pathlib.Path) -> list[str]:
     for path in sorted(reviews_dir.glob("referee-*.py")):
         review_ids.append(path.stem)
     return review_ids
-
-
 
 def selected_reviews_from_config(config: dict[str, object], available_reviews: list[str]) -> list[str]:
     reviews_enabled = str(config.get("reviews") or "false").strip().lower()
@@ -132,7 +130,6 @@ def main() -> int:
         _merge_reviews_into_summary(summary_path, [])
         return 0
 
-    run_started_at_utc = datetime.now(timezone.utc)
     print(f"[run-reviews] running {len(review_ids)} review(s): {', '.join(review_ids)}")
 
     results = []
