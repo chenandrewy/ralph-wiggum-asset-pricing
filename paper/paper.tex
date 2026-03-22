@@ -3,14 +3,21 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{setspace}
 \onehalfspacing
-\usepackage{amsmath,amssymb}
+\usepackage{amsmath,amssymb,amsthm}
 \usepackage[backend=biber,natbib=true,style=authoryear]{biblatex}
 \addbibresource{references.bib}
 \usepackage{hyperref}
 \usepackage{graphicx}
 \usepackage{booktabs}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
 
-\title{PLACEHOLDER TITLE}
+\pagestyle{plain}
+
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}[proposition]{Corollary}
+
+\title{Hedging the Singularity}
 \author{}
 \date{}
 
@@ -19,27 +26,305 @@
 \thispagestyle{plain}
 
 \begin{abstract}
-PLACEHOLDER ABSTRACT
+\noindent AI stocks trade at remarkable valuations. We propose that hedging demand is a contributing factor. In our model, a representative household faces a negative AI singularity---a sudden advance in AI that devastates household consumption while enriching AI owners who hold private, untradeable capital. Public AI stocks appreciate when AI advances, providing a partial hedge. In equilibrium, AI stocks command a valuation premium that increases with the probability and severity of the singularity. Incomplete markets are essential: if households could access private AI capital, the hedging motive would disappear.
 \end{abstract}
 
+%% ============================================================
 \section{Introduction}
+\label{sec:intro}
+%% ============================================================
 
-PLACEHOLDER INTRODUCTION
+Why are AI stocks so expensive? The largest AI companies trade at price-earnings ratios well above the market average, and their combined market capitalization dwarfs that of many national stock exchanges. Some of this reflects expected growth in earnings as AI technology matures. But even after accounting for growth, AI stock valuations appear high by historical standards.
 
-\citet{lucas1978asset} and \citet{cochrane2005asset} provide foundational frameworks.
+We argue that hedging demand is part of the explanation. If artificial intelligence advances suddenly and dramatically---devastating the incomes of ordinary investors while enriching the owners of AI technology---then public AI stocks provide valuable insurance. Investors bid up AI stock prices not only for the expected dividends, but for the protection these stocks offer against an AI-driven catastrophe. Financial market solutions to AI disaster risk have received surprisingly little attention; this paper offers a first step.
 
-\section{Model}
+We formalize this idea in a simple consumption-based asset pricing model. A representative household faces the risk of a \emph{negative AI singularity}: a sudden event that transfers a large share of economic output from the household to AI owners who hold private, untradeable capital. The household cannot buy into these private AI firms---markets are incomplete. But the household can invest in publicly traded AI stocks, which appreciate when AI advances. In equilibrium, this hedging demand pushes AI stock valuations above those of non-AI stocks.
 
-PLACEHOLDER MODEL
+Our main result is a closed-form expression for the price-dividend ratio of AI stocks. The AI valuation premium---the gap between AI and non-AI stock valuations---is increasing in the probability of a singularity, and decreasing in the existing AI share of the household's portfolio. Figure~\ref{fig:pd-ratios} previews the result: for a calibration with a 2\% annual singularity probability, the model generates an AI valuation premium of roughly 29\%, broadly consistent with the elevated valuations of AI stocks observed in equity markets.
 
-\section{Results}
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel={Singularity probability ($\lambda$)},
+    ylabel={Price-dividend ratio},
+    xmin=0, xmax=0.06,
+    ymin=10, ymax=25,
+    legend pos=north west,
+    grid=both,
+    minor grid style={gray!25},
+    major grid style={gray!50},
+    width=0.85\textwidth,
+    height=0.5\textwidth,
+]
+\addplot[blue, thick, smooth, domain=0:0.06, samples=100]
+    {(0.92272 + 31.564*x) / (0.07728 + 0.92272*x)};
+\addlegendentry{AI stocks ($v^A$)}
+\addplot[red, thick, dashed, smooth, domain=0:0.06, samples=100]
+    {(0.92272 + 14.232*x) / (0.07728 + 0.92272*x)};
+\addlegendentry{Non-AI stocks ($v^N$)}
+\end{axis}
+\end{tikzpicture}
+\caption{Model-implied price-dividend ratios for AI and non-AI stocks as a function of the annual singularity probability~$\lambda$. The gap between the curves is the hedging premium. Parameters: $\beta = 0.96$, $\gamma = 3$, $g = 0.02$, $\theta = 0.50$, $\phi = 0.30$, $s = 0.15$.}
+\label{fig:pd-ratios}
+\end{figure}
 
-PLACEHOLDER RESULTS
+Incomplete markets are the key friction. If the household could invest in private AI capital, it could perfectly hedge the singularity risk, and the valuation premium would vanish. The premium exists precisely because the household is excluded from the most direct hedge---ownership of the AI technology itself---and must instead rely on the imperfect hedge provided by public AI stocks.
 
+Our paper relates most closely to \citet{garleanu2012displacement}, who study displacement risk from innovation in an overlapping-generations economy. In their model, future cohorts of innovators capture the gains from innovation, and current agents cannot trade with agents who have not yet been born. The key incomplete-markets friction is intergenerational: the people who benefit from innovation literally do not exist yet. Our model differs in three respects. First, our incomplete-markets friction comes from \emph{asset inaccessibility}, not intergenerational non-existence: the AI owners already exist, but their capital is private and untradeable. Second, we use an infinite-horizon representative household rather than an OLG structure, isolating the hedging channel from life-cycle effects. Third, the AI singularity is a specific, concentrated risk---not generic innovation---which yields sharper predictions about the valuation of AI stocks in particular.
+
+In an extension, we incorporate existential risk following \citet{jones2024ai}. If the singularity may cause human extinction, AI stocks are worthless in the extinction state and the hedging premium falls. Conversely, if the singularity produces unbounded output for AI owners, the abundance of resources could overcome the incomplete-markets friction entirely, as sharing becomes costless. This connects our model to the broader debate about the opportunities and risks of transformative AI \citep{korinek2024scenarios}.
+
+Our paper also draws on the rare disaster literature \citep{rietz1988equity, barro2006rare, wachter2013can}, which shows that small probabilities of large consumption drops can have first-order effects on asset prices. The AI singularity is a disaster risk with asymmetric structure: it devastates some assets while benefiting others. This asymmetry generates hedging demand rather than a uniform increase in risk premia, connecting the disaster risk literature to the cross-section of stock valuations.
+
+The rest of the paper proceeds as follows. Section~\ref{sec:model} presents the model. Section~\ref{sec:equilibrium} derives equilibrium valuations and the main results. Section~\ref{sec:extension} extends the model to incorporate existential risk. Section~\ref{sec:conclusion} concludes.
+
+
+%% ============================================================
+\section{A Model of Singularity Hedging}
+\label{sec:model}
+%% ============================================================
+
+\subsection{Environment}
+
+Time is discrete and infinite: $t = 0, 1, 2, \ldots\,$. The economy has two types of agents: a \emph{representative household} and \emph{AI owners}. The representative household is the marginal investor and sets asset prices. AI owners hold private AI capital and are not marginal investors; they do not participate in public equity markets.
+
+The household has constant relative risk aversion (CRRA) preferences:
+\begin{equation}
+\label{eq:utility}
+E_0 \sum_{t=0}^{\infty} \beta^t \frac{c_t^{1-\gamma}}{1-\gamma}, \quad \gamma > 1, \quad \beta \in (0,1),
+\end{equation}
+where $c_t$ is consumption at time~$t$, $\gamma$ is the coefficient of relative risk aversion, and $\beta$ is the subjective discount factor.
+
+Two assets are publicly traded: an \emph{AI stock} and a \emph{non-AI stock}. These are Lucas trees that pay dividends $D_t^A$ and $D_t^N$ respectively. The household holds all outstanding shares of both stocks, and its consumption equals total dividends:
+\begin{equation}
+\label{eq:consumption}
+c_t = D_t^A + D_t^N.
+\end{equation}
+
+Define the \emph{AI dividend share}:
+\begin{equation}
+\label{eq:share}
+s \equiv \frac{D_t^A}{c_t}.
+\end{equation}
+In the pre-singularity regime (defined below), this share is constant over time.
+
+
+\subsection{The AI Singularity}
+
+The economy begins in a \emph{pre-singularity} regime. In each pre-singularity period, with probability~$\lambda \in (0,1)$, an AI singularity occurs. With probability~$1-\lambda$, the economy remains in the pre-singularity regime. Once the singularity occurs, the economy enters a \emph{post-singularity} regime permanently. The singularity is a one-time event.
+
+In both regimes, dividends grow at a common deterministic rate~$g > 0$. The singularity modifies this growth asymmetrically:
+
+\medskip
+\noindent\emph{Normal transition} (probability $1-\lambda$ pre-singularity; probability~1 post-singularity):
+\begin{equation}
+\label{eq:normal}
+D_{t+1}^A = (1+g)\, D_t^A, \qquad D_{t+1}^N = (1+g)\, D_t^N.
+\end{equation}
+
+\noindent\emph{Singularity transition} (probability $\lambda$, pre-singularity only):
+\begin{equation}
+\label{eq:singularity}
+D_{t+1}^A = (1+\theta)(1+g)\, D_t^A, \qquad D_{t+1}^N = (1-\phi)(1+g)\, D_t^N,
+\end{equation}
+where $\theta > 0$ is the fractional jump in AI dividends and $\phi \in (0,1)$ is the fractional drop in non-AI dividends.
+
+The singularity is an AI advance that benefits AI owners and their associated public stocks, while devastating the rest of the economy. The household's consumption growth upon singularity is:
+\begin{equation}
+\label{eq:jump}
+\frac{c_{t+1}}{c_t} = (1+g) \, J(s), \qquad J(s) \equiv 1 - \phi + (\theta + \phi)\,s.
+\end{equation}
+
+We say the singularity is \emph{negative} if $J(s) < 1$, which holds when $s < \phi / (\theta + \phi)$. That is, the singularity devastates the household whenever AI stocks are a sufficiently small share of its portfolio. For our baseline calibration ($\theta = 0.50$, $\phi = 0.30$, $s = 0.15$), the threshold is $s < 0.375$, so the singularity is clearly negative.
+
+
+\subsection{Incomplete Markets}
+\label{sec:incomplete}
+
+The household is excluded from private AI capital. This is the source of market incompleteness: the household cannot buy equity in privately held AI firms, data assets, or proprietary algorithms. It can only access AI exposure through publicly traded AI stocks, which represent a fraction of the total AI economy.
+
+If markets were complete---if the household could freely trade claims on private AI capital---it could construct a portfolio that perfectly hedges the singularity. A household holding both public stocks and private AI capital would experience no consumption disruption from the singularity, because the gains on AI capital would offset the losses on non-AI assets. In that case, the singularity would be a redistribution between asset classes, not a consumption disaster, and the AI valuation premium would vanish.
+
+The friction in our model differs from that in \citet{garleanu2012displacement}. In their OLG economy, future innovators cannot trade with current agents because they have not yet been born. Incomplete markets arise from the intergenerational structure. In our model, AI owners \emph{already exist}---they are contemporaries of the household---but their capital is private and untradeable. The friction is about asset accessibility, not about the non-existence of trading partners. This distinction matters: it means the incomplete-markets problem could, in principle, be solved by broadening access to private AI capital (e.g., through securitization or regulatory reform), whereas the GKP friction is inherently tied to demographics.
+
+
+%% ============================================================
+\section{Equilibrium Valuations}
+\label{sec:equilibrium}
+%% ============================================================
+
+\subsection{Stochastic Discount Factor}
+
+In this general equilibrium endowment economy, prices are determined by the household's Euler equations. The stochastic discount factor (SDF) is:
+\begin{equation}
+\label{eq:sdf}
+M_{t,t+1} = \beta \left(\frac{c_{t+1}}{c_t}\right)^{-\gamma}.
+\end{equation}
+
+Pre-singularity, the SDF takes two values:
+\begin{equation*}
+M_{t,t+1} = \begin{cases}
+\beta(1+g)^{-\gamma} & \text{no singularity (prob.\ } 1-\lambda\text{)} \\[4pt]
+\beta\bigl[(1+g)\,J\bigr]^{-\gamma} & \text{singularity (prob.\ } \lambda\text{)}.
+\end{cases}
+\end{equation*}
+
+Because $J < 1$ (negative singularity), the SDF is \emph{high} in the singularity state---marginal utility surges when the household's consumption drops. Assets that pay well in this state are therefore valuable.
+
+\subsection{Main Results}
+
+Define the \emph{effective discount factor}:
+\begin{equation}
+\label{eq:a-def}
+a \equiv \beta(1+g)^{1-\gamma}.
+\end{equation}
+We assume $a < 1$, which ensures finite valuations. In the post-singularity regime, there is no further risk, and both stocks have the same price-dividend ratio:
+\begin{equation}
+\label{eq:pd-benchmark}
+\bar{v} = \frac{a}{1-a}.
+\end{equation}
+
+\begin{proposition}[Equilibrium Valuations]
+\label{prop:valuations}
+In the pre-singularity regime, the price-dividend ratios of AI and non-AI stocks are:
+\begin{align}
+\label{eq:pd-ai}
+v^A &= \bar{v} + \frac{\lambda\, a\bigl[J^{-\gamma}(1+\theta) - 1\bigr]}{(1-a)\bigl[1-(1-\lambda)a\bigr]}, \\[6pt]
+\label{eq:pd-nonai}
+v^N &= \bar{v} + \frac{\lambda\, a\bigl[J^{-\gamma}(1-\phi) - 1\bigr]}{(1-a)\bigl[1-(1-\lambda)a\bigr]},
+\end{align}
+where $\bar{v} = a/(1-a)$ is the benchmark valuation absent singularity risk, and $J = 1 - \phi + (\theta + \phi)s$ is the consumption jump factor.
+\end{proposition}
+
+\begin{proof}
+The household's Euler equation for the AI stock is:
+\[
+v^A = E_t\!\left[M_{t,t+1}\,\frac{D_{t+1}^A}{D_t^A}\!\left(1 + v_{t+1}^A\right)\right].
+\]
+In the pre-singularity regime, this expands to:
+\[
+v^A = (1-\lambda)\,a\,(1+v^A) + \lambda\,a\,J^{-\gamma}(1+\theta)(1+\bar{v}),
+\]
+where the first term covers the no-singularity path (dividend growth $1+g$, next-period P/D still $v^A$) and the second covers the singularity path (dividend growth $(1+g)(1+\theta)$, consumption growth $(1+g)J$, next-period P/D collapses to $\bar{v}$). Solving for~$v^A$ and substituting $1 + \bar{v} = 1/(1-a)$ yields~\eqref{eq:pd-ai}. The derivation for~$v^N$ is identical, replacing $(1+\theta)$ with $(1-\phi)$.
+\end{proof}
+
+Equations~\eqref{eq:pd-ai}--\eqref{eq:pd-nonai} decompose each stock's valuation into two components: the risk-free benchmark~$\bar{v}$ and a singularity adjustment. For AI stocks, the adjustment is proportional to $J^{-\gamma}(1+\theta) - 1$, which is always positive since $J^{-\gamma} > 1$ (high marginal utility in the disaster state) and $(1+\theta) > 1$ (AI dividends surge). AI stocks are valuable precisely because they pay well when the household is desperate.
+
+\begin{proposition}[Hedging Premium]
+\label{prop:premium}
+AI stocks command a valuation premium over non-AI stocks:
+\begin{equation}
+\label{eq:premium}
+v^A - v^N = \frac{\lambda\, a\, J^{-\gamma}\,(\theta + \phi)}{(1-a)\bigl[1-(1-\lambda)a\bigr]} > 0.
+\end{equation}
+Moreover:
+\begin{enumerate}
+\item[(i)] The premium is strictly increasing in~$\lambda$ (singularity probability).
+\item[(ii)] The premium is strictly decreasing in~$s$ (AI dividend share).
+\item[(iii)] The relative premium $v^A / v^N$ is bounded: $v^A/v^N \in \bigl[1,\; (1+\theta)/(1-\phi)\bigr]$, with the lower bound at $\lambda = 0$ and the upper bound at $\lambda = 1$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Equation~\eqref{eq:premium} follows by subtracting~\eqref{eq:pd-nonai} from~\eqref{eq:pd-ai}. Positivity is immediate since every term is positive.
+
+\emph{Part~(i).} Write the premium as $K \cdot \lambda / (1-a+\lambda a)$ where $K = a\,J^{-\gamma}(\theta+\phi)/(1-a) > 0$. The function $\lambda \mapsto \lambda/(1-a+\lambda a)$ has derivative $(1-a)/(1-a+\lambda a)^2 > 0$.
+
+\emph{Part~(ii).} Since $\partial J / \partial s = \theta + \phi > 0$ and $J < 1$ with $\gamma > 1$, increasing~$s$ raises~$J$ and lowers~$J^{-\gamma}$, reducing the premium.
+
+\emph{Part~(iii).} At $\lambda = 0$, both valuations equal~$\bar{v}$ and the ratio is~1. At $\lambda = 1$, $v^i = a\,J^{-\gamma} F^i / (1-a)$ where $F^A = 1+\theta$ and $F^N = 1-\phi$, giving the ratio $(1+\theta)/(1-\phi)$.
+\end{proof}
+
+The economic intuition is straightforward. AI stocks act as insurance: they pay high dividends in the state where the household suffers most. Investors are willing to pay a premium for this insurance, and the premium grows with the perceived likelihood of a singularity. Conversely, the premium shrinks as the AI share~$s$ increases, because a larger AI share makes the singularity less devastating---the household's own AI holdings partially offset its losses. There is a natural self-limiting mechanism: as AI stocks become more expensive and a larger fraction of the portfolio, the very risk that justifies their premium diminishes.
+
+
+\subsection{Calibration}
+\label{sec:calibration}
+
+Table~\ref{tab:calibration} reports equilibrium valuations for a range of singularity probabilities. The preference parameters ($\beta = 0.96$, $\gamma = 3$) are standard in the asset pricing literature. Dividend growth of $g = 0.02$ matches the long-run average for U.S.\ equities. The AI share $s = 0.15$ reflects the approximate weight of AI-related firms in U.S.\ equity market capitalization. The singularity parameters ($\theta = 0.50$, $\phi = 0.30$) imply that AI dividends jump by 50\% while non-AI dividends drop by 30\%, a severe but not catastrophic event: household consumption falls by 18\%.
+
+\begin{table}[t]
+\centering
+\caption{Equilibrium price-dividend ratios under alternative singularity probabilities. Baseline parameters: $\beta = 0.96$, $\gamma = 3$, $g = 0.02$, $\theta = 0.50$, $\phi = 0.30$, $s = 0.15$.}
+\label{tab:calibration}
+\medskip
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+$\lambda$ & $v^A$ & $v^N$ & $v^A - v^N$ & $v^A / v^N$ \\
+\midrule
+0.00 & 11.9 & 11.9 & 0.0 & 1.00 \\
+0.01 & 14.3 & 12.3 & 2.0 & 1.16 \\
+0.02 & 16.2 & 12.6 & 3.6 & 1.29 \\
+0.05 & 20.3 & 13.2 & 7.0 & 1.53 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Absent singularity risk ($\lambda = 0$), both stocks have a P/D ratio of 11.9, the standard Gordon growth benchmark. As singularity risk increases, AI stock valuations rise sharply: at $\lambda = 0.02$, the AI P/D ratio is 16.2 versus 12.6 for non-AI stocks, a 29\% premium. At $\lambda = 0.05$, the premium reaches 53\%.
+
+These magnitudes are economically meaningful. The largest AI companies currently trade at valuations roughly 1.5 to 2 times the market average. Our model suggests that a singularity probability of 2--5\% per year can account for a substantial share of this premium through hedging demand alone, without appealing to differential growth expectations.
+
+
+%% ============================================================
+\section{Extension: Existential Risk and Infinite Output}
+\label{sec:extension}
+%% ============================================================
+
+The baseline model treats the singularity as devastating but survivable. Following \citet{jones2024ai}, we now consider two possibilities at the tail of the AI singularity: the singularity may cause human extinction, and it may produce unbounded output for AI owners.
+
+\subsection{Extinction Risk}
+
+Suppose that conditional on the singularity occurring, there is a probability~$\delta \in [0,1)$ that humanity goes extinct. In the extinction state, all consumption and dividends drop to zero. With probability~$1-\delta$, the economy survives and the outcomes are as in the baseline model.
+
+Since both AI and non-AI stocks pay zero dividends in the extinction state, this state contributes nothing to asset valuations---it is infinitely bad for welfare but irrelevant for pricing.
+
+\begin{proposition}[Extinction and the Hedging Premium]
+\label{prop:extinction}
+With extinction probability~$\delta$ conditional on singularity, the hedging premium becomes:
+\begin{equation}
+\label{eq:premium-extinction}
+v^A - v^N = \frac{\lambda\,(1-\delta)\, a\, J^{-\gamma}\,(\theta + \phi)}{(1-a)\bigl[1-(1-\lambda)a\bigr]}.
+\end{equation}
+The premium is linearly decreasing in~$\delta$.
+\end{proposition}
+
+\begin{proof}
+In the extinction state, $D_{t+1}^i = 0$ and $P_{t+1}^i = 0$, so this state contributes zero to the Euler equation. The singularity-state contribution to the P/D ratio is scaled by the survival probability~$1-\delta$. The rest of the derivation follows Propositions~\ref{prop:valuations}--\ref{prop:premium}.
+\end{proof}
+
+The result is intuitive: AI stocks cannot hedge extinction, because all assets are worthless when everyone dies. Higher extinction risk reduces the fraction of singularity states in which the hedge pays off, shrinking the premium.
+
+\citet{jones2024ai} calibrates the value of a statistical life (VSL) to assess the trade-off between AI-driven growth and existential risk. In his framework, a year of life is worth approximately six times per capita consumption. With $\gamma > 1$, utility is bounded, and even infinite consumption generates finite utility---the marginal value of more consumption declines sharply. These observations reinforce our result: the hedging premium is largest when the singularity is severe enough to justify insurance, but the probability of total extinction is moderate.
+
+
+\subsection{Infinite Output and Market Completeness}
+
+A striking feature of the AI singularity is that it may produce unbounded output for AI owners. If AI technology becomes sufficiently advanced, the owners of that technology could, in principle, produce unlimited goods and services at near-zero marginal cost.
+
+This has a profound implication for our model. The incomplete-markets friction at the heart of our results---the household's inability to access private AI capital---becomes irrelevant when AI output is infinite. If AI owners have unbounded resources, the cost of sharing with the household is infinitesimal. Any finite barrier to trade---legal, informational, or market-based---can be overcome when the resources to overcome it are unlimited. Post-singularity, markets effectively become complete.
+
+The implication for asset pricing is paradoxical. Pre-singularity, the household values AI stocks for their hedge. But if the household expects that a singularity producing infinite output will also produce complete markets---because AI owners will share their abundance---then the singularity is no longer devastating. The household will be compensated regardless, and the hedging motive weakens. The AI valuation premium is therefore largest in an intermediate regime: the singularity must be harmful enough to justify insurance, but not so extreme as to trivially resolve the incomplete-markets problem.
+
+This connects our model to the observation in \citet{garleanu2012displacement} that market incompleteness is the engine of displacement risk premia. In their model, the friction is permanent because future innovators can never trade before they are born. In ours, the friction is potentially self-resolving: the same event that generates hedging demand may also eliminate the need for it.
+
+
+%% ============================================================
 \section{Conclusion}
+\label{sec:conclusion}
+%% ============================================================
 
-PLACEHOLDER CONCLUSION
+This paper offers a simple explanation for the high valuations of AI stocks: hedging demand against a negative AI singularity. In our model, a representative household excluded from private AI capital pays a premium for publicly traded AI stocks because they appreciate in the state where the household suffers most. The premium is increasing in the probability of a singularity and decreasing in the household's existing AI exposure.
 
+The key friction is market incompleteness. Private AI capital is concentrated in the hands of AI owners---founders, venture capitalists, and early employees---who are not marginal investors in public markets. The representative household cannot access this capital directly and must rely on the imperfect hedge provided by public AI stocks.
+
+Our model suggests that the current wave of AI investment reflects, in part, a rational response to a genuinely new risk. The AI singularity is not a generic innovation shock; it is a concentrated transfer of economic power to a small class of AI owners. To the extent that public AI stocks offer a hedge against this transfer, their elevated valuations are not a bubble---they are the price of insurance.
+
+Looking forward, our analysis highlights the role of financial market design in managing AI risk. Broadening access to private AI capital---through securitization, public offerings, or regulatory reform---would directly reduce the incomplete-markets friction and, with it, the hedging premium. The policy implication is that financial inclusion in the AI economy is not only an equity concern but also a pricing one: incomplete markets generate the very premia that make AI stocks appear expensive.
+
+
+%% ============================================================
 \printbibliography
+%% ============================================================
 
 \end{document}

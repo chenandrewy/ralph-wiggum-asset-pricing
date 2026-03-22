@@ -1,0 +1,43 @@
+{
+  "timestamps": {
+    "started_at_utc": "2026-03-22T02:34:54.004616+00:00",
+    "finished_at_utc": "2026-03-22T02:40:36.763909+00:00",
+    "started_at_ny": "2026-03-21T22:34:54.004616-04:00",
+    "finished_at_ny": "2026-03-21T22:40:36.763909-04:00",
+    "timezone": "America/New_York"
+  },
+  "duration_seconds": 342.759,
+  "tests": [
+    {
+      "name": "spec-compliance",
+      "status": "fail",
+      "exit_code": 1,
+      "timestamps": {
+        "started_at_utc": "2026-03-22T02:34:54.012578+00:00",
+        "finished_at_utc": "2026-03-22T02:36:14.081446+00:00",
+        "started_at_ny": "2026-03-21T22:34:54.012578-04:00",
+        "finished_at_ny": "2026-03-21T22:36:14.081446-04:00",
+        "timezone": "America/New_York"
+      },
+      "duration_seconds": 80.069
+    },
+    {
+      "name": "theory-correctness",
+      "status": "pass",
+      "exit_code": 0,
+      "timestamps": {
+        "started_at_utc": "2026-03-22T02:34:54.012729+00:00",
+        "finished_at_utc": "2026-03-22T02:40:36.762260+00:00",
+        "started_at_ny": "2026-03-21T22:34:54.012729-04:00",
+        "finished_at_ny": "2026-03-21T22:40:36.762260-04:00",
+        "timezone": "America/New_York"
+      },
+      "duration_seconds": 342.75
+    }
+  ],
+  "summary": {
+    "total": 2,
+    "passed": 1,
+    "failed": 1
+  }
+}
