@@ -312,6 +312,23 @@ $\alpha = 1.00$ & 13.9 & 11.5 & 2.4 & 1.21 \\
 Two results stand out. First, the hedging channel can account for a substantial share of observed valuations under plausible parameter combinations, especially when the singularity is more severe or risk aversion is higher. Combined with a growth differential of 3--5 percentage points, the model can match the 2--2.7$\times$ premium in the data. Second, partial market access degrades the premium smoothly, providing a quantitative policy lever: each increment of~$\alpha$ produces a measurable reduction in the valuation distortion caused by incomplete markets.
 
 
+\subsection{Testable Implications}
+\label{sec:testable}
+
+The hedging channel generates a testable prediction that distinguishes it from a pure growth-expectations story. A growth-only explanation predicts that the AI premium rises when expected AI earnings are revised upward. The hedging channel predicts that the premium \emph{also} rises when perceived singularity risk increases, \emph{conditional on} earnings expectations---because higher~$\lambda$ raises the hedging amplifier $J^{-\gamma}$ independently of cash-flow fundamentals (Proposition~\ref{prop:premium}(i)).
+
+Figure~\ref{fig:ai-premium-ts} plots the AI-to-market ratio for both price-dividend and price-earnings multiples alongside two major AI capability milestones: the release of GPT-3 (2020) and ChatGPT/GPT-4 (2023). Both ratios spike sharply at these milestones. Notably, the 2023 jump occurs before realized AI earnings caught up with the valuation surge---consistent with the hedging channel, in which a perceived increase in singularity risk (not just revised earnings forecasts) bids up AI stocks. The model also predicts that as the AI share~$s$ of public equity rises, the premium should erode (Proposition~\ref{prop:premium}(ii))---a self-limiting mechanism with time-series implications that can be tested as the data accumulate.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.85\textwidth]{figure-ai-premium-ts.pdf}
+\caption{AI-to-market valuation ratios, 2015--2024. The solid line shows the ratio of AI to market price-dividend ratios (total shareholder payouts); the dashed line shows price-earnings ratios. Vertical lines mark major AI capability milestones. Both ratios spike at milestones that plausibly increased perceived singularity risk. Data from CRSP and Compustat.}
+\label{fig:ai-premium-ts}
+\end{figure}
+
+These patterns are suggestive, not causal. A formal test would regress the AI premium on a proxy for perceived singularity risk---such as AI capability announcement intensity or expert survey updates---controlling for consensus earnings revisions. The model's sharp comparative statics provide the identifying restriction: the hedging channel predicts a positive coefficient on the singularity-risk proxy even after absorbing earnings expectations.
+
+
 %% ============================================================
 \section{Extension: Existential Risk, Heterogeneous Beliefs, and Infinite Output}
 \label{sec:extension}
@@ -390,14 +407,14 @@ The prediction is that disagreement about extinction risk can partially unwind t
 
 \subsection{Infinite Output and Market Completeness}
 
-If the singularity produces large output for AI owners, sharing with the household becomes cheap, and the incomplete-markets friction weakens. We formalize this by microfounding~$\pi$ as a function of post-singularity AI output.
+If the singularity produces large output for AI owners, sharing with the household becomes cheap, and the incomplete-markets friction weakens. We formalize this by microfounding~$\pi$ through the adverse-selection channel identified in Section~\ref{sec:incomplete}.
 
-Let $Y_O > 0$ denote the scale of post-singularity output accruing to AI owners. Sharing capital with the household requires AI owners to pay a fixed cost~$k > 0$ (due to contracting, regulatory, or organizational frictions). AI owners share only if the cost is small relative to their output, giving:
+Let $Y_O > 0$ denote the scale of post-singularity output accruing to AI owners, and let $d > 0$ denote the adverse-selection discount that outsiders demand when purchasing claims on proprietary AI capital. Because outsiders cannot evaluate proprietary technology, training data, or algorithmic capabilities, they require a lemon's discount~$d$ relative to true value. AI owners share capital only when the gains from trade exceed this discount---that is, when output~$Y_O$ is large enough that the discount is negligible relative to total value:
 \begin{equation}
 \label{eq:pi-micro}
-\pi(Y_O) = 1 - \frac{k}{Y_O}, \qquad Y_O \geq k.
+\pi(Y_O) = 1 - \frac{d}{Y_O}, \qquad Y_O \geq d.
 \end{equation}
-As AI output grows, $\pi \to 1$ and the friction vanishes.
+As AI output grows, the adverse-selection discount becomes a vanishing fraction of the gains from trade, $\pi \to 1$, and the friction resolves. Each of the three forces in Section~\ref{sec:incomplete} maps to a specific policy lever that increases~$\alpha$: securitization standards and disclosure requirements reduce information asymmetry (lowering~$d$); accredited-investor reform and fund-structure innovation address regulatory barriers; and IPO incentives weaken the control motive by compensating founders for diluted governance.
 
 \begin{proposition}[Hump-Shaped Hedging Amplification]
 \label{prop:hump}
@@ -408,7 +425,7 @@ Suppose $\pi$ is given by~\eqref{eq:pi-micro} and the post-singularity AI output
 Then:
 \begin{enumerate}
 \item[(i)] As $Y_O \to \infty$ (equivalently, as $\theta$ grows without bound), $\pi \to 1$ and the hedging component $\Delta^{\emph{hedge}} \to 0$. The total premium converges to the cash-flow-only premium, which is monotonically increasing in~$\theta$.
-\item[(ii)] The hedging component is hump-shaped in~$\theta$: increasing for small~$\theta$ (where the singularity becomes more harmful and the hedging amplifier rises) and decreasing for large~$\theta$ (where friction resolution dominates and $J^{-\gamma} - 1$ is multiplied by a vanishing $(1-\pi)$).
+\item[(ii)] The hedging component is hump-shaped in~$\theta$: increasing for small~$\theta$ (where the dividend-differential factor $(\theta+\phi)$ grows faster than the hedging amplifier $J^{-\gamma}$ declines) and decreasing for large~$\theta$ (where friction resolution dominates and $J^{-\gamma} - 1$ is multiplied by a vanishing $(1-\pi)$).
 \end{enumerate}
 \end{proposition}
 

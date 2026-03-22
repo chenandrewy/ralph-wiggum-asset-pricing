@@ -1,48 +1,49 @@
 # Improvement Plan
 
-## Status
+## Current Status
 
-All tests pass. Referee-top3 review completed with two substantive comments. No section needs an overhaul — the model is correct, well-structured, and spec-compliant. Focus is on addressing referee feedback.
+- **Tests**: 2/2 pass (spec-compliance, theory-correctness)
+- **Referee**: referee-top3 completed with two substantive comments
+- **No overhaul needed**: Model is correct, spec-compliant, and well-structured at 13 pages / 4 exhibits
 
-## Key Issues
+## Issues
 
-### From referee-top3
+### 1. Misleading parenthetical in Prop 5(ii) proof (theory-correctness minor note)
 
-1. **Singularity parameters lack empirical grounding.** The calibration varies $\lambda$, $\theta$, $\phi$ freely but offers no external evidence. The paper repeatedly compares model output to data (2-2.7x ratio) yet treats parameters as illustrative. Either anchor them or soften quantitative claims.
+The proof states "where the singularity becomes more harmful" as theta increases. This is wrong: increasing theta raises J, making the singularity *less* harmful to the household. The hump shape arises because the dividend-differential factor (theta + phi) grows faster than J^{-gamma} declines for small theta. Fix the parenthetical to reflect the correct mechanism.
 
-2. **Market incompleteness is exogenous and unexplained.** A 29% premium implies large gains from trade — why don't intermediaries securitize private AI capital pre-singularity? Section 4.3 microfounds friction resolution post-singularity, but the pre-singularity persistence is unaddressed. The referee notes GKP's friction (unborn innovators) is structurally irreducible, while ours (private capital held by existing agents) is exactly what financial markets resolve.
+### 2. Referee: No distinguishing empirical test for the hedging channel (Comment 1)
 
-### From CFR-R1 (already largely addressed)
+The paper's only empirical content is Figure 1, which documents the AI valuation premium but doesn't distinguish the hedging channel from a pure growth-expectations story. The referee asks: what observable pattern would be present if hedging operates and absent if only growth drives the premium? The paper has room for one more exhibit (currently 4/6) and is well under the page limit (13/20).
 
-- GKP subsumption concern: addressed via three-point differentiation in intro and continuous $\alpha$ parameter.
-- Jones (2024) integration: addressed via Section 4 extensions.
+### 3. Referee: Friction-resolution microfoundation disconnected from friction rationale (Comment 2)
 
-## Planned Changes
+Section 2.3 gives three compelling reasons the friction persists (information asymmetry, control/incentives, regulatory barriers). Section 4.3 ignores all three and introduces a generic fixed cost k. The referee wants pi microfounded through at least one of the three stated forces, and wants alpha connected to specific policy levers.
 
-### 1. Anchor calibration parameters empirically (referee comment 1)
+## Plan
 
-**Where:** Section 3.1 (Calibration), before Table 1.
+### Step 1: Fix Prop 5(ii) proof parenthetical
 
-Add a paragraph grounding each singularity parameter in external evidence:
-- **$\lambda$ (singularity probability):** Cite AI researcher surveys (e.g., Grace et al. 2024) on probability of transformative AI within N years. Convert to an annual hazard rate. The 1-5% range in the paper should be shown to bracket survey-based estimates.
-- **$\theta = 0.50$ (AI dividend jump):** Relate to the private-vs-public split in AI capital. If private AI capital is roughly equal to public AI market cap, then a singularity that doubles total AI value implies $\theta \approx 0.50$ for the public component. Cite industry estimates of private AI valuations.
-- **$\phi = 0.30$ (non-AI dividend drop):** Relate to labor share displacement estimates. If AI automates 30-40% of tasks (cite Eloundou et al. 2023 or similar), a 30% drop in non-AI dividends is consistent.
+In the proof of Proposition 5(ii), replace the parenthetical "where the singularity becomes more harmful" with language reflecting the correct mechanism: for small theta, the dividend-differential factor (theta + phi) grows faster than the hedging amplifier J^{-gamma} declines, so the hedging component increases. This is a one-line fix.
 
-Also soften language in the growth-hedging decomposition: frame the 2-2.7x comparison as "consistent with" rather than "accounts for."
+### Step 2: Microfound friction resolution through adverse selection (Comment 2)
 
-### 2. Explain why the friction persists pre-singularity (referee comment 2)
+Replace the generic fixed-cost microfoundation in Section 4.3 with one tied to information asymmetry (the first force in Section 2.3). Specifically:
 
-**Where:** Section 2.3 (Incomplete Markets), after the paragraph on parameterizing $\alpha$.
+- AI owners selling private capital face an adverse-selection discount: outsiders cannot evaluate proprietary technology, so they demand a lemon's discount d relative to true value V.
+- AI owners share only if the gains from trade exceed the adverse-selection loss: they share when output Y_O is large enough that d/Y_O becomes negligible.
+- This gives pi(Y_O) = 1 - d/Y_O (structurally similar but now d is the adverse-selection discount, not a generic cost).
+- Add a sentence connecting alpha to specific policy levers: securitization standards reduce information asymmetry (increasing alpha), accredited-investor reform addresses regulatory barriers, and IPO incentives weaken the control motive.
 
-Add a paragraph explaining why the friction is not arbitraged away despite large gains from trade:
-- **Information asymmetry:** Private AI firms' value depends on proprietary technology that outsiders cannot evaluate — classic adverse selection.
-- **Control and incentives:** AI owners retain private capital to preserve control over strategic technology; selling equity dilutes governance rights and may reduce innovation incentives.
-- **Regulatory barriers:** Private placements, accredited investor requirements, and securities regulation limit household access to pre-IPO AI capital.
-- **Contrast with GKP:** Acknowledge that GKP's friction is structurally permanent while ours is reducible — this is a feature, not a bug, because it generates the policy lever ($\alpha$) that GKP lacks.
+This closes the gap between Sections 2.3 and 4.3 without changing any propositions or proofs (the functional form is the same).
 
-### 3. Add references
+### Step 3: Add a testable implication exhibit (Comment 1)
 
-Add bibliography entries for:
-- Grace et al. (2024) — AI researcher surveys
-- Eloundou et al. (2023) or similar — AI labor displacement estimates
-- Any private AI capital valuation source used
+Add one empirical exhibit (Figure or Table) showing that the AI valuation premium co-moves with a proxy for perceived singularity probability lambda. Candidate approach:
+
+- Construct a time series of AI premium (P/D ratio of AI stocks / P/D ratio of S&P 500) from the existing CRSP/Compustat data.
+- Construct a proxy for lambda using AI capability announcement dates or AI-related news intensity (e.g., Google Trends for "artificial general intelligence" or counts of major AI announcements).
+- Show a scatter plot or time-series overlay demonstrating that the AI premium spikes around periods of heightened perceived singularity risk, controlling for earnings revisions.
+- Add a brief paragraph in Section 3 (after the calibration) interpreting the evidence.
+
+This moves the paper from "consistent with" to "suggestive evidence for" the hedging channel. The key testable distinction: a pure growth story predicts the premium rises with earnings revisions; the hedging story predicts it also rises with perceived singularity risk *conditional on* earnings expectations.
