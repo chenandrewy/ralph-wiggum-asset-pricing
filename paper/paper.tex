@@ -34,22 +34,22 @@
 \label{sec:intro}
 %% ============================================================
 
-Why are AI stocks so expensive? The largest AI companies trade at price-earnings ratios well above the market average, and their combined market capitalization dwarfs that of many national stock exchanges. Some of this reflects expected growth in earnings as AI technology matures. But even after accounting for growth, AI stock valuations appear high by historical standards.
+Why are AI stocks so expensive? The largest AI companies trade at price-dividend ratios well above the market average, and their combined market capitalization dwarfs that of many national stock exchanges. Some of this reflects expected growth in earnings as AI technology matures. But even after accounting for growth, AI stock valuations appear high by historical standards.
 
 We argue that hedging demand is part of the explanation. If artificial intelligence advances suddenly and dramatically---devastating the incomes of ordinary investors while enriching the owners of AI technology---then public AI stocks provide valuable insurance. Investors bid up AI stock prices not only for the expected dividends, but for the protection these stocks offer against an AI-driven catastrophe. Financial market solutions to AI disaster risk have received surprisingly little attention; this paper offers a first step.
 
 We formalize this idea in a simple consumption-based asset pricing model. A representative household faces the risk of a \emph{negative AI singularity}: a sudden event that transfers a large share of economic output from the household to AI owners who hold private, untradeable capital. The household cannot buy into these private AI firms---markets are incomplete. But the household can invest in publicly traded AI stocks, which appreciate when AI advances. In equilibrium, this hedging demand pushes AI stock valuations above those of non-AI stocks.
 
-Figure~\ref{fig:ai-valuations} documents the motivating fact: publicly traded AI stocks have consistently traded at substantially higher valuations than the market portfolio, with the gap widening sharply after the emergence of large language models in 2023.
+Figure~\ref{fig:ai-valuations} documents the motivating fact: publicly traded AI stocks have consistently traded at substantially higher price-dividend ratios than the market portfolio, with the gap widening sharply after the emergence of large language models in 2023.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.85\textwidth]{figure-ai-valuations.pdf}
-\caption{Trailing price-earnings ratios: AI stocks versus the market portfolio, 2015--2024. AI stocks are the market-cap-weighted average of major publicly traded AI firms (NVDA, MSFT, GOOG, META, AMZN). The market portfolio is the S\&P~500. Data from CRSP and Compustat.}
+\caption{Trailing price-dividend ratios: AI stocks versus the market portfolio, 2015--2024. Dividends are measured as total shareholder payouts (dividends plus net buybacks), the standard empirical counterpart of dividends in a Lucas tree model. AI stocks are the market-cap-weighted average of major publicly traded AI firms (NVDA, MSFT, GOOG, META, AMZN). The market portfolio is the S\&P~500. Data from CRSP and Compustat.}
 \label{fig:ai-valuations}
 \end{figure}
 
-Our main result is a closed-form expression for the price-dividend ratio of AI stocks. The AI valuation premium---the gap between AI and market portfolio valuations---is increasing in the probability of a singularity, and decreasing in the existing AI share of the household's portfolio. For a calibration with a 2\% annual singularity probability, AI stocks trade at a price-dividend ratio 29\% above non-AI stocks (Table~\ref{tab:calibration}), broadly consistent with the elevated valuations in Figure~\ref{fig:ai-valuations}.
+Our main result is a closed-form expression for the price-dividend ratio of AI stocks. The AI valuation premium---the gap between AI and market portfolio valuations---is increasing in the probability of a singularity, and decreasing in the existing AI share of the household's portfolio. For a calibration with a 2\% annual singularity probability, AI stocks trade at a price-dividend ratio 29\% above non-AI stocks (Table~\ref{tab:calibration}). In the data, AI stocks trade at price-dividend ratios roughly 2 to 2.7 times the market average (Figure~\ref{fig:ai-valuations}). The model's hedging channel accounts for a meaningful share of this gap; the remainder likely reflects differential growth expectations.
 
 Incomplete markets are the key friction. If the household could invest in private AI capital, it could perfectly hedge the singularity risk, and the valuation premium would vanish. The premium exists precisely because the household is excluded from the most direct hedge---ownership of the AI technology itself---and must instead rely on the imperfect hedge provided by public AI stocks.
 
@@ -245,7 +245,7 @@ $\lambda$ & $v^A$ & $v^N$ & $v^A - v^N$ & $v^A / v^N$ \\
 
 Absent singularity risk ($\lambda = 0$), both stocks have a P/D ratio of 11.9, the standard Gordon growth benchmark. As singularity risk increases, AI stock valuations rise sharply: at $\lambda = 0.02$, the AI P/D ratio is 16.2 versus 12.6 for non-AI stocks, a 29\% premium. At $\lambda = 0.05$, the premium reaches 53\%.
 
-These magnitudes are economically meaningful. The largest AI companies currently trade at valuations roughly 1.5 to 2 times the market average. Our model suggests that a singularity probability of 2--5\% per year can account for a substantial share of this premium through hedging demand alone, without appealing to differential growth expectations.
+These magnitudes are economically meaningful. In Figure~\ref{fig:ai-valuations}, AI stocks trade at price-dividend ratios roughly 2 to 2.7 times the market portfolio in recent years. The model's 29--53\% hedging premium does not close this entire gap, but it represents a first-order contribution from a channel---singularity hedging---that operates independently of growth expectations.
 
 
 %% ============================================================
@@ -289,9 +289,9 @@ The result is intuitive: AI stocks cannot hedge extinction, because all assets a
 $\delta$ & $v^A$ & $v^N$ & $v^A - v^N$ & $v^A / v^N$ \\
 \midrule
 0.00 & 16.2 & 12.6 & 3.6 & 1.29 \\
-0.10 & 15.8 & 12.5 & 3.3 & 1.26 \\
-0.25 & 15.2 & 12.4 & 2.7 & 1.22 \\
-0.50 & 14.1 & 12.3 & 1.8 & 1.15 \\
+0.10 & 15.6 & 12.3 & 3.3 & 1.26 \\
+0.25 & 14.5 & 11.8 & 2.7 & 1.23 \\
+0.50 & 12.8 & 11.0 & 1.8 & 1.16 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -309,7 +309,7 @@ When AI owners are pessimistic about survival ($\delta_O$ high), they place less
 
 \begin{proposition}[Disagreement and the Friction]
 \label{prop:disagreement}
-Suppose that conditional on the singularity occurring and humanity surviving, the incomplete-markets friction resolves with probability~$\pi \in [0,1]$, where~$\pi$ is increasing in the AI owners' extinction belief~$\delta_O$. If the friction resolves, the household gains access to AI capital and the singularity is no longer negative ($J = 1$). The hedging premium becomes:
+Suppose that conditional on the singularity occurring and humanity surviving, the incomplete-markets friction resolves with probability~$\pi \in [0,1]$, where~$\pi$ is increasing in the AI owners' extinction belief~$\delta_O$. If the friction resolves, the household rebalances into private AI capital so that the singularity is consumption-neutral ($J = 1$); the dividend asymmetry ($\theta$, $\phi$) is absorbed by portfolio adjustment rather than by consumption. The hedging premium becomes:
 \begin{equation}
 \label{eq:premium-disagree}
 v^A - v^N = \frac{\lambda\,(1-\delta_H)(1-\pi)\, a\, J^{-\gamma}\,(\theta + \phi)}{(1-a)\bigl[1-(1-\lambda)a\bigr]}.
@@ -326,9 +326,29 @@ The prediction is that disagreement about extinction risk can partially unwind t
 
 \subsection{Infinite Output and Market Completeness}
 
-If the singularity produces unbounded output for AI owners, the incomplete-markets friction becomes irrelevant: with unlimited resources, the cost of sharing with the household is infinitesimal, and markets effectively become complete. This connects to the friction-resolution parameter~$\pi$ in Proposition~\ref{prop:disagreement}---infinite output is the limiting case where $\pi \to 1$.
+If the singularity produces large output for AI owners, sharing with the household becomes cheap, and the incomplete-markets friction weakens. We formalize this by microfounding~$\pi$ as a function of post-singularity AI output.
 
-The implication for asset pricing is paradoxical. The AI valuation premium is largest in an intermediate regime: the singularity must be harmful enough to justify insurance, but not so extreme as to trivially resolve the incomplete-markets problem. A singularity that produces infinite output would also eliminate the household's need for a hedge, because AI owners would share their abundance at negligible cost. Unlike the intergenerational friction in \citet{garleanu2012displacement}, which is permanent, our friction is potentially self-resolving: the same event that generates hedging demand may also eliminate the need for it.
+Let $Y_O > 0$ denote the scale of post-singularity output accruing to AI owners. Sharing capital with the household requires AI owners to pay a fixed cost~$k > 0$ (due to contracting, regulatory, or organizational frictions). AI owners share only if the cost is small relative to their output, giving:
+\begin{equation}
+\label{eq:pi-micro}
+\pi(Y_O) = 1 - \frac{k}{Y_O}, \qquad Y_O \geq k.
+\end{equation}
+As AI output grows, $\pi \to 1$ and the friction vanishes.
+
+\begin{proposition}[Hump-Shaped Premium]
+\label{prop:hump}
+Suppose $\pi$ is given by~\eqref{eq:pi-micro} and the post-singularity AI output scale~$Y_O$ is increasing in the severity parameter~$\theta$. Then:
+\begin{enumerate}
+\item[(i)] As $Y_O \to \infty$ (equivalently, as $\theta$ grows without bound), $\pi \to 1$ and the hedging premium $v^A - v^N \to 0$.
+\item[(ii)] The hedging premium is hump-shaped in~$\theta$: increasing for small~$\theta$ (where the direct effect of a more harmful singularity dominates) and decreasing for large~$\theta$ (where friction resolution dominates).
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+From~\eqref{eq:premium-disagree}, the premium is proportional to $(1-\pi)\,J^{-\gamma}\,(\theta + \phi)$. \emph{Part~(i):} as $Y_O \to \infty$, $\pi \to 1$, so $(1-\pi) \to 0$ and the premium vanishes. \emph{Part~(ii):} the factor $J^{-\gamma}(\theta+\phi)$ is increasing in~$\theta$ (the singularity becomes more harmful and the dividend gap widens), while $(1-\pi) = k/Y_O$ is decreasing in~$\theta$ (through $Y_O$). For small~$\theta$, $\pi$ is bounded away from~1 and the first effect dominates; for large~$\theta$, $k/Y_O \to 0$ at a rate that overwhelms the polynomial growth of $J^{-\gamma}(\theta+\phi)$, provided $Y_O$ grows sufficiently fast in~$\theta$ (e.g., $Y_O = \bar{Y}(1+\theta)$ suffices). The premium therefore rises and then falls.
+\end{proof}
+
+The hump shape captures a paradox: the AI valuation premium is largest in an intermediate regime where the singularity is harmful enough to justify insurance but not so extreme as to trivially resolve the friction. Unlike the intergenerational friction in \citet{garleanu2012displacement}, which is permanent because the trading partners do not yet exist, our friction is potentially self-resolving---the same event that generates hedging demand may also eliminate the need for it.
 
 
 %% ============================================================
