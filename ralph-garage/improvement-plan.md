@@ -1,49 +1,52 @@
 # Improvement Plan
 
-## Current Status
+## Current State
 
-- **Tests**: 2/2 pass (spec-compliance, theory-correctness)
-- **Referee**: referee-top3 completed with two substantive comments
-- **No overhaul needed**: Model is correct, spec-compliant, and well-structured at 13 pages / 4 exhibits
+All tests pass. The referee-top3 review identifies two substantive issues.
 
-## Issues
+## Key Issues
 
-### 1. Misleading parenthetical in Prop 5(ii) proof (theory-correctness minor note)
+### Issue 1: Common growth rate assumption creates a narrative–model gap (referee-top3 comment 1)
 
-The proof states "where the singularity becomes more harmful" as theta increases. This is wrong: increasing theta raises J, making the singularity *less* harmful to the household. The hump shape arises because the dividend-differential factor (theta + phi) grows faster than J^{-gamma} declines for small theta. Fix the parenthetical to reflect the correct mechanism.
+The model assumes $g^A = g^N = g$, so the AI share $s$ is constant pre-singularity. This causes two problems:
 
-### 2. Referee: No distinguishing empirical test for the hedging channel (Comment 1)
+1. **Self-limiting mechanism is a comparative static, not a dynamic prediction.** Proposition 2(ii) and Section 3.4 describe the premium eroding "as the AI share rises," but $s$ never rises in the model. The testable implication points to variation the model cannot generate.
 
-The paper's only empirical content is Figure 1, which documents the AI valuation premium but doesn't distinguish the hedging channel from a pure growth-expectations story. The referee asks: what observable pattern would be present if hedging operates and absent if only growth drives the premium? The paper has room for one more exhibit (currently 4/6) and is well under the page limit (13/20).
+2. **Growth decomposition is informal.** The "approximately multiplicative" claim (Section 3.2) that combines the model's 29% singularity premium with a 3–5pp secular growth differential is not derived. With differential growth, $s_t$ rises over time and feeds back into $J$ and the hedging amplifier, making the interaction potentially non-multiplicative.
 
-### 3. Referee: Friction-resolution microfoundation disconnected from friction rationale (Comment 2)
+### Issue 2: No welfare quantification of the policy lever $\alpha$ (referee-top3 comment 2)
 
-Section 2.3 gives three compelling reasons the friction persists (information asymmetry, control/incentives, regulatory barriers). Section 4.3 ignores all three and introduces a generic fixed cost k. The referee wants pi microfounded through at least one of the three stated forces, and wants alpha connected to specific policy levers.
+Corollary 1 shows the premium decreases in $\alpha$, but the paper never answers: how much does the household *gain* from increased market access? A consumption-equivalent welfare calculation would make the policy lever concrete and distinguish between "better hedged" and "less risk."
 
 ## Plan
 
-### Step 1: Fix Prop 5(ii) proof parenthetical
+### Priority 1: Introduce differential pre-singularity growth (addresses Issue 1)
 
-In the proof of Proposition 5(ii), replace the parenthetical "where the singularity becomes more harmful" with language reflecting the correct mechanism: for small theta, the dividend-differential factor (theta + phi) grows faster than the hedging amplifier J^{-gamma} declines, so the hedging component increases. This is a one-line fix.
+This is the highest-value change. It resolves the narrative–model gap with a single modeling extension.
 
-### Step 2: Microfound friction resolution through adverse selection (Comment 2)
+**Changes:**
 
-Replace the generic fixed-cost microfoundation in Section 4.3 with one tied to information asymmetry (the first force in Section 2.3). Specifically:
+1. **Section 2.2 (The AI Singularity):** Replace the common growth rate $g$ with asset-specific rates $g^A$ and $g^N$ in eq. (4). The AI share $s_t$ now evolves deterministically pre-singularity: $s_{t+1} = s_t (1+g^A) / [s_t(1+g^A) + (1-s_t)(1+g^N)]$.
 
-- AI owners selling private capital face an adverse-selection discount: outsiders cannot evaluate proprietary technology, so they demand a lemon's discount d relative to true value V.
-- AI owners share only if the gains from trade exceed the adverse-selection loss: they share when output Y_O is large enough that d/Y_O becomes negligible.
-- This gives pi(Y_O) = 1 - d/Y_O (structurally similar but now d is the adverse-selection discount, not a generic cost).
-- Add a sentence connecting alpha to specific policy levers: securitization standards reduce information asymmetry (increasing alpha), accredited-investor reform addresses regulatory barriers, and IPO incentives weaken the control motive.
+2. **Section 3.2 (Main Results):** Re-derive Propositions 1–2 with time-varying $s_t$. The P/D ratio becomes a recursive but closed-form expression (standard in dividend-share models). The premium decomposition (eq. 12) still holds at each $t$ with $J(s_t)$ replacing $J(s)$.
 
-This closes the gap between Sections 2.3 and 4.3 without changing any propositions or proofs (the functional form is the same).
+3. **Section 3.2 (Calibration):** Replace the informal "approximately multiplicative" decomposition with the model's own combined premium. Calibrate $g^A - g^N = 3\text{–}5$ pp and show the model matches the 2–2.7x data range directly.
 
-### Step 3: Add a testable implication exhibit (Comment 1)
+4. **Section 3.4 (Testable Implications):** The self-limiting mechanism is now a genuine dynamic prediction: as $s_t$ rises deterministically, the hedging amplifier $J(s_t)^{-\gamma}$ falls. Rewrite this subsection to emphasize the time-series prediction the model now generates.
 
-Add one empirical exhibit (Figure or Table) showing that the AI valuation premium co-moves with a proxy for perceived singularity probability lambda. Candidate approach:
+5. **Tables 1–2:** Recompute with differential growth. Show both the $g^A = g^N$ special case (for comparison) and the general case.
 
-- Construct a time series of AI premium (P/D ratio of AI stocks / P/D ratio of S&P 500) from the existing CRSP/Compustat data.
-- Construct a proxy for lambda using AI capability announcement dates or AI-related news intensity (e.g., Google Trends for "artificial general intelligence" or counts of major AI announcements).
-- Show a scatter plot or time-series overlay demonstrating that the AI premium spikes around periods of heightened perceived singularity risk, controlling for earnings revisions.
-- Add a brief paragraph in Section 3 (after the calibration) interpreting the evidence.
+### Priority 2: Add welfare quantification of market access (addresses Issue 2)
 
-This moves the paper from "consistent with" to "suggestive evidence for" the hedging channel. The key testable distinction: a pure growth story predicts the premium rises with earnings revisions; the hedging story predicts it also rises with perceived singularity risk *conditional on* earnings expectations.
+**Changes:**
+
+1. **After Corollary 1:** Add a short paragraph (or a new corollary) computing the consumption-equivalent welfare gain from increasing $\alpha$ from 0 to some target value. With CRRA utility, this is closed-form: $\Delta_{CE} = [\tilde{s}(\alpha)/s]^{1/(1-\gamma)} - 1$ type expression from the change in the effective share.
+
+2. **Calibration table:** Add a column to Table 2 showing the welfare gain (in consumption-equivalent units) alongside the premium reduction for each $\alpha$ value.
+
+3. **Conclusion:** Add one sentence noting the welfare quantification.
+
+### Priority 3: Minor polish
+
+1. Ensure the testable-implications figure caption and text are consistent with the new dynamic $s_t$ story.
+2. Check that all comparative statics in Proposition 2 still hold with time-varying $s_t$ (they should, since the results hold pointwise at each $t$).
