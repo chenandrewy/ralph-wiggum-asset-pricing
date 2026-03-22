@@ -1,50 +1,59 @@
 # Improvement Plan
 
-## Status Summary
+## Status
 
-- **spec-compliance**: PASS
-- **theory-correctness**: FAIL — business-cycle expected-return claim ("2–3 percentage points") unsupported by the formula at stated parameters; actual value is ~5–7 basis points.
-- **referee-top3**: Two substantive comments.
+All tests pass. The referee-top3 review identifies two substantive gaps that limit publishability.
 
-No section overhaul needed. The core model (Sections 2–3) is sound. The issues are a localized calibration error in the expected-returns discussion and a thin microfoundation in Section 4.3.
+## Key Issues
 
----
+### From referee-top3
 
-## Priority 1: Fix the Failing Test
+1. **No empirical content beyond Figure 1.** The testable-implications section (3.4) promises an identification strategy (singularity-risk shocks orthogonal to earnings revisions) but provides zero empirical evidence. The referee calls this a "promissory note" and says it makes the hedging channel "unfalsified and unfalsifiable."
 
-**Problem.** Line 399 claims "the business-cycle premium differential is approximately 2–3 percentage points" with σ ≈ 0.02. Equation (17) gives (0.98)(3)(0.4–0.6)(0.0004)(~1.04) ≈ 5–7 bp, not 2–3 pp.
+2. **The incomplete-markets friction ($\alpha$) is asserted, not measured.** The welfare analysis ($\omega$ up to 3.4%) and the GKP comparison ("reducible in principle") are disconnected from observable data. No proxies for $\alpha$ are discussed, $\psi = 0.15$ is assumed without justification, and the policy discussion is abstract.
 
-**Fix.** Revise the paragraph after Proposition 3's proof (around line 399) as follows:
+### From CFR-R1 referee report (spec file)
 
-1. Replace "2–3 percentage points" with the correct magnitude (~5–7 basis points) using σ ≈ 0.02.
-2. Reframe the expected-returns narrative honestly: with consumption-growth volatility, the business-cycle premium is small and does not clearly dominate the hedging discount (~80 bp). Acknowledge this tension directly rather than claiming a clean reconciliation.
-3. Note that matching observed return differentials would require return-based volatility (σ ≈ 0.15), which conflicts with the consumption-based framework's first-order invariance result (Proposition 3(i) relies on small σ). Frame this as a known limitation of the consumption-CAPM, not a defect of the hedging channel.
-4. The key message should be: the hedging channel operates through *valuations* (P/D ratios), not expected returns; reconciling expected returns with observed betas is a standard challenge for consumption-based models and is orthogonal to the paper's main contribution.
+The CFR referee's two concerns have been addressed in prior iterations:
+- GKP subsumption concern → addressed via the incomplete-markets parameterization ($\alpha$), the hedging/cash-flow decomposition, and explicit GKP comparison prose.
+- Jones (2024) integration → addressed in Section 4 (extinction risk, heterogeneous beliefs, infinite output with bilateral-trade microfoundation).
 
-**Files to edit:** `paper/paper.tex`, lines ~399 (the paragraph after Proposition 3's proof).
+## No overhaul needed
 
----
+The model section is clean: theory-correctness passes, notation is consistent, all propositions are correctly derived, and the narrative aligns with results. The model structure is sound and does not need reworking.
 
-## Priority 2: Strengthen the Friction-Resolution Microfoundation (Section 4.3)
+## Plan: Add empirical content to strengthen the hedging channel
 
-**Problem (referee comment 1).** The π(Y_O) = 1 − d/Y_O microfoundation is a single reduced-form equation. The referee flags three gaps: (a) control/governance frictions don't obviously dissolve with large output; (b) the super-linear growth condition needs more justification; (c) the adverse-selection discount d should depend on information, not just output scale.
+The referee's two comments both point to the same gap: the paper lacks empirical grounding beyond the motivating figure. The plan focuses on closing this gap within the 20-page constraint.
 
-**Fix.** Add a short (2–3 paragraph) screening/securitization microfoundation before equation (18), replacing the current single-equation treatment. Specifically:
+### 1. Add a preliminary event study (addresses referee comment 1)
 
-1. Add a simple bilateral-trade setup: AI owners have private information about capital quality q ∈ {H, L}. The household offers a pooling price. High-quality owners sell only if output Y_O is large enough that the adverse-selection discount d is negligible relative to gains from trade (diversification motive for AI owners). This derives π(Y_O) from primitives rather than assuming it.
-2. Address the governance objection directly: note that AI owners with infinite output have a *diversification* motive (their wealth is concentrated in a single technology) that provides the incentive to sell, even without needing the proceeds for consumption.
-3. Strengthen the super-linear growth justification: cite increasing returns to scale in AI (compute scaling laws) as the economic basis, and note that the qualitative results (hump shape, convergence) hold for any growth rate exceeding linear.
-4. If this pushes the paper over 20 pages, trim equal length from elsewhere (e.g., compress the Proposition 6 proof further, or tighten the extinction-risk discussion).
+**What:** A small-sample descriptive analysis showing AI stocks respond abnormally to singularity-risk events, controlling for earnings news. Use 5–8 events: the 2023 executive order on AI safety, publication of Grace et al. (2024) expert survey results, major lab safety announcements (e.g., Anthropic/OpenAI safety publications), EU AI Act milestones.
 
-**Files to edit:** `paper/paper.tex`, Section 4.3 (lines ~478–508).
+**Where:** Replace the current testable-implications subsection (Section 3.4) with a short empirical subsection. Present abnormal returns for AI stocks vs. non-AI stocks in a narrow event window (e.g., [-1, +1] days). A simple table of cumulative abnormal returns (CARs) would suffice—this is a theory paper, not an empirical one, so a descriptive pass is adequate.
 
----
+**Data:** CRSP daily returns for the AI portfolio (NVDA, MSFT, GOOG, META, AMZN) and S&P 500. Market-model residuals using a 120-day estimation window.
 
-## Priority 3: Reframe Expected-Returns Discussion (Referee Comment 2 Residual)
+**Code:** Write an R script `code/table-event-study.R` that computes CARs and outputs a LaTeX table.
 
-This is largely addressed by Priority 1. The residual action:
+**Constraint:** This adds one exhibit (table). Current count is 5; max is 6.
 
-1. In the conclusion (line ~516), soften the claim about business-cycle reconciliation. Change "the hedging channel coexists with higher expected returns for AI stocks from cyclical exposure" to acknowledge that the model predicts the coexistence qualitatively but that the quantitative reconciliation depends on parameters beyond the consumption-based framework.
-2. In the introduction (line ~60), similarly temper: the current sentence about business-cycle risk "reconciling" the hedging channel should say the augmented model shows the two forces *can* coexist, without claiming a tight quantitative match to observed return differentials.
+### 2. Add observable proxies for $\alpha$ and ground $\psi$ in data (addresses referee comment 2)
 
-**Files to edit:** `paper/paper.tex`, introduction (~line 60) and conclusion (~line 516).
+**What:** Add 2–3 paragraphs to the calibration/sensitivity discussion that:
+- Identify observable proxies for $\alpha$: ratio of public-to-total AI market capitalization, household participation rates in venture/PE funds, secondary-market volume for pre-IPO AI shares.
+- Calibrate $\psi$ from data rather than assuming it: estimate the size of private AI capital (major private AI labs' valuations) relative to aggregate household consumption.
+- Briefly note how $\alpha$ is evolving (secondary markets like Forge/EquityZen, AI-focused ETFs, accredited investor definition changes).
+
+**Where:** Add to the partial-market-access discussion in Section 3.2 (after Table 3).
+
+**Constraint:** No new exhibits needed—this is prose and calibration grounding.
+
+### 3. Tighten the testable-implications prose
+
+**What:** Reframe the section around the event-study evidence rather than the current promissory-note framing. Keep the theoretical identification argument ($\lambda$-shocks orthogonal to earnings) but present it as the motivation for the empirical exercise, not a placeholder for future work. Remove "We leave this empirical test to future work."
+
+### 4. Minor prose adjustments
+
+- In the GKP comparison, add a sentence noting that the $\alpha$-trajectory is observable (tying to the proxies from item 2), strengthening the "reducible in principle" claim.
+- In the conclusion, update the testability language to reference the event-study evidence.
