@@ -1,51 +1,62 @@
 # Improvement Plan
 
-## Current Status
-- **Tests**: All pass (spec-compliance, theory-correctness).
-- **Referee reviews**: referee-top3 completed; CFR-R1 report on file.
+## Diagnosis
 
-## Key Issues
+The `theory-correctness` test fails because Proposition 4 (eq 17) is mathematically wrong. The error propagates to Proposition 5 and several verbal claims. The referee report independently identifies the same conceptual root cause: the paper conflates a mechanical cash-flow differential with hedging demand (SDF amplification). These two issues are the same fix.
 
-### From referee-top3
-1. **Quantitative gap is the central vulnerability.** The model produces a 29% hedging premium at λ=0.02, but Figure 1 shows AI stocks at 2–2.7× the market P/D. The paper hand-waves the residual as "differential growth expectations" without formal analysis. A top journal will reject on this alone.
-2. **Incomplete-markets friction is too stark.** The all-or-nothing assumption (AI owners completely absent from public markets) is empirically counterfactual. A graded participation parameter in the main model would improve credibility.
+**The core error**: In the friction-resolves state, the paper assumes consumption neutrality (J=1) means no premium contribution. But AI dividends still grow by (1+θ) while non-AI dividends grow by (1-φ), so the cash-flow differential persists even when hedging demand vanishes. The correct Proposition 4 formula is:
 
-### From CFR-R1
-1. **Model is perceived as subsumed by GKP.** The referee views the main model as a special case of GKP where growth stocks fully hedge displacement risk. The paper needs to sharpen the distinction — the friction is about asset accessibility (contemporaneous agents, private capital), not intergenerational non-existence.
-2. **Extensions address Jones (2024) well.** The referee's suggestion to incorporate heterogeneous beliefs and existential risk is already implemented in Section 4. This is a strength.
+$$v^A - v^N = \frac{\lambda(1-\delta_H)\,a\,(\theta+\phi)\,[(1-\pi)J^{-\gamma} + \pi]}{(1-a)[1-(1-\lambda)a]}$$
 
-## Plan
+The missing `+π` term breaks the hump-shaped result (Proposition 5) and the verbal claim that the premium vanishes under complete markets.
 
-### 1. Add heterogeneous growth rates to close the quantitative gap
-**Section 3.3 (Calibration) + new content.**
-- Extend the calibration to allow differential expected dividend growth ($g^A \neq g^N$) for AI vs. non-AI stocks. This nests the pure-growth benchmark and the pure-hedging benchmark.
-- Show a decomposition: at plausible growth differentials (e.g., $g^A - g^N$ = 3–5%), the combined growth + hedging premium can match the 2–2.7× observed ratio.
-- Add a back-of-the-envelope calculation: given the 29% hedging premium, what growth differential is implied by the residual? Assess whether it is empirically plausible.
-- This directly addresses referee-top3 comment #1 and strengthens the paper's quantitative claim.
+## Plan: Premium Decomposition Overhaul
 
-### 2. Introduce partial market access (α) in the main model
-**Section 2.3 (Incomplete Markets) + Propositions.**
-- Parameterize the degree of market incompleteness: the household can access a fraction α ∈ [0,1] of total AI capital, with α=0 recovering the current model and α=1 giving complete markets.
-- This adjusts the effective AI share from $s$ to $s + α(1-s)$ or similar, modifying $J(s)$ and the premium continuously.
-- Show how the premium degrades gracefully with market access. This gives the policy discussion (broadening access to private AI capital) a formal backbone.
-- Addresses referee-top3 comment #2 and strengthens the GKP differentiation (our friction has a natural continuous relaxation; their intergenerational friction does not).
+The entire fix revolves around one change: **decompose the premium into a cash-flow component and a hedging-amplification component throughout the paper.**
 
-### 3. Sharpen the GKP differentiation
-**Section 1 (Introduction) + Section 2.3.**
-- Rewrite the GKP discussion to emphasize three concrete differences:
-  (a) The friction source: asset accessibility (private capital) vs. non-existence of future cohorts.
-  (b) The policy implication: our friction is reducible via financial innovation (securitization, IPOs); GKP's is structural.
-  (c) The partial-access parameter α (from item 2 above) gives a continuous policy lever that has no analogue in GKP.
-- This directly addresses CFR-R1 comment #1.
+### Step 1: Introduce the decomposition after Proposition 2
 
-### 4. Sensitivity analysis across key parameters
-**New Table or expanded Table 1.**
-- Show how the premium varies across γ, s, ϕ, θ at the baseline λ=0.02.
-- Demonstrate that reasonable alternative calibrations (e.g., higher γ or larger ϕ) bring the model premium substantially closer to the data.
-- Complements the growth decomposition in item 1.
+After eq (13), decompose the existing premium:
 
-### Priority Order
-1. Heterogeneous growth rates (item 1) — highest impact, directly addresses the "central vulnerability."
-2. Partial market access α (item 2) — strengthens both credibility and GKP differentiation.
-3. GKP differentiation prose (item 3) — low effort, high value.
-4. Sensitivity analysis (item 4) — supporting evidence for quantitative claims.
+$$v^A - v^N = \underbrace{\frac{\lambda\,a\,(\theta+\phi)}{(1-a)[1-(1-\lambda)a]}}_{\text{cash-flow premium}} \cdot \underbrace{J^{-\gamma}}_{\text{hedging amplifier}}$$
+
+- The cash-flow premium reflects that AI dividends jump more than non-AI dividends upon singularity. A risk-neutral investor (γ→0) would pay this.
+- The hedging amplifier reflects that marginal utility is high in the singularity state (J<1, γ>1), so the household overpays relative to expected cash flows.
+- Calibration: at baseline (J≈0.82, γ=3), J^{-γ}≈1.81, so hedging roughly doubles the cash-flow-only premium.
+
+### Step 2: Fix the complete-markets claim (Section 2.3 and Introduction)
+
+Current: "the AI valuation premium would vanish" under complete markets.
+
+Fix: Under complete markets (J=1), the hedging amplifier equals 1 and the *hedging component* vanishes, but the cash-flow premium remains positive. The premium shrinks to its cash-flow-only value. Change the claim to: "the hedging component of the premium would vanish."
+
+### Step 3: Fix Proposition 4 (eq 17)
+
+Replace eq (17) with the corrected formula that includes both the friction-persists and friction-resolves state contributions:
+
+$$v^A - v^N = \frac{\lambda(1-\delta_H)\,a\,(\theta+\phi)\,[(1-\pi)J^{-\gamma} + \pi]}{(1-a)[1-(1-\lambda)a]}$$
+
+Fix the proof: remove the claim that the friction-resolves state "contributes no hedging premium." Instead, note it contributes the cash-flow differential at the risk-neutral SDF.
+
+### Step 4: Fix Proposition 5 (hump shape)
+
+The total premium no longer vanishes as θ→∞. Two options:
+
+**Recommended**: Restate Proposition 5 so the hump shape applies to the *hedging component* only: (1-π)J^{-γ}(θ+φ) → 0 as π→1, while the total premium approaches its cash-flow-only value. The hedging amplifier is hump-shaped in θ; the total premium is monotonically increasing. This is a cleaner and more precise result.
+
+Update the verbal discussion: "the same event that generates hedging demand may also eliminate the need for it" should become "the same event that generates hedging demand may also resolve the friction that amplifies it — but the cash-flow differential remains."
+
+### Step 5: Update the calibration discussion (Section 3.3)
+
+The growth-hedging decomposition (Section 3.3) currently treats the hedging premium as the entire model premium. With the decomposition, this section should note that the model premium includes both cash-flow and hedging components. The "residual attributable to growth" calculation doesn't change numerically — but the interpretation sharpens: the model already captures some growth-like effects through the cash-flow differential.
+
+### Step 6: Update the conclusion
+
+Adjust language to reflect the decomposition — the premium has both a cash-flow and a hedging component; incomplete markets amplify the premium through hedging demand but are not the sole source.
+
+### What NOT to change
+
+- Propositions 1–3 and Corollary 1 are correct — do not modify.
+- The baseline calibration numbers in Tables 1–3 are correct.
+- The model setup (Sections 2.1–2.2) needs no changes.
+- Do not add the referee's suggested empirical tests (cross-sectional predictions, time-series tests) — those are beyond the paper's theoretical scope and would require new data work.
