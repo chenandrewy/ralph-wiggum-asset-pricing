@@ -5,7 +5,6 @@
 
 from __future__ import annotations
 
-import hashlib
 import json
 import pathlib
 import subprocess
@@ -47,13 +46,6 @@ Guidance:
 - Do not modify `config-ralph.yaml`.
 - You may use `git diff` and `git log` to understand recent changes when useful."""
 
-
-def file_digest(path: pathlib.Path) -> str:
-    if not path.exists():
-        return ""
-    return hashlib.sha256(path.read_bytes()).hexdigest()
-
-
 def test_results_instruction(repo_root: pathlib.Path) -> str:
     return summary_results_instruction(
         repo_root=repo_root,
@@ -91,7 +83,6 @@ def main() -> int:
     config = load_config(config_file, list_keys=set())
     agent_log_mode = str(config.get("agent-log-mode", "off")).strip().lower()
     plan_file = repo_root / "ralph-garage/improvement-plan.md"
-    config_digest_before = file_digest(config_file)
     cmd = [
         sys.executable,
         str(repo_root / "ralph/agent_wrapper.py"),
@@ -109,8 +100,6 @@ def main() -> int:
     result = subprocess.run(cmd, cwd=repo_root)
     if result.returncode != 0:
         return result.returncode
-    if file_digest(config_file) != config_digest_before:
-        raise RuntimeError(f"planning phase modified {config_file}")
     if not plan_file.is_file():
         raise FileNotFoundError(f"planning phase did not create {plan_file}")
     return 0

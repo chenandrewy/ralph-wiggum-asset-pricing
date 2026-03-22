@@ -25,6 +25,7 @@ Define the Ralph loop contract for improving the paper and recording current tes
 - All prompts live inline in their respective scripts (e.g. `ralph/author-plan.py`, `ralph/author-improve.py`, `ralph/commit-iteration.py`).
 - Runtime configuration lives in `config-ralph.yaml`.
 - `config-ralph.yaml` is re-read at the start of each iteration so that the human can adjust settings (e.g. `max-iter`) mid-run without restarting.
+- Human edits to `config-ralph.yaml` are allowed at any time during a Ralph run.
 - Referee definitions live in `tests/` with `referee-` prefix.
 - `config-ralph.yaml` may optionally enable referee reviews with `reviews`.
 - `config-ralph.yaml` may optionally enable continual-improvement mode with `continual-improvement`; this requires `reviews: true`.
@@ -52,6 +53,7 @@ Define the Ralph loop contract for improving the paper and recording current tes
 ## Manual Intervention Model
 
 - The human may stop Ralph at any time.
+- The human may edit `config-ralph.yaml` at any time, including during an active step; Ralph should not treat that as an author-step failure.
 - The human may manually edit `spec/`, `tests/`, `ralph/`, or other repo files between or during Ralph runs.
 - Ralph does not require a clean working tree before starting or resuming.
 
