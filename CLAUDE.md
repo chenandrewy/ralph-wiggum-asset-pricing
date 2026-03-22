@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-The goal of the project is to write an academic asset pricing theory paper. You are either an author or a reviewer.
+The goal of the project is to write an academic asset pricing theory paper. You are either an author or a referee.
 
 Always read `spec/paper-spec.md` before doing work.
 
@@ -32,7 +32,7 @@ See `README.md` for the full repo structure and how Ralph (a.k.a. RALF, ralph, t
 
 ### Tests
 - `tests/` — test and referee definitions (referee scripts prefixed `referee-`)
-- `test-results/` — test and referee outputs from the latest run
+- `test-results/` — latest test and referee outputs
 
 ### Ralph (Permanent)
 - `ralph/` — loop script, agent wrapper, prompts

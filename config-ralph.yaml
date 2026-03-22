@@ -15,11 +15,12 @@ selected-tests:
 # Agent log verbosity
 agent-log-mode: verbose
 
-# == Referee reviews and continual-improvement mode ==
+# == Referees and continual-improvement mode ==
 
 continual-improvement: true
 
-reviews: true
+referees: true
 
-selected-reviews:
+selected-referees:
   - referee-top3
+  - referee-cfr-r1

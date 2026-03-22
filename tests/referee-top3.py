@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import pathlib
 
-from _referee_helpers import run_review, derive_review_id, derive_review_report_path, write_fallback_report
+from _referee_helpers import run_referee, derive_referee_id, derive_referee_report_path, write_fallback_report
 
 
 AGENT = "claude"
@@ -18,8 +18,8 @@ MODEL = "opus"
 
 def main() -> int:
     repo_root = pathlib.Path(__file__).resolve().parents[1]
-    review_id = derive_review_id(__file__)
-    report_path = derive_review_report_path(repo_root, review_id)
+    referee_id = derive_referee_id(__file__)
+    report_path = derive_referee_report_path(repo_root, referee_id)
 
     paper_path = repo_root / "paper/paper.tex"
     spec_path = repo_root / "spec/paper-spec.md"
@@ -55,15 +55,15 @@ Guidelines:
 
 Write your report to: {report_path}
 The report must be a clean, human-readable markdown file with this exact format:
-- Line 1: # {review_id}
-- Line 2: REVIEW — followed by the current date
+- Line 1: # {referee_id}
+- Line 2: REFEREE — followed by the current date
 - Then: ## Summary (one paragraph overall assessment)
 - Then: ## Comments (numbered list)
 
-Do NOT include a VERDICT line. This is a review, not a test.
+Do NOT include a VERDICT line. This is a referee report, not a test.
 """
 
-    return run_review(
+    return run_referee(
         script_file=__file__,
         prompt=prompt,
         agent=AGENT,

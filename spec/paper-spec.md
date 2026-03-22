@@ -47,5 +47,5 @@
 
 ## IV. Technical Requirements
 
-1. `paper/paper.tex` is the canonical paper and the only LaTeX document intended for review, testing, and referee-style evaluation.
+1. `paper/paper.tex` is the canonical paper and the only LaTeX document intended for referee evaluation and PASS/FAIL testing.
 2. `paper/` should contain only assets used by `paper/paper.tex`.

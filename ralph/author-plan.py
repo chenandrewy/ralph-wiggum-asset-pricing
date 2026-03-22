@@ -26,7 +26,7 @@ Procedure:
 - `spec/asset-pricing-background.md` for asset pricing conventions.
 - `paper/paper.tex` for the current paper state.
 - {test_results_instruction}
-- {review_results_instruction}
+- {referee_results_instruction}
 - `ralph/run-tests.py` and `tests/*.py` for available tests and test ids.
 
 2. Consider whether any section needs an overhaul.
@@ -38,7 +38,7 @@ Requirements of the plan:
 1. It summarizes key issues from current paper/tests.
 2. It outlines specific paper changes.
 3. If an overhaul is needed, the ENTIRE plan should be focused on the overhaul.
-4. If an overhaul is not needed, the plan prioritizes fixing failing tests first, then addressing referee review feedback.
+4. If an overhaul is not needed, the plan prioritizes fixing failing tests first, then addressing referee feedback.
 
 Guidance:
 - Adjust the messaging to fit the best evidence.
@@ -57,7 +57,7 @@ def test_results_instruction(repo_root: pathlib.Path) -> str:
     )
 
 
-def review_results_instruction(repo_root: pathlib.Path) -> str:
+def referee_results_instruction(repo_root: pathlib.Path) -> str:
     summary_path = repo_root / "test-results/summary.json"
     if not summary_path.is_file():
         return "`test-results/summary.json` for referee outputs (may not exist if referees are disabled or on first iteration)"
@@ -65,15 +65,15 @@ def review_results_instruction(repo_root: pathlib.Path) -> str:
         payload = json.loads(summary_path.read_text(encoding="utf-8"))
     except (json.JSONDecodeError, OSError):
         return "`test-results/summary.json` exists but is invalid; ignore referee outputs"
-    if "reviews" not in payload:
+    if "referees" not in payload:
         return "`test-results/summary.json` has no referee outputs (referees may be disabled)"
-    return "`test-results/summary.json` `reviews` key for the latest selected referee outputs; read only the referee reports listed there"
+    return "`test-results/summary.json` `referees` key for the latest selected referee outputs; read only the referee reports listed there"
 
 
 def build_author_plan_prompt(repo_root: pathlib.Path) -> str:
     return AUTHOR_PLAN_PROMPT_TEMPLATE.format(
         test_results_instruction=test_results_instruction(repo_root),
-        review_results_instruction=review_results_instruction(repo_root),
+        referee_results_instruction=referee_results_instruction(repo_root),
     )
 
 

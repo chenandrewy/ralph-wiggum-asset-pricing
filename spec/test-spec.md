@@ -2,11 +2,12 @@
 
 ## Purpose
 
-Define required output behavior for all tests under `tests/`.
+Define required output behavior for all PASS/FAIL tests under `tests/`.
 
 ## Terminology
 
 - `test result`: markdown report at `test-results/<test-id>.md`.
+- `referee result`: markdown report at `test-results/<referee-id>.md` produced by a `tests/referee-*.py` script.
 - `agent log`: raw runtime log under `ralph-garage/agent-logs/`.
 - `agent-backed test`: a test that calls an LLM via `ralph/agent_wrapper.py`.
 - `pure Python test`: a test using only local Python logic.
@@ -43,6 +44,7 @@ Primary source trees evaluated by tests:
   - next: `REASON: <one short sentence>`
 - Tests MUST return exit code `0` for PASS, `1` for FAIL.
 - `test-results/summary.json` remains the canonical machine-readable test summary.
+- Referees are outside this contract: they are open-ended, never emit PASS/FAIL, and never determine the process exit code for `ralph/run-tests.py`.
 
 ## Agent Wrapper Contract
 

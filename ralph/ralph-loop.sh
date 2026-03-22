@@ -77,10 +77,10 @@ fi
 
 # --- pre-loop baseline ---
 if is_truthy "$TEST_BEFORE_LOOP"; then
-    log "--- pre-loop test & review phase ---"
+    log "--- pre-loop test & referee phase ---"
     clear_dir test-results
     if ! build_paper_artifacts; then
-        log "=== pre-loop LaTeX build failed; skipping baseline test & review phase ==="
+        log "=== pre-loop LaTeX build failed; skipping baseline test & referee phase ==="
     else
         python3 ralph/run-tests.py && test_rc=0 || test_rc=$?
         if [ "$test_rc" -eq 0 ]; then
@@ -88,10 +88,10 @@ if is_truthy "$TEST_BEFORE_LOOP"; then
         else
             log "=== pre-loop tests failed ==="
         fi
-        if is_truthy "$REVIEWS_ENABLED"; then
-            log "--- pre-loop review phase ---"
-            python3 ralph/run-reviews.py
-            log "=== pre-loop reviews complete ==="
+        if is_truthy "$REFEREES_ENABLED"; then
+            log "--- pre-loop referee phase ---"
+            python3 ralph/run-referees.py
+            log "=== pre-loop referees complete ==="
         fi
     fi
 fi
@@ -116,7 +116,7 @@ while true; do
     # 2. Build paper and generate test artifacts (build gate)
     clear_dir test-results
     if ! build_paper_artifacts; then
-        log "=== iteration $iteration LaTeX build failed; skipping tests and reviews ==="
+        log "=== iteration $iteration LaTeX build failed; skipping tests and referees ==="
         log "--- commit iteration $iteration ---"
         python3 ralph/commit-iteration.py
         continue
@@ -124,14 +124,14 @@ while true; do
 
     cp paper/paper.pdf "ralph-garage/history/$(printf '%03d-paper.pdf' "$iteration")" 2>/dev/null || true
 
-    # 3. Run tests and reviews
+    # 3. Run tests and referees
     log "--- test phase ---"
     python3 ralph/run-tests.py && test_rc=0 || test_rc=$?
 
-    if is_truthy "$REVIEWS_ENABLED"; then
-        log "--- review phase ---"
-        python3 ralph/run-reviews.py
-        log "=== reviews complete ==="
+    if is_truthy "$REFEREES_ENABLED"; then
+        log "--- referee phase ---"
+        python3 ralph/run-referees.py
+        log "=== referees complete ==="
     fi
 
     # 4. Commit and compile history

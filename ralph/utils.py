@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # Shared utilities for ralph loop tools.
-# Imported by: read-config.py, run-tests.py, run-reviews.py, check-setup.py,
+# Imported by: read-config.py, run-tests.py, run-referees.py, check-setup.py,
 #              author-plan.py, author-improve.py
 
 from __future__ import annotations
@@ -17,7 +17,7 @@ STALE_RESULTS_MAX_AGE = timedelta(hours=1)
 
 PRESERVED_RESULT_FILENAMES = {".gitkeep"}
 
-_LIST_KEYS_DEFAULT = {"selected-tests", "selected-reviews"}
+_LIST_KEYS_DEFAULT = {"selected-tests", "selected-referees"}
 
 
 def strip_quotes(value: str) -> str:

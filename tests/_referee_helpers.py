@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 How to run: Imported by tests/referee-*.py referee scripts.
-Inputs: review script path and optional CLI arg --agent-log-mode.
+Inputs: referee script path and optional CLI arg --agent-log-mode.
 Outputs: shared utilities for referee execution.
 """
 
@@ -16,7 +16,7 @@ import sys
 VALID_AGENT_LOG_MODES = ("off", "verbose", "all", "1", "true", "yes")
 
 
-def parse_review_cli(default_agent_log_mode: str = "off") -> argparse.Namespace:
+def parse_referee_cli(default_agent_log_mode: str = "off") -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--agent-log-mode",
@@ -27,12 +27,12 @@ def parse_review_cli(default_agent_log_mode: str = "off") -> argparse.Namespace:
     return parser.parse_args()
 
 
-def derive_review_id(script_file: str) -> str:
+def derive_referee_id(script_file: str) -> str:
     return pathlib.Path(script_file).stem
 
 
-def derive_review_report_path(repo_root: pathlib.Path, review_id: str) -> pathlib.Path:
-    return repo_root / f"test-results/{review_id}.md"
+def derive_referee_report_path(repo_root: pathlib.Path, referee_id: str) -> pathlib.Path:
+    return repo_root / f"test-results/{referee_id}.md"
 
 
 def _now_ny() -> str:
@@ -48,12 +48,12 @@ def write_fallback_report(
 ) -> None:
     """Fallback report written when the agent can't run."""
     report_path.parent.mkdir(parents=True, exist_ok=True)
-    review_id = report_path.stem
-    text = f"# {review_id}\nREVIEW — {_now_ny()}\n\n## Summary\n\nReview could not be completed: {reason}\n"
+    referee_id = report_path.stem
+    text = f"# {referee_id}\nREFEREE — {_now_ny()}\n\n## Summary\n\nReferee could not be completed: {reason}\n"
     report_path.write_text(text, encoding="utf-8")
 
 
-def run_review(
+def run_referee(
     *,
     script_file: str,
     prompt: str,
@@ -61,12 +61,12 @@ def run_review(
     model: str | None = None,
     default_agent_log_mode: str = "off",
 ) -> int:
-    """Common review runner. Always returns 0 (reviews never fail the loop)."""
-    args = parse_review_cli(default_agent_log_mode=default_agent_log_mode)
-    review_id = derive_review_id(script_file)
+    """Common referee runner. Always returns 0 (referees never fail the loop)."""
+    args = parse_referee_cli(default_agent_log_mode=default_agent_log_mode)
+    referee_id = derive_referee_id(script_file)
 
     repo_root = pathlib.Path(script_file).resolve().parents[1]
-    report_path = derive_review_report_path(repo_root, review_id)
+    report_path = derive_referee_report_path(repo_root, referee_id)
     report_path.parent.mkdir(parents=True, exist_ok=True)
 
     cmd = [
@@ -75,7 +75,7 @@ def run_review(
         "--agent", agent,
         "--log-mode", args.agent_log_mode,
         "--failure-log-mode", "off",
-        "--step-label", review_id,
+        "--step-label", referee_id,
     ]
     if model:
         cmd.extend(["--model", model])
@@ -86,7 +86,7 @@ def run_review(
     if result.returncode != 0:
         write_fallback_report(report_path, f"agent wrapper failed with exit code {result.returncode}")
 
-    # Even if the agent fails or produces no report, reviews always return 0.
+    # Even if the agent fails or produces no report, referees always return 0.
     if not report_path.exists():
         write_fallback_report(report_path, "agent did not produce a report")
 

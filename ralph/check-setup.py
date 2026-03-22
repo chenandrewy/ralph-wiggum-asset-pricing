@@ -36,10 +36,10 @@ def main() -> int:
             return 2
 
     ci = str(config_values.get("continual-improvement", "false"))
-    reviews = str(config_values.get("reviews", "false"))
-    if is_truthy(ci) and not is_truthy(reviews):
+    referees = str(config_values.get("referees", "false"))
+    if is_truthy(ci) and not is_truthy(referees):
         print(
-            "FAIL: continual-improvement requires reviews to be enabled",
+            "FAIL: continual-improvement requires referees to be enabled",
             file=sys.stderr,
         )
         return 2
@@ -76,32 +76,32 @@ def main() -> int:
             )
             return 2
 
-    # --- validate selected-reviews ---
-    if is_truthy(reviews):
-        selected_reviews_raw = config_values.get("selected-reviews", [])
-        if not isinstance(selected_reviews_raw, list):
-            selected_reviews = [item.strip() for item in str(selected_reviews_raw).split(",") if item.strip()]
+    # --- validate selected-referees ---
+    if is_truthy(referees):
+        selected_referees_raw = config_values.get("selected-referees", [])
+        if not isinstance(selected_referees_raw, list):
+            selected_referees = [item.strip() for item in str(selected_referees_raw).split(",") if item.strip()]
         else:
-            selected_reviews = [str(item).strip() for item in selected_reviews_raw if str(item).strip()]
-        if not selected_reviews:
-            print("FAIL: reviews requires selected-reviews to be non-empty", file=sys.stderr)
+            selected_referees = [str(item).strip() for item in selected_referees_raw if str(item).strip()]
+        if not selected_referees:
+            print("FAIL: referees requires selected-referees to be non-empty", file=sys.stderr)
             return 2
 
-        reviews_dir = pathlib.Path("tests")
-        available_reviews = []
-        if reviews_dir.is_dir():
-            available_reviews = sorted(
+        referees_dir = pathlib.Path("tests")
+        available_referees = []
+        if referees_dir.is_dir():
+            available_referees = sorted(
                 path.stem
-                for path in reviews_dir.glob("referee-*.py")
+                for path in referees_dir.glob("referee-*.py")
             )
-        available_set = set(available_reviews)
-        unknown = [review_id for review_id in selected_reviews if review_id not in available_set]
+        available_set = set(available_referees)
+        unknown = [referee_id for referee_id in selected_referees if referee_id not in available_set]
         if unknown:
             print(
-                "FAIL: unknown selected-reviews value(s): "
+                "FAIL: unknown selected-referees value(s): "
                 + ", ".join(unknown)
-                + "; known reviews: "
-                + ", ".join(available_reviews),
+                + "; known referees: "
+                + ", ".join(available_referees),
                 file=sys.stderr,
             )
             return 2

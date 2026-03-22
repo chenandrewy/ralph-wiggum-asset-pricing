@@ -2,7 +2,7 @@
 
 This project writes an academic asset pricing theory paper using Geoffrey Huntley's Ralph Wiggum (a.k.a. ralph) loop applied to a standard research project structure.
 
-The ralph loop has agents continuously improve the repo based on the spec and tests.
+The ralph loop has agents continuously improve the repo based on the spec, tests, and referees.
 
 ## Repository wiring
 
@@ -15,7 +15,7 @@ The ralph loop has agents continuously improve the repo based on the spec and te
 
 These are the paper and its supporting materials.
 
-- `paper/` — canonical LaTeX source for the reviewable paper (`paper.tex`, references, and only exhibits used by that paper)
+- `paper/` — canonical LaTeX source for the referee-ready paper (`paper.tex`, references, and only exhibits used by that paper)
 - `code/` — R scripts and analysis code (if needed)
 - `data/` — datasets (if needed)
 - `spec/lit/` — literature for reference
@@ -34,8 +34,8 @@ These files are the source of truth for the repo's intent.
 
 Test and referee definitions that evaluate the paper.
 
-- `tests/` — test scripts (no prefix) and referee scripts (`referee-` prefix)
-- `test-results/` — test and referee outputs from the latest completed run
+- `tests/` — PASS/FAIL test scripts (no prefix) and open-ended referee scripts (`referee-` prefix)
+- `test-results/` — latest test and referee outputs
 
 ### Ralph (Permanent)
 

@@ -14,7 +14,7 @@ Define the Ralph loop contract for improving the paper and recording current tes
   - `ralph/author-plan.py`
   - `ralph/author-improve.py`
   - `ralph/run-tests.py`
-  - `ralph/run-reviews.py`
+  - `ralph/run-referees.py`
   - `ralph/commit-iteration.py`
 
 ## Author Working Directories
@@ -35,8 +35,8 @@ The author steps (`author-plan.py`, `author-improve.py`) may modify files in the
 - `config-ralph.yaml` is re-read at the start of each iteration so that the human can adjust settings (e.g. `max-iter`) mid-run without restarting.
 - Human edits to `config-ralph.yaml` are allowed at any time during a Ralph run.
 - Referee definitions live in `tests/` with `referee-` prefix.
-- `config-ralph.yaml` may optionally enable referee reviews with `reviews`.
-- `config-ralph.yaml` may optionally enable continual-improvement mode with `continual-improvement`; this requires `reviews: true`.
+- `config-ralph.yaml` may optionally enable referees with `referees`.
+- `config-ralph.yaml` may optionally enable continual-improvement mode with `continual-improvement`; this requires `referees: true`.
 - `config-ralph.yaml` may optionally enable a baseline pre-loop test run with `test-before-loop`.
 - `config-ralph.yaml` may optionally specify a `run-name` that labels the current run for traceability in commit subjects and logs.
 
@@ -47,7 +47,7 @@ The author steps (`author-plan.py`, `author-improve.py`) may modify files in the
   - rendering `paper/paper.pdf` into `ralph-garage/page-images/page-*.png`
   - building `ralph-garage/page-images/exhibit-manifest.json`
 - LaTeX compilation of `paper/paper.tex` is a deterministic build gate that runs before page-image generation and before the test phase.
-- If the LaTeX build gate fails for an iteration, Ralph records that iteration as failed, skips page-image generation, skips the test phase, skips the review phase, and continues to the next iteration instead of terminating the whole loop.
+- If the LaTeX build gate fails for an iteration, Ralph records that iteration as failed, skips page-image generation, skips the test phase, skips the referee phase, and continues to the next iteration instead of terminating the whole loop.
 
 ## Branch Model
 
@@ -55,7 +55,7 @@ The author steps (`author-plan.py`, `author-improve.py`) may modify files in the
 - `ralph/run` is a reusable working branch label, not a one-time unique run identifier.
 - Manual config, spec, or tooling changes may be committed directly on `main` between Ralph stretches.
 - Ralph work should be merged back into `main` with a non-fast-forward merge so each Ralph stretch remains visible in git history.
-- When Ralph is started from `main`, it treats that startup as a fresh Ralph stretch and wipes old files from `ralph-garage/agent-logs/` before any pre-loop test or review phase begins.
+- When Ralph is started from `main`, it treats that startup as a fresh Ralph stretch and wipes old files from `ralph-garage/agent-logs/` before any pre-loop test or referee phase begins.
 - When Ralph is started from `ralph/run`, it treats that startup as a continuation and does not wipe the full agent log directory at startup.
 
 ## Manual Intervention Model
@@ -76,7 +76,7 @@ The author steps (`author-plan.py`, `author-improve.py`) may modify files in the
 
 ## Iteration Lifecycle
 
-If `test-before-loop` is enabled, Ralph first runs the LaTeX build gate. If that baseline build succeeds, Ralph prepares the remaining test artifacts and then runs `ralph/run-tests.py` once before iteration 1 to establish the current baseline. If `reviews` is also enabled, Ralph runs the selected reviews once after the baseline test run completes. If the baseline LaTeX build fails, Ralph skips the baseline test and review phase and proceeds to iteration 1.
+If `test-before-loop` is enabled, Ralph first runs the LaTeX build gate. If that baseline build succeeds, Ralph prepares the remaining test artifacts and then runs `ralph/run-tests.py` once before iteration 1 to establish the current baseline. If `referees` is also enabled, Ralph runs the selected referees once after the baseline test run completes. If the baseline LaTeX build fails, Ralph skips the baseline test and referee phase and proceeds to iteration 1.
 
 For each iteration from `1` through `max-iter`:
 
@@ -87,7 +87,7 @@ For each iteration from `1` through `max-iter`:
 5. If the LaTeX build gate fails, record the iteration as failed, skip page-image generation, skip tests and referees, create the iteration commit, and continue according to the normal exit rules.
 6. If the LaTeX build gate succeeds, prepare the remaining test artifacts.
 7. Run `ralph/run-tests.py`.
-8. If reviews are enabled, run `ralph/run-reviews.py` after the test phase completes.
+8. If referees are enabled, run `ralph/run-referees.py` after the test phase completes.
 9. Create one git commit for the iteration with `ralph/commit-iteration.py`.
 10. If continual-improvement is disabled, exit successfully as soon as the test phase returns success.
 11. If continual-improvement is enabled, continue to the next iteration regardless of test results.

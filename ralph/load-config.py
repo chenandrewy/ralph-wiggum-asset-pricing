@@ -17,7 +17,7 @@ CONFIG_PATH = pathlib.Path("config-ralph.yaml")
 DEFAULTS = {
     "agent-log-mode": "off",
     "test-before-loop": "off",
-    "reviews": "false",
+    "referees": "false",
     "continual-improvement": "false",
     "run-name": "",
 }
@@ -53,14 +53,14 @@ def main() -> int:
     if test_before not in VALID_BOOLEANS:
         return fail(f"test-before-loop must be a boolean value (got: {test_before})")
 
-    reviews = get("reviews")
+    referees = get("referees")
     continual = get("continual-improvement")
     run_name = str(config.get("run-name", "")).strip()
 
     print(f"MAX_ITER={max_iter}")
     print(f"AGENT_LOG_MODE={agent_log_mode}")
     print(f"TEST_BEFORE_LOOP={test_before}")
-    print(f"REVIEWS_ENABLED={reviews}")
+    print(f"REFEREES_ENABLED={referees}")
     print(f"CONTINUAL_IMPROVEMENT={continual}")
     print(f"RUN_NAME={shlex.quote(run_name)}")
     return 0
