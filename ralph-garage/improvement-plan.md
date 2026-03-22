@@ -1,38 +1,45 @@
 # Improvement Plan
 
 ## Status
-All tests pass. One referee review (referee-top3) with two substantive comments.
+
+All tests pass. Referee report (referee-top3) raises two issues.
 
 ## Key Issues
 
-### Referee Comment 1: Hedging channel is second-order at empirical calibrations
-At the calibrations that approach the data (Table 2), the hedging amplifier contributes only 13–23% of the combined premium. The paper's framing (title, abstract, intro) foregrounds hedging as the main story, but the calibration tells a growth-differential-dominant story. The referee flags this as a framing tension, not a fatal flaw.
+1. **Testable-implications section is too long and defensive.** Section 3.4 runs ~2 pages plus Figure 2, proposes a test, then immediately concedes it can't be executed and proxies don't exist. The referee reads this as identifying the paper's vulnerability and declining to address it.
 
-### Referee Comment 2: "Independently testable" claim is unsubstantiated
-Section 3.4 proposes a regression but doesn't run it. The referee says either (a) run at least a reduced-form test, or (b) downgrade the language from "independently testable" to "in principle testable" and be transparent about data limitations.
+2. **Hedging channel is 13–23% at empirical calibrations.** The novel mechanism is second-order at baseline. The paper needs a stronger affirmative case for why this matters.
 
 ## Plan
 
-### 1. Reframe the hedging channel's quantitative role (addresses Comment 1)
+### Change 1: Compress testable-implications section (addresses referee comment 1)
 
-**Goal:** Own the result that the hedging channel is a meaningful but minority contributor at empirical calibrations, rather than toggling between the common-growth showcase and the differential-growth reality.
+Take **Option B** from the referee: compress Section 3.4's testability discussion to a single short paragraph. Cut Figure 2 (the AI-premium time-series plot). This frees ~1.5 pages and removes the paper's most defensive passage.
 
-Changes:
-- **Introduction (¶ starting "Our main result"):** Restructure so the differential-growth model (Table 2) is presented as the primary empirical case. The common-growth result (Table 1) should be introduced as the "mechanism isolation" case that shows the hedging channel in pure form. Current text already does this partially but leads with "the hedging channel alone generates a 30% premium" before pivoting to differential growth—flip the ordering.
-- **Introduction:** Add 1–2 sentences noting that under more severe but plausible calibrations (γ=5, φ_L=0.35), the hedging share rises substantially and can become the dominant force, with an explicit statement of what parameter combinations make it first-order (high risk aversion + high labor displacement).
-- **Calibration section (§3.3):** After Table 1, add a transitional sentence making clear that Table 1 isolates the mechanism; Table 2 is the empirically relevant case.
-- **Conclusion:** Adjust "quantitatively meaningful" language to be more precise: "contributes 13–23% of the valuation gap at empirical calibrations, rising substantially under higher risk aversion or labor displacement."
+Keep:
+- The core prediction (premium responds to λ conditional on earnings expectations)
+- The self-limiting mechanism as a dynamic prediction
+- The expected-returns / business-cycle subsection (this is formal and not defensive)
 
-### 2. Downgrade testability language (addresses Comment 2)
+Cut:
+- The extended discussion of why proxies don't exist
+- The "we do not execute this test" paragraph
+- Figure 2 (suggestive but not dispositive)
+- The Bayesian-learning extension suggestion
 
-**Goal:** Replace "independently testable" with "in principle testable" and be transparent that the paper does not execute the test.
+Rewrite as: one paragraph stating the identifying prediction, acknowledging the empirical challenge in a sentence, and pointing to future work.
 
-Changes:
-- **Introduction:** Change "independently testable force" to "in principle independently testable" or "qualitatively distinct force with testable implications."
-- **Section 3.4 (Testable Implications):** Add an explicit caveat paragraph after the regression description acknowledging that (a) the paper does not execute the test, (b) suitable proxies for perceived singularity risk are not yet well-established, and (c) the current evidence (Figure 2) is suggestive but does not isolate the hedging channel from growth revisions. This is mostly already present in the "These patterns are suggestive, not causal" paragraph, but should be strengthened.
-- **Section 3.4:** Remove or soften the claim that the hedging channel is "identifiable because it responds to perceived singularity risk, not earnings forecasts"—this is the identifying *restriction*, not something the paper has *demonstrated*.
+### Change 2: Strengthen the value proposition of the hedging channel (addresses referee comment 2)
 
-### 3. Minor tightening
+Add 2–3 sentences in the introduction and/or conclusion making the following explicit arguments (currently left implicit):
 
-- **Abstract:** If any wording changes from above push the abstract over 100 words, trim accordingly.
-- Verify paper stays at ≤ 20 pages after edits.
+- **Policy relevance**: The hedging channel is the *only* component that depends on incomplete markets, so it's the part policy can affect. The welfare gains (ω up to 3.4%) flow entirely through this channel.
+- **Qualitative distinctiveness**: The hedging channel generates different predictions (response to singularity-risk shocks vs. earnings revisions), making it empirically distinguishable even if quantitatively modest. A theory paper's contribution can rest on identifying a new mechanism.
+- **Lower bound**: The 13–23% range uses conservative φ_L. Evidence from rapid LLM adoption in white-collar tasks since 2023 suggests labor displacement may be higher, pushing φ_L toward values where the hedging channel dominates (>50% at γ=5, φ_L=0.35).
+
+### Change 3: Reallocate freed space
+
+Use the ~1.5 pages freed from compressing Section 3.4 to:
+- Expand the policy/welfare discussion (connect welfare gains explicitly to the hedging channel)
+- Strengthen the "why this matters" framing from Change 2
+- Potentially tighten other prose to stay well within 20 pages
