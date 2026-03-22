@@ -57,7 +57,7 @@ Incomplete markets amplify the premium. The decomposition in equation~\eqref{eq:
 
 Augmenting the model with business-cycle risk reconciles the hedging channel with the high observed betas of AI stocks. AI stocks face two opposing forces: a positive risk premium from high cyclical exposure and a negative hedging discount from singularity insurance. For moderate singularity risk, the business-cycle premium dominates expected returns while the hedging channel operates through \emph{valuations}---the model generates both the high P/D ratios and the high betas observed in the data.
 
-Our paper applies the displacement-risk framework of \citet{garleanu2012displacement} to AI singularity risk. The models share a common structure---technology shocks that benefit some agents at others' expense, with incomplete markets preventing full risk-sharing---but differ in three ways. First, in GKP, future innovators have not yet been born; in our model, AI owners already exist but their capital is private. Second, GKP's intergenerational friction is structural, whereas ours can be relaxed through financial innovation. As GKP note (footnote~14), bequests or transfers could eliminate their displacement risk; in our model, intergenerational transfers do not help, but financial inclusion does. Third, we parameterize market incompleteness with a continuous access parameter~$\alpha$ (Section~\ref{sec:incomplete}), providing a formal policy lever with no natural analogue in GKP's OLG setting. Like GKP, our model features two sources of risk---business-cycle fluctuations and displacement---but with different economic content: theirs is intergenerational, ours is between capital holders and labor.
+Our paper applies the displacement-risk framework of \citet{garleanu2012displacement} to AI singularity risk. Both models feature technology shocks that benefit some agents at others' expense under incomplete markets, but differ in two key respects. First, in GKP, future innovators are unborn; in our model, AI owners exist but hold private capital. Second, GKP's intergenerational friction is structural---as they note (footnote~14), only bequests or transfers could eliminate it---whereas ours is reducible through financial innovation, parameterized by a continuous market-access parameter~$\alpha$ (Section~\ref{sec:incomplete}).
 
 In an extension, we incorporate two features of transformative AI emphasized by \citet{jones2024ai}. First, if the singularity may cause human extinction, AI stocks are worthless in the extinction state and the hedging premium falls. We calibrate this using Jones's VSL estimates. Second, Jones shows that rich and poor households view existential risk differently: the rich, with more to lose, are more concerned. In our model, if AI owners (the rich) are pessimistic about survival, they discount their private capital and may be more willing to sell it, loosening the incomplete-markets friction and reducing the hedging premium. This connects our model to the broader debate about the opportunities and risks of transformative AI \citep{korinek2024scenarios}.
 
@@ -136,9 +136,7 @@ We parameterize the degree of market incompleteness with a market-access paramet
 \end{equation}
 where $\psi > 0$ measures the size of private AI capital relative to the household's baseline consumption. The consumption jump factor generalizes to $J(\tilde{s}(\alpha))$, and all pricing results carry through with $\tilde{s}$ replacing~$s$. Three forces sustain this friction: \emph{information asymmetry} (outsiders cannot evaluate proprietary AI technology, creating adverse selection that makes securitization difficult), \emph{control and incentives} (AI owners retain private capital to preserve governance rights, a standard agency friction), and \emph{regulatory barriers} (accredited investor requirements and securities regulation limit household access to pre-IPO capital). Unlike the intergenerational friction in \citet{garleanu2012displacement}---which is structurally irreducible---our friction is reducible in principle, generating the policy lever ($\alpha$) that GKP's setting lacks.
 
-One might object that AI owners---founders, early employees, venture capitalists---are large shareholders of public AI companies, and their SDF would assign \emph{low} marginal utility to the singularity state ($J_O > 1$ for AI owners), weakening the hedging premium. We argue that this tension is limited in practice. Insiders are primarily constrained sellers: lockup agreements, diversification mandates, and board restrictions mean they set quantities (how many shares to sell), not prices. After lockup expiration, insider holdings are typically small relative to total public float. The marginal investor in public AI stocks is the diversified household, not the concentrated insider.
-
-To assess robustness, suppose a fraction~$\eta$ of public AI shares are priced by AI owners rather than the household. The effective hedging amplifier becomes $(1-\eta)\,J^{-\gamma} + \eta\,J_O^{-\gamma}$, where $J_O > 1$ is the AI owners' consumption jump. At baseline ($J \approx 0.81$, $\gamma = 3$, $J_O \approx 1.5$), the effective amplifier is $1.92$ at $\eta = 0$, $1.76$ at $\eta = 0.10$, and $1.60$ at $\eta = 0.20$. The hedging premium remains substantial for moderate insider pricing influence---even at $\eta = 0.20$, the amplifier exceeds unity---and degrades smoothly, paralleling the $\alpha$ exercise for private market access.
+One might object that AI owners also hold public AI shares, and their SDF assigns low marginal utility to the singularity state ($J_O > 1$). In practice, insiders are constrained sellers---lockup agreements and diversification mandates mean they set quantities, not prices---so the marginal investor remains the diversified household. To assess robustness, suppose a fraction~$\eta$ of public AI shares are priced by AI owners. The effective hedging amplifier becomes $(1-\eta)\,J^{-\gamma} + \eta\,J_O^{-\gamma}$, which remains well above unity for $\eta \leq 0.20$ at baseline (Table~\ref{tab:sensitivity}).
 
 We present the main results for the baseline case $\alpha = 0$ and examine the effect of partial market access in Section~\ref{sec:calibration}.
 
@@ -192,15 +190,7 @@ where $\bar{v} = a/(1-a)$ is the benchmark valuation absent singularity risk, an
 \end{proposition}
 
 \begin{proof}
-The household's Euler equation for the AI stock is:
-\[
-v^A = E_t\!\left[M_{t,t+1}\,\frac{D_{t+1}^A}{D_t^A}\!\left(1 + v_{t+1}^A\right)\right].
-\]
-In the pre-singularity regime, this expands to:
-\[
-v^A = (1-\lambda)\,a\,(1+v^A) + \lambda\,a\,J^{-\gamma}(1+\theta)(1+\bar{v}),
-\]
-where the first term covers the no-singularity path (dividend growth $1+g$, next-period P/D still $v^A$) and the second covers the singularity path (dividend growth $(1+g)(1+\theta)$, consumption growth $(1+g)J$, next-period P/D collapses to $\bar{v}$). Solving for~$v^A$ and substituting $1 + \bar{v} = 1/(1-a)$ yields~\eqref{eq:pd-ai}. The derivation for~$v^N$ is identical, replacing $(1+\theta)$ with $(1-\phi)$.
+The Euler equation $v^A = E_t[M_{t,t+1}(D_{t+1}^A/D_t^A)(1 + v_{t+1}^A)]$ expands to $v^A = (1-\lambda)\,a\,(1+v^A) + \lambda\,a\,J^{-\gamma}(1+\theta)(1+\bar{v})$. Solving for~$v^A$ and substituting $1 + \bar{v} = 1/(1-a)$ yields~\eqref{eq:pd-ai}. The derivation for~$v^N$ is identical with $(1-\phi)$ replacing $(1+\theta)$.
 \end{proof}
 
 Equations~\eqref{eq:pd-ai}--\eqref{eq:pd-nonai} decompose each stock's valuation into two components: the risk-free benchmark~$\bar{v}$ and a singularity adjustment. For AI stocks, the adjustment is proportional to $J^{-\gamma}(1+\theta) - 1$, which is always positive since $J^{-\gamma} > 1$ (high marginal utility in the disaster state) and $(1+\theta) > 1$ (AI dividends surge). AI stocks are valuable precisely because they pay well when the household is desperate.
@@ -272,7 +262,7 @@ The household's pre-singularity value function satisfies $V(c) = [c^{1-\gamma}/(
 
 Table~\ref{tab:calibration} reports equilibrium valuations for a range of singularity probabilities. The preference parameters ($\beta = 0.96$, $\gamma = 3$) are standard in the asset pricing literature. Growth of $g^N = g^L = 0.02$ matches the long-run average for U.S.\ equities and labor income; the baseline sets $g^A = g^N$. The AI dividend share $s = 0.05$ reflects the weight of AI-related firms in U.S.\ equity market capitalization (approximately 15\% of equities) rescaled to total household income---roughly 35\% of which comes from equity payouts. The labor share $\ell = 0.65$ matches the aggregate labor share of household consumption. The singularity parameters ($\theta = 0.50$, $\phi = 0.30$, $\phi_L = 0.20$) imply that AI dividends jump by 50\%, non-AI dividends drop by 30\%, and labor income drops by 20\%---a severe but not catastrophic event in which household consumption falls by 19\%.
 
-Each singularity parameter can be grounded in external evidence. The annual singularity probability $\lambda = 0.01$--$0.05$ brackets the range implied by AI researcher surveys: \citet{grace2024thousands} report median expert forecasts of roughly 50\% probability that transformative AI arrives within 30--50 years, corresponding to annual hazard rates of 1--2\%, with a fat upper tail reaching 5\% or more. The AI dividend jump $\theta = 0.50$ reflects the private-vs-public split in AI capital: private AI firms (pre-IPO startups, corporate research labs) are collectively valued at roughly the same order of magnitude as public AI market capitalization, so a singularity that doubles total AI value implies approximately $\theta \approx 0.50$ for the public component. The non-AI dividend drop $\phi = 0.30$ is consistent with estimates of AI labor displacement: \citet{eloundou2023gpts} find that large language models could affect 30--50\% of worker tasks. The labor income drop $\phi_L = 0.20$ is more conservative, reflecting that some labor tasks are complementary to AI, and direct wage displacement may be slower than the collapse in non-AI corporate earnings. Because labor income is the household's dominant income source ($\ell = 0.65$), even a 20\% labor decline drives most of the consumption drop, ensuring $J \approx 0.81 < 1$.
+Each parameter can be grounded externally. The annual probability $\lambda = 0.01$--$0.05$ brackets expert survey hazard rates \citep{grace2024thousands}. The AI jump $\theta = 0.50$ reflects the private-vs-public split: private AI capital is roughly comparable to public AI market cap, so a singularity doubling total AI value implies $\theta \approx 0.50$ for public stocks. The non-AI drop $\phi = 0.30$ and labor drop $\phi_L = 0.20$ are consistent with task-exposure estimates \citep{eloundou2023gpts}, with $\phi_L < \phi$ reflecting partial labor complementarity. Because labor is the household's dominant income source ($\ell = 0.65$), even a 20\% decline drives most of the consumption drop ($J \approx 0.81$).
 
 \begin{table}[t]
 \centering
@@ -363,9 +353,7 @@ Two results stand out. First, the hedging channel is driven by labor displacemen
 
 \subsubsection*{Level Effects on Non-AI Stocks}
 
-Table~\ref{tab:calibration} reveals a counterintuitive prediction: non-AI stock valuations also \emph{rise} with singularity risk, from $v^N = 11.9$ at $\lambda = 0$ to $v^N = 13.6$ at $\lambda = 0.05$. The mechanism is visible in equation~\eqref{eq:pd-nonai}: the singularity adjustment for non-AI stocks is proportional to $J^{-\gamma}(1-\phi) - 1$, which is positive at baseline because the marginal-utility surge ($J^{-\gamma} \approx 1.92$) more than compensates for the dividend drop ($1-\phi = 0.70$). The product $J^{-\gamma}(1-\phi) \approx 1.34 > 1$, so the SDF boost dominates.
-
-This distinguishes our model from standard rare-disaster frameworks \citep{rietz1988equity, barro2006rare}, where disaster risk depresses all stock valuations uniformly. Here, disaster risk \emph{raises} valuations---just more so for AI stocks. Non-AI valuations would fall only if $J^{-\gamma}(1-\phi) < 1$, requiring either a larger collapse~$\phi$ or a weaker hedging amplifier.
+Table~\ref{tab:calibration} reveals that non-AI stock valuations also \emph{rise} with singularity risk: at baseline, $J^{-\gamma}(1-\phi) \approx 1.34 > 1$, so the marginal-utility surge more than compensates for the dividend drop. This distinguishes our model from standard rare-disaster frameworks \citep{rietz1988equity, barro2006rare}, where disaster risk depresses all valuations uniformly; here, disaster risk raises valuations---just more so for AI stocks.
 
 
 \subsection{Testable Implications}
@@ -397,16 +385,27 @@ E[R^A] - E[R^N] = -R^f \cdot \text{Cov}\bigl(M,\, R^A - R^N\bigr) < 0.
 \]
 This appears to conflict with the data: AI stocks have high market betas, high volatility, and procyclicality---characteristics that in standard factor models command \emph{higher} expected returns.
 
-To reconcile, we augment the baseline with i.i.d.\ mean-zero shocks to normal-period growth. In normal times, aggregate consumption growth is $(1+g)(1 + \sigma\epsilon_{t+1})$, where $\epsilon_{t+1}$ has mean zero and unit variance. AI dividends have higher cyclical exposure: their growth loads on $\epsilon_{t+1}$ with factor $b^A > 1$, while non-AI dividends load with $b^N < 1$. The SDF now varies in normal times too, generating a standard positive risk premium for high-beta assets. The covariance between the SDF and the return differential decomposes into two sources:
+To reconcile, we augment the baseline with i.i.d.\ mean-zero shocks to normal-period growth. In normal times, aggregate consumption growth is $(1+g)(1 + \sigma\epsilon_{t+1})$, where $\epsilon_{t+1}$ has mean zero and unit variance. AI dividends load on $\epsilon_{t+1}$ with cyclical factor $b^A > 1$, while non-AI dividends load with $b^N < 1$.
+
+\begin{proposition}[Business-Cycle Augmentation]
+\label{prop:cycle}
+Augment the baseline model with i.i.d.\ normal-period shocks as described above. Then:
+\begin{enumerate}
+\item[(i)] The price-dividend ratios in Propositions~\ref{prop:valuations}--\ref{prop:premium} are unchanged to first order in~$\sigma^2$: the hedging premium is determined by singularity risk, not by business-cycle volatility.
+\item[(ii)] The expected-return differential decomposes exactly as:
 \begin{equation}
 \label{eq:return-decomp}
 E[R^A\!-\!R^N] \;=\; \underbrace{(1\!-\!\lambda)\,\gamma\,(b^A\!-\!b^N)\,\sigma^2\,R^f}_{\text{business-cycle premium}\;(>0)} \;+\; \underbrace{(-R^f)\,\lambda\;\text{Cov}_{\text{sing}}(M,\, R^A\!-\!R^N)}_{\text{hedging discount}\;(<0)}.
 \end{equation}
-The first term is the familiar positive risk premium from cyclical covariance: AI stocks lose more in recessions and gain more in expansions, commanding compensation. The second term is the hedging discount from the singularity channel: AI stocks pay well when the SDF is high, lowering their required return.
+\item[(iii)] The finite-valuation condition $a < 1$ is sufficient for existence of the joint equilibrium.
+\end{enumerate}
+\end{proposition}
 
-With empirically motivated parameters ($b^A \approx 1.3$--$1.5$, $b^N \approx 0.9$), AI stocks have excess returns roughly 30--50\% above the market in normal times. Applying this to the historical equity premium of 6\%, the business-cycle premium differential is approximately 2--3 percentage points. The hedging discount from the singularity channel is approximately 80 basis points at our baseline calibration ($\lambda = 0.02$). The net effect is that AI stocks earn \emph{higher} expected returns overall---consistent with their high observed betas---while the hedging channel operates primarily through \emph{valuations}: it raises P/D ratios even when it does not dominate expected returns. The model thus generates both the high P/D ratios and the high betas observed in the data.
+\begin{proof}
+The augmented SDF is $M_{t,t+1} = \beta[(1+g)(1+\sigma\epsilon_{t+1})]^{-\gamma}$ in normal times and $\beta[(1+g)J]^{-\gamma}$ upon singularity. The P/D Euler equation, conditional on no singularity, gains a factor $E[(1+\sigma b^i \epsilon)/(1+\sigma\epsilon)^\gamma] = 1 + O(\sigma^2)$ for each asset~$i$, leaving equations~\eqref{eq:pd-ai}--\eqref{eq:pd-nonai} unchanged at first order. For expected returns, the covariance $\text{Cov}(M,R^i)$ separates by independence of $\epsilon_{t+1}$ and the singularity indicator: the normal-period contribution is $(1-\lambda)\gamma b^i \sigma^2/(1+v^i)$ to first order in~$\sigma^2$, and the singularity contribution is unchanged. Differencing across $i \in \{A,N\}$ yields~\eqref{eq:return-decomp}. The condition $a < 1$ ensures convergent P/D ratios; the $O(\sigma^2)$ perturbation preserves this for small~$\sigma$.
+\end{proof}
 
-High realized returns in recent years are consistent with this decomposition. In the dominant normal state, AI stocks earn high returns from their business-cycle exposure. The singularity has not occurred, so the hedging discount has not materialized as low realized returns---a classic peso problem. Additionally, upward revisions in perceived~$\lambda$ (especially after the emergence of large language models in 2023) raise the hedging amplifier and bid up AI stock prices, generating capital gains that further inflate realized returns. As the sample lengthens, the hedging discount should become visible in lower \emph{future} expected excess returns, conditional on no singularity.
+With empirically motivated parameters ($b^A \approx 1.3$--$1.5$, $b^N \approx 0.9$, $\sigma \approx 0.02$), the business-cycle premium differential is approximately 2--3 percentage points, while the hedging discount is roughly 80 basis points at baseline ($\lambda = 0.02$). AI stocks thus earn higher expected returns overall---consistent with their high observed betas---while the hedging channel operates primarily through \emph{valuations}. High realized returns in recent years reflect a peso problem: in the dominant normal state, cyclical exposure drives returns, and the hedging discount has not materialized. Upward revisions in perceived~$\lambda$ further inflate realized returns through capital gains.
 
 
 %% ============================================================
@@ -510,9 +509,9 @@ Then:
 \end{proposition}
 
 \begin{proof}
-\emph{Part~(i):} As $\theta \to \infty$, $Y_O \to \infty$ and $\pi = 1 - d/Y_O \to 1$. The hedging component is $(1-\pi) \cdot (\theta+\phi)(J^{-\gamma}-1) \cdot C$ where $C > 0$ collects the remaining terms. Since $J \approx s\theta$ for large~$\theta$, we have $|J^{-\gamma}-1| \to 1$ and $(\theta+\phi) \sim \theta$, so $|(\theta+\phi)(J^{-\gamma}-1)| \sim \theta$. Meanwhile $(1-\pi) = d/Y_O$, and the super-linear growth condition $Y_O/\theta \to \infty$ ensures $(1-\pi) \cdot \theta = d\theta/Y_O \to 0$. Hence $\Delta^{\text{hedge}} \to 0$. The total premium~\eqref{eq:premium-disagree} converges to $\lambda(1-\delta_H)\,a\,(\theta+\phi)/[(1-a)(1-(1-\lambda)a)]$, which is increasing in~$\theta$.
+\emph{Part~(i):} For large~$\theta$, $J \approx s\theta$ so $|(\theta+\phi)(J^{-\gamma}-1)| \sim \theta$, while $(1-\pi) = d/Y_O$ and the super-linear condition $Y_O/\theta \to \infty$ ensures $(1-\pi)\theta \to 0$. Hence $\Delta^{\text{hedge}} \to 0$ and the total premium converges to the cash-flow-only expression, which is increasing in~$\theta$.
 
-\emph{Part~(ii):} At $\theta = 0$, $\Delta^{\text{hedge}} > 0$ since $J < 1$ and $(1-\pi) > 0$. The factor $(\theta+\phi)(J^{-\gamma}-1)$ is initially increasing in~$\theta$, and $\pi$ is bounded away from~1, so $\Delta^{\text{hedge}}$ increases. As $\theta$ rises past $[(1-s-\ell)\phi + \ell\phi_L]/s$, $J$ crosses~1 and $J^{-\gamma} - 1$ turns negative, so $\Delta^{\text{hedge}} < 0$. For large~$\theta$, $(1-\pi) \to 0$ by Part~(i), so $\Delta^{\text{hedge}} \to 0$ from below.
+\emph{Part~(ii):} At $\theta = 0$, $J < 1$ and $(1-\pi) > 0$, so $\Delta^{\text{hedge}} > 0$. As $\theta$ rises past $[(1-s-\ell)\phi + \ell\phi_L]/s$, $J$ crosses~1 and $J^{-\gamma}-1$ turns negative, so $\Delta^{\text{hedge}} < 0$. For large~$\theta$, $(1-\pi) \to 0$ by Part~(i), so $\Delta^{\text{hedge}} \to 0$ from below.
 \end{proof}
 
 The super-linear growth condition is natural: increasing returns to AI mean doubling $\theta$ more than doubles $Y_O$. The hump shape captures a key tension: hedging amplification is largest in an intermediate regime where the singularity is harmful enough to generate high marginal utility but not so extreme as to trivially resolve the friction. Unlike \citet{garleanu2012displacement}'s permanent intergenerational friction, ours is potentially self-resolving---the same event that generates hedging demand may also resolve the friction that amplifies it---but the cash-flow differential remains.
@@ -529,7 +528,7 @@ The model suggests that elevated AI stock valuations partly reflect a rational r
 
 
 %% ============================================================
-\printbibliography
+{\small\printbibliography}
 %% ============================================================
 
 \end{document}
