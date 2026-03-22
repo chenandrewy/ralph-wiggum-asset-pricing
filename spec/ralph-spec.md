@@ -27,7 +27,7 @@ The author steps (`author-plan.py`, `author-improve.py`) may modify files in the
 
 ## Inputs And Configuration
 
-- Core project state lives in `paper/`, `code/`, and `data/`.
+- Core project state lives in the author working directories.
 - Loop intent lives in `spec/`, with `spec/paper-spec.md` used by the current author prompts.
 - Test definitions live in `tests/`.
 - All prompts live inline in their respective scripts (e.g. `ralph/author-plan.py`, `ralph/author-improve.py`, `ralph/commit-iteration.py`).
@@ -104,6 +104,13 @@ For each iteration from `1` through `max-iter`:
 - `data/` is a working directory but is not committed (too large for git).
 - Shared page images under `ralph-garage/page-images/` are transient inputs to tests and are not committed.
 - Specs, tests, prompts, Ralph tooling, and `ralph-garage/agent-logs/` are not included in Ralph iteration commits.
+
+## Reset
+
+- Resetting Ralph means reverting the author working directories, clearing `test-results/`, and wiping `ralph-garage/`.
+- For committed author working directories, reset restores them to their git state, including removal of ignored build artifacts.
+- For uncommitted author working directories (e.g. `data/`), reset deletes them entirely.
+- `ralph/wipe.sh` performs a full reset.
 
 ## Exit Conditions
 
