@@ -4,5 +4,8 @@
       "Bash(git add:*)",
       "Bash(git commit:*)"
     ]
+  },
+  "attribution": {
+    "commit": ""
   }
 }
