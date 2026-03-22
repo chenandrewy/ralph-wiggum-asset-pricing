@@ -1,43 +1,45 @@
 # Improvement Plan
 
-## Status: Targeted Fixes (No Overhaul Needed)
-
-The paper is substantively complete: theory-correctness passes, the model is clean and well-differentiated from GKP, and all style/quality requirements are met. One test fails.
-
 ## Key Issues
 
-1. **FAIL: spec-compliance (I.6)** — Figure 1 compares AI stocks to *non-AI stocks*. The spec requires comparison to the *market portfolio*. The market portfolio P/D ratio is $v^M = s \cdot v^A + (1-s) \cdot v^N$, a distinct object from $v^N$.
+1. **Introduction figure uses model output, not data (spec violation).** Spec I.6 requires "a single figure illustrating the valuation of publicly traded AI stocks compared with the market portfolio using CRSP and Compustat data." Figure 1 currently plots model-implied P/D ratios against lambda. It must be replaced with an empirical exhibit.
+
+2. **GKP contribution is overclaimed and misses the required angle (spec I.7, referee comment 1).** The referee says the model is "largely subsumed" by GKP. The current paper lists three differences (asset inaccessibility vs intergenerational, infinite-horizon vs OLG, concentrated risk), but these are largely interpretive reframings, not non-trivial modeling contributions. The cfr-r1 test will reject any hint of immodesty. Spec I.7 specifically requires engaging with GKP footnote 14: in GKP, bequests/gifts between generations would eliminate the displacement factor entirely. Our friction (private untradeable capital) is NOT resolvable by intergenerational transfers — it requires securitization or regulatory reform. This is the genuine, modest differentiator. The current paper does not mention this.
+
+3. **Jones (2024) extension is too thin (referee comment 2, cfr-r1 test).** The extinction result is trivial (multiply by 1-delta). The infinite output discussion is purely verbal with no formal model. The cfr-r1 test requires at least two key features of Jones captured with meaningful results tied to the main argument.
 
 ## Plan
 
-### Fix 1: Add market portfolio curve to Figure 1 (fixes spec-compliance)
+### Change 1: Replace Figure 1 with empirical data exhibit
 
-In `paper/paper.tex`, add a third curve to the figure for the market portfolio P/D ratio:
-$$v^M = s \cdot v^A + (1-s) \cdot v^N$$
+- Write an R script in `code/` that computes the market-cap-weighted P/E (or P/D) ratio of AI-related stocks vs. the overall market portfolio using CRSP and Compustat data.
+- Define AI stocks using SIC/NAICS codes or a curated list of major AI firms (NVDA, MSFT, GOOG, META, etc.).
+- Plot a time series (or recent cross-section) showing AI stock valuations vs. market valuations.
+- Replace the current TikZ figure with `\includegraphics` referencing the generated plot.
+- Move the current model-implied P/D figure into the calibration subsection (Section 3.3) as a second exhibit, or drop it if the table suffices.
 
-With $s = 0.15$, the plot formula is:
-$$v^M(\lambda) = 0.15 \cdot v^A(\lambda) + 0.85 \cdot v^N(\lambda)$$
+### Change 2: Rewrite GKP differentiation to be modest and engage with footnote 14
 
-Using the existing plot expressions:
-- $v^A(\lambda) = (0.92272 + 31.564\lambda) / (0.07728 + 0.92272\lambda)$
-- $v^N(\lambda) = (0.92272 + 14.232\lambda) / (0.07728 + 0.92272\lambda)$
+- Shorten the current GKP paragraph in the introduction to 2-3 sentences max.
+- Frame the contribution modestly: our model applies the displacement-risk intuition of GKP to the specific context of an AI singularity. The modeling is similar, but the friction differs.
+- Add one sentence engaging with GKP footnote 14: in GKP, intergenerational transfers (bequests, government debt) can in principle eliminate displacement risk. In our model, the friction is asset inaccessibility — private AI capital is untradeable — which cannot be resolved by intergenerational transfers but could be resolved by broadening capital access (securitization, regulation). This distinction matters for policy.
+- Remove the three-point enumeration of differences. Do not overclaim.
 
-So: $v^M(\lambda) = (0.92272 + 16.832\lambda) / (0.07728 + 0.92272\lambda)$
+### Change 3: Deepen the Jones (2024) extension
 
-(Numerator coefficient: $0.15 \times 31.564 + 0.85 \times 14.232 = 4.7346 + 12.0972 = 16.832$)
+- **Feature 1 (already present but strengthen):** Extinction risk. The current Proposition 3 is fine but mechanical. Add a brief calibration using Jones's VSL estimates (value of a statistical life ~6x consumption). Show how the premium varies with delta for a plausible range of extinction probabilities. This ties the extension to quantitative predictions.
+- **Feature 2 (new modeling):** Heterogeneous views on existential risk, following Jones (2024). Rich households (AI owners in our framing) may be more concerned about extinction than poor households, because they have more to lose. Model this by allowing AI owners to have a different subjective extinction probability than the representative household. Show that disagreement about extinction probability affects the equilibrium hedging premium — if AI owners believe extinction is likely, they value their private capital less, potentially loosening the incomplete-markets friction.
+- Keep the infinite-output discussion verbal but tighten it to 1-2 paragraphs connecting back to the main result.
 
-Steps:
-- Add an `\addplot` for the market portfolio between the AI and non-AI curves, with a distinct style (e.g., black, dotted).
-- Update the legend entry to "Market portfolio ($v^M$)".
-- Update the caption to mention the market portfolio.
-- Update the introductory text around the figure to reference the AI premium relative to the market portfolio, not just non-AI stocks.
+### Change 4: Minor fixes
 
-### Fix 2: Update prose referencing the figure
+- Verify abstract is under 100 words (currently ~90, OK).
+- Ensure the model P/D figure (if kept) or calibration table numerics are consistent with the formulas. Spot-check: at lambda=0, v = a/(1-a) = 0.92272/0.07728 = 11.94 ~ 11.9. Checks out.
+- Confirm paper stays under 20 pages after changes.
 
-The paragraph introducing Figure 1 (around line 43) describes the premium as the gap between AI and non-AI stock valuations. Adjust to frame as AI vs. market portfolio, consistent with the updated figure and the spec's intent.
+## Priority Order
 
-## Test IDs
-
-Non-referee: `ai-economics`, `build-latex`, `spec-compliance`, `theory-correctness`, `theory-elegance`, `visual-pages`, `writing-natural`
-
-Referee: `referee-top3`, `cfr-r1`
+1. Change 2 (GKP differentiation) — addresses the referee's main critique and the cfr-r1 test.
+2. Change 1 (empirical figure) — fixes a spec violation.
+3. Change 3 (Jones extension) — addresses the referee's second comment and deepens the contribution.
+4. Change 4 (minor fixes) — cleanup.

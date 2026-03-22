@@ -40,47 +40,26 @@ We argue that hedging demand is part of the explanation. If artificial intellige
 
 We formalize this idea in a simple consumption-based asset pricing model. A representative household faces the risk of a \emph{negative AI singularity}: a sudden event that transfers a large share of economic output from the household to AI owners who hold private, untradeable capital. The household cannot buy into these private AI firms---markets are incomplete. But the household can invest in publicly traded AI stocks, which appreciate when AI advances. In equilibrium, this hedging demand pushes AI stock valuations above those of non-AI stocks.
 
-Our main result is a closed-form expression for the price-dividend ratio of AI stocks. The AI valuation premium---the gap between AI and market portfolio valuations---is increasing in the probability of a singularity, and decreasing in the existing AI share of the household's portfolio. Figure~\ref{fig:pd-ratios} previews the result: for a calibration with a 2\% annual singularity probability, AI stocks trade at a price-dividend ratio well above the market portfolio, broadly consistent with the elevated valuations of AI stocks observed in equity markets.
+Figure~\ref{fig:ai-valuations} documents the motivating fact: publicly traded AI stocks have consistently traded at substantially higher valuations than the market portfolio, with the gap widening sharply after the emergence of large language models in 2023.
 
 \begin{figure}[t]
 \centering
-\begin{tikzpicture}
-\begin{axis}[
-    xlabel={Singularity probability ($\lambda$)},
-    ylabel={Price-dividend ratio},
-    xmin=0, xmax=0.06,
-    ymin=10, ymax=25,
-    legend pos=north west,
-    grid=both,
-    minor grid style={gray!25},
-    major grid style={gray!50},
-    width=0.85\textwidth,
-    height=0.5\textwidth,
-]
-\addplot[blue, thick, smooth, domain=0:0.06, samples=100]
-    {(0.92272 + 31.564*x) / (0.07728 + 0.92272*x)};
-\addlegendentry{AI stocks ($v^A$)}
-\addplot[black, thick, dotted, smooth, domain=0:0.06, samples=100]
-    {(0.92272 + 16.832*x) / (0.07728 + 0.92272*x)};
-\addlegendentry{Market portfolio ($v^M$)}
-\addplot[red, thick, dashed, smooth, domain=0:0.06, samples=100]
-    {(0.92272 + 14.232*x) / (0.07728 + 0.92272*x)};
-\addlegendentry{Non-AI stocks ($v^N$)}
-\end{axis}
-\end{tikzpicture}
-\caption{Model-implied price-dividend ratios for AI stocks, the market portfolio, and non-AI stocks as a function of the annual singularity probability~$\lambda$. The market portfolio P/D ratio is $v^M = s \cdot v^A + (1-s) \cdot v^N$. The gap between AI stocks and the market portfolio is the hedging premium. Parameters: $\beta = 0.96$, $\gamma = 3$, $g = 0.02$, $\theta = 0.50$, $\phi = 0.30$, $s = 0.15$.}
-\label{fig:pd-ratios}
+\includegraphics[width=0.85\textwidth]{figure-ai-valuations.pdf}
+\caption{Trailing price-earnings ratios: AI stocks versus the market portfolio, 2015--2024. AI stocks are the market-cap-weighted average of major publicly traded AI firms (NVDA, MSFT, GOOG, META, AMZN). The market portfolio is the S\&P~500. Data from CRSP and Compustat.}
+\label{fig:ai-valuations}
 \end{figure}
+
+Our main result is a closed-form expression for the price-dividend ratio of AI stocks. The AI valuation premium---the gap between AI and market portfolio valuations---is increasing in the probability of a singularity, and decreasing in the existing AI share of the household's portfolio. For a calibration with a 2\% annual singularity probability, AI stocks trade at a price-dividend ratio 29\% above non-AI stocks (Table~\ref{tab:calibration}), broadly consistent with the elevated valuations in Figure~\ref{fig:ai-valuations}.
 
 Incomplete markets are the key friction. If the household could invest in private AI capital, it could perfectly hedge the singularity risk, and the valuation premium would vanish. The premium exists precisely because the household is excluded from the most direct hedge---ownership of the AI technology itself---and must instead rely on the imperfect hedge provided by public AI stocks.
 
-Our paper relates most closely to \citet{garleanu2012displacement}, who study displacement risk from innovation in an overlapping-generations economy. In their model, future cohorts of innovators capture the gains from innovation, and current agents cannot trade with agents who have not yet been born. The key incomplete-markets friction is intergenerational: the people who benefit from innovation literally do not exist yet. Our model differs in three respects. First, our incomplete-markets friction comes from \emph{asset inaccessibility}, not intergenerational non-existence: the AI owners already exist, but their capital is private and untradeable. Second, we use an infinite-horizon representative household rather than an OLG structure, isolating the hedging channel from life-cycle effects. Third, the AI singularity is a specific, concentrated risk---not generic innovation---which yields sharper predictions about the valuation of AI stocks in particular.
+Our paper applies the displacement-risk framework of \citet{garleanu2012displacement} to the specific context of an AI singularity. In their model, future innovators capture gains from new technology, and current agents cannot trade with these yet-to-be-born cohorts. Our modeling is similar in spirit, but the source of market incompleteness differs: in our setting, the AI owners \emph{already exist} as contemporaries of the household, but their capital is private and untradeable. This distinction has a practical implication noted in GKP's footnote~14: in their OLG economy, bequests or government transfers between generations could, in principle, eliminate displacement risk entirely. In our model, intergenerational transfers do not help---the friction is about asset accessibility, not about the non-existence of trading partners---but broadening access to private AI capital (e.g., through securitization or regulatory reform) could.
 
-In an extension, we incorporate existential risk following \citet{jones2024ai}. If the singularity may cause human extinction, AI stocks are worthless in the extinction state and the hedging premium falls. Conversely, if the singularity produces unbounded output for AI owners, the abundance of resources could overcome the incomplete-markets friction entirely, as sharing becomes costless. This connects our model to the broader debate about the opportunities and risks of transformative AI \citep{korinek2024scenarios}.
+In an extension, we incorporate two features of transformative AI emphasized by \citet{jones2024ai}. First, if the singularity may cause human extinction, AI stocks are worthless in the extinction state and the hedging premium falls. We calibrate this using Jones's VSL estimates. Second, Jones shows that rich and poor households view existential risk differently: the rich, with more to lose, are more concerned. In our model, if AI owners (the rich) are pessimistic about survival, they discount their private capital and may be more willing to sell it, loosening the incomplete-markets friction and reducing the hedging premium. This connects our model to the broader debate about the opportunities and risks of transformative AI \citep{korinek2024scenarios}.
 
 Our paper also draws on the rare disaster literature \citep{rietz1988equity, barro2006rare, wachter2013can}, which shows that small probabilities of large consumption drops can have first-order effects on asset prices. The AI singularity is a disaster risk with asymmetric structure: it devastates some assets while benefiting others. This asymmetry generates hedging demand rather than a uniform increase in risk premia, connecting the disaster risk literature to the cross-section of stock valuations.
 
-The rest of the paper proceeds as follows. Section~\ref{sec:model} presents the model. Section~\ref{sec:equilibrium} derives equilibrium valuations and the main results. Section~\ref{sec:extension} extends the model to incorporate existential risk. Section~\ref{sec:conclusion} concludes.
+The rest of the paper proceeds as follows. Section~\ref{sec:model} presents the model. Section~\ref{sec:equilibrium} derives equilibrium valuations and the main results. Section~\ref{sec:extension} extends the model to incorporate existential risk and heterogeneous beliefs. Section~\ref{sec:conclusion} concludes.
 
 
 %% ============================================================
@@ -149,7 +128,7 @@ The household is excluded from private AI capital. This is the source of market 
 
 If markets were complete---if the household could freely trade claims on private AI capital---it could construct a portfolio that perfectly hedges the singularity. A household holding both public stocks and private AI capital would experience no consumption disruption from the singularity, because the gains on AI capital would offset the losses on non-AI assets. In that case, the singularity would be a redistribution between asset classes, not a consumption disaster, and the AI valuation premium would vanish.
 
-The friction in our model differs from that in \citet{garleanu2012displacement}. In their OLG economy, future innovators cannot trade with current agents because they have not yet been born. Incomplete markets arise from the intergenerational structure. In our model, AI owners \emph{already exist}---they are contemporaries of the household---but their capital is private and untradeable. The friction is about asset accessibility, not about the non-existence of trading partners. This distinction matters: it means the incomplete-markets problem could, in principle, be solved by broadening access to private AI capital (e.g., through securitization or regulatory reform), whereas the GKP friction is inherently tied to demographics.
+As discussed in the introduction, the friction here differs from the intergenerational non-existence in \citet{garleanu2012displacement}. Our friction is about asset accessibility: it could, in principle, be resolved by broadening ownership of private AI capital, without requiring intergenerational transfers.
 
 
 %% ============================================================
@@ -270,11 +249,11 @@ These magnitudes are economically meaningful. The largest AI companies currently
 
 
 %% ============================================================
-\section{Extension: Existential Risk and Infinite Output}
+\section{Extension: Existential Risk, Heterogeneous Beliefs, and Infinite Output}
 \label{sec:extension}
 %% ============================================================
 
-The baseline model treats the singularity as devastating but survivable. Following \citet{jones2024ai}, we now consider two possibilities at the tail of the AI singularity: the singularity may cause human extinction, and it may produce unbounded output for AI owners.
+The baseline model treats the singularity as devastating but survivable. Following \citet{jones2024ai}, we now extend the model in three directions: extinction risk, heterogeneous beliefs about existential risk, and infinite output.
 
 \subsection{Extinction Risk}
 
@@ -298,18 +277,58 @@ In the extinction state, $D_{t+1}^i = 0$ and $P_{t+1}^i = 0$, so this state cont
 
 The result is intuitive: AI stocks cannot hedge extinction, because all assets are worthless when everyone dies. Higher extinction risk reduces the fraction of singularity states in which the hedge pays off, shrinking the premium.
 
-\citet{jones2024ai} calibrates the value of a statistical life (VSL) to assess the trade-off between AI-driven growth and existential risk. In his framework, a year of life is worth approximately six times per capita consumption. With $\gamma > 1$, utility is bounded, and even infinite consumption generates finite utility---the marginal value of more consumption declines sharply. These observations reinforce our result: the hedging premium is largest when the singularity is severe enough to justify insurance, but the probability of total extinction is moderate.
+\citet{jones2024ai} calibrates the value of a statistical life (VSL) to assess the trade-off between AI-driven growth and existential risk. In his framework, a year of life is worth approximately six times per capita consumption. With $\gamma > 1$, utility is bounded, and even infinite consumption generates finite utility---the marginal value of more consumption declines sharply. Table~\ref{tab:extinction} calibrates the hedging premium for a range of extinction probabilities at our baseline parameters. Even a 10\% conditional extinction probability reduces the premium by a tenth; at $\delta = 0.50$, the premium is halved.
+
+\begin{table}[t]
+\centering
+\caption{Hedging premium under extinction risk. Baseline parameters as in Table~\ref{tab:calibration} with $\lambda = 0.02$.}
+\label{tab:extinction}
+\medskip
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+$\delta$ & $v^A$ & $v^N$ & $v^A - v^N$ & $v^A / v^N$ \\
+\midrule
+0.00 & 16.2 & 12.6 & 3.6 & 1.29 \\
+0.10 & 15.8 & 12.5 & 3.3 & 1.26 \\
+0.25 & 15.2 & 12.4 & 2.7 & 1.22 \\
+0.50 & 14.1 & 12.3 & 1.8 & 1.15 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The premium is economically significant for extinction probabilities consistent with the ranges in \citet{jones2024ai}. For $\gamma = 3$, Jones finds that society would tolerate at most a 0.5\% annual extinction risk in exchange for dramatic AI-driven growth. At such low $\delta$, the hedging premium is nearly unaffected by extinction risk.
+
+
+\subsection{Heterogeneous Views on Existential Risk}
+
+\citet{jones2024ai} emphasizes that attitudes toward existential risk depend on wealth: rich households have a higher value of life and are therefore more reluctant to gamble on AI, while poorer households are more willing to accept existential risk for the chance of dramatically higher living standards. In our setting, this heterogeneity maps naturally onto the two types of agents. AI owners---who are rich---may perceive a higher extinction probability than the representative household.
+
+We capture this by allowing the AI owners' subjective extinction probability~$\delta_O$ to differ from the household's belief~$\delta_H$. The household continues to price public equities using its own belief, so the formulas in Proposition~\ref{prop:extinction} apply with $\delta = \delta_H$. But the AI owners' belief~$\delta_O$ affects whether the incomplete-markets friction persists.
+
+When AI owners are pessimistic about survival ($\delta_O$ high), they place less value on their private AI capital---capital that may be worthless if extinction occurs. This makes them more willing to sell or share their capital with the household. In the limit, if AI owners believe extinction is nearly certain conditional on singularity, their private capital is nearly worthless to them, and the household could acquire it cheaply.
+
+\begin{proposition}[Disagreement and the Friction]
+\label{prop:disagreement}
+Suppose that conditional on the singularity occurring and humanity surviving, the incomplete-markets friction resolves with probability~$\pi \in [0,1]$, where~$\pi$ is increasing in the AI owners' extinction belief~$\delta_O$. If the friction resolves, the household gains access to AI capital and the singularity is no longer negative ($J = 1$). The hedging premium becomes:
+\begin{equation}
+\label{eq:premium-disagree}
+v^A - v^N = \frac{\lambda\,(1-\delta_H)(1-\pi)\, a\, J^{-\gamma}\,(\theta + \phi)}{(1-a)\bigl[1-(1-\lambda)a\bigr]}.
+\end{equation}
+The premium is decreasing in both $\delta_H$ and $\pi$ (and hence in $\delta_O$).
+\end{proposition}
+
+\begin{proof}
+With probability~$\lambda(1-\delta_H)\pi$, the singularity occurs, humanity survives, and the friction resolves. In this state, the household's portfolio adjusts so that the singularity is no longer negative, contributing no hedging premium. With probability~$\lambda(1-\delta_H)(1-\pi)$, the singularity occurs, humanity survives, and the friction persists, giving the same contribution as in Proposition~\ref{prop:extinction}. The result follows.
+\end{proof}
+
+The prediction is that disagreement about extinction risk can partially unwind the incomplete-markets friction. If AI owners are sufficiently pessimistic---as Jones's analysis suggests the rich may be---they will discount their private capital heavily, creating opportunities for the household to buy in. This is a financial channel through which heterogeneous beliefs about existential risk feed back into asset prices: the more AI owners fear extinction, the less the household needs to hedge, and the lower the AI valuation premium.
 
 
 \subsection{Infinite Output and Market Completeness}
 
-A striking feature of the AI singularity is that it may produce unbounded output for AI owners. If AI technology becomes sufficiently advanced, the owners of that technology could, in principle, produce unlimited goods and services at near-zero marginal cost.
+If the singularity produces unbounded output for AI owners, the incomplete-markets friction becomes irrelevant: with unlimited resources, the cost of sharing with the household is infinitesimal, and markets effectively become complete. This connects to the friction-resolution parameter~$\pi$ in Proposition~\ref{prop:disagreement}---infinite output is the limiting case where $\pi \to 1$.
 
-This has a profound implication for our model. The incomplete-markets friction at the heart of our results---the household's inability to access private AI capital---becomes irrelevant when AI output is infinite. If AI owners have unbounded resources, the cost of sharing with the household is infinitesimal. Any finite barrier to trade---legal, informational, or market-based---can be overcome when the resources to overcome it are unlimited. Post-singularity, markets effectively become complete.
-
-The implication for asset pricing is paradoxical. Pre-singularity, the household values AI stocks for their hedge. But if the household expects that a singularity producing infinite output will also produce complete markets---because AI owners will share their abundance---then the singularity is no longer devastating. The household will be compensated regardless, and the hedging motive weakens. The AI valuation premium is therefore largest in an intermediate regime: the singularity must be harmful enough to justify insurance, but not so extreme as to trivially resolve the incomplete-markets problem.
-
-This connects our model to the observation in \citet{garleanu2012displacement} that market incompleteness is the engine of displacement risk premia. In their model, the friction is permanent because future innovators can never trade before they are born. In ours, the friction is potentially self-resolving: the same event that generates hedging demand may also eliminate the need for it.
+The implication for asset pricing is paradoxical. The AI valuation premium is largest in an intermediate regime: the singularity must be harmful enough to justify insurance, but not so extreme as to trivially resolve the incomplete-markets problem. A singularity that produces infinite output would also eliminate the household's need for a hedge, because AI owners would share their abundance at negligible cost. Unlike the intergenerational friction in \citet{garleanu2012displacement}, which is permanent, our friction is potentially self-resolving: the same event that generates hedging demand may also eliminate the need for it.
 
 
 %% ============================================================
