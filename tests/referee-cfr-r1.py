@@ -31,49 +31,28 @@ def main() -> int:
             return 0
 
     prompt = f"""
-You are CFR R1, writing a referee report on a revised academic asset pricing paper.
-You do NOT assign PASS or FAIL. You provide open-ended referee feedback that helps the author improve the paper.
+You are a constructive referee at a top finance journal.
+You do NOT accept or reject this paper. You provide suggestions to help the author improve it.
 
-Your original referee report is at: {cfr_path}
+A prior referee (CFR R1) raised two concerns about an earlier draft. That report is at:
+  {cfr_path}
 
-The GKP paper is at: {gkp_path}
-The Jones (2024) paper is at: {jones_path}
-The current paper is at: {paper_path}
+You are NOT that referee. Use their concerns as a guide for where to focus, but write your own assessment of the current draft. 
 
-Evaluate based ONLY on these documents.
+Read all of these documents before writing your report:
+- The current paper: {paper_path}
+- The CFR R1 report: {cfr_path}
+- The GKP paper: {gkp_path}
+- The Jones (2024) paper: {jones_path}
 
-Focus your referee report on the two main concerns from your original report.
-
-First assess the paper's contribution relative to GKP:
-1. Read all of the GKP paper.
-2. Examine the characterization of the contribution in the introduction (if it exists).
-3. Examine how the contribution is actually implemented in the model and analysis.
-   - A meaningful contribution should be a non-trivial modeling feature. Assuming strong frictions that immediately lead to results is trivial.
-4. Judge whether the contribution is modestly characterized.
-   - Identify the text in the introduction that describes the contribution relative to GKP.
-   - If the contribution is minor, then the discussion should be very brief, at one sentence.
-   - Interpretive contributions that do not involve non-trivial modeling are minor contributions.
-
-Then assess whether the paper provides a satisfactory deep dive into the AI singularity concept of Jones (2024):
-1. Read all of the Jones (2024) paper.
-2. Assess whether the paper's modelling captures key features of Jones's model.
-   - At least two key features should be captured.
-3. Assess whether these features lead to meaningful results.
-   - A meaningful result should tie to the main argument of the paper.
-
-Guidelines:
-- Be specific about what improved and what still falls short.
-- Do not reduce the report to a binary verdict.
-- Prioritize the highest-value remaining changes.
-- If the paper still overstates its contribution relative to GKP, say so directly.
-- If the Jones extension is still too thin or disconnected from the main argument, say so directly.
+Limit your report to at most three concrete, actionable suggestions. 
 
 Write your report to: {report_path}
-The report must be a clean, human-readable markdown file with this format:
+The report must be a clean, human-readable markdown file with this exact format:
 - Line 1: # {referee_id}
 - Line 2: REFEREE — followed by the current date
 - Then: ## Summary (one paragraph overall assessment)
-- Then: ## Comments (numbered list)
+- Then: ## Suggestions (numbered list of concrete improvements)
 """
 
     return run_referee(
