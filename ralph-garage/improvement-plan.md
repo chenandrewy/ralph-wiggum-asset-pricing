@@ -1,52 +1,40 @@
 # Improvement Plan
 
-## Current State
+## Current Status
 
-All tests pass. The referee-top3 review identifies two substantive issues.
+- **spec-compliance**: PASS
+- **theory-correctness**: FAIL — Proposition 5 proof error
+- **referee-top3**: Two substantive comments
 
-## Key Issues
+## Priority 1: Fix Proposition 5 (theory-correctness FAIL)
 
-### Issue 1: Common growth rate assumption creates a narrative–model gap (referee-top3 comment 1)
+The test identified that the proof of Proposition 5(i) is incorrect. The claim is that $\Delta^{\text{hedge}} \to 0$ as $Y_O \to \infty$, but the proof says "$Y_O = \bar{Y}(1+\theta)$ suffices." With linear $Y_O$, the product $(1-\pi)(\theta+\phi)(J^{-\gamma}-1)$ converges to $-d/\bar{Y}$, not zero.
 
-The model assumes $g^A = g^N = g$, so the AI share $s$ is constant pre-singularity. This causes two problems:
+**Fix:** Replace the linear specification with a super-linear one. Specifically:
 
-1. **Self-limiting mechanism is a comparative static, not a dynamic prediction.** Proposition 2(ii) and Section 3.4 describe the premium eroding "as the AI share rises," but $s$ never rises in the model. The testable implication points to variation the model cannot generate.
+1. Change the proof of Part (i) to require $Y_O$ to grow faster than linearly in $\theta$ — e.g., state that $Y_O$ grows at least quadratically (or simply say "provided $Y_O$ grows faster than linearly in $\theta$").
+2. In the proof of Part (ii), replace "$Y_O = \bar{Y}(1+\theta)$ suffices" with a correct sufficient condition, e.g., $Y_O = \bar{Y}(1+\theta)^k$ for $k > 1$.
+3. Add a brief economic justification: super-linear scaling is natural if AI output exhibits increasing returns — the same accelerating-returns logic that motivates the singularity concept.
 
-2. **Growth decomposition is informal.** The "approximately multiplicative" claim (Section 3.2) that combines the model's 29% singularity premium with a 3–5pp secular growth differential is not derived. With differential growth, $s_t$ rises over time and feeds back into $J$ and the hedging amplifier, making the interaction potentially non-multiplicative.
+**Secondary issue (Part ii):** The test notes that for large $\theta$ (specifically $\theta > \phi(1-s)/s \approx 1.70$), the singularity becomes positive for the household ($J > 1$), so $J^{-\gamma} - 1 < 0$ and the hedging component turns negative. The "hump shape" description is incomplete — it rises, falls through zero, and becomes negative. Fix: acknowledge in the proposition statement or surrounding text that the hedging component eventually turns negative for very large $\theta$ (when the singularity ceases to be negative), reinforcing that hedging amplification is an intermediate-regime phenomenon.
 
-### Issue 2: No welfare quantification of the policy lever $\alpha$ (referee-top3 comment 2)
+## Priority 2: Referee Comments
 
-Corollary 1 shows the premium decreases in $\alpha$, but the paper never answers: how much does the household *gain* from increased market access? A consumption-equivalent welfare calculation would make the policy lever concrete and distinguish between "better hedged" and "less risk."
+### Comment 1 — AI owners as marginal investors in public AI stocks
 
-## Plan
+The referee argues that AI insiders (founders, VCs) are large shareholders of public AI companies and would have low marginal utility in the singularity state, weakening the hedging premium.
 
-### Priority 1: Introduce differential pre-singularity growth (addresses Issue 1)
+**Fix:**
+1. Add a paragraph in Section 2.3 (Incomplete Markets) or Section 3.2 explicitly acknowledging this tension.
+2. Argue that insiders are primarily constrained sellers (lockups, diversification mandates, board restrictions) who set quantities not prices, and that after lockup expiration their holdings are small relative to total public float.
+3. Add a simple robustness check: let a fraction $\eta$ of public AI shares be priced by AI owners (who have $J > 1$). Show the effective hedging amplifier becomes $(1-\eta)J^{-\gamma} + \eta J_O^{-\gamma}$ where $J_O > 1$, degrading the premium in $\eta$. Report a small table or inline calculation showing the premium remains substantial for moderate $\eta$.
 
-This is the highest-value change. It resolves the narrative–model gap with a single modeling extension.
+### Comment 2 — Non-AI stock valuations rise with singularity risk
 
-**Changes:**
+Table 1 shows non-AI P/D rises from 11.9 to 13.2 as $\lambda$ goes from 0 to 0.05. The referee notes this is a substantive, counterintuitive prediction the paper ignores.
 
-1. **Section 2.2 (The AI Singularity):** Replace the common growth rate $g$ with asset-specific rates $g^A$ and $g^N$ in eq. (4). The AI share $s_t$ now evolves deterministically pre-singularity: $s_{t+1} = s_t (1+g^A) / [s_t(1+g^A) + (1-s_t)(1+g^N)]$.
-
-2. **Section 3.2 (Main Results):** Re-derive Propositions 1–2 with time-varying $s_t$. The P/D ratio becomes a recursive but closed-form expression (standard in dividend-share models). The premium decomposition (eq. 12) still holds at each $t$ with $J(s_t)$ replacing $J(s)$.
-
-3. **Section 3.2 (Calibration):** Replace the informal "approximately multiplicative" decomposition with the model's own combined premium. Calibrate $g^A - g^N = 3\text{–}5$ pp and show the model matches the 2–2.7x data range directly.
-
-4. **Section 3.4 (Testable Implications):** The self-limiting mechanism is now a genuine dynamic prediction: as $s_t$ rises deterministically, the hedging amplifier $J(s_t)^{-\gamma}$ falls. Rewrite this subsection to emphasize the time-series prediction the model now generates.
-
-5. **Tables 1–2:** Recompute with differential growth. Show both the $g^A = g^N$ special case (for comparison) and the general case.
-
-### Priority 2: Add welfare quantification of market access (addresses Issue 2)
-
-**Changes:**
-
-1. **After Corollary 1:** Add a short paragraph (or a new corollary) computing the consumption-equivalent welfare gain from increasing $\alpha$ from 0 to some target value. With CRRA utility, this is closed-form: $\Delta_{CE} = [\tilde{s}(\alpha)/s]^{1/(1-\gamma)} - 1$ type expression from the change in the effective share.
-
-2. **Calibration table:** Add a column to Table 2 showing the welfare gain (in consumption-equivalent units) alongside the premium reduction for each $\alpha$ value.
-
-3. **Conclusion:** Add one sentence noting the welfare quantification.
-
-### Priority 3: Minor polish
-
-1. Ensure the testable-implications figure caption and text are consistent with the new dynamic $s_t$ story.
-2. Check that all comparative statics in Proposition 2 still hold with time-varying $s_t$ (they should, since the results hold pointwise at each $t$).
+**Fix:**
+1. Add a paragraph in Section 3.2 or 3.4 discussing the level effects on both stock types. Explain: $J^{-\gamma}(1-\phi) > 1$ at baseline, so the marginal-utility surge dominates the dividend drop for non-AI stocks too.
+2. Note the condition under which non-AI stocks *fall* with singularity risk: $J^{-\gamma}(1-\phi) < 1$, i.e., when the singularity is severe enough that even the SDF boost cannot overcome the dividend collapse.
+3. Frame this as an additional testable implication: all stocks should appreciate when perceived singularity risk rises, but AI stocks more so. Contrast with standard rare-disaster models (Barro, Rietz) where disaster risk depresses all valuations.
+4. Note that $v^A/v^N$ understates the absolute valuation effect on AI stocks since both numerator and denominator are moving.

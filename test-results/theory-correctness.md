@@ -1,112 +1,82 @@
 # tests/theory-correctness.py
-Started: 2026-03-22 10:33:23 EDT
-Runtime: 5m 34s
-[ralph-garage/agent-logs/20260322T143323.816783Z_theory-correctness_claude_opus.log](../ralph-garage/agent-logs/20260322T143323.816783Z_theory-correctness_claude_opus.log)
+Started: 2026-03-22 10:45:45 EDT
+Runtime: 5m 20s
+[ralph-garage/agent-logs/20260322T144545.635988Z_theory-correctness_claude_opus.log](../ralph-garage/agent-logs/20260322T144545.635988Z_theory-correctness_claude_opus.log)
 
 # theory-correctness
 
 VERDICT: FAIL
-REASON: Proposition 5 contains a proof error — the claimed sufficient condition for the hedging component to vanish is incorrect.
+
+REASON: Inline numerical claims for the insider-pricing robustness check ($\eta$ exercise) are inconsistent with the stated formula and parameters.
 
 ## Condition 1: Notational Consistency — PASS
 
-All mathematical objects are used consistently throughout:
+All mathematical objects grouped by concept:
 
-| Group | Symbols | Consistent? |
-|-------|---------|-------------|
-| Consumption | $c_t$ | Yes |
-| Dividends | $D_t^A$, $D_t^N$ | Yes |
-| AI share | $s_t$, $s$ (constant baseline) | Yes |
-| Preferences | $\beta$, $\gamma$ | Yes |
-| Growth rates | $g^A$, $g^N$, $g$ (equal case) | Yes |
-| Singularity params | $\lambda$, $\theta$, $\phi$ | Yes |
-| Jump factor | $J(s_t)$, $J$ | Yes |
-| Aggregate growth | $G(s_t)$ | Yes |
-| Effective discount | $a$ | Yes |
-| P/D ratios | $v^A$, $v^N$, $\bar{v}$ | Yes |
-| SDF | $M_{t,t+1}$ | Yes |
-| Market access | $\alpha$, $\tilde{s}(\alpha)$, $\psi$ | Yes |
-| Welfare | $\omega(\alpha)$ | Yes |
-| Extinction | $\delta$, $\delta_H$, $\delta_O$ | Yes |
-| Friction resolution | $\pi$ | Yes |
-| AI output scale | $Y_O$, adverse-selection discount $d$ | Yes |
+- **Consumption/Utility:** $c_t$, $\gamma$, $\beta$, CRRA utility (eq 1). Consistent throughout.
+- **Dividends:** $D_t^A$, $D_t^N$. Always superscripted A/N. $c_t = D_t^A + D_t^N$ (eq 2). Consistent.
+- **AI share:** $s_t \equiv D_t^A / c_t$ (eq 3), $s$ when constant. $\tilde{s}(\alpha) = s + \alpha\psi$ (eq 6) for market access. Consistent.
+- **Growth:** $g^A$, $g^N$, $g$ (common case), $G(s_t)$ aggregate growth factor. Consistent.
+- **Singularity:** $\lambda$, $\theta$, $\phi$, $J(s_t)$ consumption jump factor (eq 5). Consistent.
+- **Market access:** $\alpha$, $\psi$. Consistent.
+- **Pricing:** $M_{t,t+1}$ SDF (eq 7), $a$ effective discount factor (eq 8), $\bar{v}$ benchmark P/D (eq 9), $v^A$, $v^N$ P/D ratios. $a_t^A$ for differential growth (eq 12). Consistent; $a_t^A$ reduces to $a$ in the baseline case as expected.
+- **Extension:** $\delta$, $\delta_H$, $\delta_O$, $\pi$, $Y_O$, $d$, $\eta$, $J_O$, $\omega(\alpha)$. All introduced cleanly and used consistently.
 
-No notational conflicts found.
-
+No notation conflicts found.
 
 ## Condition 2: Consistent Assumptions — PASS
 
-All mathematical assumptions:
+Key assumptions:
+1. $\gamma > 1$, $\beta \in (0,1)$ (CRRA preferences, eq 1)
+2. $c_t = D_t^A + D_t^N$ (market clearing, eq 2)
+3. $g^A \geq g^N > 0$ (growth rates, eq 4)
+4. $\lambda \in (0,1)$ (singularity probability)
+5. $\theta > 0$ (AI dividend jump, eq 5)
+6. $\phi \in (0,1)$ (non-AI dividend drop, eq 5)
+7. $a < 1$ (finite valuations, eq 8)
+8. $\alpha \in [0,1]$, $\psi > 0$ (market access, eq 6)
+9. $\delta \in [0,1)$ (extinction probability)
 
-1. $\gamma > 1$, $\beta \in (0,1)$ (eq. 1)
-2. $g^A \geq g^N > 0$ (eq. 4)
-3. $\lambda \in (0,1)$ (Section 2.2)
-4. $\theta > 0$, $\phi \in (0,1)$ (eq. 5)
-5. $a \equiv \beta(1+g)^{1-\gamma} < 1$ (eq. 8)
-6. $\alpha \in [0,1]$, $\psi > 0$ (eq. 6)
-7. $\delta \in [0,1)$ (Section 4.1)
-
-Compatibility check: Assumption 5 ($a < 1$) follows from Assumptions 1–2: since $\beta < 1$, $1+g > 1$, and $1-\gamma < 0$, we have $(1+g)^{1-\gamma} < 1$, so $a = \beta(1+g)^{1-\gamma} < 1$. All other assumptions involve disjoint parameters or are trivially compatible. No contradictions.
-
+Consistency check: Assumption 7 ($a < 1$) follows from assumptions 1 and 3: $a = \beta(1+g)^{1-\gamma}$ with $\beta < 1$, $g > 0$, $\gamma > 1$ implies $(1+g)^{1-\gamma} < 1$, so $a < 1$. All parameter domains are compatible. No pair of assumptions is contradictory.
 
 ## Condition 3: Logical Results — FAIL
 
-### Propositions 1–4 and Corollaries 1–2: Verified correct
+**Proposition 1 (Equilibrium Valuations):** Verified. The Euler equation expands correctly into the two-state formula. Solving for $v^A$ and substituting $1 + \bar{v} = 1/(1-a)$ yields eq (10). Numerically confirmed: all values in Table 1 match to stated precision.
 
-**Proposition 1 (Valuations).** Re-derived from the Euler equation. The pre-singularity Euler equation for the AI stock expands to $v^A = (1-\lambda)a(1+v^A) + \lambda a J^{-\gamma}(1+\theta)(1+\bar{v})$. Solving and substituting $1+\bar{v} = 1/(1-a)$ yields eq. (9). Verified algebraically. ✓
+**Proposition 2 (Hedging Premium):** Verified. Eq (11) follows from subtracting eq (10b) from eq (10a). Parts (i)–(iii) verified analytically. Decomposition (eq 11) confirmed.
 
-**Proposition 2 (Premium).** Subtracting eq. (10) from eq. (9) yields eq. (11). Parts (i)–(iii) verified by direct differentiation and limit evaluation. ✓
+**Corollary 1 (Partial Market Access):** Verified. Follows from Prop 2(ii) and $\tilde{s}$ increasing in $\alpha$.
 
-**Decomposition (eq. 12).** Trivially factors from eq. (11). ✓
+**Corollary 2 (Welfare):** Verified. The value function is separable in $c$ and $s$ under CRRA with geometric growth. $W(\tilde{s}) = [1-a+\lambda a J(\tilde{s})^{1-\gamma}]/[(1-a)(1-(1-\lambda)a)]$. The consumption-equivalent variation follows. Welfare gains in Table 2 confirmed numerically (0.9%, 1.8%, 3.3%).
 
-**Corollary 1 (Partial Market Access).** Follows from Proposition 2(ii) via chain rule with $\tilde{s}(\alpha) = s + \alpha\psi$. ✓
+**Proposition 3 (Extinction):** Verified. The extinction state contributes $M \times 0 = 0$ to the Euler equation (payoffs are zero regardless of SDF). Scaling by $(1-\delta)$ is correct. Table 3 values confirmed.
 
-**Corollary 2 (Welfare).** The value-function structure is standard for CRRA with i.i.d. risk. The consumption-equivalent calculation is correct: since $1-\gamma < 0$ and $J$ is increasing in $\tilde{s}$, $W(\tilde{s})$ is decreasing, giving $\omega > 0$. ✓
+**Proposition 4 (Disagreement):** Verified. The four sub-states decompose correctly. Eq (16) confirmed algebraically.
 
-**Proposition 3 (Extinction).** The extinction state contributes zero to the Euler equation (zero dividends and prices). Scaling the singularity contribution by $(1-\delta)$ yields eq. (15). ✓
+**Proposition 5 (Hump-Shaped):** Verified. Part (i): $(1-\pi)\theta \to 0$ under super-linear growth. Part (ii): $J > 1$ threshold at $\theta > \phi(1-s)/s$ is correct.
 
-**Proposition 4 (Disagreement).** The four sub-states (extinction, survive+friction, survive+resolve) are correctly enumerated. The premium formula (eq. 17) is verified by summing contributions. ✓
+**Tables 1–3 and sensitivity table:** All numerical values confirmed to stated precision.
 
-**Numerical verification.** All entries in Tables 1–3 were independently recomputed from the formulas and match to within rounding precision. ✓
+**FAILURE: Inline $\eta$ robustness computation.** The paper states the effective hedging amplifier $(1-\eta)J^{-\gamma} + \eta J_O^{-\gamma}$ equals 1.81 at $\eta=0$, 1.50 at $\eta=0.10$, and 1.21 at $\eta=0.20$, with $J \approx 0.82$, $\gamma=3$, $J_O \approx 1.5$. The formula gives:
+- $\eta=0$: $1.81$ (correct)
+- $\eta=0.10$: $0.9 \times 1.814 + 0.1 \times 0.296 = 1.662$ (paper claims 1.50)
+- $\eta=0.20$: $0.8 \times 1.814 + 0.2 \times 0.296 = 1.510$ (paper claims 1.21)
 
-### Proposition 5 (Hump-Shaped Hedging Amplification): ERROR
+The claimed values cannot be derived from the stated formula and parameters. The discrepancy is large (10–20%). An alternative formula $[(1-\eta)J + \eta J_O]^{-\gamma}$ gives 1.43 and 1.14 respectively—closer but still inconsistent with the claims. No parameterization of the stated formula reproduces the claimed values.
 
-The hedging component is:
-$$\Delta^{\text{hedge}} = C \cdot (1-\pi)(\theta+\phi)(J^{-\gamma}-1)$$
-where $C > 0$ is a positive constant.
+## Condition 4: Interpretations — PASS (conditional on Condition 3 failure)
 
-**Part (i) error.** The proposition claims $\Delta^{\text{hedge}} \to 0$ as $Y_O \to \infty$ (equivalently, as $\theta$ grows without bound). The proof claims that $Y_O = \bar{Y}(1+\theta)$ suffices. This is incorrect.
+All key verbal economic claims are supported by the formal theory:
 
-With $Y_O = \bar{Y}(1+\theta)$, as $\theta \to \infty$:
-- $(1-\pi) = d/Y_O \approx d/(\bar{Y}\theta)$, which goes to zero as $1/\theta$
-- $J = 1-\phi+(\theta+\phi)s \approx s\theta$, so $J^{-\gamma} \to 0$ and $J^{-\gamma}-1 \to -1$
-- $(\theta+\phi) \approx \theta$
+1. "Hedging demand is part of the explanation" for high AI valuations — supported by $v^A > v^N$ (Prop 2).
+2. "Incomplete markets roughly double the premium" — $J^{-\gamma} \approx 1.81$ at baseline.
+3. Premium increasing in $\lambda$, decreasing in $s$ — Prop 2(i)–(ii).
+4. "If markets were complete, the hedging amplification would vanish" — $\tilde{s} \to$ large value, $J \to 1$, amplifier $\to 1$.
+5. Non-AI valuations rise with singularity risk — confirmed from $J^{-\gamma}(1-\phi) \approx 1.27 > 1$.
+6. "AI stocks cannot hedge extinction" — Prop 3, $(1-\delta)$ scaling.
+7. "Disagreement about extinction risk can partially unwind the friction" — Prop 4.
+8. "Broader market access makes the household unambiguously better off" — Corollary 2, $\omega > 0$.
+9. Self-limiting mechanism — $J(s_t)$ rising toward 1 as $s_t$ grows, confirmed analytically.
+10. Hump-shaped hedging amplification — Prop 5.
 
-The product: $(1-\pi)(\theta+\phi)(J^{-\gamma}-1) \approx \frac{d}{\bar{Y}\theta} \cdot \theta \cdot (-1) = -\frac{d}{\bar{Y}} \neq 0$.
-
-So with linear $Y_O$, $\Delta^{\text{hedge}}$ converges to $-Cd/\bar{Y}$, not zero. The proposition requires $Y_O$ to grow *faster than linearly* in $\theta$ (e.g., $Y_O \propto \theta^k$ for $k > 1$), but neither the proposition statement nor the proof imposes this condition.
-
-**Part (ii) additional issue.** For sufficiently large $\theta$, $J > 1$ (the singularity becomes positive for the household), causing $J^{-\gamma} - 1 < 0$ and $\Delta^{\text{hedge}} < 0$. This occurs when $\theta > \phi(1-s)/s$ (= 1.70 at baseline). The "hump shape" description is incomplete: the hedging component rises, falls through zero, and becomes negative — not merely "hump-shaped."
-
-
-## Condition 4: Interpretations — PASS
-
-All key verbal economic claims were checked against the formal theory:
-
-1. "AI stocks command a valuation premium increasing in singularity probability" — Proposition 2(i). ✓
-2. "Incomplete markets roughly double the premium" — $J^{-\gamma} \approx 1.81$ at baseline. ✓
-3. "The premium shrinks as the AI share increases" — Proposition 2(ii). ✓
-4. "Self-limiting mechanism" — Follows from Proposition 2(ii). ✓
-5. "Broader market access makes the household unambiguously better off" — Corollary 2. ✓
-6. "AI stocks cannot hedge extinction" — Proposition 3, linear in $(1-\delta)$. ✓
-7. "Disagreement about extinction risk can partially unwind the friction" — Proposition 4. ✓
-8. "Cash-flow premium remains when friction resolves" — Setting $\pi = 1$ in eq. (17). ✓
-9. "The hedging amplification is largest in an intermediate regime" — Qualitatively correct intuition, though the formal result (Proposition 5) has the proof error noted above. The verbal claim is directionally supported by the model structure.
-10. All calibration claims (29% premium, 2–2.7× with differential growth, 3.3% welfare gain) match the verified numerical results. ✓
-
-No unsupported verbal claims found.
-
-
-## Summary
-
-The core model (Sections 2–3) is mathematically rigorous: notation is consistent, assumptions are compatible, Propositions 1–4 and Corollaries 1–2 are correctly derived, and all numerical results verify. The failure is isolated to Proposition 5 in the extension (Section 4.3), where the proof's claimed sufficient condition ($Y_O = \bar{Y}(1+\theta)$) does not deliver the stated convergence result. The fix is straightforward — require super-linear growth of $Y_O$ in $\theta$ — but as stated, the proof is incorrect.
+The qualitative claims in the $\eta$ robustness paragraph ("premium remains substantial," "degrades smoothly") are directionally correct, but the specific numerical values cited are wrong (see Condition 3).
