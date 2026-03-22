@@ -1,40 +1,48 @@
 # Improvement Plan
 
-## Current Status
+## Current State
 
 - **spec-compliance**: PASS
-- **theory-correctness**: FAIL — Proposition 5 proof error
-- **referee-top3**: Two substantive comments
+- **theory-correctness**: FAIL — inline η-robustness numbers are wrong
+- **referee-top3**: two actionable comments
 
-## Priority 1: Fix Proposition 5 (theory-correctness FAIL)
+No overhaul needed. The model section is sound (notation consistent, assumptions consistent, all propositions verified). The single failure is an arithmetic error in inline numbers.
 
-The test identified that the proof of Proposition 5(i) is incorrect. The claim is that $\Delta^{\text{hedge}} \to 0$ as $Y_O \to \infty$, but the proof says "$Y_O = \bar{Y}(1+\theta)$ suffices." With linear $Y_O$, the product $(1-\pi)(\theta+\phi)(J^{-\gamma}-1)$ converges to $-d/\bar{Y}$, not zero.
+---
 
-**Fix:** Replace the linear specification with a super-linear one. Specifically:
+## Priority 1: Fix Failing Test (theory-correctness)
 
-1. Change the proof of Part (i) to require $Y_O$ to grow faster than linearly in $\theta$ — e.g., state that $Y_O$ grows at least quadratically (or simply say "provided $Y_O$ grows faster than linearly in $\theta$").
-2. In the proof of Part (ii), replace "$Y_O = \bar{Y}(1+\theta)$ suffices" with a correct sufficient condition, e.g., $Y_O = \bar{Y}(1+\theta)^k$ for $k > 1$.
-3. Add a brief economic justification: super-linear scaling is natural if AI output exhibits increasing returns — the same accelerating-returns logic that motivates the singularity concept.
+**Issue.** The η-robustness paragraph (Section 2.3, line 142) claims the effective hedging amplifier $(1-\eta)J^{-\gamma} + \eta J_O^{-\gamma}$ equals 1.50 at η=0.10 and 1.21 at η=0.20. The correct values (with J≈0.82, γ=3, J_O≈1.5) are approximately 1.66 and 1.51. The η=0 value (1.81) is correct.
 
-**Secondary issue (Part ii):** The test notes that for large $\theta$ (specifically $\theta > \phi(1-s)/s \approx 1.70$), the singularity becomes positive for the household ($J > 1$), so $J^{-\gamma} - 1 < 0$ and the hedging component turns negative. The "hump shape" description is incomplete — it rises, falls through zero, and becomes negative. Fix: acknowledge in the proposition statement or surrounding text that the hedging component eventually turns negative for very large $\theta$ (when the singularity ceases to be negative), reinforcing that hedging amplification is an intermediate-regime phenomenon.
+**Fix.** Recompute the amplifier for η=0.10 and η=0.20 using the stated formula and parameters, and replace the inline numbers with the correct values. Verify the qualitative claim ("premium remains substantial") still holds — it does, since even 1.51 > 1.
 
-## Priority 2: Referee Comments
+---
 
-### Comment 1 — AI owners as marginal investors in public AI stocks
+## Priority 2: Address Referee Comments (referee-top3)
 
-The referee argues that AI insiders (founders, VCs) are large shareholders of public AI companies and would have low marginal utility in the singularity state, weakening the hedging premium.
+### Comment 1 — Differential-growth calibration needs a table
 
-**Fix:**
-1. Add a paragraph in Section 2.3 (Incomplete Markets) or Section 3.2 explicitly acknowledging this tension.
-2. Argue that insiders are primarily constrained sellers (lockups, diversification mandates, board restrictions) who set quantities not prices, and that after lockup expiration their holdings are small relative to total public float.
-3. Add a simple robustness check: let a fraction $\eta$ of public AI shares be priced by AI owners (who have $J > 1$). Show the effective hedging amplifier becomes $(1-\eta)J^{-\gamma} + \eta J_O^{-\gamma}$ where $J_O > 1$, degrading the premium in $\eta$. Report a small table or inline calculation showing the premium remains substantial for moderate $\eta$.
+**Issue.** The paper's central quantitative claim — that with 3–5pp growth differentials the model generates v^A/v^N of 2.0–2.7× — appears only in prose (Section 3.3, "Differential Pre-Singularity Growth"). No exhibit supports it. The paper uses only 5 of 6 allowed exhibits.
 
-### Comment 2 — Non-AI stock valuations rise with singularity risk
+**Fix.** Add a table (Table 4 or renumber) showing v^A/v^N for a grid of (g^A − g^N, λ) values, with columns decomposing the premium into hedging-amplifier and cash-flow components. Place it in Section 3.3 after equation (12). This is the 6th and final exhibit.
 
-Table 1 shows non-AI P/D rises from 11.9 to 13.2 as $\lambda$ goes from 0 to 0.05. The referee notes this is a substantive, counterintuitive prediction the paper ignores.
+**Implementation.** Write an R script to compute the recursive v^A formula (eq 12) at t=0 for each (g^A − g^N, λ) combination, decomposing into cash-flow and hedging components. Output a LaTeX table fragment.
 
-**Fix:**
-1. Add a paragraph in Section 3.2 or 3.4 discussing the level effects on both stock types. Explain: $J^{-\gamma}(1-\phi) > 1$ at baseline, so the marginal-utility surge dominates the dividend drop for non-AI stocks too.
-2. Note the condition under which non-AI stocks *fall* with singularity risk: $J^{-\gamma}(1-\phi) < 1$, i.e., when the singularity is severe enough that even the SDF boost cannot overcome the dividend collapse.
-3. Frame this as an additional testable implication: all stocks should appreciate when perceived singularity risk rises, but AI stocks more so. Contrast with standard rare-disaster models (Barro, Rietz) where disaster risk depresses all valuations.
-4. Note that $v^A/v^N$ understates the absolute valuation effect on AI stocks since both numerator and denominator are moving.
+### Comment 2 — Derive and discuss expected returns
+
+**Issue.** The model implies AI stocks are insurance assets with low expected excess returns (Cov(M, R^A) > 0), yet AI stocks have delivered high realized returns. The paper never states this implication or addresses the tension.
+
+**Fix.** Add a short subsection (or a paragraph within Section 3) that:
+1. Derives the expected return differential in closed form from the existing Euler equation. This is straightforward: E[R^A] = 1/E[M·R^A] adjusted for covariance, yielding a lower risk premium for AI stocks.
+2. States the prediction clearly: the hedging channel implies AI stocks earn a *lower* risk premium than non-AI stocks.
+3. Discusses the tension with data: high realized returns are consistent with (a) the singularity not having occurred yet (peso problem), and (b) upward revisions in perceived λ driving capital gains — both of which the model accommodates.
+
+Place this after the testable-implications subsection or integrate it there.
+
+---
+
+## Sequencing
+
+1. Fix η numbers (small, surgical edit — unblocks theory-correctness).
+2. Build differential-growth table (requires R computation + LaTeX table).
+3. Add expected-returns discussion (analytical derivation + prose).
