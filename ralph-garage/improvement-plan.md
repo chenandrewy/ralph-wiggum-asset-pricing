@@ -2,58 +2,30 @@
 
 ## Status
 
-All tests pass. The referee-top3 review identifies two substantive gaps that limit publishability.
+All tests pass (spec-compliance, theory-correctness). One referee review (referee-top3) with two comments.
 
-## Key Issues
+## Referee Comments Summary
 
-### From referee-top3
+1. **Event study identification**: The six events don't cleanly identify singularity-risk shocks. Most events simultaneously signal AI economic importance (bullish for growth), not just tail risk. The CAIS extinction statement is the cleanest event; the others are confounded. The referee wants either sharper identification or honest reframing.
 
-1. **No empirical content beyond Figure 1.** The testable-implications section (3.4) promises an identification strategy (singularity-risk shocks orthogonal to earnings revisions) but provides zero empirical evidence. The referee calls this a "promissory note" and says it makes the hedging channel "unfalsified and unfalsifiable."
+2. **AI-specificity vs generic disaster risk**: A 19% consumption drop looks like a generic rare disaster. Why does the hedging premium accrue to AI stocks specifically, rather than Treasuries, gold, or defensive equities? The two-asset model makes AI stocks mechanically the only hedge. The referee also asks how the premium scales if the singularity is gradual (many small steps) rather than one large jump.
 
-2. **The incomplete-markets friction ($\alpha$) is asserted, not measured.** The welfare analysis ($\omega$ up to 3.4%) and the GKP comparison ("reducible in principle") are disconnected from observable data. No proxies for $\alpha$ are discussed, $\psi = 0.15$ is assumed without justification, and the policy discussion is abstract.
+## Plan
 
-### From CFR-R1 referee report (spec file)
+### Change 1: Reframe the event study as suggestive evidence with an explicit identification caveat
 
-The CFR referee's two concerns have been addressed in prior iterations:
-- GKP subsumption concern → addressed via the incomplete-markets parameterization ($\alpha$), the hedging/cash-flow decomposition, and explicit GKP comparison prose.
-- Jones (2024) integration → addressed in Section 4 (extinction risk, heterogeneous beliefs, infinite output with bilateral-trade microfoundation).
+**Where**: Section 3.3, the paragraph introducing the event study and the paragraph interpreting Table 4.
 
-## No overhaul needed
+**What to do**:
+- Add 1-2 sentences acknowledging the confound: most events simultaneously signal AI economic importance, which revises growth expectations upward, not just singularity probabilities. Only the CAIS extinction statement is a clean singularity-risk shock.
+- Reframe the event study from a "preliminary test" to "suggestive evidence consistent with" the hedging channel. Do not claim it identifies the channel.
+- Add a sentence describing what *would* constitute a clean test: events that are unambiguously bad news for AI (safety incidents, capability failures) yet generate positive AI abnormal returns. That would be a smoking gun.
+- Remove or soften the claim that "none of the six events coincided with earnings announcements or analyst forecast revisions" as sufficient for identification—acknowledge that absence of concurrent analyst revisions does not mean the events are uninformative about future cash flows.
 
-The model section is clean: theory-correctness passes, notation is consistent, all propositions are correctly derived, and the narrative aligns with results. The model structure is sound and does not need reworking.
+### Change 2: Add a short discussion distinguishing AI singularity risk from generic disaster risk
 
-## Plan: Add empirical content to strengthen the hedging channel
+**Where**: After the "Level Effects on Non-AI Stocks" subsubsection (end of Section 3.2), or as a new paragraph within Section 3.3.
 
-The referee's two comments both point to the same gap: the paper lacks empirical grounding beyond the motivating figure. The plan focuses on closing this gap within the 20-page constraint.
-
-### 1. Add a preliminary event study (addresses referee comment 1)
-
-**What:** A small-sample descriptive analysis showing AI stocks respond abnormally to singularity-risk events, controlling for earnings news. Use 5–8 events: the 2023 executive order on AI safety, publication of Grace et al. (2024) expert survey results, major lab safety announcements (e.g., Anthropic/OpenAI safety publications), EU AI Act milestones.
-
-**Where:** Replace the current testable-implications subsection (Section 3.4) with a short empirical subsection. Present abnormal returns for AI stocks vs. non-AI stocks in a narrow event window (e.g., [-1, +1] days). A simple table of cumulative abnormal returns (CARs) would suffice—this is a theory paper, not an empirical one, so a descriptive pass is adequate.
-
-**Data:** CRSP daily returns for the AI portfolio (NVDA, MSFT, GOOG, META, AMZN) and S&P 500. Market-model residuals using a 120-day estimation window.
-
-**Code:** Write an R script `code/table-event-study.R` that computes CARs and outputs a LaTeX table.
-
-**Constraint:** This adds one exhibit (table). Current count is 5; max is 6.
-
-### 2. Add observable proxies for $\alpha$ and ground $\psi$ in data (addresses referee comment 2)
-
-**What:** Add 2–3 paragraphs to the calibration/sensitivity discussion that:
-- Identify observable proxies for $\alpha$: ratio of public-to-total AI market capitalization, household participation rates in venture/PE funds, secondary-market volume for pre-IPO AI shares.
-- Calibrate $\psi$ from data rather than assuming it: estimate the size of private AI capital (major private AI labs' valuations) relative to aggregate household consumption.
-- Briefly note how $\alpha$ is evolving (secondary markets like Forge/EquityZen, AI-focused ETFs, accredited investor definition changes).
-
-**Where:** Add to the partial-market-access discussion in Section 3.2 (after Table 3).
-
-**Constraint:** No new exhibits needed—this is prose and calibration grounding.
-
-### 3. Tighten the testable-implications prose
-
-**What:** Reframe the section around the event-study evidence rather than the current promissory-note framing. Keep the theoretical identification argument ($\lambda$-shocks orthogonal to earnings) but present it as the motivation for the empirical exercise, not a placeholder for future work. Remove "We leave this empirical test to future work."
-
-### 4. Minor prose adjustments
-
-- In the GKP comparison, add a sentence noting that the $\alpha$-trajectory is observable (tying to the proxies from item 2), strengthening the "reducible in principle" claim.
-- In the conclusion, update the testability language to reference the event-study evidence.
+**What to do**:
+- Add a paragraph (4-6 sentences) addressing why the hedging premium is AI-specific. The key distinction: standard rare disasters (recessions, pandemics) destroy value broadly—Treasuries and gold hedge those. The AI singularity is *asymmetric by construction*: it devastates labor and non-AI dividends while enriching AI capital. Only assets correlated with the AI upside can hedge this specific risk. Treasuries and gold do not appreciate when AI advances; AI stocks do. The two-asset structure is not a limitation—it reflects the economic reality that the hedging instrument must be positively exposed to the shock that harms the household.
+- Briefly address gradual vs sudden singularity: if displacement is gradual (many small shocks), each shock produces a smaller marginal-utility surge and the hedging amplifier $J^{-\gamma}$ is smaller per event. The model's one-shot structure is a simplification, but the qualitative mechanism (asymmetric exposure generating hedging demand) survives; the quantitative magnitude scales with the size of each discrete jump. This is consistent with the self-limiting mechanism already in the paper (rising $s_t$ erodes $J^{-\gamma}$).
