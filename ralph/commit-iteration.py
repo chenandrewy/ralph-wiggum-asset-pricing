@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# How to run: python3 ralph/commit-iteration.py [--repo-root /path/to/repo] [--test-results-dir /path/to/repo/test-results]
+# How to run: python3 ralph/commit-iteration.py
 # Inputs: test-results/summary.json and changes under paper/ralph-garage.
 # Outputs: One git commit for the iteration created by Claude; exits non-zero if no commit is created.
 
@@ -57,8 +57,6 @@ def commit_prefix() -> str:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Create one Ralph iteration commit.")
-    parser.add_argument("--repo-root", default=str(DEFAULT_REPO_ROOT))
-    parser.add_argument("--test-results-dir", default=str(DEFAULT_TEST_RESULTS_DIR))
     parser.add_argument("--add-path", action="append")
     return parser.parse_args()
 
@@ -241,12 +239,9 @@ def commit_with_message(repo_root: Path, message: str) -> None:
 
 def main() -> int:
     args = parse_args()
-    repo_root = Path(args.repo_root)
-    test_results_dir = Path(args.test_results_dir)
+    repo_root = DEFAULT_REPO_ROOT
+    test_results_dir = DEFAULT_TEST_RESULTS_DIR
     requested_paths = args.add_path if args.add_path else DEFAULT_ADD_PATHS
-
-    if not repo_root.is_dir():
-        raise FileNotFoundError(f"missing repo root: {repo_root}")
 
     add_paths = existing_add_paths(repo_root, requested_paths)
     git_run(repo_root, "add", "-A", "--", *add_paths)

@@ -6,7 +6,6 @@ max-iter: 2
 test-before-loop: off
 
 # == Test Set ==
-
 test-mode: selected
 
 selected-tests:
@@ -15,9 +14,6 @@ selected-tests:
 
 # Agent log verbosity
 agent-log-mode: verbose
-
-# Delete agent log files older than this many days
-agent-log-retention-days: 1
 
 # == Referee reviews and continual-improvement mode ==
 

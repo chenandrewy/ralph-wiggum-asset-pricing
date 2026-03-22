@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-How to run: python ralph/run-tests.py [--jobs N] [--agent-log-mode MODE]
+How to run: python ralph/run-tests.py [--jobs N]
 Inputs: config-ralph.yaml, code/*, paper/paper.tex, paper/paper.pdf, ralph-garage/page-images/page-*.png, ralph-garage/page-images/exhibit-manifest.json, ralph/agent_wrapper.py, tests/*.py
 Outputs: test-results/summary.json
 """
@@ -34,12 +34,6 @@ def parse_args() -> argparse.Namespace:
         type=int,
         default=None,
         help="Number of tests to run in parallel (default: all selected tests)",
-    )
-    parser.add_argument(
-        "--agent-log-mode",
-        choices=VALID_AGENT_LOG_MODES,
-        default=None,
-        help="Override config agent-log-mode for this run",
     )
     return parser.parse_args()
 
@@ -176,8 +170,7 @@ def main() -> int:
         config = load_config(config_path, list_keys={"selected-tests"})
         available_tests = discover_tests(tests_dir)
         test_mode, selected_tests = selected_tests_from_config(config, available_tests)
-        configured_mode = agent_log_mode_from_config(config)
-        agent_log_mode = (args.agent_log_mode or configured_mode).strip().lower()
+        agent_log_mode = agent_log_mode_from_config(config)
     except ValueError as exc:
         print(f"ERROR: {exc}", file=sys.stderr)
         return 1

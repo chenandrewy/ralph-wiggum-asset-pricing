@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 """
-How to run: python ralph/run-reviews.py [--agent-log-mode MODE]
+How to run: python ralph/run-reviews.py
 Inputs: config-ralph.yaml, tests/referee-*.py
 Outputs: test-results/summary.json (reviews section)
 """
 
 from __future__ import annotations
 
-import argparse
 import json
 import pathlib
 import subprocess
@@ -22,15 +21,12 @@ VALID_AGENT_LOG_MODES = ("off", "verbose", "all", "1", "true", "yes")
 NEW_YORK_TZ = ZoneInfo("America/New_York")
 
 
-def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Run paper review suite")
-    parser.add_argument(
-        "--agent-log-mode",
-        choices=VALID_AGENT_LOG_MODES,
-        default="off",
-        help="Agent log verbosity",
-    )
-    return parser.parse_args()
+def agent_log_mode_from_config(config: dict[str, object]) -> str:
+    mode = str(config.get("agent-log-mode") or "off").strip().lower()
+    if mode not in VALID_AGENT_LOG_MODES:
+        allowed = ", ".join(sorted(VALID_AGENT_LOG_MODES))
+        raise ValueError(f"invalid agent-log-mode '{mode}', expected one of: {allowed}")
+    return mode
 
 
 def discover_reviews(reviews_dir: pathlib.Path) -> list[str]:
@@ -105,7 +101,6 @@ def _merge_reviews_into_summary(summary_path: pathlib.Path, results: list[dict[s
 
 
 def main() -> int:
-    args = parse_args()
     repo_root = pathlib.Path(__file__).resolve().parents[1]
     config_path = repo_root / "config-ralph.yaml"
     reviews_dir = repo_root / "tests"
@@ -120,6 +115,7 @@ def main() -> int:
         config = load_config(config_path, list_keys={"selected-reviews"})
         available_reviews = discover_reviews(reviews_dir)
         review_ids = selected_reviews_from_config(config, available_reviews)
+        agent_log_mode = agent_log_mode_from_config(config)
     except ValueError as exc:
         print(f"[run-reviews] config error: {exc}", file=sys.stderr)
         _merge_reviews_into_summary(summary_path, [])
@@ -135,7 +131,7 @@ def main() -> int:
     results = []
     for review_id in review_ids:
         print(f"[run-reviews] starting {review_id}")
-        result = run_single_review(repo_root, reviews_dir, review_id, args.agent_log_mode)
+        result = run_single_review(repo_root, reviews_dir, review_id, agent_log_mode)
         print(f"[run-reviews] completed {review_id} ({result['status']})")
         results.append(result)
 

@@ -8,9 +8,9 @@ Define the Ralph loop contract for improving the paper and recording current tes
 
 - The main control flow lives in `ralph/ralph-loop.sh`.
 - The bash loop should stay minimal and explicit.
-- Scalar config reads are handled by `ralph/read-config.py`.
+- Config loading and validation is handled by `ralph/load-config.py`.
 - Python scripts handle the individual work steps:
-  - `ralph/read-config.py`
+  - `ralph/load-config.py`
   - `ralph/author-plan.py`
   - `ralph/author-improve.py`
   - `ralph/run-tests.py`
@@ -24,6 +24,7 @@ Define the Ralph loop contract for improving the paper and recording current tes
 - Test definitions live in `tests/`.
 - All prompts live inline in their respective scripts (e.g. `ralph/author-plan.py`, `ralph/author-improve.py`, `ralph/commit-iteration.py`).
 - Runtime configuration lives in `config-ralph.yaml`.
+- `config-ralph.yaml` is re-read at the start of each iteration so that the human can adjust settings (e.g. `max-iter`) mid-run without restarting.
 - Referee definitions live in `tests/` with `referee-` prefix.
 - `config-ralph.yaml` may optionally enable referee reviews with `reviews`.
 - `config-ralph.yaml` may optionally enable continual-improvement mode with `continual-improvement`; this requires `reviews: true`.
