@@ -49,11 +49,11 @@ Figure~\ref{fig:ai-valuations} documents the motivating fact: publicly traded AI
 \label{fig:ai-valuations}
 \end{figure}
 
-Our main result is a closed-form expression for the price-dividend ratio of AI stocks. The AI valuation premium---the gap between AI and market portfolio valuations---is increasing in the probability of a singularity, and decreasing in the existing AI share of the household's portfolio. For a calibration with a 2\% annual singularity probability, AI stocks trade at a price-dividend ratio 29\% above non-AI stocks (Table~\ref{tab:calibration}). In the data, AI stocks trade at price-dividend ratios roughly 2 to 2.7 times the market average (Figure~\ref{fig:ai-valuations}). The model's hedging channel accounts for a meaningful share of this gap; the remainder likely reflects differential growth expectations.
+Our main result is a closed-form expression for the price-dividend ratio of AI stocks. The AI valuation premium---the gap between AI and market portfolio valuations---is increasing in the probability of a singularity, and decreasing in the existing AI share of the household's portfolio. For a calibration with a 2\% annual singularity probability, AI stocks trade at a price-dividend ratio 29\% above non-AI stocks (Table~\ref{tab:calibration}). In the data, AI stocks trade at price-dividend ratios roughly 2 to 2.7 times the market average (Figure~\ref{fig:ai-valuations}). The model's hedging channel accounts for a meaningful share of this gap; a back-of-the-envelope decomposition shows that the remainder is consistent with an AI dividend growth premium of 3 to 5 percentage points---well within empirical estimates (Section~\ref{sec:calibration}). Under more severe calibrations, the hedging channel alone can account for most of the observed gap.
 
 Incomplete markets are the key friction. If the household could invest in private AI capital, it could perfectly hedge the singularity risk, and the valuation premium would vanish. The premium exists precisely because the household is excluded from the most direct hedge---ownership of the AI technology itself---and must instead rely on the imperfect hedge provided by public AI stocks.
 
-Our paper applies the displacement-risk framework of \citet{garleanu2012displacement} to the specific context of an AI singularity. In their model, future innovators capture gains from new technology, and current agents cannot trade with these yet-to-be-born cohorts. Our modeling is similar in spirit, but the source of market incompleteness differs: in our setting, the AI owners \emph{already exist} as contemporaries of the household, but their capital is private and untradeable. This distinction has a practical implication noted in GKP's footnote~14: in their OLG economy, bequests or government transfers between generations could, in principle, eliminate displacement risk entirely. In our model, intergenerational transfers do not help---the friction is about asset accessibility, not about the non-existence of trading partners---but broadening access to private AI capital (e.g., through securitization or regulatory reform) could.
+Our paper applies the displacement-risk framework of \citet{garleanu2012displacement} to the specific context of an AI singularity. The models share a common structure---technology shocks that benefit some agents at the expense of others, with incomplete markets preventing full risk-sharing---but differ in three ways. First, the \emph{source} of the friction differs: in GKP, future innovators have not yet been born, so current agents cannot trade with them; in our model, AI owners already exist but their capital is private and untradeable. Second, the \emph{policy implications} differ: GKP's intergenerational friction is structural and cannot be reduced by financial innovation, whereas our friction can be relaxed by broadening access to private AI capital through securitization, public offerings, or regulatory reform. As GKP note in their footnote~14, bequests or government transfers could eliminate their displacement risk entirely; in our model, intergenerational transfers do not help, but financial inclusion does. Third, we parameterize the degree of market incompleteness with a continuous market-access parameter~$\alpha$ (Section~\ref{sec:incomplete}), which provides a formal policy lever: as~$\alpha$ rises from zero to one, the hedging premium degrades smoothly to zero. This continuous relaxation has no natural analogue in GKP's OLG setting.
 
 In an extension, we incorporate two features of transformative AI emphasized by \citet{jones2024ai}. First, if the singularity may cause human extinction, AI stocks are worthless in the extinction state and the hedging premium falls. We calibrate this using Jones's VSL estimates. Second, Jones shows that rich and poor households view existential risk differently: the rich, with more to lose, are more concerned. In our model, if AI owners (the rich) are pessimistic about survival, they discount their private capital and may be more willing to sell it, loosening the incomplete-markets friction and reducing the hedging premium. This connects our model to the broader debate about the opportunities and risks of transformative AI \citep{korinek2024scenarios}.
 
@@ -128,7 +128,12 @@ The household is excluded from private AI capital. This is the source of market 
 
 If markets were complete---if the household could freely trade claims on private AI capital---it could construct a portfolio that perfectly hedges the singularity. A household holding both public stocks and private AI capital would experience no consumption disruption from the singularity, because the gains on AI capital would offset the losses on non-AI assets. In that case, the singularity would be a redistribution between asset classes, not a consumption disaster, and the AI valuation premium would vanish.
 
-As discussed in the introduction, the friction here differs from the intergenerational non-existence in \citet{garleanu2012displacement}. Our friction is about asset accessibility: it could, in principle, be resolved by broadening ownership of private AI capital, without requiring intergenerational transfers.
+We parameterize the degree of market incompleteness with a market-access parameter $\alpha \in [0,1]$. At $\alpha = 0$, the household is fully excluded from private AI capital---the baseline case. At $\alpha = 1$, the household has full access and markets are complete. For intermediate values, the household acquires partial exposure to private AI capital, and its effective AI share rises to:
+\begin{equation}
+\label{eq:effective-share}
+\tilde{s}(\alpha) = s + \alpha\,\psi,
+\end{equation}
+where $\psi > 0$ measures the size of private AI capital relative to the household's baseline consumption. The consumption jump factor generalizes to $J(\tilde{s}(\alpha))$, and all pricing results carry through with $\tilde{s}$ replacing~$s$. We present the main results for the baseline case $\alpha = 0$ and examine the effect of partial market access in Section~\ref{sec:calibration}.
 
 
 %% ============================================================
@@ -220,6 +225,17 @@ Equation~\eqref{eq:premium} follows by subtracting~\eqref{eq:pd-nonai} from~\eqr
 
 The economic intuition is straightforward. AI stocks act as insurance: they pay high dividends in the state where the household suffers most. Investors are willing to pay a premium for this insurance, and the premium grows with the perceived likelihood of a singularity. Conversely, the premium shrinks as the AI share~$s$ increases, because a larger AI share makes the singularity less devastating---the household's own AI holdings partially offset its losses. There is a natural self-limiting mechanism: as AI stocks become more expensive and a larger fraction of the portfolio, the very risk that justifies their premium diminishes.
 
+\begin{corollary}[Partial Market Access]
+\label{cor:partial}
+The hedging premium $v^A - v^N$ is strictly decreasing in the market-access parameter~$\alpha$. As market access broadens, the singularity becomes less devastating and the hedging motive weakens.
+\end{corollary}
+
+\begin{proof}
+Since $\tilde{s}(\alpha) = s + \alpha\psi$ is increasing in~$\alpha$ and the premium is decreasing in the effective AI share (Proposition~\ref{prop:premium}(ii)), the result follows.
+\end{proof}
+
+Corollary~\ref{cor:partial} gives the paper's policy discussion a formal backbone: broadening access to private AI capital (increasing~$\alpha$) continuously reduces the hedging premium. Unlike the intergenerational friction in \citet{garleanu2012displacement}, which cannot be relaxed through financial innovation, our friction admits a natural continuous relaxation.
+
 
 \subsection{Calibration}
 \label{sec:calibration}
@@ -245,7 +261,42 @@ $\lambda$ & $v^A$ & $v^N$ & $v^A - v^N$ & $v^A / v^N$ \\
 
 Absent singularity risk ($\lambda = 0$), both stocks have a P/D ratio of 11.9, the standard Gordon growth benchmark. As singularity risk increases, AI stock valuations rise sharply: at $\lambda = 0.02$, the AI P/D ratio is 16.2 versus 12.6 for non-AI stocks, a 29\% premium. At $\lambda = 0.05$, the premium reaches 53\%.
 
-These magnitudes are economically meaningful. In Figure~\ref{fig:ai-valuations}, AI stocks trade at price-dividend ratios roughly 2 to 2.7 times the market portfolio in recent years. The model's 29--53\% hedging premium does not close this entire gap, but it represents a first-order contribution from a channel---singularity hedging---that operates independently of growth expectations.
+These magnitudes are economically meaningful but do not close the full gap with the data. In Figure~\ref{fig:ai-valuations}, AI stocks trade at price-dividend ratios roughly 2 to 2.7 times the market portfolio. The 29--53\% hedging premium is a first-order contribution from a channel that operates independently of growth expectations. We now decompose the residual and examine the sensitivity of the premium to key parameters.
+
+\subsubsection*{Growth and Hedging: A Decomposition}
+
+The model assumes a common dividend growth rate across all stocks. In practice, AI firms' dividends are expected to grow faster than the market average. How much of the observed valuation gap reflects growth, and how much reflects hedging?
+
+Treating the two channels as approximately multiplicative, the hedging channel generates a ratio $v^A/v^N = 1.29$ at $\lambda = 0.02$. In the data, the ratio is roughly 2 to 2.7. The residual attributable to differential growth expectations is therefore $2.0/1.29 \approx 1.6$ to $2.7/1.29 \approx 2.1$. In a Gordon growth model, these ratios imply an AI dividend growth premium of approximately 3 to 5 percentage points above the market average---well within the range of analyst consensus forecasts for major AI firms. The hedging channel and the growth channel are complementary: neither alone explains the full gap, but together they can account for the observed valuations.
+
+\subsubsection*{Sensitivity and Partial Market Access}
+
+Table~\ref{tab:sensitivity} reports how the hedging premium varies across key parameters. Higher risk aversion~($\gamma = 5$) combined with a more severe singularity~($\phi = 0.50$) substantially increases the premium to $v^A/v^N = 1.87$, close to the lower end of the data. A smaller public AI share~($s = 0.05$) raises the premium because the household is less hedged and the singularity is more devastating. Partial market access~($\alpha > 0$) with private AI capital equal to the public share~($\psi = 0.15$) smoothly reduces the premium: at $\alpha = 0.50$, the ratio falls from 1.29 to 1.24; at $\alpha = 1.00$, it falls to 1.21.
+
+\begin{table}[t]
+\centering
+\caption{Sensitivity of the hedging premium to key parameters. Each row varies one or two parameters from the baseline ($\beta = 0.96$, $\gamma = 3$, $g = 0.02$, $\theta = 0.50$, $\phi = 0.30$, $s = 0.15$, $\lambda = 0.02$, $\alpha = 0$). Partial-access rows set $\psi = 0.15$.}
+\label{tab:sensitivity}
+\medskip
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+Variation & $v^A$ & $v^N$ & $v^A - v^N$ & $v^A / v^N$ \\
+\midrule
+Baseline & 16.2 & 12.6 & 3.6 & 1.29 \\[3pt]
+$\gamma = 5$ & 11.5 & 8.9 & 2.6 & 1.29 \\
+$\phi = 0.50$ & 23.0 & 14.0 & 9.1 & 1.65 \\
+$\gamma = 5$, $\phi = 0.50$ & 22.1 & 11.8 & 10.3 & 1.87 \\
+$s = 0.05$ & 18.7 & 13.7 & 4.9 & 1.36 \\
+$s = 0.30$ & 13.9 & 11.5 & 2.4 & 1.21 \\
+$\theta = 1.00$ & 16.4 & 11.9 & 4.5 & 1.38 \\[3pt]
+$\alpha = 0.25$ & 15.5 & 12.3 & 3.2 & 1.26 \\
+$\alpha = 0.50$ & 14.9 & 12.0 & 2.9 & 1.24 \\
+$\alpha = 1.00$ & 13.9 & 11.5 & 2.4 & 1.21 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Two results stand out. First, the hedging channel can account for a substantial share of observed valuations under plausible parameter combinations, especially when the singularity is more severe or risk aversion is higher. Combined with a growth differential of 3--5 percentage points, the model can match the 2--2.7$\times$ premium in the data. Second, partial market access degrades the premium smoothly, providing a quantitative policy lever: each increment of~$\alpha$ produces a measurable reduction in the valuation distortion caused by incomplete markets.
 
 
 %% ============================================================
@@ -356,13 +407,13 @@ The hump shape captures a paradox: the AI valuation premium is largest in an int
 \label{sec:conclusion}
 %% ============================================================
 
-This paper offers a simple explanation for the high valuations of AI stocks: hedging demand against a negative AI singularity. In our model, a representative household excluded from private AI capital pays a premium for publicly traded AI stocks because they appreciate in the state where the household suffers most. The premium is increasing in the probability of a singularity and decreasing in the household's existing AI exposure.
+This paper offers a simple explanation for the high valuations of AI stocks: hedging demand against a negative AI singularity. In our model, a representative household excluded from private AI capital pays a premium for publicly traded AI stocks because they appreciate in the state where the household suffers most. The premium is increasing in the probability of a singularity and decreasing in the household's existing AI exposure. A decomposition of observed valuations shows that the hedging channel and differential growth expectations together can account for the AI valuation premium in the data.
 
-The key friction is market incompleteness. Private AI capital is concentrated in the hands of AI owners---founders, venture capitalists, and early employees---who are not marginal investors in public markets. The representative household cannot access this capital directly and must rely on the imperfect hedge provided by public AI stocks.
+The key friction is market incompleteness. Private AI capital is concentrated in the hands of AI owners---founders, venture capitalists, and early employees---who are not marginal investors in public markets. The representative household cannot access this capital directly and must rely on the imperfect hedge provided by public AI stocks. We parameterize this friction with a continuous market-access parameter~$\alpha$, showing that the premium degrades smoothly as access broadens.
 
 Our model suggests that the current wave of AI investment reflects, in part, a rational response to a genuinely new risk. The AI singularity is not a generic innovation shock; it is a concentrated transfer of economic power to a small class of AI owners. To the extent that public AI stocks offer a hedge against this transfer, their elevated valuations are not a bubble---they are the price of insurance.
 
-Looking forward, our analysis highlights the role of financial market design in managing AI risk. Broadening access to private AI capital---through securitization, public offerings, or regulatory reform---would directly reduce the incomplete-markets friction and, with it, the hedging premium. The policy implication is that financial inclusion in the AI economy is not only an equity concern but also a pricing one: incomplete markets generate the very premia that make AI stocks appear expensive.
+Looking forward, our analysis highlights the role of financial market design in managing AI risk. The market-access parameter~$\alpha$ provides a formal policy lever: broadening access to private AI capital---through securitization, public offerings, or regulatory reform---directly reduces the incomplete-markets friction and, with it, the hedging premium. The policy implication is that financial inclusion in the AI economy is not only an equity concern but also a pricing one: incomplete markets generate the very premia that make AI stocks appear expensive.
 
 
 %% ============================================================

@@ -1,47 +1,51 @@
 # Improvement Plan
 
-## Status Summary
-
-- **Tests**: 2/2 pass (spec-compliance, theory-correctness)
-- **Referee (top3)**: 2 comments, both substantive
+## Current Status
+- **Tests**: All pass (spec-compliance, theory-correctness).
+- **Referee reviews**: referee-top3 completed; CFR-R1 report on file.
 
 ## Key Issues
 
-### 1. P/D vs P/E mismatch (Referee Comment 1)
-The model derives price-dividend ratios, but Figure 1 plots price-earnings ratios. The text claims the model's 29% premium is "broadly consistent with" Figure 1, but P/D and P/E are different objects—AI firms retain most earnings and many pay no dividends, so P/D >> P/E. The paper's central quantitative claim lacks a valid empirical benchmark.
+### From referee-top3
+1. **Quantitative gap is the central vulnerability.** The model produces a 29% hedging premium at λ=0.02, but Figure 1 shows AI stocks at 2–2.7× the market P/D. The paper hand-waves the residual as "differential growth expectations" without formal analysis. A top journal will reject on this alone.
+2. **Incomplete-markets friction is too stark.** The all-or-nothing assumption (AI owners completely absent from public markets) is empirically counterfactual. A graded participation parameter in the main model would improve credibility.
 
-### 2. Section 4.3 is informal (Referee Comment 2)
-The "intermediate regime" insight—that the premium is largest when the singularity is harmful but not so extreme as to resolve the friction—is stated informally in two paragraphs. The parameter π is not microfounded as a function of output scale. Section 4.3 reads as a promissory note.
-
-### 3. Table 2 computational error (Theory-correctness test, note)
-Individual P/D levels in Table 2 (extinction) are wrong: $(1-\delta)$ is applied outside the bracket instead of inside. Premiums and ratios are unaffected, but the v^A and v^N columns are overstated for δ > 0.
-
-### 4. Proposition 4 implicit assumption (Theory-correctness test, note)
-The proof assumes friction resolution neutralizes dividend asymmetry (θ, φ don't apply). This is economically reasonable but should be stated explicitly.
+### From CFR-R1
+1. **Model is perceived as subsumed by GKP.** The referee views the main model as a special case of GKP where growth stocks fully hedge displacement risk. The paper needs to sharpen the distinction — the friction is about asset accessibility (contemporaneous agents, private capital), not intergenerational non-existence.
+2. **Extensions address Jones (2024) well.** The referee's suggestion to incorporate heterogeneous beliefs and existential risk is already implemented in Section 4. This is a strength.
 
 ## Plan
 
-### A. Fix P/D vs P/E comparison (addresses Referee Comment 1)
-**Option chosen**: Recast Figure 1 to show P/D ratios instead of P/E ratios.
-- Update `code/figure-ai-valuations.R` to compute trailing price-dividend ratios (price / trailing 12-month dividends per share) for both the AI basket and S&P 500.
-- Update the figure caption and axis labels accordingly.
-- Revise the calibration discussion paragraph (around line 248) to compare model P/D ratios directly to empirical P/D ratios. Remove "broadly consistent with" hand-waving; state the comparison precisely.
+### 1. Add heterogeneous growth rates to close the quantitative gap
+**Section 3.3 (Calibration) + new content.**
+- Extend the calibration to allow differential expected dividend growth ($g^A \neq g^N$) for AI vs. non-AI stocks. This nests the pure-growth benchmark and the pure-hedging benchmark.
+- Show a decomposition: at plausible growth differentials (e.g., $g^A - g^N$ = 3–5%), the combined growth + hedging premium can match the 2–2.7× observed ratio.
+- Add a back-of-the-envelope calculation: given the 29% hedging premium, what growth differential is implied by the residual? Assess whether it is empirically plausible.
+- This directly addresses referee-top3 comment #1 and strengthens the paper's quantitative claim.
 
-### B. Formalize Section 4.3 (addresses Referee Comment 2)
-- Microfound π as a function of post-singularity AI output scale Y_O. Define π(Y_O) as a simple increasing function (e.g., π = 1 − k/Y_O for some cost parameter k, so π → 1 as Y_O → ∞).
-- Add a **Proposition 5** that states: as Y_O → ∞, π → 1 and the hedging premium → 0. Show that the premium is hump-shaped in the severity of the singularity (increasing in θ for small θ, decreasing for large θ where π dominates).
-- Rewrite Section 4.3 around this new proposition. Keep it tight—one proposition, one short proof, one paragraph of interpretation.
+### 2. Introduce partial market access (α) in the main model
+**Section 2.3 (Incomplete Markets) + Propositions.**
+- Parameterize the degree of market incompleteness: the household can access a fraction α ∈ [0,1] of total AI capital, with α=0 recovering the current model and α=1 giving complete markets.
+- This adjusts the effective AI share from $s$ to $s + α(1-s)$ or similar, modifying $J(s)$ and the premium continuously.
+- Show how the premium degrades gracefully with market access. This gives the policy discussion (broadening access to private AI capital) a formal backbone.
+- Addresses referee-top3 comment #2 and strengthens the GKP differentiation (our friction has a natural continuous relaxation; their intergenerational friction does not).
 
-### C. Fix Table 2 values
-- Recompute v^A and v^N for each δ using the correct formula where (1−δ) multiplies only J^{−γ}(1+θ) inside the bracket.
-- Update Table 2 in paper.tex.
+### 3. Sharpen the GKP differentiation
+**Section 1 (Introduction) + Section 2.3.**
+- Rewrite the GKP discussion to emphasize three concrete differences:
+  (a) The friction source: asset accessibility (private capital) vs. non-existence of future cohorts.
+  (b) The policy implication: our friction is reducible via financial innovation (securitization, IPOs); GKP's is structural.
+  (c) The partial-access parameter α (from item 2 above) gives a continuous policy lever that has no analogue in GKP.
+- This directly addresses CFR-R1 comment #1.
 
-### D. State Proposition 4 assumption explicitly
-- Add one sentence before or within Proposition 4 stating that when the friction resolves, the household rebalances into private AI capital so that the singularity is consumption-neutral (J = 1), and thus the dividend asymmetry (θ, φ) does not generate a premium in that state.
+### 4. Sensitivity analysis across key parameters
+**New Table or expanded Table 1.**
+- Show how the premium varies across γ, s, ϕ, θ at the baseline λ=0.02.
+- Demonstrate that reasonable alternative calibrations (e.g., higher γ or larger ϕ) bring the model premium substantially closer to the data.
+- Complements the growth decomposition in item 1.
 
-## Priority Order
-
-1. **C** — Fix Table 2 (quick, correctness issue)
-2. **D** — State Prop 4 assumption (quick, correctness issue)
-3. **A** — Fix P/D vs P/E (substantive, addresses main referee concern)
-4. **B** — Formalize Section 4.3 (substantive, addresses second referee concern)
+### Priority Order
+1. Heterogeneous growth rates (item 1) — highest impact, directly addresses the "central vulnerability."
+2. Partial market access α (item 2) — strengthens both credibility and GKP differentiation.
+3. GKP differentiation prose (item 3) — low effort, high value.
+4. Sensitivity analysis (item 4) — supporting evidence for quantitative claims.

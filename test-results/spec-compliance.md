@@ -1,7 +1,7 @@
 # tests/spec-compliance.py
-Started: 2026-03-22 09:11:30 EDT
-Runtime: 1m 11s
-[ralph-garage/agent-logs/20260322T131130.159340Z_spec-compliance_claude_opus.log](../ralph-garage/agent-logs/20260322T131130.159340Z_spec-compliance_claude_opus.log)
+Started: 2026-03-22 09:30:27 EDT
+Runtime: 1m 33s
+[ralph-garage/agent-logs/20260322T133027.197976Z_spec-compliance_claude_opus.log](../ralph-garage/agent-logs/20260322T133027.197976Z_spec-compliance_claude_opus.log)
 
 # spec-compliance
 
@@ -12,53 +12,64 @@ REASON: All economic, quality, style, and technical requirements are satisfied.
 
 1. **Academic asset pricing theory paper.** PASS. The paper is a formal consumption-based asset pricing model with propositions, proofs, and calibration.
 
-2. **Economic ideas.** PASS.
-   - AI singularity as sudden productivity improvement: defined in §2.2 (eqs. 5–6).
-   - Negative AI singularity: defined via $J(s) < 1$ (line 121).
-   - Incomplete markets as inability to buy private AI capital: §2.3 explicitly states this is about asset accessibility, not Arrow-Debreu securities.
+2. **Economic ideas (AI singularity, negative singularity, incomplete markets).** PASS.
+   - AI singularity defined as sudden AI advance (Section 2.2, eq. 5): "a sudden event that transfers a large share of economic output from the household to AI owners."
+   - Negative singularity defined via J(s) < 1 (line 121): "the singularity devastates the household whenever AI stocks are a sufficiently small share of its portfolio."
+   - Incomplete markets: Section 2.3 defines the household's exclusion from private AI capital. The paper explicitly states this "does not necessarily refer to Arrow-Debreu securities" in practice—the friction is about private vs. public capital access.
 
-3. **Paper arguments.** PASS.
-   - Main argument (hedging demand drives AI valuations): stated in abstract and throughout.
-   - Incomplete markets are key: §2.3 and Proposition 2 show premium vanishes under complete markets.
-   - Financial market solutions under-discussed: intro states "Financial market solutions to AI disaster risk have received surprisingly little attention."
-   - Singularity overcomes frictions due to abundance: §4.3 (Infinite Output) formalizes this—as $Y_O \to \infty$, $\pi \to 1$ and the friction vanishes.
+3. **Main arguments.** PASS.
+   - Hedging demand explains high AI valuations: "hedging demand is part of the explanation" (intro, para 2).
+   - Incomplete markets are key: "If markets were complete...the AI valuation premium would vanish" (Section 2.3).
+   - Financial market solutions under-discussed: "Financial market solutions to AI disaster risk have received surprisingly little attention" (intro, para 2).
+   - Singularity resolves frictions due to abundance: Section 4.3 (Infinite Output and Market Completeness) formalizes this via eq. 16, showing π → 1 as Y_O → ∞.
 
 4. **Main model features.** PASS.
-   - Infinite horizon: "Time is discrete and infinite: $t = 0, 1, 2, \ldots$" (§2.1).
-   - Two agents (representative household + AI owners): §2.1.
-   - Two publicly traded assets (AI stock + non-AI stock): §2.1.
-   - Focus on P/D ratio and how it changes with singularity probability: Propositions 1–2 and Table 1.
+   - Infinite horizon: "Time is discrete and infinite: t = 0, 1, 2, ..." (Section 2.1).
+   - Two agents: "representative household" (marginal investor) and "AI owners" (not marginal investors) (Section 2.1).
+   - Two publicly traded assets: AI stock and non-AI stock as Lucas trees (Section 2.1).
+   - Focus on P/D ratio of AI stocks and dependence on singularity probability: Propositions 1–2 derive closed-form P/D ratios; Table 1 reports how they change with λ.
 
 5. **Extension incorporating Jones (2024).** PASS.
-   - Extinction risk: §4.1, Proposition 3.
-   - Infinite consumption for AI owners: §4.3 models $Y_O \to \infty$.
-   - VSL calibration: §4.1 cites Jones's VSL estimates ("a year of life is worth approximately six times per capita consumption").
-   - How infinite output affects trade assumption: §4.3 (Proposition 5) shows large output resolves the friction.
-   - Kept in extension (§4), not in main model: PASS.
+   - Extinction risk: Section 4.1, Proposition 3.
+   - Infinite consumption for AI owners: Section 4.3 considers Y_O → ∞ for AI owners.
+   - VSL calibration: "a year of life is worth approximately six times per capita consumption" and "Jones finds that society would tolerate at most a 0.5% annual extinction risk" (Section 4.1).
+   - How infinite output affects trade assumption: Proposition 5 shows the friction vanishes as Y_O → ∞, formalized via eq. 16.
+   - Kept in extension: All Jones-related material is in Section 4 (Extension), separate from the main model.
 
-6. **Introduction figure with CRSP/Compustat data.** PASS. Figure 1 shows AI stock P/D ratios vs. the market portfolio, 2015–2024, using CRSP and Compustat data.
+6. **Introduction figure with CRSP/Compustat data.** PASS. Figure 1 shows "Trailing price-dividend ratios: AI stocks versus the market portfolio, 2015–2024...Data from CRSP and Compustat."
 
-7. **Contribution relative to GKP.** PASS. The intro discusses GKP's displacement-risk framework and explicitly references their footnote 14 on bequests/government transfers eliminating displacement risk, contrasting it with the paper's friction based on asset accessibility.
+7. **Contribution relative to GKP (2012).** PASS. The intro devotes a full paragraph to three differences from GKP. The paper explicitly references GKP's footnote 14: "As GKP note in their footnote 14, bequests or government transfers could eliminate their displacement risk entirely; in our model, intergenerational transfers do not help, but financial inclusion does."
 
 ## II. Quality Requirements
 
-1. **Narrative consistent with results.** PASS. Claims about the premium being increasing in $\lambda$ and decreasing in $s$ are proven in Proposition 2 and illustrated in Table 1.
-2. **Figures and tables nicely formatted.** PASS. Uses booktabs, proper captions, and clear labeling.
-3. **Clear, unified, concise story.** PASS. Single coherent argument from intro through model, results, extension, and conclusion.
-4. **No superfluous text or math.** PASS. Every equation serves the argument; no orphaned definitions or unused results.
+1. **Narrative consistent with results.** PASS. Claims match propositions and calibration tables (e.g., "29% premium" at λ = 0.02 matches Table 1; "hump-shaped" claim matches Proposition 5).
+
+2. **Figures and tables nicely formatted.** PASS. Tables use booktabs (toprule/midrule/bottomrule). Figure uses standard includegraphics with caption.
+
+3. **Clear, unified, concise story.** PASS. The paper follows a tight arc: motivation → model → equilibrium → calibration → extension → conclusion, all centered on the hedging mechanism.
+
+4. **No extraneous text or math.** PASS. Every equation is used in subsequent derivations or calibration. No orphaned notation or digressions.
 
 ## III. Style Requirements
 
-1. **Writing style.** PASS. Conversational yet rigorous (e.g., "Why are AI stocks so expensive?", "AI stocks are valuable precisely because they pay well when the household is desperate").
-2. **Anonymous author.** PASS. `\author{}` is empty.
-3. **Abstract ≤ 100 words.** PASS. Abstract is ~80 words.
-4. **Title short and evocative.** PASS. "Hedging the Singularity"—three words, evocative, not cringey.
-5. **Paper length ≤ 20 pages.** PASS. ~370 lines of LaTeX with 1 figure and 2 tables; well within 20 pages.
-6. **Visible page numbers on every page.** PASS. `\pagestyle{plain}` and `\thispagestyle{plain}` on the title page.
-7. **At most 6 exhibits.** PASS. 3 exhibits total (1 figure, 2 tables).
-8. **Lit review concise and focused.** PASS. Cites only the most relevant papers (GKP, Jones, Rietz, Barro, Wachter, Korinek) with brief contextual discussion.
+1. **Writing style: catchy, conversational, rigorous.** PASS. Examples: "Why are AI stocks so expensive?" (opening), "Assets that pay well in this state are therefore valuable" (plain English), formal proofs throughout (rigor).
+
+2. **Author is anonymous.** PASS. `\author{}` is empty.
+
+3. **Abstract ≤ 100 words.** PASS. Abstract is approximately 82 words.
+
+4. **Title: short, evocative, eye-catching, not cringey.** PASS. "Hedging the Singularity" — three words, evocative, not cringey.
+
+5. **Paper length ≤ 20 pages.** PASS. Compiled PDF is 13 pages.
+
+6. **Every page has visible page number.** PASS. `\pagestyle{plain}` with `\thispagestyle{plain}` on the title page ensures page numbers on all pages.
+
+7. **At most 6 exhibits.** PASS. 4 exhibits total: 1 figure + 3 tables.
+
+8. **Lit review concise and focused on most relevant papers.** PASS. References are limited to GKP (2012), Jones (2024), Korinek (2024), and the rare disaster literature (Rietz, Barro, Wachter) — all directly relevant.
 
 ## IV. Technical Requirements
 
-1. **`paper/paper.tex` is canonical.** PASS. Single LaTeX document.
-2. **`paper/` contains only assets used by `paper.tex`.** PASS. Contains `figure-ai-valuations.pdf` and `references.bib` (both used by the tex file), plus standard LaTeX build artifacts (.aux, .bbl, .bcf, .blg, .log, .out, .run.xml, .pdf).
+1. **`paper/paper.tex` is the canonical paper.** PASS. Single LaTeX file containing the complete paper.
+
+2. **`paper/` contains only assets used by `paper/paper.tex`.** PASS (not violated by inspection; the paper references `references.bib` and `figure-ai-valuations.pdf`, both expected in `paper/`).
