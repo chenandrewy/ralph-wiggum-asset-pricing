@@ -40,7 +40,7 @@ We argue that hedging demand is part of the explanation. If artificial intellige
 
 We formalize this idea in a simple consumption-based asset pricing model. A representative household faces the risk of a \emph{negative AI singularity}: a sudden event that transfers a large share of economic output from the household to AI owners who hold private, untradeable capital. The household cannot buy into these private AI firms---markets are incomplete. But the household can invest in publicly traded AI stocks, which appreciate when AI advances. In equilibrium, this hedging demand pushes AI stock valuations above those of non-AI stocks.
 
-Our main result is a closed-form expression for the price-dividend ratio of AI stocks. The AI valuation premium---the gap between AI and non-AI stock valuations---is increasing in the probability of a singularity, and decreasing in the existing AI share of the household's portfolio. Figure~\ref{fig:pd-ratios} previews the result: for a calibration with a 2\% annual singularity probability, the model generates an AI valuation premium of roughly 29\%, broadly consistent with the elevated valuations of AI stocks observed in equity markets.
+Our main result is a closed-form expression for the price-dividend ratio of AI stocks. The AI valuation premium---the gap between AI and market portfolio valuations---is increasing in the probability of a singularity, and decreasing in the existing AI share of the household's portfolio. Figure~\ref{fig:pd-ratios} previews the result: for a calibration with a 2\% annual singularity probability, AI stocks trade at a price-dividend ratio well above the market portfolio, broadly consistent with the elevated valuations of AI stocks observed in equity markets.
 
 \begin{figure}[t]
 \centering
@@ -60,12 +60,15 @@ Our main result is a closed-form expression for the price-dividend ratio of AI s
 \addplot[blue, thick, smooth, domain=0:0.06, samples=100]
     {(0.92272 + 31.564*x) / (0.07728 + 0.92272*x)};
 \addlegendentry{AI stocks ($v^A$)}
+\addplot[black, thick, dotted, smooth, domain=0:0.06, samples=100]
+    {(0.92272 + 16.832*x) / (0.07728 + 0.92272*x)};
+\addlegendentry{Market portfolio ($v^M$)}
 \addplot[red, thick, dashed, smooth, domain=0:0.06, samples=100]
     {(0.92272 + 14.232*x) / (0.07728 + 0.92272*x)};
 \addlegendentry{Non-AI stocks ($v^N$)}
 \end{axis}
 \end{tikzpicture}
-\caption{Model-implied price-dividend ratios for AI and non-AI stocks as a function of the annual singularity probability~$\lambda$. The gap between the curves is the hedging premium. Parameters: $\beta = 0.96$, $\gamma = 3$, $g = 0.02$, $\theta = 0.50$, $\phi = 0.30$, $s = 0.15$.}
+\caption{Model-implied price-dividend ratios for AI stocks, the market portfolio, and non-AI stocks as a function of the annual singularity probability~$\lambda$. The market portfolio P/D ratio is $v^M = s \cdot v^A + (1-s) \cdot v^N$. The gap between AI stocks and the market portfolio is the hedging premium. Parameters: $\beta = 0.96$, $\gamma = 3$, $g = 0.02$, $\theta = 0.50$, $\phi = 0.30$, $s = 0.15$.}
 \label{fig:pd-ratios}
 \end{figure}
 

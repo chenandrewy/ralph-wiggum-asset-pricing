@@ -1,85 +1,81 @@
 # tests/spec-compliance.py
-Started: 2026-03-21 22:34:54 EDT
-Runtime: 1m 20s
-[ralph-garage/agent-logs/20260322T023454.042030Z_spec-compliance_claude_opus.log](../ralph-garage/agent-logs/20260322T023454.042030Z_spec-compliance_claude_opus.log)
+Started: 2026-03-21 22:42:48 EDT
+Runtime: 56s
+[ralph-garage/agent-logs/20260322T024248.934912Z_spec-compliance_claude_opus.log](../ralph-garage/agent-logs/20260322T024248.934912Z_spec-compliance_claude_opus.log)
 
 # spec-compliance
 
-VERDICT: FAIL
-REASON: The introduction figure compares AI stocks to non-AI stocks, not to the market portfolio as required by spec I.6.
+VERDICT: PASS
+REASON: All economic, quality, and style requirements are satisfied.
 
 ## I. Economic Requirements
 
-### I.1 Academic asset pricing theory paper
-PASS. The paper is a formal asset pricing theory paper with propositions, proofs, and calibration.
+### 1. Academic asset pricing theory paper
+PASS. The paper is a formal asset pricing theory paper with propositions, proofs, calibration, and references to the finance literature.
 
-### I.2 Economic ideas
-PASS.
-- **AI singularity**: Defined in Section 2.2 (lines 113–115): "with probability λ, an AI singularity occurs."
-- **Negative AI singularity**: Defined at line 139: "We say the singularity is *negative* if J(s) < 1, which holds when s < φ/(θ+φ)."
-- **Incomplete markets as asset inaccessibility**: Section 2.3 (line 145): "the household cannot buy equity in privately held AI firms, data assets, or proprietary algorithms." Explicitly distinguished from Arrow-Debreu framing.
+### 2. Economic ideas
+- **AI singularity**: PASS. Defined in Section 2.2 (line 118): "an AI singularity occurs" as a sudden event that modifies dividend growth asymmetrically.
+- **Negative AI singularity**: PASS. Defined explicitly (line 142): "We say the singularity is negative if $J(s) < 1$", meaning it devastates household consumption.
+- **Incomplete markets as asset inaccessibility**: PASS. Section 2.3 (line 148): "the household cannot buy equity in privately held AI firms, data assets, or proprietary algorithms." The paper explicitly distinguishes this from Arrow-Debreu incompleteness and from GKP's intergenerational friction.
 
-### I.3 Arguments
-PASS.
-- **Main argument (hedging demand)**: Line 38–39: "We argue that hedging demand is part of the explanation."
-- **Incomplete markets are key**: Line 72: "Incomplete markets are the key friction. If the household could invest in private AI capital, it could perfectly hedge the singularity risk, and the valuation premium would vanish."
-- **Financial market solutions under-discussed**: Line 39: "Financial market solutions to AI disaster risk have received surprisingly little attention."
-- **Singularity overcomes frictions via abundance**: Section 4.2, line 305: "Any finite barrier to trade... can be overcome when the resources to overcome it are unlimited."
+### 3. Arguments
+- **Main argument (hedging demand explains high AI valuations)**: PASS. Abstract and introduction state this directly: "hedging demand is a contributing factor" (line 29); Proposition 2 formalizes the premium.
+- **Incomplete markets are key**: PASS. Section 2.3 (lines 150-151): "If markets were complete...the AI valuation premium would vanish."
+- **Financial market solutions under-discussed**: PASS. Introduction (line 39): "Financial market solutions to AI disaster risk have received surprisingly little attention."
+- **Singularity abundance overcomes frictions**: PASS. Section 4.2 (lines 307-308): "Any finite barrier to trade...can be overcome when the resources to overcome it are unlimited."
 
-### I.4 Model features
-PASS.
-- **Infinite horizon**: Line 90: "Time is discrete and infinite: t = 0, 1, 2, …"
-- **Two agents**: Line 90: "representative household" and "AI owners." Household is marginal investor (line 91). AI owners hold private capital and are not marginal (line 91).
-- **Two publicly traded assets**: Line 99: "AI stock" and "non-AI stock."
-- **Focus on P/D ratio of public AI stocks**: Proposition 1 (line 188) derives closed-form P/D ratios; Proposition 2 gives comparative statics on the premium w.r.t. singularity probability.
+### 4. Main model features
+- **Infinite horizon**: PASS. Line 93: "Time is discrete and infinite: $t = 0, 1, 2, \ldots$."
+- **Two agents (representative household as marginal investor; AI owners not marginal)**: PASS. Lines 93-94: "a representative household and AI owners. The representative household is the marginal investor...AI owners hold private AI capital and are not marginal investors."
+- **Two publicly traded assets**: PASS. Line 102: "Two assets are publicly traded: an AI stock and a non-AI stock."
+- **Focus on P/D ratio of public AI stocks varying with singularity probability**: PASS. Proposition 1 gives closed-form P/D ratios; Table 1 and Figure 1 show how they change with $\lambda$.
 
-### I.5 Extension incorporating Jones (2024)
-PASS.
-- **Extinction**: Section 4.1, Proposition 3 (line 282).
-- **Infinite consumption for AI owners**: Section 4.2 (line 303): "the owners of that technology could, in principle, produce unlimited goods and services."
-- **VSL calibration**: Line 298: "calibrates the value of a statistical life (VSL) to assess the trade-off between AI-driven growth and existential risk."
-- **Infinite output overcoming incomplete markets (connecting to GKP)**: Section 4.2, line 309: explicitly connects to Garleanu et al. and discusses how infinite output resolves the friction.
-- **Kept in extension**: Yes, all of this is in Section 4 ("Extension: Existential Risk and Infinite Output"), separate from the main model.
+### 5. Extension incorporating Jones (2024)
+- **Extinction**: PASS. Section 4.1 introduces extinction probability $\delta$ with Proposition 3.
+- **Infinite consumption for AI owners**: PASS. Section 4.2 discusses unbounded output for AI owners.
+- **VSL calibration**: PASS. Line 301: "calibrates the value of a statistical life (VSL) to assess the trade-off between AI-driven growth and existential risk."
+- **Infinite output overcoming incomplete markets (connecting to GKP)**: PASS. Section 4.2 (line 312): "This connects our model to the observation in Garleanu et al. that market incompleteness is the engine of displacement risk premia."
+- **Kept in extension**: PASS. These ideas are confined to Section 4, separate from the main model in Sections 2-3.
 
-### I.6 Introduction includes a single figure illustrating AI stock valuation vs. market portfolio
-**FAIL.** Figure 1 (line 45–70) compares AI stocks to *non-AI stocks* (labeled "Non-AI stocks (v^N)"). The spec requires comparison to the *market portfolio*, which is the value-weighted combination of AI and non-AI stocks, not non-AI stocks alone. Non-AI stocks and the market portfolio are distinct objects.
+### 6. Introduction figure showing AI valuation vs market portfolio
+PASS. Figure 1 (lines 45-73) plots P/D ratios for AI stocks, market portfolio, and non-AI stocks as a function of singularity probability. The market portfolio curve is explicitly included.
 
 ## II. Quality Requirements
 
-### II.1 Narrative consistent with results
-PASS. The narrative (hedging demand drives AI premium) matches the formal results (Propositions 1–3) and calibration (Table 1).
+### 1. Narrative consistent with results
+PASS. The introduction previews the hedging premium; the model delivers it formally; the calibration confirms economically meaningful magnitudes.
 
-### II.2 Figures and tables nicely formatted
-PASS. Uses booktabs for tables, pgfplots for figures, with gridlines, legends, and clear labels.
+### 2. Figures and tables nicely formatted
+PASS. Figure 1 uses pgfplots with grid, legend, and clear labels. Table 1 uses booktabs formatting.
 
-### II.3 Clear, unified, concise story
-PASS. The paper follows a tight arc: motivation → model → results → extension → conclusion.
+### 3. Clear, unified, concise story
+PASS. The paper follows a tight arc: motivation, model, results, extension, conclusion, without tangential material.
 
-### II.4 Remove text and math that do not add value
-PASS. No extraneous sections or unused equations detected.
+### 4. Remove text and math that do not add value
+PASS. The paper is lean; every section and equation serves the main argument.
 
 ## III. Style Requirements
 
-### III.1 Writing style (between academic and blog, catchy, not cringey)
-PASS. The writing is direct and conversational while maintaining rigor. Examples: "Why are AI stocks so expensive?" (line 37), "their elevated valuations are not a bubble—they are the price of insurance" (line 321).
+### 1. Writing style between academic and blog post
+PASS. The prose is direct and conversational ("Why are AI stocks so expensive?") while maintaining rigor (formal propositions with proofs).
 
-### III.2 Author is anonymous
-PASS. `\author{}` on line 21.
+### 2. Author is anonymous
+PASS. Line 21: `\author{}`.
 
-### III.3 Abstract is 100 words or less
-PASS. Abstract is 89 words.
+### 3. Abstract is 100 words or less
+PASS. The abstract contains 89 words.
 
-### III.4 Title is short, evocative, eye-catching, not cringey
+### 4. Title is short, evocative, and eye-catching
 PASS. "Hedging the Singularity" — three words, evocative, not cringey.
 
-### III.5 Paper length < 20 pages excluding references
-PASS. The paper is approximately 330 lines of LaTeX with standard 12pt/1.5-spacing formatting, well under 20 pages.
+### 5. Paper length less than 20 pages excluding references
+PASS. The paper body is approximately 333 lines of LaTeX with onehalfspacing and 12pt font, well under 20 pages.
 
-### III.6 Every page has a visible page number
-PASS. `\pagestyle{plain}` (line 15) and `\thispagestyle{plain}` (line 26) ensure page numbers on all pages including the title page.
+### 6. Every page has a visible page number
+PASS. `\pagestyle{plain}` (line 15) and `\thispagestyle{plain}` (line 26) ensure page numbers on all pages.
 
-### III.7 At most 6 exhibits
-PASS. 2 exhibits total: 1 figure (Figure 1) and 1 table (Table 1).
+### 7. At most 6 exhibits
+PASS. The paper contains 2 exhibits: Figure 1 and Table 1.
 
-### III.8 Lit review focuses on most relevant papers, concise
-PASS. The lit review covers three targeted strands: Garleanu et al. (2012) on displacement risk (most closely related), Jones (2024) on existential risk, and the rare disaster literature (Rietz, Barro, Wachter). All directly relevant, no padding.
+### 8. Lit review is concise and focused on most relevant papers
+PASS. The introduction cites only the most relevant papers: Garleanu et al. (2012) on displacement risk, Jones (2024) on AI existential risk, and the rare disaster literature (Rietz, Barro, Wachter). No bloated literature review section.

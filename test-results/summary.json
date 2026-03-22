@@ -1,43 +1,43 @@
 {
   "timestamps": {
-    "started_at_utc": "2026-03-22T02:34:54.004616+00:00",
-    "finished_at_utc": "2026-03-22T02:40:36.763909+00:00",
-    "started_at_ny": "2026-03-21T22:34:54.004616-04:00",
-    "finished_at_ny": "2026-03-21T22:40:36.763909-04:00",
+    "started_at_utc": "2026-03-22T02:42:48.902522+00:00",
+    "finished_at_utc": "2026-03-22T02:45:06.580011+00:00",
+    "started_at_ny": "2026-03-21T22:42:48.902522-04:00",
+    "finished_at_ny": "2026-03-21T22:45:06.580011-04:00",
     "timezone": "America/New_York"
   },
-  "duration_seconds": 342.759,
+  "duration_seconds": 137.677,
   "tests": [
     {
       "name": "spec-compliance",
-      "status": "fail",
-      "exit_code": 1,
+      "status": "pass",
+      "exit_code": 0,
       "timestamps": {
-        "started_at_utc": "2026-03-22T02:34:54.012578+00:00",
-        "finished_at_utc": "2026-03-22T02:36:14.081446+00:00",
-        "started_at_ny": "2026-03-21T22:34:54.012578-04:00",
-        "finished_at_ny": "2026-03-21T22:36:14.081446-04:00",
+        "started_at_utc": "2026-03-22T02:42:48.907422+00:00",
+        "finished_at_utc": "2026-03-22T02:43:44.657914+00:00",
+        "started_at_ny": "2026-03-21T22:42:48.907422-04:00",
+        "finished_at_ny": "2026-03-21T22:43:44.657914-04:00",
         "timezone": "America/New_York"
       },
-      "duration_seconds": 80.069
+      "duration_seconds": 55.75
     },
     {
       "name": "theory-correctness",
       "status": "pass",
       "exit_code": 0,
       "timestamps": {
-        "started_at_utc": "2026-03-22T02:34:54.012729+00:00",
-        "finished_at_utc": "2026-03-22T02:40:36.762260+00:00",
-        "started_at_ny": "2026-03-21T22:34:54.012729-04:00",
-        "finished_at_ny": "2026-03-21T22:40:36.762260-04:00",
+        "started_at_utc": "2026-03-22T02:42:48.907435+00:00",
+        "finished_at_utc": "2026-03-22T02:45:06.578864+00:00",
+        "started_at_ny": "2026-03-21T22:42:48.907435-04:00",
+        "finished_at_ny": "2026-03-21T22:45:06.578864-04:00",
         "timezone": "America/New_York"
       },
-      "duration_seconds": 342.75
+      "duration_seconds": 137.671
     }
   ],
   "summary": {
     "total": 2,
-    "passed": 1,
-    "failed": 1
+    "passed": 2,
+    "failed": 0
   }
 }
