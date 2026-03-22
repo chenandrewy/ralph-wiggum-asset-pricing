@@ -1,45 +1,50 @@
 # Improvement Plan
 
-## Status
+## Status Summary
 
-All tests pass. Referee report (referee-top3) raises two issues.
+- **spec-compliance**: PASS
+- **theory-correctness**: FAIL — business-cycle expected-return claim ("2–3 percentage points") unsupported by the formula at stated parameters; actual value is ~5–7 basis points.
+- **referee-top3**: Two substantive comments.
 
-## Key Issues
+No section overhaul needed. The core model (Sections 2–3) is sound. The issues are a localized calibration error in the expected-returns discussion and a thin microfoundation in Section 4.3.
 
-1. **Testable-implications section is too long and defensive.** Section 3.4 runs ~2 pages plus Figure 2, proposes a test, then immediately concedes it can't be executed and proxies don't exist. The referee reads this as identifying the paper's vulnerability and declining to address it.
+---
 
-2. **Hedging channel is 13–23% at empirical calibrations.** The novel mechanism is second-order at baseline. The paper needs a stronger affirmative case for why this matters.
+## Priority 1: Fix the Failing Test
 
-## Plan
+**Problem.** Line 399 claims "the business-cycle premium differential is approximately 2–3 percentage points" with σ ≈ 0.02. Equation (17) gives (0.98)(3)(0.4–0.6)(0.0004)(~1.04) ≈ 5–7 bp, not 2–3 pp.
 
-### Change 1: Compress testable-implications section (addresses referee comment 1)
+**Fix.** Revise the paragraph after Proposition 3's proof (around line 399) as follows:
 
-Take **Option B** from the referee: compress Section 3.4's testability discussion to a single short paragraph. Cut Figure 2 (the AI-premium time-series plot). This frees ~1.5 pages and removes the paper's most defensive passage.
+1. Replace "2–3 percentage points" with the correct magnitude (~5–7 basis points) using σ ≈ 0.02.
+2. Reframe the expected-returns narrative honestly: with consumption-growth volatility, the business-cycle premium is small and does not clearly dominate the hedging discount (~80 bp). Acknowledge this tension directly rather than claiming a clean reconciliation.
+3. Note that matching observed return differentials would require return-based volatility (σ ≈ 0.15), which conflicts with the consumption-based framework's first-order invariance result (Proposition 3(i) relies on small σ). Frame this as a known limitation of the consumption-CAPM, not a defect of the hedging channel.
+4. The key message should be: the hedging channel operates through *valuations* (P/D ratios), not expected returns; reconciling expected returns with observed betas is a standard challenge for consumption-based models and is orthogonal to the paper's main contribution.
 
-Keep:
-- The core prediction (premium responds to λ conditional on earnings expectations)
-- The self-limiting mechanism as a dynamic prediction
-- The expected-returns / business-cycle subsection (this is formal and not defensive)
+**Files to edit:** `paper/paper.tex`, lines ~399 (the paragraph after Proposition 3's proof).
 
-Cut:
-- The extended discussion of why proxies don't exist
-- The "we do not execute this test" paragraph
-- Figure 2 (suggestive but not dispositive)
-- The Bayesian-learning extension suggestion
+---
 
-Rewrite as: one paragraph stating the identifying prediction, acknowledging the empirical challenge in a sentence, and pointing to future work.
+## Priority 2: Strengthen the Friction-Resolution Microfoundation (Section 4.3)
 
-### Change 2: Strengthen the value proposition of the hedging channel (addresses referee comment 2)
+**Problem (referee comment 1).** The π(Y_O) = 1 − d/Y_O microfoundation is a single reduced-form equation. The referee flags three gaps: (a) control/governance frictions don't obviously dissolve with large output; (b) the super-linear growth condition needs more justification; (c) the adverse-selection discount d should depend on information, not just output scale.
 
-Add 2–3 sentences in the introduction and/or conclusion making the following explicit arguments (currently left implicit):
+**Fix.** Add a short (2–3 paragraph) screening/securitization microfoundation before equation (18), replacing the current single-equation treatment. Specifically:
 
-- **Policy relevance**: The hedging channel is the *only* component that depends on incomplete markets, so it's the part policy can affect. The welfare gains (ω up to 3.4%) flow entirely through this channel.
-- **Qualitative distinctiveness**: The hedging channel generates different predictions (response to singularity-risk shocks vs. earnings revisions), making it empirically distinguishable even if quantitatively modest. A theory paper's contribution can rest on identifying a new mechanism.
-- **Lower bound**: The 13–23% range uses conservative φ_L. Evidence from rapid LLM adoption in white-collar tasks since 2023 suggests labor displacement may be higher, pushing φ_L toward values where the hedging channel dominates (>50% at γ=5, φ_L=0.35).
+1. Add a simple bilateral-trade setup: AI owners have private information about capital quality q ∈ {H, L}. The household offers a pooling price. High-quality owners sell only if output Y_O is large enough that the adverse-selection discount d is negligible relative to gains from trade (diversification motive for AI owners). This derives π(Y_O) from primitives rather than assuming it.
+2. Address the governance objection directly: note that AI owners with infinite output have a *diversification* motive (their wealth is concentrated in a single technology) that provides the incentive to sell, even without needing the proceeds for consumption.
+3. Strengthen the super-linear growth justification: cite increasing returns to scale in AI (compute scaling laws) as the economic basis, and note that the qualitative results (hump shape, convergence) hold for any growth rate exceeding linear.
+4. If this pushes the paper over 20 pages, trim equal length from elsewhere (e.g., compress the Proposition 6 proof further, or tighten the extinction-risk discussion).
 
-### Change 3: Reallocate freed space
+**Files to edit:** `paper/paper.tex`, Section 4.3 (lines ~478–508).
 
-Use the ~1.5 pages freed from compressing Section 3.4 to:
-- Expand the policy/welfare discussion (connect welfare gains explicitly to the hedging channel)
-- Strengthen the "why this matters" framing from Change 2
-- Potentially tighten other prose to stay well within 20 pages
+---
+
+## Priority 3: Reframe Expected-Returns Discussion (Referee Comment 2 Residual)
+
+This is largely addressed by Priority 1. The residual action:
+
+1. In the conclusion (line ~516), soften the claim about business-cycle reconciliation. Change "the hedging channel coexists with higher expected returns for AI stocks from cyclical exposure" to acknowledge that the model predicts the coexistence qualitatively but that the quantitative reconciliation depends on parameters beyond the consumption-based framework.
+2. In the introduction (line ~60), similarly temper: the current sentence about business-cycle risk "reconciling" the hedging channel should say the augmented model shows the two forces *can* coexist, without claiming a tight quantitative match to observed return differentials.
+
+**Files to edit:** `paper/paper.tex`, introduction (~line 60) and conclusion (~line 516).

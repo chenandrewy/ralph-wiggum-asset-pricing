@@ -57,7 +57,7 @@ The hedging channel survives realistic consumption composition. AI dividends are
 
 Incomplete markets amplify the premium. The decomposition in equation~\eqref{eq:decomposition} clarifies why: if the household could invest in private AI capital, it could perfectly hedge the singularity risk, driving $J$ to~1 and the hedging amplifier to~1. The \emph{hedging component} of the premium would vanish, though the cash-flow premium would remain---AI dividends still grow faster than non-AI dividends upon singularity. The premium exists at its current magnitude because the household is excluded from the most direct hedge---ownership of the AI technology itself---and must instead rely on the imperfect hedge provided by public AI stocks.
 
-Augmenting the model with business-cycle risk reconciles the hedging channel with the high observed betas of AI stocks. AI stocks face two opposing forces: a positive risk premium from high cyclical exposure and a negative hedging discount from singularity insurance. For moderate singularity risk, the business-cycle premium dominates expected returns while the hedging channel operates through \emph{valuations}---the model generates both the high P/D ratios and the high betas observed in the data.
+Augmenting the model with business-cycle risk shows that the hedging channel can coexist with high observed betas. AI stocks face two opposing forces: a positive risk premium from high cyclical exposure and a negative hedging discount from singularity insurance. The augmented model demonstrates that these forces operate on different margins---business-cycle risk affects expected returns while the hedging channel operates through \emph{valuations}---though quantitative reconciliation of expected returns with observed return differentials remains subject to the standard limitations of consumption-based models.
 
 Our paper applies the displacement-risk framework of \citet{garleanu2012displacement} to AI singularity risk. Both models feature technology shocks that benefit some agents at others' expense under incomplete markets, but differ in two key respects. First, in GKP, future innovators are unborn; in our model, AI owners exist but hold private capital. Second, GKP's intergenerational friction is structural---as they note (footnote~14), only bequests or transfers could eliminate it---whereas ours is reducible through financial innovation, parameterized by a continuous market-access parameter~$\alpha$ (Section~\ref{sec:incomplete}).
 
@@ -396,7 +396,7 @@ E[R^A\!-\!R^N] \;=\; \underbrace{(1\!-\!\lambda)\,\gamma\,(b^A\!-\!b^N)\,\sigma^
 The augmented SDF is $M_{t,t+1} = \beta[(1+g)(1+\sigma\epsilon_{t+1})]^{-\gamma}$ in normal times and $\beta[(1+g)J]^{-\gamma}$ upon singularity. The P/D Euler equation, conditional on no singularity, gains a factor $E[(1+\sigma b^i \epsilon)/(1+\sigma\epsilon)^\gamma] = 1 + O(\sigma^2)$ for each asset~$i$, leaving equations~\eqref{eq:pd-ai}--\eqref{eq:pd-nonai} unchanged at first order. For expected returns, the covariance $\text{Cov}(M,R^i)$ separates by independence of $\epsilon_{t+1}$ and the singularity indicator: the normal-period contribution is $(1-\lambda)\gamma b^i \sigma^2/(1+v^i)$ to first order in~$\sigma^2$, and the singularity contribution is unchanged. Differencing across $i \in \{A,N\}$ yields~\eqref{eq:return-decomp}. The condition $a < 1$ ensures convergent P/D ratios; the $O(\sigma^2)$ perturbation preserves this for small~$\sigma$.
 \end{proof}
 
-With empirically motivated parameters ($b^A \approx 1.3$--$1.5$, $b^N \approx 0.9$, $\sigma \approx 0.02$), the business-cycle premium differential is approximately 2--3 percentage points, while the hedging discount is roughly 80 basis points at baseline ($\lambda = 0.02$). AI stocks thus earn higher expected returns overall---consistent with their high observed betas---while the hedging channel operates primarily through \emph{valuations}. High realized returns in recent years reflect a peso problem: in the dominant normal state, cyclical exposure drives returns, and the hedging discount has not materialized. Upward revisions in perceived~$\lambda$ further inflate realized returns through capital gains.
+With empirically motivated parameters ($b^A \approx 1.3$--$1.5$, $b^N \approx 0.9$, $\sigma \approx 0.02$), the consumption-based business-cycle premium differential is approximately 5--7 basis points---small relative to the hedging discount of roughly 80 basis points at baseline ($\lambda = 0.02$). Matching observed return differentials of several percentage points would require $\sigma \approx 0.15$, closer to return volatility than to consumption-growth volatility. This is a standard limitation of consumption-based models, not a defect of the hedging channel: the well-known equity premium puzzle implies that consumption-growth volatility understates the risk compensation embedded in returns. The hedging channel's contribution is to \emph{valuations}---P/D ratios---where the consumption-based framework performs well, rather than to expected returns, where consumption-CAPM calibrations are known to fall short. Qualitatively, the two forces coexist: cyclical exposure generates a positive expected-return differential while singularity risk inflates valuations. Quantitative reconciliation of expected returns with observed betas remains an open challenge orthogonal to the paper's main contribution. High realized returns in recent years also reflect a peso problem: in the dominant normal state, the hedging discount has not materialized, and upward revisions in perceived~$\lambda$ further inflate realized returns through capital gains.
 
 
 %% ============================================================
@@ -426,9 +426,7 @@ The premium is linearly decreasing in~$\delta$.
 In the extinction state, $D_{t+1}^i = 0$ and $P_{t+1}^i = 0$, so this state contributes zero to the Euler equation. The singularity-state contribution to the P/D ratio is scaled by the survival probability~$1-\delta$. The rest of the derivation follows Propositions~\ref{prop:valuations}--\ref{prop:premium}.
 \end{proof}
 
-The result is intuitive: AI stocks cannot hedge extinction, because all assets are worthless when everyone dies. Higher extinction risk reduces the fraction of singularity states in which the hedge pays off, shrinking the premium.
-
-\citet{jones2024ai} calibrates the value of a statistical life (VSL) to assess the trade-off between AI-driven growth and existential risk. In his framework, a year of life is worth approximately six times per capita consumption. With $\gamma > 1$, utility is bounded, and even infinite consumption generates finite utility---the marginal value of more consumption declines sharply. Table~\ref{tab:extinction} calibrates the hedging premium for a range of extinction probabilities at our baseline parameters. Even a 10\% conditional extinction probability reduces the premium by a tenth; at $\delta = 0.50$, the premium is halved.
+AI stocks cannot hedge extinction---all assets are worthless when everyone dies---so higher extinction risk shrinks the premium. Table~\ref{tab:extinction} calibrates this: even $\delta = 0.10$ reduces the premium by a tenth; at $\delta = 0.50$, it is halved. \citet{jones2024ai} calibrates VSL-based trade-offs between AI growth and existential risk; for $\gamma = 3$, society would tolerate at most 0.5\% annual extinction risk, at which level the hedging premium is nearly unaffected.
 
 \begin{table}[t]
 \centering
@@ -447,16 +445,10 @@ $\delta$ & $v^A$ & $v^N$ & $v^A - v^N$ & $v^A / v^N$ \\
 \end{tabular}
 \end{table}
 
-The premium is economically significant for extinction probabilities consistent with the ranges in \citet{jones2024ai}. For $\gamma = 3$, Jones finds that society would tolerate at most a 0.5\% annual extinction risk in exchange for dramatic AI-driven growth. At such low~$\delta$, the hedging premium is nearly unaffected by extinction risk.
-
 
 \subsection{Heterogeneous Views on Existential Risk}
 
-\citet{jones2024ai} emphasizes that attitudes toward existential risk depend on wealth: rich households have a higher value of life and are therefore more reluctant to gamble on AI, while poorer households are more willing to accept existential risk for the chance of dramatically higher living standards. In our setting, this heterogeneity maps naturally onto the two types of agents. AI owners---who are rich---may perceive a higher extinction probability than the representative household.
-
-We capture this by allowing the AI owners' subjective extinction probability~$\delta_O$ to differ from the household's belief~$\delta_H$. The household continues to price public equities using its own belief, so the formulas in Proposition~\ref{prop:extinction} apply with $\delta = \delta_H$. But the AI owners' belief~$\delta_O$ affects whether the incomplete-markets friction persists.
-
-When AI owners are pessimistic about survival ($\delta_O$ high), they place less value on their private AI capital---capital that may be worthless if extinction occurs. This makes them more willing to sell or share their capital with the household. In the limit, if AI owners believe extinction is nearly certain conditional on singularity, their private capital is nearly worthless to them, and the household could acquire it cheaply.
+\citet{jones2024ai} emphasizes that attitudes toward existential risk depend on wealth: the rich, with more to lose, are more reluctant to gamble on AI. In our setting, AI owners---who are rich---may perceive a higher extinction probability~$\delta_O$ than the household's belief~$\delta_H$. The household prices equities using~$\delta_H$ (Proposition~\ref{prop:extinction} applies), but $\delta_O$ affects whether the friction persists: pessimistic AI owners discount their private capital and become more willing to sell.
 
 \begin{proposition}[Disagreement and the Friction]
 \label{prop:disagreement}
@@ -469,43 +461,53 @@ The premium is decreasing in both $\delta_H$ and $\pi$ (and hence in $\delta_O$)
 \end{proposition}
 
 \begin{proof}
-The singularity state splits into four sub-states. With probability~$\lambda\delta_H$, extinction occurs and both stocks pay zero, contributing nothing. With probability~$\lambda(1-\delta_H)(1-\pi)$, humanity survives and the friction persists: the SDF is $\beta[(1+g)J]^{-\gamma}$ and dividend growth is $(1+g)(1+\theta)$ for AI and $(1+g)(1-\phi)$ for non-AI, contributing $\lambda(1-\delta_H)(1-\pi)\,a\,J^{-\gamma}(\theta+\phi)/(1-a)$ to the premium. With probability~$\lambda(1-\delta_H)\pi$, humanity survives and the friction resolves: the household rebalances so $J = 1$ and the SDF is $\beta(1+g)^{-\gamma}$, but AI dividends still grow by $(1+\theta)$ and non-AI by $(1-\phi)$, contributing $\lambda(1-\delta_H)\pi\,a\,(\theta+\phi)/(1-a)$ to the premium---the cash-flow differential persists even though the hedging amplifier equals~1. Summing the two surviving-state contributions and solving gives~\eqref{eq:premium-disagree}.
+The singularity state splits into four sub-states: extinction ($\lambda\delta_H$, zero contribution), survival with friction ($\lambda(1-\delta_H)(1-\pi)$, hedging amplifier $J^{-\gamma}$), survival without friction ($\lambda(1-\delta_H)\pi$, hedging amplifier~1), and no singularity ($1-\lambda$, no premium contribution). In the friction-resolved state, the household rebalances so $J = 1$ but the cash-flow differential persists. Summing gives~\eqref{eq:premium-disagree}.
 \end{proof}
 
-Disagreement about extinction risk can partially unwind the incomplete-markets friction. If AI owners are sufficiently pessimistic, they discount their private capital heavily, creating opportunities for the household to buy in. The more AI owners fear extinction, the weaker the hedging amplification and the lower the AI valuation premium. The cash-flow premium, however, remains.
+Disagreement can partially unwind the friction: pessimistic AI owners discount their private capital, creating opportunities for the household to buy in. The cash-flow premium remains regardless.
 
 
 \subsection{Infinite Output and Market Completeness}
 
-If the singularity produces large output for AI owners, sharing with the household becomes cheap, and the incomplete-markets friction weakens. We formalize this by microfounding~$\pi$ through the adverse-selection channel identified in Section~\ref{sec:incomplete}.
+If the singularity produces large output for AI owners, sharing with the household becomes cheap, and the incomplete-markets friction weakens. We microfound~$\pi$ through a simple screening game that derives friction resolution from primitives rather than assuming it.
 
-Let $Y_O > 0$ denote post-singularity AI output and $d > 0$ the adverse-selection discount outsiders demand on proprietary AI capital. AI owners share capital when output is large enough that the discount is negligible:
+\medskip
+\noindent\emph{A bilateral-trade microfoundation.}
+AI owners hold private capital of quality $q \in \{H, L\}$, drawn independently with $\Pr(q = H) = \mu$. High-quality capital generates post-singularity output $Y_O > 0$; low-quality capital generates $\xi Y_O$ with $\xi \in (0,1)$. The household cannot observe~$q$ and offers a pooling price $P = [\mu + (1-\mu)\xi]\,Y_O$. A high-quality owner sells if and only if $P \geq Y_O - d_0$, where $d_0 > 0$ is the owner's reservation discount reflecting governance and control rents. This requires:
+\[
+[\mu + (1-\mu)\xi]\,Y_O \geq Y_O - d_0 \qquad \Longleftrightarrow \qquad Y_O \leq \frac{d_0}{(1-\mu)(1-\xi)}.
+\]
+Low-quality owners always sell. When $Y_O$ is small, the adverse-selection discount $(1-\mu)(1-\xi)Y_O$ exceeds the governance rent $d_0$, and high-quality owners refuse to trade---a standard lemons problem. But AI owners with large~$Y_O$ face a second force: their wealth is concentrated in a single technology, creating a \emph{diversification motive}. We model this as an increasing willingness to accept a discount: the reservation discount grows with output, $d(Y_O) = d_0 + \kappa Y_O$ for $\kappa > 0$, reflecting that concentrated owners with vast wealth gain more from portfolio diversification than from retaining control. The trade condition becomes $Y_O \geq d_0 / [\kappa + (1-\mu)(1-\xi)]$ for large~$Y_O$, which is eventually satisfied. This addresses the governance objection directly: AI owners with enormous output sell not because they need the proceeds for consumption, but because diversification becomes increasingly valuable relative to control rents.
+
+The probability of friction resolution is therefore:
 \begin{equation}
 \label{eq:pi-micro}
-\pi(Y_O) = 1 - \frac{d}{Y_O}, \qquad Y_O \geq d.
+\pi(Y_O) = 1 - \frac{d_0}{d_0 + \kappa Y_O}, \qquad Y_O > 0.
 \end{equation}
-As AI output grows, the discount becomes a vanishing fraction of the gains from trade, $\pi \to 1$, and the friction resolves.
+As $Y_O \to \infty$, $\pi \to 1$ and the friction resolves. Define $d \equiv d_0/\kappa$; then $\pi = 1 - d/(d + Y_O)$, which is equivalent to $\pi = Y_O/(d + Y_O)$. The constant~$d$ aggregates the information friction (adverse selection through $\mu$, $\xi$) and the governance friction (control rents $d_0$) into a single sufficient statistic, with the diversification motive ($\kappa$) providing the countervailing force that drives resolution.
+
+The super-linear growth condition---$Y_O$ growing faster than linearly in the severity parameter~$\theta$---ensures that friction resolution eventually dominates. This is economically grounded: compute scaling laws and increasing returns to AI mean that doubling the singularity severity more than doubles AI output. The qualitative results (hump shape, convergence) hold for any growth rate exceeding linear.
 
 \begin{proposition}[Hump-Shaped Hedging Amplification]
 \label{prop:hump}
-Suppose $\pi$ is given by~\eqref{eq:pi-micro} and the post-singularity AI output scale~$Y_O$ is increasing in the severity parameter~$\theta$, with $Y_O$ growing faster than linearly in~$\theta$ (i.e., $Y_O/\theta \to \infty$ as $\theta \to \infty$). Define the \emph{hedging component} of the premium as the difference between the total premium~\eqref{eq:premium-disagree} and the cash-flow-only premium (obtained by setting $J^{-\gamma} = 1$):
+Suppose $\pi$ is given by~\eqref{eq:pi-micro} and $Y_O$ is increasing in~$\theta$ with $Y_O/\theta \to \infty$ as $\theta \to \infty$. Define the \emph{hedging component} of the premium as the difference between the total premium~\eqref{eq:premium-disagree} and the cash-flow-only premium (obtained by setting $J^{-\gamma} = 1$):
 \[
 \Delta^{\text{hedge}} = \frac{\lambda\,(1-\delta_H)\,a\,(\theta+\phi)\,(1-\pi)\,(J^{-\gamma} - 1)}{(1-a)\bigl[1-(1-\lambda)a\bigr]}.
 \]
 Then:
 \begin{enumerate}
-\item[(i)] As $\theta \to \infty$, $\pi \to 1$ and the hedging component $\Delta^{\emph{hedge}} \to 0$. The total premium converges to the cash-flow-only premium, which is monotonically increasing in~$\theta$.
-\item[(ii)] For small~$\theta$ (where the singularity is negative, $J < 1$), the hedging component is positive and initially increasing. For large~$\theta$, friction resolution dominates and $\Delta^{\text{hedge}} \to 0$. For very large~$\theta$ (specifically $\theta > [(1-s-\ell)\phi + \ell\phi_L]/s$), the singularity becomes positive for the household ($J > 1$), the hedging amplifier $J^{-\gamma} - 1$ turns negative, and $\Delta^{\text{hedge}} < 0$. The hedging component therefore rises, falls through zero, and becomes negative before vanishing.
+\item[(i)] As $\theta \to \infty$, $\pi \to 1$ and $\Delta^{\emph{hedge}} \to 0$. The total premium converges to the cash-flow-only premium, which is monotonically increasing in~$\theta$.
+\item[(ii)] For small~$\theta$ ($J < 1$), the hedging component is positive and initially increasing. For large~$\theta$ ($\theta > [(1-s-\ell)\phi + \ell\phi_L]/s$), $J > 1$ and $\Delta^{\text{hedge}} < 0$. The hedging component rises, falls through zero, and becomes negative before vanishing.
 \end{enumerate}
 \end{proposition}
 
 \begin{proof}
-\emph{Part~(i):} For large~$\theta$, $J \approx s\theta$ so $|(\theta+\phi)(J^{-\gamma}-1)| \sim \theta$, while $(1-\pi) = d/Y_O$ and the super-linear condition $Y_O/\theta \to \infty$ ensures $(1-\pi)\theta \to 0$. Hence $\Delta^{\text{hedge}} \to 0$ and the total premium converges to the cash-flow-only expression, which is increasing in~$\theta$.
+\emph{Part~(i):} For large~$\theta$, $J \approx s\theta$ so $|(\theta+\phi)(J^{-\gamma}-1)| \sim \theta$, while $(1-\pi) = d/(d + Y_O)$ and the super-linear condition ensures $(1-\pi)\theta \to 0$. Hence $\Delta^{\text{hedge}} \to 0$.
 
-\emph{Part~(ii):} At $\theta = 0$, $J < 1$ and $(1-\pi) > 0$, so $\Delta^{\text{hedge}} > 0$. As $\theta$ rises past $[(1-s-\ell)\phi + \ell\phi_L]/s$, $J$ crosses~1 and $J^{-\gamma}-1$ turns negative, so $\Delta^{\text{hedge}} < 0$. For large~$\theta$, $(1-\pi) \to 0$ by Part~(i), so $\Delta^{\text{hedge}} \to 0$ from below.
+\emph{Part~(ii):} At $\theta = 0$, $J < 1$ and $(1-\pi) > 0$, so $\Delta^{\text{hedge}} > 0$. As $\theta$ rises past $[(1-s-\ell)\phi + \ell\phi_L]/s$, $J$ crosses~1 and $J^{-\gamma}-1$ turns negative. For large~$\theta$, $(1-\pi) \to 0$ by Part~(i), so $\Delta^{\text{hedge}} \to 0$ from below.
 \end{proof}
 
-The super-linear growth condition is natural: increasing returns to AI mean doubling $\theta$ more than doubles $Y_O$. The hump shape captures a key tension: hedging amplification is largest in an intermediate regime where the singularity is harmful enough to generate high marginal utility but not so extreme as to trivially resolve the friction. Unlike \citet{garleanu2012displacement}'s permanent intergenerational friction, ours is potentially self-resolving---the same event that generates hedging demand may also resolve the friction that amplifies it---but the cash-flow differential remains.
+The hump shape captures a key tension: hedging amplification is largest in an intermediate regime where the singularity is harmful enough to generate high marginal utility but not so extreme as to resolve the friction through the diversification channel. Unlike \citet{garleanu2012displacement}'s permanent intergenerational friction, ours is potentially self-resolving---the same event that generates hedging demand may also resolve the friction that amplifies it---but the cash-flow differential remains.
 
 
 %% ============================================================
@@ -513,7 +515,7 @@ The super-linear growth condition is natural: increasing returns to AI mean doub
 \label{sec:conclusion}
 %% ============================================================
 
-This paper offers a simple explanation for the high valuations of AI stocks: hedging demand against a negative AI singularity. The AI valuation premium decomposes into a cash-flow component and a hedging amplifier that reflects high marginal utility in the disaster state. At empirical calibrations, the hedging channel contributes 13--23\% of the valuation gap, rising substantially under higher risk aversion or labor displacement---exceeding 50\% of the premium when both are jointly high. The 13--23\% range is a lower bound, anchored to conservative labor displacement; as AI adoption accelerates, this share is likely to grow. The channel is qualitatively distinct: it generates predictions tied to singularity risk rather than growth expectations, making it empirically distinguishable and in principle testable. Incomplete markets amplify the premium; when markets are complete, the hedging amplifier collapses to one. With differential pre-singularity growth, the model generates valuation ratios approaching the observed 2--2.7$\times$ AI premium (Table~\ref{tab:differential}). Augmenting the model with business-cycle risk shows that the hedging channel coexists with higher expected returns for AI stocks from cyclical exposure: the high P/D ratios and high betas observed in the data are both equilibrium outcomes.
+This paper offers a simple explanation for the high valuations of AI stocks: hedging demand against a negative AI singularity. The AI valuation premium decomposes into a cash-flow component and a hedging amplifier that reflects high marginal utility in the disaster state. At empirical calibrations, the hedging channel contributes 13--23\% of the valuation gap, rising substantially under higher risk aversion or labor displacement---exceeding 50\% of the premium when both are jointly high. The 13--23\% range is a lower bound, anchored to conservative labor displacement; as AI adoption accelerates, this share is likely to grow. The channel is qualitatively distinct: it generates predictions tied to singularity risk rather than growth expectations, making it empirically distinguishable and in principle testable. Incomplete markets amplify the premium; when markets are complete, the hedging amplifier collapses to one. With differential pre-singularity growth, the model generates valuation ratios approaching the observed 2--2.7$\times$ AI premium (Table~\ref{tab:differential}). Augmenting the model with business-cycle risk shows that the hedging channel can coexist with higher expected returns from cyclical exposure---the two forces operate on different margins---though matching observed return differentials quantitatively requires parameters beyond the consumption-based framework.
 
 The model suggests that elevated AI stock valuations partly reflect a rational response to a genuinely new risk: a concentrated transfer of economic power to AI owners. To the extent that public AI stocks hedge this transfer, their high prices are insurance, not a bubble. The hedging channel is the only component of the premium that depends on incomplete markets---and therefore the only part that policy can directly affect. Broadening access to private AI capital---through securitization, public offerings, or regulatory reform---reduces the incomplete-markets friction and yields welfare gains of up to 3.4\% in consumption-equivalent terms, all flowing through the hedging channel. Financial inclusion in the AI economy is not only an equity concern but a pricing one.
 
