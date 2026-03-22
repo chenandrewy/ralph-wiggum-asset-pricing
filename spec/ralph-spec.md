@@ -17,9 +17,17 @@ Define the Ralph loop contract for improving the paper and recording current tes
   - `ralph/run-reviews.py`
   - `ralph/commit-iteration.py`
 
+## Author Working Directories
+
+The author steps (`author-plan.py`, `author-improve.py`) may modify files in these directories:
+
+- `paper/` — LaTeX source
+- `code/` — R scripts and analysis
+- `data/` — datasets (not committed; working directory only)
+
 ## Inputs And Configuration
 
-- Core project state lives in `paper/`.
+- Core project state lives in `paper/`, `code/`, and `data/`.
 - Loop intent lives in `spec/`, with `spec/paper-spec.md` used by the current author prompts.
 - Test definitions live in `tests/`.
 - All prompts live inline in their respective scripts (e.g. `ralph/author-plan.py`, `ralph/author-improve.py`, `ralph/commit-iteration.py`).
@@ -92,10 +100,8 @@ For each iteration from `1` through `max-iter`:
 - Ralph commit subjects should headline the substantive paper change.
 - Ralph commit bodies should describe the failing tests the iteration attempted to fix.
 
-- The commit step stages only:
-  - `paper/`
-  - `ralph-garage/improvement-plan.md`
-  - `test-results/`
+- The commit step stages all author working directories except `data/`, plus `ralph-garage/improvement-plan.md` and `test-results/`.
+- `data/` is a working directory but is not committed (too large for git).
 - Shared page images under `ralph-garage/page-images/` are transient inputs to tests and are not committed.
 - Specs, tests, prompts, Ralph tooling, and `ralph-garage/agent-logs/` are not included in Ralph iteration commits.
 

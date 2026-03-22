@@ -17,7 +17,7 @@ from datetime import datetime, timezone
 from zoneinfo import ZoneInfo
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
-from utils import clear_transient_results_dir, load_config
+from utils import clear_transient_results_dir, load_config, write_json_atomic
 
 
 VALID_AGENT_LOG_MODES = ("off", "verbose", "all", "1", "true", "yes")
@@ -261,7 +261,7 @@ def main() -> int:
             "failed": len(results) - num_passed,
         },
     }
-    summary_path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+    write_json_atomic(summary_path, payload)
     return 0 if num_passed == len(results) else 1
 
 

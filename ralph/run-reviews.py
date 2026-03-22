@@ -15,7 +15,7 @@ from datetime import datetime, timezone
 from zoneinfo import ZoneInfo
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
-from utils import load_config
+from utils import load_config, write_json_atomic
 
 VALID_AGENT_LOG_MODES = ("off", "verbose", "all", "1", "true", "yes")
 NEW_YORK_TZ = ZoneInfo("America/New_York")
@@ -88,7 +88,10 @@ def run_single_review(
 def _merge_reviews_into_summary(summary_path: pathlib.Path, results: list[dict[str, object]]) -> None:
     """Merge referee review results into the existing summary.json."""
     if summary_path.exists():
-        payload = json.loads(summary_path.read_text(encoding="utf-8"))
+        try:
+            payload = json.loads(summary_path.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            payload = {}
     else:
         payload = {}
     payload["reviews"] = results
@@ -97,7 +100,7 @@ def _merge_reviews_into_summary(summary_path: pathlib.Path, results: list[dict[s
         "completed": sum(1 for r in results if r.get("status") == "completed"),
         "errored": sum(1 for r in results if r.get("status") == "errored"),
     }
-    summary_path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+    write_json_atomic(summary_path, payload)
 
 
 def main() -> int:

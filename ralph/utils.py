@@ -9,6 +9,7 @@ import json
 import pathlib
 import re
 import shutil
+import tempfile
 from datetime import datetime, timedelta, timezone
 
 
@@ -126,3 +127,16 @@ def summary_results_instruction(
         return stale_message
 
     return fresh_message
+
+
+def write_json_atomic(path: pathlib.Path, payload: dict[str, object]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.NamedTemporaryFile(
+        "w",
+        encoding="utf-8",
+        dir=path.parent,
+        delete=False,
+    ) as handle:
+        tmp_path = pathlib.Path(handle.name)
+        handle.write(json.dumps(payload, indent=2) + "\n")
+    tmp_path.replace(path)
