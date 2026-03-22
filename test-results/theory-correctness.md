@@ -1,99 +1,120 @@
 # tests/theory-correctness.py
-Started: 2026-03-22 13:07:06 EDT
-Runtime: 6m 25s
-[ralph-garage/agent-logs/20260322T170706.993192Z_theory-correctness_claude_opus.log](../ralph-garage/agent-logs/20260322T170706.993192Z_theory-correctness_claude_opus.log)
+Started: 2026-03-22 13:21:40 EDT
+Runtime: 4m 40s
+[ralph-garage/agent-logs/20260322T172140.396226Z_theory-correctness_claude_opus.log](../ralph-garage/agent-logs/20260322T172140.396226Z_theory-correctness_claude_opus.log)
 
 # theory-correctness
 VERDICT: PASS
-REASON: All notation is consistent, assumptions are mutually compatible, all results follow logically from assumptions, and all verbal claims are supported by the formal theory.
+REASON: All mathematical notation, assumptions, derivations, and verbal interpretations are internally consistent and correctly derived.
 
 ## 1. Notational Consistency
 
-All mathematical objects were cataloged and grouped by economic concept. Notation is consistent throughout:
+All mathematical objects grouped by concept:
 
-- **Consumption:** $c_t$ used uniformly.
-- **Dividends:** $D_t^A$, $D_t^N$ consistently denote AI and non-AI dividends.
-- **Labor:** $L_t$ throughout; labor share $\ell_t \equiv L_t/c_t$.
-- **Shares:** $s_t \equiv D_t^A/c_t$; subscripts dropped appropriately in the common-growth baseline where shares are constant.
-- **Growth rates:** $g^A$, $g^N$, $g$ (common growth); $g^L = g^N$ stated once and maintained.
-- **Singularity parameters:** $\lambda$, $\theta$, $\phi$, $\phi_L$ used consistently.
-- **Preferences:** $\beta$, $\gamma$ standard and consistent.
-- **Aggregate growth:** $G(s_t)$ defined once, used consistently.
-- **Jump factor:** $J(s_t, \ell_t)$ and shorthand $J$ used appropriately.
-- **Effective discount:** $a \equiv \beta(1+g)^{1-\gamma}$ (common growth); $a_t^A \equiv \beta(1+g^A)G(s_t)^{-\gamma}$ (differential growth). Clearly distinguished.
-- **P/D ratios:** $v^A$, $v^N$, $\bar{v}$ consistent.
-- **Market access:** $\alpha$, $\psi$, $\tilde{s}(\alpha) = s + \alpha\psi$ consistent.
-- **Extinction/disagreement:** $\delta$, $\delta_H$, $\delta_O$, $\pi$ consistent.
-- **Business cycle:** $\sigma$, $\epsilon_{t+1}$, $b^A$, $b^N$ consistent.
-- **SDF:** $M_{t,t+1}$ consistent.
-- **Welfare:** $\omega(\alpha)$ consistent.
+- **Consumption/utility:** $c_t$, $\gamma$, $\beta$, $E_0$ — used consistently throughout.
+- **Dividends/income:** $D_t^A$, $D_t^N$, $L_t$, $s_t \equiv D_t^A/c_t$, $\ell_t \equiv L_t/c_t$ — defined once (eq 2) and used consistently.
+- **Growth rates:** $g^A$, $g^N$, $g^L = g^N$, $g$ (common-growth baseline where $g^A = g^N \equiv g$), $G(s_t)$ — no conflicts; the distinction between general and baseline cases is clearly stated.
+- **Singularity parameters:** $\lambda$, $\theta$, $\phi$, $\phi_L$, $J(s_t, \ell_t)$ — consistently defined and used.
+- **Market access:** $\alpha$, $\psi$, $\tilde{s}(\alpha) = s + \alpha\psi$ — consistent.
+- **Pricing:** $M_{t,t+1}$, $a \equiv \beta(1+g)^{1-\gamma}$, $\bar{v}$, $v^A$, $v^N$ — consistent. The asset-specific $a_t^A$ in eq (8) is clearly distinguished from the common-growth $a$.
+- **Extension:** $\delta$, $\delta_H$, $\delta_O$, $\pi$, $Y_O$, $q$, $\mu$, $\xi$, $d_0$, $\kappa$, $d = d_0/\kappa$ — all introduced with clear definitions and used consistently.
+- **Business cycle:** $\sigma$, $\epsilon_{t+1}$, $b^A$, $b^N$, $R^f$, $R^i$ — consistent.
 
 No notational conflicts found.
 
 ## 2. Consistent Assumptions
 
-All mathematical assumptions listed:
+All mathematical assumptions:
 
-1. CRRA utility with $\gamma > 1$, $\beta \in (0,1)$ (eq 1).
-2. Budget/consumption identity $c_t = D_t^A + D_t^N + L_t$ (eq 2).
-3. Share definitions $s_t \equiv D_t^A/c_t$, $\ell_t \equiv L_t/c_t$.
-4. Singularity probability $\lambda \in (0,1)$, one-time event.
-5. Deterministic growth: $g^A \geq g^N > 0$, $g^L = g^N$ (eq 3).
-6. Singularity jumps: $\theta > 0$, $\phi \in (0,1)$, $\phi_L \in (0,1)$ (eq 4).
-7. Finite valuation condition $a < 1$ (eq 6).
-8. Market access $\alpha \in [0,1]$, $\psi > 0$ (eq 5).
-9. Extinction $\delta \in [0,1)$.
-10. Friction resolution $\pi \in [0,1]$, increasing in $\delta_O$.
+1. CRRA utility: $\gamma > 1$, $\beta \in (0,1)$ (eq 1)
+2. Budget constraint: $c_t = D_t^A + D_t^N + L_t$ (eq 2)
+3. Normal transition: deterministic growth at $g^A$, $g^N$, $g^L = g^N$ (eq 3)
+4. Growth ordering: $g^A \geq g^N > 0$
+5. Singularity: probability $\lambda \in (0,1)$, one-time event (eq 4)
+6. Singularity parameters: $\theta > 0$, $\phi \in (0,1)$, $\phi_L \in (0,1)$
+7. Finite valuations: $a < 1$
+8. Market access: $\alpha \in [0,1]$, $\psi > 0$
+9. Extension: $\delta \in [0,1)$, $\pi \in [0,1]$
 
 Consistency checks:
-- $a = \beta(1+g)^{1-\gamma}$: with $\gamma > 1$ and $g > 0$, $(1+g)^{1-\gamma} < 1$, so $a < \beta < 1$. ✓
-- All parameter ranges are non-conflicting. ✓
-- Baseline calibration satisfies all constraints: $\beta = 0.96$, $\gamma = 3$, $g = 0.02$, $a \approx 0.923 < 1$, $s + \ell = 0.70 < 1$, $J \approx 0.81 < 1$. ✓
+- **Assumption 7 ($a < 1$):** With $\beta < 1$ and $(1+g)^{1-\gamma} < 1$ (since $\gamma > 1$, $g > 0$), $a < 1$ is automatically satisfied. Consistent with assumptions 1 and 4.
+- **Negative singularity ($J < 1$):** At baseline, $J = 0.805 < 1$. Consistent with the parameter ranges in assumptions 5–6.
+- **Budget constraint holds in all states:** Normal transition scales all income streams; singularity transition scales them asymmetrically but $c_{t+1}$ remains the sum of the three scaled components. No violation.
 
 All assumptions are mutually consistent.
 
 ## 3. Logical Results
 
-Every derived expression was traced back to assumptions:
+### Proposition 1 (Equilibrium Valuations, eqs 7–8)
+Verified by expanding the Euler equation $v^A = E_t[M_{t,t+1}(D_{t+1}^A/D_t^A)(1+v_{t+1}^A)]$:
+- No-singularity branch: $(1-\lambda) \cdot a \cdot (1+v^A)$
+- Singularity branch: $\lambda \cdot a \cdot J^{-\gamma}(1+\theta) \cdot (1+\bar{v})$
 
-- **$G(s_t)$ and $J(s_t, \ell_t)$** (eqs 3-4): Follow directly from the consumption identity and growth/singularity transition rules. ✓
-- **SDF** (eq 5): Standard CRRA first-order condition. ✓
-- **Post-singularity P/D** $\bar{v} = a/(1-a)$ (eq 7): Euler equation with no further risk, geometric series. ✓
-- **Proposition 1** (eqs 8-9): Verified by expanding the pre-singularity Euler equation, substituting $1+\bar{v} = 1/(1-a)$, and solving. Algebra confirmed. ✓
-- **Proposition 2** (eq 10): Verified by subtraction of eq (9) from eq (8). Comparative statics (i)-(iii) all verified analytically. ✓
-- **Decomposition** (eq 11): Correct factoring of eq (10). ✓
-- **Corollary 1**: Follows from Proposition 2(ii) via $\tilde{s}(\alpha)$ increasing in $\alpha$. ✓
-- **Corollary 2** (eq 13): Derived value function multiplier $W(\tilde{s})$ and confirmed the consumption-equivalent formula. Verified $\omega > 0$ using $\gamma > 1$ and $J$ increasing in $\tilde{s}$. ✓
-- **Differential growth** (eq 12): Verified the Euler equation structure with time-varying $a_t^A$ and $s_t$. ✓
-- **Expected returns** (eq 14): Standard asset pricing identity. ✓
-- **Proposition 3** (eq 15): Business-cycle augmentation. Independence of $\epsilon$ and singularity indicator gives additive decomposition. First-order invariance of P/D ratios verified. ✓
-- **Proposition 4** (eq 16): Extinction state contributes zero to Euler equation (zero dividends and prices). Scaling by $(1-\delta)$ confirmed. ✓
-- **Proposition 5** (eq 17): Four sub-states correctly enumerated and summed. ✓
-- **Friction microfoundation** (eq 18): $\pi(Y_O)$ derived from the bilateral-trade conditions. ✓
-- **Proposition 6** (hump shape): Result is correct. Minor note: the proof sketch claims $|(\theta+\phi)(J^{-\gamma}-1)| \sim \theta^{1-\gamma}$, but for large $\theta$, $J^{-\gamma}-1 \to -1$ so the expression actually grows as $\sim\theta$. The conclusion $\Delta^{\text{hedge}} \to 0$ still holds because $(1-\pi) = d/(d+Y_O) \to 0$ super-linearly in $1/\theta$, which dominates. The result is logically sound; only the intermediate bound in the proof sketch is imprecise. ✓
+Solving yields eq (7). Algebraically verified that $\bar{v} + \lambda a[J^{-\gamma}(1+\theta)-1]/[(1-a)(1-(1-\lambda)a)]$ equals the solved expression. Derivation for $v^N$ is identical with $(1-\phi)$ replacing $(1+\theta)$. **Correct.**
 
-All expressions are logically derivable from the assumptions.
+### Proposition 2 (Hedging Premium, eq 9)
+- Subtraction of eqs 7–8 yields $\lambda a J^{-\gamma}(\theta+\phi)/[(1-a)(1-(1-\lambda)a)]$. **Correct.**
+- Part (i): $\partial/\partial\lambda[\lambda/(1-a+\lambda a)] = (1-a)/(1-a+\lambda a)^2 > 0$. **Correct.**
+- Part (ii): $\partial J/\partial s = (1+\theta)-(1-\phi) = \theta+\phi > 0$; since $J < 1$ and $\gamma > 1$, $J^{-\gamma}$ decreases. **Correct.**
+- Part (iii): At $\lambda=0$, ratio is 1. At $\lambda=1$, $v^i = aJ^{-\gamma}F^i/(1-a)$, ratio is $(1+\theta)/(1-\phi)$. **Correct.**
+
+### Decomposition (eq 10)
+Direct factoring of $J^{-\gamma}$ from the premium formula. **Correct.**
+
+### Corollary 1 (Partial Market Access)
+$\tilde{s}(\alpha) = s + \alpha\psi$ increasing in $\alpha$; premium decreasing in effective AI share by Prop 2(ii). **Correct.**
+
+### Corollary 2 (Welfare, eq 12)
+$(1+\omega)^{1-\gamma} = W(\tilde{s})/W(s)$ where $W$ is decreasing in $\tilde{s}$ (since $J^{1-\gamma}$ is decreasing in $J$ for $\gamma > 1$). With $1-\gamma < 0$, $\omega > 0$. **Correct.**
+
+### Proposition 3 (Business Cycle, eq 13)
+Independence of $\epsilon_{t+1}$ and the singularity indicator allows covariance separation. First-order invariance of P/D ratios follows from standard perturbation. **Correct.**
+
+### Proposition 4 (Extinction, eq 15)
+Extinction state contributes zero to Euler equation (zero dividends/prices). Premium scaled by $(1-\delta)$. **Correct.**
+
+### Proposition 5 (Disagreement, eq 14)
+Four sub-states enumerated correctly. In friction-resolved state, $J=1$ so hedging amplifier is 1. Weighted average gives $(1-\pi)J^{-\gamma}+\pi$. **Correct.**
+
+### Proposition 6 (Hump Shape)
+- For large $\theta$: $J \approx s\theta \to \infty$, $(1-\pi) = O(1/Y_O) = o(1/\theta)$ by super-linear condition, so $\Delta^{\text{hedge}} \to 0$. **Correct.**
+- $J = 1$ threshold: $\theta = [(1-s-\ell)\phi + \ell\phi_L]/s$. Verified algebraically. **Correct.**
+
+### Numerical Verification (Tables 1 and 3)
+Spot-checked against closed-form expressions:
+
+| Entry | Computed | Paper | Match |
+|-------|----------|-------|-------|
+| $\bar{v}$ | 11.92 | 11.9 | ✓ |
+| $v^A$ ($\lambda=0.01$) | 14.50 | 14.5 | ✓ |
+| $v^N$ ($\lambda=0.01$) | 12.39 | 12.4 | ✓ |
+| $v^A$ ($\lambda=0.05$) | 20.96 | 21.0 | ✓ |
+| $v^N$ ($\lambda=0.05$) | 13.57 | 13.6 | ✓ |
+| $v^A$ ($\gamma=5$) | 11.98 | 12.0 | ✓ |
+| $v^N$ ($\gamma=5$) | 9.14 | 9.1 | ✓ |
+| $v^A$ ($\phi=0.50,\phi_L=0.35$) | 23.17 | 23.2 | ✓ |
+| $v^A-v^N$ ($\alpha=0.25$) | 3.42 | 3.4 | ✓ |
+| $\omega$ ($\alpha=1.00$) | 3.42% | 3.4% | ✓ |
+
+All numerical values are consistent with the formulas to within rounding precision.
 
 ## 4. Interpretations
 
-All key verbal claims checked against formal theory:
+Key verbal claims and their formal support:
 
-| Claim | Support | Status |
-|---|---|---|
-| AI stocks command a valuation premium increasing in $\lambda$ | Proposition 2(i) | ✓ |
-| Premium decreasing in AI share $s$ | Proposition 2(ii) | ✓ |
-| Incomplete markets essential: hedging amplifier collapses to 1 when $J=1$ | Decomposition (eq 11), Corollary 1 | ✓ |
-| Welfare gain from market access strictly positive | Corollary 2 | ✓ |
-| AI stocks act as insurance (pay well when household suffers) | $J < 1$ with $\theta > 0$ in eq (4) | ✓ |
-| Self-limiting mechanism: premium erodes as $s_t$ rises | Proposition 2(ii), differential growth dynamics | ✓ |
-| Non-AI valuations also rise with singularity risk | $J^{-\gamma}(1-\phi) \approx 1.34 > 1$ at baseline | ✓ |
-| Hedging amplifier roughly doubles cash-flow premium | $J^{-3} \approx 1.92$ at baseline | ✓ |
-| Hedging channel contributes 13-23% at empirical calibrations | Table 2 verified numerically | ✓ |
-| Hedging share exceeds 50% at $\gamma=5$, $\phi_L=0.35$ | Computed hedging share ~81% at those parameters | ✓ |
-| AI stocks earn lower expected returns in baseline | Positive Cov($M$, $R^A - R^N$) verified | ✓ |
-| Business-cycle augmentation reconciles with high betas | Proposition 3(ii) | ✓ |
-| Extinction reduces premium linearly in $\delta$ | Proposition 4 | ✓ |
-| Hedging component is hump-shaped in $\theta$ | Proposition 6 | ✓ |
-| The hedging channel is the only premium component depending on incomplete markets | Cash-flow premium exists at $J^{-\gamma}=1$; hedging amplifier requires $J \neq 1$ | ✓ |
+1. "AI stocks command a valuation premium increasing in singularity probability" — Prop 2(i). ✓
+2. "Premium decreasing in AI dividend share" — Prop 2(ii). ✓
+3. "Incomplete markets essential: hedging amplification vanishes if markets complete" — Corollary 1: as $\alpha \to 1$, $J \to 1$, amplifier $J^{-\gamma} \to 1$. ✓
+4. "Hedging demand roughly doubles the cash-flow premium" — $J^{-\gamma} \approx 1.92$ at baseline. ✓
+5. "Natural self-limiting mechanism" — as $s$ rises, $J \to 1$ and premium erodes. Prop 2(ii). ✓
+6. "Broader market access makes household unambiguously better off" — Corollary 2: $\omega > 0$. ✓
+7. "AI stocks earn lower expected returns in baseline" — positive Cov$(M, R^A)$ from eq (11). ✓
+8. "AI stocks cannot hedge extinction" — zero payoffs in extinction state. ✓
+9. "Premium linearly decreasing in $\delta$" — eq (15): proportional to $(1-\delta)$. ✓
+10. "Hedging amplification hump-shaped" — Prop 6. ✓
+11. "Non-AI valuations also rise with singularity risk" — $J^{-\gamma}(1-\phi) \approx 1.34 > 1$. ✓
+12. "13–23% hedging share at empirical calibrations" — Table 2, structural decomposition. ✓
+13. "Welfare gains up to 3.4%" — Table 3. Verified numerically. ✓
+14. "$J \approx 0.81$, consumption falls by 19%" — computed $J = 0.805$, consistent with stated rounding. ✓
 
-All verbal claims are supported by the formal theory.
+All verbal economic claims are supported by the formal theory.

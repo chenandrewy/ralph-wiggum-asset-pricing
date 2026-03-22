@@ -1,38 +1,38 @@
 {
   "timestamps": {
-    "started_at_utc": "2026-03-22T17:07:06.955576+00:00",
-    "finished_at_utc": "2026-03-22T17:13:31.630154+00:00",
-    "started_at_ny": "2026-03-22T13:07:06.955576-04:00",
-    "finished_at_ny": "2026-03-22T13:13:31.630154-04:00",
+    "started_at_utc": "2026-03-22T17:21:40.363653+00:00",
+    "finished_at_utc": "2026-03-22T17:26:20.043664+00:00",
+    "started_at_ny": "2026-03-22T13:21:40.363653-04:00",
+    "finished_at_ny": "2026-03-22T13:26:20.043664-04:00",
     "timezone": "America/New_York"
   },
-  "duration_seconds": 384.675,
+  "duration_seconds": 279.68,
   "tests": [
     {
       "name": "spec-compliance",
       "status": "pass",
       "exit_code": 0,
       "timestamps": {
-        "started_at_utc": "2026-03-22T17:07:06.960167+00:00",
-        "finished_at_utc": "2026-03-22T17:08:40.958965+00:00",
-        "started_at_ny": "2026-03-22T13:07:06.960167-04:00",
-        "finished_at_ny": "2026-03-22T13:08:40.958965-04:00",
+        "started_at_utc": "2026-03-22T17:21:40.368485+00:00",
+        "finished_at_utc": "2026-03-22T17:23:08.969366+00:00",
+        "started_at_ny": "2026-03-22T13:21:40.368485-04:00",
+        "finished_at_ny": "2026-03-22T13:23:08.969366-04:00",
         "timezone": "America/New_York"
       },
-      "duration_seconds": 93.999
+      "duration_seconds": 88.601
     },
     {
       "name": "theory-correctness",
       "status": "pass",
       "exit_code": 0,
       "timestamps": {
-        "started_at_utc": "2026-03-22T17:07:06.960187+00:00",
-        "finished_at_utc": "2026-03-22T17:13:31.629240+00:00",
-        "started_at_ny": "2026-03-22T13:07:06.960187-04:00",
-        "finished_at_ny": "2026-03-22T13:13:31.629240-04:00",
+        "started_at_utc": "2026-03-22T17:21:40.368485+00:00",
+        "finished_at_utc": "2026-03-22T17:26:20.042319+00:00",
+        "started_at_ny": "2026-03-22T13:21:40.368485-04:00",
+        "finished_at_ny": "2026-03-22T13:26:20.042319-04:00",
         "timezone": "America/New_York"
       },
-      "duration_seconds": 384.669
+      "duration_seconds": 279.674
     }
   ],
   "summary": {
@@ -45,11 +45,11 @@
       "name": "referee-top3",
       "exit_code": 0,
       "status": "completed",
-      "started_at_utc": "2026-03-22T17:13:31.651275+00:00",
-      "finished_at_utc": "2026-03-22T17:15:23.358753+00:00",
-      "started_at_ny": "2026-03-22T13:13:31.651275-04:00",
-      "finished_at_ny": "2026-03-22T13:15:23.358753-04:00",
-      "duration_seconds": 111.707
+      "started_at_utc": "2026-03-22T17:26:20.068861+00:00",
+      "finished_at_utc": "2026-03-22T17:27:27.557093+00:00",
+      "started_at_ny": "2026-03-22T13:26:20.068861-04:00",
+      "finished_at_ny": "2026-03-22T13:27:27.557093-04:00",
+      "duration_seconds": 67.488
     }
   ],
   "review_summary": {

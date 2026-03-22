@@ -1,38 +1,44 @@
 # Improvement Plan
 
-## Status
+## Current State
 
-All tests pass. No overhaul needed — the model section is correct and well-structured. Focus is on referee feedback and spec compliance.
+- **Tests**: All pass (spec-compliance, theory-correctness).
+- **Referee (referee-top3)**: Two substantive comments, both actionable.
+- **CFR-R1**: Largely addressed — GKP differentiation and Jones 2024 extension are in the paper.
 
 ## Key Issues
 
-1. **Paper exceeds 20-page limit.** The referee-top3 review reports 22 pages; the spec requires at most 20. The spec-compliance test passed by estimating 17–19 pages from line counts, but the compiled PDF is longer.
-2. **Event study (Table 4) is the weakest exhibit.** The paper spends ~1.5 pages presenting evidence it immediately discredits. The referee correctly notes this undermines rather than supports the contribution, and wastes one of six exhibit slots.
-3. **Defensive digressions in Section 3.3 are too long.** "Why AI Stocks, Not Treasuries or Gold?" (~1 page) and the gradual-singularity paragraph can be heavily compressed. "Measuring Market Access and Private AI Capital" runs long on observable proxies.
-4. **No figure illustrating the model mechanism.** The paper has five tables and one data figure but zero model-output figures. A mechanism figure would make the core contribution more memorable.
-5. **Proof of Prop 6(i) has imprecise scaling claim.** The proof says $|(\theta+\phi)(J^{-\gamma}-1)| \sim \theta$ but the expression actually scales as $\theta^{1-\gamma} \to 0$. The conclusion is correct; the proof sketch needs a one-line fix.
+### 1. Constant-λ tension with Figure 1 (referee-top3 #1)
+
+The model assumes constant λ. With differential growth, s_t rises and the premium *erodes* — the opposite of what Figure 1 shows (widening gap post-2023). The model cannot explain its own motivating time-series fact. This is the most important issue.
+
+**Options**: (a) Add time-varying λ (two-state Markov chain), or (b) reframe as a cross-sectional story and acknowledge the limitation.
+
+**Decision**: Option (b). Adding a Markov chain for λ_t is a significant model extension that risks bloating the paper beyond 20 pages. The cleaner fix is to reframe the contribution as cross-sectional (why AI stocks are expensive *relative to* non-AI stocks at any point in time) and explicitly address the time-series limitation. The paper already hints at this ("part of the explanation") but needs to be more disciplined about it.
+
+### 2. Testable implications lack empirical content (referee-top3 #2)
+
+Section 3.4 identifies a sharp prediction but defers all empirical work. The referee wants at least suggestive evidence — even a small event-study table (5-10 events) showing AI abnormal returns around singularity-risk events conditional on earnings controls.
+
+**Decision**: Add a small event-study exhibit. Use AI capability/safety announcements (e.g., GPT-4 release, major AI safety incidents, executive orders) and show abnormal returns for AI stocks relative to earnings-revision controls. This is feasible with existing data and strengthens the paper without requiring a full empirical section.
+
+### 3. Minor: Proposition 6 proof imprecision (theory-correctness note)
+
+The proof sketch claims |(\theta+\phi)(J^{-\gamma}-1)| ~ θ^{1-\gamma}, but for large θ, J^{-\gamma}-1 → -1, so the expression grows as ~θ. The conclusion Δ^hedge → 0 still holds because (1-π) → 0 dominates. Fix the proof sketch.
 
 ## Plan
 
-### 1. Replace event study with model-mechanism figure
+### Step 1: Reframe as cross-sectional story
 
-- **Drop Table 4** (event study) and the ~1.5 pages of surrounding discussion in Section 3.4.
-- **Add a new Figure 2** showing the premium decomposition across parameter space. Best candidate: the hump shape from Proposition 6 — plot the total premium, cash-flow component, and hedging component as functions of $\theta$, illustrating the self-resolving friction. Alternative: a $\lambda \times (g^A - g^N)$ heatmap of the hedging share from Table 2.
-- Write an R script to generate the figure. Keep the event-study mention to one sentence in the conclusion or a footnote if desired.
-- This recovers ~1.5 pages and replaces a weak exhibit with a strong one. Exhibit count stays at 6.
+- **Intro**: Adjust the framing. Figure 1 motivates the *level* of the AI premium (AI stocks trade at 2-2.7x market P/D). Stop implying the model explains the *widening* post-2023. Add a sentence acknowledging that the time-series dynamics (the post-2023 acceleration) require time-varying beliefs about singularity risk, which is beyond the scope of this paper.
+- **Section 3.4 (Testable Implications)**: Frame the erosion prediction (rising s_t shrinks premium) as a long-run cross-sectional prediction. Note that the constant-λ model is silent on short-run time-series variation driven by belief shocks. Mention that extending to time-varying λ_t is a natural direction for future work.
 
-### 2. Cut defensive digressions to hit 20 pages
+### Step 2: Add event-study evidence
 
-- **"Why AI Stocks, Not Treasuries or Gold?"**: Compress to 2–3 sentences. Core point: the singularity is an asymmetric shock; only assets with positive AI exposure can hedge it; safe-haven assets are orthogonal.
-- **Gradual-singularity paragraph**: Delete. The self-limiting mechanism (Prop 2(ii)) already makes this point formally.
-- **"Measuring Market Access and Private AI Capital"**: Condense to one short paragraph folded into the calibration discussion. Keep only the key data points ($\alpha$ small but increasing, $\psi \approx 0.10$–$0.20$).
-- Target: recover ~2 pages from these cuts combined with the event-study removal, bringing total to ~18–19 pages.
+- Create an R script to compute abnormal returns for AI stocks around 5-10 singularity-risk events (AI capability announcements, safety incidents, regulation). Use a simple market model or Fama-French 3-factor residuals. Show a small table or figure with cumulative abnormal returns (CARs) and confidence intervals.
+- Add a brief empirical subsection (or expand Section 3.4) presenting this evidence as suggestive, not definitive. The prediction: events that shift perceived singularity risk without revising near-term earnings should move AI valuations.
+- Keep it compact — one exhibit maximum.
 
-### 3. Fix Prop 6(i) proof sketch
+### Step 3: Fix Proposition 6 proof sketch
 
-- Replace "$|(\theta+\phi)(J^{-\gamma}-1)| \sim \theta$" with the correct scaling: "$J \approx s\theta$ implies $J^{-\gamma} \approx (s\theta)^{-\gamma}$, so $|(\theta+\phi)(J^{-\gamma}-1)| \sim \theta^{1-\gamma} \to 0$."
-- One-line fix; no structural change.
-
-### 4. Verify page count after changes
-
-- Recompile and confirm the paper is at most 20 pages.
+- Correct the intermediate bound: note that the dominant convergence comes from (1-π) → 0 (super-linear decay), not from the J^{-γ} factor.

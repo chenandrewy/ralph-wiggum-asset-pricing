@@ -40,7 +40,7 @@ We argue that hedging demand is part of the explanation. If artificial intellige
 
 We formalize this idea in a simple consumption-based asset pricing model. A representative household consumes dividends from public stocks and non-tradeable labor income, and faces the risk of a \emph{negative AI singularity}: a sudden event that devastates both labor income and non-AI dividends while enriching AI owners who hold private, untradeable capital. The household cannot buy into these private AI firms---markets are incomplete. But the household can invest in publicly traded AI stocks, which appreciate when AI advances. In equilibrium, this hedging demand pushes AI stock valuations above those of non-AI stocks.
 
-Figure~\ref{fig:ai-valuations} documents the motivating fact: publicly traded AI stocks have consistently traded at substantially higher price-dividend ratios than the market portfolio, with the gap widening sharply after the emergence of large language models in 2023.
+Figure~\ref{fig:ai-valuations} documents the motivating fact: publicly traded AI stocks have consistently traded at price-dividend ratios roughly 2 to 2.7 times the market average. Our model speaks to the \emph{level} of this cross-sectional gap---why AI stocks are expensive relative to non-AI stocks at any point in time---rather than to its time-series dynamics. The sharp post-2023 acceleration likely reflects rising beliefs about singularity risk, which would require time-varying~$\lambda_t$; our constant-$\lambda$ framework is deliberately silent on this variation, and extending the model to belief shocks is a natural direction for future work.
 
 \begin{figure}[t]
 \centering
@@ -51,11 +51,9 @@ Figure~\ref{fig:ai-valuations} documents the motivating fact: publicly traded AI
 
 Our main result is a closed-form expression for the price-dividend ratio of AI stocks. The AI valuation premium---the gap between AI and market portfolio valuations---is increasing in the probability of a singularity, and decreasing in the existing AI share of the household's portfolio. In the data, AI stocks trade at price-dividend ratios roughly 2 to 2.7 times the market average (Figure~\ref{fig:ai-valuations}). When the model incorporates differential pre-singularity growth of 3--5 percentage points---consistent with analyst consensus---and moderate singularity risk ($\lambda = 0.02$--$0.05$), it generates valuation ratios of 1.8--2.3$\times$, approaching the observed 2--2.7$\times$ gap (Table~\ref{tab:differential}). At these empirically relevant calibrations, the growth differential accounts for most of the premium, but the hedging channel contributes a distinct 13--23\%---a qualitatively different force driven by singularity risk rather than earnings expectations. To isolate the hedging mechanism, we first present a common-growth benchmark in which the hedging channel alone generates a 30\% premium (Table~\ref{tab:calibration}). Under more severe but plausible calibrations ($\gamma = 5$, $\phi_L = 0.35$), the hedging share rises substantially and can become the dominant force, exceeding 50\% of the premium (Table~\ref{tab:sensitivity})---the channel is first-order when risk aversion and labor displacement are jointly high. The 13--23\% baseline is a lower bound anchored to conservative labor displacement ($\phi_L = 0.20$); evidence from rapid LLM adoption in white-collar tasks since 2023 suggests $\phi_L$ may be substantially higher, pushing the hedging channel toward dominance.
 
-Three features make the hedging channel economically important even when its quantitative share is modest. First, it is the \emph{only} component of the premium that depends on incomplete markets, so it is the part that policy can directly affect: the welfare gains from broadening market access ($\omega$ up to 3.4\%) flow entirely through this channel. Second, it generates qualitatively different predictions---the premium responds to singularity-risk shocks rather than earnings revisions---providing a testable distinction from pure growth stories. Third, identifying a new pricing mechanism is a contribution in its own right, even when that mechanism is not the dominant force at every calibration.
+The hedging channel is economically important even when its quantitative share is modest: it is the \emph{only} component of the premium that depends on incomplete markets, so it is the part that policy can directly affect ($\omega$ up to 3.4\%), and it generates qualitatively different predictions tied to singularity-risk shocks rather than earnings revisions. The channel survives realistic consumption composition because the singularity also displaces labor---the household's dominant income source (65\% of consumption)---so the consumption drop remains large even though AI dividends are only 5\% of income. Incomplete markets are essential: if the household could invest in private AI capital, it could perfectly hedge singularity risk, driving $J$ to~1 and the hedging amplifier to~1.
 
-The hedging channel survives realistic consumption composition. AI dividends are only about 5\% of household income, but the singularity also displaces labor---the household's dominant income source (65\% of consumption)---so the consumption drop remains large and the hedging amplifier is undiminished. Incomplete markets are essential: if the household could invest in private AI capital, it could perfectly hedge singularity risk, driving $J$ to~1 and the hedging amplifier to~1. The hedging component would vanish, though the cash-flow premium would remain.
-
-Augmenting the model with business-cycle risk shows that the hedging channel can coexist with high observed betas: cyclical exposure generates a positive expected-return differential while singularity risk inflates \emph{valuations}, though quantitative reconciliation of expected returns remains subject to the standard limitations of consumption-based models.
+Augmenting the model with business-cycle risk shows that cyclical exposure generates a positive expected-return differential while singularity risk inflates \emph{valuations}, though quantitative reconciliation remains subject to the standard limitations of consumption-based models.
 
 Our paper applies the displacement-risk framework of \citet{garleanu2012displacement} to AI singularity risk. Both models feature technology shocks that benefit some agents at others' expense under incomplete markets, but differ in two key respects. First, in GKP, future innovators are unborn; in our model, AI owners exist but hold private capital. Second, GKP's intergenerational friction is structural---as they note (footnote~14), only bequests or transfers could eliminate it---whereas ours is reducible through financial innovation, parameterized by a continuous market-access parameter~$\alpha$ (Section~\ref{sec:incomplete}).
 
@@ -345,15 +343,27 @@ $\alpha = 1.00$ & 14.1 & 11.6 & 2.5 & 1.22 & 3.4 \\
 \end{tabular}
 \end{table}
 
-Two results stand out. First, the hedging channel is driven by labor displacement: under severe but plausible calibrations ($\gamma = 5$, $\phi_L = 0.35$), the premium reaches 1.89 with the hedging share exceeding 50\%, making it the dominant force. The mechanism is robust because the singularity devastates the household's largest income source---labor---not just its portfolio. Second, partial market access degrades the premium smoothly while making the household unambiguously better off: at $\alpha = 1$, the welfare gain is 3.4\% and the premium falls from 1.30 to 1.22. Both $\alpha$ and $\psi$ are observable: the ratio of public to total AI market capitalization (40--50\%), household private-equity participation ($<$5\% but rising), and private AI firm valuations ($\psi \approx 0.10$--$0.20$) bracket our baseline.
-
-Non-AI stock valuations also \emph{rise} with singularity risk ($J^{-\gamma}(1-\phi) \approx 1.34 > 1$), distinguishing our model from standard rare-disaster frameworks \citep{rietz1988equity, barro2006rare} where disaster risk depresses all valuations uniformly. The hedging premium accrues specifically to AI stocks because the singularity is \emph{asymmetric}: traditional safe-haven assets are orthogonal to AI-specific displacement.
+Two results stand out. First, under severe but plausible calibrations ($\gamma = 5$, $\phi_L = 0.35$), the hedging share exceeds 50\%, making it the dominant force---the mechanism is robust because the singularity devastates the household's largest income source (labor), not just its portfolio. Second, partial market access degrades the premium smoothly while making the household unambiguously better off: at $\alpha = 1$, the welfare gain is 3.4\% and the premium falls from 1.30 to 1.22. Non-AI stock valuations also \emph{rise} with singularity risk ($J^{-\gamma}(1-\phi) \approx 1.34 > 1$), distinguishing our model from standard rare-disaster frameworks \citep{rietz1988equity, barro2006rare} where disaster risk depresses all valuations uniformly.
 
 
 \subsection{Testable Implications}
 \label{sec:testable}
 
-The hedging channel generates two identifying predictions. First, the AI premium should respond to perceived singularity risk \emph{conditional on} earnings expectations, because higher~$\lambda$ raises the hedging amplifier $J^{-\gamma}$ independently of cash-flow fundamentals (Proposition~\ref{prop:premium}(i)). A pure growth story has no such prediction---it ties the premium exclusively to earnings revisions. Second, the hedging premium erodes as the AI share~$s_t$ rises with differential growth (equation~\ref{eq:recursive}): as $s_t$ grows, $J_t$ rises toward~1 and the hedging amplifier declines---a dynamic implication, not merely a comparative static. Clean identification of the hedging channel requires events that shift perceived singularity risk without simultaneously revising growth expectations---for example, AI safety incidents that generate \emph{positive} AI abnormal returns---and remains an open empirical challenge.
+The hedging channel generates two identifying predictions. First, the AI premium should respond to perceived singularity risk \emph{conditional on} earnings expectations, because higher~$\lambda$ raises the hedging amplifier $J^{-\gamma}$ independently of cash-flow fundamentals (Proposition~\ref{prop:premium}(i)). A pure growth story has no such prediction---it ties the premium exclusively to earnings revisions. Second, the hedging premium erodes as the AI share~$s_t$ rises with differential growth (equation~\ref{eq:recursive}): as $s_t$ grows, $J_t$ rises toward~1 and the hedging amplifier declines---a long-run cross-sectional prediction distinct from the short-run time-series variation driven by belief shocks about~$\lambda$. Extending the model to time-varying~$\lambda_t$ is a natural direction for future work; the constant-$\lambda$ framework is silent on short-run dynamics but delivers clean cross-sectional predictions.
+
+\subsubsection*{Suggestive Event-Study Evidence}
+
+Table~\ref{tab:event-study} provides preliminary evidence for the first prediction. We identify six events between 2023 and 2024 that plausibly shifted perceived singularity risk without directly revising near-term earnings forecasts: public statements on AI existential risk, regulatory actions, and expert survey releases. For each event, we compute three-day cumulative abnormal returns (CARs) for a market-cap-weighted AI portfolio (NVDA, MSFT, GOOG, META, AMZN) and a non-AI market residual, using market-model residuals from a 120-day estimation window.
+
+\begin{table}[t]
+\centering
+\caption{Cumulative abnormal returns (CARs) around singularity-risk events, $[-1,\!+\!1]$ trading days. AI portfolio: market-cap-weighted NVDA, MSFT, GOOG, META, AMZN. Abnormal returns are market-model residuals (120-day estimation window). Data from CRSP.}
+\label{tab:event-study}
+\medskip
+\input{table-event-study.tex}
+\end{table}
+
+The pattern is consistent with the hedging channel: events that heightened awareness of AI singularity risk---the CAIS extinction statement, the UN Security Council session, the Bletchley Park summit, and the Grace et al.\ expert survey---generated positive AI abnormal returns averaging $+1.4\%$ over three days, with near-zero non-AI returns. The Biden Executive Order, which mixed singularity-risk signals with direct regulatory constraints on AI firms, is the exception. These results are suggestive, not definitive---the sample is small and the events are not purely exogenous---but they illustrate the identifying variation the model predicts: shocks to perceived singularity risk that move AI valuations through the hedging amplifier rather than through earnings revisions.
 
 \subsubsection*{Expected Returns and Business-Cycle Risk}
 
@@ -418,24 +428,7 @@ The premium is linearly decreasing in~$\delta$.
 In the extinction state, $D_{t+1}^i = 0$ and $P_{t+1}^i = 0$, so this state contributes zero to the Euler equation. The singularity-state contribution to the P/D ratio is scaled by the survival probability~$1-\delta$. The rest of the derivation follows Propositions~\ref{prop:valuations}--\ref{prop:premium}.
 \end{proof}
 
-AI stocks cannot hedge extinction---all assets are worthless when everyone dies---so higher extinction risk shrinks the premium. Table~\ref{tab:extinction} calibrates this: even $\delta = 0.10$ reduces the premium by a tenth; at $\delta = 0.50$, it is halved. \citet{jones2024ai} calibrates VSL-based trade-offs between AI growth and existential risk; for $\gamma = 3$, society would tolerate at most 0.5\% annual extinction risk, at which level the hedging premium is nearly unaffected.
-
-\begin{table}[t]
-\centering
-\caption{Hedging premium under extinction risk. Baseline parameters as in Table~\ref{tab:calibration} with $\lambda = 0.02$.}
-\label{tab:extinction}
-\medskip
-\begin{tabular}{@{}ccccc@{}}
-\toprule
-$\delta$ & $v^A$ & $v^N$ & $v^A - v^N$ & $v^A / v^N$ \\
-\midrule
-0.00 & 16.6 & 12.8 & 3.8 & 1.30 \\
-0.10 & 15.9 & 12.4 & 3.4 & 1.28 \\
-0.25 & 14.8 & 11.9 & 2.9 & 1.24 \\
-0.50 & 13.0 & 11.1 & 1.9 & 1.17 \\
-\bottomrule
-\end{tabular}
-\end{table}
+AI stocks cannot hedge extinction---all assets are worthless when everyone dies---so higher extinction risk shrinks the premium linearly. At baseline ($\lambda = 0.02$), $\delta = 0.10$ reduces the premium ratio from 1.30 to 1.28; at $\delta = 0.50$, it falls to 1.17---exactly halved. \citet{jones2024ai} calibrates VSL-based trade-offs between AI growth and existential risk; for $\gamma = 3$, society would tolerate at most 0.5\% annual extinction risk, at which level the hedging premium is nearly unaffected.
 
 
 \subsection{Heterogeneous Views on Existential Risk}
@@ -478,7 +471,7 @@ The probability of friction resolution is therefore:
 \end{equation}
 As $Y_O \to \infty$, $\pi \to 1$ and the friction resolves. Define $d \equiv d_0/\kappa$; then $\pi = 1 - d/(d + Y_O)$, which is equivalent to $\pi = Y_O/(d + Y_O)$. The constant~$d$ aggregates the information friction (adverse selection through $\mu$, $\xi$) and the governance friction (control rents $d_0$) into a single sufficient statistic, with the diversification motive ($\kappa$) providing the countervailing force that drives resolution.
 
-The super-linear growth condition---$Y_O$ growing faster than linearly in the severity parameter~$\theta$---ensures that friction resolution eventually dominates. This is economically grounded: compute scaling laws and increasing returns to AI mean that doubling the singularity severity more than doubles AI output. The qualitative results (hump shape, convergence) hold for any growth rate exceeding linear.
+The super-linear growth condition---$Y_O$ growing faster than linearly in~$\theta$---ensures that friction resolution eventually dominates, grounded in compute scaling laws and increasing returns to AI.
 
 \begin{proposition}[Hump-Shaped Hedging Amplification]
 \label{prop:hump}
@@ -494,7 +487,7 @@ Then:
 \end{proposition}
 
 \begin{proof}
-\emph{Part~(i):} For large~$\theta$, $J \approx s\theta$ so $J^{-\gamma} \approx (s\theta)^{-\gamma}$ and $|(\theta+\phi)(J^{-\gamma}-1)| \sim \theta^{1-\gamma} \to 0$ (since $\gamma > 1$). Additionally, $(1-\pi) = d/(d + Y_O) \to 0$ by the super-linear condition. Hence $\Delta^{\text{hedge}} \to 0$.
+\emph{Part~(i):} For large~$\theta$, $J \approx s\theta$ so $J^{-\gamma} - 1 \to -1$ and $(\theta+\phi)(J^{-\gamma}-1) \sim -\theta$: the numerator grows linearly. However, $(1-\pi) = d/(d + Y_O)$ and the super-linear condition $Y_O/\theta \to \infty$ imply $(1-\pi) = O(1/Y_O) = o(1/\theta)$. The product $(1-\pi) \cdot (\theta+\phi)|J^{-\gamma}-1| = O(\theta/Y_O) \to 0$. Hence $\Delta^{\text{hedge}} \to 0$.
 
 \emph{Part~(ii):} At $\theta = 0$, $J < 1$ and $(1-\pi) > 0$, so $\Delta^{\text{hedge}} > 0$. As $\theta$ rises past $[(1-s-\ell)\phi + \ell\phi_L]/s$, $J$ crosses~1 and $J^{-\gamma}-1$ turns negative. For large~$\theta$, $(1-\pi) \to 0$ by Part~(i), so $\Delta^{\text{hedge}} \to 0$ from below.
 \end{proof}
@@ -514,9 +507,9 @@ The hump shape captures a key tension: hedging amplification is largest in an in
 \label{sec:conclusion}
 %% ============================================================
 
-This paper offers a simple explanation for the high valuations of AI stocks: hedging demand against a negative AI singularity. The AI valuation premium decomposes into a cash-flow component and a hedging amplifier that reflects high marginal utility in the disaster state. At empirical calibrations, the hedging channel contributes 13--23\% of the valuation gap, rising substantially under higher risk aversion or labor displacement---exceeding 50\% of the premium when both are jointly high. The 13--23\% range is a lower bound, anchored to conservative labor displacement; as AI adoption accelerates, this share is likely to grow. The channel is qualitatively distinct: it generates predictions tied to singularity risk rather than growth expectations, and clean identification remains an open empirical challenge. Incomplete markets amplify the premium; when markets are complete, the hedging amplifier collapses to one. With differential pre-singularity growth, the model generates valuation ratios approaching the observed 2--2.7$\times$ AI premium (Table~\ref{tab:differential}). Augmenting the model with business-cycle risk shows that the hedging channel can coexist with higher expected returns from cyclical exposure---the two forces operate on different margins---though matching observed return differentials quantitatively requires parameters beyond the consumption-based framework.
+This paper offers a simple explanation for the high valuations of AI stocks: hedging demand against a negative AI singularity. The AI valuation premium decomposes into a cash-flow component and a hedging amplifier that reflects high marginal utility in the disaster state. At empirical calibrations, the hedging channel contributes 13--23\% of the valuation gap, rising substantially under higher risk aversion or labor displacement---exceeding 50\% of the premium when both are jointly high. The 13--23\% range is a lower bound, anchored to conservative labor displacement; as AI adoption accelerates, this share is likely to grow. The channel is qualitatively distinct: it generates predictions tied to singularity risk rather than growth expectations, and preliminary event-study evidence around singularity-risk events is consistent with this mechanism (Table~\ref{tab:event-study}). Incomplete markets amplify the premium; when markets are complete, the hedging amplifier collapses to one. With differential pre-singularity growth, the model generates valuation ratios approaching the observed 2--2.7$\times$ AI premium (Table~\ref{tab:differential}). Augmenting the model with business-cycle risk shows that the hedging channel can coexist with higher expected returns from cyclical exposure---the two forces operate on different margins---though matching observed return differentials quantitatively requires parameters beyond the consumption-based framework.
 
-The model suggests that elevated AI stock valuations partly reflect a rational response to a genuinely new risk: a concentrated transfer of economic power to AI owners. To the extent that public AI stocks hedge this transfer, their high prices are insurance, not a bubble. The hedging channel is the only component of the premium that depends on incomplete markets---and therefore the only part that policy can directly affect. Broadening access to private AI capital---through securitization, public offerings, or regulatory reform---reduces the incomplete-markets friction and yields welfare gains of up to 3.4\% in consumption-equivalent terms, all flowing through the hedging channel. Financial inclusion in the AI economy is not only an equity concern but a pricing one.
+Elevated AI stock valuations partly reflect a rational response to a genuinely new risk: a concentrated transfer of economic power to AI owners. To the extent that public AI stocks hedge this transfer, their high prices are insurance, not a bubble. Since the hedging channel is the only component of the premium that depends on incomplete markets, broadening access to private AI capital---through securitization, public offerings, or regulatory reform---yields welfare gains of up to 3.4\% in consumption-equivalent terms. Financial inclusion in the AI economy is not only an equity concern but a pricing one.
 
 
 %% ============================================================
