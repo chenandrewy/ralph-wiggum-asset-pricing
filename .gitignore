@@ -29,5 +29,5 @@ paper/*.toc
 # Generated PDFs (commit only for milestones)
 paper/paper.pdf
 
-# History PDFs
-ralph-garage/history/*.pdf
+# History 
+ralph-garage/history/

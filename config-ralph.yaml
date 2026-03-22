@@ -1,6 +1,6 @@
 # == Basic loop configuration ==
 run-name: testing-refactor
-max-iter: 2
+max-iter: 20
 
 # Optional pre-loop baseline test run
 test-before-loop: off
@@ -17,9 +17,9 @@ agent-log-mode: verbose
 
 # == Referee reviews and continual-improvement mode ==
 
-continual-improvement: false
+continual-improvement: true
 
-reviews: false
+reviews: true
 
 selected-reviews:
   - referee-top3

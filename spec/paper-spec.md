@@ -23,7 +23,9 @@
     - Data on the value of a statistical life can be used to calibrate the model.
     - Consider how infinite output and consumption affects the assumption that agents cannot make trades despite the mutual benefit (see `spec/lit/GKP-2012-WP.md`).
     - Keep these ideas in an extension, so that the main argument stays simple.
-6. The introduction includes a single figure illustrating the valuation of AI stocks compared with the market portfolio.
+6. The introduction includes a single figure illustrating the valuation of publicly traded AI stocks compared with the market portfolio using CRSP and Compustat data.
+7. The paper explains how it contributes relative to `spec/lit/GKP-2012-WP.md`
+    - In GKP, there is a footnote mentioning how government debt or intergenerational transfers would affect the magnitude of the displacement factor.
 
 ## II. Quality Requirements
 
@@ -38,7 +40,7 @@
 2. The author is anonymous.
 3. The abstract is 100 words or less.
 4. The title is short, evocative and eye-catching, but not cringey.
-5. Paper length is less than 20 pages, excluding references.
+5. Paper length is at most 20 pages.
 6. Every page has a visible page number.
 7. At most 6 exhibits.
 8. Lit review focuses on the most relevant papers and is concise.
