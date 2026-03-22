@@ -1,62 +1,48 @@
 # Improvement Plan
 
-## Diagnosis
+## Status
 
-The `theory-correctness` test fails because Proposition 4 (eq 17) is mathematically wrong. The error propagates to Proposition 5 and several verbal claims. The referee report independently identifies the same conceptual root cause: the paper conflates a mechanical cash-flow differential with hedging demand (SDF amplification). These two issues are the same fix.
+All tests pass. Referee-top3 review completed with two substantive comments. No section needs an overhaul — the model is correct, well-structured, and spec-compliant. Focus is on addressing referee feedback.
 
-**The core error**: In the friction-resolves state, the paper assumes consumption neutrality (J=1) means no premium contribution. But AI dividends still grow by (1+θ) while non-AI dividends grow by (1-φ), so the cash-flow differential persists even when hedging demand vanishes. The correct Proposition 4 formula is:
+## Key Issues
 
-$$v^A - v^N = \frac{\lambda(1-\delta_H)\,a\,(\theta+\phi)\,[(1-\pi)J^{-\gamma} + \pi]}{(1-a)[1-(1-\lambda)a]}$$
+### From referee-top3
 
-The missing `+π` term breaks the hump-shaped result (Proposition 5) and the verbal claim that the premium vanishes under complete markets.
+1. **Singularity parameters lack empirical grounding.** The calibration varies $\lambda$, $\theta$, $\phi$ freely but offers no external evidence. The paper repeatedly compares model output to data (2-2.7x ratio) yet treats parameters as illustrative. Either anchor them or soften quantitative claims.
 
-## Plan: Premium Decomposition Overhaul
+2. **Market incompleteness is exogenous and unexplained.** A 29% premium implies large gains from trade — why don't intermediaries securitize private AI capital pre-singularity? Section 4.3 microfounds friction resolution post-singularity, but the pre-singularity persistence is unaddressed. The referee notes GKP's friction (unborn innovators) is structurally irreducible, while ours (private capital held by existing agents) is exactly what financial markets resolve.
 
-The entire fix revolves around one change: **decompose the premium into a cash-flow component and a hedging-amplification component throughout the paper.**
+### From CFR-R1 (already largely addressed)
 
-### Step 1: Introduce the decomposition after Proposition 2
+- GKP subsumption concern: addressed via three-point differentiation in intro and continuous $\alpha$ parameter.
+- Jones (2024) integration: addressed via Section 4 extensions.
 
-After eq (13), decompose the existing premium:
+## Planned Changes
 
-$$v^A - v^N = \underbrace{\frac{\lambda\,a\,(\theta+\phi)}{(1-a)[1-(1-\lambda)a]}}_{\text{cash-flow premium}} \cdot \underbrace{J^{-\gamma}}_{\text{hedging amplifier}}$$
+### 1. Anchor calibration parameters empirically (referee comment 1)
 
-- The cash-flow premium reflects that AI dividends jump more than non-AI dividends upon singularity. A risk-neutral investor (γ→0) would pay this.
-- The hedging amplifier reflects that marginal utility is high in the singularity state (J<1, γ>1), so the household overpays relative to expected cash flows.
-- Calibration: at baseline (J≈0.82, γ=3), J^{-γ}≈1.81, so hedging roughly doubles the cash-flow-only premium.
+**Where:** Section 3.1 (Calibration), before Table 1.
 
-### Step 2: Fix the complete-markets claim (Section 2.3 and Introduction)
+Add a paragraph grounding each singularity parameter in external evidence:
+- **$\lambda$ (singularity probability):** Cite AI researcher surveys (e.g., Grace et al. 2024) on probability of transformative AI within N years. Convert to an annual hazard rate. The 1-5% range in the paper should be shown to bracket survey-based estimates.
+- **$\theta = 0.50$ (AI dividend jump):** Relate to the private-vs-public split in AI capital. If private AI capital is roughly equal to public AI market cap, then a singularity that doubles total AI value implies $\theta \approx 0.50$ for the public component. Cite industry estimates of private AI valuations.
+- **$\phi = 0.30$ (non-AI dividend drop):** Relate to labor share displacement estimates. If AI automates 30-40% of tasks (cite Eloundou et al. 2023 or similar), a 30% drop in non-AI dividends is consistent.
 
-Current: "the AI valuation premium would vanish" under complete markets.
+Also soften language in the growth-hedging decomposition: frame the 2-2.7x comparison as "consistent with" rather than "accounts for."
 
-Fix: Under complete markets (J=1), the hedging amplifier equals 1 and the *hedging component* vanishes, but the cash-flow premium remains positive. The premium shrinks to its cash-flow-only value. Change the claim to: "the hedging component of the premium would vanish."
+### 2. Explain why the friction persists pre-singularity (referee comment 2)
 
-### Step 3: Fix Proposition 4 (eq 17)
+**Where:** Section 2.3 (Incomplete Markets), after the paragraph on parameterizing $\alpha$.
 
-Replace eq (17) with the corrected formula that includes both the friction-persists and friction-resolves state contributions:
+Add a paragraph explaining why the friction is not arbitraged away despite large gains from trade:
+- **Information asymmetry:** Private AI firms' value depends on proprietary technology that outsiders cannot evaluate — classic adverse selection.
+- **Control and incentives:** AI owners retain private capital to preserve control over strategic technology; selling equity dilutes governance rights and may reduce innovation incentives.
+- **Regulatory barriers:** Private placements, accredited investor requirements, and securities regulation limit household access to pre-IPO AI capital.
+- **Contrast with GKP:** Acknowledge that GKP's friction is structurally permanent while ours is reducible — this is a feature, not a bug, because it generates the policy lever ($\alpha$) that GKP lacks.
 
-$$v^A - v^N = \frac{\lambda(1-\delta_H)\,a\,(\theta+\phi)\,[(1-\pi)J^{-\gamma} + \pi]}{(1-a)[1-(1-\lambda)a]}$$
+### 3. Add references
 
-Fix the proof: remove the claim that the friction-resolves state "contributes no hedging premium." Instead, note it contributes the cash-flow differential at the risk-neutral SDF.
-
-### Step 4: Fix Proposition 5 (hump shape)
-
-The total premium no longer vanishes as θ→∞. Two options:
-
-**Recommended**: Restate Proposition 5 so the hump shape applies to the *hedging component* only: (1-π)J^{-γ}(θ+φ) → 0 as π→1, while the total premium approaches its cash-flow-only value. The hedging amplifier is hump-shaped in θ; the total premium is monotonically increasing. This is a cleaner and more precise result.
-
-Update the verbal discussion: "the same event that generates hedging demand may also eliminate the need for it" should become "the same event that generates hedging demand may also resolve the friction that amplifies it — but the cash-flow differential remains."
-
-### Step 5: Update the calibration discussion (Section 3.3)
-
-The growth-hedging decomposition (Section 3.3) currently treats the hedging premium as the entire model premium. With the decomposition, this section should note that the model premium includes both cash-flow and hedging components. The "residual attributable to growth" calculation doesn't change numerically — but the interpretation sharpens: the model already captures some growth-like effects through the cash-flow differential.
-
-### Step 6: Update the conclusion
-
-Adjust language to reflect the decomposition — the premium has both a cash-flow and a hedging component; incomplete markets amplify the premium through hedging demand but are not the sole source.
-
-### What NOT to change
-
-- Propositions 1–3 and Corollary 1 are correct — do not modify.
-- The baseline calibration numbers in Tables 1–3 are correct.
-- The model setup (Sections 2.1–2.2) needs no changes.
-- Do not add the referee's suggested empirical tests (cross-sectional predictions, time-series tests) — those are beyond the paper's theoretical scope and would require new data work.
+Add bibliography entries for:
+- Grace et al. (2024) — AI researcher surveys
+- Eloundou et al. (2023) or similar — AI labor displacement estimates
+- Any private AI capital valuation source used
