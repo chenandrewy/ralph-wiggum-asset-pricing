@@ -30,7 +30,8 @@ for dir in "${author_dirs[@]}"; do
 done
 
 echo "Clearing: test-results"
-rm -rf test-results
+git checkout HEAD -- test-results
+git clean -fdx test-results
 
 echo "Removing: ralph-garage"
 rm -rf ralph-garage
