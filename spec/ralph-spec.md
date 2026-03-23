@@ -105,12 +105,10 @@ For each iteration from `1` through `max-iter`:
 - Shared page images under `ralph-garage/page-images/` are transient inputs to tests and are not committed.
 - Specs, tests, prompts, Ralph tooling, and `ralph-garage/agent-logs/` are not included in Ralph iteration commits.
 
-## Reset
+## Wipe
 
-- Resetting Ralph means reverting the author working directories, clearing `test-results/`, and wiping `ralph-garage/`.
-- For committed author working directories, reset restores them to their git state, including removal of ignored build artifacts.
-- For uncommitted author working directories (e.g. `data/`), reset deletes them entirely.
-- `ralph/wipe.sh` performs a full reset.
+- Wiping gives Ralph a blank slate: empty author working directories, empty `test-results/`, and no `ralph-garage/`.
+- `ralph/wipe.sh` performs a wipe.
 
 ## Exit Conditions
 
