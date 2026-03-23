@@ -18,7 +18,9 @@ Define required output behavior for all PASS/FAIL tests under `tests/`.
 
 Primary source trees evaluated by tests:
 - `paper/` (including `paper/paper.tex`, `paper/paper.pdf`, and `paper/references.bib`)
-- `spec/` (at minimum `spec/paper-spec.md` for compliance tests)
+- `code/` (analysis, calibration, simulation, and exhibit-generation code used by the paper)
+- `data/` (local derived data or cached outputs relied on by the paper or its code-based checks)
+- `spec/` (at minimum `spec/paper-spec.md` for compliance tests, and other spec files when a test requires them)
 
 ## Artifact Preparation
 

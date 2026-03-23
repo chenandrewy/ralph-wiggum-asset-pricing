@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-How to run: python tests/theory-correctness.py
+How to run: python tests/factcheck-theory.py
 Inputs: paper/paper.tex, spec/paper-spec.md, spec/asset-pricing-background.md
-Outputs: test-results/theory-correctness.md and process exit code (0=PASS, 1=FAIL)
+Outputs: test-results/factcheck-theory.md and process exit code (0=PASS, 1=FAIL)
 """
 
 from __future__ import annotations
@@ -25,13 +25,30 @@ def main() -> int:
         return preflight
 
     prompt = f"""
-You are a strict test agent evaluating the economic theory in an academic asset pricing paper.
+You are a strict test agent evaluating the formal theory in an academic asset pricing paper.
 
 Read the paper at: {paper_path}
 Read the spec at: {spec_path}
 Read the asset pricing background at: {bg_path}
 
-Evaluate the economic theory. Check that ALL of the following conditions are met:
+You MUST use a staged subagent workflow for the first two conditions:
+
+- Subagent 1 handles Condition 1:
+  enumerate every mathematical object in the paper, group objects that refer to the same economic concept, and produce a normalized symbol map with locations in the paper and ambiguity notes.
+- Subagent 2 handles Condition 2:
+  take Subagent 1's symbol map as an input artifact, enumerate all mathematical assumptions in the paper, map each assumption to the objects it references, and identify any cross-assumption conflicts or unresolved ambiguities.
+
+The main agent must:
+- review both subagent outputs
+- use them when evaluating Condition 3
+- resolve disagreements conservatively
+- own the final PASS/FAIL verdict
+
+Do not delegate the final verdict. Do not skip any step because a subagent seems uncertain. If a subagent output is incomplete, say so and treat that as evidence against PASS where appropriate.
+
+This is a math-only test. Do NOT evaluate abstract/introduction rhetoric, broad narrative framing, contribution claims, or verbal interpretation except where a statement is needed to identify a formal object, assumption, or claimed formal result.
+
+Evaluate the formal theory. Check that ALL of the following conditions are met:
 
 1. **Notational Consistency.** Follow this process step by step:
    a. List every mathematical object in the paper. Group objects that refer to the same economic concept (e.g., consumption, dividends, utility).
@@ -47,13 +64,8 @@ Evaluate the economic theory. Check that ALL of the following conditions are met
    b. Trace each object back to the assumptions.
    c. If any expression cannot be logically derived from the assumptions, FAIL.
 
-4. **Interpretations.** Follow this process step by step:
-   a. For each paragraph, identify the key verbal economic claims. Make a list of all claims.
-      - Key claims are related to the economic theory proposed in the paper. Exclude claims used for motivation.
-   b. For each claim, check whether the claim is supported by the formal theory. If not, FAIL.
-
 Criteria:
-- To PASS, ALL four conditions must be satisfied. If ANY condition fails, FAIL.
+- To PASS, ALL three conditions must be satisfied. If ANY condition fails, FAIL.
 
 Write your report to: {context.report_path}
 The report must be a clean, human-readable markdown file with this format:
@@ -61,6 +73,10 @@ The report must be a clean, human-readable markdown file with this format:
 - Next line: VERDICT: PASS or VERDICT: FAIL
 - Next line: REASON: one short sentence
 - Then a brief summary of your findings, organized by condition.
+- Explicitly include:
+  - a short "Subagent 1 output summary"
+  - a short "Subagent 2 output summary"
+  - any important ambiguity passed from Step 1 to Step 2
 """
 
     return run_test(

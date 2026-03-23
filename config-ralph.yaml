@@ -9,8 +9,12 @@ test-before-loop: off
 test-mode: selected
 
 selected-tests:
+  - factcheck-code
+  - factcheck-interpretation
+  - factcheck-lit
   - spec-compliance
-  - theory-correctness
+  - factcheck-theory
+  - visual-pages
 
 # Agent log verbosity
 agent-log-mode: verbose
