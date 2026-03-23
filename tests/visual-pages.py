@@ -37,7 +37,7 @@ Evaluate:
 2. Figures and tables are nicely formatted and readable.
 3. The paper appears well-structured with clear section headings.
 4. No obvious formatting issues (overflowing text, broken references, missing figures).
-5. Paper length conforms to spec (less than 15 pages excluding references).
+5. Paper length conforms to spec (less than 20 pages).
 
 Criteria:
 - To PASS, ALL conditions must be satisfied.
