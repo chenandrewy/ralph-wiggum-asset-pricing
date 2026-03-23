@@ -1,6 +1,6 @@
 # == Basic loop configuration ==
-run-name: testing-refactor
-max-iter: 20
+run-name: ref-cfr+factcheck
+max-iter: 10
 
 # Optional pre-loop baseline test run
 test-before-loop: off
@@ -10,10 +10,11 @@ test-mode: selected
 
 selected-tests:
   - factcheck-code
+  - factcheck-theory
   - factcheck-interpretation
   - factcheck-lit
   - spec-compliance
-  - factcheck-theory
+  - visual-figures
   - visual-pages
 
 # Agent log verbosity
