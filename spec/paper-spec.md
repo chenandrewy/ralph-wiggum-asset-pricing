@@ -49,3 +49,8 @@
 
 1. `paper/paper.tex` is the canonical paper and the only LaTeX document intended for referee evaluation and PASS/FAIL testing.
 2. `paper/` should contain only assets used by `paper/paper.tex`.
+3. If the paper relies on local analysis code, `code/` must provide one canonical local analysis path that supports the paper's claimed quantitative objects, exhibits, calibration, and implementation choices.
+4. The canonical local analysis path must use only local inputs already present in the repo. Data download, external setup, and network-dependent scripts must be separated from that path.
+5. The canonical local analysis path should be fast enough for routine test execution. Slow or optional steps should either be outside the canonical path or skipped when their outputs already exist, with an explicit way to force regeneration when needed.
+6. Any figure, table, calibration, or quantitative claim used in `paper/paper.tex` must be reproducible from the canonical local analysis path unless the paper clearly labels it as external, nonlocal, unreproducible from repo inputs, or illustrative/non-canonical.
+7. The claimed local workflow must not depend on hidden auxiliary files or undocumented manual steps.

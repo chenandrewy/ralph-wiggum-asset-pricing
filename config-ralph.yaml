@@ -22,5 +22,4 @@ continual-improvement: true
 referees: true
 
 selected-referees:
-  - referee-top3
   - referee-cfr-r1
