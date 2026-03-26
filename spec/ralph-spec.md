@@ -57,6 +57,8 @@ The author steps (`author-plan.py`, `author-improve.py`) may modify files in the
 - Ralph work should be merged back into `main` with a non-fast-forward merge so each Ralph stretch remains visible in git history.
 - When Ralph is started from `main`, it treats that startup as a fresh Ralph stretch and wipes old files from `ralph-garage/agent-logs/` before any pre-loop test or referee phase begins.
 - When Ralph is started from `ralph/run`, it treats that startup as a continuation and does not wipe the full agent log directory at startup.
+- On a fresh Ralph stretch, branch setup may prompt the human to run `ralph/wipe.sh` before any pre-loop test or author step begins.
+- On a fresh Ralph stretch, Ralph creates one startup commit on `ralph/run` before any pre-loop test or author step begins to record the initial contents of `paper/` and `code/`.
 
 ## Manual Intervention Model
 
@@ -95,6 +97,7 @@ For each iteration from `1` through `max-iter`:
 ## Commit Model
 
 - Ralph creates one commit per iteration.
+- Ralph may also create one startup commit per fresh Ralph stretch before iteration 1 to record the initial condition on `ralph/run`.
 - The commit step uses `--allow-empty`.
 - Commits created by the Ralph loop must start with `rloop` (e.g., `rloop [run-name]: ...`).
 - Ralph commit subjects should headline the substantive paper change.
@@ -103,6 +106,7 @@ For each iteration from `1` through `max-iter`:
 - The commit step stages all author working directories except `data/`, plus `ralph-garage/improvement-plan.md` and `test-results/`.
 - `data/` is a working directory but is not committed (too large for git).
 - Shared page images under `ralph-garage/page-images/` are transient inputs to tests and are not committed.
+- The startup commit stages only `paper/` and `code/`.
 - Specs, tests, prompts, Ralph tooling, and `ralph-garage/agent-logs/` are not included in Ralph iteration commits.
 
 ## Wipe

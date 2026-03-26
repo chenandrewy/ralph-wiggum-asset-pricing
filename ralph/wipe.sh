@@ -9,6 +9,11 @@ set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 LATEX_TEMPLATE_DIR="$REPO_ROOT/ralph/code-templates/latex"
+ASSUME_YES=0
+
+if [ "${1:-}" = "--yes" ]; then
+  ASSUME_YES=1
+fi
 
 if [ ! -d "$LATEX_TEMPLATE_DIR" ]; then
   echo "ERROR: missing template directory: $LATEX_TEMPLATE_DIR" >&2
@@ -16,10 +21,12 @@ if [ ! -d "$LATEX_TEMPLATE_DIR" ]; then
 fi
 
 echo "This will delete all contents of paper/, code/, data/, test-results/, and ralph-garage/."
-read -r -p "Are you sure? [y/N] " response
-if [[ ! "$response" =~ ^[Yy]$ ]]; then
-  echo "Aborted."
-  exit 0
+if [ "$ASSUME_YES" -ne 1 ]; then
+  read -r -p "Are you sure? [y/N] " response
+  if [[ ! "$response" =~ ^[Yy]$ ]]; then
+    echo "Aborted."
+    exit 0
+  fi
 fi
 
 # Author working directories (defined in spec/ralph-spec.md)

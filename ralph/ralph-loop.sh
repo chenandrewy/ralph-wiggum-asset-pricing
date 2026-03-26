@@ -21,6 +21,10 @@ clear_dir() {
     find "$1" -mindepth 1 ! -name '.gitkeep' -exec rm -rf {} +
 }
 
+has_tracked_files() {
+    git ls-files --error-unmatch -- "$1" >/dev/null 2>&1
+}
+
 # Build paper, run build gate test, and generate page images.
 # Returns 1 if the LaTeX build gate fails (caller decides how to handle).
 # Exits the script if page image generation fails (unrecoverable).
@@ -39,17 +43,12 @@ eval "$_CONFIG"
 log "--- setup check ---"
 python3 ralph/check-setup.py || { log "ERROR: setup check failed"; exit 1; }
 
-mkdir -p ralph-garage ralph-garage/history ralph-garage/page-images test-results ralph-garage/agent-logs
-exec > >(tee ralph-garage/loop.log) 2>&1
-export RALPH_GARAGE_DIR=ralph-garage
-
 # --- branch setup ---
 CURRENT_BRANCH="$(git branch --show-current)"
 if [ "$CURRENT_BRANCH" = "ralph/run" ]; then
     :
 else
-    log "--- wipe agent logs for fresh Ralph stretch from $CURRENT_BRANCH ---"
-    clear_dir ralph-garage/agent-logs
+    startup_paths=()
     if git show-ref --verify --quiet refs/heads/ralph/run; then
         log "--- switch to existing ralph/run and fast-forward from $CURRENT_BRANCH ---"
         if ! git merge-base --is-ancestor ralph/run "$CURRENT_BRANCH"; then
@@ -66,7 +65,28 @@ else
             log "ERROR: could not create branch 'ralph/run' from '$CURRENT_BRANCH'"; exit 1
         }
     fi
+    read -r -p "Run ralph/wipe.sh before starting this Ralph stretch? [y/N] " response
+    if [[ "$response" =~ ^[Yy]$ ]]; then
+        bash ralph/wipe.sh --yes
+    fi
+    mkdir -p ralph-garage ralph-garage/history ralph-garage/page-images test-results ralph-garage/agent-logs
+    log "--- wipe agent logs for fresh Ralph stretch from $CURRENT_BRANCH ---"
+    clear_dir ralph-garage/agent-logs
+    log "--- commit startup state before author steps ---"
+    for path in paper code; do
+        if [ -e "$path" ] || has_tracked_files "$path"; then
+            startup_paths+=("$path")
+        fi
+    done
+    if [ "${#startup_paths[@]}" -gt 0 ]; then
+        git add -A -- "${startup_paths[@]}"
+    fi
+    git -c user.name="Ralph Loop" -c user.email="noreply@gmail.com" commit --allow-empty \
+        -m "rloop start: record initial condition before author steps"
 fi
+
+mkdir -p ralph-garage ralph-garage/history ralph-garage/page-images test-results ralph-garage/agent-logs
+exec > >(tee ralph-garage/loop.log) 2>&1
 
 if [ -n "$RUN_NAME" ]; then
     log "=== ralph loop started: $RUN_NAME (branch ralph/run, max $MAX_ITER iterations, agent-log-mode $AGENT_LOG_MODE) ==="
