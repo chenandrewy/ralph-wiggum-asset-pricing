@@ -3,13 +3,13 @@ FROM node:20
 ARG TZ
 ENV TZ="$TZ"
 
+ARG GIT_VERSION=2.49.0
 ARG CLAUDE_CODE_VERSION=latest
 ARG CODEX_CLI_VERSION=latest
 
 # Install basic development tools and iptables/ipset
 RUN apt-get update && apt-get install -y --no-install-recommends \
   less \
-  git \
   procps \
   sudo \
   fzf \
@@ -34,10 +34,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   python3 \
   python3-pip \
   python3-venv \
+  build-essential \
+  libexpat1-dev \
   r-base \
   r-base-dev \
   libcurl4-openssl-dev \
   libssl-dev \
+  zlib1g-dev \
   libxml2-dev \
   libpq-dev \
   libsecret-1-dev \
@@ -48,6 +51,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   cm-super \
   biber \
   && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Pin Git to the local workflow version so worktree features match host behavior.
+RUN wget -O /tmp/git.tar.gz "https://mirrors.edge.kernel.org/pub/software/scm/git/git-${GIT_VERSION}.tar.gz" && \
+  tar -C /tmp -xzf /tmp/git.tar.gz && \
+  make -C "/tmp/git-${GIT_VERSION}" prefix=/usr/local NO_TCLTK=YesPlease NO_GETTEXT=YesPlease -j"$(nproc)" all && \
+  make -C "/tmp/git-${GIT_VERSION}" prefix=/usr/local NO_TCLTK=YesPlease NO_GETTEXT=YesPlease install && \
+  rm -rf /tmp/git.tar.gz "/tmp/git-${GIT_VERSION}"
 
 # Ensure default node user has access to /usr/local/share
 RUN mkdir -p /usr/local/share/npm-global && \

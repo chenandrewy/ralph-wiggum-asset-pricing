@@ -4,6 +4,7 @@
     "dockerfile": "Dockerfile",
     "args": {
       "TZ": "${localEnv:TZ:America/New_York}",
+      "GIT_VERSION": "2.49.0",
       "CLAUDE_CODE_VERSION": "latest",
       "CODEX_CLI_VERSION": "latest",
       "GIT_DELTA_VERSION": "0.18.2",
