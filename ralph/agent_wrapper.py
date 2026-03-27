@@ -9,7 +9,8 @@ import shlex
 import shutil
 import tempfile
 import threading
-from datetime import datetime, timezone
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 LOG_SECTION_MAX_BYTES = 500000
 DEFAULT_GARAGE_DIR = "ralph-garage"
@@ -17,6 +18,7 @@ DEFAULT_AGENT_LOG_DIR = "ralph-garage/agent-logs"
 CLAUDE_STREAM_JQ_FILTER = ".result // ."
 VALID_LOG_MODES = ("off", "verbose", "all", "1", "true", "yes")
 VALID_FAILURE_LOG_MODES = ("on", "off", "auto")
+NEW_YORK_TZ = ZoneInfo("America/New_York")
 
 
 def write_log(path, text):
@@ -142,11 +144,15 @@ def truncate_log_section(text):
     return f"(truncated; keeping last {LOG_SECTION_MAX_BYTES} bytes)\n{kept}"
 
 
+def now_ny():
+    return datetime.now(NEW_YORK_TZ)
+
+
 def build_verbose_log_path(agent, model, step_label, ts=None):
     step_label = safe_label(step_label or 'run')
     model_label = safe_label(model)
     if ts is None:
-        ts = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S.%fZ')
+        ts = now_ny().strftime('%Y%m%dT%H%M%S.%f%z')
     return os.path.join(DEFAULT_AGENT_LOG_DIR, f"{ts}_{step_label}_{agent}_{model_label}.log")
 
 
@@ -158,7 +164,7 @@ def write_verbose_log(agent, model, step_label, log_mode, rc, stdout_text, stder
     if log_path is None:
         log_path = build_verbose_log_path(agent, model, step_label)
     payload = (
-        f"timestamp_utc: {datetime.now(timezone.utc).isoformat(timespec='seconds')}\n"
+        f"timestamp_ny: {now_ny().isoformat(timespec='seconds')}\n"
         f"agent: {agent}\n"
         f"step_label: {step_label}\n"
         f"model: {model}\n"
@@ -238,7 +244,7 @@ def handle_failure(agent, model, step_label, failure_log_mode, rc, stdout_text, 
         sys.exit(1)
 
     error_text = (stderr_text or '') + (stdout_text or '')
-    ts = datetime.now(timezone.utc).isoformat(timespec='seconds')
+    ts = now_ny().isoformat(timespec='seconds')
     snippet_lines = error_text.strip().splitlines()[-20:]
     snippet = '\n'.join(snippet_lines) if snippet_lines else '(no output captured)'
     failure_record = (
@@ -279,7 +285,7 @@ def main():
         write_log(
             live_log_path,
             (
-                f"timestamp_utc: {datetime.now(timezone.utc).isoformat(timespec='seconds')}\n"
+                f"timestamp_ny: {now_ny().isoformat(timespec='seconds')}\n"
                 f"agent: {agent}\n"
                 f"step_label: {safe_label(step_label or 'run')}\n"
                 f"model: {model}\n"
