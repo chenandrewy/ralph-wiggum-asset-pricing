@@ -3,15 +3,18 @@
 How to run: python tests/spec-compliance.py
 Inputs: paper/paper.tex, spec/paper-spec.md
 Outputs: test-results/spec-compliance.md and process exit code (0=PASS, 1=FAIL)
+
+Orchestrator spawns one sub-agent per top-level requirement section (in parallel)
+to evaluate compliance. Checks all straightforward requirements (everything except
+the Quality Requirements section).
 """
 
 from __future__ import annotations
 
 from _test_helpers import build_test_context, require_paths, run_test
 
-
 AGENT = "claude"
-MODEL = "opus"
+MODEL = "claude-opus-4-6"
 
 
 def main() -> int:
@@ -23,26 +26,29 @@ def main() -> int:
     if preflight is not None:
         return preflight
 
-    prompt = f"""
-You are a strict test agent checking whether an academic paper complies with its specification.
+    prompt = f"""\
+You are an orchestrator for spec-compliance checks on an academic paper.
 
 Read the spec at: {spec_path}
-Read the paper at: {paper_path}
 
-Procedure:
-1. List every requirement from the spec sections I (Economic Requirements) and II (Style Requirements).
-2. For each requirement, check whether the paper satisfies it. Quote evidence from the paper.
-3. A requirement is satisfied only if the paper clearly addresses it. Do not give credit for vague or partial coverage. Enforce this strictly.
+For each top-level requirement section (roman numerals) EXCEPT "Quality Requirements",
+launch a sub-agent IN PARALLEL using the Agent tool.
 
-Criteria:
-- To PASS, ALL requirements must be satisfied. If ANY requirement is not met, FAIL.
+Each sub-agent should:
+- Read the spec at {spec_path} and the paper at {paper_path}
+- Check every requirement (and sub-requirement) in its assigned section
+- Verify compliance across ALL sections of the paper, not just one or two
+- Quote evidence from the paper for each requirement
+- Use model "opus"
+- Report back (do not write files)
 
-Write your report to: {context.report_path}
-The report must be a clean, human-readable markdown file with this format:
+After all sub-agents report back, write an aggregated report to: {context.report_path}
+
+Format:
 - Line 1: # {context.test_id}
-- Next line: VERDICT: PASS or VERDICT: FAIL
-- Next line: REASON: one short sentence
-- Then a brief summary of your findings, organized by requirement.
+- VERDICT: PASS or VERDICT: FAIL (FAIL if any section failed)
+- REASON: short summary
+- Then each section's verdict, reason, and per-requirement findings
 """
 
     return run_test(
