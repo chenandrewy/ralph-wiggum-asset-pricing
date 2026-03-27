@@ -20,6 +20,8 @@
     "vscode": {
       "extensions": [
         "anthropic.claude-code",
+        "GitHub.copilot",
+        "GitHub.copilot-chat",
         "dbaeumer.vscode-eslint",
         "esbenp.prettier-vscode",
         "eamodio.gitlens",

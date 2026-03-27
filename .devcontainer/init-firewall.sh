@@ -69,6 +69,13 @@ for domain in \
     "marketplace.visualstudio.com" \
     "open-vsx.org" \
     "ms-vscode.gallery.vsassets.io" \
+    "copilot-proxy.githubusercontent.com" \
+    "origin-tracker.githubusercontent.com" \
+    "copilot-telemetry.githubusercontent.com" \
+    "collector.github.com" \
+    "default.exp-tas.com" \
+    "githubcopilot.com" \
+    "api.githubcopilot.com" \
     "auth.openai.com" \
     "api.openai.com" \
     "chatgpt.com" \
