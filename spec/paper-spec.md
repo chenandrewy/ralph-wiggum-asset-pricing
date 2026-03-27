@@ -3,7 +3,7 @@
 ## I. Economic Requirements
 
 1. Academic asset pricing theory paper.
-2. The paper uses the following economic ideas:
+2. The following economic ideas are consistently used, throughout the paper
     - An AI singularity is a sudden improvement in AI that vastly increases productivity and output.
     - A *negative* AI singularity is an AI singularity that is devastating for the typical investor.
     - Incomplete markets refers to the idea that some assets cannot be bought by the representative investor. It does not necessarily refer to Arrow-Debreu securities.
@@ -27,14 +27,7 @@
 7. The paper explains how it contributes relative to `spec/lit/GKP-2012-WP.md`
     - In GKP, there is a footnote mentioning how government debt or intergenerational transfers would affect the magnitude of the displacement factor.
 
-## II. Quality Requirements
-
-1. The narrative is consistent with the results.
-2. Figures and tables are nicely formatted.
-3. The paper tells a clear, unified, and concise story.
-4. Remove text and math that do not add value.
-
-## III. Style Requirements
+## II. Style Requirements
 
 1. Writing is between an academic paper and a blog post. Catchy and conversational, yet rigorous. Favor plain english. Be direct and concise. Not cringey.
 2. The author is anonymous.
@@ -45,12 +38,18 @@
 7. At most 6 exhibits.
 8. Lit review focuses on the most relevant papers and is concise.
 
-## IV. Technical Requirements
+## III. Technical Requirements
 
-1. `paper/paper.tex` is the canonical paper and the only LaTeX document intended for referee evaluation and PASS/FAIL testing.
-2. `paper/` should contain only assets used by `paper/paper.tex`.
-3. If the paper relies on local analysis code, `code/` must provide one canonical local analysis path that supports the paper's claimed quantitative objects, exhibits, calibration, and implementation choices.
-4. The canonical local analysis path must use only local inputs already present in the repo. Data download, external setup, and network-dependent scripts must be separated from that path.
-5. The canonical local analysis path should be fast enough for routine test execution. Slow or optional steps should either be outside the canonical path or skipped when their outputs already exist, with an explicit way to force regeneration when needed.
-6. Any figure, table, calibration, or quantitative claim used in `paper/paper.tex` must be reproducible from the canonical local analysis path unless the paper clearly labels it as external, nonlocal, unreproducible from repo inputs, or illustrative/non-canonical.
-7. The claimed local workflow must not depend on hidden auxiliary files or undocumented manual steps.
+1. `paper/` contains only assets used by `paper/paper.tex`. It has no extraneous objects.
+2. All sections in `paper.tex` come with comments that list the section number, for ease of reference.
+3. All exhibits in `paper.tex` come with comments that list the exhibit number, for ease of reference.
+4. All math theorem environments (e.g. propositions) in `paper.tex` come with comments that list the environment number.
+5. If the paper relies on local analysis code, `code/` must provide one canonical local analysis path that supports the paper's claims. The canonical local analysis path should be fast enough for routine test execution. Slow or optional steps should either be outside the canonical path or skipped when their outputs already exist, with an explicit way to force regeneration when needed.
+
+## IV. Quality Requirements
+
+1. Figures and tables are nicely formatted.
+2. Theoretical derivations are correct
+3. Each claim is supported by either the paper's results, or by a literature citation
+4. Each citation accurately represents the referenced paper(s).
+5. Mathematical formalism is kept to a minimum. Each piece of formalism contributes to the economic claims.
