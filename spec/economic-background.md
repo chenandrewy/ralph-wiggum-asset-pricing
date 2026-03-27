@@ -1,4 +1,10 @@
-# Asset Pricing Background
+# Economic Background
+
+## AI Singularity
+
+An AI singularity is a sudden improvement in AI that vastly increases productivity and output.
+
+A negative AI singularity is an AI singularity that is devastating for the typical investor.
 
 ## Budget Constraints
 
