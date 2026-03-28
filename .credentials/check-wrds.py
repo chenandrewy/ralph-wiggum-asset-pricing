@@ -27,7 +27,10 @@ def main() -> int:
         if not password:
             missing.append("WRDS_PASSWORD / wrds-password")
         print(f"FAIL: Missing credentials: {', '.join(missing)}")
-        print("Run `python .credentials/setup.py` on your host to save them.")
+        print(
+            "Rerun `python .credentials/setup.py` on your host/local machine, "
+            "then reopen or rebuild the devcontainer so WRDS credentials are injected."
+        )
         return 1
 
     print("WRDS credentials found")

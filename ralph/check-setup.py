@@ -8,6 +8,7 @@ Outputs: setup-check report to stdout/stderr and process exit code (0 pass, non-
 from __future__ import annotations
 
 import pathlib
+import subprocess
 import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
@@ -34,6 +35,9 @@ def main() -> int:
         if not path.is_file():
             print(f"FAIL: missing required file: {path}", file=sys.stderr)
             return 2
+
+    paper_spec_path = pathlib.Path("spec/paper-spec.md")
+    paper_spec_text = paper_spec_path.read_text(encoding="utf-8")
 
     ci = str(config_values.get("continual-improvement", "false"))
     referees = str(config_values.get("referees", "false"))
@@ -102,6 +106,24 @@ def main() -> int:
                 + ", ".join(unknown)
                 + "; known referees: "
                 + ", ".join(available_referees),
+                file=sys.stderr,
+            )
+            return 2
+
+    # --- validate WRDS availability when the spec requires WRDS-backed data ---
+    if "CRSP and Compustat data" in paper_spec_text:
+        wrds_check = pathlib.Path(".credentials/check-wrds.py")
+        if not wrds_check.is_file():
+            print(f"FAIL: missing WRDS checker: {wrds_check}", file=sys.stderr)
+            return 2
+
+        print("Spec requires WRDS-backed data; checking WRDS availability...")
+        wrds_result = subprocess.run([sys.executable, str(wrds_check)])
+        if wrds_result.returncode != 0:
+            print(
+                "FAIL: WRDS is required by spec/paper-spec.md but is not available. "
+                "Rerun `python .credentials/setup.py` on your host/local machine, "
+                "then reopen or rebuild the devcontainer before starting Ralph.",
                 file=sys.stderr,
             )
             return 2
