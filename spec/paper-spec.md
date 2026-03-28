@@ -26,7 +26,7 @@
     - e. Keep these ideas in an extension, so that the main argument stays simple.
 6. The paper explains how it contributes relative to `spec/lit/GKP-2012-WP.md`
     - a. In GKP, there is a footnote mentioning how government debt or intergenerational transfers would affect the magnitude of the displacement factor, but no further analysis. The paper contributes with a formal analysis.
-    - b. Presumably, frictions prevent these transfer mechanisms from allowing for efficient risk-sharing (e.g. Coase Theorem). 
+    - b. Without frictions, intergenerational transfers (bequests, gifts, government debt) would allow existing agents to share in the gains of new entrants, eliminating displacement risk — this is the Coase Theorem logic. GKP's modeling assumes, quite reasonably, that such frictions exist and preserve the risk premium.
     - c. In the case of a singularity, perhaps these frictions can be overcome. Following the modeling in `spec/lit/Jones-2024-AERI.md`, we can quantify the size of frictions that can be overcome, given infinite output.
     - d. The characterization of the contribution is purposefully modest. The main insights about displacement risk and incomplete markets are already in GKP.
 7. The introduction includes a single figure illustrating the valuation of publicly traded AI stocks compared with the market portfolio using CRSP and Compustat data.
