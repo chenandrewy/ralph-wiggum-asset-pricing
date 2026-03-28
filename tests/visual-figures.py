@@ -4,7 +4,7 @@ How to run: python tests/visual-figures.py [--agent-log-mode off]
 Inputs: ralph-garage/page-images/page-*.png, ralph-garage/page-images/exhibit-manifest.json
 Outputs: test-results/visual-figures.md and process exit code (0=PASS, 1=FAIL)
 
-Orchestrator spawns one sub-agent per figure (serially) to evaluate
+Orchestrator spawns one sub-agent per figure (in parallel) to evaluate
 readability and distinguishability at the panel level. Sub-agents receive
 only the image and a focused visual rubric — no reporting instructions.
 """
@@ -22,6 +22,7 @@ from _test_helpers import (
 
 AGENT = "claude"
 MODEL = "claude-opus-4-6"
+EFFORT = "medium"
 IMAGES_DIR = "ralph-garage/page-images"
 MANIFEST_PATH = "ralph-garage/page-images/exhibit-manifest.json"
 
@@ -109,7 +110,7 @@ def main() -> int:
     prompt = f"""\
 You are an orchestrator for visual figure quality checks.
 
-Launch the following sub-agents ONE AT A TIME IN SEQUENCE using the Agent tool (one per figure).
+Launch ALL of the following sub-agents IN PARALLEL using the Agent tool (one per figure).
 Use model "opus" for each sub-agent. Each sub-agent will report its findings
 back to you (do not ask sub-agents to write files).
 
@@ -129,6 +130,7 @@ Format:
         prompt=prompt,
         agent=AGENT,
         model=MODEL,
+        default_agent_effort=EFFORT,
         default_agent_log_mode="verbose",
     )
 

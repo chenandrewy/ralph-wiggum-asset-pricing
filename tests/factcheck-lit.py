@@ -14,6 +14,7 @@ from _test_helpers import build_test_context, fail_test, require_paths, run_test
 
 AGENT = "claude"
 MODEL = "opus"
+EFFORT = "medium"
 KEYS_PER_BATCH = 8
 
 
@@ -161,6 +162,7 @@ In section 2, list every cited work and label it VERIFIED or UNVERIFIED, with th
         prompt=prompt,
         agent=AGENT,
         model=MODEL,
+        default_agent_effort=EFFORT,
         default_agent_log_mode="verbose",
     )
 

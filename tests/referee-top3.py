@@ -14,6 +14,7 @@ from _referee_helpers import run_referee, derive_referee_id, derive_referee_repo
 
 AGENT = "claude"
 MODEL = "opus"
+EFFORT = "medium"
 
 
 def main() -> int:
@@ -68,6 +69,7 @@ Do NOT include a VERDICT line. This is a referee report, not a test.
         prompt=prompt,
         agent=AGENT,
         model=MODEL,
+        default_agent_effort=EFFORT,
         default_agent_log_mode="verbose",
     )
 

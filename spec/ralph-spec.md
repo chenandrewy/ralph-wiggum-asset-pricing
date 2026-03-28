@@ -31,6 +31,8 @@ The author steps (`author-plan.py`, `author-improve.py`) may modify files in the
 - Loop intent lives in `spec/`, with `spec/paper-spec.md` used by the current author prompts.
 - Test definitions live in `tests/`.
 - All prompts live inline in their respective scripts (e.g. `ralph/author-plan.py`, `ralph/author-improve.py`, `ralph/commit-iteration.py`).
+- Agent invocation settings such as agent choice, model choice, and effort level belong in the calling script, alongside constants such as `AGENT` and `MODEL`.
+- `ralph/agent_wrapper.py` may translate those script-level settings into provider-specific CLI arguments, but per-step agent behavior should not be introduced through new repo-wide config keys or environment variables unless the behavior is truly loop-wide.
 - Runtime configuration lives in `config-ralph.yaml`.
 - `config-ralph.yaml` is re-read at the start of each iteration so that the human can adjust settings (e.g. `max-iter`) mid-run without restarting.
 - Human edits to `config-ralph.yaml` are allowed at any time during a Ralph run.

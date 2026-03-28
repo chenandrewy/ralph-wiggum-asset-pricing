@@ -16,6 +16,7 @@ from utils import load_config, summary_results_instruction
 REPO_ROOT = pathlib.Path(__file__).resolve().parents[1]
 AGENT = "claude"
 MODEL = "opus"
+EFFORT = "medium"
 
 AUTHOR_PLAN_PROMPT_TEMPLATE = """You are an author planning improvements to an academic asset pricing theory paper.
 
@@ -91,10 +92,14 @@ def main() -> int:
         agent_log_mode,
         "--step-label",
         "author-plan",
+    ]
+    if EFFORT:
+        cmd.extend(["--effort", EFFORT])
+    cmd.extend([
         "--model",
         MODEL,
         build_author_plan_prompt(repo_root),
-    ]
+    ])
 
     result = subprocess.run(cmd, cwd=repo_root)
     if result.returncode != 0:

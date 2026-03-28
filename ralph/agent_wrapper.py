@@ -1,6 +1,14 @@
 #!/usr/bin/env python3
 """
 Lightweight agent wrapper that dispatches to Claude or Codex.
+
+Wrapper-level effort control is provider-agnostic:
+- `--effort ...` maps to Claude CLI `--effort ...`
+- `--effort ...` maps to Codex CLI `-c model_reasoning_effort="..."`
+
+Omitting `--effort` preserves each provider's default behavior. Supported
+effort levels differ by provider/model, so unsupported combinations should
+fail clearly at the wrapper or provider boundary.
 """
 import subprocess
 import sys
@@ -18,6 +26,8 @@ DEFAULT_AGENT_LOG_DIR = "ralph-garage/agent-logs"
 CLAUDE_STREAM_JQ_FILTER = ".result // ."
 VALID_LOG_MODES = ("off", "verbose", "all", "1", "true", "yes")
 VALID_FAILURE_LOG_MODES = ("on", "off", "auto")
+VALID_CLAUDE_EFFORTS = ("low", "medium", "high", "max")
+VALID_CODEX_EFFORTS = ("none", "low", "medium", "high", "xhigh")
 NEW_YORK_TZ = ZoneInfo("America/New_York")
 
 
@@ -40,6 +50,7 @@ def split_agent_args(args):
     step_label = None
     log_mode = "off"
     failure_log_mode = "on"
+    effort = None
     forwarded = []
     i = 0
     while i < len(args):
@@ -83,24 +94,53 @@ def split_agent_args(args):
                 sys.exit(1)
             i += 2
             continue
+        if arg == "--effort":
+            if i + 1 >= len(args):
+                print("ERROR: --effort requires a value", file=sys.stderr)
+                sys.exit(1)
+            effort = args[i + 1].strip().lower()
+            i += 2
+            continue
         forwarded.append(arg)
         i += 1
     if agent not in ("claude", "codex"):
         print(f"ERROR: unsupported agent '{agent}' (expected 'claude' or 'codex')", file=sys.stderr)
         sys.exit(1)
-    return agent, step_label, log_mode, failure_log_mode, forwarded
+
+    if effort is not None:
+        if agent == "claude" and effort not in VALID_CLAUDE_EFFORTS:
+            allowed = ", ".join(VALID_CLAUDE_EFFORTS)
+            print(
+                f"ERROR: unsupported --effort '{effort}' for claude (expected one of: {allowed})",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+        if agent == "codex" and effort not in VALID_CODEX_EFFORTS:
+            allowed = ", ".join(VALID_CODEX_EFFORTS)
+            print(
+                f"ERROR: unsupported --effort '{effort}' for codex (expected one of: {allowed})",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+
+    return agent, step_label, log_mode, failure_log_mode, effort, forwarded
 
 
-def build_bash_command(agent, forwarded_args, log_mode, stream_capture_path=None):
+def build_bash_command(agent, forwarded_args, log_mode, effort=None, stream_capture_path=None):
     args_str = ' '.join(shlex.quote(arg) for arg in forwarded_args)
     if agent == "codex":
-        return f"codex exec --sandbox danger-full-access {args_str}"
+        effort_flag = ""
+        if effort is not None:
+            config_override = f'model_reasoning_effort="{effort}"'
+            effort_flag = f" -c {shlex.quote(config_override)}"
+        return f"codex exec --sandbox danger-full-access{effort_flag} {args_str}"
 
     output_format = 'stream-json' if agent_logs_enabled(log_mode) else 'text'
+    effort_flag = f" --effort {shlex.quote(effort)}" if effort is not None else ""
 
     base_cmd = (
         f"claude -p --output-format {shlex.quote(output_format)}"
-        f" --dangerously-skip-permissions {args_str}"
+        f"{effort_flag} --dangerously-skip-permissions {args_str}"
     )
 
     if output_format != 'stream-json':
@@ -109,7 +149,7 @@ def build_bash_command(agent, forwarded_args, log_mode, stream_capture_path=None
     # Stream mode is more informative when verbose event logs are enabled.
     stream_cmd = (
         f"claude -p --verbose --output-format stream-json"
-        f" --dangerously-skip-permissions {args_str}"
+        f"{effort_flag} --dangerously-skip-permissions {args_str}"
     )
     if stream_capture_path:
         tee_cmd = f"{stream_cmd} | tee {shlex.quote(stream_capture_path)}"
@@ -261,7 +301,7 @@ def main():
         print("Usage: agent_wrapper.py [agent arguments...]", file=sys.stderr)
         sys.exit(1)
 
-    agent, step_label, log_mode, failure_log_mode, forwarded_args = split_agent_args(sys.argv[1:])
+    agent, step_label, log_mode, failure_log_mode, effort, forwarded_args = split_agent_args(sys.argv[1:])
 
     env = os.environ.copy()
     stream_capture_path = None
@@ -277,7 +317,7 @@ def main():
             break
 
     # Build the command for the selected agent.
-    bash_command = build_bash_command(agent, forwarded_args, log_mode, stream_capture_path)
+    bash_command = build_bash_command(agent, forwarded_args, log_mode, effort, stream_capture_path)
 
     live_log_path = None
     if agent_logs_enabled(log_mode):

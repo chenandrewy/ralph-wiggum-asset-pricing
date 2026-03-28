@@ -13,6 +13,7 @@ from _test_helpers import build_test_context, require_paths, run_test
 
 AGENT = "claude"
 MODEL = "opus"
+EFFORT = "medium"
 
 
 def main() -> int:
@@ -42,6 +43,7 @@ then "REASON: ...", then section-by-section findings.
         prompt=prompt,
         agent=AGENT,
         model=MODEL,
+        default_agent_effort=EFFORT,
         default_agent_log_mode="verbose",
     )
 

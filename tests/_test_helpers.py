@@ -17,6 +17,7 @@ from dataclasses import dataclass
 from zoneinfo import ZoneInfo
 
 VALID_AGENT_LOG_MODES = ("off", "verbose", "all", "1", "true", "yes")
+VALID_AGENT_EFFORTS = ("none", "low", "medium", "high", "max", "xhigh")
 NEW_YORK_TZ = ZoneInfo("America/New_York")
 
 
@@ -30,13 +31,22 @@ class TestContext:
     started_at_utc: datetime.datetime
 
 
-def parse_test_cli(default_agent_log_mode: str = "off") -> argparse.Namespace:
+def parse_test_cli(
+    default_agent_log_mode: str = "off",
+    default_agent_effort: str | None = None,
+) -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--agent-log-mode",
         choices=VALID_AGENT_LOG_MODES,
         default=default_agent_log_mode,
         help="Agent log verbosity passed through to ralph/agent_wrapper.py",
+    )
+    parser.add_argument(
+        "--agent-effort",
+        choices=VALID_AGENT_EFFORTS,
+        default=default_agent_effort,
+        help="Agent reasoning effort passed through to ralph/agent_wrapper.py",
     )
     return parser.parse_args()
 
@@ -208,9 +218,13 @@ def run_test(
     agent: str,
     model: str | None = None,
     default_agent_log_mode: str = "off",
+    default_agent_effort: str | None = None,
 ) -> int:
     """Common test runner. Returns exit code 0 (PASS) or 1 (FAIL)."""
-    args = parse_test_cli(default_agent_log_mode=default_agent_log_mode)
+    args = parse_test_cli(
+        default_agent_log_mode=default_agent_log_mode,
+        default_agent_effort=default_agent_effort,
+    )
     if context is None:
         if script_file is None:
             raise ValueError("run_test requires either context or script_file")
@@ -224,6 +238,8 @@ def run_test(
         "--failure-log-mode", "off",
         "--step-label", context.test_id,
     ]
+    if args.agent_effort:
+        cmd.extend(["--effort", args.agent_effort])
     if model:
         cmd.extend(["--model", model])
     cmd.append(prompt)

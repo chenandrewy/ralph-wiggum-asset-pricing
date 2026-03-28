@@ -12,6 +12,7 @@ from _test_helpers import build_test_context, require_paths, run_test
 
 AGENT = "codex"
 MODEL = "gpt-5.4"
+EFFORT = "medium"
 
 
 def main() -> int:
@@ -91,6 +92,7 @@ The report must be a clean, human-readable markdown file with this format:
         prompt=prompt,
         agent=AGENT,
         model=MODEL,
+        default_agent_effort=EFFORT,
         default_agent_log_mode="verbose",
     )
 

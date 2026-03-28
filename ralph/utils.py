@@ -18,6 +18,7 @@ STALE_RESULTS_MAX_AGE = timedelta(hours=1)
 PRESERVED_RESULT_FILENAMES = {".gitkeep"}
 
 _LIST_KEYS_DEFAULT = {"selected-tests", "selected-referees"}
+VALID_AGENT_EFFORTS = ("none", "low", "medium", "high", "max", "xhigh")
 
 
 def strip_quotes(value: str) -> str:
@@ -28,6 +29,11 @@ def strip_quotes(value: str) -> str:
 
 def is_truthy(value: str) -> bool:
     return value.strip().lower() in {"true", "on", "yes", "1"}
+
+
+def normalize_agent_effort(value: object) -> str | None:
+    normalized = str(value or "").strip().lower()
+    return normalized or None
 
 
 def load_config(
