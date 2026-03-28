@@ -44,6 +44,8 @@ Inspect local data or cached outputs under: {data_dir}
    - missing required local inputs,
    - missing or undocumented runtime dependencies,
    - and inability to execute because this environment lacks tools such as R or required packages.
+6. For each paper output or claim you examine, classify it as locally reproducible, blocked by environment, blocked by missing local inputs, or inconsistent with the code.
+7. Record every violation of the requirements.
 
 ## Requirements
 1. There is a coherent local analysis path for the paper.
@@ -55,11 +57,10 @@ Inspect local data or cached outputs under: {data_dir}
 
 Rules:
 - Use only existing local inputs. Do not download anything.
-- If the required local inputs or canonical local analysis path are missing, fail the test.
 - If execution is blocked only because this environment lacks R, required packages, or another runtime dependency, do not claim the code logic is broken on that basis alone. Report the execution blocker separately and use static evidence from the code and paper to judge the workflow.
 - If the canonical local workflow itself requires undocumented tools or packages, treat that as a workflow problem.
 - Be strict about mismatches between what the paper says was done and what the code actually does.
-- When discussing reproducibility, name the exact output or claim and classify it as locally reproducible, blocked by environment, blocked by missing local inputs, or inconsistent with the code.
+- When discussing reproducibility, name the exact output or claim and use the classification from the procedure.
 
 Write your report to: {context.report_path}
 The report must be a clean, human-readable markdown file with this format:

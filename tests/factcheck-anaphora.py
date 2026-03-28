@@ -81,7 +81,7 @@ After all subagents complete, review their outputs and write the combined report
 
 ## Requirements
 
-- Every demonstrative near a cross-reference resolves to a meaning that matches what the target actually contains.
+1. Every demonstrative near a cross-reference resolves to a meaning that matches what the target actually contains.
 
 Write your report to: {context.report_path}
 

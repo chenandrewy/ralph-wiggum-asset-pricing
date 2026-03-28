@@ -52,7 +52,7 @@ This is a math-only test. Do NOT evaluate abstract/introduction rhetoric, broad 
    - a. If Requirement 2 FAILS, write the final report and exit. Do NOT analyze further.
 5. List all other mathematical objects not identified in the assumptions.
 6. Trace each object back to the assumptions.
-7. If any expression cannot be logically derived from the assumptions, FAIL.
+7. Record every expression that cannot be logically derived from the assumptions.
 
 ### Subagent 1 Procedure — Notational Consistency
 1. Read {paper_path}.

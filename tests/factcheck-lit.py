@@ -62,15 +62,21 @@ Audit only the following citation keys:
 2. Verify each listed citation key using external web sources.
 3. Use local paper text only to identify how the citation is used.
 4. Use external sources for factual judgments about the cited work.
-5. If web tools are unavailable, or if any listed key cannot be verified externally, mark it UNVERIFIED.
-6. Return only the audit results for these keys. Do not write files.
+5. Record, for each listed key, whether it is VERIFIED or UNVERIFIED and list the external source or sources used.
+6. Record every metadata issue, claim-support issue, source-quality issue, and verification gap that bears on the requirements.
+7. Return only the audit results for these keys. Do not write files.
 
 ## Requirements
-1. Every listed citation key is verified using external web sources.
-2. Memory or training data is not used for factual judgments about cited works.
-3. Preferred sources are publisher pages, DOI landing pages, journal pages, Crossref, Google Scholar, SSRN, and author pages.
-4. Every IMPORTANT or CRITICAL issue names the external source that supports it.
-5. A concern that is not externally supported is not reported as an error.
+1. Every listed citation key is externally verified or else remains explicitly UNVERIFIED.
+2. The bibliographic metadata for each listed citation key is materially accurate.
+3. The paper's in-text use of each listed citation key is materially accurate and supported by the cited work.
+4. Every IMPORTANT or CRITICAL issue is supported by external sources.
+5. A concern that lacks adequate external support is not treated as an error.
+
+### Guidelines
+1. Do not use memory, training data, guessing, or silent fallback to prior knowledge for factual judgments about cited works.
+2. Preferred sources are publisher pages, DOI landing pages, journal pages, Crossref, Google Scholar, SSRN, and author pages.
+3. If web tools are unavailable, or if a listed key cannot be verified externally, leave it UNVERIFIED rather than guessing.
 
 For each citation key, report:
 - key
@@ -117,32 +123,35 @@ You must use a staged subagent workflow. Launch one subagent per citation batch 
    - Source quality:
      - prefer the published version when available
      - use working-paper versions only when appropriate and clearly matching the cited work
+8. Record, for each cited work, whether it is VERIFIED or UNVERIFIED and list the external source or sources used.
+9. Record every metadata error, claim-support problem, source-quality problem, and verification gap that bears on the requirements.
 
 ## Requirements
 1. External verification is required for this test.
-2. Memory or training data is not used for factual judgments about cited works.
+2. Every cited work is externally verified or else remains explicitly UNVERIFIED.
+3. The paper's bibliographic metadata for each cited work is materially accurate.
+4. The paper's in-text description of each cited work is materially accurate and supported by that work.
+5. Every CRITICAL or IMPORTANT finding is supported by external sources.
+6. A concern that lacks adequate external support is not treated as an error.
+
+### Guidelines
+1. Use external sources for all factual judgments about the cited work itself.
+2. Do not use memory, training data, guessing, or silent fallback to prior knowledge for factual judgments about cited works.
 3. Preferred sources are publisher pages, DOI landing pages, journal pages, Crossref, Google Scholar, SSRN, and author pages.
-4. If web search or external fetch tools are unavailable, or if there is not enough external evidence to verify every cited work, the test fails.
-5. Guessing, hallucinating, or silently falling back to prior knowledge is not allowed.
-6. Every cited work includes an external verification status: VERIFIED or UNVERIFIED.
-7. Every CRITICAL or IMPORTANT finding names the external source or sources that support it.
-8. A concern that is not supported by an external source is not reported as an error.
-9. If the external sources are insufficient to verify a claim about the cited work, that item is marked UNVERIFIED rather than WRONG.
-10. Local paper text is used only to identify the citation key, the surrounding claim, and the paper's description of the cited work. External sources are used for all factual judgments about the cited work itself.
-11. Severity rules are as follows:
-    - CRITICAL:
-      - wrong paper matched to a citation key
-      - materially wrong author list, year, title, or outlet
-      - in-text description attributes a result, mechanism, or comparison that the cited work does not support
-    - IMPORTANT:
-      - real metadata errors that need correction
-      - noticeable but not fatal overstatement or mischaracterization
-    - MINOR:
-      - cosmetic formatting issues or harmless inconsistencies
-12. PASS only if every cited work is externally verified.
-13. PASS only if there are no CRITICAL problems and no pattern of IMPORTANT errors.
-14. FAIL if any cited work is left UNVERIFIED.
-15. FAIL if any CRITICAL issue exists, or if multiple IMPORTANT issues make the citation apparatus unreliable.
+4. If web search or external fetch tools are unavailable, or if there is not enough external evidence to verify every cited work, treat that as a failure to satisfy Requirement 2 rather than guessing.
+5. Use local paper text only to identify the citation key, the surrounding claim, and the paper's description of the cited work.
+6. Use source matches of sufficient quality to identify the cited work correctly before making factual judgments about it.
+7. If the external sources are insufficient to verify a claim about the cited work, leave that item UNVERIFIED rather than calling it wrong.
+8. Severity rules are as follows:
+   - CRITICAL:
+     - wrong paper matched to a citation key
+     - materially wrong author list, year, title, or outlet
+     - in-text description attributes a result, mechanism, or comparison that the cited work does not support
+   - IMPORTANT:
+     - real metadata errors that need correction
+     - noticeable but not fatal overstatement or mischaracterization
+   - MINOR:
+     - cosmetic formatting issues or harmless inconsistencies
 
 Write your report to: {context.report_path}
 The report must be a clean, human-readable markdown file with this format:

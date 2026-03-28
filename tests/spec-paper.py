@@ -28,33 +28,47 @@ def main() -> int:
         return preflight
 
     prompt = f"""\
-You are an orchestrator for spec-compliance checks on an academic paper.
+You are a strict test agent evaluating whether an academic paper satisfies the paper specification, except for the Quality Requirements section.
 
+Read the paper at: {paper_path}
 Read the spec at: {spec_path}
 
+This is a spec-compliance test. Do NOT evaluate Quality Requirements. Do NOT do a general referee report. Focus only on whether the paper satisfies the listed requirements in Sections I, II, and III of the spec, excluding the top-level section named "Quality Requirements".
+
 ## Procedure
-1. For each top-level requirement section (roman numerals) EXCEPT "Quality Requirements", launch a sub-agent IN PARALLEL using the Agent tool.
-2. Each sub-agent should:
-   - Read the spec at {spec_path} and the paper at {paper_path}
-   - Check every requirement (and sub-requirement) in its assigned section
-   - Verify compliance across ALL sections of the paper, not just one or two
-   - Quote evidence from the paper for each requirement
-   - Use model "opus"
-   - Report back (do not write files)
-3. After all sub-agents report back, write an aggregated report to: {context.report_path}
+1. Launch one subagent IN PARALLEL for each top-level requirement section (roman numerals) EXCEPT "Quality Requirements".
+2. Each subagent should:
+   - Read the paper at {paper_path} and the spec at {spec_path}.
+   - Audit only its assigned top-level requirement section.
+   - Check every requirement and sub-requirement in that section.
+   - Verify compliance across the full paper, not just one local passage.
+   - Quote concrete evidence from the paper for each requirement.
+   - Report back to you. Do NOT write files.
+3. Read all subagent reports.
+4. Evaluate each assigned top-level section.
+5. Record the compliance status of each assigned top-level section.
 
 ## Requirements
-1. Every top-level requirement section except "Quality Requirements" is evaluated.
-2. Every requirement and sub-requirement in each assigned section is checked.
-3. Compliance is verified across ALL sections of the paper, not just one or two.
-4. Evidence from the paper is quoted for each requirement.
-5. The overall verdict is FAIL if any section fails.
+1. Every non-Quality top-level requirement section in the spec is satisfied.
+2. Within each such section, every requirement and sub-requirement is satisfied.
 
-Format:
+### Guidelines
+1. Be strict. A requirement is not satisfied merely because the paper gestures at it.
+2. Do not give credit for partial compliance when the spec states a clear requirement.
+3. Keep the Quality Requirements section out of scope even if you notice issues there.
+4. Judge each requirement against the paper as a whole, not a narrow local snippet.
+5. Support each judgment with concrete evidence from the paper.
+
+## Output
+Write your report to: {context.report_path}
+The report must be a clean, human-readable markdown file with this format:
 - Line 1: # {context.test_id}
-- VERDICT: PASS or VERDICT: FAIL (FAIL if any section failed)
-- REASON: short summary
-- Then each section's verdict, reason, and per-requirement findings
+- Next line: VERDICT: PASS or VERDICT: FAIL
+- Next line: REASON: one short sentence
+- Then, for each audited top-level section:
+  - section verdict
+  - short reason
+  - per-requirement findings with quoted evidence
 """
 
     return run_test(
