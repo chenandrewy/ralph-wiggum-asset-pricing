@@ -7,12 +7,14 @@ Outputs: test-results/factcheck-theory.md and process exit code (0=PASS, 1=FAIL)
 
 from __future__ import annotations
 
+import shutil
+
 from _test_helpers import build_test_context, require_paths, run_test
 
 
-AGENT = "codex"
-MODEL = "gpt-5.4"
-EFFORT = "medium"
+AGENT = "claude"
+MODEL = "opus"
+EFFORT = "high"
 
 
 def main() -> int:
@@ -25,6 +27,13 @@ def main() -> int:
     if preflight is not None:
         return preflight
 
+    scratch_dir = context.repo_root / "ralph-garage/scratch"
+    scratch_dir.mkdir(parents=True, exist_ok=True)
+    subagent1_report_path = scratch_dir / "factcheck-notation.md"
+    subagent2_report_path = scratch_dir / "factcheck-assumptions.md"
+    subagent1_report_path.unlink(missing_ok=True)
+    subagent2_report_path.unlink(missing_ok=True)
+
     prompt = f"""
 You are a strict test agent evaluating the formal theory in an academic asset pricing paper.
 
@@ -32,57 +41,50 @@ Read the paper at: {paper_path}
 Read the spec at: {spec_path}
 Read the economic background at: {bg_path}
 
+This is a math-only test. Do NOT evaluate abstract/introduction rhetoric, broad narrative framing, contribution claims, or verbal interpretation except where a statement is needed to identify a formal object, assumption, or claimed formal result.
+
 ## Procedure
-1. Use a staged subagent workflow for the first two conditions.
-2. Subagent 1 handles Condition 1:
-   enumerate every mathematical object in the paper, group objects that refer to the same economic concept, and produce a normalized symbol map with locations in the paper and ambiguity notes. The symbol map must include symbol families/root symbols (for example, treat $x$, $x_t$, $x_H$, $x_L$, $x^*$, and $\\tilde x$ as members of the same notational family unless the paper clearly defines a different convention).
-3. Subagent 2 handles Condition 2:
-   take Subagent 1's symbol map as an input artifact, enumerate all mathematical assumptions in the paper, map each assumption to the objects it references, and identify any cross-assumption conflicts or unresolved ambiguities.
-4. The main agent must:
-   - review both subagent outputs
-   - use them when evaluating Condition 3
-   - resolve disagreements conservatively
-   - own the final PASS/FAIL verdict
-5. Do not delegate the final verdict.
-6. Do not skip any step because a subagent seems uncertain.
-7. If a subagent output is incomplete, say so and treat that as evidence against PASS where appropriate.
-8. This is a math-only test. Do NOT evaluate abstract/introduction rhetoric, broad narrative framing, contribution claims, or verbal interpretation except where a statement is needed to identify a formal object, assumption, or claimed formal result.
-9. Evaluate the formal theory.
+1. Launch subagent 1: have it follow the procedure below.
+2. Read the subagent 1 report and evaluate Requirement 1.
+   - a. If Requirement 1 FAILS, write the final report and exit. Do NOT launch subagent 2, and do NOT analyze further.
+3. Launch subagent 2: have it follow the procedure below.
+4. Read the subagent 2 report and evaluate Requirement 2.
+   - a. If Requirement 2 FAILS, write the final report and exit. Do NOT analyze further.
+5. List all other mathematical objects not identified in the assumptions.
+6. Trace each object back to the assumptions.
+7. If any expression cannot be logically derived from the assumptions, FAIL.
+
+### Subagent 1 Procedure — Notational Consistency
+1. Read {paper_path}.
+2. List every mathematical object in the paper. Group objects that refer to the same economic concept (e.g., consumption, dividends, utility).
+3. Build symbol families by root/base symbol. Treat starred, indexed, subscripted, superscripted, hatted, and tilded variants as part of the same family unless the paper states a clear global convention.
+4. For each symbol family, identify the invariant formal object, if any, that the family is supposed to denote throughout the paper.
+5. Check whether each family member is just a transparent variant of that same formal object under a stable convention such as time indexing, state indexing, firm indexing, conditioning, or a clearly defined transformation.
+6. Check if the same family is reused for a different formal object, different semantic role, different model, different decision problem, or imported external framework without an explicit renaming or equivalence statement. Do not excuse a collision merely because the symbols appear in different sections, prose versus equations, or different syntactic categories.
+7. Write a detailed report to {subagent1_report_path}.
+
+### Subagent 2 Procedure — Consistent Assumptions
+1. Read the paper {paper_path} and the subagent1 report {subagent1_report_path}
+2. List **all** mathematical assumptions in the paper. Scan every section for assumptions.
+3. List all mathematical objects in the assumptions. For each object, list all assumptions that contain the object. 
+4. Examine whether all assumptions are consistent with each other.
+5. Write a detailed report to {subagent2_report_path}.
 
 ## Requirements
-1. **Notational Consistency.** Follow this process step by step:
-   a. List every mathematical object in the paper. Group objects that refer to the same economic concept (e.g., consumption, dividends, utility).
-   b. Build symbol families by root/base symbol. Treat starred, indexed, subscripted, superscripted, hatted, and tilded variants as part of the same family unless the paper states a clear global convention.
-   c. For each symbol family, identify the invariant formal object, if any, that the family is supposed to denote throughout the paper.
-   d. Check whether each family member is just a transparent variant of that same formal object under a stable convention such as time indexing, state indexing, firm indexing, conditioning, or a clearly defined transformation.
-   e. If the same family is reused for a different formal object, different semantic role, different model, different decision problem, or imported external framework without an explicit renaming or equivalence statement, FAIL. Do not excuse a collision merely because the symbols appear in different sections, prose versus equations, or different syntactic categories.
-   f. Distinguish carefully between "same broad topic" and "same formal object." Sharing an economic theme (for example, both involving extinction risk, utility, or growth) is not enough to count as consistent notation.
+1. All mathematical notation is consistent. There are no variable collisions, mixed up symbol families, or confusing use of variables more generally. Ambiguity implies this requirement is not met. 
+2. All assumptions are mutually consistent.
+3. All mathematical objects are traceable back to the assumptions.
 
-2. **Consistent Assumptions.** Follow this process step by step:
-   a. List **all** mathematical assumptions in the paper. Scan every section for assumptions.
-   b. List all mathematical objects in the assumptions. For each object, list all assumptions that contain the object. Make sure all of these assumptions are consistent with each other.
-   c. If there is any set of assumptions that cannot be simultaneously true, FAIL.
+### Guidelines
+1. Avoid giving credit for acknowledging a problem. Problems should be fixed.
 
-3. **Logical Results.** Follow this process step by step:
-   a. List all other mathematical objects not identified in step 2.
-   b. Trace each object back to the assumptions.
-   c. If any expression cannot be logically derived from the assumptions, FAIL.
-
-4. To PASS, ALL three conditions must be satisfied. If ANY condition fails, FAIL.
-5. Be conservative about notation collisions. If you are unsure whether two members of the same symbol family denote distinct concepts, treat that as evidence against PASS unless the paper resolves the ambiguity explicitly.
-6. Do not weaken Condition 1 to "consistent within syntactic categories" or any similar standard; the test is about notational consistency at the paper level.
-7. In Condition 1, the operative standard is stability of formal object meaning across the paper, not merely visual similarity, topical similarity, or local readability.
-
+## Output
 Write your report to: {context.report_path}
 The report must be a clean, human-readable markdown file with this format:
 - Line 1: # {context.test_id}
-- Next line: VERDICT: PASS or VERDICT: FAIL
+- Next line: VERDICT: PASS or VERDICT: FAIL. 
 - Next line: REASON: one short sentence
-- Then a brief summary of your findings, organized by condition.
-- Explicitly include:
-  - a short "Subagent 1 output summary"
-  - a short "Subagent 2 output summary"
-  - any important ambiguity passed from Step 1 to Step 2
+- Then describe the findings.
 """
 
     return run_test(

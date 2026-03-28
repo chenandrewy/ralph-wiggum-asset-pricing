@@ -5,10 +5,12 @@
 
 from __future__ import annotations
 
+import datetime
 import json
 import pathlib
 import subprocess
 import sys
+from zoneinfo import ZoneInfo
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 from utils import load_config, summary_results_instruction
@@ -17,6 +19,7 @@ REPO_ROOT = pathlib.Path(__file__).resolve().parents[1]
 AGENT = "claude"
 MODEL = "opus"
 EFFORT = "medium"
+NEW_YORK_TZ = ZoneInfo("America/New_York")
 
 AUTHOR_PLAN_PROMPT_TEMPLATE = """You are an author planning improvements to an academic asset pricing theory paper.
 
@@ -45,6 +48,24 @@ Guidance:
 - Keep the plan concise and actionable.
 - Do not modify `config-ralph.yaml`.
 - You may use `git diff` and `git log` to understand recent changes when useful."""
+
+
+def _now_ny() -> str:
+    return datetime.datetime.now(NEW_YORK_TZ).strftime("%Y-%m-%d %H:%M:%S %Z")
+
+
+def ensure_plan_timestamp(plan_file: pathlib.Path) -> None:
+    text = plan_file.read_text(encoding="utf-8")
+    lines = text.splitlines()
+    if len(lines) >= 2 and lines[1].startswith("AUTHOR PLAN — "):
+        return
+    header = "# Improvement Plan"
+    body_start = 0
+    if lines and lines[0].strip() == header:
+        body_start = 1
+    updated_lines = [header, f"AUTHOR PLAN — {_now_ny()}"]
+    updated_lines.extend(lines[body_start:])
+    plan_file.write_text("\n".join(updated_lines).rstrip() + "\n", encoding="utf-8")
 
 def test_results_instruction(repo_root: pathlib.Path) -> str:
     return summary_results_instruction(
@@ -106,6 +127,7 @@ def main() -> int:
         return result.returncode
     if not plan_file.is_file():
         raise FileNotFoundError(f"planning phase did not create {plan_file}")
+    ensure_plan_timestamp(plan_file)
     return 0
 
 
