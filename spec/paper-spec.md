@@ -37,6 +37,7 @@
 6. Every page has a visible page number.
 7. At most 6 exhibits.
 8. Lit review focuses on the most relevant papers and is concise.
+9. All display equations should be numbered
 
 ## III. Technical Requirements
 
