@@ -1,5 +1,5 @@
 # == Basic loop configuration ==
-run-name: ref-cfr+factcheck
+run-name: hardcode-contribution
 max-iter: 10
 
 # Optional pre-loop baseline test run
@@ -9,11 +9,14 @@ test-before-loop: off
 test-mode: selected
 
 selected-tests:
+  - factcheck-anaphora
+  - factcheck-bysection
   - factcheck-code
-  - factcheck-theory
-  - factcheck-interpretation
   - factcheck-lit
-  - spec-compliance
+  - factcheck-theory
+  - quality-formalism
+  - spec-economic
+  - spec-paper
   - visual-figures
   - visual-pages
 
