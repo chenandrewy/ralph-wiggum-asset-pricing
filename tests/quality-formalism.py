@@ -24,31 +24,39 @@ def main() -> int:
         return preflight
 
     prompt = f"""
-You are a strict but lightweight test agent evaluating minimal formalism in an academic asset pricing paper.
+You are a skeptical test agent evaluating minimal formalism in an academic asset pricing paper.
 
 Read the paper at: {paper_path}
 
-This is not a full correctness audit. Scan for clear unnecessary formalism; do not inspect every equation mechanically.
+This is not a full correctness audit. Focus on over-formalized subparts of otherwise useful sections and on narrow cases of orphan notation.
 
 ## Procedure
 1. Read the full paper.
-2. Identify candidate formal objects: displayed equations, propositions/corollaries/remarks, explicit algebraic conditions, and parametric examples with extra notation or parameters.
-3. For the most important candidates, assess whether they carry real economic or narrative work later in the paper.
-4. Write the report.
+2. Focus on theorem subparts, displayed sufficient conditions, one-off formulas, and named examples inside larger sections.
+3. For each strong candidate, ask:
+   - does this subpart do distinct economic work later in the paper?
+   - or does the paper use only its qualitative takeaway?
+   - could the same point be stated in plain English without weakening the paper's economic claims?
+4. Also check for narrow orphan-notation cases: named variables, parameters, or functions that are introduced and then never used in any result, calibration, or interpretation that matters for the paper's conclusions.
+5. Focus on the strongest few cases and write the report.
 
 ## Definitions
-1. Formalism counts as essential only if it contributes to an economic claim, interpretation, calibration, table, figure, or necessary model setup.
-2. Formalism counts as dead weight if it is introduced and then abandoned, or if it supports only other formal objects that do not themselves carry economic or narrative work.
-3. It is not enough that an equation feeds a proposition if that proposition is never used to make an economic point.
+1. Essential formalism contributes to an economic claim, interpretation, calibration, table, figure, or necessary model setup.
+2. Compressible formalism supports a real point, but the paper uses only its qualitative takeaway and could state the point in plain English instead.
+3. Dead-weight formalism is introduced and then abandoned, or adds no meaningful economic or narrative work.
+4. A useful larger object can still contain compressible or dead-weight subparts.
 
 ## Guidelines
-1. Do not flag standard primitives needed to keep the model self-contained, such as preferences, Euler equations, stochastic discount factors, and basic equilibrium definitions.
-2. Do not flag an object as dead weight merely because it is used once, if that use matters for a real economic claim or quantitative takeaway.
-3. Prefer compressible over dead weight when an object has real economic use but appears more formal than necessary.
+1. Be adversarial. Do not let a useful proposition shield an unnecessary clause.
+2. Do not give credit merely because a point sounds economic; ask whether the formal subpart is actually needed.
+3. Standard primitives needed to keep the model self-contained are usually allowed.
+4. Local notation is allowed only if it is needed for a later result, calibration, or interpretation that matters for the paper's conclusions.
 
 ## Requirements
-1. The paper contains no clear dead-weight formal objects.
-2. The paper does not contain a clear repeated pattern of compressible formalism large enough to violate minimal-formalism expectations.
+1. The paper contains no dead-weight formal objects or formal subparts.
+2. The paper contains no compressible formal objects or formal subparts that could be replaced with plain English without weakening the paper's economic claims.
+3. The paper contains no orphan notation: named variables, parameters, or functions introduced and then unused in any result, calibration, or interpretation that matters for the paper's conclusions.
+4. PASS only if all requirements are satisfied. FAIL if any requirement is not satisfied.
 
 ## Output
 Write your report to: {context.report_path}
