@@ -105,6 +105,17 @@ def build_section(repo_root: Path, index: int, full_hash: str, short_hash: str, 
             )
             lines += ["", f"## {t['name']}", "", demoted]
 
+    referees = summary.get("referees", [])
+    for r in referees:
+        detail_path = f"{TEST_RESULTS_DIR}/{r['name']}.md"
+        detail_text = show_file(repo_root, full_hash, detail_path)
+        if detail_text:
+            demoted = "\n".join(
+                ("##" + line) if line.startswith("#") else line
+                for line in detail_text.rstrip().splitlines()
+            )
+            lines += ["", f"## {r['name']}", "", demoted]
+
     return "\n".join(lines)
 
 
