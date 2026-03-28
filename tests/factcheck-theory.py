@@ -10,8 +10,8 @@ from __future__ import annotations
 from _test_helpers import build_test_context, require_paths, run_test
 
 
-AGENT = "claude"
-MODEL = "opus"
+AGENT = "codex"
+MODEL = "gpt-5.4"
 
 
 def main() -> int:
@@ -34,7 +34,7 @@ Read the economic background at: {bg_path}
 You MUST use a staged subagent workflow for the first two conditions:
 
 - Subagent 1 handles Condition 1:
-  enumerate every mathematical object in the paper, group objects that refer to the same economic concept, and produce a normalized symbol map with locations in the paper and ambiguity notes.
+  enumerate every mathematical object in the paper, group objects that refer to the same economic concept, and produce a normalized symbol map with locations in the paper and ambiguity notes. The symbol map must include symbol families/root symbols (for example, treat $x$, $x_t$, $x_H$, $x_L$, $x^*$, and $\\tilde x$ as members of the same notational family unless the paper clearly defines a different convention).
 - Subagent 2 handles Condition 2:
   take Subagent 1's symbol map as an input artifact, enumerate all mathematical assumptions in the paper, map each assumption to the objects it references, and identify any cross-assumption conflicts or unresolved ambiguities.
 
@@ -52,7 +52,11 @@ Evaluate the formal theory. Check that ALL of the following conditions are met:
 
 1. **Notational Consistency.** Follow this process step by step:
    a. List every mathematical object in the paper. Group objects that refer to the same economic concept (e.g., consumption, dividends, utility).
-   b. For each group, check whether the notation is consistent. If the notation is inconsistent, FAIL.
+   b. Build symbol families by root/base symbol. Treat starred, indexed, subscripted, superscripted, hatted, and tilded variants as part of the same family unless the paper states a clear global convention.
+   c. For each symbol family, identify the invariant formal object, if any, that the family is supposed to denote throughout the paper.
+   d. Check whether each family member is just a transparent variant of that same formal object under a stable convention such as time indexing, state indexing, firm indexing, conditioning, or a clearly defined transformation.
+   e. If the same family is reused for a different formal object, different semantic role, different model, different decision problem, or imported external framework without an explicit renaming or equivalence statement, FAIL. Do not excuse a collision merely because the symbols appear in different sections, prose versus equations, or different syntactic categories.
+   f. Distinguish carefully between "same broad topic" and "same formal object." Sharing an economic theme (for example, both involving extinction risk, utility, or growth) is not enough to count as consistent notation.
 
 2. **Consistent Assumptions.** Follow this process step by step:
    a. List **all** mathematical assumptions in the paper. Scan every section for assumptions.
@@ -66,6 +70,9 @@ Evaluate the formal theory. Check that ALL of the following conditions are met:
 
 Criteria:
 - To PASS, ALL three conditions must be satisfied. If ANY condition fails, FAIL.
+- Be conservative about notation collisions. If you are unsure whether two members of the same symbol family denote distinct concepts, treat that as evidence against PASS unless the paper resolves the ambiguity explicitly.
+- Do not weaken Condition 1 to "consistent within syntactic categories" or any similar standard; the test is about notational consistency at the paper level.
+- In Condition 1, the operative standard is stability of formal object meaning across the paper, not merely visual similarity, topical similarity, or local readability.
 
 Write your report to: {context.report_path}
 The report must be a clean, human-readable markdown file with this format:
