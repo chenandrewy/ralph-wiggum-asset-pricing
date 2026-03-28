@@ -34,7 +34,7 @@ Read the paper spec at: {paper_spec_path}
 Inspect the code under: {code_dir}
 Inspect local data or cached outputs under: {data_dir}
 
-Task:
+## Procedure
 1. Identify the canonical local analysis path in code/ that is intended to support the paper.
 2. Exclude scripts whose primary role is downloading data, external setup, or nonlocal/network-dependent work.
 3. Using only local inputs already present in the repo, run the relevant local analysis steps in dependency order when feasible.
@@ -45,13 +45,13 @@ Task:
    - missing or undocumented runtime dependencies,
    - and inability to execute because this environment lacks tools such as R or required packages.
 
-Requirements:
-- There is a coherent local analysis path for the paper
-- If the paper relies on local code, there is a canonical fast local analysis path that uses only local inputs already present in the repo
-- The code structure is logically organized
-- The paper's claims about implemented analysis are consistent with the actual code
-- Any paper output that is not reproducible from the local analysis path is clearly labeled in the paper as external, nonlocal, unreproducible from repo inputs, or illustrative/non-canonical
-- The repo does not depend on hidden or unnecessary auxiliary files for the claimed local workflow
+## Requirements
+1. There is a coherent local analysis path for the paper.
+2. If the paper relies on local code, there is a canonical fast local analysis path that uses only local inputs already present in the repo.
+3. The code structure is logically organized.
+4. The paper's claims about implemented analysis are consistent with the actual code.
+5. Any paper output that is not reproducible from the local analysis path is clearly labeled in the paper as external, nonlocal, unreproducible from repo inputs, or illustrative/non-canonical.
+6. The repo does not depend on hidden or unnecessary auxiliary files for the claimed local workflow.
 
 Rules:
 - Use only existing local inputs. Do not download anything.

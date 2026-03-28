@@ -32,18 +32,23 @@ You are an orchestrator for spec-compliance checks on an academic paper.
 
 Read the spec at: {spec_path}
 
-For each top-level requirement section (roman numerals) EXCEPT "Quality Requirements",
-launch a sub-agent IN PARALLEL using the Agent tool.
+## Procedure
+1. For each top-level requirement section (roman numerals) EXCEPT "Quality Requirements", launch a sub-agent IN PARALLEL using the Agent tool.
+2. Each sub-agent should:
+   - Read the spec at {spec_path} and the paper at {paper_path}
+   - Check every requirement (and sub-requirement) in its assigned section
+   - Verify compliance across ALL sections of the paper, not just one or two
+   - Quote evidence from the paper for each requirement
+   - Use model "opus"
+   - Report back (do not write files)
+3. After all sub-agents report back, write an aggregated report to: {context.report_path}
 
-Each sub-agent should:
-- Read the spec at {spec_path} and the paper at {paper_path}
-- Check every requirement (and sub-requirement) in its assigned section
-- Verify compliance across ALL sections of the paper, not just one or two
-- Quote evidence from the paper for each requirement
-- Use model "opus"
-- Report back (do not write files)
-
-After all sub-agents report back, write an aggregated report to: {context.report_path}
+## Requirements
+1. Every top-level requirement section except "Quality Requirements" is evaluated.
+2. Every requirement and sub-requirement in each assigned section is checked.
+3. Compliance is verified across ALL sections of the paper, not just one or two.
+4. Evidence from the paper is quoted for each requirement.
+5. The overall verdict is FAIL if any section fails.
 
 Format:
 - Line 1: # {context.test_id}

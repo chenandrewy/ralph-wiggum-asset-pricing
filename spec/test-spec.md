@@ -46,9 +46,17 @@ Agent-backed test prompts should include:
 - `Procedure`: a checklist or process the agent should follow while evaluating the test
 - `Requirements`: declarative statements that must be true for the test to pass
 
+Both sections must use enumerated lists:
+- `Procedure` must be a numbered list so individual steps can be referenced unambiguously.
+- `Requirements` must be a numbered list so individual pass/fail conditions can be referenced unambiguously.
+- Unnumbered itemized lists are allowed only as supporting detail within a numbered step or requirement, not as the top-level structure of either section.
+
 In the `Requirements` section:
 - each item should be written as a declarative sentence or sentences
 - each item should state a condition for passing
 - items should not be phrased as questions
+- For tests that evaluate an external specification, the prompt `Requirements` section should define what must be true for the evaluation to pass, such as exhaustiveness, evidence standards, and fail-on-any-violation behavior. It need not restate every requirement from the external specification.
+
+Agent-backed tests should instruct the agent to apply a strict pass/fail standard. A requirement should fail if the available evidence is missing, ambiguous, inconsistent, or only partially supports compliance.
 
 Agent-backed tests should use sub-agents to divide independent evaluation work whenever the test covers multiple distinct requirement groups, paper sections, claims, or exhibits. Pure Python tests and narrowly scoped agent-backed tests need not use sub-agents.

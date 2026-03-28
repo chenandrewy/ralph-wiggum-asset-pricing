@@ -32,25 +32,24 @@ Read the paper at: {paper_path}
 Read the spec at: {spec_path}
 Read the economic background at: {bg_path}
 
-You MUST use a staged subagent workflow for the first two conditions:
+## Procedure
+1. Use a staged subagent workflow for the first two conditions.
+2. Subagent 1 handles Condition 1:
+   enumerate every mathematical object in the paper, group objects that refer to the same economic concept, and produce a normalized symbol map with locations in the paper and ambiguity notes. The symbol map must include symbol families/root symbols (for example, treat $x$, $x_t$, $x_H$, $x_L$, $x^*$, and $\\tilde x$ as members of the same notational family unless the paper clearly defines a different convention).
+3. Subagent 2 handles Condition 2:
+   take Subagent 1's symbol map as an input artifact, enumerate all mathematical assumptions in the paper, map each assumption to the objects it references, and identify any cross-assumption conflicts or unresolved ambiguities.
+4. The main agent must:
+   - review both subagent outputs
+   - use them when evaluating Condition 3
+   - resolve disagreements conservatively
+   - own the final PASS/FAIL verdict
+5. Do not delegate the final verdict.
+6. Do not skip any step because a subagent seems uncertain.
+7. If a subagent output is incomplete, say so and treat that as evidence against PASS where appropriate.
+8. This is a math-only test. Do NOT evaluate abstract/introduction rhetoric, broad narrative framing, contribution claims, or verbal interpretation except where a statement is needed to identify a formal object, assumption, or claimed formal result.
+9. Evaluate the formal theory.
 
-- Subagent 1 handles Condition 1:
-  enumerate every mathematical object in the paper, group objects that refer to the same economic concept, and produce a normalized symbol map with locations in the paper and ambiguity notes. The symbol map must include symbol families/root symbols (for example, treat $x$, $x_t$, $x_H$, $x_L$, $x^*$, and $\\tilde x$ as members of the same notational family unless the paper clearly defines a different convention).
-- Subagent 2 handles Condition 2:
-  take Subagent 1's symbol map as an input artifact, enumerate all mathematical assumptions in the paper, map each assumption to the objects it references, and identify any cross-assumption conflicts or unresolved ambiguities.
-
-The main agent must:
-- review both subagent outputs
-- use them when evaluating Condition 3
-- resolve disagreements conservatively
-- own the final PASS/FAIL verdict
-
-Do not delegate the final verdict. Do not skip any step because a subagent seems uncertain. If a subagent output is incomplete, say so and treat that as evidence against PASS where appropriate.
-
-This is a math-only test. Do NOT evaluate abstract/introduction rhetoric, broad narrative framing, contribution claims, or verbal interpretation except where a statement is needed to identify a formal object, assumption, or claimed formal result.
-
-Evaluate the formal theory. Check that ALL of the following conditions are met:
-
+## Requirements
 1. **Notational Consistency.** Follow this process step by step:
    a. List every mathematical object in the paper. Group objects that refer to the same economic concept (e.g., consumption, dividends, utility).
    b. Build symbol families by root/base symbol. Treat starred, indexed, subscripted, superscripted, hatted, and tilded variants as part of the same family unless the paper states a clear global convention.
@@ -69,11 +68,10 @@ Evaluate the formal theory. Check that ALL of the following conditions are met:
    b. Trace each object back to the assumptions.
    c. If any expression cannot be logically derived from the assumptions, FAIL.
 
-Criteria:
-- To PASS, ALL three conditions must be satisfied. If ANY condition fails, FAIL.
-- Be conservative about notation collisions. If you are unsure whether two members of the same symbol family denote distinct concepts, treat that as evidence against PASS unless the paper resolves the ambiguity explicitly.
-- Do not weaken Condition 1 to "consistent within syntactic categories" or any similar standard; the test is about notational consistency at the paper level.
-- In Condition 1, the operative standard is stability of formal object meaning across the paper, not merely visual similarity, topical similarity, or local readability.
+4. To PASS, ALL three conditions must be satisfied. If ANY condition fails, FAIL.
+5. Be conservative about notation collisions. If you are unsure whether two members of the same symbol family denote distinct concepts, treat that as evidence against PASS unless the paper resolves the ambiguity explicitly.
+6. Do not weaken Condition 1 to "consistent within syntactic categories" or any similar standard; the test is about notational consistency at the paper level.
+7. In Condition 1, the operative standard is stability of formal object meaning across the paper, not merely visual similarity, topical similarity, or local readability.
 
 Write your report to: {context.report_path}
 The report must be a clean, human-readable markdown file with this format:

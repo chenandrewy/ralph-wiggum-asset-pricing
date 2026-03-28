@@ -29,9 +29,15 @@ def main() -> int:
 Read the economic background spec at: {spec_path}
 Read the paper at: {paper_path}
 
-For every section of the paper, check whether each concept from the spec is used
-consistently with its definition. Quote each relevant usage and flag any
-inconsistency. FAIL if any usage is inconsistent. Be strict.
+## Procedure
+1. For every section of the paper, check whether each concept from the spec is used consistently with its definition.
+2. Quote each relevant usage.
+3. Flag any inconsistency.
+4. Be strict.
+
+## Requirements
+1. Each concept from the spec is used consistently with its definition in every section of the paper.
+2. If any usage is inconsistent, the test fails.
 
 Write your report to: {context.report_path}
 Format: line 1 "# {context.test_id}", then "VERDICT: PASS" or "VERDICT: FAIL",

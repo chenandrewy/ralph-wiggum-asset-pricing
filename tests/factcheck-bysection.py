@@ -75,41 +75,40 @@ You are a strict fact-checking agent. Your job is to check every line of an acad
 The paper has these sections:
 {section_list}
 
-## Workflow
+## Procedure
+1. Spawn one subagent per section. Each subagent checks its assigned lines. Run all subagents in parallel.
+2. Each subagent should follow this procedure for its assigned line range:
+   - Go through the assigned lines line by line.
+   - Extract every distinct claim. A single sentence often contains multiple claims; extract and check each one separately.
+   - Use these claim types:
+     - DEFINITION: introduces notation or a concept
+     - ASSUMPTION: states a parameter value or modeling choice
+     - ARITHMETIC: a number derived from parameters or formulas
+     - VERBAL: a qualitative statement about results
+     - REFERENCE: cites another paper or section for a specific fact
+     - FIGURE/TABLE: asserts something about the content of an exhibit
+   - Verify each type as follows:
+     - ARITHMETIC: recompute using the formulas in the paper and the stated parameters.
+     - VERBAL: check whether the tables, figures, and formulas actually support the claim at the stated strength.
+     - ASSUMPTION: check whether the stated values match what the tables actually use.
+     - REFERENCE: read the referenced section and confirm it actually contains the claimed content.
+     - FIGURE/TABLE: read the underlying file (e.g. PDF/PNG in paper/figures/) to verify.
+   - Apply the no-circular-verification rule: when a claim cites a specific section for a number (e.g. "Section X shows Y = 5.1%"), verify independently both that the referenced section actually states or derives that number and that you can reproduce the number from the derivation in that section. Do not verify a number solely by checking that it is consistent with other numbers in the same paragraph.
+3. After all subagents complete, review all subagent outputs.
+4. Then write the combined report.
 
-Spawn one subagent per section. Each subagent checks its assigned lines. Run all subagents in parallel.
-
-Each subagent should follow this procedure for its assigned line range:
-
-Go through the assigned lines line by line. Extract every distinct claim. A single sentence often contains multiple claims — extract and check each one separately.
-
-Claim types:
-- DEFINITION: introduces notation or a concept
-- ASSUMPTION: states a parameter value or modeling choice
-- ARITHMETIC: a number derived from parameters or formulas
-- VERBAL: a qualitative statement about results
-- REFERENCE: cites another paper or section for a specific fact
-- FIGURE/TABLE: asserts something about the content of an exhibit
-
-How to verify each type:
-- ARITHMETIC: recompute using the formulas in the paper and the stated parameters.
-- VERBAL: check whether the tables, figures, and formulas actually support the claim at the stated strength.
-- ASSUMPTION: check whether the stated values match what the tables actually use.
-- REFERENCE: read the referenced section and confirm it actually contains the claimed content.
-- FIGURE/TABLE: read the underlying file (e.g. PDF/PNG in paper/figures/) to verify.
-
-Critical rule — no circular verification:
-When a claim cites a specific section for a number (e.g. "Section X shows Y = 5.1%"), you must verify two things independently: (1) that the referenced section actually states or derives that number, and (2) that you can reproduce the number from the derivation in that section. Do not verify a number solely by checking that it is consistent with other numbers in the same paragraph.
-
-## After all subagents complete
-
-Review all subagent outputs. Then write the combined report.
+## Requirements
+1. All arithmetic is correct.
+2. All verbal claims are supported.
+3. No claim is materially wrong.
 
 Write your report to: {context.report_path}
 
 The report must be a clean, human-readable markdown file:
 - Line 1: # {context.test_id}
 - Next line: VERDICT: PASS or VERDICT: FAIL
+  - PASS if all arithmetic is correct, all verbal claims are supported, and no claim is materially wrong.
+  - FAIL if any arithmetic error, unsupported claim, or material inaccuracy is found.
 - Next line: REASON: one short sentence
 - Then, for each section, a line-by-line outline:
 
@@ -121,9 +120,6 @@ The report must be a clean, human-readable markdown file:
 - **Line N** [REFERENCE] ERROR — cites Section X for Y, but Section X does not contain Y
 ...
 
-## Criteria
-- PASS if all arithmetic is correct, all verbal claims are supported, and no claim is materially wrong.
-- FAIL if any arithmetic error, unsupported claim, or material inaccuracy is found.
 """
 
     return run_test(

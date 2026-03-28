@@ -57,14 +57,20 @@ Read the bibliography at: {bib_path}
 Audit only the following citation keys:
 {key_list}
 
-Requirements:
-- Verify every listed citation key using external web sources.
-- Do not rely on memory or training data.
-- If web tools are unavailable, or if any listed key cannot be verified externally, mark it UNVERIFIED.
-- Prefer publisher pages, DOI landing pages, journal pages, Crossref, Google Scholar, SSRN, and author pages.
-- Use local paper text only to identify how the citation is used; use external sources for factual judgments about the cited work.
-- Every IMPORTANT or CRITICAL issue must name the external source that supports it.
-- If a concern is not externally supported, do not report it as an error.
+## Procedure
+1. Audit only the listed citation keys.
+2. Verify each listed citation key using external web sources.
+3. Use local paper text only to identify how the citation is used.
+4. Use external sources for factual judgments about the cited work.
+5. If web tools are unavailable, or if any listed key cannot be verified externally, mark it UNVERIFIED.
+6. Return only the audit results for these keys. Do not write files.
+
+## Requirements
+1. Every listed citation key is verified using external web sources.
+2. Memory or training data is not used for factual judgments about cited works.
+3. Preferred sources are publisher pages, DOI landing pages, journal pages, Crossref, Google Scholar, SSRN, and author pages.
+4. Every IMPORTANT or CRITICAL issue names the external source that supports it.
+5. A concern that is not externally supported is not reported as an error.
 
 For each citation key, report:
 - key
@@ -73,8 +79,6 @@ For each citation key, report:
 - metadata verdict
 - in-text claim-support verdict
 - any issue severity: CRITICAL, IMPORTANT, MINOR, or NONE
-
-Do not write files. Return only the audit results for these keys.\
 """
         batches.append({"label": label, "sub_prompt": sub_prompt})
 
@@ -94,52 +98,51 @@ You must use a staged subagent workflow. Launch one subagent per citation batch 
 
 {sub_agent_block}
 
-External verification is required for this test. Do not rely on memory or training data for factual judgments about cited works. Prioritize publisher pages, DOI landing pages, journal pages, Crossref, Google Scholar, SSRN, and author pages.
+## Procedure
+1. Launch one subagent per citation batch below using model "opus".
+2. Do not ask subagents to write files; collect their results and own the final verdict yourself.
+3. Audit every work that is actually cited in the paper text, including footnotes.
+4. Ignore bibliography entries that are never cited.
+5. Be exhaustive. Do not use sampling.
+6. Do not omit any cited key; all cited keys in the paper are included in the batched subagent tasks above.
+7. For each cited work, verify:
+   - Bibliographic metadata accuracy:
+     - author names
+     - publication year
+     - title
+     - journal, outlet, or working-paper series
+   - Citation-to-claim accuracy:
+     - whether the surrounding text describes the cited work fairly
+     - whether the citation is being used for a claim the cited work actually supports
+   - Source quality:
+     - prefer the published version when available
+     - use working-paper versions only when appropriate and clearly matching the cited work
 
-If web search or external fetch tools are unavailable, or if you cannot find enough external evidence to verify every cited work, FAIL the test. Do not guess, hallucinate, or silently fall back to prior knowledge.
-
-Scope:
-- Audit every work that is actually cited in the paper text, including footnotes.
-- Ignore bibliography entries that are never cited.
-- Exhaustiveness is required. Do not use sampling.
-- All cited keys in the paper are included in the batched subagent tasks above. Do not omit any key.
-
-For each cited work, verify:
-1. Bibliographic metadata accuracy:
-   - author names
-   - publication year
-   - title
-   - journal, outlet, or working-paper series
-2. Citation-to-claim accuracy:
-   - whether the surrounding text describes the cited work fairly
-   - whether the citation is being used for a claim the cited work actually supports
-3. Source quality:
-   - prefer the published version when available
-   - use working-paper versions only when appropriate and clearly matching the cited work
-
-Evidence rules:
-- Every cited work must include an external verification status: VERIFIED or UNVERIFIED.
-- Every CRITICAL or IMPORTANT finding must name the external source or sources that support it.
-- If a concern is not supported by an external source, do not report it as an error.
-- If the external sources are insufficient to verify a claim about the cited work, mark that item UNVERIFIED rather than WRONG.
-- Use local paper text only to identify the citation key, the surrounding claim, and the paper's description of the cited work. Use external sources for all factual judgments about the cited work itself.
-
-Severity rules:
-- CRITICAL:
-  - wrong paper matched to a citation key
-  - materially wrong author list, year, title, or outlet
-  - in-text description attributes a result, mechanism, or comparison that the cited work does not support
-- IMPORTANT:
-  - real metadata errors that need correction
-  - noticeable but not fatal overstatement or mischaracterization
-- MINOR:
-  - cosmetic formatting issues or harmless inconsistencies
-
-Pass/fail standard:
-- PASS only if every cited work is externally verified.
-- PASS only if there are no CRITICAL problems and no pattern of IMPORTANT errors.
-- FAIL if any cited work is left UNVERIFIED.
-- FAIL if any CRITICAL issue exists, or if multiple IMPORTANT issues make the citation apparatus unreliable.
+## Requirements
+1. External verification is required for this test.
+2. Memory or training data is not used for factual judgments about cited works.
+3. Preferred sources are publisher pages, DOI landing pages, journal pages, Crossref, Google Scholar, SSRN, and author pages.
+4. If web search or external fetch tools are unavailable, or if there is not enough external evidence to verify every cited work, the test fails.
+5. Guessing, hallucinating, or silently falling back to prior knowledge is not allowed.
+6. Every cited work includes an external verification status: VERIFIED or UNVERIFIED.
+7. Every CRITICAL or IMPORTANT finding names the external source or sources that support it.
+8. A concern that is not supported by an external source is not reported as an error.
+9. If the external sources are insufficient to verify a claim about the cited work, that item is marked UNVERIFIED rather than WRONG.
+10. Local paper text is used only to identify the citation key, the surrounding claim, and the paper's description of the cited work. External sources are used for all factual judgments about the cited work itself.
+11. Severity rules are as follows:
+    - CRITICAL:
+      - wrong paper matched to a citation key
+      - materially wrong author list, year, title, or outlet
+      - in-text description attributes a result, mechanism, or comparison that the cited work does not support
+    - IMPORTANT:
+      - real metadata errors that need correction
+      - noticeable but not fatal overstatement or mischaracterization
+    - MINOR:
+      - cosmetic formatting issues or harmless inconsistencies
+12. PASS only if every cited work is externally verified.
+13. PASS only if there are no CRITICAL problems and no pattern of IMPORTANT errors.
+14. FAIL if any cited work is left UNVERIFIED.
+15. FAIL if any CRITICAL issue exists, or if multiple IMPORTANT issues make the citation apparatus unreliable.
 
 Write your report to: {context.report_path}
 The report must be a clean, human-readable markdown file with this format:
