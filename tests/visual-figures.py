@@ -39,15 +39,19 @@ It contains {exhibit_id}. Use the caption to understand what each panel shows.
 1. Identify every panel (e.g. Panel A, Panel B, or the full figure if no sub-panels).
 2. For each panel individually, evaluate readability.
 3. For each panel individually, evaluate distinguishability.
-4. Report back with a verdict, a one-sentence reason, and per-panel findings with assessments.
+4. Record every readability or distinguishability problem that bears on the requirements.
+5. Report back with a verdict, a one-sentence reason, and per-panel findings with assessments.
 
 ## Requirements
 1. Readability: titles, axis labels, legends, tick labels, and font sizes are readable.
-   - Fail if any text is too small, overlapping, or cut off.
 2. Distinguishability: plotted series or marks are clearly distinguishable.
-   - Fail if lines, colors, or legend encodings are confusing, ambiguous, duplicated in a misleading way, or hard to tell apart.
-   - Fail if the legend or insets cover non-trivial parts of the main plot.
-   - Apply the "instant read" test: every series — whether rendered as a line, band, shaded region, set of points, or bar — must be visually separable from all other series without effort. If a reader must squint, cross-reference the legend repeatedly, or mentally decompose overlapping elements to tell series apart, fail. Note: spatial overlap between elements that use different visual channels (e.g. a dashed line crossing a shaded band, or a reference boundary drawn over a confidence region) does NOT fail this test as long as each element remains clearly identifiable through the overlap.
+
+## Guidelines
+1. Treat text that is too small, overlapping, or cut off as a readability problem.
+2. Treat lines, colors, or legend encodings that are confusing, ambiguous, duplicated in a misleading way, or hard to tell apart as a distinguishability problem.
+3. Treat legends or insets that cover non-trivial parts of the main plot as a distinguishability problem.
+4. Apply the "instant read" test: every series, whether rendered as a line, band, shaded region, set of points, or bar, should be visually separable from all other series without effort.
+5. Spatial overlap between elements that use different visual channels does not count against the figure if each element remains clearly identifiable through the overlap.
 
 Report back with:
 - VERDICT: PASS or FAIL
@@ -107,17 +111,21 @@ You are an orchestrator for visual figure quality checks.
 1. Launch ALL of the following sub-agents IN PARALLEL using the Agent tool (one per figure).
 2. Use model "opus" for each sub-agent.
 3. Each sub-agent will report its findings back to you; do not ask sub-agents to write files.
-4. After all sub-agents report back, write an aggregated report to: {context.report_path}
+4. After all sub-agents report back, aggregate their findings figure by figure.
+5. Write the aggregated report to: {context.report_path}
 
 {sub_agent_block}
 
 ## Requirements
-1. Every figure listed in the subagent block is evaluated.
-2. The overall verdict is FAIL if any figure fails.
+1. Every figure listed in the subagent block satisfies the readability requirement.
+2. Every figure listed in the subagent block satisfies the distinguishability requirement.
 
-Format:
+## Guidelines
+1. Evaluate every figure listed in the subagent block.
+
+## Output
 - Line 1: # {context.test_id}
-- VERDICT: PASS or VERDICT: FAIL (FAIL if any figure failed)
+- VERDICT: PASS or VERDICT: FAIL
 - REASON: short summary
 - Then each figure's verdict, reason, and full panel-by-panel findings
 """

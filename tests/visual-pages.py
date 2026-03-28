@@ -40,6 +40,7 @@ Look at ALL page images in: {images_dir}
 4. Check whether the paper appears well-structured with clear section headings.
 5. Check whether there are obvious formatting issues such as overflowing text, broken references, or missing figures.
 6. Check whether paper length conforms to the spec (less than 20 pages).
+7. Record every violation of the requirements that you find.
 
 ## Requirements
 1. Every page has a visible page number.
@@ -47,7 +48,6 @@ Look at ALL page images in: {images_dir}
 3. The paper appears well-structured with clear section headings.
 4. There are no obvious formatting issues such as overflowing text, broken references, or missing figures.
 5. Paper length conforms to the spec (less than 20 pages).
-6. To PASS, ALL conditions must be satisfied.
 
 Write your report to: {context.report_path}
 The report must be a clean, human-readable markdown file with this format:

@@ -102,13 +102,14 @@ The paper has these sections:
 2. All verbal claims are supported.
 3. No claim is materially wrong.
 
+### Guidelines
+1. Apply the no-circular-verification rule from the procedure when evaluating whether the requirements are satisfied.
+
 Write your report to: {context.report_path}
 
 The report must be a clean, human-readable markdown file:
 - Line 1: # {context.test_id}
 - Next line: VERDICT: PASS or VERDICT: FAIL
-  - PASS if all arithmetic is correct, all verbal claims are supported, and no claim is materially wrong.
-  - FAIL if any arithmetic error, unsupported claim, or material inaccuracy is found.
 - Next line: REASON: one short sentence
 - Then, for each section, a line-by-line outline:
 
