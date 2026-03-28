@@ -1,53 +1,54 @@
 # Test Result Specification
 
-## Purpose
+Defines the output contract for PASS/FAIL tests in `tests/`. Referee scripts (`tests/referee-*.py`) are outside this contract.
 
-Define required output behavior for all PASS/FAIL tests under `tests/`.
+## Inputs
 
-## Terminology
+PASS/FAIL tests may inspect repo files needed for evaluation, including `paper/`, `code/`, `data/`, and `spec/`.
 
-- `test result`: markdown report at `test-results/<test-id>.md`.
-- `referee result`: markdown report at `test-results/<referee-id>.md` produced by a `tests/referee-*.py` script.
-- `agent log`: raw runtime log under `ralph-garage/agent-logs/`.
-- `agent-backed test`: a test that calls an LLM via `ralph/agent_wrapper.py`.
-- `pure Python test`: a test using only local Python logic.
-- `page images`: PNG renders of `paper/paper.pdf` at `ralph-garage/page-images/page-*.png`.
-- `exhibit manifest`: JSON file at `ralph-garage/page-images/exhibit-manifest.json` that maps rendered page images to the expected figures and tables visible on each page.
+PASS/FAIL tests assume Ralph has already prepared:
+- `paper/paper.pdf`
+- `ralph-garage/page-images/page-*.png`
+- `ralph-garage/page-images/exhibit-manifest.json`
 
-## Evaluation Scope (Files Under Test)
+## Report Contract
 
-Primary source trees evaluated by tests:
-- `paper/` (including `paper/paper.tex`, `paper/paper.pdf`, and `paper/references.bib`)
-- `code/` (analysis, calibration, simulation, and exhibit-generation code used by the paper)
-- `data/` (local derived data or cached outputs relied on by the paper or its code-based checks)
-- `spec/` (at minimum `spec/paper-spec.md` for compliance tests, and other spec files when a test requires them)
+Each PASS/FAIL test writes exactly one markdown report at:
 
-## Artifact Preparation
+`test-results/<test-id>.md`
 
-- Before executing tests, the Ralph loop MUST first run a deterministic LaTeX build gate for `paper/paper.tex`.
-- If the LaTeX build gate fails, `ralph/run-tests.py` MUST NOT run for that iteration.
-- If the LaTeX build gate succeeds, the Ralph loop MUST prepare the remaining test artifacts.
-- Remaining test artifact preparation consists of:
-  - rendering `paper/paper.pdf` into `ralph-garage/page-images/page-*.png`
-  - building `ralph-garage/page-images/exhibit-manifest.json`
+where `<test-id>` is the test script stem.
 
-## Test Result Contract
+Each report must contain:
+- a runner-prepended header:
+  - `# <repo-relative test script path>`
+  - `Started: <timestamp in America/New_York>`
+  - `Runtime: <human-readable duration>`
+  - optional link to an agent log
+- a body beginning with:
+  - `# <test-id>`
+  - `VERDICT: PASS` or `VERDICT: FAIL`
+  - `REASON: <one short sentence>`
 
-- Each invocation of `ralph/run-tests.py` owns `test-results/`.
-- Each test MUST produce `test-results/<test-id>.md`.
-- The runner MUST prepend a human-readable metadata header before the test body:
-  - line 1: `# <repo-relative test script path>`
-  - next: `Started: <timestamp in America/New_York>`
-  - next: `Runtime: <human-readable wall-clock duration>`
-  - optional next: markdown link to the agent log under `ralph-garage/agent-logs/`
-- After one blank line, the report body MUST begin with:
-  - line 1 of body: `# <test-id>`
-  - next: `VERDICT: PASS` or `VERDICT: FAIL`
-  - next: `REASON: <one short sentence>`
-- Tests MUST return exit code `0` for PASS, `1` for FAIL.
-- `test-results/summary.json` remains the canonical machine-readable test summary.
-- Referees are outside this contract: they are open-ended, never emit PASS/FAIL, and never determine the process exit code for `ralph/run-tests.py`.
+Tests return:
+- `0` for `PASS`
+- `1` for `FAIL`
 
-## Agent Wrapper Contract
+`test-results/summary.json` is the canonical machine-readable summary.
 
-- Agent-backed tests MUST call `ralph/agent_wrapper.py` with `--step-label <test-id>` and `--failure-log-mode off`.
+## Agent-Backed Tests
+
+Agent-backed tests must call `ralph/agent_wrapper.py` with:
+- `--step-label <test-id>`
+- `--failure-log-mode off`
+
+Agent-backed test prompts should include:
+- `Procedure`: a checklist or process the agent should follow while evaluating the test
+- `Requirements`: declarative statements that must be true for the test to pass
+
+In the `Requirements` section:
+- each item should be written as a declarative sentence or sentences
+- each item should state a condition for passing
+- items should not be phrased as questions
+
+Agent-backed tests should use sub-agents to divide independent evaluation work whenever the test covers multiple distinct requirement groups, paper sections, claims, or exhibits. Pure Python tests and narrowly scoped agent-backed tests need not use sub-agents.
