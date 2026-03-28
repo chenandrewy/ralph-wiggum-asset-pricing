@@ -8,7 +8,7 @@ See `README.md` for the full repo structure and how Ralph (a.k.a. RALF, ralph, t
 
 ## Asset Pricing Background
 - Target audience is readers of top finance journals.
-- See `spec/asset-pricing-background.md` for how to use asset pricing terms.
+- See `spec/economic-background.md` for how to use asset pricing terms.
 
 ## Prompt Design Guidelines
 - Keep prompts general. Do not use examples to patch current holes in the system.

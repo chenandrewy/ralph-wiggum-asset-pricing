@@ -23,12 +23,7 @@ These are the paper and its supporting materials.
 
 ### Specification
 
-These files are the source of truth for the repo's intent.
-- `spec/paper-spec.md` — the paper specification
-- `spec/asset-pricing-background.md` — asset pricing conventions
-- `spec/CFR-R1-report.md` — the CFR referee report to address
-- `spec/ralph-spec.md` — the Ralph loop specification
-- `spec/test-spec.md` — the test framework specification
+`spec/` contains the source-of-truth specifications for the project, including the paper requirements, economic background, referee reports, Ralph loop behavior, and test framework.
 
 ### Tests
 

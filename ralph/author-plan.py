@@ -23,7 +23,6 @@ Procedure:
 
 1. Read:
 - `spec/paper-spec.md` for the paper specification.
-- `spec/asset-pricing-background.md` for asset pricing conventions.
 - `paper/paper.tex` for the current paper state.
 - {test_results_instruction}
 - {referee_results_instruction}

@@ -20,7 +20,6 @@ AUTHOR_IMPROVE_PROMPT_TEMPLATE = """You are an author improving an academic asse
 
 Read:
 - `spec/paper-spec.md` for the paper specification.
-- `spec/asset-pricing-background.md` for asset pricing conventions.
 - `paper/paper.tex` for the current paper state.
 - {test_results_instruction}
 - `ralph-garage/improvement-plan.md` for the planned improvements.

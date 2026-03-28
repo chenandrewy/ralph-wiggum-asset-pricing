@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 How to run: python tests/factcheck-theory.py
-Inputs: paper/paper.tex, spec/paper-spec.md, spec/asset-pricing-background.md
+Inputs: paper/paper.tex, spec/paper-spec.md, spec/economic-background.md
 Outputs: test-results/factcheck-theory.md and process exit code (0=PASS, 1=FAIL)
 """
 
@@ -19,7 +19,7 @@ def main() -> int:
 
     paper_path = context.repo_root / "paper/paper.tex"
     spec_path = context.repo_root / "spec/paper-spec.md"
-    bg_path = context.repo_root / "spec/asset-pricing-background.md"
+    bg_path = context.repo_root / "spec/economic-background.md"
     preflight = require_paths(context, paper_path, spec_path, bg_path)
     if preflight is not None:
         return preflight
@@ -29,7 +29,7 @@ You are a strict test agent evaluating the formal theory in an academic asset pr
 
 Read the paper at: {paper_path}
 Read the spec at: {spec_path}
-Read the asset pricing background at: {bg_path}
+Read the economic background at: {bg_path}
 
 You MUST use a staged subagent workflow for the first two conditions:
 
