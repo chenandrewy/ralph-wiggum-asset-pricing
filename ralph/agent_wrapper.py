@@ -13,10 +13,12 @@ fail clearly at the wrapper or provider boundary.
 import subprocess
 import sys
 import os
+import re
 import shlex
 import shutil
 import tempfile
 import threading
+import time
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
@@ -29,6 +31,12 @@ VALID_FAILURE_LOG_MODES = ("on", "off", "auto")
 VALID_CLAUDE_EFFORTS = ("low", "medium", "high", "max")
 VALID_CODEX_EFFORTS = ("none", "low", "medium", "high", "xhigh")
 NEW_YORK_TZ = ZoneInfo("America/New_York")
+TRANSIENT_ERROR_PATTERNS = (
+    re.compile(r"\bAPI Error:\s*(429|500|502|503|504)\b", re.IGNORECASE),
+    re.compile(r"\bInternal server error\b", re.IGNORECASE),
+)
+MAX_TRANSIENT_RETRIES = 2
+TRANSIENT_RETRY_BASE_DELAY_SECONDS = 2.0
 
 
 def write_log(path, text):
@@ -279,6 +287,66 @@ def should_write_failure_log(step_label, failure_log_mode):
     return label.startswith("author-")
 
 
+def is_transient_failure(stdout_text, stderr_text):
+    stderr_payload = stderr_text or ""
+    if any(pattern.search(stderr_payload) for pattern in TRANSIENT_ERROR_PATTERNS):
+        return True
+    if stderr_payload.strip():
+        return False
+    stdout_payload = stdout_text or ""
+    return any(pattern.search(stdout_payload) for pattern in TRANSIENT_ERROR_PATTERNS)
+
+
+def retry_delay_seconds(attempt_index):
+    return TRANSIENT_RETRY_BASE_DELAY_SECONDS * (2 ** (attempt_index - 1))
+
+
+def read_and_clear_stream_capture(stream_capture_path):
+    if not stream_capture_path or not os.path.exists(stream_capture_path):
+        return ""
+    try:
+        with open(stream_capture_path, 'r', encoding='utf-8', errors='replace') as f:
+            payload = f.read()
+    except OSError:
+        return ""
+    try:
+        os.remove(stream_capture_path)
+    except OSError:
+        pass
+    return payload
+
+
+def run_with_transient_retries(bash_command, env, live_log_path, stream_capture_path, step_label):
+    attempts = 1 + MAX_TRANSIENT_RETRIES
+    retry_log_text = ""
+
+    for attempt in range(1, attempts + 1):
+        if attempt > 1:
+            read_and_clear_stream_capture(stream_capture_path)
+
+        rc, stdout_text, stderr_text = run_command_with_live_capture(
+            bash_command,
+            env,
+            live_log_path=live_log_path,
+        )
+        stream_json_text = read_and_clear_stream_capture(stream_capture_path)
+
+        if rc == 0 or attempt >= attempts or not is_transient_failure(stdout_text, stderr_text):
+            return rc, stdout_text, stderr_text, stream_json_text, retry_log_text
+
+        delay_seconds = retry_delay_seconds(attempt)
+        retry_message = (
+            f"[agent-wrapper] transient agent failure for step "
+            f"'{safe_label(step_label or 'run')}' (attempt {attempt}/{attempts}); "
+            f"retrying in {delay_seconds:.1f}s\n"
+        )
+        retry_log_text = f"{retry_log_text}{retry_message}"
+        if live_log_path:
+            with open(live_log_path, 'a', encoding='utf-8') as live_file:
+                live_file.write(f"[RETRY] {retry_message}")
+        time.sleep(delay_seconds)
+
+
 def handle_failure(agent, model, step_label, failure_log_mode, rc, stdout_text, stderr_text):
     if not should_write_failure_log(step_label, failure_log_mode):
         sys.exit(1)
@@ -335,17 +403,13 @@ def main():
             ),
         )
 
-    rc, stdout_text, stderr_text = run_command_with_live_capture(bash_command, env, live_log_path=live_log_path)
-    stream_json_text = ""
-    if stream_capture_path and os.path.exists(stream_capture_path):
-        try:
-            with open(stream_capture_path, 'r', encoding='utf-8', errors='replace') as f:
-                stream_json_text = f.read()
-        finally:
-            try:
-                os.remove(stream_capture_path)
-            except OSError:
-                pass
+    rc, stdout_text, stderr_text, stream_json_text, retry_log_text = run_with_transient_retries(
+        bash_command,
+        env,
+        live_log_path,
+        stream_capture_path,
+        step_label,
+    )
 
     if should_echo_output(step_label, rc):
         # Preserve agent output for callers (tests parse VERDICT lines from stdout).
@@ -361,13 +425,13 @@ def main():
         log_mode,
         rc,
         stdout_text,
-        stderr_text,
+        f"{retry_log_text}{stderr_text}",
         stream_json_text,
         log_path=live_log_path,
     )
 
     if rc != 0:
-        handle_failure(agent, model, step_label, failure_log_mode, rc, stdout_text, stderr_text)
+        handle_failure(agent, model, step_label, failure_log_mode, rc, stdout_text, f"{retry_log_text}{stderr_text}")
 
     sys.exit(0)
 
