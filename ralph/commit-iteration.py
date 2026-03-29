@@ -94,10 +94,11 @@ def generate_commit_message() -> str:
     prompt = COMMIT_MESSAGE_PROMPT.format(test_context=test_context())
     proc = subprocess.run(
         [
-            "claude",
-            "-p",
-            "--output-format", "text",
-            "--dangerously-skip-permissions",
+            "python3",
+            str(REPO_ROOT / "ralph" / "agent_wrapper.py"),
+            "--agent", "claude",
+            "--failure-log-mode", "on",
+            "--step-label", "commit-iteration",
             "--model", COMMIT_MODEL,
             prompt,
         ],

@@ -19,6 +19,7 @@ import shutil
 import tempfile
 import threading
 import time
+import json
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
@@ -37,6 +38,7 @@ TRANSIENT_ERROR_PATTERNS = (
 )
 MAX_TRANSIENT_RETRIES = 2
 TRANSIENT_RETRY_BASE_DELAY_SECONDS = 2.0
+RATE_LIMIT_SLEEP_BUFFER_SECONDS = 60.0
 
 
 def write_log(path, text):
@@ -301,6 +303,59 @@ def retry_delay_seconds(attempt_index):
     return TRANSIENT_RETRY_BASE_DELAY_SECONDS * (2 ** (attempt_index - 1))
 
 
+def append_live_log(live_log_path, prefix, message):
+    if not live_log_path:
+        return
+    with open(live_log_path, 'a', encoding='utf-8') as live_file:
+        live_file.write(f"[{prefix}] {message}")
+
+
+def extract_rate_limit_reset_at(stream_json_text):
+    if not stream_json_text.strip():
+        return None
+    for line in stream_json_text.splitlines():
+        raw = line.strip()
+        if not raw:
+            continue
+        try:
+            payload = json.loads(raw)
+        except json.JSONDecodeError:
+            continue
+        if payload.get("type") != "rate_limit_event":
+            continue
+        info = payload.get("rate_limit_info")
+        if not isinstance(info, dict):
+            continue
+        reset_at = info.get("resetsAt")
+        if isinstance(reset_at, (int, float)):
+            return float(reset_at)
+    return None
+
+
+def get_rate_limit_reset_at(stdout_text, stderr_text, stream_json_text):
+    return extract_rate_limit_reset_at(stream_json_text)
+
+
+def maybe_wait_for_rate_limit(stdout_text, stderr_text, stream_json_text, live_log_path, step_label):
+    reset_at = get_rate_limit_reset_at(stdout_text, stderr_text, stream_json_text)
+    if reset_at is None:
+        return False, ""
+
+    now_ts = time.time()
+    sleep_seconds = max(0.0, reset_at - now_ts) + RATE_LIMIT_SLEEP_BUFFER_SECONDS
+    reset_ny = datetime.fromtimestamp(reset_at, tz=NEW_YORK_TZ)
+    wake_ny = datetime.fromtimestamp(now_ts + sleep_seconds, tz=NEW_YORK_TZ)
+    message = (
+        f"[agent-wrapper] rate limit for step '{safe_label(step_label or 'run')}'; "
+        f"waiting until {reset_ny.isoformat(timespec='seconds')} "
+        f"(retry scheduled for {wake_ny.isoformat(timespec='seconds')}, "
+        f"sleep {sleep_seconds:.1f}s)\n"
+    )
+    append_live_log(live_log_path, "WAIT", message)
+    time.sleep(sleep_seconds)
+    return True, message
+
+
 def read_and_clear_stream_capture(stream_capture_path):
     if not stream_capture_path or not os.path.exists(stream_capture_path):
         return ""
@@ -319,6 +374,7 @@ def read_and_clear_stream_capture(stream_capture_path):
 def run_with_transient_retries(bash_command, env, live_log_path, stream_capture_path, step_label):
     attempts = 1 + MAX_TRANSIENT_RETRIES
     retry_log_text = ""
+    rate_limit_wait_used = False
 
     for attempt in range(1, attempts + 1):
         if attempt > 1:
@@ -331,7 +387,23 @@ def run_with_transient_retries(bash_command, env, live_log_path, stream_capture_
         )
         stream_json_text = read_and_clear_stream_capture(stream_capture_path)
 
-        if rc == 0 or attempt >= attempts or not is_transient_failure(stdout_text, stderr_text):
+        if rc == 0:
+            return rc, stdout_text, stderr_text, stream_json_text, retry_log_text
+
+        if not rate_limit_wait_used:
+            waited, wait_message = maybe_wait_for_rate_limit(
+                stdout_text,
+                stderr_text,
+                stream_json_text,
+                live_log_path,
+                step_label,
+            )
+            if waited:
+                retry_log_text = f"{retry_log_text}{wait_message}"
+                rate_limit_wait_used = True
+                continue
+
+        if attempt >= attempts or not is_transient_failure(stdout_text, stderr_text):
             return rc, stdout_text, stderr_text, stream_json_text, retry_log_text
 
         delay_seconds = retry_delay_seconds(attempt)
@@ -341,9 +413,7 @@ def run_with_transient_retries(bash_command, env, live_log_path, stream_capture_
             f"retrying in {delay_seconds:.1f}s\n"
         )
         retry_log_text = f"{retry_log_text}{retry_message}"
-        if live_log_path:
-            with open(live_log_path, 'a', encoding='utf-8') as live_file:
-                live_file.write(f"[RETRY] {retry_message}")
+        append_live_log(live_log_path, "RETRY", retry_message)
         time.sleep(delay_seconds)
 
 
