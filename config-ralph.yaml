@@ -1,5 +1,5 @@
 # == Basic loop configuration ==
-run-name: hardcode-contribution
+run-name: gkp-checks+wrds-fix
 max-iter: 10
 
 # Optional pre-loop baseline test run
@@ -15,6 +15,7 @@ selected-tests:
   - factcheck-lit
   - factcheck-theory
   - quality-formalism
+  - quality-gkp-cites
   - spec-economic
   - spec-paper
   - visual-figures
