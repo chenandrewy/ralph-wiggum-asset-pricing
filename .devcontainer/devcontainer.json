@@ -27,7 +27,8 @@
         "esbenp.prettier-vscode",
         "eamodio.gitlens",
         "tomoki1207.pdf",
-        "james-yu.latex-workshop"
+        "james-yu.latex-workshop",
+        "donjayamanne.githistory"
       ],
       "settings": {
         "editor.formatOnSave": true,
