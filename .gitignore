@@ -37,3 +37,6 @@ data/
 
 # worktrees
 worktrees/
+
+# lit pdfs
+spec/lit/*.pdf
