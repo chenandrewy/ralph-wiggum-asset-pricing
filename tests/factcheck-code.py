@@ -36,28 +36,31 @@ Inspect local data or cached outputs under: {data_dir}
 
 ## Procedure
 1. Identify the canonical local analysis path in code/ that is intended to support the paper.
-2. Exclude scripts whose primary role is downloading data, external setup, or nonlocal/network-dependent work.
-3. Using only local inputs already present in the repo, run the relevant local analysis steps in dependency order when feasible.
+2. Determine whether that canonical path matches the execution model required by the paper spec, including whether it is supposed to run from scratch and whether downloads or WRDS queries are part of the canonical path.
+3. Run the canonical local analysis steps in dependency order when feasible under the execution model required by the paper spec.
 4. Check whether the code's outputs and logic match the paper's quantitative objects, exhibits, calibration, and stated implementation choices.
 5. Distinguish clearly between:
    - code or workflow problems,
    - missing required local inputs,
    - missing or undocumented runtime dependencies,
-   - and inability to execute because this environment lacks tools such as R or required packages.
+   - inability to execute because this environment lacks tools such as R or required packages,
+   - and inability to execute because the canonical path requires credentials, downloads, or network access.
 6. For each paper output or claim you examine, classify it as locally reproducible, blocked by environment, blocked by missing local inputs, or inconsistent with the code.
 7. Record every violation of the requirements.
 
 ## Requirements
-1. There is a coherent local analysis path for the paper.
-2. If the paper relies on local code, there is a canonical fast local analysis path that uses only local inputs already present in the repo.
+1. There is a coherent canonical analysis path for the paper.
+2. If the paper relies on local code, the canonical analysis path runs from scratch in the manner required by the paper spec, without relying on preexisting generated artifacts that the spec forbids.
 3. The code structure is logically organized.
 4. The paper's claims about implemented analysis are consistent with the actual code.
-5. Any paper output that is not reproducible from the local analysis path is clearly labeled in the paper as external, nonlocal, unreproducible from repo inputs, or illustrative/non-canonical.
-6. The repo does not depend on hidden or unnecessary auxiliary files for the claimed local workflow.
+5. The canonical analysis path handles per-share data carefully. When the code combines per-share quantities with share counts drawn from different sources, it verifies that the construction is valid despite differences in timing, split adjustment, or source conventions.
+6. Any paper output that is not reproducible from the canonical local analysis path is clearly labeled in the paper as external, nonlocal, unreproducible from repo inputs, or illustrative/non-canonical.
+7. The repo does not depend on hidden or unnecessary auxiliary files for the claimed local workflow.
 
 Rules:
-- Use only existing local inputs. Do not download anything.
+- Judge the canonical path against the execution model required by the paper spec. If the spec requires from-scratch execution, do not treat cache-only reruns as sufficient.
 - If execution is blocked only because this environment lacks R, required packages, or another runtime dependency, do not claim the code logic is broken on that basis alone. Report the execution blocker separately and use static evidence from the code and paper to judge the workflow.
+- If execution is blocked because the canonical path requires credentials, downloads, or network access, treat that as an execution blocker and judge whether that is compatible with the paper spec.
 - If the canonical local workflow itself requires undocumented tools or packages, treat that as a workflow problem.
 - Be strict about mismatches between what the paper says was done and what the code actually does.
 - When discussing reproducibility, name the exact output or claim and use the classification from the procedure.

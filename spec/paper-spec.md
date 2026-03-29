@@ -2,7 +2,7 @@
 
 ## I. Economic Requirements
 
-1. Academic asset pricing theory paper.
+1. Academic asset pricing theory paper. Empirical analysis is welcome but must be limited.
 2. The following economic ideas are consistently used, throughout the paper
     - a. An AI singularity is a sudden improvement in AI that vastly increases productivity and output.
     - b. A *negative* AI singularity is an AI singularity that is devastating for the typical investor.
@@ -30,7 +30,6 @@
     - c. In the case of a singularity, perhaps these frictions can be overcome. Following the modeling in `spec/lit/Jones-2024-AERI.md`, we can quantify the size of frictions that can be overcome, given infinite output.
     - d. The characterization of the contribution is purposefully modest. The main insights about displacement risk and incomplete markets are already in GKP.
 7. The introduction includes a single figure illustrating the valuation of publicly traded AI stocks compared with the market portfolio using CRSP and Compustat data.
-    - a. This figure uses daily data from 2010 to present.
 8. The end of the abstract explains that all analysis and writing is done by AI agents.
 
 ## II. Style Requirements
@@ -44,14 +43,27 @@
 7. At most 6 exhibits.
 8. Lit review focuses on the most relevant papers and is concise.
 9. All display equations should be numbered
+10. All propositions are explicitly proved, with long proofs in the appendix.
 
 ## III. Technical Requirements
 
-1. `paper/` contains only assets used by `paper/paper.tex`. It has no extraneous objects.
-2. All sections in `paper.tex` come with comments that list the section number, for ease of reference.
-3. All exhibits in `paper.tex` come with comments that list the exhibit number, for ease of reference.
-4. All math theorem environments (e.g. propositions) in `paper.tex` come with comments that list the environment number.
-5. If the paper relies on local analysis code, `code/` must provide one canonical local analysis path that supports the paper's claims. The canonical local analysis path should be fast enough for routine test execution. Slow or optional steps should either be outside the canonical path or skipped when their outputs already exist, with an explicit way to force regeneration when needed.
+1. `paper/` has the following structure
+    - a. `paper.tex` is the main paper file
+    - b. All figures use pdfs in `paper/exhibits/`
+    - c. All tables use tex files in `paper/exhibits/`
+    - d. All files are `paper/exhibits/` are used in the paper
+2. `paper.tex` uses comments that list object numbers for ease of reference.
+    - a. Sections come with comments that list the section number
+    - b. Exhibits come with comments that list the exhibit number
+    - c. Math theorem environments (e.g. propositions) come with comments that list the environment number
+3. All analysis code goes in `code/` and satisfies the following:
+    - a. Code is written in R
+    - b. `code/` provides one canonical entry point that regenerates every exhibit used in `paper/paper.tex`.
+    - c. The canonical pipeline runs from scratch. It does not rely on precomputed local caches or manually prepared intermediate files.
+    - d. The canonical pipeline executes in less than 180 seconds in routine test execution.
+    - e. Any external-data download or WRDS query required by the paper is part of the canonical pipeline and must fit within that time budget.
+    - f. The code outputs directly to `paper/exhibits/` in the correct format for use in the paper.
+    - g. The canonical pipeline does not silently rely on inconsistent cached objects, manually prepared files, or mismatched code paths.
 
 ## IV. Quality Requirements
 

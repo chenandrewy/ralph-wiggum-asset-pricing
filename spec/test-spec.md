@@ -6,6 +6,8 @@ Defines the output contract for PASS/FAIL tests in `tests/`. Referee scripts (`t
 
 PASS/FAIL tests may inspect repo files needed for evaluation, including `paper/`, `code/`, `data/`, and `spec/`.
 
+When the paper spec defines a canonical analysis pipeline, PASS/FAIL tests should evaluate that canonical pipeline as the default local workflow. If the paper spec requires the canonical pipeline to run from scratch, tests should treat from-scratch execution as the default expectation.
+
 PASS/FAIL tests assume Ralph has already prepared:
 - `paper/paper.pdf`
 - `ralph-garage/page-images/page-*.png`
@@ -63,5 +65,12 @@ In the `Requirements` section:
 - For tests that evaluate an external specification, the prompt `Requirements` section should define what must be true for the evaluation to pass, such as exhaustiveness, evidence standards, and fail-on-any-violation behavior. It need not restate every requirement from the external specification.
 
 Agent-backed tests should instruct the agent to apply a strict pass/fail standard. A numbered requirement should fail if the available evidence is missing, ambiguous, inconsistent, or only partially supports compliance.
+
+For tests that evaluate analysis code or reproducibility, prompts should distinguish clearly between:
+- the canonical analysis pipeline required by the paper spec
+- any optional or non-canonical exploratory workflows
+- and any caches, intermediate files, or downloaded inputs that the canonical pipeline creates or uses
+
+Such tests should fail if the canonical pipeline is ambiguous, relies silently on inconsistent cached objects or manually prepared files, or does not satisfy the paper spec's required execution model.
 
 Agent-backed tests should use sub-agents to divide independent evaluation work whenever the test covers multiple distinct requirement groups, paper sections, claims, or exhibits. Pure Python tests and narrowly scoped agent-backed tests need not use sub-agents.
