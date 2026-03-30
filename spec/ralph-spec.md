@@ -35,6 +35,7 @@ The author steps (`author-plan.py`, `author-improve.py`) may modify files in the
 - `ralph/agent_wrapper.py` may translate those script-level settings into provider-specific CLI arguments, but per-step agent behavior should not be introduced through new repo-wide config keys or environment variables unless the behavior is truly loop-wide.
 - Runtime configuration lives in `config-ralph.yaml`.
 - `config-ralph.yaml` is re-read at the start of each iteration so that the human can adjust settings (e.g. `max-iter`) mid-run without restarting.
+- `max-iter` is the maximum total number of Ralph iteration commits for the current `ralph/run` stretch, counted since the most recent Ralph startup commit on the branch.
 - Human edits to `config-ralph.yaml` are allowed at any time during a Ralph run.
 - Referee definitions live in `tests/` with `referee-` prefix.
 - `config-ralph.yaml` may optionally enable referees with `referees`.
@@ -82,7 +83,7 @@ The author steps (`author-plan.py`, `author-improve.py`) may modify files in the
 
 If `test-before-loop` is enabled, Ralph first runs the LaTeX build gate. If that baseline build succeeds, Ralph prepares the remaining test artifacts and then runs `ralph/run-tests.py` once before iteration 1 to establish the current baseline. If `referees` is also enabled, Ralph runs the selected referees once after the baseline test run completes. If the baseline LaTeX build fails, Ralph skips the baseline test and referee phase and proceeds to iteration 1.
 
-For each iteration from `1` through `max-iter`:
+Let the current Ralph stretch begin at the most recent startup commit on `ralph/run`. For each iteration from the next unfinished iteration through `max-iter` for that stretch:
 
 1. Run `ralph/author-plan.py`.
 2. Require the planning phase to create `ralph-garage/improvement-plan.md`.
@@ -119,5 +120,5 @@ For each iteration from `1` through `max-iter`:
 ## Exit Conditions
 
 - When continual-improvement is disabled (default): exit `0` immediately after the first iteration whose selected tests all pass.
-- When continual-improvement is enabled: exit `0` after completing `max-iter` iterations.
+- When continual-improvement is enabled: exit `0` after the current Ralph stretch reaches `max-iter` total iterations.
 - Exit `1` if an author step fails, planning does not produce `ralph-garage/improvement-plan.md`, the commit step fails, or (when continual-improvement is disabled) the iteration limit is reached without a passing test run.

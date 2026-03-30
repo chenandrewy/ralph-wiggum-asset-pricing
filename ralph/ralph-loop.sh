@@ -25,6 +25,20 @@ has_tracked_files() {
     git ls-files --error-unmatch -- "$1" >/dev/null 2>&1
 }
 
+count_completed_iterations() {
+    local start_commit
+    start_commit="$(git log --first-parent --grep='^rloop start: record initial condition before author steps$' --format=%H -n 1 HEAD 2>/dev/null || true)"
+    if [ -z "$start_commit" ]; then
+        echo 0
+        return
+    fi
+    git log --first-parent --format=%s "${start_commit}..HEAD" | awk '
+        BEGIN { count = 0 }
+        /^rloop( \[[^]]+\])?:/ { count++ }
+        END { print count }
+    '
+}
+
 # Build paper, run build gate test, and generate page images.
 # Returns 1 if the LaTeX build gate fails (caller decides how to handle).
 # Exits the script if page image generation fails (unrecoverable).
@@ -94,6 +108,8 @@ if [ -n "$RUN_NAME" ]; then
 else
     log "=== ralph loop started (branch ralph/run, max $MAX_ITER iterations, agent-log-mode $AGENT_LOG_MODE) ==="
 fi
+completed_iterations="$(count_completed_iterations)"
+log "=== completed Ralph iterations on this branch stretch: $completed_iterations / $MAX_ITER ==="
 
 # --- pre-loop baseline ---
 if is_truthy "$TEST_BEFORE_LOOP"; then
@@ -117,7 +133,7 @@ if is_truthy "$TEST_BEFORE_LOOP"; then
 fi
 
 # --- main loop ---
-iteration=1
+iteration=$((completed_iterations + 1))
 while true; do
     _CONFIG="$(python3 ralph/load-config.py)"
     eval "$_CONFIG"
@@ -139,6 +155,7 @@ while true; do
         log "=== iteration $iteration LaTeX build failed; skipping tests and referees ==="
         log "--- commit iteration $iteration ---"
         python3 ralph/commit-iteration.py
+        iteration=$((iteration + 1))
         continue
     fi
 
