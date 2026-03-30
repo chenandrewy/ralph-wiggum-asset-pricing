@@ -312,7 +312,9 @@ def append_live_log(live_log_path, prefix, message):
 
 def extract_rate_limit_reset_at(stream_json_text):
     if not stream_json_text.strip():
-        return None
+        return None, None
+    latest_five_hour_reset = None
+    saw_seven_day = False
     for line in stream_json_text.splitlines():
         raw = line.strip()
         if not raw:
@@ -327,19 +329,31 @@ def extract_rate_limit_reset_at(stream_json_text):
         if not isinstance(info, dict):
             continue
         reset_at = info.get("resetsAt")
-        if isinstance(reset_at, (int, float)):
-            return float(reset_at)
-    return None
+        if not isinstance(reset_at, (int, float)):
+            continue
+        rate_limit_type = info.get("rateLimitType")
+        if rate_limit_type == "five_hour":
+            latest_five_hour_reset = float(reset_at)
+        elif rate_limit_type == "seven_day":
+            saw_seven_day = True
+    if latest_five_hour_reset is not None:
+        return latest_five_hour_reset, "five_hour"
+    if saw_seven_day:
+        return None, "seven_day"
+    return None, None
 
 
-def get_rate_limit_reset_at(stdout_text, stderr_text, stream_json_text):
-    return extract_rate_limit_reset_at(stream_json_text)
-
-
-def maybe_wait_for_rate_limit(stdout_text, stderr_text, stream_json_text, live_log_path, step_label):
-    reset_at = get_rate_limit_reset_at(stdout_text, stderr_text, stream_json_text)
+def maybe_wait_for_rate_limit(stream_json_text, live_log_path, step_label):
+    reset_at, rate_limit_type = extract_rate_limit_reset_at(stream_json_text)
+    if rate_limit_type == "seven_day":
+        message = (
+            f"[agent-wrapper] seven-day rate limit for step '{safe_label(step_label or 'run')}'; "
+            f"manual intervention required, not retrying automatically\n"
+        )
+        append_live_log(live_log_path, "ERROR", message)
+        return False, message, True
     if reset_at is None:
-        return False, ""
+        return False, "", False
 
     now_ts = time.time()
     sleep_seconds = max(0.0, reset_at - now_ts) + RATE_LIMIT_SLEEP_BUFFER_SECONDS
@@ -353,7 +367,7 @@ def maybe_wait_for_rate_limit(stdout_text, stderr_text, stream_json_text, live_l
     )
     append_live_log(live_log_path, "WAIT", message)
     time.sleep(sleep_seconds)
-    return True, message
+    return True, message, False
 
 
 def read_and_clear_stream_capture(stream_capture_path):
@@ -391,13 +405,14 @@ def run_with_transient_retries(bash_command, env, live_log_path, stream_capture_
             return rc, stdout_text, stderr_text, stream_json_text, retry_log_text
 
         if not rate_limit_wait_used:
-            waited, wait_message = maybe_wait_for_rate_limit(
-                stdout_text,
-                stderr_text,
+            waited, wait_message, stop_for_rate_limit = maybe_wait_for_rate_limit(
                 stream_json_text,
                 live_log_path,
                 step_label,
             )
+            if stop_for_rate_limit:
+                retry_log_text = f"{retry_log_text}{wait_message}"
+                return rc, stdout_text, stderr_text, stream_json_text, retry_log_text
             if waited:
                 retry_log_text = f"{retry_log_text}{wait_message}"
                 rate_limit_wait_used = True
