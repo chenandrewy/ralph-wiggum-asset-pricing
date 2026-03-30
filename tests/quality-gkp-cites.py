@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 How to run: python tests/quality-gkp-cites.py
-Inputs: paper/paper.tex, spec/paper-spec.md, spec/lit/GKP-2012-WP.md
+Inputs: paper/paper.tex, spec/paper-spec.md, spec/CFR-R1-report.md, spec/lit/GKP-2012-WP.md
 Outputs: test-results/quality-gkp-cites.md and process exit code (0=PASS, 1=FAIL)
 """
 
@@ -20,8 +20,11 @@ def main() -> int:
 
     paper_path = context.repo_root / "paper/paper.tex"
     spec_path = context.repo_root / "spec/paper-spec.md"
+    referee_report_path = context.repo_root / "spec/CFR-R1-report.md"
     gkp_wp_path = context.repo_root / "spec/lit/GKP-2012-WP.md"
-    preflight = require_paths(context, paper_path, spec_path, gkp_wp_path)
+    preflight = require_paths(
+        context, paper_path, spec_path, referee_report_path, gkp_wp_path
+    )
     if preflight is not None:
         return preflight
 
@@ -29,13 +32,14 @@ def main() -> int:
 You are a skeptical test agent evaluating whether an academic asset pricing paper cites GKP (Garleanu, Kogan & Panageas 2012) in a way that is sensitive, cautious, and modest.
 
 Read these files:
+- Referee report: {referee_report_path}
 - Paper: {paper_path}
 - Paper spec: {spec_path}
 - GKP working paper: {gkp_wp_path}
 
 ## Context
 
-The paper builds directly on GKP's displacement risk framework. The paper spec (Quality Requirement 7) states: "The paper is sensitive, cautious, and modest in how it cites GKP." The spec also defines the intended contribution relative to GKP in section I.6.
+The paper builds directly on GKP's displacement risk framework. The paper spec states that the paper should be sensitive, cautious, and modest in how it cites GKP. The spec also defines the intended contribution relative to GKP.
 
 "Sensitive" means two things: (a) do not diminish GKP's contribution — give them full credit for what they did, and (b) be respectful and collegial in tone, as these are prominent living researchers who may read the paper.
 
@@ -44,7 +48,7 @@ The paper builds directly on GKP's displacement risk framework. The paper spec (
 "Modest" means: acknowledge that the core displacement-risk insight is GKP's; do not oversell the paper's contribution relative to GKP.
 
 ## Procedure
-1. Read the full paper, the paper spec (especially sections I.6 and IV.7), and the GKP working paper.
+1. Read the referee report first, then read the full paper, the full paper spec, and the GKP working paper.
 2. Identify every passage in the paper that references GKP — by citation, by name, or by clear allusion to their model.
 3. For each passage, evaluate against the requirements below by comparing what the paper says with what GKP actually wrote.
 4. Pay special attention to: (a) how the paper characterizes GKP's discussion of intergenerational transfers, bequests, gifts, and government debt; (b) whether interpretations from other papers are attributed to GKP or correctly to the paper's own analysis; (c) how the paper characterizes the analogy between AI owners and GKP's unborn cohorts; (d) whether the paper's description of its own contribution is consistent with the modesty called for in the spec.
