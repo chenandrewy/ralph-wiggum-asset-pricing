@@ -1,6 +1,6 @@
 # == Basic loop configuration ==
-run-name: gkp-checks+wrds-fix
-max-iter: 10
+run-name: lots-of-tests-now
+max-iter: 20
 
 # Optional pre-loop baseline test run
 test-before-loop: off
@@ -14,6 +14,9 @@ selected-tests:
   - factcheck-code
   - factcheck-lit
   - factcheck-theory
+  - factcheck-exhibits
+  - factcheck-narrative
+  - factcheck-freely
   - quality-formalism
   - quality-gkp-cites
   - spec-economic
