@@ -66,6 +66,7 @@ Wipe these folders before making disposable code
 - Top comment in every script: how to run, inputs, outputs.
 - Do not create fallback or try-catch statements unless they are strictly necessary.
 - if the user says "what do you think?" it means explain and do not modify any files.
+- Check `ralph/code-templates/**` for examples, including for WRDS access
 
 ## Git Usage
 - For commits that update the ralph algorithm, start with "algo update:"
