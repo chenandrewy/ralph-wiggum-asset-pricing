@@ -1,9 +1,9 @@
 # == Basic loop configuration ==
 run-name: lots-of-tests-now
-max-iter: 20
+max-iter: 30
 
 # Optional pre-loop baseline test run
-test-before-loop: off
+test-before-loop: on
 
 # == Test Set ==
 test-mode: selected
