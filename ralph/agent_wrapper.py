@@ -47,6 +47,12 @@ def write_log(path, text):
         f.write(text)
 
 
+def append_log(path, text):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, 'a', encoding='utf-8') as f:
+        f.write(text)
+
+
 def normalize_log_mode(value):
     return (value or 'off').strip().lower()
 
@@ -214,6 +220,8 @@ def write_verbose_log(agent, model, step_label, log_mode, rc, stdout_text, stder
     if log_path is None:
         log_path = build_verbose_log_path(agent, model, step_label)
     payload = (
+        f"\n{'=' * 72}\n"
+        f"[FINAL]\n"
         f"timestamp_ny: {now_ny().isoformat(timespec='seconds')}\n"
         f"agent: {agent}\n"
         f"step_label: {step_label}\n"
@@ -229,7 +237,7 @@ def write_verbose_log(agent, model, step_label, log_mode, rc, stdout_text, stder
         f"[STDERR]\n"
         f"{truncate_log_section(stderr_text or '')}\n"
     )
-    write_log(log_path, payload)
+    append_log(log_path, payload)
 
 
 def run_command_with_live_capture(bash_command, env, live_log_path=None):
@@ -306,8 +314,7 @@ def retry_delay_seconds(attempt_index):
 def append_live_log(live_log_path, prefix, message):
     if not live_log_path:
         return
-    with open(live_log_path, 'a', encoding='utf-8') as live_file:
-        live_file.write(f"[{prefix}] {message}")
+    append_log(live_log_path, f"[{prefix}] {message}")
 
 
 def extract_rate_limit_reset_at(stream_json_text):
@@ -394,12 +401,23 @@ def run_with_transient_retries(bash_command, env, live_log_path, stream_capture_
         if attempt > 1:
             read_and_clear_stream_capture(stream_capture_path)
 
+        append_live_log(
+            live_log_path,
+            "ATTEMPT",
+            f"[agent-wrapper] starting attempt {attempt}/{attempts} for step "
+            f"'{safe_label(step_label or 'run')}'\n",
+        )
         rc, stdout_text, stderr_text = run_command_with_live_capture(
             bash_command,
             env,
             live_log_path=live_log_path,
         )
         stream_json_text = read_and_clear_stream_capture(stream_capture_path)
+        append_live_log(
+            live_log_path,
+            "RESULT",
+            f"[agent-wrapper] attempt {attempt}/{attempts} finished with exit code {rc}\n",
+        )
 
         if rc == 0:
             return rc, stdout_text, stderr_text, stream_json_text, retry_log_text
@@ -485,6 +503,7 @@ def main():
                 f"status: running\n"
                 f"{'-' * 72}\n"
                 f"[LIVE]\n"
+                f"[ATTEMPT] [agent-wrapper] wrapper started for step '{safe_label(step_label or 'run')}'\n"
             ),
         )
 
