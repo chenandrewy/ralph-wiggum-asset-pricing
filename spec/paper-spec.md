@@ -78,7 +78,7 @@
 6. The paper is sensitive, cautious, and modest in how it cites `spec/lit/GKP-2012-WP.md`. 
 7. The lit review is centered on the papers most relevant to the paper's contribution. It emphasizes papers in JF, JFE, RFS, JFQA, RAPS, and MS, as well as top economics journals. 
 8. The paper is intentionally limited in scope to a compact theoretical contribution.
-    - a. The empirical content remains very limited, ideally to a single figure in the introduction illustrating the valuation of publicly traded AI stocks compared with non-AI stocks using CRSP data.
-    - b. The paper does not try to generate a broad menu of novel testable predictions beyond the model's main arguments.
-    - c. The paper may include rough quantitative parameterizations for illustration, but quantitative material remains illustrative rather than becoming a calibration or estimation exercise.
-    - d. Good theory style is essential. Mathematical formalism is kept to a minimum. Each piece of formalism contributes to the economic claims. The paper avoids pompous or ceremonial formalism, and it avoids auxiliary formal detours that do not advance the main argument.
+    - a. Good theory style is essential. Mathematical formalism is kept to a minimum. Each piece of formalism contributes to the economic claims. The paper avoids pompous or ceremonial formalism, and it avoids auxiliary formal detours that do not advance the main argument.
+    - b. The empirical content remains very limited, ideally to a single figure in the introduction illustrating the valuation of publicly traded AI stocks compared with non-AI stocks using CRSP data.
+    - c. The paper does not try to generate a broad menu of novel testable predictions beyond the model's main arguments.
+    - d. The paper may include rough quantitative parameterizations for illustration, but quantitative material remains illustrative rather than becoming a calibration or estimation exercise.
