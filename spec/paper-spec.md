@@ -2,8 +2,8 @@
 
 ## I. Economic Requirements
 
-1. Academic asset pricing theory paper. Empirical analysis is welcome but must be limited.
-2. The following economic ideas are consistently used, throughout the paper
+1. Academic asset pricing theory paper with tightly limited empirical content.
+2. The following economic ideas are consistently used throughout the paper
     - a. An AI singularity is a sudden improvement in AI that vastly increases productivity and output.
     - b. A *negative* AI singularity is an AI singularity that is devastating for the typical investor.
     - c. Incomplete markets refers to the idea that some assets cannot be bought by the representative investor. It does not necessarily refer to Arrow-Debreu securities.
@@ -13,24 +13,28 @@
     - c. Financial market solutions to AI disaster risk are under-discussed.
     - d. If the singularity occurs, then market frictions can be overcome due to the abundance of resources.
 4. The main model has the following features:
-    - a. Infinite horizon
-    - b. Two agents: A representative household, who is the marginal investor, and AI owners who hold private AI capital and are not marginal investors in public stocks.
+    - a. Infinite-horizon, discrete-time model.
+    - b. Two agents: A representative household, who is the marginal investor, and AI owners who hold private AI capital, including unborn or not-yet-marketable capital, and are not marginal investors in public stocks.
     - c. Two publicly traded assets: AI stocks and non-AI stocks. AI stocks grow as a share of the economy with each singularity.
     - d. The main focus is on the price/dividend ratio of public AI stocks, and how it changes with the probability of a negative AI singularity.
-    - e. The private AI capital and AI owners can also be thought of as capital and owners that do not yet exist, as in `spec/lit/GKP-2012-WP.md`.
+    - e. The private AI capital and AI owners can also be thought of as unborn capital and future owners that do not yet exist, as in `spec/lit/GKP-2012-WP.md`.
 5. An extension of the main model formally incorporates ideas from `spec/lit/Jones-2024-AERI.md`:
     - a. The singularity may cause extinction.
     - b. Consumption may become infinite (in our case, only for the AI owners).
-    - c. Data on the value of a statistical life can be used to calibrate the model.
-    - d. Consider how infinite output and consumption affects the assumption that agents cannot make trades despite the mutual benefit (see `spec/lit/GKP-2012-WP.md`).
-    - e. Keep these ideas in an extension, so that the main argument stays simple.
+    - c. Consider how infinite output and consumption affects the assumption that agents cannot make trades despite the mutual benefit (see `spec/lit/GKP-2012-WP.md`).
+    - d. Keep these ideas in an extension, so that the main argument stays simple.
 6. The paper explains how it contributes relative to `spec/lit/GKP-2012-WP.md`
     - a. GKP mentions that government debt or intergenerational transfers would affect the magnitude of the displacement factor, but do not conduct further analysis. The paper contributes with a formal analysis.
     - b. Without frictions, intergenerational transfers (bequests, gifts, government debt) would allow existing agents to share in the gains of new entrants, eliminating displacement risk — this is the Coase Theorem logic. GKP's modeling assumes, quite reasonably, that such frictions exist and preserve the risk premium.
     - c. In the case of a singularity, perhaps these frictions can be overcome. Following the modeling in `spec/lit/Jones-2024-AERI.md`, we can quantify the size of frictions that can be overcome, given infinite output.
     - d. The characterization of the contribution is purposefully modest. The main insights about displacement risk and incomplete markets are already in GKP.
-7. The introduction includes a single figure illustrating the valuation of publicly traded AI stocks compared with the market portfolio using CRSP and Compustat data.
-8. The end of the abstract explains that all analysis and writing is done by AI agents.
+7. The paper is intentionally limited in scope to a compact theoretical contribution.
+    - a. The empirical content is limited to a single figure in the introduction, illustrating the valuation of publicly traded AI stocks compared with non-AI stocks using CRSP data.
+    - b. The paper does not aim to generate novel testable predictions beyond the model's main arguments.
+    - c. The paper may include rough quantitative parameterizations for illustration, but it does not conduct formal calibration or estimation. 
+8.   The paper is itself a demonstration of the AI-driven displacement risk it models, since all analysis and writing is done by AI agents. 
+    - a. The abstract notes this.
+    - b. The introduction notes this, near the beginning.
 
 ## II. Style Requirements
 
@@ -41,7 +45,7 @@
 5. Paper length is at most 20 pages.
 6. Every page has a visible page number.
 7. At most 6 exhibits.
-8. Lit review focuses on the most relevant papers and is concise.
+8. Lit review is at most half a page, at the end of the intro, and focuses on papers in the JF, JFE, RFS, JFQA, RAPS, and MS. 
 9. All display equations should be numbered
 10. All propositions are explicitly proved, with long proofs in the appendix.
 
@@ -75,3 +79,4 @@
 6. Writing catchy and conversational, yet rigorous. Plain English is favored. Writing is direct and concise.
 7. The paper is sensitive, cautious, and modest in how it cites `spec/lit/GKP-2012-WP.md`. 
 8. The abstract is eye-catching yet rigorous. 
+9. There is a literature review 
