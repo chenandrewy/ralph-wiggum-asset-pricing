@@ -11,7 +11,7 @@ from _test_helpers import build_test_context, require_paths, run_test
 
 AGENT = "claude"
 MODEL = "claude-opus-4-6"
-EFFORT = "high"
+EFFORT = "medium"
 
 
 def main() -> int:
