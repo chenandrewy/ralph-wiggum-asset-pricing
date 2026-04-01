@@ -52,16 +52,25 @@ def main() -> int:
 
     prompt = f"""
 You are a literature-review test agent. Your job is to check whether an academic
-finance paper cites the most relevant related work from the top finance journals
-and keeps the literature review appropriately concise.
+finance paper cites the most relevant related work from the top finance and
+economics journals and keeps the literature review appropriately concise.
 
 Target journals (abbreviations used below):
-  JF  = Journal of Finance
-  JFE = Journal of Financial Economics
-  RFS = Review of Financial Studies
-  JFQA = Journal of Financial and Quantitative Analysis
-  RAPS = Review of Asset Pricing Studies
-  MS  = Management Science
+
+  Finance:
+    JF   = Journal of Finance
+    JFE  = Journal of Financial Economics
+    RFS  = Review of Financial Studies
+    JFQA = Journal of Financial and Quantitative Analysis
+    RAPS = Review of Asset Pricing Studies
+    MS   = Management Science
+
+  Economics:
+    AER  = American Economic Review
+    JPE  = Journal of Political Economy
+    QJE  = Quarterly Journal of Economics
+    ECMA = Econometrica
+    REStud = Review of Economic Studies
 
 Step 1 — Read the paper and bibliography:
   Paper source: {paper_path}
@@ -77,13 +86,21 @@ Step 2 — Read additional context files if they exist:
 Step 3 — Derive evaluation scope from the spec and paper:
 - Extract the paper's required research questions, theoretical focus, and
   contribution claims from the spec.
+- Identify the paper's PRIMARY topic — the central subject that the title,
+  abstract, and main argument are about.
 - Infer the minimum literature coverage needed to support those themes.
 - Do NOT assume subtopics unless the paper or spec explicitly includes them.
 
 Step 4 — Build a candidate set of expected citations:
 Using the paper, spec, and optional context, identify papers published in the
-target journals (JF, JFE, RFS, JFQA, RAPS, MS) that are highly relevant to the
-paper's actual stated themes.
+target journals that are highly relevant to the paper's actual stated themes.
+
+Topic-proportionality rule: The candidate set must reflect the paper's topic
+emphasis. If the paper is primarily about topic X, then papers about X in the
+target journals should form the majority of your candidate set. Do not let
+secondary themes (rare disasters, general incomplete-markets theory, etc.)
+crowd out the primary topic. A paper with thin coverage of its own primary
+topic fails even if secondary themes are well covered.
 
 For each theme, identify important papers a referee would reasonably expect to
 see cited. Search the web to broaden coverage and reduce omissions, but keep the
@@ -101,23 +118,33 @@ Step 6 — Evaluate literature-review length:
   raw LaTeX source.
 
 Step 7 — Assess adequacy. Classify each issue as:
-  - CRITICAL: A highly influential paper in the target journals directly on the
-    paper's core stated topics that any referee would flag as missing.
-  - IMPORTANT: A well-known paper in the target journals on a closely related
-    topic that strengthens the literature positioning, or a literature review
-    that is materially longer than half a page.
-  - MINOR: A relevant paper whose omission is understandable given the paper's
-    scope and length, or a literature review that is only marginally close to
-    the half-page limit without clearly exceeding it.
+  - CRITICAL: A prominent paper in the target journals on the paper's PRIMARY
+    topic that a specialist referee would expect to see cited. Also: any paper
+    in the target journals that is directly on-point for a contribution claim
+    the paper makes.
+  - IMPORTANT: A well-known paper in the target journals on a secondary theme
+    of the paper, or a literature review that is materially longer than half a
+    page.
+  - MINOR: A tangentially relevant paper whose omission is understandable given
+    the paper's scope and length, or a literature review that is only marginally
+    close to the half-page limit without clearly exceeding it.
+
+Classification guidance:
+  - Do NOT downgrade a gap from CRITICAL to IMPORTANT/MINOR just because the
+    paper is "purely theoretical" or "does not engage with empirical work."
+    A theory paper about topic X must still cite the landmark papers about X
+    in the target journals, whether those papers are theoretical or empirical.
+  - When in doubt about whether a gap is CRITICAL or IMPORTANT, ask: "Would a
+    referee who specializes in the paper's primary topic flag this omission in
+    their report?" If yes, it is CRITICAL.
 
 Criteria:
-  - To PASS, there must be NO critical gaps.
+  - To PASS, there must be NO critical gaps AND no more than one IMPORTANT gap.
   - The literature review must not clearly exceed half a page in the compiled
     paper.
-  - A small number of IMPORTANT citation gaps is acceptable for a PASS if the
-    paper's existing citations adequately cover the core themes.
   - If there are critical gaps, FAIL and list the missing papers with brief
     explanations of why they are essential.
+  - If there are two or more IMPORTANT gaps, FAIL.
   - If the lit review clearly exceeds half a page, FAIL.
 
 Search guidance:
@@ -143,14 +170,14 @@ The report must be a clean, human-readable markdown file with this format:
   1. Scope extracted from spec and paper
   2. Current bibliography summary (what the paper already cites)
   3. Missing references by topic area (with gap classification)
-  4. Focus on the target journal set (JF, JFE, RFS, JFQA, RAPS, MS)
+  4. Focus on the target journal set (finance and economics)
   5. Literature review length check
   6. Suggested additions (author, year, title, journal, and a one-sentence
      explanation of relevance)
 
 In section 4, assess whether the literature review is appropriately focused on
-relevant papers from the target journal set. Do not require that every listed
-journal appear in the bibliography or literature review.
+relevant papers from the target journal set (both finance and economics). Do not
+require that every listed journal appear in the bibliography or literature review.
 """
 
     return run_test(
