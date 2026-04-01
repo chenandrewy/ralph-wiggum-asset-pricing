@@ -28,13 +28,6 @@
     - b. Without frictions, intergenerational transfers (bequests, gifts, government debt) would allow existing agents to share in the gains of new entrants, eliminating displacement risk — this is the Coase Theorem logic. GKP's modeling assumes, quite reasonably, that such frictions exist and preserve the risk premium.
     - c. In the case of a singularity, perhaps these frictions can be overcome. Following the modeling in `spec/lit/Jones-2024-AERI.md`, we can quantify the size of frictions that can be overcome, given infinite output.
     - d. The characterization of the contribution is purposefully modest. The main insights about displacement risk and incomplete markets are already in GKP.
-7. The paper is intentionally limited in scope to a compact theoretical contribution.
-    - a. The empirical content is limited to a single figure in the introduction, illustrating the valuation of publicly traded AI stocks compared with non-AI stocks using CRSP data.
-    - b. The paper does not aim to generate novel testable predictions beyond the model's main arguments.
-    - c. The paper may include rough quantitative parameterizations for illustration, but it does not conduct formal calibration or estimation. 
-8.   The paper is itself a demonstration of the AI-driven displacement risk it models, since all analysis and writing is done by AI agents. 
-    - a. The abstract notes this.
-    - b. The introduction notes this, near the beginning.
 
 ## II. Style Requirements
 
@@ -45,9 +38,11 @@
 5. Paper length is at most 20 pages.
 6. Every page has a visible page number.
 7. At most 6 exhibits.
-8. Lit review is at most half a page, at the end of the intro, and focuses on papers in the JF, JFE, RFS, JFQA, RAPS, and MS. 
+8. Lit review is at most half a page and appears at the end of the introduction.
 9. All display equations should be numbered
 10. All propositions are explicitly proved, with long proofs in the appendix.
+11. The first section is called "Preface (TBC)", is unnumbered, and left blank
+    - a. The traditional "Introduction" follows, and then the rest of the paper is standard, as if the Preface is not there.
 
 ## III. Technical Requirements
 
@@ -75,8 +70,15 @@
 2. Theoretical derivations are correct
 3. Each claim is supported by either the paper's results, or by a literature citation
 4. Each citation accurately represents the referenced paper(s).
-5. Mathematical formalism is kept to a minimum. Each piece of formalism contributes to the economic claims.
-6. Writing catchy and conversational, yet rigorous. Plain English is favored. Writing is direct and concise.
-7. The paper is sensitive, cautious, and modest in how it cites `spec/lit/GKP-2012-WP.md`. 
-8. The abstract is eye-catching yet rigorous. 
-9. There is a literature review 
+5. The writing is compelling and conversationally, yet rigorous.
+    - a. Plain English is favored. Writing is direct and concise.
+    - b. The abstract is eye-catching yet rigorous. 
+    - c. The introduction is engaging. Each paragraph moves the reader to the next one. 
+    - d. The paper uses itself as a demonstration of the AI displacement risk it models, since all analysis and writing is done by AI agents. Discussion of this includes an accurate description of how the work was divided: the human only wrote the paper spec (80 lines) and tests.
+6. The paper is sensitive, cautious, and modest in how it cites `spec/lit/GKP-2012-WP.md`. 
+7. The lit review is centered on the papers most relevant to the paper's contribution. It emphasizes papers in JF, JFE, RFS, JFQA, RAPS, and MS, as well as top economics journals. 
+8. The paper is intentionally limited in scope to a compact theoretical contribution.
+    - a. The empirical content remains very limited, ideally to a single figure in the introduction illustrating the valuation of publicly traded AI stocks compared with non-AI stocks using CRSP data.
+    - b. The paper does not try to generate a broad menu of novel testable predictions beyond the model's main arguments.
+    - c. The paper may include rough quantitative parameterizations for illustration, but quantitative material remains illustrative rather than becoming a calibration or estimation exercise.
+    - d. Good theory style is essential. Mathematical formalism is kept to a minimum. Each piece of formalism contributes to the economic claims. The paper avoids pompous or ceremonial formalism, and it avoids auxiliary formal detours that do not advance the main argument.
