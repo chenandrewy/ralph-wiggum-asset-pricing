@@ -30,7 +30,7 @@ You are a skeptical test agent evaluating the writing quality of an academic ass
 Read the paper at: {paper_path}
 Read the spec at: {spec_path}
 
-This test evaluates writing quality only. Do NOT evaluate mathematical correctness, citation accuracy, narrative fulfillment, or formalism minimality — those are covered by other tests.
+This test evaluates writing quality only. Do NOT evaluate mathematical correctness, citation accuracy, or formalism minimality — those are covered by other tests.
 
 ## Procedure
 1. Read the full paper and the spec.
@@ -38,7 +38,8 @@ This test evaluates writing quality only. Do NOT evaluate mathematical correctne
 3. Evaluate the introduction paragraph-by-paragraph against Requirement 2.
 4. Evaluate the full paper against Requirement 3.
 5. Check for Requirement 4 (self-demonstration).
-6. Write the report.
+6. Evaluate the full paper against Requirement 5 (compelling and conversational).
+7. Write the report.
 
 ## Requirements
 
@@ -70,6 +71,13 @@ The paper uses itself as a demonstration of the AI displacement risk it models, 
 - FAIL if the acknowledgment is buried in a footnote or afterthought rather than being used as a compelling demonstration of the paper's own thesis.
 - FAIL if the paper does not describe the division of labor between human and AI, or describes it inaccurately. The accurate description is: the human authored only the paper specification (approximately 80 lines) and the tests; AI agents did the rest (analysis, writing, code).
 
+### Requirement 5: Compelling and conversational, yet rigorous (spec IV.5 umbrella)
+The writing throughout the paper — not just the abstract and introduction — is compelling and conversational, yet rigorous. This is the umbrella standard of spec IV.5.
+- FAIL if any section of the paper (including the model, results, or conclusion) lapses into dry, mechanical, or textbook-style prose that a reader would skim or skip.
+- FAIL if the paper reads as a sequence of isolated technical exercises rather than a sustained argument that pulls the reader through.
+- FAIL if conversational tone comes at the expense of rigor — informality must not introduce imprecision or hand-waving.
+- Do not double-count issues already flagged under Requirements 1–4. This requirement targets the body sections not covered by those requirements.
+
 ## Guidelines
 1. Be adversarial but fair. The standard is a top finance journal, not literary fiction.
 2. Evaluate the paper as written, not against an ideal rewrite. Flag concrete problems, not vague preferences.
@@ -77,7 +85,7 @@ The paper uses itself as a demonstration of the AI displacement risk it models, 
 4. For Requirement 3, quote specific passages that violate the requirement. Do not flag more than 5 passages — focus on the worst offenders.
 5. The tone target is "between an academic paper and a blog post" (spec II.1). The paper should not read like a textbook, but it also should not read like a Twitter thread.
 
-PASS only if all four requirements are satisfied. FAIL if any requirement is not satisfied.
+PASS only if all five requirements are satisfied. FAIL if any requirement is not satisfied.
 
 ## Output
 Write your report to: {context.report_path}
@@ -85,7 +93,7 @@ Format:
 - Line 1: # {context.test_id}
 - Next line: VERDICT: PASS or VERDICT: FAIL
 - Next line: REASON: one short sentence
-- Then four sections, one per requirement, each with a sub-verdict and supporting evidence.
+- Then five sections, one per requirement, each with a sub-verdict and supporting evidence.
 """
 
     return run_test(
