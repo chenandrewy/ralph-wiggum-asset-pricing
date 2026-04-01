@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 How to run: python tests/referee-cfr-r1.py [--agent-log-mode MODE]
-Inputs: paper/paper.tex, spec/CFR-R1-report.md, spec/lit/GKP-2012-WP.md, spec/lit/Jones-2024-AERI.md
+Inputs: paper/paper.tex, spec/paper-spec.md, spec/CFR-R1-report.md, spec/lit/GKP-2012-WP.md, spec/lit/Jones-2024-AERI.md
 Outputs: test-results/referee-cfr-r1.md (always exits 0)
 """
 
@@ -23,10 +23,11 @@ def main() -> int:
     report_path = derive_referee_report_path(repo_root, referee_id)
 
     paper_path = repo_root / "paper/paper.tex"
+    spec_path = repo_root / "spec/paper-spec.md"
     cfr_path = repo_root / "spec/CFR-R1-report.md"
     gkp_path = repo_root / "spec/lit/GKP-2012-WP.md"
     jones_path = repo_root / "spec/lit/Jones-2024-AERI.md"
-    for p in (paper_path, cfr_path, gkp_path, jones_path):
+    for p in (paper_path, spec_path, cfr_path, gkp_path, jones_path):
         if not p.exists():
             write_fallback_report(report_path, f"missing: {p}")
             return 0
@@ -42,11 +43,13 @@ You are NOT that referee. Use their concerns as a guide for where to focus, but 
 
 Read all of these documents before writing your report:
 - The current paper: {paper_path}
+- The paper specification: {spec_path}
 - The CFR R1 report: {cfr_path}
 - The GKP paper: {gkp_path}
 - The Jones (2024) paper: {jones_path}
 
 Limit your report to at most three concrete, actionable suggestions. 
+Use the paper spec only to understand the paper's intended scope and stated contribution. Keep the report focused on the CFR R1 concerns and the current draft, not on broad spec compliance.
 
 Write your report to: {report_path}
 The report must be a clean, human-readable markdown file with this exact format:
