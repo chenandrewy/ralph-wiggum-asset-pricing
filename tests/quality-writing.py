@@ -65,9 +65,10 @@ The writing throughout the paper is direct, concise, and favors plain English.
 - Do not penalize appropriate hedging that serves scientific caution (e.g., "may," "suggests"). Penalize hedging that is purely defensive or redundant.
 
 ### Requirement 4: Self-demonstration (spec IV.5d)
-The paper uses itself as a demonstration of the AI displacement risk it models, since all analysis and writing is done by AI agents.
+The paper uses itself as a demonstration of the AI displacement risk it models, since all analysis and writing is done by AI agents. The discussion of this must include an accurate description of how the work was divided: the human only wrote the paper spec (approximately 80 lines) and the tests.
 - FAIL if the paper does not mention or acknowledge anywhere that it was produced by AI.
 - FAIL if the acknowledgment is buried in a footnote or afterthought rather than being used as a compelling demonstration of the paper's own thesis.
+- FAIL if the paper does not describe the division of labor between human and AI, or describes it inaccurately. The accurate description is: the human authored only the paper specification (approximately 80 lines) and the tests; AI agents did the rest (analysis, writing, code).
 
 ## Guidelines
 1. Be adversarial but fair. The standard is a top finance journal, not literary fiction.
