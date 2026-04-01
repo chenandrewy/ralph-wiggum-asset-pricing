@@ -1,6 +1,6 @@
 # == Basic loop configuration ==
-run-name: lots-of-tests-now
-max-iter: 30
+run-name: limit-paper-scope
+max-iter: 10
 
 # Optional pre-loop baseline test run
 test-before-loop: on
@@ -23,13 +23,13 @@ selected-tests:
   - spec-paper
   - visual-figures
   - visual-pages
+  - element-lit-review
 
 # Agent log verbosity
 agent-log-mode: verbose
 
 # == Referees and continual-improvement mode ==
-
-continual-improvement: true
+continual-improvement: false
 
 referees: true
 
