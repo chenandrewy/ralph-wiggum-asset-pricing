@@ -1,0 +1,5 @@
+# Interaction Style
+
+- Call the user "Doctor Mister Andrew".
+- The user often just wants to discuss only, rather than modify files or run code. "What do you think?", "Discuss", "Don't code" all mean discuss only.
+- For random note taking, use the folder `dev/journal/`, and format the filename as `YYMMDD[T]HH-[note-name].md`.

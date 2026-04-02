@@ -35,6 +35,7 @@ Read the paper at: {paper_path}
    - or does the paper use only its qualitative takeaway?
    - could the same point be stated in plain English without weakening the paper's economic claims?
    Also check for orphan notation: named variables, parameters, or functions introduced and then never used in any result, calibration, or interpretation that matters for the paper's conclusions.
+   Apply the same audit to prose detours that introduce new mechanisms, agent heterogeneity, bargaining variants, dynamic laws of motion, or future-work style channels without formal payoff. Treat these as scope candidates under 8a even if they are not theorem environments.
 3. **Scope audit (Requirements 8b–8d).** Check whether the paper stays compact:
    - *Empirical content (8b):* should be very limited — ideally a single introductory figure using CRSP data. Scrutinize any additional empirical content, but a small justified addition is not an automatic failure.
    - *Testable predictions (8c):* a handful of direct implications of the main model is fine; a laundry list of auxiliary predictions is not.
@@ -46,6 +47,7 @@ Read the paper at: {paper_path}
 2. Compressible formalism supports a real point, but the paper uses only its qualitative takeaway and could state the point in plain English instead.
 3. Dead-weight formalism is introduced and then abandoned, or adds no meaningful economic or narrative work.
 4. A useful larger object can still contain compressible or dead-weight subparts.
+5. Prose that introduces a new mechanism or extension without being needed for the paper's compact contribution is a scope detour, even if it contains no new equations.
 
 ## Guidelines
 1. Be adversarial. Do not let a useful proposition shield an unnecessary clause.
@@ -53,6 +55,12 @@ Read the paper at: {paper_path}
 3. Standard primitives needed to keep the model self-contained are usually allowed.
 4. Local notation is allowed only if it is needed for a later result, calibration, or interpretation that matters for the paper's conclusions.
 5. The overall standard is elegance and economy: a compact theoretical contribution, not a comprehensive treatment.
+6. For any borderline section, proposition, or paragraph, apply this burden-of-proof test:
+   - is it required by the paper spec?
+   - is it required to support a central claim already made in the paper?
+   - if cut entirely, would any headline claim become unsupported?
+   If the answer to all three is no, treat it as a failure candidate rather than rationalizing it as helpful context.
+7. The spec-permitted extensions are narrow: extinction risk; infinite output / whether sufficiently large surplus can overcome trading frictions; and the modest contribution relative to GKP on how transfers or government debt affect displacement risk. Do not give extra credit for additional heterogeneity, mortality channels, bargaining variants, or auxiliary mechanisms unless they are necessary to execute those permitted extensions.
 
 ## Requirements
 1. **(8a — Theory style)** The paper contains no dead-weight formal objects or formal subparts.

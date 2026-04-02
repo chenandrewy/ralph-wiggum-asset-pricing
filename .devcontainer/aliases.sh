@@ -13,3 +13,5 @@ claude-yolo() {
         claude -p --output-format "$fmt" --dangerously-skip-permissions "$@"
     fi
 }
+
+alias gitlog="git log --graph --oneline --decorate --pretty=format:'%C(auto)%h %ad %d %s' --date=format:'%Y-%m-%d %H:%M'"

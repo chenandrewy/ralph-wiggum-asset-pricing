@@ -6,6 +6,8 @@ Always read `spec/paper-spec.md` before doing work.
 
 See `README.md` for the full repo structure and how Ralph (a.k.a. RALF, ralph, the ralph loop) works.
 
+Import `.agent-guidelines/README.md` for shared agent coding, git, and interaction rules.
+
 ## Asset Pricing Background
 - Target audience is readers of top finance journals.
 - See `spec/economic-background.md` for how to use asset pricing terms.

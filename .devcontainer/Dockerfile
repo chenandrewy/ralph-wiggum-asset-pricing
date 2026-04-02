@@ -7,9 +7,11 @@ ARG GIT_VERSION=2.49.0
 ARG CLAUDE_CODE_VERSION=latest
 ARG CODEX_CLI_VERSION=latest
 
-# Install basic development tools and iptables/ipset
+# Install core system tools and build prerequisites.
 RUN apt-get update && apt-get install -y --no-install-recommends \
   less \
+  git \
+  libexpat1-dev \
   procps \
   sudo \
   fzf \
@@ -31,19 +33,34 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   fd-find \
   bat \
   poppler-utils \
+  build-essential \
+  zlib1g-dev \
+  && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Pin Git to the host workflow version so worktree behavior matches outside the container.
+RUN wget -O /tmp/git.tar.gz "https://mirrors.edge.kernel.org/pub/software/scm/git/git-${GIT_VERSION}.tar.gz" && \
+  tar -C /tmp -xzf /tmp/git.tar.gz && \
+  make -C "/tmp/git-${GIT_VERSION}" prefix=/usr/local NO_TCLTK=YesPlease NO_GETTEXT=YesPlease -j"$(nproc)" all && \
+  make -C "/tmp/git-${GIT_VERSION}" prefix=/usr/local NO_TCLTK=YesPlease NO_GETTEXT=YesPlease install && \
+  rm -rf /tmp/git.tar.gz "/tmp/git-${GIT_VERSION}"
+
+# Git defaults
+RUN git config --system merge.ff false
+
+# Install heavy workflow toolchains after Git so later workflow changes do not
+# force a Git rebuild.
+RUN apt-get update && apt-get install -y --no-install-recommends \
   python3 \
   python3-pip \
   python3-venv \
-  build-essential \
-  libexpat1-dev \
   r-base \
   r-base-dev \
   libcurl4-openssl-dev \
   libssl-dev \
-  zlib1g-dev \
   libxml2-dev \
   libpq-dev \
   libsecret-1-dev \
+  libuv1-dev \
   texlive-latex-recommended \
   texlive-latex-extra \
   texlive-fonts-recommended \
@@ -51,13 +68,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   cm-super \
   biber \
   && apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# Pin Git to the local workflow version so worktree features match host behavior.
-RUN wget -O /tmp/git.tar.gz "https://mirrors.edge.kernel.org/pub/software/scm/git/git-${GIT_VERSION}.tar.gz" && \
-  tar -C /tmp -xzf /tmp/git.tar.gz && \
-  make -C "/tmp/git-${GIT_VERSION}" prefix=/usr/local NO_TCLTK=YesPlease NO_GETTEXT=YesPlease -j"$(nproc)" all && \
-  make -C "/tmp/git-${GIT_VERSION}" prefix=/usr/local NO_TCLTK=YesPlease NO_GETTEXT=YesPlease install && \
-  rm -rf /tmp/git.tar.gz "/tmp/git-${GIT_VERSION}"
 
 # Ensure default node user has access to /usr/local/share
 RUN mkdir -p /usr/local/share/npm-global && \
@@ -75,8 +85,8 @@ RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhisto
 ENV DEVCONTAINER=true
 
 # Create workspace and config directories and set permissions
-RUN mkdir -p /workspace /home/node/.claude /home/node/.codex && \
-  chown -R node:node /workspace /home/node/.claude /home/node/.codex
+RUN mkdir -p /workspace /home/node/.claude /home/node/.codex /home/node/.config/gh && \
+  chown -R node:node /workspace /home/node/.claude /home/node/.codex /home/node/.config
 
 WORKDIR /workspace
 
@@ -107,6 +117,11 @@ RUN Rscript -e "install.packages(c('DBI','RPostgres','dplyr','data.table','keyri
 
 # Allow non-root user to install R packages at runtime.
 RUN chmod -R a+w /usr/local/lib/R/site-library
+
+# Keep a tiny late convenience layer for likely document-tooling tweaks.
+RUN apt-get update && apt-get install -y --no-install-recommends \
+  pandoc \
+  && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 ARG GIT_DELTA_VERSION=0.18.2
 RUN ARCH=$(dpkg --print-architecture) && \

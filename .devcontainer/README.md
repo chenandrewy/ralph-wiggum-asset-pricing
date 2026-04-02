@@ -40,6 +40,26 @@ Keys are credential store entry names; values are the env var names scripts will
 - `init-firewall.sh` — network firewall rules applied post-create.
 - `aliases.sh` — shell aliases for the container environment.
 
+### Persistent auth state
+
+The template mounts persistent volumes for:
+
+- `/home/node/.claude` — Claude auth and config
+- `/home/node/.codex` — Codex auth and config
+- `/home/node/.config/gh` — GitHub CLI auth and config
+
+This keeps interactive login state across container rebuilds and restarts.
+
+### Dockerfile ordering
+
+Keep the Dockerfile ordered for cache efficiency as well as readability.
+
+- Put expensive, stable layers early
+- Put frequently edited or convenience-oriented layers later
+- Avoid small package additions near the top of the file when they would force rebuilds of expensive downstream layers
+
+In practice, large system installs, source builds, and language package installs should be placed so minor template tweaks do not invalidate more of the image cache than necessary.
+
 ### Timezone
 
 The container defaults to `America/New_York`. To override, set the `TZ` environment variable on your host before building:
