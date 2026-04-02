@@ -1,84 +1,76 @@
 # Improvement Plan
-AUTHOR PLAN — 2026-04-02 18:14:05 EDT
+AUTHOR PLAN — 2026-04-02 18:25:11 EDT
 
-## Status: 8/16 tests passing
-
-No overhaul needed. The model and proofs are mathematically correct. The failures are targeted issues: false comparative statics claims, missing code/exhibits infrastructure, and notation/spec inconsistencies.
+**Status:** 6/16 tests pass, 10 fail. Build OK. No overhaul needed — model section is sound (factcheck-theory, quality-formalism, spec-economic all pass). Focus on infrastructure gaps and content fixes.
 
 ---
 
-## Priority 1: Fix false gamma comparative statics claims
+## Priority 1: Infrastructure (blocks 4+ tests)
 
-**Tests:** factcheck-bysection, factcheck-narrative, factcheck-freely
+### 1a. Create `code/` pipeline and `paper/exhibits/` directory
+**Fixes:** factcheck-code, factcheck-exhibits, spec-paper, visual-figures
 
-The paper claims in four places that valuations/spreads/premiums increase with risk aversion gamma. This is **numerically false** — the spread V0^A - V0^N actually *decreases* with gamma for the paper's own parameters (6.82 at gamma=2, 4.53 at gamma=3, 3.19 at gamma=5). The hedging premium is non-monotone in gamma.
+- Create `paper/exhibits/` directory.
+- Write R scripts in `code/` with a single canonical entry point that:
+  - Computes the numerical illustration from Section 3 (P/D ratios for given parameters) and outputs a table to `paper/exhibits/`.
+  - Generates a CRSP-based figure comparing AI vs. non-AI stock valuations (spec I.8.b / IV.8.b) and outputs a PDF to `paper/exhibits/`.
+- Add `\input` / `\includegraphics` calls in `paper.tex` for the new exhibits.
+- The pipeline must run from scratch in under 180 seconds.
 
-The root cause: gamma appears in Delta^{-gamma} (increasing) but also in (1+g_tilde)^{1-gamma}, V1, and the denominator (all decreasing). The net effect is ambiguous.
+### 1b. Fix hyperref red boxes
+**Fixes:** visual-pages
 
-**Fixes:**
-1. **Abstract (line 30):** Remove "and with risk aversion" from the sentence about what increases the P/D ratio.
-2. **After Proposition 2 (line 190):** Remove the claim about gamma. Keep the correct claims about p and (1-Delta).
-3. **Proposition 4 (line 215):** Remove "increasing in risk aversion gamma" from the comparative statics list. Keep p, theta-tilde/theta, and 1-Delta which are straightforward from the formula.
-4. **Conclusion (line 279):** Remove "with risk aversion" from the summary of comparative statics.
+- Add `hidelinks` option to the `\usepackage[...]{hyperref}` line in `paper.tex`.
 
-## Priority 2: Fix Remark 1 gamma < 1 claim
+---
 
-**Tests:** factcheck-bysection, factcheck-freely
+## Priority 2: Unproven or overstated claims (blocks 3 tests)
 
-Remark 1 (line 245) claims the hedging premium grows without bound when gamma < 1 and g_tilde -> infinity. But gamma < 1 violates Assumption 3 (existence condition) in this limit, so the P/D formulas are undefined. The paper draws conclusions outside its valid parameter space.
+### 2a. Non-AI valuation claim
+**Fixes:** factcheck-bysection, factcheck-narrative
 
-**Fix:** Remove the gamma < 1 case from Remark 1 entirely, or add a brief note that the existence condition fails. The gamma > 1 and gamma = 1 cases are fine.
+- The introduction and conclusion assert unconditionally that non-AI valuations *fall* with singularity probability. The paper only proves the AI case (Proposition 3) and the cross-sectional spread (Proposition 2), not the non-AI comparative static.
+- **Fix:** Either (a) add a Proposition/Corollary proving $\partial V_0^N / \partial p < 0$ under stated conditions, or (b) qualify the intro/conclusion claims to say the *spread* widens rather than asserting non-AI stocks fall unconditionally.
 
-## Priority 3: Fix conditional vs. unconditional p claim
+### 2b. "Moderate singularity" claim
+**Fixes:** factcheck-bysection
 
-**Test:** factcheck-narrative
+- The conclusion asserts the hedging premium is "largest for moderate singularities." This is stated in Remark 2 but never formally proved.
+- **Fix:** Either add a brief formal argument (e.g., show the premium is hump-shaped in singularity severity by combining Remark 1 and Remark 2) or soften the language to "suggests" / "the preceding analysis indicates."
 
-The abstract and introduction state unconditionally that the P/D ratio increases with p. Proposition 3 establishes this only under condition (12). The condition is natural but the verbal claims should match the formal result.
+### 2c. Conclusion conflation
+**Fixes:** factcheck-bysection
 
-**Fix:** Add a qualifier in the abstract and introduction — e.g., "when displacement is sufficiently severe" or "under natural parameter restrictions." Alternatively, state the result holds "for empirically relevant parameters."
+- The conclusion paragraph conflates two distinct mechanisms: (i) utility curvature making marginal utility negligible at extreme consumption (Remark 1) and (ii) friction costs becoming negligible relative to surplus (Remark 2).
+- **Fix:** Distinguish the two channels clearly in the conclusion.
 
-## Priority 4: Fix singularity definition (g_tilde >= g vs. strict)
+---
 
-**Test:** spec-economic
+## Priority 3: Citation accuracy (blocks 2 tests)
 
-The spec says a singularity "vastly increases productivity and output" but the model uses weak inequality g_tilde >= g, allowing g_tilde = g (no increase). The numerical illustration uses g_tilde = 0.05 vs g = 0.02, which is modest, not "vast."
+### 3a. GKP characterization
+**Fixes:** quality-gkp-cites
 
-**Fix:** Change the weak inequality to strict: g_tilde > g. Add a sentence noting the model allows for any magnitude of productivity increase, with the extension exploring the limit of vast increases (g_tilde -> infinity). The verbal descriptions in the abstract/intro should mention the productivity increase alongside displacement.
+Three passages need revision:
+1. **Line ~79 (model, AI owners):** Don't equate "illiquid private ventures" with GKP's unborn-cohorts mechanism as if they are the same thing. Present them as the paper's interpretation, inspired by GKP.
+2. **Line ~253 (extension, "do not analyze further"):** GKP devote a paragraph and footnote to transfers. Revise to something like "GKP discuss these mechanisms but do not conduct a formal analysis of how they scale with output."
+3. **Line ~273 (extension, "incremental innovation"):** GKP never restrict their framework to incremental innovation. Remove or restate.
 
-## Priority 5: Fix GKP quote
+### 3b. Missing literature
+**Fixes:** element-lit-review
 
-**Tests:** factcheck-bysection, factcheck-freely
+- Add Kogan, Papanikolaou, and Stoffman (2020, JPE) — the published version of the displacement risk theory — and Kogan and Papanikolaou (2014) to the lit review and bibliography.
 
-Line 252 presents a direct quote from GKP but omits material without ellipses and changes "or" to "[and]."
+---
 
-**Fix:** Either convert to a paraphrase (remove quotation marks) or use the full quote with proper ellipses for omitted material.
+## Priority 4: Minor content fixes
 
-## Priority 6: Fix Delta notation collision
+### 4a. Anaphora overgloss (line 108)
+**Fixes:** factcheck-anaphora
 
-**Test:** factcheck-theory
+- The sentence after the definition of $\Delta$ says "the singularity displaces the household by shifting output toward private AI capital." Assumption 1 only states the household share falls; the mechanism (shifting toward private AI) is interpretive. Remove the causal gloss or attribute it as interpretation.
 
-Delta is defined as tilde-omega/omega in eq. (5), then silently redefined as Delta(lambda) in Section 4.2 eq. (11).
+### 4b. Extension: infinite consumption asymmetry
+**Fixes:** spec-paper
 
-**Fix:** Add a bridging sentence when introducing Delta(lambda): "We now generalize the displacement ratio to depend on the transfer parameter lambda, with the earlier definition corresponding to lambda = 0."
-
-## Priority 7: Create exhibits and code pipeline
-
-**Tests:** factcheck-exhibits, visual-figures, spec-paper
-
-The paper has zero exhibits. The spec calls for "ideally a single figure in the introduction illustrating the valuation of publicly traded AI stocks compared with non-AI stocks using CRSP data." The code/ directory is empty, and paper/exhibits/ does not exist.
-
-**Fixes:**
-1. Create `paper/exhibits/` directory.
-2. Write R code in `code/` with a single entry point that:
-   - Downloads AI vs non-AI stock P/D data from CRSP/WRDS
-   - Produces a single PDF figure comparing valuations
-   - Outputs to `paper/exhibits/`
-3. Include the figure in the introduction.
-4. Runs in under 180 seconds.
-
-## Priority 8: Minor cleanup
-
-**Tests:** factcheck-freely (minor items)
-
-- Fix Assumption 3 commentary: "automatically satisfied for gamma > 1" — remove "and sufficiently large g or g_tilde" since any g >= 0 suffices.
-- Remove unused bibliography entries (MehraPrescott1985, CampbellCochrane1999, Blanchard1985).
+- Spec I.5.b requires explicitly stating that infinite consumption in the extension applies only to AI owners. Add a sentence in Section 4.1 or 4.2 making this explicit.

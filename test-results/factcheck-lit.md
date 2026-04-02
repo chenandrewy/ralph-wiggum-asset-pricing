@@ -1,71 +1,90 @@
 # tests/factcheck-lit.py
-Started: 2026-04-02 18:17:45 EDT
-Runtime: 4m 20s
-[ralph-garage/agent-logs/20260402T181745.336425-0400_factcheck-lit_claude_opus.log](../ralph-garage/agent-logs/20260402T181745.336425-0400_factcheck-lit_claude_opus.log)
+Started: 2026-04-02 18:34:30 EDT
+Runtime: 2m 31s
+[ralph-garage/agent-logs/20260402T183430.356081-0400_factcheck-lit_claude_opus.log](../ralph-garage/agent-logs/20260402T183430.356081-0400_factcheck-lit_claude_opus.log)
 
 # factcheck-lit
 VERDICT: PASS
-REASON: All 9 cited works are externally verified with accurate metadata and supported in-text claims; only minor issues found.
+REASON: All 11 cited works are externally verified with accurate metadata and supported in-text claims.
 
 ## 1. Citation inventory audited
 
-All 9 bibliography entries are cited in the paper text. No bibliography entry is unused. The following citation keys were audited:
+All citation keys that appear in the paper text (including footnotes) were audited:
 
 1. GKP2012
 2. Jones2024
-3. Rietz1988
-4. Barro2006
-5. Wachter2013
-6. KorinekSuh2024
-7. AcemogluRestrepo2018
-8. PastorVeronesi2009
-9. HobijnJovanovic2001
+3. KoganPapanikolaouStoffman2020
+4. KoganPapanikolaou2014
+5. Rietz1988
+6. Barro2006
+7. Wachter2013
+8. KorinekSuh2024
+9. AcemogluRestrepo2018
+10. PastorVeronesi2009
+11. HobijnJovanovic2001
+
+All 11 bibliography entries are cited in the paper; none were ignored.
 
 ## 2. External verification coverage
 
 | Key | Status | External sources |
 |-----|--------|-----------------|
-| GKP2012 | VERIFIED | EconPapers/RePEc, ScienceDirect, MIT DSpace, SSRN |
-| Jones2024 | VERIFIED | AEA (doi:10.1257/aeri.20230570), IDEAS/RePEc, Stanford GSB |
-| Rietz1988 | VERIFIED | IDEAS/RePEc, Semantic Scholar |
+| GKP2012 | VERIFIED | EconPapers/RePEC, ScienceDirect, SSRN |
+| Jones2024 | VERIFIED | AEA website, RePEC/IDEAS, Stanford GSB |
+| KoganPapanikolaouStoffman2020 | VERIFIED | Journal of Political Economy, MIT DSpace, Northwestern Scholars |
+| KoganPapanikolaou2014 | VERIFIED | Wiley/Journal of Finance, NBER, EconPapers |
+| Rietz1988 | VERIFIED | ScienceDirect, RePEC/IDEAS, NYU Stern PDF |
 | Barro2006 | VERIFIED | Oxford Academic/QJE, Harvard DASH, EconPapers |
-| Wachter2013 | VERIFIED | Wiley/Journal of Finance, EconPapers, UPenn repository |
-| KorinekSuh2024 | VERIFIED | NBER (w32255), IDEAS/RePEc, SSRN, arXiv |
-| AcemogluRestrepo2018 | VERIFIED | AEA (doi:10.1257/aer.20160696), MIT, IDEAS/RePEc |
-| PastorVeronesi2009 | VERIFIED | AEA (doi:10.1257/aer.99.4.1451), EconPapers, NBER |
-| HobijnJovanovic2001 | VERIFIED | AEA (doi:10.1257/aer.91.5.1203), IDEAS/RePEc, NBER (w7684), SSRN |
+| Wachter2013 | VERIFIED | Wharton/UPenn, EconPapers, NBER |
+| KorinekSuh2024 | VERIFIED | NBER, SSRN, RePEC/IDEAS |
+| AcemogluRestrepo2018 | VERIFIED | AEA article page, IDEAS/RePEc |
+| PastorVeronesi2009 | VERIFIED | AEA article page, SSRN, NBER |
+| HobijnJovanovic2001 | VERIFIED | AEA article page, IDEAS/RePEc, NYU Scholars |
 
-**Coverage: 9/9 cited works externally verified (100%).**
+Coverage: 11/11 cited works externally verified (100%).
 
 ## 3. Metadata accuracy findings
 
-All 9 entries have materially accurate metadata (authors, year, title, journal/outlet, volume, number, pages). One minor formatting note:
+All 11 entries have materially accurate bibliographic metadata:
 
-- **Rietz1988:** The bib title is "The Equity Risk Premium: A Solution" while some sources render it "A Solution?" with a trailing question mark. External sources are inconsistent on this point. Trivial formatting issue.
+- **GKP2012:** Authors (Garleanu, Kogan, Panageas), title, journal (JFE), vol 105(3), pp. 491--510, 2012 — all confirmed.
+- **Jones2024:** Author (Charles I. Jones), title, journal (AER: Insights), vol 6(4), pp. 575--590, 2024 — all confirmed.
+- **KoganPapanikolaouStoffman2020:** Authors, title, journal (JPE), vol 128(3), pp. 855--906, 2020 — all confirmed.
+- **KoganPapanikolaou2014:** Authors, title, journal (JF), vol 69(2), pp. 675--718, 2014 — all confirmed.
+- **Rietz1988:** Author, title, journal (JME), vol 22(1), pp. 117--131, 1988 — all confirmed.
+- **Barro2006:** Author, title, journal (QJE), vol 121(3), pp. 823--866, 2006 — all confirmed.
+- **Wachter2013:** Author, title, journal (JF), vol 68(3), pp. 987--1035, 2013 — all confirmed.
+- **KorinekSuh2024:** Authors, title, institution (NBER), WP 32255, 2024 — all confirmed.
+- **AcemogluRestrepo2018:** Authors, title, journal (AER), vol 108(6), pp. 1488--1542, 2018 — all confirmed.
+- **PastorVeronesi2009:** Authors, title, journal (AER), vol 99(4), pp. 1451--1483, 2009 — all confirmed.
+- **HobijnJovanovic2001:** Authors, title, journal (AER), vol 91(5), pp. 1203--1220, 2001 — all confirmed.
+
+No metadata errors found.
 
 ## 4. In-text description accuracy findings
 
-All in-text characterizations of cited works are materially accurate and supported by the cited work, based on external verification:
+All in-text characterizations of cited works are materially accurate and supported:
 
-- **GKP2012:** Correctly described as introducing displacement risk in an OLG economy with innovation, showing incomplete intergenerational risk-sharing generates a priced risk factor. One specific claim—that GKP note bequests/government debt/transfers as mechanisms but do not analyze them further—cannot be verified from external abstracts alone, but no external source contradicts it.
-- **Jones2024:** Correctly described as analyzing the growth-vs-existential-risk trade-off and showing curvature of utility is central.
-- **Rietz1988, Barro2006, Wachter2013:** Correctly grouped as the rare disasters literature.
-- **KorinekSuh2024:** Correctly described as studying AGI transition scenarios and conditions under which wages collapse.
-- **AcemogluRestrepo2018:** Correctly described as modeling the race between automation and labor.
-- **PastorVeronesi2009:** Correctly described as studying how technological revolutions affect stock prices through uncertainty about productivity.
-- **HobijnJovanovic2001:** Correctly described as documenting the negative impact of IT innovation on incumbent firms.
+- **GKP2012:** Described as introducing displacement risk in an OLG economy with innovation, where new entrants capture rents existing agents cannot share, generating a priced risk factor via incomplete intergenerational risk-sharing. Also attributed discussion of bequests, government transfers, and representative dynasty. All confirmed by external sources.
+- **Jones2024:** Described as analyzing the trade-off between AI-driven growth and existential risk, with utility curvature central. Confirmed.
+- **KoganPapanikolaouStoffman2020:** Described as extending displacement risk to study creative destruction, inequality, and cross-sectional return premia. Confirmed.
+- **KoganPapanikolaou2014:** Described as analyzing how investment-specific technology shocks affect asset prices through growth opportunities. Confirmed.
+- **Rietz1988, Barro2006, Wachter2013:** Cited collectively as the rare disasters literature. All three are foundational rare-disaster papers. Confirmed.
+- **KorinekSuh2024:** Described as studying AGI transition scenarios and conditions under which wages collapse. Confirmed.
+- **AcemogluRestrepo2018:** Described as modeling the race between automation and labor. Confirmed.
+- **PastorVeronesi2009:** Described as studying how technological revolutions affect stock prices through uncertainty about productivity. Confirmed.
+- **HobijnJovanovic2001:** Described as documenting the negative impact of IT innovation on incumbent firms. Confirmed.
+
+No claim-support issues found.
 
 ## 5. Flagged issues by citation key and severity
 
-### GKP2012 — MINOR
-The paper claims GKP "note, mechanisms such as bequests, government debt, and intergenerational transfers would affect the magnitude of the displacement factor, but they do not analyze this further." This specific textual claim cannot be verified from external abstracts/metadata alone. No external source contradicts it. This is a verification gap, not an identified error.
+No CRITICAL, IMPORTANT, or MINOR issues were found for any citation key.
 
-### Rietz1988 — MINOR
-The bib title omits a possible trailing question mark ("A Solution" vs. "A Solution?"). External sources are inconsistent. Trivial formatting issue with no impact on identification or attribution.
-
-### All other keys — NONE
-No issues found for Jones2024, Barro2006, Wachter2013, KorinekSuh2024, AcemogluRestrepo2018, PastorVeronesi2009, or HobijnJovanovic2001.
+| Key | Severity | Issue |
+|-----|----------|-------|
+| (none) | — | — |
 
 ## 6. Overall reliability of the paper's citations
 
-The paper's citations are highly reliable. All 9 cited works were externally verified with accurate bibliographic metadata and well-supported in-text characterizations. No critical or important issues were found. The two minor issues identified (an unverifiable granular claim about GKP2012's text and a possible missing question mark in Rietz1988's title) do not affect the substantive accuracy of the paper's citation practices.
+The paper's citations are highly reliable. All 11 cited works were externally verified against publisher pages, DOI landing pages, NBER, SSRN, and RePEC. Bibliographic metadata is accurate across the board — authors, titles, journals, volumes, pages, and years all match authoritative external sources. In-text characterizations of each cited work are materially accurate and fair. No errors, misattributions, or unsupported claims were identified.

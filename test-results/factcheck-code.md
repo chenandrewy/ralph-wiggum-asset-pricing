@@ -1,64 +1,66 @@
 # tests/factcheck-code.py
-Started: 2026-04-02 18:17:45 EDT
-Runtime: 1m 40s
-[ralph-garage/agent-logs/20260402T181745.328980-0400_factcheck-code_claude_opus.log](../ralph-garage/agent-logs/20260402T181745.328980-0400_factcheck-code_claude_opus.log)
+Started: 2026-04-02 18:34:30 EDT
+Runtime: 2m 3s
+[ralph-garage/agent-logs/20260402T183430.355175-0400_factcheck-code_claude_opus.log](../ralph-garage/agent-logs/20260402T183430.355175-0400_factcheck-code_claude_opus.log)
 
 # factcheck-code
 
-VERDICT: FAIL
-REASON: The `code/` directory is empty — no canonical entry point exists, violating spec III.3.b.
+VERDICT: PASS
+REASON: Canonical pipeline runs from scratch, produces all exhibits, and code output matches the paper's quantitative claims.
 
 ## Canonical local analysis path
 
-**No canonical analysis path exists.** The `code/` directory contains zero files. The `paper/exhibits/` directory does not exist. The `data/` directory is empty.
+The canonical entry point is `code/run-all.R`, which calls two scripts in sequence:
 
-The paper spec (III.3.b) requires: *"code/ provides one canonical entry point that regenerates every exhibit used in paper/paper.tex."* Since `code/` is empty, there is no entry point at all.
+1. `code/numerical-illustration.R` — computes price-dividend ratios from model parameters and writes `paper/exhibits/numerical-illustration.tex`.
+2. `code/ai-valuations-figure.R` — queries WRDS/CRSP for monthly price and dividend data for AI vs. non-AI stocks and writes `paper/exhibits/ai-valuations.pdf`.
 
-The paper itself contains no exhibits — no `\includegraphics`, no `\input{exhibits/...}`, no figure or table environments. Consequently, the exhibit-regeneration requirement is vacuously satisfied for the current paper content. However:
-
-- The spec (III.3.a–g) clearly envisions a populated `code/` directory with a from-scratch pipeline.
-- The spec (IV.8.b) envisions empirical content: *"ideally a single figure in the introduction illustrating the valuation of publicly traded AI stocks compared with non-AI stocks using CRSP data."* This figure does not exist.
-- The paper includes a numerical illustration (Section 3) with specific computed values. This constitutes analysis that, per the spec, belongs in `code/` and should output reproducible results.
+Both outputs land directly in `paper/exhibits/` as required by the spec (III.3.f). The pipeline has a single entry point (III.3.b), is written in R (III.3.a), and does not rely on precomputed caches or manually prepared intermediate files (III.3.c). The WRDS query is part of the canonical pipeline (III.3.e).
 
 ## Execution status
 
-| Item | Status |
-|------|--------|
-| R runtime available | Yes (`/usr/bin/Rscript`) |
-| Code files in `code/` | **None** |
-| Exhibits in `paper/exhibits/` | **None (directory absent)** |
-| Data files in `data/` | **None** |
-| Canonical entry point | **Missing** |
-| Pipeline execution | **Blocked: nothing to run** |
+- **Full pipeline**: Executed successfully via `Rscript code/run-all.R`. Both exhibits regenerated from scratch.
+- **Numerical illustration**: Runs with no external dependencies. Produces correct output.
+- **CRSP figure**: Requires WRDS credentials (`WRDS_USERNAME`, `WRDS_PASSWORD`). Connected, queried, and generated the figure. Run completed well within the 180-second budget (III.3.d).
+- **Runtime dependencies**: R, `DBI`, `RPostgres`. These are not explicitly documented in a requirements file but are standard and listed in the script headers.
 
 ## Paper-code consistency
 
-**Numerical illustration (Section 3):** The paper reports values for a parameterization (β=0.96, γ=3, g=0.02, g̃=0.05, θ=0.05, θ̃=0.15, ν=0.55, ν̃=0.30, p=0.01). Independent verification confirms all stated values are correct:
+### Numerical illustration (Table 1 / Exhibit 2)
 
-- V₀ᴬ ≈ 16.1 ✓
-- V₀ᴺ ≈ 11.6 ✓
-- Ratio ≈ 1.4 ✓
-- No-singularity P/D ≈ 11.9 ✓
-- Complete-markets V₀ᴬ·ᶜᴹ ≈ 12.9 ✓
-- Hedging premium ≈ 25% ✓
+All inline claims in Section 3 verified against code output at p = 0.01:
 
-The numerical values are mathematically correct given the closed-form expressions and stated parameters. However, these computations exist only in the paper text — there is no code that generates or verifies them.
+| Claim | Paper | Code |
+|-------|-------|------|
+| V0_A | ~16.1 | 16.1 |
+| V0_N | ~11.6 | 11.6 |
+| V0_A / V0_N | ~1.4 | 1.39 |
+| V0_A at p=0 | ~11.9 | 11.9 |
+| V0_A_CM | ~12.9 | 12.9 |
+| Hedging premium | ~25% | 24.8% |
 
-**No per-share data issues (Requirement 5):** The paper is purely theoretical with an inline parameterization. No empirical data is combined, so per-share consistency is not applicable.
+Parameters in the code (`beta=0.96, gamma=3, g=0.02, g_tilde=0.05, theta=0.05, theta_tilde=0.15, nu=0.55, nu_tilde=0.30`) match the paper's stated values exactly. The formulas implemented in the code (`R`, `Phi_A`, `Phi_N`, `V1`, `V0_A`, `V0_N`, `Phi_A_CM`, `V0_A_CM`) correspond to equations (7)-(14) in the paper.
+
+### CRSP figure (Figure 1 / Exhibit 1)
+
+- The figure caption states it uses CRSP data for NVDA, MSFT, GOOGL, META, AMZN with trailing 12-month dividends. The code queries exactly these tickers from `crsp.stocknames` and computes trailing 12-month P/D ratios. Consistent.
+- The code computes portfolio-level P/D ratios (total market cap / total trailing dividends), which is a standard value-weighted approach. Consistent with "price-dividend ratios" as described.
+
+### Per-share data handling (Requirement 5)
+
+The CRSP query computes total dollar dividends as `mcap / prc * div_total`, which equals `shrout * divamt`. Here `shrout` is month-end shares outstanding from `crsp.msf`, while `divamt` is the per-share dividend from `crsp.msedist` at the ex-date. If a stock split occurs between the ex-date and month-end within the same month, these quantities are on different split bases, which would overstate or understate total dividends. The code does not verify or adjust for this.
+
+In practice, for the five large-cap AI stocks and the broad CRSP universe at monthly frequency, intra-month splits are rare and the impact is negligible. The paper spec classifies this figure as illustrative (IV.8.b, IV.8.d), not a calibration exercise. This is a minor methodological gap, not a material error.
 
 ## Reproducibility classification
 
-| Paper object | Classification |
-|--------------|---------------|
-| Closed-form propositions (Props 1–4) | Algebraic — no code needed |
-| Numerical illustration (Section 3) | **Not reproducible from canonical local path** — correct values, but no code exists to generate them |
-| CRSP-based empirical figure (spec IV.8.b) | **Missing entirely** — neither code nor exhibit exists |
-| All other paper content | Theoretical prose — no code needed |
+| Output | Classification |
+|--------|---------------|
+| Table 1 (numerical-illustration.tex) | **Locally reproducible** — runs from scratch with no external dependencies |
+| Figure 1 (ai-valuations.pdf) | **Locally reproducible with credentials** — requires WRDS access, which is part of the canonical pipeline per spec III.3.e |
+| All theoretical propositions and proofs | Not code-dependent — pure mathematical derivations in the paper |
 
-## Violations
+## Minor observations
 
-1. **Spec III.3.b (canonical entry point):** `code/` is empty. No entry point exists to regenerate exhibits or reproduce the numerical illustration.
-2. **Spec III.3.c (from-scratch pipeline):** No pipeline exists at all.
-3. **Spec IV.8.b (empirical content):** The spec calls for an empirical figure using CRSP data. Neither the figure, its code, nor the data exist in the repo.
-4. **Requirement 1 (coherent canonical path):** There is no canonical analysis path for the paper.
-5. **Requirement 4 (paper-code consistency for analysis):** The numerical illustration in Section 3 is analysis with no corresponding code.
+- **No formal dependency manifest**: The R package requirements (`DBI`, `RPostgres`) are documented in script headers but not in a standalone requirements file. This is a minor documentation gap but does not violate any spec requirement.
+- **Graceful degradation**: `run-all.R` documents that if WRDS credentials are unavailable, the numerical table is still generated. This is helpful but the CRSP figure would fail. The spec requires the full pipeline to run from scratch (III.3.c), so credentials must be available for full compliance.
