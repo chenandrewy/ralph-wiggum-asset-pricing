@@ -22,7 +22,7 @@ compile_tex() {
         cd "$PAPER_DIR"
         run_quiet "pdflatex pass 1 ($tex_file)" pdflatex -interaction=nonstopmode -halt-on-error "$tex_file"
         if [ "$needs_biber" = "yes" ]; then
-            run_quiet "biber ($base_name)" biber "$base_name"
+            run_quiet "biber ($base_name)" biber --output-safechars "$base_name"
         fi
         run_quiet "pdflatex pass 2 ($tex_file)" pdflatex -interaction=nonstopmode -halt-on-error "$tex_file"
         run_quiet "pdflatex pass 3 ($tex_file)" pdflatex -interaction=nonstopmode -halt-on-error "$tex_file"
