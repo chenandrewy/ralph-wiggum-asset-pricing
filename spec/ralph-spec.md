@@ -13,6 +13,7 @@ Define the Ralph loop contract for improving the paper and recording current tes
   - `ralph/load-config.py`
   - `ralph/author-plan.py`
   - `ralph/author-improve.py`
+  - `ralph/author-fix-build.py`
   - `ralph/run-tests.py`
   - `ralph/run-referees.py`
   - `ralph/commit-iteration.py`
@@ -50,7 +51,7 @@ The author steps (`author-plan.py`, `author-improve.py`) may modify files in the
   - rendering `paper/paper.pdf` into `ralph-garage/page-images/page-*.png`
   - building `ralph-garage/page-images/exhibit-manifest.json`
 - LaTeX compilation of `paper/paper.tex` is a deterministic build gate that runs before page-image generation and before the test phase.
-- If the LaTeX build gate fails for an iteration, Ralph records that iteration as failed, skips page-image generation, skips the test phase, skips the referee phase, and continues to the next iteration instead of terminating the whole loop.
+- If the LaTeX build gate fails for an iteration, Ralph runs a focused build-fix step (`ralph/author-fix-build.py`) and retries the build once. If the retry also fails, Ralph records that iteration as failed, skips page-image generation, skips the test phase, skips the referee phase, and continues to the next iteration instead of terminating the whole loop.
 
 ## Branch Model
 
@@ -89,13 +90,14 @@ Let the current Ralph stretch begin at the most recent startup commit on `ralph/
 2. Require the planning phase to create `ralph-garage/improvement-plan.md`.
 3. Run `ralph/author-improve.py`.
 4. Run the LaTeX build gate for `paper/paper.tex`.
-5. If the LaTeX build gate fails, record the iteration as failed, skip page-image generation, skip tests and referees, create the iteration commit, and continue according to the normal exit rules.
-6. If the LaTeX build gate succeeds, prepare the remaining test artifacts.
-7. Run `ralph/run-tests.py`.
-8. If referees are enabled, run `ralph/run-referees.py` after the test phase completes.
-9. Create one git commit for the iteration with `ralph/commit-iteration.py`.
-10. If continual-improvement is disabled, exit successfully as soon as the test phase returns success.
-11. If continual-improvement is enabled, continue to the next iteration regardless of test results.
+5. If the LaTeX build gate fails, run `ralph/author-fix-build.py` to attempt a focused build recovery, then re-run the LaTeX build gate.
+6. If the build gate still fails after the fix attempt, record the iteration as failed, skip page-image generation, skip tests and referees, create the iteration commit, and continue according to the normal exit rules.
+7. If the LaTeX build gate succeeds (on the first try or after the fix attempt), prepare the remaining test artifacts.
+8. Run `ralph/run-tests.py`.
+9. If referees are enabled, run `ralph/run-referees.py` after the test phase completes.
+10. Create one git commit for the iteration with `ralph/commit-iteration.py`.
+11. If continual-improvement is disabled, exit successfully as soon as the test phase returns success.
+12. If continual-improvement is enabled, continue to the next iteration regardless of test results.
 
 ## Commit Model
 

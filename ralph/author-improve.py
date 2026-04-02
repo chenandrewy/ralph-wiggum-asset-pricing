@@ -29,6 +29,7 @@ Then write improved versions in place:
 - `paper/paper.tex` and/or `paper/references.bib` to address the improvement plan.
 
 Rules:
+- If `paper/.latex-build.log` exists, is less than 1 hour old, and shows a build failure, ignore the improvement plan and focus entirely on fixing the build. No other changes until the paper compiles.
 - Keep the paper concise and focused.
 - Do not edit `test-results/`.
 - You may use `git diff` and `git log` to understand recent changes when useful."""

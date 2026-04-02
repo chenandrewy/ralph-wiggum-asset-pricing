@@ -152,11 +152,16 @@ while true; do
     # 2. Build paper and generate test artifacts (build gate)
     clear_dir test-results
     if ! build_paper_artifacts; then
-        log "=== iteration $iteration LaTeX build failed; skipping tests and referees ==="
-        log "--- commit iteration $iteration ---"
-        python3 ralph/commit-iteration.py
-        iteration=$((iteration + 1))
-        continue
+        log "--- build failed; attempting fix ---"
+        python3 ralph/author-fix-build.py || { log "ERROR: author fix-build step failed"; exit 1; }
+        if ! build_paper_artifacts; then
+            log "=== iteration $iteration LaTeX build failed after fix attempt; skipping tests and referees ==="
+            log "--- commit iteration $iteration ---"
+            python3 ralph/commit-iteration.py
+            iteration=$((iteration + 1))
+            continue
+        fi
+        log "--- build fix succeeded ---"
     fi
 
     cp paper/paper.pdf "ralph-garage/history/$(printf '%03d-paper.pdf' "$iteration")" 2>/dev/null || true

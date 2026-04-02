@@ -44,6 +44,7 @@ Requirements of the plan:
 4. If an overhaul is not needed, the plan prioritizes fixing failing tests first, then addressing referee feedback.
 
 Guidance:
+- If `paper/.latex-build.log` exists, is less than 1 hour old, and shows a build failure, the entire plan must focus on fixing the build. No other improvements until the paper compiles.
 - Adjust the messaging to fit the best evidence.
 - Keep the plan concise and actionable.
 - Do not modify `config-ralph.yaml`.
