@@ -1,32 +1,35 @@
 # tests/factcheck-freely.py
-Started: 2026-04-02 18:07:23 EDT
-Runtime: 3m 13s
-[ralph-garage/agent-logs/20260402T180723.872198-0400_factcheck-freely_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260402T180723.872198-0400_factcheck-freely_claude_claude-opus-4-6.log)
+Started: 2026-04-02 18:17:45 EDT
+Runtime: 4m 10s
+[ralph-garage/agent-logs/20260402T181745.329284-0400_factcheck-freely_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260402T181745.329284-0400_factcheck-freely_claude_claude-opus-4-6.log)
 
 # factcheck-freely
-VERDICT: FAIL
-REASON: Remark 1 draws economic conclusions about the gamma < 1 case in a parameter region where the model's own existence conditions (Assumption 3) are violated.
+VERDICT: PASS
+REASON: The paper's mathematics, proofs, and economic reasoning are correct with no factual errors or logical inconsistencies; only minor terminological imprecisions were found.
 
-## Major Issue
+## Review Details
 
-**Remark 1: Claim about gamma < 1 violates model assumptions (Section 4.1)**
+An independent review of the full paper found all four propositions, two remarks, the numerical illustration, and the extinction-risk extension to be mathematically correct and logically consistent. Literature characterizations (GKP, Jones 2024) were verified against source texts and found accurate. The following minor observations do not rise to the level of factual errors or logical inconsistencies:
 
-Remark 1 considers three cases for the limit as post-singularity growth goes to infinity: gamma > 1, gamma < 1, and gamma = 1. For gamma < 1, the remark claims "the hedging premium grows without bound." However, when gamma < 1, we have 1 - gamma > 0, so (1 + g_tilde)^{1-gamma} diverges as g_tilde grows. This means beta * (1 + g_tilde)^{1-gamma} exceeds 1, violating Assumption 3 (the existence condition). The post-singularity price-dividend ratio V_1 is undefined in this limit, so the hedging premium formula is not well-defined either.
+### Minor Observations
 
-This is a logical inconsistency: the paper states a conclusion about a region of the parameter space where the model has no equilibrium.
+1. **Terminology: "pricing kernel" (line ~165).** R = beta*(1+g)^{1-gamma} is called "the normal-state pricing kernel," but it is technically the SDF times gross dividend growth (a valuation ratio increment), not the SDF itself. This is imprecise terminology, not a factual error — the formulas using R are correct.
 
-## Minor Issues
+2. **Proposition 3 title vs. content.** The title says "Singularity probability raises AI valuations," but the result is an if-and-only-if condition. The proposition body states the condition correctly; only the title is oversimplified.
 
-1. **Misleading characterization of Assumption 3**: The paper says existence conditions hold "for gamma > 1 and sufficiently large g or g_tilde." In fact, for gamma > 1, the conditions hold for ALL g >= 0 and g_tilde >= 0, not just sufficiently large values. The phrasing incorrectly suggests a binding restriction.
+3. **Remark 1 discusses gamma = 1 despite assuming gamma > 1.** This is standard economic practice (taking the limit of CRRA utility) used for intuition. Not an error within the model.
 
-2. **Complete markets interpretation**: Proposition 4 states the household's consumption equals total output under complete markets, implying AI owners consume nothing. The economic mechanism (state-contingent claims trading) deserves more precision.
+4. **Comparative statics of the spread (line ~191)** are stated without explicit proof but are correct and follow from the model's assumptions (gamma > 1 ensures R < 1).
 
-3. **GKP quotation**: The quoted text attributed to GKP omits parts of the original footnote 14 without ellipses, and drops GKP's point that the functional form is robust.
+5. **Coase theorem argument (Remark 2)** is informal and treats friction costs in partial equilibrium, which is appropriate for a remark-level discussion.
 
-4. **Coasian surplus argument (Section 4.2)**: The paper compares friction costs to the AI owners' singularity windfall, but the relevant concept for Coasian bargaining is total surplus from trade, not one party's windfall.
+### Verified Correct
 
-5. **Unused bibliography entries**: MehraPrescott1985, CampbellCochrane1999, and Blanchard1985 are in the bib file but not cited.
-
-## What Checks Out
-
-The core mathematical results (Propositions 1-4 and proofs) are correct. The numerical illustration reproduces accurately. The main economic arguments are internally consistent.
+- Proposition 1 (P/D ratios): Euler equation derivation, transition consumption growth, closed-form solution all check out.
+- Proposition 2 (Cross-section): Subtraction and sign condition correct.
+- Proposition 3 (Comparative static): Appendix proof via quotient rule verified.
+- Proposition 4 (Complete markets): Hedging premium formula and sign correct.
+- Numerical illustration: All computed values match (V_0^A ~ 16.1, V_0^N ~ 11.6, ratio ~ 1.4, hedging premium ~ 25%).
+- Extinction risk extension: (1-q) attenuation correctly applied.
+- Budget constraint and market clearing: Equilibrium consumption follows correctly.
+- Post-singularity P/D ratio: Commonality across stock types is correct.

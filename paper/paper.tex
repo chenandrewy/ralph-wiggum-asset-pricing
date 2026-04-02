@@ -27,7 +27,7 @@
 \thispagestyle{plain}
 
 \begin{abstract}
-\noindent Why are AI stocks so expensive? We show that publicly traded AI stocks command a valuation premium because they hedge against a negative AI singularity---a sudden AI-driven transformation that displaces existing workers and firms. In our model, the representative household cannot invest in private AI capital, making public AI stocks uniquely valuable as partial insurance against displacement. The price-dividend ratio of AI stocks increases with the probability of a singularity and with risk aversion. Under complete markets, the hedging premium vanishes. When the singularity produces sufficiently abundant output, even modest transfers can eliminate displacement risk.
+\noindent Why are AI stocks so expensive? We show that publicly traded AI stocks command a valuation premium because they hedge against a negative AI singularity---a sudden AI-driven productivity surge that displaces existing workers and firms. In our model, the representative household cannot invest in private AI capital, making public AI stocks uniquely valuable as partial insurance against displacement. The price-dividend ratio of AI stocks increases with the probability of a singularity when displacement is sufficiently severe. Under complete markets, the hedging premium vanishes. When the singularity produces sufficiently abundant output, even modest transfers can eliminate displacement risk.
 \end{abstract}
 
 %% ============================================================
@@ -42,11 +42,11 @@
 
 The recent surge in AI stock valuations has drawn widespread attention. Between 2023 and 2025, the largest AI-related companies collectively gained trillions of dollars in market value, trading at price-dividend ratios far above historical norms. Standard explanations point to expected cash flows from AI products and services. We propose an additional channel: publicly traded AI stocks command a valuation premium because they serve as a hedge against a negative AI singularity.
 
-Consider a representative investor whose wealth is largely tied to existing firms and human capital. A sudden AI breakthrough---a singularity---could dramatically shift the economy's structure, displacing traditional businesses and reducing the investor's share of total output. Private AI ventures and yet-to-be-created firms would capture much of the new value, but the typical investor cannot buy these assets. They are either privately held, illiquid, or simply do not yet exist. In this world of incomplete markets, publicly traded AI stocks offer the best available hedge: they are the investor's only tradeable claim on the AI upside.
+Consider a representative investor whose wealth is largely tied to existing firms and human capital. A sudden AI breakthrough---a singularity---could dramatically increase productivity while shifting the economy's structure, displacing traditional businesses and reducing the investor's share of total output. Private AI ventures and yet-to-be-created firms would capture much of the new value, but the typical investor cannot buy these assets. They are either privately held, illiquid, or simply do not yet exist. In this world of incomplete markets, publicly traded AI stocks offer the best available hedge: they are the investor's only tradeable claim on the AI upside.
 
 We formalize this argument in an infinite-horizon, discrete-time asset pricing model. There are two publicly traded assets---AI stocks and non-AI stocks---and a representative household who is the marginal investor. AI owners hold private AI capital and, following \citet{GKP2012}, can be interpreted as future innovators who do not yet participate in public markets. Each period, with some probability, a singularity occurs: AI stocks gain a larger share of total output while non-AI stocks shrink. The household is displaced---its consumption share falls.
 
-We derive the price-dividend ratio of AI stocks in closed form. The ratio increases with the probability of a singularity. The mechanism is a hedging premium: in singularity states, the household's marginal utility is high (due to displacement) while AI stocks pay relatively more. This positive covariance between the stochastic discount factor and AI dividends lowers the required return and raises the valuation. For non-AI stocks, the effect reverses---their valuations fall with singularity probability. Under complete markets, the household could invest in private AI capital, eliminating displacement risk and the hedging premium.
+We derive the price-dividend ratio of AI stocks in closed form. Under natural parameter restrictions, the ratio increases with the probability of a singularity. The mechanism is a hedging premium: in singularity states, the household's marginal utility is high (due to displacement) while AI stocks pay relatively more. This positive covariance between the stochastic discount factor and AI dividends lowers the required return and raises the valuation. For non-AI stocks, the effect reverses---their valuations fall with singularity probability. Under complete markets, the household could invest in private AI capital, eliminating displacement risk and the hedging premium.
 
 In an extension, we connect to \citet{Jones2024} on the trade-off between AI-driven growth and existential risk. When the singularity produces very large output, the frictions that sustain displacement risk---the barriers to intergenerational risk-sharing emphasized by \citet{GKP2012}---can be overcome. Even modest transfer mechanisms suffice when the surplus is enormous. Paradoxically, the most extreme AI singularity reduces displacement risk. We also incorporate extinction risk: if the singularity may destroy the economy entirely, the hedging premium is attenuated.
 
@@ -70,10 +70,11 @@ Time is discrete: $t = 0, 1, 2, \ldots$ The economy produces aggregate output $Y
 \begin{equation}
 Y_{t+1} = (1 + g)\, Y_t. \label{eq:normal-growth}
 \end{equation}
-In the period the singularity occurs, and in all subsequent periods, output grows at a (weakly) higher rate:
+In the period the singularity occurs, and in all subsequent periods, output grows at a strictly higher rate, reflecting the productivity increase that accompanies the singularity:
 \begin{equation}
-Y_{t+1} = (1 + \tilde{g})\, Y_t, \quad \tilde{g} \geq g. \label{eq:sing-growth}
+Y_{t+1} = (1 + \tilde{g})\, Y_t, \quad \tilde{g} > g. \label{eq:sing-growth}
 \end{equation}
+The model allows for any magnitude of productivity increase; the extension explores the limit $\tilde{g} \to \infty$, corresponding to a singularity that vastly increases output.
 
 The economy has two types of agents: a representative household and AI owners. The household is the marginal investor in public markets. AI owners hold private AI capital and do not participate in public stock markets. Following \citet{GKP2012}, AI owners can be interpreted as future innovators and entrepreneurs who have not yet entered the economy, or equivalently as holders of illiquid private AI ventures that cannot be traded publicly.
 
@@ -138,7 +139,7 @@ We focus on the pre-singularity regime, in which the economy may transition to t
 $(1-p)\,\beta\,(1+g)^{1-\gamma} < 1$ and $\beta\,(1+\tilde{g})^{1-\gamma} < 1$.
 \end{assumption}
 
-These ensure that price-dividend ratios are finite. They are automatically satisfied for $\gamma > 1$ and sufficiently large $g$ or $\tilde{g}$, the empirically relevant case.
+These ensure that price-dividend ratios are finite. They are automatically satisfied for $\gamma > 1$, the empirically relevant case.
 
 %% ============================================================
 %% Section 3: Results
@@ -187,7 +188,7 @@ V_0^A - V_0^N = \frac{p\,\beta\,\Delta^{-\gamma}\,(1+\tilde{g})^{1-\gamma}\!\lef
 Subtract~\eqref{eq:pd-nonai} from~\eqref{eq:pd-ai}. The denominators are identical, and $\Phi^A - \Phi^N = \beta\,\Delta^{-\gamma}(1+\tilde{g})^{1-\gamma}(\tilde{\theta}/\theta - \tilde{\nu}/\nu)$, which is positive since $\tilde{\theta}/\theta > 1 > \tilde{\nu}/\nu$ by Assumption~\ref{as:ai-share}.
 \end{proof}
 
-The valuation spread $V_0^A - V_0^N$ increases with the singularity probability $p$, with risk aversion $\gamma$, and with the severity of displacement $(1 - \Delta)$. These comparative statics reflect the hedging channel: the more the household fears displacement, the more it values AI stocks relative to non-AI stocks.
+The valuation spread $V_0^A - V_0^N$ increases with the singularity probability $p$ and with the severity of displacement $(1 - \Delta)$. These comparative statics reflect the hedging channel: the more likely or severe the displacement, the more the household values AI stocks relative to non-AI stocks.
 
 \begin{proposition}[Singularity probability raises AI valuations] \label{prop:comp-static} % Proposition 3
 Under Assumptions~\ref{as:neg-sing}--\ref{as:existence}, the price-dividend ratio of AI stocks is increasing in the singularity probability:
@@ -212,7 +213,7 @@ where $\Phi^{A,\mathrm{CM}} = \beta\,(1+\tilde{g})^{1-\gamma}\,\tilde{\theta}/\t
 \begin{equation}
 V_0^A - V_0^{A,\mathrm{CM}} = \frac{p\,\beta\,(1+\tilde{g})^{1-\gamma}\,\frac{\tilde{\theta}}{\theta}\,(\Delta^{-\gamma} - 1)\,(1 + V_1)}{1 - (1-p)\,R} > 0. \label{eq:hedging-premium}
 \end{equation}
-The hedging premium is increasing in risk aversion $\gamma$, singularity probability $p$, the AI share gain $\tilde{\theta}/\theta$, and displacement severity $1 - \Delta$.
+The hedging premium is increasing in singularity probability $p$, the AI share gain $\tilde{\theta}/\theta$, and displacement severity $1 - \Delta$.
 \end{proposition}
 
 \begin{proof}
@@ -242,16 +243,16 @@ Extinction risk reduces the singularity-state contribution by the factor $(1-q)$
 \citet{Jones2024} shows that the trade-off between AI-driven growth and existential risk depends critically on the curvature of utility. With $\gamma > 1$, utility is bounded, and even infinite consumption generates finite utility. This connects to our model: when post-singularity growth $\tilde{g}$ is very large, the singularity-state pricing contribution $\Phi^A(1+V_1)$ is governed by two opposing forces.
 
 \begin{remark}[Extreme singularity and the hedging premium] \label{rem:extreme} % Remark 1
-Consider the limit $\tilde{g} \to \infty$. For $\gamma > 1$, $(1+\tilde{g})^{1-\gamma} \to 0$, so both $\Phi^A \to 0$ and $V_1 \to 0$. The hedging premium vanishes: the household's marginal utility in singularity states becomes negligible because consumption is so high that additional dividends have little value. For $\gamma < 1$, the opposite holds: the hedging premium grows without bound. For $\gamma = 1$ (log utility), the premium is independent of $\tilde{g}$.
+Consider the limit $\tilde{g} \to \infty$. For $\gamma > 1$, $(1+\tilde{g})^{1-\gamma} \to 0$, so both $\Phi^A \to 0$ and $V_1 \to 0$. The hedging premium vanishes: the household's marginal utility in singularity states becomes negligible because consumption is so high that additional dividends have little value. For $\gamma = 1$ (log utility), the premium is independent of $\tilde{g}$.
 \end{remark}
 
 This observation complements \citet{Jones2024}: just as the curvature of utility determines whether infinite AI-driven consumption justifies existential risk, it determines whether extreme AI growth sustains or eliminates the hedging premium.
 
 \subsection{Overcoming frictions: the Coase theorem in the singularity} % Section 4.2
 
-\citet{GKP2012} assume that intergenerational risk-sharing fails due to frictions: future innovators cannot (or do not) trade with existing agents. This is what creates displacement risk. As GKP note, ``bequests and gifts across generations, government debt, [and] intergenerational transfers'' would affect the magnitude of the displacement factor, but they do not analyze this further. We take up this question.
+\citet{GKP2012} assume that intergenerational risk-sharing fails due to frictions: future innovators cannot (or do not) trade with existing agents. This is what creates displacement risk. As GKP note, mechanisms such as bequests, government debt, and intergenerational transfers would affect the magnitude of the displacement factor, but they do not analyze this further. We take up this question.
 
-In our model, the displacement ratio $\Delta$ can be interpreted as incorporating whatever partial risk-sharing already exists. If a fraction $\lambda \in [0,1]$ of the displacement is offset by transfers---through bequests, government programs, or private insurance---then the effective displacement ratio is
+We now generalize the displacement ratio to depend on the extent of risk-sharing, with the earlier definition corresponding to the case of no transfers. If a fraction $\lambda \in [0,1]$ of the displacement is offset by transfers---through bequests, government programs, or private insurance---then the effective displacement ratio is
 \begin{equation}
 \Delta(\lambda) = 1 - (1 - \Delta_0)(1 - \lambda), \label{eq:delta-lambda}
 \end{equation}
@@ -276,7 +277,7 @@ This result connects GKP's displacement risk to Jones's analysis of the singular
 %% ============================================================
 \section{Conclusion} % Section 5
 
-We show that publicly traded AI stocks command a hedging premium under incomplete markets. The representative household, unable to invest in private AI capital, values public AI stocks for their insurance properties: they pay relatively more in singularity states when the household's marginal utility is high. The hedging premium increases with the probability of a singularity, with risk aversion, and with the severity of displacement. Under complete markets, the premium vanishes.
+We show that publicly traded AI stocks command a hedging premium under incomplete markets. The representative household, unable to invest in private AI capital, values public AI stocks for their insurance properties: they pay relatively more in singularity states when the household's marginal utility is high. The hedging premium increases with the probability of a singularity and with the severity of displacement. Under complete markets, the premium vanishes.
 
 The model delivers a cross-sectional prediction: AI stocks should trade at higher price-dividend ratios than non-AI stocks, with the spread increasing in perceived singularity risk. This is consistent with the elevated valuations of AI-related firms observed in recent years, though we emphasize that the model is deliberately stylized and not designed to match specific valuation levels.
 

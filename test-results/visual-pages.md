@@ -1,38 +1,40 @@
 # tests/visual-pages.py
-Started: 2026-04-02 18:07:23 EDT
-Runtime: 57s
-[ralph-garage/agent-logs/20260402T180723.872611-0400_visual-pages_claude_opus.log](../ralph-garage/agent-logs/20260402T180723.872611-0400_visual-pages_claude_opus.log)
+Started: 2026-04-02 18:17:45 EDT
+Runtime: 1m 7s
+[ralph-garage/agent-logs/20260402T181745.329010-0400_visual-pages_claude_opus.log](../ralph-garage/agent-logs/20260402T181745.329010-0400_visual-pages_claude_opus.log)
 
 # visual-pages
-VERDICT: PASS
-REASON: All 12 pages are well-formatted with visible page numbers, clear section headings, and no formatting defects.
+VERDICT: FAIL
+REASON: Red hyperref link boxes are visible around cross-references on multiple pages.
 
-## Detailed Findings
+## Page-by-page evaluation
 
-### Page Numbers
-All 12 pages display a visible page number at bottom center.
+| Page | Page number visible | Issues |
+|------|-------------------|--------|
+| 1 | Yes | None |
+| 2 | Yes | None |
+| 3 | Yes | None |
+| 4 | Yes | None |
+| 5 | Yes | Red boxes around cross-references (e.g., "Assumptions 1-3" in Proposition 1) |
+| 6 | Yes | Red boxes around equation cross-references |
+| 7 | Yes | Red boxes around cross-references |
+| 8 | Yes | Red boxes around cross-references (e.g., Jones (2024)) |
+| 9 | Yes | Red boxes around cross-references |
+| 10 | Yes | Red boxes around cross-references |
+| 11 | Yes | None |
+| 12 | Yes | Mostly empty page (proof ends in upper quarter) |
 
-### Figures and Tables
-No figures or tables are present (the paper is purely theoretical). No exhibit formatting issues.
+## Summary of checks
 
-### Structure
-The paper has clear, well-formatted section headings:
-- Abstract
-- Preface (TBC) — unnumbered, left blank per spec
-- 1 Introduction (with Related Literature subsection)
-- 2 Model (subsections 2.1 Environment, 2.2 Assets and dividends, 2.3 The household's problem, 2.4 Equilibrium)
-- 3 Results
-- 4 Extension: Singularity, Extinction, and Frictions (subsections 4.1 Extinction risk, 4.2 Overcoming frictions)
-- 5 Conclusion
-- References
-- A Proofs
+1. **Page numbers**: PASS. All 12 pages have visible page numbers at the bottom center.
+2. **Figures and tables**: N/A. No figures or tables appear in the paper. The spec allows up to 6 exhibits; zero is acceptable.
+3. **Section structure**: PASS. Clear numbered section headings (Preface (TBC), 1 Introduction, 2 Model, 3 Results, 4 Extension, 5 Conclusion, A Proofs) with well-formatted subsections.
+4. **Formatting issues**: FAIL. Red/colored rectangular boxes from LaTeX's hyperref package are visible around cross-references to equations, assumptions, and propositions on pages 5-10. This is a known issue caused by hyperref's default `linkbordercolor` setting; it should be fixed with `colorlinks=true` or `hidelinks` in the hyperref package options.
+5. **Paper length**: PASS. 12 pages, well under the 20-page limit.
 
-### Formatting Issues
-- No overflowing text detected.
-- No broken references detected. Cross-references use standard hyperref link styling.
-- No missing figures.
-- All display equations are numbered.
-- Page 12 (final appendix page) has significant whitespace below the proof, which is normal.
+## Additional observations
 
-### Paper Length
-12 pages total, well within the 20-page limit.
+- All display equations are numbered (equations 1-25).
+- Page 12 has significant whitespace after the proof of Proposition 3 ends, with roughly three-quarters of the page empty. This is not a violation but could be improved.
+- The abstract appears concise and within the expected length.
+- The Preface (TBC) section is present and blank, as specified.
