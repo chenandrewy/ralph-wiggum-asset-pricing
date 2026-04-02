@@ -1,91 +1,92 @@
 # tests/quality-gkp-cites.py
-Started: 2026-04-02 18:34:30 EDT
-Runtime: 4m 59s
-[ralph-garage/agent-logs/20260402T183430.356093-0400_quality-gkp-cites_claude_opus.log](../ralph-garage/agent-logs/20260402T183430.356093-0400_quality-gkp-cites_claude_opus.log)
+Started: 2026-04-02 18:45:35 EDT
+Runtime: 5m 24s
+[ralph-garage/agent-logs/20260402T184535.059793-0400_quality-gkp-cites_claude_opus.log](../ralph-garage/agent-logs/20260402T184535.059793-0400_quality-gkp-cites_claude_opus.log)
 
 # quality-gkp-cites
 VERDICT: PASS
-REASON: Every passage referencing GKP accurately represents their ideas, correctly identifies their key mechanism (intergenerational risk-sharing failure), treats the AI-owner analogy as an analogy, attributes the paper's own interpretations clearly, and maintains a respectful, modest tone.
+REASON: Every passage citing GKP accurately represents their ideas, uses analogy language rather than claiming equivalence, clearly separates the paper's own interpretations from GKP's, and maintains a gracious and modest tone throughout.
 
 ## Passage-by-passage evaluation
 
-### Passage 1 (Line 54)
-> "following \citet{GKP2012}, can be interpreted as future innovators who do not yet participate in public markets"
+### Passage 1: Introduction, paragraph 3 (line 54)
+> "AI owners hold private AI capital and, following \citet{GKP2012}, can be interpreted as future innovators who do not yet participate in public markets."
 
-**Function:** Draws analogy between AI owners and GKP's unborn cohorts.
-**Evaluation:** Uses "can be interpreted as" — presents this as an interpretation, not an exact equivalence. GKP does describe "future cohorts of inventors through the firms they create" and that "future innovators, who are yet to enter the economy, are not able to trade with the current population of agents" (GKP Introduction). Accurate and appropriately hedged.
-**Result:** PASS (all requirements).
+**What it does:** Introduces AI owners with an analogy to GKP's unborn cohorts.
+**Evaluation:** Uses "can be interpreted as" — analogy language, not equivalence. Does not claim AI owners *are* GKP's future cohorts. **PASS** (Req 1).
 
-### Passage 2 (Line 58)
-> "the barriers to intergenerational risk-sharing emphasized by \citet{GKP2012}"
+### Passage 2: Introduction, paragraph 4 (line 58)
+> "the frictions that sustain displacement risk---the barriers to intergenerational risk-sharing emphasized by \citet{GKP2012}---can be overcome"
 
-**Function:** Credits GKP for the intergenerational risk-sharing insight.
-**Evaluation:** GKP footnote 13 explicitly states "the key economic mechanism is the failure of intergenerational risk sharing." The word "emphasized" is accurate — this is GKP's central mechanism, not a peripheral point.
-**Result:** PASS (all requirements).
+**What it does:** Credits GKP for emphasizing intergenerational risk-sharing barriers, introduces the paper's extension about overcoming them.
+**Evaluation:** Correctly identifies GKP's key mechanism as barriers to intergenerational risk-sharing (not mere inability to buy AI stocks). The connection to Jones (2024) in the surrounding sentence is clearly the paper's own contribution. **PASS** (Reqs 1, 2).
 
-### Passage 3 (Lines 63)
+### Passage 3: Related literature paragraph (line 63)
 > "Our paper builds most directly on \citet{GKP2012}, who introduce displacement risk in an overlapping-generations economy with innovation. They show that innovation creates a systematic risk factor because new entrants capture rents that existing agents cannot share. We apply their core insight---that incomplete intergenerational risk-sharing generates a priced risk factor---to the specific context of an AI singularity. Our contribution relative to GKP is purposefully modest: the main economic insights about displacement risk and incomplete markets originate in their work. We contribute a formal analysis of how the magnitude of displacement risk changes with singularity probability, and of the conditions under which intergenerational frictions can be overcome."
 
-**Function:** Credits GKP, describes the paper's relationship to GKP, characterizes contribution.
+**What it does:** Main attribution paragraph. Credits GKP, describes their contribution, positions the paper's own contribution as modest.
 **Evaluation:**
-- "introduce displacement risk" — accurate, this is GKP's coinage.
-- "new entrants capture rents that existing agents cannot share" — accurate summary of GKP's mechanism.
-- "their core insight—that incomplete intergenerational risk-sharing generates a priced risk factor" — precisely GKP's key claim.
-- "purposefully modest" — implements spec requirement 6d ("The characterization of the contribution is purposefully modest"). Given the referee explicitly raised the overlap concern, this is responsive, not unprompted. A skeptical referee might find the phrasing slightly self-conscious, but it is not defensive or over-explaining — it is a single clause within a substantive paragraph that describes what the paper actually contributes.
-- "the main economic insights about displacement risk and incomplete markets originate in their work" — gracious and accurate.
-- The contribution claim ("formal analysis of how the magnitude of displacement risk changes with singularity probability, and of the conditions under which intergenerational frictions can be overcome") accurately describes what the paper does in Sections 3–4, and does not overstate.
-**Result:** PASS (all requirements).
+- "who introduce displacement risk" — full credit for the concept. Accurate.
+- "because new entrants capture rents that existing agents cannot share" — fair summary. The next sentence explicitly names "incomplete intergenerational risk-sharing" as GKP's core insight, which is faithful to GKP's own language (GKP footnote 13: "the key economic mechanism is the failure of intergenerational risk sharing"). Together, these two sentences accurately capture GKP's mechanism.
+- "Our contribution relative to GKP is purposefully modest" — directly implements the spec's modesty requirement. Not defensive, because the referee report explicitly raised overlap concerns; this is a direct response.
+- "the main economic insights about displacement risk and incomplete markets originate in their work" — gives GKP full credit.
+- "We contribute a formal analysis of how the magnitude of displacement risk changes with singularity probability, and of the conditions under which intergenerational frictions can be overcome" — accurately describes what the paper adds. GKP discuss these mechanisms (main text, line 322 of GKP WP) but do not formally analyze how they scale with output. This claim is consistent with what GKP wrote.
+**PASS** (Reqs 1, 2, 3, 4).
 
-### Passage 4 (Line 86)
+### Passage 4: Model, Section 2.1 (line 86)
 > "Following \citet{GKP2012}, AI owners can be interpreted as future innovators and entrepreneurs who have not yet entered the economy. In our application, they may also represent holders of illiquid private AI ventures---this is our own modeling choice, distinct from but inspired by GKP's unborn-cohorts mechanism."
 
-**Function:** Draws analogy, then explicitly distinguishes the paper's own modeling choice from GKP.
+**What it does:** Establishes the analogy between AI owners and GKP's unborn cohorts; clarifies the paper's own extension.
 **Evaluation:**
-- "can be interpreted as" — analogy, not equivalence. PASS on requirement 1 (no exact-counterpart claim).
-- "this is our own modeling choice, distinct from but inspired by" — clearly attributes the private-AI-ventures interpretation to the paper, not to GKP. PASS on requirement 2.
-- Re requirement 4 (no awkward/defensive passages): This distinction is responsive to the referee's concern about overlap and is delivered in a single, matter-of-fact sentence. It clarifies a genuine modeling distinction rather than preemptively denying a criticism no one has made. A skeptical referee would appreciate the transparency rather than find it defensive.
-**Result:** PASS (all requirements).
+- "can be interpreted as" — analogy, not equivalence. Does not claim AI owners are exact counterparts of GKP's future cohorts.
+- "this is our own modeling choice, distinct from but inspired by" — explicitly marks the extension to illiquid private AI ventures as the paper's own interpretation, not GKP's. This is a model of clear attribution.
+- A skeptical reader might wonder if the "distinct from but inspired by" clause is over-hedging. However, given the referee's concern about overlap, this clarification is responsive rather than unprompted. It is informative and brief (one phrase), not defensive.
+**PASS** (Reqs 1, 2, 4).
 
-### Passage 5 (Lines 262–263)
+### Passage 5: Extension, Section 4.2 (lines 262–263)
 > "\citet{GKP2012} assume that intergenerational risk-sharing fails due to frictions: future innovators cannot (or do not) trade with existing agents. This is what creates displacement risk. GKP discuss how mechanisms such as bequests, government debt, and intergenerational transfers would affect the magnitude of the displacement factor---noting, for instance, that in a representative dynasty with perfect altruism the displacement factor equals one---but do not conduct a formal analysis of how these mechanisms scale with output. We take up this question."
 
-**Function:** Describes what GKP did and did not do, motivating the paper's extension.
-**Evaluation (checked against GKP source text):**
-- "intergenerational risk-sharing fails due to frictions: future innovators cannot (or do not) trade with existing agents" — GKP fn. 13 says "the key economic mechanism is the failure of intergenerational risk sharing" and the Introduction says "future innovators, who are yet to enter the economy, are not able to trade with the current population of agents." Accurate.
-- "GKP discuss how mechanisms such as bequests, government debt, and intergenerational transfers would affect the magnitude of the displacement factor" — GKP main text (Section 3.2, following eq. 24): "bequests and gifts across generations, government debt, intergenerational transfers mandated by the government... Such extensions would not change the functional form of equation (24) and would only affect the magnitude of the displacement factor." The paper uses "discuss" for what is a paragraph + footnote in GKP. "Discuss" is neutral and does not overstate; GKP does discuss these mechanisms, even if briefly. Not minimizing (does not say "note in passing" or "raise in a footnote"). PASS on requirement 1.
-- "noting, for instance, that in a representative dynasty with perfect altruism the displacement factor equals one" — directly from GKP footnote 14: "in an economy populated by a representative, altruistically-linked dynasty, bequests and gifts between the different generations would ensure that every living member of the dynasty enjoys the same consumption... the displacement factor is identically equal to one." Accurate paraphrase.
-- "but do not conduct a formal analysis of how these mechanisms scale with output" — true. GKP notes the magnitude would change but does not analyze scaling with output. This is the gap the paper fills. The framing is respectful ("do not conduct a formal analysis") rather than critical.
-- "We take up this question" — clearly attributes the extension to the paper's own contribution. PASS on requirement 2.
-**Result:** PASS (all requirements).
+**What it does:** Characterizes GKP's treatment of intergenerational transfers and positions the paper's formal extension.
+**Evaluation:**
+- "intergenerational risk-sharing fails due to frictions: future innovators cannot (or do not) trade with existing agents" — faithful to GKP's mechanism. GKP introduction (line 23 of WP): "the future innovators, who are yet to enter the economy, are not able to trade with the current population of agents."
+- "GKP discuss how mechanisms such as bequests, government debt, and intergenerational transfers would affect the magnitude of the displacement factor" — verified against GKP main text (line 322 of WP): "extensions of the model that would allow for bequests and gifts across generations, government debt, intergenerational transfers mandated by the government... would only affect the magnitude of the displacement factor." The word "discuss" is accurate — this is a paragraph-length treatment in the main text, not a passing mention.
+- "noting, for instance, that in a representative dynasty with perfect altruism the displacement factor equals one" — verified against GKP footnote 14 (line 340 of WP). The paper does not say "noted in a footnote" or "note in passing" — it says "noting, for instance," which is neutral and non-minimizing.
+- "but do not conduct a formal analysis of how these mechanisms scale with output" — accurate. GKP note these would affect magnitude but do not analyze the scaling relationship. GKP's conclusion (line 592 of WP) explicitly says "We leave such extensions for future work."
+- "We take up this question" — modest claim. Does not overstate the contribution.
+**PASS** (Reqs 1, 2, 3).
 
-### Passage 6 (Line 270)
-> "GKP's assumption that $\lambda < 1$ is driven by real-world frictions: the administrative cost of government transfers, the impossibility of contracting with unborn agents, legal barriers to intergenerational deals."
+### Passage 6: Extension, Section 4.2 (line 264)
+> "GKP's assumption that displacement persists is driven by real-world frictions: the administrative cost of government transfers, the impossibility of contracting with unborn agents, legal barriers to intergenerational deals."
 
-**Function:** Interprets what motivates GKP's modeling assumption.
-**Evaluation:** GKP's OLG structure inherently embodies the impossibility of contracting with the unborn (the second item). GKP's text mentions bequests, government debt, and intergenerational transfers as mechanisms that would affect the displacement factor's magnitude, implying these are imperfect in their model. The paper's list ("administrative cost of government transfers," "legal barriers") goes slightly beyond GKP's explicit text — GKP does not enumerate specific friction types beyond the OLG impossibility. However, this is the paper's reasonable interpretation of what real-world frictions would justify GKP's assumption, not a claim that GKP enumerated these exact frictions. The framing ("is driven by") is a standard academic characterization of a modeling choice's motivation. A skeptical referee would recognize this as reasonable economic interpretation, not as putting words in GKP's mouth.
-**Result:** PASS (borderline on requirement 1, but the interpretation is economically standard and not materially misleading).
+**What it does:** Interprets the real-world frictions that motivate GKP's modeling choice.
+**Evaluation:**
+- "the impossibility of contracting with unborn agents" — directly faithful to GKP's OLG framework.
+- "the administrative cost of government transfers" and "legal barriers to intergenerational deals" — GKP does not explicitly list these. However, the sentence says GKP's assumption "is driven by real-world frictions," which is standard academic language for describing the real-world motivation behind a modeling choice, not a claim that GKP explicitly enumerated these frictions. GKP's discussion of bequests, government debt, and intergenerational transfers (line 322 of WP) implicitly acknowledges that these mechanisms face real-world frictions, since GKP's baseline model excludes them. The paper's elaboration is a reasonable interpretation, not an attribution of specific language to GKP.
+- A skeptical referee could quibble that this sentence blurs the line between GKP's explicit reasoning and the paper's interpretation. However, the sentence structure ("is driven by real-world frictions:") attributes a motivation to GKP's modeling choice, which is standard practice. The frictions listed are natural consequences of GKP's OLG framework, not controversial or surprising interpretations.
+**PASS** (Reqs 1, 2), though this is the closest call in the paper.
 
-### Passage 7 (Line 282)
+### Passage 7: Extension, Section 4.2, after Remark 2 (line 276)
 > "This result connects GKP's displacement risk to Jones's analysis of the singularity. When innovation shocks are moderate, frictions plausibly prevent full risk-sharing, and GKP's displacement mechanism operates at full strength. For singularity-level transformations, the very abundance that creates displacement also provides the resources to overcome it."
 
-**Function:** Connects GKP's framework to the paper's own extension.
-**Evaluation:** Credits GKP for the displacement mechanism. The connection to Jones is clearly the paper's own synthesis. Does not attribute the singularity/abundance argument to GKP. Respectful in treating GKP's mechanism as operating "at full strength" in the standard case.
-**Result:** PASS (all requirements).
+**What it does:** Connects GKP's framework to the paper's extension about singularity-level abundance.
+**Evaluation:**
+- "This result connects" — clearly the paper's own connection, not attributed to GKP.
+- "GKP's displacement mechanism operates at full strength" — respectful characterization of GKP's framework as the default case.
+- The connection between GKP's frictions and Jones's analysis is the paper's own contribution, and is presented as such.
+**PASS** (Reqs 2, 3).
 
-### Passage 8 (Line 54, second reference)
-> "Each period, with some probability, a singularity occurs: AI stocks gain a larger share of total output while non-AI stocks shrink. The household is displaced---its consumption share falls."
+### Passage 8: Proposition 4 discussion (line 230)
+> "If the household could trade with AI owners---or equivalently, if future innovators could sell claims on their forthcoming ventures to current investors---the household's consumption would not fall at the singularity, and the hedging motive would vanish."
 
-**Function:** Uses GKP's concept of displacement without explicit citation.
-**Evaluation:** "Displaced" here is used as a general economic concept that has been credited to GKP earlier in the paragraph. No attribution issue — GKP has already been cited in the same paragraph.
-**Result:** PASS (all requirements).
+**What it does:** Implicitly invokes GKP's mechanism (future innovators selling claims) without explicit citation.
+**Evaluation:** This echoes GKP's key mechanism but applies it to the paper's own complete-markets result. The language is neutral and accurate. No citation is needed here since the prior passages have established the connection. **PASS** (Req 1).
 
-## Summary of fail-condition checks
+## Summary by requirement
 
-| Fail condition | Status |
-|---|---|
-| Characterizes GKP as mere inability to buy private AI capital | NOT TRIGGERED — paper explicitly identifies intergenerational risk-sharing failure as GKP's key mechanism (lines 58, 63, 262) |
-| Says GKP "raise in a footnote" or "note in passing" | NOT TRIGGERED — paper uses "discuss" and "noting, for instance" |
-| Presents AI owners and GKP cohorts as exact counterparts | NOT TRIGGERED — uses "can be interpreted as" (line 54, 86) and explicitly distinguishes the paper's own interpretation (line 86) |
-| Attributes other papers' ideas to GKP | NOT TRIGGERED — Jones connection clearly attributed to paper's own analysis ("We now extend," "We take up this question") |
-| Tone is disrespectful or diminishing | NOT TRIGGERED — tone is consistently gracious ("builds most directly on," "their core insight," "the main economic insights... originate in their work") |
-| Awkward, defensive, or over-explaining | NOT TRIGGERED — the "purposefully modest" language and the distinction in line 86 are responsive to a legitimate overlap concern (raised by the referee) and are delivered concisely |
+**Requirement 1 (Accuracy):** All passages accurately represent GKP's ideas. GKP's mechanism is consistently described as failure of intergenerational risk-sharing, not as mere inability to buy AI stocks. AI owners are presented as analogous to, not identical with, GKP's unborn cohorts. The characterization of GKP's treatment of transfers is verified against the source text.
+
+**Requirement 2 (Attribution of connections):** The connections to Jones (2024) and the Coase theorem are clearly the paper's own analysis. The extension to illiquid private AI ventures is explicitly marked as the paper's own modeling choice.
+
+**Requirement 3 (Gracious tone, modest contribution):** The paper uses consistently respectful and collegial language ("builds most directly on," "their core insight," "purposefully modest," "the main economic insights... originate in their work"). GKP is given full credit for displacement risk and incomplete-markets insights.
+
+**Requirement 4 (No awkward or defensive passages):** No passage preemptively denies a criticism no one has made. The hedges about the GKP relationship respond directly to the referee's overlap concern. The clarifying language in the model section (line 86) is brief and informative rather than defensive.

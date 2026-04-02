@@ -1,34 +1,29 @@
 # tests/visual-pages.py
-Started: 2026-04-02 18:34:30 EDT
-Runtime: 46s
-[ralph-garage/agent-logs/20260402T183430.357169-0400_visual-pages_claude_opus.log](../ralph-garage/agent-logs/20260402T183430.357169-0400_visual-pages_claude_opus.log)
+Started: 2026-04-02 18:45:35 EDT
+Runtime: 44s
+[ralph-garage/agent-logs/20260402T184535.060493-0400_visual-pages_claude_opus.log](../ralph-garage/agent-logs/20260402T184535.060493-0400_visual-pages_claude_opus.log)
 
 # visual-pages
 VERDICT: PASS
-REASON: All 13 pages are well-formatted with visible page numbers, clear headings, and no formatting issues.
+REASON: All 13 pages are well-formatted with visible page numbers, readable exhibits, and clear section headings.
 
-## Findings
+## Page Numbers
+All 13 pages display a visible page number centered at the bottom. No missing page numbers.
 
-### Page Numbers
-All 13 pages display a visible page number at the bottom center. No violations.
+## Figures and Tables
+- **Page 2, Figure 1** (AI vs. Non-AI Stock Valuations): Clean line chart with legend, axis labels, and caption. Readable.
+- **Page 9, Table 1** (Numerical Illustration, Price-Dividend Ratios): Well-formatted table with clear column headers, parameter notes below, and no alignment issues.
 
-### Figures and Tables
-- **Figure 1** (page 2): Price-dividend ratio chart for AI vs. non-AI stocks. Clearly rendered with legible axes, legend, and caption.
-- **Table 1** (page 9): Numerical illustration of price-dividend ratios. Properly formatted with clear column headers, aligned entries, and descriptive notes below.
+## Section Structure
+The paper has clear, well-formatted section headings:
+- Abstract, Preface (TBC), 1 Introduction, 2 Model (with subsections 2.1--2.4), 3 Results, 4 Extension (with subsections 4.1--4.2), 5 Conclusion, References, A Proofs.
 
-### Section Structure
-The paper has clear, well-structured section headings:
-- Preface (TBC) — unnumbered, left blank as required
-- 1 Introduction
-- 2 Model (with subsections 2.1--2.4)
-- 3 Results
-- 4 Extension: Singularity, Extinction, and Frictions (with subsections 4.1--4.2)
-- 5 Conclusion
-- References
-- A Proofs
+## Formatting Issues
+- No overflowing text, broken references, or missing figures detected.
+- All display equations are numbered (equations 1--26).
+- Footnotes render correctly.
+- References section is properly formatted.
+- Page 13 (Appendix) has substantial whitespace below the proof, which is normal for a final page.
 
-### Formatting Issues
-No overflowing text, broken references, or missing figures detected. Equations are numbered and properly typeset. All references appear correctly formatted.
-
-### Paper Length
+## Paper Length
 13 pages total, well within the 20-page limit.

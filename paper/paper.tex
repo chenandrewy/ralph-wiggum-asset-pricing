@@ -232,7 +232,7 @@ Proposition~\ref{prop:complete} is the central result: the gap between incomplet
 \paragraph{Numerical illustration.}
 To gauge magnitudes, consider the following parameterization: $\beta = 0.96$, $\gamma = 3$, $g = 0.02$, $\tilde{g} = 0.05$, $\theta = 0.05$, $\tilde{\theta} = 0.15$, $\nu = 0.55$, $\tilde{\nu} = 0.30$. These imply a household output share of $\omega = 0.60$ falling to $\tilde{\omega} = 0.45$ at the singularity ($\Delta = 0.75$). Table~\ref{tab:numerical} reports price-dividend ratios for several values of $p$. At $p = 0.01$, the AI stock price-dividend ratio is $V_0^A \approx 16.1$, versus $V_0^N \approx 11.6$ for non-AI stocks---a ratio of roughly $1.4$. Without singularity risk ($p = 0$), both equal approximately $11.9$. Under complete markets, the AI stock price-dividend ratio drops to $V_0^{A,\text{CM}} \approx 12.9$. A 1\% annual singularity probability generates a hedging premium of about 25\% of the complete-markets valuation.
 
-\input{exhibits/numerical-illustration.tex}
+\input{exhibits/numerical-illustration.tex} % Exhibit 2
 
 %% ============================================================
 %% Section 4: Extension
@@ -261,13 +261,7 @@ This observation complements \citet{Jones2024}: just as the curvature of utility
 
 \citet{GKP2012} assume that intergenerational risk-sharing fails due to frictions: future innovators cannot (or do not) trade with existing agents. This is what creates displacement risk. GKP discuss how mechanisms such as bequests, government debt, and intergenerational transfers would affect the magnitude of the displacement factor---noting, for instance, that in a representative dynasty with perfect altruism the displacement factor equals one---but do not conduct a formal analysis of how these mechanisms scale with output. We take up this question.
 
-We now generalize the displacement ratio to depend on the extent of risk-sharing, with the earlier definition corresponding to the case of no transfers. If a fraction $\lambda \in [0,1]$ of the displacement is offset by transfers---through bequests, government programs, or private insurance---then the effective displacement ratio is
-\begin{equation}
-\Delta(\lambda) = 1 - (1 - \Delta_0)(1 - \lambda), \label{eq:delta-lambda}
-\end{equation}
-where $\Delta_0 = \tilde{\omega}/\omega$ is the raw displacement without transfers. At $\lambda = 0$, no risk-sharing occurs and $\Delta = \Delta_0$. At $\lambda = 1$, transfers fully offset displacement and $\Delta = 1$, eliminating the hedging premium as in the complete-markets case.
-
-The key question is what determines $\lambda$. The Coase theorem implies that if property rights are well-defined and transaction costs are zero, the parties will bargain to an efficient (fully risk-sharing) outcome. GKP's assumption that $\lambda < 1$ is driven by real-world frictions: the administrative cost of government transfers, the impossibility of contracting with unborn agents, legal barriers to intergenerational deals.
+Transfers---bequests, government programs, private insurance---can offset displacement. With no transfers, the displacement ratio is $\Delta_0 = \tilde{\omega}/\omega < 1$ as before. With full transfers, $\Delta = 1$ and the hedging premium vanishes, as in the complete-markets case. The key question is what determines the extent of risk-sharing. The Coase theorem implies that if property rights are well-defined and transaction costs are zero, the parties will bargain to an efficient (fully risk-sharing) outcome. GKP's assumption that displacement persists is driven by real-world frictions: the administrative cost of government transfers, the impossibility of contracting with unborn agents, legal barriers to intergenerational deals.
 
 When the singularity produces very large output, the surplus from risk-sharing---the total gains from trade between AI owners and the household---grows with output. If the friction costs contain any fixed component, they become negligible relative to the surplus as output grows. Formally, suppose the cost of implementing transfers is $F + \tau T$, where $F > 0$ is a fixed cost, $\tau \geq 0$ is a proportional cost, and $T$ is the transfer amount. The transfer needed to keep the household's share at $\omega$ is $T = (\omega - \tilde{\omega})\,Y$. The net cost as a fraction of total output is
 \begin{equation}
@@ -309,8 +303,8 @@ From equation~\eqref{eq:pd-ai}, write $V_0^A = A(p)/B(p)$ where $A(p) = (1-p)\,R
 \end{equation}
 where $A'(p) = -R + \Phi^A(1+V_1)$ and $B'(p) = R$. Expanding the numerator:
 \begin{align}
-&\bigl[-R + \Phi^A(1+V_1)\bigr]\bigl[1-(1-p)R\bigr] - \bigl[(1-p)R + p\,\Phi^A(1+V_1)\bigr]\,R \notag \\
-&= -R + \Phi^A(1+V_1) - R\,\Phi^A(1+V_1) \notag \\
+&\bigl[-R + \Phi^A(1+V_1)\bigr]\bigl[1-(1-p)R\bigr] - \bigl[(1-p)R + p\,\Phi^A(1+V_1)\bigr]\,R \label{eq:numerator-expand} \\
+&= -R + \Phi^A(1+V_1) - R\,\Phi^A(1+V_1) \label{eq:numerator-simplify} \\
 &= \Phi^A(1+V_1)(1 - R) - R. \label{eq:numerator}
 \end{align}
 This is positive if and only if $\Phi^A(1+V_1) > R/(1-R)$. Since $R/(1-R) = V_0^A\big|_{p=0}$ (the Gordon growth price-dividend ratio with no singularity risk), condition~\eqref{eq:comp-static} follows.
