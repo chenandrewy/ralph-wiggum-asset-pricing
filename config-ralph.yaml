@@ -1,6 +1,6 @@
 # == Basic loop configuration ==
-run-name: quality*(writing+formalism)
-max-iter: 10
+run-name: turn-off-referees
+max-iter: 4
 
 # Optional pre-loop baseline test run
 test-before-loop: off
@@ -32,7 +32,7 @@ agent-log-mode: verbose
 # == Referees and continual-improvement mode ==
 continual-improvement: false
 
-referees: true
+referees: false
 
 selected-referees:
-  - referee-cfr-r1
+  - []
