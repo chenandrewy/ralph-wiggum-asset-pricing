@@ -3,21 +3,14 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{setspace}
 \onehalfspacing
-\usepackage{amsmath,amssymb,amsthm}
+\usepackage{amsmath,amssymb}
 \usepackage[backend=biber,natbib=true,style=authoryear]{biblatex}
 \addbibresource{references.bib}
 \usepackage{hyperref}
 \usepackage{graphicx}
 \usepackage{booktabs}
 
-% Page numbers on every page
-\pagestyle{plain}
-
-% Theorem environments
-\newtheorem{proposition}{Proposition}
-\newtheorem{corollary}{Corollary}
-
-\title{Hedging the Singularity}
+\title{PLACEHOLDER TITLE}
 \author{}
 \date{}
 
@@ -26,365 +19,25 @@
 \thispagestyle{plain}
 
 \begin{abstract}
-\noindent Why are AI stocks so expensive? We propose that publicly traded AI firms help the typical investor hedge against a negative AI singularity---a sudden improvement in AI that vastly increases productivity yet devastates those lacking AI capital. In an incomplete-markets model with two agents and two asset classes, the price-dividend ratio of public AI stocks rises with singularity probability. An extension incorporating existential risk and infinite output, calibrated via the value of a statistical life, shows that sufficiently large singularities can overcome the frictions sustaining displacement risk. All analysis and writing is by AI agents.
+PLACEHOLDER ABSTRACT
 \end{abstract}
 
-%% ============================================================
-%% Section 1: Introduction
-%% ============================================================
 \section{Introduction}
 
-Publicly traded AI firms have reached extraordinary valuations. Figure~\ref{fig:ai_valuation} shows the price-to-earnings ratio of publicly traded AI stocks versus non-AI stocks from 2010 to 2024. The divergence is striking: AI firms trade at a persistent, though volatile, premium. A natural question for asset pricing theory is whether these valuations reflect something beyond simple growth expectations.\footnote{Our AI classification relies on SIC codes, which are an imperfect proxy: they capture broad technology sectors rather than AI exposure specifically, and they may miss AI-intensive firms classified under other industries (e.g., cloud infrastructure) or include hardware firms with limited AI revenue. The P/E divergence is, if anything, sharper in the post-2020 subsample when AI-specific revenue became more concentrated among a few large firms. An ideal empirical test would use firm-level AI revenue shares or patent-based classifications; we leave this refinement for future work with richer data.}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. \citet{authorYEAR1,authorYEAR2} provide a generic citation example.
 
-%% Figure 1
-\begin{figure}[t]
-\centering
-\includegraphics[width=\textwidth]{ai-valuation.pdf}
-\caption{Aggregate price-to-earnings ratio of publicly traded AI stocks versus non-AI CRSP stocks, 2010--present. AI stocks are identified using SIC codes associated with computer hardware, software, and electronic components (see text for discussion of classification limitations). The aggregate P/E for each group is total market capitalization divided by total earnings, using CRSP/Compustat merged data. Monthly data.}
-\label{fig:ai_valuation}
-\end{figure}
+\section{Model}
 
-This paper argues that they do. We propose that public AI stocks carry a hedging premium: the typical investor values these stocks, in part, because they provide insurance against a \emph{negative AI singularity}---a sudden improvement in artificial intelligence that vastly increases productivity but is devastating for investors who do not own AI capital. The hedging demand pushes up the price-dividend ratio of AI stocks, even when expected cash flows alone would not justify the premium.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. See \citet{authorYEAR1} for a generic citation example.
 
-The key friction is incomplete markets. If the representative household could freely buy equity in all AI capital---including privately held startups, unrealized innovations, and firms that do not yet exist---it could share in the gains from any singularity, and the hedging motive would vanish. But in practice, much of the value created by AI accrues to private owners: founders, venture capitalists, and future entrepreneurs whose firms have yet to be founded. This is the same logic that \citet{GKP2012} formalize as ``displacement risk'' in an overlapping-generations economy. We build on their insight by applying it to a specific, contemporary setting---AI singularity risk---and by making the incomplete-markets friction explicit through a simple two-agent structure.
+\section{Results}
 
-Our model features an infinite-horizon economy with two agents: a representative household, who is the marginal investor in public stock markets, and a class of AI owners, who hold private AI capital and are not marginal investors in public stocks. There are two publicly traded asset classes: AI stocks and non-AI stocks. AI stocks grow as a share of the economy with each singularity. An AI singularity arrives as a Poisson event. When it occurs, aggregate output jumps, but the gains accrue disproportionately to private AI owners. The household's consumption share falls---this is the negative singularity. Because public AI stocks grow as a share of the economy with each singularity, they provide a partial hedge against displacement. In equilibrium, the household bids up the price-dividend ratio of AI stocks to reflect this insurance value.
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 
-We extend the baseline model by incorporating ideas from \citet{Jones2024}. The singularity may cause extinction. Consumption may become effectively infinite for AI owners, though not for the household. Following \citet{HallJones2007}, we use data on the value of a statistical life to calibrate the trade-off between growth and existential risk. A striking implication emerges: if the singularity produces sufficiently large output, the resulting abundance can overcome the market frictions that prevent risk-sharing between AI owners and the household---a Coase-theorem logic applied to displacement risk. This provides a formal analysis of a question that \citet{GKP2012}'s framework raises but that their empirical strategy does not need to answer: under what conditions would the displacement factor collapse entirely, rather than merely change magnitude?
+\section{Conclusion}
 
-Our contribution is purposefully modest. The foundational insight---that displacement risk from innovation is a priced factor, and that incomplete markets prevent full insurance---belongs to \citet{GKP2012}. What we add is an application of this insight to a specific and timely risk, a tractable two-agent formulation that makes the incomplete-markets friction transparent, a characterization of the household's optimal hedging portfolio, and a formal treatment of how singularity-scale abundance might dissolve that friction. We also note that financial market solutions to AI disaster risk---such as creating tradeable claims on private AI capital---are under-discussed in both the academic literature and policy debate.
-
-The paper proceeds as follows. Section~\ref{sec:model} presents the baseline model. Section~\ref{sec:results} derives the main results on asset prices. Section~\ref{sec:extension} extends the model to incorporate existential risk and infinite output. Section~\ref{sec:conclusion} concludes. Appendix~\ref{sec:proofs} provides derivation sketches for the main propositions.
-
-%% ============================================================
-%% Section 2: Model
-%% ============================================================
-\section{Model}\label{sec:model}
-
-%% Section 2.1
-\subsection{Environment}
-
-Consider an infinite-horizon, discrete-time economy. There are two types of agents: a \emph{representative household} and a class of \emph{AI owners}. The household is the marginal investor in public stock markets. The AI owners hold private AI capital and are not marginal investors in public stocks. Both agent types have CRRA preferences with the same risk-aversion parameter $\gamma$ (Section~\ref{sec:prefs}). This two-agent structure captures, in reduced form, the key feature of the overlapping-generations economy in \citet{GKP2012}: that the beneficiaries of innovation (there, future cohorts of entrepreneurs; here, private AI owners) cannot trade with the agents who bear displacement risk. The OLG formulation has the advantage that the friction is endogenous---future cohorts literally cannot trade because they do not yet exist---while our two-agent friction is exogenous and must be justified by appeal to adverse selection, contractual incompleteness, or regulation (Section~\ref{sec:assets}). The two-agent structure is more appropriate when the counterparty is an identifiable contemporary agent (e.g., a venture capitalist) rather than an unborn cohort, and it makes the incomplete-markets friction transparent enough to ask when it might dissolve (Section~\ref{sec:abundance}).
-
-%% Section 2.2
-\subsection{Output and consumption}
-
-Aggregate output at time $t$ is $Y_t = A_t \cdot X_t$, where $A_t$ captures the scale of the AI economy and $X_t$ is an exogenous productivity process:
-\begin{equation}
-\log X_{t+1} = \log X_t + g + \varepsilon_{t+1}, \quad \varepsilon_{t+1} \sim \text{i.i.d.},
-\end{equation}
-with trend growth rate $g > 0$ and mean-zero i.i.d.\ shock $\varepsilon_{t+1}$.
-
-Output is divided between the household and the AI owners. Let $\omega_t \in (0,1)$ denote the household's share of aggregate output. The household consumes
-\begin{equation}
-C_t^H = \omega_t \, Y_t,
-\end{equation}
-and the AI owners consume the remainder, $C_t^{AI} = (1 - \omega_t) Y_t$. The household's output share $\omega_t$ is the state variable that links asset prices to displacement risk.
-
-%% Section 2.3
-\subsection{AI singularity events}
-
-An AI singularity arrives as a Poisson event with intensity $\lambda > 0$ per period. When a singularity occurs at time $t+1$:
-
-\begin{enumerate}
-\item \textbf{Output jumps.} The AI scale factor jumps: $A_{t+1} = A_t \cdot e^{J}$, where $J > 0$ is the size of the jump. In normal periods, $A_t$ is constant.
-\item \textbf{The household's share falls.} The household's output share drops:
-\begin{equation}
-\omega_{t+1} = \omega_t \cdot (1 - \theta), \quad \theta \in (0,1).
-\end{equation}
-The parameter $\theta$ measures the severity of displacement. The gains from the singularity accrue disproportionately to private AI owners, shrinking the household's share.
-\item \textbf{Public AI stocks grow.} Let $s_t$ denote the share of total public equity market capitalization represented by AI stocks, with initial value $s_0 \in (0,1)$. After a singularity, $s_t$ jumps:
-\begin{equation}
-s_{t+1} = s_t + (1 - s_t)\,\phi, \quad \phi \in (0,1).
-\end{equation}
-The parameter $\phi$ measures how much of the remaining non-AI share is absorbed by AI stocks after a singularity. In normal periods, $s_t$ is constant.
-\end{enumerate}
-
-The model formalizes the broader concept of a negative AI singularity---an AI singularity that is devastating for the typical investor---through a specific channel: a decline in the household's consumption level. Formally, the household's consumption falls when $\theta$ is large enough that displacement dominates the output gain, i.e., when $(1-\theta) e^J < 1$. A singularity could be devastating in other ways not captured here (e.g., loss of status, labor-market disruption), but the consumption channel is the one that enters asset prices directly.
-
-%% Section 2.4
-\subsection{Asset markets}\label{sec:assets}
-
-There are two publicly traded asset classes:
-
-\begin{itemize}
-\item \textbf{AI stocks} pay dividends $D_t^{AI}$ proportional to $s_t \, Y_t$.
-\item \textbf{Non-AI stocks} pay dividends $D_t^{N}$ proportional to $(1-s_t) \, Y_t$.
-\end{itemize}
-
-Markets are \emph{incomplete}: the household cannot buy equity in private AI capital. It can only trade the two public asset classes and a risk-free bond. This is the central friction. If the household could buy private AI capital, it could perfectly insure against displacement, and the hedging motive would disappear.\footnote{This parallels \citet{GKP2012}, where existing agents can trade a rich set of public assets, but the entrepreneurs who will capture future innovation rents---corresponding to our AI owners---are unable to participate in today's markets. In our two-agent formulation, the AI owners play the role of these future cohorts.}
-
-What real-world friction prevents risk-sharing between AI owners and the household? The two-agent structure is a reduced form for several possibilities: private information about the value of AI capital (adverse selection makes securitization costly), contractual incompleteness (AI capital depends on human capital that cannot be pledged), and regulatory barriers to selling equity in early-stage ventures to retail investors. These frictions are concrete in the AI setting. Retail investors cannot purchase pre-IPO equity in leading AI firms such as OpenAI or Anthropic; AI venture capital is concentrated among a small number of institutional investors; and the value of AI firms depends heavily on human capital and proprietary data that resist securitization. The key requirement is not that trade is technologically impossible---Section~\ref{sec:extension} shows how abundance can overcome these costs---but that trade is costly enough to prevent the household from fully insuring against displacement at current surplus levels.
-
-%% Section 2.5
-\subsection{Household preferences}\label{sec:prefs}
-
-The representative household has CRRA preferences over consumption $C_t^H$:
-\begin{equation}
-U_t = E_t \left[ \sum_{k=0}^{\infty} \beta^k \, \frac{(C_{t+k}^H)^{1-\gamma}}{1-\gamma} \right],
-\end{equation}
-where $\beta \in (0,1)$ is the time discount factor and $\gamma > 1$ is the coefficient of relative risk aversion.\footnote{The results extend naturally to Epstein-Zin preferences, which separate risk aversion from the elasticity of intertemporal substitution. We use CRRA for transparency, since no result in the paper depends on this separation.} AI owners have the same CRRA flow utility over their consumption $C_t^{AI}$, i.e., $u(C) = C^{1-\gamma}/(1-\gamma)$ with the same $\gamma$. Because AI owners are not marginal investors in public markets, their preferences do not enter the SDF, but their marginal utility matters for the bargaining analysis in Section~\ref{sec:abundance}.
-
-%% ============================================================
-%% Section 3: Results
-%% ============================================================
-\section{Results}\label{sec:results}
-
-%% Section 3.1
-\subsection{Stochastic discount factor}
-
-The household is the marginal investor in public equities. Its stochastic discount factor (SDF) is
-\begin{equation}
-M_{t+1} = \beta \left( \frac{C_{t+1}^H}{C_t^H} \right)^{-\gamma}.
-\end{equation}
-Because household consumption growth reflects both normal productivity shocks and the possibility of displacement via the singularity, the SDF loads on both sources of risk. In singularity states where $(1-\theta)e^J < 1$, household consumption drops and $M_{t+1}$ spikes---the household assigns high marginal utility to precisely those states.
-
-%% Section 3.2
-\subsection{Price-dividend ratios}
-
-%% Proposition 1
-\begin{proposition}[AI stock valuation]\label{prop:pd}
-The price-dividend ratio of AI stocks, $P_t^{AI}/D_t^{AI}$, is increasing in the singularity probability $\lambda$ when the singularity is negative for the household (i.e., when $(1-\theta)e^J < 1$).
-\end{proposition}
-
-The price-dividend ratio satisfies the standard present-value identity:
-\begin{equation}
-\frac{P_t^{AI}}{D_t^{AI}} = E_t \left[ \sum_{k=1}^{\infty} \prod_{j=1}^{k} M_{t+j} \cdot \frac{D_{t+k}^{AI}}{D_t^{AI}} \right].
-\end{equation}
-In singularity states, $M_{t+1}$ is high (the household's marginal utility spikes) and $D_{t+1}^{AI}/D_t^{AI}$ is high (AI dividends jump because both $s_t$ and $Y_t$ increase). Their product is large. Increasing $\lambda$ puts more weight on these high-product states, raising the price-dividend ratio. This positive covariance between AI stock payoffs and marginal utility---the hallmark of a hedging asset---pushes the price-dividend ratio above what cash-flow fundamentals alone would justify. Appendix~\ref{sec:proofs} provides a formal derivation.
-
-By contrast, non-AI stocks have less favorable exposure to displacement risk:
-
-%% Proposition 2
-\begin{proposition}[Non-AI stock valuation]\label{prop:pd_nonai}
-The price-dividend ratio of non-AI stocks, $P_t^{N}/D_t^{N}$, is decreasing in $\lambda$ when the singularity is negative for the household and the AI share displacement is sufficiently large. (Appendix~\ref{sec:proofs} states the formal sufficient condition.)
-\end{proposition}
-
-Non-AI dividends are proportional to $(1-s_t) Y_t$. After a singularity, output jumps by $e^J$ but the non-AI share shrinks by a factor $(1-\phi)$, so non-AI dividend growth is $(1-\phi)\,e^J$. When $\phi$ is large enough, the SDF-weighted non-AI dividend growth in singularity states falls below its normal-state counterpart, and increasing $\lambda$ depresses the non-AI price-dividend ratio.
-
-%% Section 3.3
-\subsection{Risk premia}
-
-%% Proposition 3
-\begin{proposition}[Expected returns]\label{prop:riskprem}
-In equilibrium, AI stocks earn lower expected excess returns than non-AI stocks. The spread in expected returns is increasing in the singularity probability $\lambda$ and the displacement severity $\theta$.
-\end{proposition}
-
-This result mirrors the value-growth spread in \citet{GKP2012}. There, growth stocks---firms more likely to innovate---offer a partial hedge against displacement risk and earn lower returns. Here, AI stocks play the analogous role. The household accepts a lower return on AI stocks because they provide insurance against the negative singularity. The compensation for bearing displacement risk shows up as a premium on non-AI stocks.\footnote{The SDF contains a displacement risk factor beyond aggregate consumption risk. AI stocks have negative exposure to this factor (they hedge displacement), while non-AI stocks have positive exposure. This is the displacement-factor structure in \citet{GKP2012}, adapted to the AI setting.}
-
-%% Section 3.4
-\subsection{Optimal portfolio and hedging fraction}
-
-Given the return structure above, the household's optimal portfolio weight on AI stocks, $w^{AI}$, is increasing in $\lambda$ and $\theta$: a singularity erodes the household's consumption share $\omega_t$ but boosts AI stock returns, so the household tilts toward AI stocks to offset this loss. But the hedge is imperfect: public AI stocks capture only a fraction $s_t$ of the total AI economy, with the remainder held privately. As $\lambda$ or $\theta$ rises, the household's demand for the hedge increases, and so does $w^{AI}$. The hedge remains incomplete because the AI stock return does not span the full displacement shock---the household cannot replicate a claim on private AI capital using public securities alone. This partial-hedge result connects directly to the analysis in \citet{GKP2012}: in their OLG economy, growth stocks similarly provide only a partial hedge against displacement, so the risk premium is attenuated but not eliminated.
-
-%% Section 3.5
-\subsection{Quantitative illustration}\label{sec:quant}
-
-%% Table 1
-\begin{table}[t]
-\centering
-\caption{Ratio of AI to non-AI price-dividend ratios for different singularity probabilities ($\lambda$) and displacement severities ($\theta$). Baseline parameters: $\beta = 0.96$, $g = 0.02$, $\gamma = 2$, $J = 0.10$, $s_0 = 0.20$, $\phi = 0.10$. Each entry is $(P/D)^{AI}/(P/D)^{N}$.}
-\label{tab:calibration}
-\begin{tabular}{lccc}
-\toprule
- & $\theta = 5\%$\textsuperscript{\dag} & $\theta = 10\%$ & $\theta = 15\%$ \\
-\midrule
-$\lambda = 1\%$ & 1.09 & 1.10 & 1.12 \\
-$\lambda = 3\%$ & 1.32 & 1.39 & 1.50 \\
-$\lambda = 5\%$ & 1.63 & 1.86 & 2.32 \\
-\bottomrule
-\multicolumn{4}{l}{\footnotesize \textsuperscript{\dag}At $\theta = 5\%$, $(1-\theta)e^J > 1$: the singularity is not negative for the household.}
-\end{tabular}
-\end{table}
-
-Table~\ref{tab:calibration} illustrates the hedging premium using the model's closed-form price-dividend ratios. The one-period expected discounted dividend growth for each asset class is $\Psi_i = B\,[(1-\lambda) + \lambda\,\Phi\,f_i]$, where $B = \beta\,e^{(1-\gamma)g}$ is the normal-state discount factor, $\Phi = [(1-\theta)e^J]^{-\gamma}\,e^J$ captures the SDF-weighted output jump in singularity states, and $f_i$ is the share-change factor ($s_{t+1}/s_t$ for AI stocks, $1 - \phi$ for non-AI stocks). For non-AI stocks $f_N = 1-\phi$ is constant; for AI stocks $f_{AI}(s_t) = 1 + (1-s_t)\phi/s_t$ depends on the current AI share $s_t$, so $\Psi_{AI}$ is itself state-dependent. Table~\ref{tab:calibration} evaluates at the initial share $s_0$. Because $f_{AI}(s_t)$ decreases as $s_t$ rises with successive singularities, this evaluation is an upper bound on the true infinite-horizon AI P/D ratio; the approximation is tight at calibration values (after one singularity $s$ rises from 0.20 to 0.28, and $\Psi_{AI}$ falls by less than 3\%). The closed-form expressions set $\sigma = 0$ (degenerate $\varepsilon$) to isolate the singularity channel; normal-state productivity risk enters only through the moment-generating function $E[e^{(1-\gamma)\varepsilon}]$, which scales $\Psi_{AI}$ and $\Psi_N$ identically and therefore cancels in the AI-to-non-AI ratio reported in the table. The infinite-horizon P/D ratio is $\Psi_i/(1-\Psi_i)$, so even modest one-period differences in $\Psi$ are amplified through the infinite sum.
-
-How do these model-implied ratios compare with the data? Figure~\ref{fig:ai_valuation} shows that AI stocks traded at roughly twice the P/E ratio of non-AI stocks by end of 2024. The model produces P/D ratios, while the data show P/E ratios. The two are related by $P/D = (P/E) \times d^{-1}$, where $d$ is the payout ratio (dividends per dollar of earnings). In practice, AI firms retain substantially more earnings than non-AI firms: aggregate payout ratios (dividends plus repurchases as a share of earnings) for technology-intensive firms are typically 30--50\% lower than for the broader market. This means the P/D premium is, if anything, \emph{larger} than the P/E premium, making the model-implied ratios conservative relative to the data. We lack firm-level payout data matched to our AI classification in the current dataset, so we note this as a data limitation and maintain the conservative framing. With this caveat, the 2$\times$ P/E magnitude provides a rough empirical target. The table entries near 2 arise for moderate parameter combinations---for example, $(\lambda, \theta) = (5\%, 10\%)$ yields 1.86, and $(\lambda, \theta) = (3\%, 15\%)$ yields 1.50. The model can match the observed premium without extreme assumptions: a few-percent annual singularity probability paired with 10--15\% displacement severity suffices.
-
-The table shows that the AI valuation premium is increasing in both $\lambda$ and $\theta$. The monotonicity in $\lambda$ is consistent with Proposition~\ref{prop:pd}; the monotonicity in $\theta$ follows from the closed-form expression for $\Psi_{AI}$, since a larger $\theta$ raises the SDF-weighted singularity term $\Phi$.\footnote{The sufficient condition for Proposition~\ref{prop:pd_nonai} (see Appendix~\ref{sec:proofs}) is not satisfied at all baseline parameter combinations---for instance, it fails at $\theta = 10\%$ and $\theta = 15\%$---but the AI-to-non-AI \emph{ratio} still rises with $\lambda$ because the AI P/D increases faster than the non-AI P/D.} With a 5\% annual singularity probability and 15\% displacement, AI stocks trade at roughly 2.3 times the P/D ratio of non-AI stocks. These magnitudes are large enough to matter quantitatively, and even modest one-period differences in $\Psi$ are amplified through the infinite sum.
-
-%% Section 3.6
-\subsection{The role of incomplete markets}
-
-The hedging premium exists only because markets are incomplete. If the household could trade claims on private AI capital, it could fully insure against displacement, the displacement risk premium would vanish, and the hedging-driven spread in price-dividend ratios would be zero. Under complete markets, AI and non-AI stocks may still differ in their price-dividend ratios due to differences in expected cash-flow growth---higher $\lambda$ still means AI dividends grow faster on average. But the \emph{hedging-driven wedge} disappears: both assets are priced by the same aggregate-consumption SDF, and displacement risk is not a priced factor. This result underscores a point that deserves more attention in policy discussions: creating financial instruments that give ordinary investors access to private AI capital---whether through broadened IPO markets, sovereign wealth funds, or government-issued claims on AI rents---would directly reduce the displacement risk premium and the fragility it implies.
-
-%% ============================================================
-%% Section 4: Extension---Existential Risk and Infinite Output
-%% ============================================================
-\section{Extension: Existential Risk and Infinite Output}\label{sec:extension}
-
-The baseline model treats the singularity as a large but finite shock. In reality, discussions of AI singularity often invoke more extreme possibilities: that AI could produce effectively infinite output, or that it could pose existential risk to humanity. \citet{Jones2024} formalizes these ideas and shows that the trade-off between growth and existential risk depends critically on the curvature of utility and the value of a statistical life. We now extend our model to incorporate these features.
-
-%% Section 4.1
-\subsection{Setup}
-
-Suppose that the singularity, when it arrives, has two possible outcomes:
-
-\begin{enumerate}
-\item \textbf{Bounded singularity} (probability $1 - q$): Output jumps by the factor $e^J$ as before. The household's share falls by $\theta$. This is the baseline negative singularity.
-\item \textbf{Extreme singularity} (probability $q$): AI owners' consumption $C^{AI}$ becomes effectively infinite. The household may face extinction---complete consumption loss. Conditional on survival, its post-singularity consumption depends on whether bargaining with AI owners occurs, as defined in Section~\ref{sec:abundance} below.
-\end{enumerate}
-
-This extension keeps $\gamma > 1$; Propositions~\ref{prop:pd}--\ref{prop:riskprem} apply to the baseline specification. Following \citet{Jones2024}, we add a constant to CRRA flow utility so that life is preferred to death. With $\gamma > 1$, even infinite consumption delivers only finite utility---this is the key property that makes the growth-versus-existential-risk trade-off nontrivial.
-
-%% Section 4.2
-\subsection{The value of a statistical life}\label{sec:vsl}
-
-Following \citet{Jones2024} and \citet{HallJones2007}, we anchor the extension using the value of a statistical life (VSL). Empirically, a year of life is worth roughly six times annual consumption for an average U.S.\ household. This implies that households strongly prefer survival to even very large consumption gains---higher risk aversion strengthens this preference---and that existential risk carries a large welfare cost. The VSL anchors the quantitative question in Section~\ref{sec:abundance}: how large must the singularity be for the resulting surplus to overcome bargaining frictions?
-
-%% Section 4.3
-\subsection{Can abundance overcome frictions?}\label{sec:abundance}
-
-A key insight from combining our model with \citet{Jones2024} concerns the persistence of incomplete markets. In the baseline model, the household cannot trade with AI owners---this is the friction that sustains displacement risk. \citet{GKP2012} argue that extensions allowing for bequests, government debt, or intergenerational transfers would not change the functional form of the SDF but would affect only the magnitude of the displacement factor---and that their empirical calibration, which estimates the displacement factor directly from the data, is robust to such extensions.
-
-But what if the singularity produces \emph{infinite} output? Following a Coase-theorem logic \citep{Coase1960}, bargaining frictions can be overcome when the surplus from trade is sufficiently large. If AI owners' consumption $C^{AI}$ is unbounded, the cost of compensating the household for its displacement loss is vanishingly small relative to the AI owners' wealth. The baseline model's no-trade assumption is not that trade is technologically impossible, but that it is too costly given current surplus levels. The extreme singularity changes this calculus. Formally:
-
-When the extreme singularity produces infinite output for AI owners ($C^{AI} \to \infty$), for any finite bargaining cost $\kappa > 0$, there exists a mutually beneficial transfer $T$ that fully compensates the household for its displacement loss. The logic is simple. With $\gamma > 1$, the AI owners' marginal utility $u'(C^{AI}) = (C^{AI})^{-\gamma} \to 0$ as $C^{AI} \to \infty$ (adding a constant to flow utility, as in the extension, does not affect marginal utility). Any finite transfer---no matter how large---costs them nothing at the margin. The household is finite and can be made whole with a finite transfer. So displacement risk persists after an extreme singularity only if bargaining costs are themselves infinite, or if the AI owners are truly unable to interact with the household at all.
-
-What about the empirically relevant case of large but finite output? Transfers are feasible whenever the AI owners' post-singularity consumption exceeds the household's displacement loss plus bargaining costs. The household's displacement loss is $L = \omega_t \, Y_t \,[1 - (1-\theta)e^J]$. After the singularity, the AI owners' share of output is $1 - \omega_t(1-\theta)$, so their consumption is $C^{AI} = [1 - \omega_t(1-\theta)]\, Y_t \, e^J$. The transfer is feasible when $C^{AI} \geq L + \kappa$. This yields a closed-form threshold:
-
-%% Proposition 4
-\begin{proposition}[Finite-output threshold for Coasean transfer]\label{prop:threshold}
-The Coasean transfer is feasible if and only if the output jump satisfies both a resource-feasibility condition and a household participation constraint:
-\begin{equation}
-e^J \;\geq\; \omega_t + \kappa / Y_t \quad \text{(resource feasibility)},
-\end{equation}
-\begin{equation}
-T \;\geq\; L \;\equiv\; \omega_t\,Y_t\bigl[1 - (1-\theta)\,e^J\bigr] \quad \text{(participation)},
-\end{equation}
-where $L$ is the household's displacement loss---the gap between pre- and post-singularity consumption. Resource feasibility requires that AI owners have enough surplus to fund the transfer net of bargaining costs $\kappa$. Participation requires that the transfer at least covers the household's consumption loss.
-\end{proposition}
-
-The resource-feasibility condition requires that AI owners have enough surplus to fund the transfer net of bargaining costs. The participation constraint requires that the transfer at least covers the household's displacement loss $L$. Because the loss is deterministic conditional on the singularity occurring, the participation threshold is simply $T \geq L$ with no dependence on risk aversion $\gamma$. For $\theta = 10\%$ and $J = 0.10$, the displacement loss is $L/(\omega_t Y_t) = 1 - (1-\theta)e^J \approx 0.5\%$ of the household's pre-singularity consumption---quite modest. The resource-feasibility threshold is increasing in $\omega_t$ and $\kappa$. Notably, $\theta$ drops out of the resource condition: a larger $\theta$ increases the household's loss but equally increases the AI owners' surplus. However, $\theta$ \emph{does} enter the participation constraint---higher displacement severity raises the household's loss $L$. For example, with $\omega_t = 0.8$ and bargaining costs equal to one year of output ($\kappa = Y_t$), resource feasibility requires $e^J \geq 1.80$---less than a doubling of output. With the VSL calibration of Section~\ref{sec:vsl}, even moderate singularities can generate sufficient AI-owner surplus to fund the transfer for bargaining costs up to several multiples of the household's annual consumption.
-
-A further insight from \citet{Jones2024} strengthens the case for friction dissolution. Jones shows that attitudes toward existential risk vary sharply with consumption: richer agents are more conservative, while poorer agents are more willing to gamble for large gains. After an extreme singularity, AI owners are vastly richer than the household. Per Jones's logic, the AI owners should therefore be far more averse to existential risk---including the social instability or political backlash that could follow from leaving the household uncompensated. This asymmetry implies that the AI owners' willingness to pay for a stable post-singularity world may exceed what a simple surplus calculation suggests, because they have more to lose from instability than the household does.
-
-This gives the Coase-theorem logic quantitative bite. Not all frictions are equally amenable to this logic. Adverse selection---where the AI owners have private information about the value of AI capital---scales down naturally with surplus, since the cost of overpaying shrinks relative to total wealth. Regulatory barriers (e.g., accredited-investor rules) are institutional and do not automatically dissolve with abundance; they require deliberate policy action. Contractual incompleteness---the difficulty of pledging human capital embedded in AI systems---is intermediate: the incentive to find contractual solutions grows with surplus, but the underlying non-pledgeability does not vanish. The Coase-theorem logic is therefore strongest for information frictions and weakest for institutional ones.
-
-The robustness of the baseline hedging premium depends on how bargaining costs scale with the size of the singularity. If $\kappa$ is fixed, then sufficiently large singularities always dissolve frictions, and the baseline model's no-trade assumption becomes untenable for extreme parameter values---a tension that the extension resolves. If instead $\kappa$ grows proportionally with output (as when regulatory or coordination costs scale with the stakes involved), frictions survive even large singularities, and the hedging premium is robust. The empirically plausible case is intermediate: $\kappa$ grows with surplus, but less than proportionally. In this regime the baseline and extension are complements---the hedging premium persists for moderate singularities but attenuates for extreme ones.
-
-%% Section 4.4
-\subsection{Implications for pre-singularity asset prices}
-
-The abundance result feeds back into asset prices \emph{before} the singularity occurs. Let $q$ denote the probability that a singularity, conditional on arrival, is extreme. In the extreme state, frictions dissolve and the household is compensated---displacement risk vanishes ($\theta$ effectively equals zero). In the bounded state, frictions persist and displacement risk is fully priced. The extended-model SDF is a mixture over three regimes: no singularity, bounded singularity, and extreme singularity. This yields a closed-form expression for the one-period expected discounted dividend growth:
-
-%% Proposition 5
-\begin{proposition}[Extended-model P/D ratios]\label{prop:extended_pd}
-In the extended model, the one-period expected discounted dividend growth for asset class $i$ is
-\begin{equation}
-\Psi_i^{ext} = B\bigl[(1-\lambda) + \lambda\,(1-q)\,\Phi\,f_i + \lambda\,q\,\Phi_0\,f_i\bigr],
-\end{equation}
-where $\Phi_0 = (e^J)^{1-\gamma}$ is the SDF-weighted output jump with no displacement ($\theta = 0$), and all other objects are as defined in Section~\ref{sec:quant}. The infinite-horizon P/D ratio is $\Psi_i^{ext}/(1-\Psi_i^{ext})$, evaluated at $s_0$.
-\end{proposition}
-
-The key insight is that $\Psi_i^{ext}$ is a convex combination of the baseline $\Psi_i$ and the no-displacement analog: increasing $q$ shifts weight from the displacement regime ($\Phi$) to the frictionless regime ($\Phi_0$), attenuating the hedging premium. The household's expected displacement loss is reduced: conditional on a singularity arriving, a fraction $q$ of states are ``self-insuring'' because abundance funds the transfer. Appendix~\ref{sec:proofs} provides the derivation.
-
-This means the baseline hedging premium on AI stocks is moderated by $q$. When $q$ is large---when the household believes extreme singularities are likely---the insurance value of AI stocks is partially crowded out by the expectation that frictions will dissolve on their own. The net effect on AI stock valuations depends on the relative likelihood of bounded versus extreme singularities and on the household's beliefs about post-singularity bargaining.
-
-Combining these elements, the household faces a nuanced trade-off. A higher singularity probability $\lambda$ has three effects on its welfare:
-
-\begin{enumerate}
-\item \textbf{Displacement risk} (negative): More frequent singularities erode the household's consumption share.
-\item \textbf{Hedging value} (positive): AI stocks become more valuable as hedging instruments, partially offsetting displacement losses through portfolio gains.
-\item \textbf{Friction dissolution} (ambiguously positive): If the singularity is extreme, the resulting abundance may enable transfers that undo displacement entirely.
-\end{enumerate}
-
-Table~\ref{tab:extension} makes these effects concrete. Fixing $\lambda = 5\%$, the table shows how the AI-to-non-AI P/D ratio from Table~\ref{tab:calibration} attenuates as the probability $q$ of an extreme (self-insuring) singularity rises. At $q = 0$ the entries reproduce the baseline. At $q = 50\%$, the premium shrinks materially---for instance, from 2.32 to 1.77 at $\theta = 15\%$---because half of all singularity states no longer generate displacement risk.
-
-%% Table 2
-\begin{table}[t]
-\centering
-\caption{Attenuation of the AI valuation premium as the extreme-singularity probability $q$ rises. Each entry is the ratio of AI to non-AI price-dividend ratios, $(P/D)^{AI}/(P/D)^{N}$, at $\lambda = 5\%$. Other parameters as in Table~\ref{tab:calibration}. At $q = 0$ the entries match the $\lambda = 5\%$ row of Table~\ref{tab:calibration}.}
-\label{tab:extension}
-\begin{tabular}{lccc}
-\toprule
- & $\theta = 5\%$ & $\theta = 10\%$ & $\theta = 15\%$ \\
-\midrule
-$q = 0\%$   & 1.63 & 1.86 & 2.32 \\
-$q = 25\%$  & 1.59 & 1.74 & 1.99 \\
-$q = 50\%$  & 1.56 & 1.64 & 1.77 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-The third channel is what distinguishes our extension from the baseline model and from \citet{GKP2012}. It provides a formal basis for the intuition that AI disaster risk may be partially self-correcting: the very abundance that AI creates could fund the insurance that its disruption demands.
-
-%% ============================================================
-%% Section 5: Conclusion
-%% ============================================================
-\section{Conclusion}\label{sec:conclusion}
-
-This paper offers a simple asset-pricing rationale for the high valuations of publicly traded AI stocks. When a negative AI singularity threatens to displace the typical investor's consumption, and when incomplete markets prevent that investor from buying into private AI capital, public AI stocks serve as a partial hedge against displacement risk. The investor bids up their price-dividend ratio accordingly.
-
-The key ingredients are not new. \citet{GKP2012} develop the theory of displacement risk in detail, and our model is best understood as an application of their framework to AI singularity risk. What we add is a setting in which the incomplete-markets friction is made explicit through two agents, a formal treatment of how singularity-scale abundance could dissolve that friction, and a connection to the quantitative framework of \citet{Jones2024} for evaluating trade-offs between growth and existential risk.
-
-Three observations are worth highlighting. First, financial market solutions to AI disaster risk are under-discussed. Creating instruments that give ordinary households access to private AI capital---through broadened IPO markets, government-issued claims on AI rents, or other mechanisms---would directly reduce displacement risk and the fragility it creates. Second, the incomplete-markets assumption is doing most of the work. If markets were complete, the hedging premium would vanish and AI stock valuations would reflect only expected cash flows. Third, the extreme singularity case illustrates a hopeful possibility: if AI truly delivers unbounded abundance, the resulting surplus is large enough to compensate everyone, and the frictions that sustain displacement risk become economically irrelevant.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
 
 \printbibliography
-
-%% ============================================================
-%% Appendix A: Derivation Sketches
-%% ============================================================
-\appendix
-\section{Derivation Sketches}\label{sec:proofs}
-
-This appendix sketches the key derivations for Propositions~\ref{prop:pd}--\ref{prop:riskprem}. Full proofs are available upon request. Because the singularity shock is i.i.d.\ conditional on state, the conditional distributions are stationary; we use time subscripts only where needed for clarity.
-
-%% Appendix A.1
-\subsection*{Setup}
-
-Under CRRA, the SDF is $M_{t+1} = \beta (C_{t+1}^H / C_t^H)^{-\gamma}$. Household consumption is $C_t^H = \omega_t Y_t$, so
-\begin{equation}
-M_{t+1} = \beta \left( \frac{\omega_{t+1}}{\omega_t} \cdot \frac{Y_{t+1}}{Y_t} \right)^{-\gamma}.
-\end{equation}
-Let $\xi \equiv e^{-\gamma \varepsilon}$ collect the i.i.d.\ productivity shock terms. Conditional on no singularity (probability $1-\lambda$), $\omega_{t+1} = \omega_t$ and output grows at rate $g$, so $M^{\text{no}} = \beta \, e^{-\gamma g} \cdot \xi$. Conditional on a singularity (probability $\lambda$), $\omega_{t+1} = \omega_t(1-\theta)$ and output jumps by $e^J$, so
-\begin{equation}
-M^{\text{sing}} = \beta \, e^{-\gamma g} \, \left[(1-\theta) e^J\right]^{-\gamma} \cdot \xi.
-\end{equation}
-When $(1-\theta)e^J < 1$, we have $[(1-\theta)e^J]^{-\gamma} > 1$ for $\gamma > 1$, confirming that $M^{\text{sing}} > M^{\text{no}}$ in expectation over $\xi$.
-
-%% Appendix A.2
-\subsection*{Proposition~\ref{prop:pd}: AI stock P/D increasing in $\lambda$}
-
-AI dividends are proportional to $s_t Y_t$. Define the AI dividend growth factor $G^{AI} \equiv D_{t+1}^{AI}/D_t^{AI}$. Since dividends are proportional to $s_t Y_t$, the productivity shock enters $G^{AI}$ through the same $X_{t+1}/X_t$ ratio, giving $G^{AI,\text{no}} = e^{g + \varepsilon}$ in normal periods and $G^{AI,\text{sing}} = (s_{t+1}/s_t) \cdot e^{J+g+\varepsilon}$ in singularity periods, where $s_{t+1}/s_t = 1 + (1-s_t)\phi/s_t > 1$.
-
-The one-period expected SDF-weighted return decomposes as:
-\begin{equation}
-E_t[M_{t+1} G_{t+1}^{AI}] = (1-\lambda) \, E_t[M^{\text{no}} G^{AI,\text{no}}] + \lambda \, E_t[M^{\text{sing}} G^{AI,\text{sing}}].
-\end{equation}
-The singularity term exceeds the normal term because both $M$ and $G^{AI}$ are elevated in singularity states. Therefore $E_t[M_{t+1} G_{t+1}^{AI}]$ is increasing in $\lambda$. Iterating forward, the P/D ratio $\sum_{k=1}^{\infty} E_t[\prod_{j=1}^k M_{t+j} G_{t+j}^{AI}]$ inherits this monotonicity.
-
-%% Appendix A.3
-\subsection*{Proposition~\ref{prop:pd_nonai}: Non-AI stock P/D decreasing in $\lambda$}
-
-Non-AI dividend growth in a singularity is $G^{N,\text{sing}} = (1-\phi) \cdot e^{J+g+\varepsilon}$, since $(1-s_{t+1})/(1-s_t) = 1 - \phi$ by the share law of motion.
-
-The product of the SDF and non-AI dividend growth in singularity states, relative to normal states, is
-\begin{equation}
-\frac{E_t[M^{\text{sing}} G^{N,\text{sing}}]}{E_t[M^{\text{no}} G^{N,\text{no}}]} = (1-\phi)\,[(1-\theta)e^J]^{-\gamma}\,e^J.
-\end{equation}
-The sufficient condition for the non-AI P/D to be decreasing in $\lambda$ is that this ratio is less than one:
-\begin{equation}
-(1 - \phi)\,\left[(1 - \theta)\,e^{J}\right]^{-\gamma}\,e^{J} < 1.
-\end{equation}
-When this holds, increasing $\lambda$ puts more weight on the lower-valued singularity term, making $E_t[M_{t+1} G_{t+1}^{N}]$ decreasing in $\lambda$ and depressing the non-AI P/D ratio.
-
-%% Appendix A.4
-\subsection*{Proposition~\ref{prop:riskprem}: Expected return spread}
-
-From the Euler equation $1 = E_t[M_{t+1} R_{t+1}^i]$ for any asset $i$, expected excess returns satisfy
-\begin{equation}
-E_t[R_{t+1}^i] - R_f = -\frac{\text{Cov}_t(M_{t+1}, R_{t+1}^i)}{E_t[M_{t+1}]}.
-\end{equation}
-AI stock returns have more positive covariance with $M_{t+1}$ than non-AI stock returns: both $M$ and AI returns are high in singularity states, while non-AI returns are relatively damped. Therefore $\text{Cov}_t(M_{t+1}, R_{t+1}^{AI}) > \text{Cov}_t(M_{t+1}, R_{t+1}^{N})$, implying $E_t[R_{t+1}^{AI}] < E_t[R_{t+1}^{N}]$. The spread widens with $\lambda$ (more weight on the divergent singularity state) and $\theta$ (larger displacement makes $M^{\text{sing}}$ spike more and widens the gap between AI and non-AI dividend growth).
-
-%% Appendix A.5
-\subsection*{Proposition~\ref{prop:extended_pd}: Extended-model P/D ratios}
-
-The extended-model singularity has two sub-states. With probability $1-q$ the singularity is bounded: the SDF and dividend growth are as in the baseline ($M^{\text{sing}}$, $G^{i,\text{sing}}$). With probability $q$ the singularity is extreme: frictions dissolve, $\theta$ effectively equals zero, and the SDF-weighted output jump becomes $\Phi_0 = (e^J)^{1-\gamma}$. The one-period expected SDF-weighted dividend growth decomposes as:
-\begin{equation}
-E_t[M_{t+1} G_{t+1}^i] = (1-\lambda)\,E_t[M^{\text{no}} G^{i,\text{no}}] + \lambda(1-q)\,E_t[M^{\text{sing}} G^{i,\text{sing}}] + \lambda\,q\,E_t[M^{\text{ext}} G^{i,\text{ext}}],
-\end{equation}
-where $M^{\text{ext}} = \beta\,e^{-\gamma g}\,(e^J)^{-\gamma}\cdot\xi$ and $G^{i,\text{ext}} = f_i\,e^{J+g+\varepsilon}$. Setting $\sigma = 0$ and collecting terms yields $\Psi_i^{ext} = B[(1-\lambda) + \lambda(1-q)\Phi f_i + \lambda q \Phi_0 f_i]$. At $q = 0$ this reduces to the baseline; at $q = 1$ displacement risk vanishes entirely.
 
 \end{document}
