@@ -1,30 +1,40 @@
 # tests/factcheck-freely.py
-Started: 2026-04-02 21:49:42 EDT
-Runtime: 4m 14s
-[ralph-garage/agent-logs/20260402T214942.812529-0400_factcheck-freely_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260402T214942.812529-0400_factcheck-freely_claude_claude-opus-4-6.log)
+Started: 2026-04-02 21:59:20 EDT
+Runtime: 3m 21s
+[ralph-garage/agent-logs/20260402T215920.397310-0400_factcheck-freely_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260402T215920.397310-0400_factcheck-freely_claude_claude-opus-4-6.log)
 
 # factcheck-freely
 VERDICT: PASS
-REASON: No factual errors or logical inconsistencies found in the paper.
+REASON: All mathematical derivations, proofs, economic arguments, and citation characterizations are correct with no factual errors or logical inconsistencies found.
 
-## Detailed Findings
+## Detailed Review
 
-### Factual Correctness
+### Mathematical Derivations
+- **Proposition 1 (P/D ratios):** Post-singularity V_1 derivation correct. Pre-singularity V_0^A derivation verified step by step: consumption growth Delta*(1+g_tilde), dividend growth (theta_tilde/theta)*(1+g_tilde), solving for V_0^A yields eq. (8). Correct.
+- **Proposition 2 (Cross-section):** Subtraction of eqs. (8)-(9) with identical denominators. Phi^A - Phi^N > 0 follows from Assumption 2. Correct.
+- **Proposition 3 (Comparative static):** Appendix A proof verified by expanding quotient rule numerator. All cancellations check out, yielding condition Phi^A(1+V_1) > R/(1-R). Claim that R/(1-R) = V_0^A|_{p=0} confirmed. Correct.
+- **Proposition 4 (Complete markets):** Replacing Delta^{-gamma} with 1 under complete markets is logically justified. Hedging premium formula follows by subtraction. Correct.
+- **Extinction risk (eq. 23):** Scaling singularity contribution by (1-q) is correct.
+- **Remark 1 (g_tilde -> infinity):** For gamma > 1, (1+g_tilde)^{1-gamma} -> 0, so Phi^A -> 0 and V_1 -> 0. Log utility independence also correct. Correct.
 
-- **Numerical values**: All numerical claims in the text (Section 3) verified against independent computation from the R code. Values for V_0^A ≈ 16.1, V_0^N ≈ 11.6, ratio ≈ 1.4, p=0 baseline ≈ 11.9, complete-markets V_0^{A,CM} ≈ 12.9, and hedging premium ≈ 25% all match.
-- **Citations**: GKP (2012), Jones (2024), Barro (2006), Rietz (1988), Wachter (2013) all have correct publication details. Characterizations of cited works are faithful to the source material.
-- **Formulas and definitions**: All equations are correctly specified. The Euler equation expansions, price-dividend ratio derivations, and comparative statics are algebraically sound.
+### Numerical Illustration
+Recomputed with stated parameters (beta=0.96, gamma=3, g=0.02, g_tilde=0.05, theta=0.05, theta_tilde=0.15, nu=0.55, nu_tilde=0.30):
+- R = 0.9224, V_1 = 6.74
+- At p=0: V_0^A = 11.9 (matches)
+- At p=0.01: V_0^A = 16.0 (matches ~16.1), V_0^N = 11.5 (matches ~11.6), ratio ~1.4 (matches)
+- Complete markets: V_0^{A,CM} = 12.8 (matches ~12.9), hedging premium ~25% (matches)
+
+### Citation Accuracy
+- **GKP (2012):** Displacement risk from incomplete intergenerational risk-sharing accurately characterized. Paper's distinction between its own AI-owners interpretation and GKP's unborn-cohorts mechanism explicitly noted. Discussion of GKP's treatment of bequests/transfers verified against source.
+- **Jones (2024):** Growth-vs-existential-risk trade-off and role of utility curvature accurately described. Bounded utility claim for gamma > 1 correct.
+- **Other citations** (Rietz 1988, Barro 2006, Wachter 2013, Kogan et al. 2014/2020, Pastor & Veronesi 2009, Hobijn & Jovanovic 2001, Korinek & Suh 2024, Acemoglu & Restrepo 2018): All characterizations are standard and accurate.
 
 ### Logical Consistency
+- Model assumptions are internally consistent throughout.
+- Budget constraint, market clearing, and equilibrium consumption are mutually consistent.
+- Coase theorem discussion is economically sound (fixed costs become negligible as Y -> infinity).
+- Comparative statics claims follow from the formulas.
 
-- **Proposition 1** (Price-dividend ratios): Euler equation expansion and solving for V_0^A and V_0^N are correct. Post-singularity P/D ratio V_1 is correctly shown to be identical for both asset types.
-- **Proposition 2** (Cross-section): Sign of the hedging premium follows correctly from Assumption 2 (θ̃/θ > 1 > ν̃/ν).
-- **Proposition 3** (Comparative static): Quotient rule calculation verified term by term. The condition Φ^A(1+V_1) > R/(1-R) = V_0^A|_{p=0} is correctly identified.
-- **Proposition 4** (Complete markets): Removal of Δ^{-γ} under complete markets is logically correct. Monotonicity claims (increasing in p, θ̃/θ, and 1-Δ) verified by differentiation.
-- **Remark 1** (Extreme singularity): Logically sound for γ > 1.
-- **Remark 2** (Coase theorem argument): Internally consistent given the stated qualification about proportional cost τ.
-- **Assumptions**: No contradictions between Assumptions 1–3. Numerical parameterization satisfies all assumptions.
-
-### Minor Note (does not affect verdict)
-
-- A cosmetic mismatch exists in `/workspace/code/numerical-illustration.R` line 68 (comment says "Exhibit 1" but should be "Exhibit 2"). This does not propagate to the compiled paper since the output file has the correct label.
+### Minor Notes (not errors)
+- Assumption 3's "automatically satisfied for gamma > 1" also requires beta < 1, which is already assumed in eq. (6).
+- The Coase discussion's reference to "AI owners' gains" as (omega - omega_tilde)Y is the change in their share rather than total surplus, but the economic logic is sound.

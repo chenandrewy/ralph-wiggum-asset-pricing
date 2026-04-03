@@ -1,105 +1,110 @@
 # tests/spec-economic.py
-Started: 2026-04-02 21:49:42 EDT
-Runtime: 2m 8s
-[ralph-garage/agent-logs/20260402T214942.812050-0400_spec-economic_claude_opus.log](../ralph-garage/agent-logs/20260402T214942.812050-0400_spec-economic_claude_opus.log)
+Started: 2026-04-02 21:59:20 EDT
+Runtime: 1m 32s
+[ralph-garage/agent-logs/20260402T215920.395413-0400_spec-economic_claude_opus.log](../ralph-garage/agent-logs/20260402T215920.395413-0400_spec-economic_claude_opus.log)
 
 # spec-economic
 VERDICT: PASS
-REASON: The paper uses all economic concepts from the spec consistently with their definitions across all sections.
+REASON: All economic concepts from the spec are used consistently with their definitions throughout the paper.
 
-## Concepts Evaluated
+## Concept-by-Concept Analysis
 
 ### 1. AI Singularity
 
-**Spec definition:** "An AI singularity is a sudden improvement in AI that vastly increases productivity and output."
+**Spec definition:** "A sudden improvement in AI that vastly increases productivity and output."
 
 **Paper usages:**
+- Abstract (line 30): "a sudden AI-driven productivity surge that displaces existing workers and firms" — matches "sudden" and "productivity."
+- Introduction (line 52): "A sudden AI breakthrough---a singularity---could dramatically increase productivity" — matches.
+- Model §2.1 (lines 82–86): Singularity increases growth from $g$ to $\tilde{g} > g$, "reflecting the productivity increase that accompanies the singularity." The limit $\tilde{g} \to \infty$ is described as "a singularity that vastly increases output" — directly echoes the spec's "vastly increases productivity and output."
+- Extension §4.1 (line 258): "consumption is so high" in the extreme singularity — consistent with vastly increased output.
 
-- Abstract (line 30): "negative AI singularity---a sudden AI-driven productivity surge that displaces existing workers and firms" — matches "sudden" and "productivity surge."
-- Intro (line 52): "A sudden AI breakthrough---a singularity---could dramatically increase productivity while shifting the economy's structure" — "sudden" and "dramatically increase productivity" consistent.
-- Model (line 76): "A singularity is an absorbing event that arrives with independent probability $p$ each period" — "absorbing event" captures "sudden" (single-period arrival).
-- Model (line 80–84): "output grows at a strictly higher rate, reflecting the productivity increase... The model allows for any magnitude of productivity increase; the extension explores the limit $\tilde{g} \to \infty$, corresponding to a singularity that vastly increases output." — The paper explicitly acknowledges the spec's "vastly increases" framing by reserving that language for the extreme case while allowing the model to parameterize magnitude.
-- Extension (line 252): "as $\tilde{g} \to \infty$, the AI owners... enjoy unbounded consumption" — consistent with vast increase.
+**Assessment:** Consistent. The singularity is always presented as a sudden, productivity-increasing event across all sections.
 
-**Assessment:** Consistent. The paper models the singularity as a sudden, absorbing event with higher productivity growth, matching the spec. The generalization to allow varying magnitudes is standard parameterization; the paper correctly reserves "vastly increases" for the extreme case.
+---
 
 ### 2. Negative AI Singularity
 
-**Spec definition:** "A negative AI singularity is an AI singularity that is devastating for the typical investor."
+**Spec definition:** "An AI singularity that is devastating for the typical investor."
 
 **Paper usages:**
+- Abstract (line 30): "a negative AI singularity---a sudden AI-driven productivity surge that displaces existing workers and firms."
+- Introduction (line 52): "the typical investor" whose "wealth is largely tied to existing firms and human capital" faces displacement.
+- Model §2.2, Assumption 1 (lines 105–107): "Negative singularity" defined as $\tilde{\omega} < \omega$ — the household's (i.e., the typical investor's, per line 88) share of output falls.
+- Results §3 (line 188): "the household is displaced at the singularity ($\Delta < 1$), its marginal utility is high in singularity states."
 
-- Abstract (line 30): "negative AI singularity---a sudden AI-driven productivity surge that displaces existing workers and firms" — displacement of workers and firms is devastating for the typical investor.
-- Model, Assumption 1 (line 103–105): "Negative singularity... The household's share of output falls at the singularity: $\tilde{\theta} + \tilde{\nu} < \theta + \nu$." — The household is the "typical investor" (representative household / marginal investor in public markets). A fall in output share is the formal analog of "devastating."
-- Model (line 111–115): "displacement ratio $\Delta \equiv \tilde{\omega}/\omega < 1$" — captures severity of the negative impact on the typical investor.
-- Results (line 185): "Because the household is displaced at the singularity ($\Delta < 1$), its marginal utility is high in singularity states: $\Delta^{-\gamma} > 1$." — High marginal utility reflects low consumption, consistent with devastating impact.
+**Assessment:** Consistent. The paper defines the representative household as the typical/marginal investor (line 88) and consistently models the negative singularity as devastating for this agent through displacement. The household loses consumption share, and with $\gamma > 1$, this is welfare-reducing — matching "devastating."
 
-**Assessment:** Consistent. The paper consistently treats "negative" as referring to the typical investor (household) being displaced—losing share of output—which is the formal version of "devastating for the typical investor."
+---
 
 ### 3. Budget Constraints
 
 **Spec definition:** "Budget constraints are satisfied. We instinctively look for violations of budget constraints, and treat violations as fundamental flaws."
 
 **Paper usages:**
+- Model §2.2 (lines 92–96): Output is fully allocated: $\theta + \nu + (1-\theta-\nu) = 1$ pre-singularity, and $\tilde{\theta} + \tilde{\nu} + (1-\tilde{\theta}-\tilde{\nu}) = 1$ post-singularity. No output is lost or created.
+- Model §2.3 (lines 126–129): The household budget constraint is explicitly stated in equation (6): consumption plus portfolio investment equals portfolio wealth plus dividends.
+- Equilibrium (lines 132–136): Market clearing ($n_t^A = n_t^N = 1$) yields $c_t = D_t^A + D_t^N = \omega Y_t$, which is consistent with the budget constraint.
+- Extension §4.2 (lines 269–273): Transfers are explicitly resource-feasible — the cost $F + \tau T$ is paid from output, and the transfer $T = (\omega - \tilde{\omega})Y$ is bounded by the AI owners' gains.
 
-- Model (line 124–128): Explicit budget constraint in eq. (6): $c_t + P_t^A n_{t+1}^A + P_t^N n_{t+1}^N = (D_t^A + P_t^A) n_t^A + (D_t^N + P_t^N) n_t^N$.
-- Model (line 130–134): Market clearing ($n_t^A = n_t^N = 1$) combined with the budget constraint yields equilibrium consumption: $c_t = D_t^A + D_t^N = \omega Y_t$.
-- Output shares (line 90–93): $D_t^A + D_t^N + D_t^P = Y_t$ — total output is fully accounted for.
+**Assessment:** Consistent. Budget constraints are satisfied throughout. Output shares sum to one, the household budget constraint is explicit, and market clearing is imposed. No violations detected.
 
-**Assessment:** Consistent. Budget constraint is explicitly stated, and output is fully allocated among the three dividend streams. No violations.
+---
 
 ### 4. Complete vs. Incomplete Markets
 
-**Spec definition:** "Incomplete markets refers to the idea that some assets cannot be bought by the representative investor... does not necessarily refer to Arrow-Debreu securities. Complete markets also does not necessarily refer to Arrow-Debreu securities. Discussions of complete markets should instead focus on the important assets that are unavailable to the representative investor."
+**Spec definition:** Incomplete markets = "some assets cannot be bought by the representative investor" (e.g., privately-held AI firms). Does NOT necessarily refer to Arrow-Debreu securities. Complete markets should focus on "important assets that are unavailable to the representative investor."
 
-**Paper usages (incomplete markets):**
+**Paper usages:**
+- Introduction (line 52): "Private AI ventures... the typical investor cannot buy these assets. They are either privately held, illiquid, or simply do not yet exist. In this world of incomplete markets..." — matches spec exactly: focuses on specific unavailable assets, not Arrow-Debreu.
+- Model §2.1 (line 88): "AI owners hold private AI capital and do not participate in public stock markets" — the specific asset the household cannot access.
+- Model §2.3 (line 126): "cannot invest in private AI capital" — restates the incompleteness.
+- Results, Proposition 4 (lines 217–218): "Under complete markets, the household can also invest in private AI capital, so its consumption equals total output" — complete markets defined by the household gaining access to the specific missing asset, not by Arrow-Debreu completion.
+- Conclusion (line 286): "expanding the set of tradeable AI-related claims" as the policy lever — again framed as making specific assets available.
 
-- Intro (line 52): "the typical investor cannot buy these assets. They are either privately held, illiquid, or simply do not yet exist. In this world of incomplete markets, publicly traded AI stocks offer the best available hedge" — Correctly focuses on unavailable assets, not Arrow-Debreu.
-- Model (line 124): "The household trades in two publicly available assets---AI stocks and non-AI stocks---but cannot invest in private AI capital." — Defines market incompleteness as inability to buy private AI capital.
-- Conclusion (line 289): "expanding the set of tradeable AI-related assets... could reduce the displacement premium and improve welfare by completing markets" — Completing markets = making more assets tradeable, not Arrow-Debreu.
+**Assessment:** Consistent. The paper never invokes Arrow-Debreu securities. Both complete and incomplete markets are consistently defined in terms of whether the household can access private AI capital — the specific important asset — matching the spec's framing.
 
-**Paper usages (complete markets):**
-
-- Proposition 4 (line 215): "Under complete markets, the household can also invest in private AI capital, so its consumption equals total output: $c_t = Y_t$." — Defines complete markets as access to the missing asset (private AI capital), exactly per spec.
-- Proof (line 226–228): "Under complete markets, the household's consumption growth in the singularity state is $(1+\tilde{g})$ rather than $\Delta(1+\tilde{g})$" — Consequence of investing in private AI capital.
-
-**Assessment:** Consistent. The paper never invokes Arrow-Debreu securities. Both complete and incomplete markets are defined entirely in terms of which assets the representative investor can trade, matching the spec precisely.
+---
 
 ### 5. Hedging
 
 **Spec definition:** "An asset 'hedges' a risk if its payoff tends to increase when that risk materializes. The hedge need not be perfect, and the asset need not earn a negative risk premium overall."
 
 **Paper usages:**
+- Abstract (line 30): "publicly traded AI stocks command a valuation premium because they hedge against a negative AI singularity" and are "partial insurance against displacement" — "partial" is consistent with the hedge not needing to be perfect.
+- Introduction (line 52): "publicly traded AI stocks offer the best available hedge" — does not claim perfection.
+- Introduction (line 56): "positive covariance between the stochastic discount factor and AI dividends" — the pricing mechanism behind hedging.
+- Results §3 (line 188): "Assets that pay more in these high-marginal-utility states are valuable hedges... AI stocks gain share at the singularity ($\tilde{\theta}/\theta > 1$)" — AI stock payoff increases when displacement risk materializes. Matches spec: "payoff tends to increase when that risk materializes."
+- The paper never claims AI stocks earn a negative risk premium overall; it discusses a valuation premium (higher price-dividend ratio), which is distinct.
 
-- Abstract (line 30): "publicly traded AI stocks command a valuation premium because they hedge against a negative AI singularity" and "partial insurance against displacement" — "partial" consistent with "need not be perfect."
-- Intro (line 52): "publicly traded AI stocks offer the best available hedge: they are the investor's only tradeable claim on the AI upside" — "best available" implies imperfect.
-- Results (line 185): "Assets that pay more in these high-marginal-utility states are valuable hedges and command higher prices. AI stocks gain share at the singularity ($\tilde{\theta}/\theta > 1$), so they are precisely such a hedge." — Payoff increases when risk materializes, matching the spec definition exactly.
-- Proposition 4 (line 219–223): "hedging premium" defined as the valuation gap between incomplete and complete markets — a price premium, not a claim about negative risk premia.
-- Conclusion (line 283): "values public AI stocks for their insurance properties: they pay relatively more in singularity states when the household's marginal utility is high" — payoff increases when risk materializes.
+**Assessment:** Consistent. The paper uses "hedge" to mean that AI stock payoffs increase when displacement risk materializes, does not claim the hedge is perfect ("partial insurance"), and does not claim a negative risk premium.
 
-**Assessment:** Consistent. The paper defines hedging as payoff increasing when the singularity risk materializes, uses "partial insurance" (not perfect), and expresses the hedging benefit as a valuation premium rather than claiming negative risk premia.
+---
 
 ### 6. General Equilibrium vs. Partial Equilibrium
 
-**Spec definition:** "General equilibrium means that prices are determined by the equilibrium conditions. It does not mean that consumption is endogenous. Partial equilibrium means that prices are exogenous."
+**Spec definition:** General equilibrium = "prices are determined by equilibrium conditions," NOT that consumption is endogenous. Partial equilibrium = "prices are exogenous."
 
 **Paper usages:**
+- The paper does not explicitly use the terms "general equilibrium" or "partial equilibrium."
+- The model's prices are determined endogenously via the Euler equation (line 141), which is an equilibrium condition. This is general equilibrium per the spec.
+- Consumption is determined by market clearing ($c_t = \omega Y_t$), which could be read as "endogenous" in the sense of being an equilibrium outcome, but the paper does not invoke this to claim general equilibrium.
 
-- The paper does not use the terms "general equilibrium" or "partial equilibrium" anywhere. Prices are determined endogenously through the Euler equation and market clearing (eq. 7–8), which is general equilibrium in nature. Consumption is determined by market clearing (eq. 8), which is an equilibrium condition. The paper does not mischaracterize the relationship between equilibrium and consumption endogeneity.
+**Assessment:** Consistent (trivially). The paper avoids these terms entirely, so there is no opportunity for misuse. The model itself is general equilibrium by the spec's definition (prices from equilibrium conditions), but the paper does not make any claims that could conflict with the spec.
 
-**Assessment:** No usage to evaluate. The paper avoids these terms entirely, so no inconsistency is possible.
+---
 
 ## Cross-Section Consistency Check
 
-The following terms were traced across all sections (abstract, introduction, model, results, extension, conclusion, appendix) for meaning drift:
+The following terms were checked for drift across sections:
 
-- **Singularity:** Consistently an absorbing, sudden event with probability $p$ that shifts output shares and increases growth rate. No drift.
-- **Displacement / negative singularity:** Consistently the household's output share falling ($\Delta < 1$). No drift.
-- **Hedging:** Consistently AI stock payoff increasing when singularity occurs. No drift.
-- **Incomplete markets:** Consistently the household's inability to invest in private AI capital. No drift.
-- **Complete markets:** Consistently the household's ability to invest in all assets including private AI capital. No drift.
-- **Budget constraint:** Stated once, satisfied throughout. No drift.
+| Term | Intro | Model | Results | Extension | Conclusion |
+|------|-------|-------|---------|-----------|------------|
+| Singularity | Sudden productivity surge | Absorbing regime shift, $\tilde{g} > g$ | Same | Same + extreme limit | Same |
+| Negative singularity | Displacement of workers/firms | $\tilde{\omega} < \omega$ | $\Delta < 1$ | Same | Same |
+| Incomplete markets | Can't buy private AI | Same | Same | Same | Same |
+| Complete markets | — | — | Can invest in private AI capital | — | Expand tradeable claims |
+| Hedging | Partial insurance | — | Payoff up when risk materializes | Same | Same |
+| Displacement | Share of output falls | $\Delta < 1$ | Same | Same + frictions analysis | Same |
 
-## Minor Observations (Not Inconsistencies)
-
-1. The spec defines AI singularity with "vastly increases productivity and output." The baseline model requires only $\tilde{g} > g$, which permits moderate increases. However, the paper explicitly acknowledges this (line 84: "the extension explores the limit $\tilde{g} \to \infty$, corresponding to a singularity that vastly increases output"), correctly reserving the spec's language for the appropriate case. The model's parameterization is a standard generalization that encompasses the spec's definition as a special case.
+No cross-section drift detected. All terms maintain their economic meaning throughout.

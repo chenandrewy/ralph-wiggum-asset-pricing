@@ -1,64 +1,64 @@
 # tests/factcheck-code.py
-Started: 2026-04-02 21:49:42 EDT
-Runtime: 1m 45s
-[ralph-garage/agent-logs/20260402T214942.812068-0400_factcheck-code_claude_opus.log](../ralph-garage/agent-logs/20260402T214942.812068-0400_factcheck-code_claude_opus.log)
+Started: 2026-04-02 21:59:20 EDT
+Runtime: 2m 19s
+[ralph-garage/agent-logs/20260402T215920.395380-0400_factcheck-code_claude_opus.log](../ralph-garage/agent-logs/20260402T215920.395380-0400_factcheck-code_claude_opus.log)
 
 # factcheck-code
 
-VERDICT: PASS
-REASON: The canonical analysis pipeline runs from scratch, produces both exhibits, and its outputs are consistent with the paper's quantitative claims.
+VERDICT: FAIL
+REASON: The CRSP figure code combines per-share dividends with month-end shares outstanding without verifying split-adjustment consistency, violating Requirement 5.
 
 ## Canonical local analysis path
 
-- **Entry point:** `code/run-all.R` (invoked via `Rscript code/run-all.R`).
-- **Scripts (in order):**
-  1. `code/numerical-illustration.R` — generates `paper/exhibits/numerical-illustration.tex` (Table 1 / Exhibit 2). No external dependencies.
-  2. `code/ai-valuations-figure.R` — generates `paper/exhibits/ai-valuations.pdf` (Figure 1 / Exhibit 1). Requires WRDS credentials (`WRDS_USERNAME`, `WRDS_PASSWORD`).
-- **Outputs:** Both files land directly in `paper/exhibits/` in the correct format for `paper.tex`, satisfying spec III.3.f.
-- The pipeline has no intermediate files, no manual steps, and no precomputed caches (spec III.3.c).
+The canonical entry point is `code/run-all.R`, which runs two scripts in order:
+
+1. `code/numerical-illustration.R` — generates `paper/exhibits/numerical-illustration.tex` (Table 1 / Exhibit 2). No external dependencies; parameters are hardcoded from the paper's Section 3.
+2. `code/ai-valuations-figure.R` — generates `paper/exhibits/ai-valuations.pdf` (Figure 1 / Exhibit 1). Requires WRDS credentials to query CRSP data.
+
+Both scripts output directly to `paper/exhibits/`. The pipeline is coherent, logically organized, and satisfies spec requirements III.3.a–g (R code, single entry point, from-scratch execution, outputs to exhibits, no precomputed caches, WRDS query in the canonical path, under 180 seconds).
 
 ## Execution status
 
-| Script | Status | Notes |
-|---|---|---|
-| `numerical-illustration.R` | Ran successfully | Pure computation, no external deps |
-| `ai-valuations-figure.R` | Ran successfully | Connected to WRDS, retrieved 168 rows, wrote PDF |
-
-Both scripts executed end-to-end in this environment. The full pipeline completes within the 180-second budget (spec III.3.d).
+- **numerical-illustration.R**: Executed successfully. Locally reproducible.
+- **ai-valuations-figure.R**: Executed successfully with WRDS credentials present in this environment. In environments without WRDS credentials, this script fails with `stop()`, and `run-all.R` also fails. The `run-all.R` header comment ("If WRDS credentials are unavailable, the numerical table is still generated") is misleading: the table file exists only because it runs first, but the pipeline itself exits with an error.
+- **Full pipeline (`run-all.R`)**: Completed successfully in this environment. All exhibits regenerated from scratch.
 
 ## Paper-code consistency
 
 ### Numerical illustration (Table 1)
 
-Paper text (Section 3, "Numerical illustration" paragraph) states:
-- At p = 0.01: V0_A ~ 16.1, V0_N ~ 11.6, ratio ~ 1.4, V0_A_CM ~ 12.9, hedging premium ~ 25%.
-- At p = 0: both equal ~ 11.9.
+Parameters in code match the paper exactly: beta=0.96, gamma=3, g=0.02, g_tilde=0.05, theta=0.05, theta_tilde=0.15, nu=0.55, nu_tilde=0.30.
 
-Code output confirms: V0_A = 16.1, V0_N = 11.6 (ratio 1.39), V0_A_CM = 12.9, hedging premium = 24.8%. At p = 0, both = 11.9. All claims match.
+Code output matches every numerical claim in the paper:
+- V0_A approx 16.1 at p=0.01: **matches** (code: 16.1)
+- V0_N approx 11.6 at p=0.01: **matches** (code: 11.6)
+- Ratio "roughly 1.4": **matches** (16.1/11.6 = 1.39)
+- Both approx 11.9 at p=0: **matches** (code: 11.9)
+- V0_A_CM approx 12.9: **matches** (code: 12.9)
+- Hedging premium "about 25%": **matches** (code: 24.8%)
 
-Parameters in code match those stated in the paper: beta = 0.96, gamma = 3, g = 0.02, g_tilde = 0.05, theta = 0.05, theta_tilde = 0.15, nu = 0.55, nu_tilde = 0.30.
+The formulas in the code (`V0_A`, `V0_N`, `Phi_A`, `Phi_N`, `V1`, complete-markets variant) are faithful implementations of equations (7)–(12) in the paper.
 
-The code formulas (R, Phi_A, Phi_N, V1, V0_A, V0_N, V0_A_CM) correctly implement equations (7)-(11) from the paper.
+### CRSP figure (Figure 1)
 
-### Empirical figure (Figure 1)
+The figure queries CRSP for monthly prices and dividends, computes trailing 12-month P/D ratios for AI stocks (NVDA, MSFT, GOOGL, META, AMZN) versus the rest of the CRSP universe, consistent with the paper's caption and description.
 
-- Paper caption: "Price-dividend ratios for AI stocks (NVDA, MSFT, GOOGL, META, AMZN) versus the rest of the CRSP universe, computed using trailing 12-month dividends."
-- Code queries exactly these five tickers from `crsp.stocknames`, computes trailing 12-month dividends from `crsp.msedist`, and plots portfolio-level P/D ratios. Consistent.
+**Per-share data violation (Requirement 5):** The SQL query computes total dividends as `mcap / prc * divamt`, which is effectively `shrout * divamt`. Here `shrout` comes from `crsp.msf` (month-end shares outstanding) and `divamt` comes from `crsp.msedist` (per-share dividend on the ex-date). These quantities have different timing: shrout is end-of-month while divamt is as of the ex-date. If a stock split occurs between the ex-date and month-end (e.g., NVDA's 10-for-1 split in June 2024), post-split shrout would be multiplied by pre-split divamt, overstating dividends by the split factor. The code does not verify, document, or adjust for this timing mismatch.
 
-### Per-share data handling (Requirement 5)
+### Exhibit label mismatch
 
-The CRSP query computes total dividends as `SUM(mcap / prc * divamt)`, which simplifies to `SUM(shrout * divamt)`. Both `shrout` and `divamt` come from CRSP (msf and msedist respectively), which maintains internally consistent split adjustment. The join is at monthly frequency (end-of-month shrout matched to same-month ex-date dividends), introducing at most minor within-month timing noise. For an illustrative figure (spec IV.8.b, IV.8.d), this is appropriate.
-
-### Minor cosmetic issue
-
-The R code labels the table comment as `% Exhibit 1`, while the paper treats the table as Exhibit 2 (the figure is Exhibit 1). This is a comment-only discrepancy with no effect on compilation or output.
+The generated file `numerical-illustration.tex` contains the comment `% Exhibit 1` on the label line, but `paper.tex` marks the table as `% Exhibit 2` and the figure as `% Exhibit 1`. This is a cosmetic inconsistency in the code-generated comment.
 
 ## Reproducibility classification
 
 | Paper object | Classification |
 |---|---|
-| Table 1 (numerical illustration) | **Locally reproducible** — runs from scratch with no external dependencies |
-| Figure 1 (AI valuations) | **Blocked by credentials** — requires WRDS access; ran successfully in this environment with credentials present |
-| All theoretical propositions/proofs | Not code-dependent; derivations are in the paper text |
+| Table 1 (numerical illustration) | **Locally reproducible** — runs from scratch with no external dependencies; output matches paper claims exactly |
+| Figure 1 (AI valuations, CRSP) | **Blocked by credentials** in environments without WRDS access; **locally reproducible** in this environment but with a per-share data handling defect |
+| All theoretical results (Propositions 1–4, Remarks 1–2) | Not code-dependent; analytic derivations in the paper |
 
-No paper output is mislabeled as locally reproducible when it is not. The WRDS dependency is documented in run-all.R's header comment and is part of the canonical pipeline as required by spec III.3.e.
+## Violations
+
+1. **Requirement 5 (per-share data handling):** The CRSP query combines month-end `shrout` from `crsp.msf` with per-share `divamt` from `crsp.msedist` without verifying split-adjustment consistency. Stock splits that occur between the dividend ex-date and month-end cause the product to be incorrect.
+2. **Minor: Exhibit label comment mismatch** in generated `numerical-illustration.tex` (`% Exhibit 1` should be `% Exhibit 2`).
+3. **Minor: Misleading `run-all.R` comment** about graceful degradation without WRDS credentials — the pipeline fails, it just happens that the table was already written.

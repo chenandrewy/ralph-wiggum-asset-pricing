@@ -71,6 +71,8 @@ On the economics of AI, \citet{Jones2024} analyzes the trade-off between AI-driv
 %% ============================================================
 \section{Model} % Section 2
 
+We now translate the introduction's intuition---that incomplete markets make AI stocks valuable hedges---into a formal environment.
+
 \subsection{Environment} % Section 2.1
 
 Time is discrete: $t = 0, 1, 2, \ldots$ The economy produces aggregate output $Y_t$, which grows over time. A singularity is an absorbing event that arrives with independent probability $p \in (0,1)$ each period. Before the singularity, output grows at a constant rate:
@@ -137,6 +139,7 @@ The standard Euler equation for asset $i \in \{A, N\}$ is
 \begin{equation}
 P_t^i = E_t \left[ \beta \left( \frac{c_{t+1}}{c_t} \right)^{-\gamma} \left( D_{t+1}^i + P_{t+1}^i \right) \right]. \label{eq:euler}
 \end{equation}
+This equation will deliver the hedging premium: because the household's consumption falls at the singularity ($\Delta < 1$), its stochastic discount factor is high precisely when AI stocks pay well.
 
 \subsection{Equilibrium} % Section 2.4
 
@@ -280,13 +283,9 @@ This result connects GKP's displacement risk to Jones's analysis of the singular
 %% ============================================================
 \section{Conclusion} % Section 5
 
-We show that publicly traded AI stocks command a hedging premium under incomplete markets. The representative household, unable to invest in private AI capital, values public AI stocks for their insurance properties: they pay relatively more in singularity states when the household's marginal utility is high. When displacement is sufficiently severe, the price-dividend ratio of AI stocks increases with singularity probability, and the valuation spread between AI and non-AI stocks widens. Under complete markets, the premium vanishes.
+Financial market solutions to AI disaster risk are under-discussed. Our analysis suggests that expanding the set of tradeable AI-related claims---through public listings of AI ventures, AI-linked derivatives, or government-facilitated risk-sharing---could reduce the displacement premium and improve welfare. The policy lever is market completeness: any mechanism that allows the representative household to share in AI upside reduces the hedging premium, and sufficiently abundant post-singularity output can make even modest transfer mechanisms effective.
 
-The model delivers a cross-sectional prediction: AI stocks should trade at higher price-dividend ratios than non-AI stocks, with the spread increasing in perceived singularity risk. This is consistent with the elevated valuations of AI-related firms observed in recent years, though we emphasize that the model is deliberately stylized and not designed to match specific valuation levels.
-
-Our extension reveals two distinct channels through which extreme singularities attenuate the hedging premium. First, when post-singularity growth is very large, the curvature of utility ($\gamma > 1$) makes marginal utility negligible at high consumption levels, reducing the household's willingness to pay for the hedge (Remark~\ref{rem:extreme}). Second, when output is abundant, the fixed costs of intergenerational transfers become negligible relative to the surplus, enabling Coasean risk-sharing that directly eliminates displacement (Remark~\ref{rem:coase}). Together, these channels suggest that the hedging premium is largest for moderate singularities---severe enough to cause displacement but not so extreme that either channel dominates.
-
-Financial market solutions to AI disaster risk are under-discussed. Our analysis suggests that expanding the set of tradeable AI-related assets---through public listings of AI ventures, AI-linked derivatives, or government-facilitated risk-sharing instruments---could reduce the displacement premium and improve welfare by completing markets.
+The model is intentionally stylized. It omits heterogeneous households, production-side frictions, and endogenous innovation---scope choices that keep the displacement channel transparent. It does not generate a broad menu of testable predictions, nor does it attempt to match specific valuation levels. What it does deliver is a precise statement of when and why AI stocks command a premium that non-AI stocks do not: the hedging premium is largest for moderate singularities, severe enough to displace the household but not so extreme that abundance or utility saturation eliminates the motive to hedge.
 
 \printbibliography
 

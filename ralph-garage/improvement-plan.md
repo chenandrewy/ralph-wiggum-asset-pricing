@@ -1,42 +1,35 @@
 # Improvement Plan
-AUTHOR PLAN — 2026-04-02 21:47:58 EDT
+AUTHOR PLAN — 2026-04-02 21:58:06 EDT
 
 ## Status
+- **Build:** Compiles cleanly (13 pages).
+- **Tests:** 15/16 pass. One failure: `quality-writing`.
+- **Referees:** Disabled (no referee outputs).
 
-Paper compiles (13 pages). No overhaul needed — the model section is structurally sound. Three tests failing; all fixable with targeted edits.
+## Key Issue
 
-## Failing Tests
+The `quality-writing` test fails on the "compelling throughout" criterion. Two problems identified:
 
-### 1. factcheck-theory — Notational ambiguities
+1. **Conclusion (primary failure).** Three of four paragraphs are mechanical recap that restate the abstract and results. The test calls this out explicitly: "a reader scanning a JF issue would stop reading here." Only the final sentence ("Financial market solutions to AI disaster risk are under-discussed") adds forward-looking content.
 
-Two medium issues causing the failure:
+2. **Model section (secondary concern).** Opens with textbook-style exposition ("Time is discrete...") and proceeds mechanically through subsections without narrative connecting the formalism to the economic story. The test notes the contrast with the introduction's tone. The section's brevity partly mitigates this, but it still falls short of the paper's own "between academic paper and blog post" target.
 
-**Issue A: V subscript convention.** Throughout the paper, subscripts denote time ($Y_t$, $c_t$). But $V_0^A$ and $V_1$ use subscripts for regimes (pre/post-singularity). The convention is never stated.
+## Plan
 
-- **Fix:** Add an explicit statement when $V_0^A$ is first introduced in Proposition 1, e.g., "where subscripts 0 and 1 on $V$ denote pre- and post-singularity regimes."
+### 1. Rewrite the conclusion (Section 5)
 
-**Issue B: A(p) collides with superscript A.** In the Appendix proof of Proposition 3, $V_0^A = A(p)/B(p)$ uses $A$ as both a function name and the AI-stock superscript in the same expression.
+This is where the test fails. Changes:
 
-- **Fix:** Rename the proof auxiliaries to non-colliding symbols, e.g., $\mathcal{N}(p)/\mathcal{D}(p)$ or $f(p)/h(p)$.
+- **Cut the recap.** Remove the first two paragraphs that restate the abstract. The reader just read the paper — they don't need a summary of it.
+- **Lead with the forward-looking insight.** Open with the under-discussed policy point: expanding tradeable AI claims (public listings, derivatives, government risk-sharing) could reduce the displacement premium. This is the conclusion's only genuinely new content — make it the lead.
+- **Add a "what's left unsaid" paragraph.** Briefly note what the model deliberately omits and why — e.g., the model is intentionally stylized, avoids calibration, and does not generate a broad menu of testable predictions. Frame these as scope choices, not apologies.
+- **End with the paradox.** Close on the extension's punchline: the most extreme singularity eliminates displacement risk, so the hedging premium is largest for moderate singularities. This is the paper's most memorable result — let it be the last thing the reader sees.
+- **Target: 2 paragraphs max.** A compact conclusion that leaves the reader thinking, not skimming.
 
-**Minor issues to also fix:**
-- Remove orphaned $\Delta_0$ in Section 4.2 (used once, identical to $\Delta$, never appears in equations).
+### 2. Add narrative connective tissue to the model section (Section 2)
 
-### 2. quality-writing — Inaccurate self-demonstration description
+This is the secondary concern flagged by the test. Changes:
 
-The self-demonstration paragraph says "the paper specification and testing framework---approximately 80 lines." This implies 80 lines covers both spec and tests. The accurate description: the human wrote the spec (~80 lines) and the tests separately.
-
-- **Fix:** Rewrite to: "The human author contributed only the paper specification---approximately 80 lines---and the test suite. The AI performed all economic modeling, derivations, writing, and typesetting."
-
-### 3. spec-paper — Exhibit numbering comments inconsistent
-
-In `paper.tex`: figure = Exhibit 1, table = Exhibit 2. But `paper/exhibits/numerical-illustration.tex` labels itself Exhibit 1, and `code/run-all.R` reverses the ordering.
-
-- **Fix:** Align all exhibit number comments across `paper/exhibits/numerical-illustration.tex` and `code/run-all.R` to match `paper.tex` (figure = Exhibit 1, table = Exhibit 2).
-
-## Execution Order
-
-1. Fix notational ambiguities in `paper/paper.tex` (factcheck-theory).
-2. Fix self-demonstration paragraph in `paper/paper.tex` (quality-writing).
-3. Fix exhibit numbering comments in `paper/exhibits/numerical-illustration.tex` and `code/run-all.R` (spec-paper).
-4. Rebuild paper and rerun tests.
+- **Add a brief motivating sentence at the top of Section 2** that connects back to the introduction's intuition before diving into formalism. Something like: "We now translate the intuition from the introduction into a formal environment."
+- **Add a one-sentence forward pointer after the household's problem** (Section 2.3) linking the setup to the results: what will the Euler equation deliver?
+- **Keep it light.** The model section is already short (~1.5 pages). Do not pad it — just add the connective sentences that make it feel less like a textbook appendix.

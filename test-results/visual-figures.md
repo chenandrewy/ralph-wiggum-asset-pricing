@@ -1,7 +1,7 @@
 # tests/visual-figures.py
-Started: 2026-04-02 21:49:42 EDT
-Runtime: 34s
-[ralph-garage/agent-logs/20260402T214942.815911-0400_visual-figures_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260402T214942.815911-0400_visual-figures_claude_claude-opus-4-6.log)
+Started: 2026-04-02 21:59:20 EDT
+Runtime: 38s
+[ralph-garage/agent-logs/20260402T215920.396565-0400_visual-figures_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260402T215920.396565-0400_visual-figures_claude_claude-opus-4-6.log)
 
 # visual-figures
 
@@ -13,16 +13,19 @@ REASON: All figures pass readability and distinguishability checks.
 
 VERDICT: PASS
 
-REASON: Both series are rendered in clearly distinct colors with legible labels, titles, and tick marks throughout, and the legend does not obstruct the data.
+REASON: Both series are rendered in clearly distinct colors with legible labels, titles, and tick marks, and the legend does not obstruct the data.
 
 ### Full Figure (single panel)
 
-**Readability:** PASS
-- Title, axis labels, tick labels, and legend text are all clearly readable at adequate font sizes.
-- No text is cut off, overlapping, or too small.
+**Readability: PASS**
+- Title ("AI vs. Non-AI Stock Valuations (CRSP)") is clearly printed at the top.
+- Y-axis label ("Price / Trailing 12-Month Dividends") is readable.
+- X-axis year tick labels (2019–2025) are all legible.
+- Legend text in the upper-left corner is small but legible.
+- No text is cut off or overlapping.
 
-**Distinguishability:** PASS
-- The blue line (AI Stocks) and red/orange line (Non-AI Stocks) use clearly different colors and are easy to tell apart at a glance.
-- Strong spatial separation between the two series for most of the time range.
-- Legend is placed in the upper-left and does not obscure any meaningful portion of the data.
-- No confusing encodings or ambiguous visual elements.
+**Distinguishability: PASS**
+- Two series (AI Stocks in blue, Non-AI Stocks in red/orange) use clearly distinct colors and are easy to tell apart at a glance.
+- Shaded confidence bands around each line are distinguishable due to different colors and spatial separation.
+- Legend placement does not obscure any meaningful part of the plotted data.
+- Passes the instant-read test: the dramatic rise of the AI Stocks line vs. the flat Non-AI Stocks line further aids distinction.
