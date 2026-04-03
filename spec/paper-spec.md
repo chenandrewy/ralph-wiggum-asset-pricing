@@ -8,7 +8,7 @@
     - b. A *negative* AI singularity is an AI singularity that is devastating for the typical investor.
     - c. Incomplete markets refers to the idea that some assets cannot be bought by the representative investor. It does not necessarily refer to Arrow-Debreu securities.
 3. The paper makes the following arguments:
-    - a. Main argument: AI stocks may have high valuations, in part, because they help hedge against a negative AI singularity
+    - a. Main argument: AI stocks may have high valuations, **in part**, because they help hedge against a negative AI singularity
     - b. Incomplete markets are key: if markets are complete, the typical investor could buy stocks in private AI assets and benefit from the singularity along with the AI owners.
     - c. Financial market solutions to AI disaster risk are under-discussed.
     - d. If the singularity occurs, then market frictions can be overcome due to the abundance of resources.
@@ -17,17 +17,19 @@
     - b. Two agents: A representative household, who is the marginal investor, and AI owners who hold private AI capital, including unborn or not-yet-marketable capital, and are not marginal investors in public stocks.
     - c. Two publicly traded assets: AI stocks and non-AI stocks. AI stocks grow as a share of the economy with each singularity.
     - d. The main focus is on the price/dividend ratio of public AI stocks, and how it changes with the probability of a negative AI singularity.
+        - i. The price/dividend ratio is studied quantitatively in a table with compelling magnitudes.
     - e. The private AI capital and AI owners can also be thought of as unborn capital and future owners that do not yet exist, as in `spec/lit/GKP-2012-WP.md`.
-5. An extension of the main model addresses the referee's suggestions in `spec/CFR-R1-report.md`:
-    - a. The singularity may cause extinction, following `spec/lit/Jones-2024-AERI.md`.
+5. An extension of the main model makes the singularity analysis richer, following the advice in `spec/CFR-R1-report.md`. The extension includes the following features:
+    - a. The singularity may cause extinction, as in `spec/lit/Jones-2024-AERI.md`.
     - b. Consumption may become infinite (in our case, only for the AI owners).
-    - c. Government transfer programs attenuate displacement risk, emphasizing the role of heterogeneity at the singularity (cf. `spec/lit/Jones-2024-AERI.md`). Illustrate quantitatively: for a range of plausible singularity growth rates, how large can the deadweight cost of the program be before the attenuation is wiped out?
+    - c. A government transfer program can attenuate displacement risk (`spec/lit/GKP-2012-WP.md`), but produces deadweight costs that scale with the size of the program. But if output grows large enough in the singularity, these costs may be overcome. A table of quantitative illustrations for various output growth rates and deadweight costs.
+        - i. In the singularity, output can be infinite (`spec/lit/Jones-2024-AERI.md`), which implies that even huge deadweight costs may be overcome.
+        - ii. Applies Coase Theorem logic to the problem of AI displacement risk.
     - d. Keep these ideas in an extension, so that the main argument stays simple.
 6. The paper explains how it contributes relative to `spec/lit/GKP-2012-WP.md`
     - a. GKP note that government transfers would affect the magnitude of the displacement factor but do not conduct further analysis. The paper contributes a formal analysis with a quantitative illustration.
-    - b. Without frictions, intergenerational transfers (bequests, gifts, government debt) would allow existing agents to share in the gains of new entrants, eliminating displacement risk — this is the Coase Theorem logic. GKP's modeling assumes, quite reasonably, that such frictions exist and preserve the risk premium.
-    - c. A transfer program with deadweight costs can still attenuate displacement if output is large enough. The paper provides a quantitative illustration calibrated to a range of singularity growth rates, showing how much inefficiency the program can absorb.
-    - d. The characterization of the contribution is purposefully modest. The main insights about displacement risk and incomplete markets are already in GKP.
+        - i. The deadweight costs of such transfers may be very large, but in the singularity, such costs may be overcome.
+    - b. The characterization of the contribution is purposefully modest. The main insights about displacement risk and incomplete markets are already in GKP.
 
 ## II. Style Requirements
 
