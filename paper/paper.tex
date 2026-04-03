@@ -42,12 +42,12 @@
 
 The recent surge in AI stock valuations has drawn widespread attention. Between 2023 and 2025, the largest AI-related companies collectively gained trillions of dollars in market value, trading at price-dividend ratios far above historical norms. Figure~\ref{fig:ai-valuations} illustrates this pattern using CRSP data: the price-dividend ratio of major AI stocks has risen sharply relative to non-AI stocks. Standard explanations point to expected cash flows from AI products and services. We propose an additional channel: publicly traded AI stocks command a valuation premium because they serve as a hedge against a negative AI singularity.
 
-% \begin{figure}[ht]
-% \centering
-% \includegraphics[width=0.85\textwidth]{exhibits/ai-valuations.pdf}
-% \caption{Price-dividend ratios for AI stocks (NVDA, MSFT, GOOGL, META, AMZN) versus the rest of the CRSP universe, computed using trailing 12-month dividends.}
-% \label{fig:ai-valuations} % Exhibit 1
-% \end{figure}
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.85\textwidth]{exhibits/ai-valuations.pdf}
+\caption{Price-dividend ratios for AI stocks (NVDA, MSFT, GOOGL, META, AMZN) versus the rest of the CRSP universe, computed using trailing 12-month dividends.}
+\label{fig:ai-valuations} % Exhibit 1
+\end{figure}
 
 Consider a representative investor whose wealth is largely tied to existing firms and human capital. A sudden AI breakthrough---a singularity---could dramatically increase productivity while shifting the economy's structure, displacing traditional businesses and reducing the investor's share of total output. Private AI ventures and yet-to-be-created firms would capture much of the new value, but the typical investor cannot buy these assets. They are either privately held, illiquid, or simply do not yet exist. In this world of incomplete markets, publicly traded AI stocks offer the best available hedge: they are the investor's only tradeable claim on the AI upside.
 
@@ -60,11 +60,7 @@ In an extension, we connect to \citet{Jones2024} on the trade-off between AI-dri
 This paper itself illustrates the displacement risk it models. All analysis and writing were performed by AI agents working from a human-written specification. The human author contributed only the paper specification---approximately 80 lines---and the test suite. The AI performed all economic modeling, derivations, writing, and typesetting.\footnote{The production process used Claude (Anthropic) as the AI system, operating within an automated loop that iteratively improved the paper against formal tests.}
 
 \paragraph{Related literature.}
-Our paper builds most directly on \citet{GKP2012}, who introduce displacement risk in an overlapping-generations economy with innovation. They show that innovation creates a systematic risk factor because new entrants capture rents that existing agents cannot share. We apply their core insight---that incomplete intergenerational risk-sharing generates a priced risk factor---to the specific context of an AI singularity. Our contribution relative to GKP is purposefully modest: the main economic insights about displacement risk and incomplete markets originate in their work. We contribute a formal analysis of how the magnitude of displacement risk changes with singularity probability, and of the conditions under which intergenerational frictions can be overcome. \citet{GarleanuPanageas2015} further develop the OLG asset pricing framework with heterogeneous agents and finite lives, characterizing how incomplete intergenerational risk-sharing shapes portfolio choice and prices---the same friction that drives our hedging premium. \citet{KoganPapanikolaouStoffman2020} extend the displacement risk framework to creative destruction and inequality, while \citet{KoganPapanikolaou2014} analyze how technology shocks affect asset prices through growth opportunities. \citet{Knesl2023} develops a model in which automation displaces labor, generating a displacement risk premium in the cross section of stock returns; our model complements his by focusing on how incomplete markets create a hedging motive specific to AI stocks.
-
-Our model shares features with the rare disasters literature \citep{Rietz1988, Barro2006, Wachter2013}. The singularity is a type of rare disaster, but with asymmetric effects across sectors: AI stocks benefit while non-AI stocks suffer. This sectoral asymmetry generates cross-sectional predictions absent from standard disaster models.
-
-On the economics of AI, \citet{Jones2024} analyzes the trade-off between AI-driven growth and existential risk, showing that the curvature of utility is central to evaluating this trade-off. \citet{BabinaEtAl2024} provide empirical evidence that AI adoption drives firm growth and product innovation, consistent with the premise that AI stocks capture a growing share of output. \citet{KorinekSuh2024} study scenarios for the transition to artificial general intelligence. \citet{AcemogluRestrepo2018} model the race between automation and labor. \citet{PastorVeronesi2009} study how technological revolutions affect stock prices through uncertainty about productivity, and \citet{HobijnJovanovic2001} document the negative impact of IT innovation on incumbent firms.
+Our paper builds most directly on \citet{GKP2012}, who introduce displacement risk in an overlapping-generations economy with innovation. They show that incomplete intergenerational risk-sharing generates a priced risk factor because new entrants capture rents that existing agents cannot share. We apply their core insight to the specific context of an AI singularity. Our contribution relative to GKP is purposefully modest: the main economic insights originate in their work. We contribute a formal analysis of how displacement risk changes with singularity probability and of when intergenerational frictions can be overcome. Related work extends the displacement framework: \citet{GarleanuPanageas2015} and \citet{KoganPapanikolaouStoffman2020} develop OLG asset pricing with incomplete risk-sharing; \citet{KoganPapanikolaou2014} analyze technology shocks and growth opportunities; \citet{Knesl2023} and \citet{Zhang2019} model automation-driven displacement risk premia in the cross section of stock returns. Our model shares features with the rare disasters literature \citep{Rietz1988, Barro2006, Wachter2013}, but with asymmetric sectoral effects that generate cross-sectional predictions absent from standard disaster models. On AI economics, \citet{Jones2024} analyzes the trade-off between AI-driven growth and existential risk; \citet{BabinaEtAl2024} provide evidence that AI adoption drives firm growth; \citet{PastorVeronesi2009} study how technological revolutions affect stock prices; and \citet{HobijnJovanovic2001} document the negative impact of IT innovation on incumbent firms.
 
 %% ============================================================
 %% Section 2: Model
@@ -139,9 +135,9 @@ The standard Euler equation for asset $i \in \{A, N\}$ is
 \begin{equation}
 P_t^i = E_t \left[ \beta \left( \frac{c_{t+1}}{c_t} \right)^{-\gamma} \left( D_{t+1}^i + P_{t+1}^i \right) \right]. \label{eq:euler}
 \end{equation}
-This equation will deliver the hedging premium: because the household's consumption falls at the singularity ($\Delta < 1$), its stochastic discount factor is high precisely when AI stocks pay well.
+This equation will deliver the hedging premium: because displacement reduces the household's consumption share ($\Delta < 1$), pushing up marginal utility in singularity states, the stochastic discount factor is high precisely when AI stocks pay well.
 
-\subsection{Equilibrium} % Section 2.4
+\subsection{Parameter restrictions} % Section 2.4
 
 We focus on the pre-singularity regime, in which the economy may transition to the post-singularity regime with probability $p$ each period. In both regimes, the price-dividend ratio of each asset is constant (because dividend growth rates and consumption growth rates are i.i.d.\ within each regime). We impose the following parameter restrictions.
 
@@ -192,7 +188,7 @@ Under Assumptions~\ref{as:neg-sing}--\ref{as:existence}, the price-dividend rati
 \begin{equation}
 \frac{\partial V_{\mathrm{pre}}^A}{\partial p} > 0 \quad \text{if and only if} \quad \Phi^A(1 + V_{\mathrm{post}}) > \frac{R}{1 - R}. \label{eq:comp-static}
 \end{equation}
-The right-hand side equals $V_{\mathrm{pre}}^A\big|_{p=0}$, the price-dividend ratio in a world with no singularity risk. The condition holds when displacement is sufficiently severe ($\Delta$ small), risk aversion is sufficiently high ($\gamma$ large), or the AI share gain is sufficiently large ($\tilde{\theta}/\theta$ large).
+The right-hand side equals $V_{\mathrm{pre}}^A\big|_{p=0}$, the price-dividend ratio in a world with no singularity risk. The condition holds when displacement is sufficiently severe ($\Delta$ small), risk aversion is sufficiently high ($\gamma$ large), the AI share gain is sufficiently large ($\tilde{\theta}/\theta$ large), or post-singularity growth $\tilde{g}$ is not too large (for $\gamma > 1$, very large $\tilde{g}$ drives $\Phi^A \to 0$, as discussed in Remark~\ref{rem:extreme}).
 \end{proposition}
 
 \begin{proof}

@@ -1,28 +1,28 @@
 # tests/factcheck-anaphora.py
-Started: 2026-04-02 22:28:07 EDT
-Runtime: 4m 21s
-[ralph-garage/agent-logs/20260402T222807.263868-0400_factcheck-anaphora_claude_opus.log](../ralph-garage/agent-logs/20260402T222807.263868-0400_factcheck-anaphora_claude_opus.log)
+Started: 2026-04-02 22:39:49 EDT
+Runtime: 2m 1s
+[ralph-garage/agent-logs/20260402T223949.792111-0400_factcheck-anaphora_claude_opus.log](../ralph-garage/agent-logs/20260402T223949.792111-0400_factcheck-anaphora_claude_opus.log)
 
 # factcheck-anaphora
 VERDICT: PASS
-REASON: All demonstratives near cross-references resolve correctly to meanings that match their targets.
+REASON: All demonstratives near cross-references resolve correctly to the meaning of their referenced targets.
 
 ## Findings by section
 
-### Introduction (lines 41--68)
-No errors. Line 43 uses "this pattern" near `\ref{fig:ai-valuations}`; the demonstrative refers to elevated price-dividend ratios described in the preceding sentence, and the figure depicts exactly that (AI vs non-AI P/D ratios). Resolution is correct.
+### Introduction (lines 41–67)
+No issues. The one demonstrative near a cross-reference—"this pattern" before `\ref{fig:ai-valuations}` (line 43)—correctly refers to the price-dividend ratio pattern that the figure depicts.
 
-### Model (lines 72--153)
-No errors. Checked demonstratives on lines 86 ("such a scenario"), 88 ("this is our own modeling choice"), 117 ("Assumption 1 states that Delta < 1"), 142 ("This equation"), and 152 ("These ensure"). All resolve correctly to their intended referents.
+### Model (lines 68–152)
+No issues. No demonstratives are paired with `\ref` or `\eqref` commands in this section. Demonstratives like "This equation" (line 138) and "These" (line 148) resolve by proximity to immediately preceding display environments, not via cross-references.
 
-### Results (lines 157--226)
-No errors. Checked demonstratives on line 188 ("such a hedge" near `\ref{as:ai-share}`), line 202 ("this condition" near `\eqref{eq:comp-static}`), and line 220 (near `\ref{prop:complete}`). All cross-reference targets match the prose descriptions.
+### Results (lines 153–225)
+No issues. The one demonstrative near a cross-reference—"this condition" following `\eqref{eq:comp-static}` (line 198)—accurately paraphrases the referenced inequality as requiring the singularity-state contribution to exceed the no-singularity baseline.
 
-### Extension (lines 230--267)
-No errors. No demonstratives appear adjacent to `\ref` or `\eqref` commands in this section. Standalone demonstratives ("This connects," "In this limit") resolve unambiguously to their immediate antecedents.
+### Extension (lines 226–266)
+No issues. Demonstratives in this section ("This connects," "This observation," "This result") refer to immediately preceding prose or remarks by proximity; none are paired with `\ref` or `\eqref`.
 
-### Conclusion (lines 271--276)
-No errors. No cross-references appear in this section.
+### Conclusion (lines 267–278)
+No issues. No cross-references appear in this section.
 
-### Proofs (lines 283--297)
-No errors. Line 296 "This is positive" correctly refers to the numerator expression on line 294, and "condition \eqref{eq:comp-static}" correctly maps to the inequality stated in Proposition 2.
+### Proofs (lines 279–295)
+No issues. The phrase "condition~\eqref{eq:comp-static} follows" (line 292) correctly identifies the referenced equation as the condition just derived in the proof.

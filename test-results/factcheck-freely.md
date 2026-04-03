@@ -1,42 +1,27 @@
 # tests/factcheck-freely.py
-Started: 2026-04-02 22:28:07 EDT
-Runtime: 7m 37s
-[ralph-garage/agent-logs/20260402T222807.260603-0400_factcheck-freely_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260402T222807.260603-0400_factcheck-freely_claude_claude-opus-4-6.log)
+Started: 2026-04-02 22:39:49 EDT
+Runtime: 5m 24s
+[ralph-garage/agent-logs/20260402T223949.798459-0400_factcheck-freely_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260402T223949.798459-0400_factcheck-freely_claude_claude-opus-4-6.log)
 
 # factcheck-freely
 VERDICT: FAIL
-REASON: The paper conflates the household's consumption share falling ($\Delta < 1$) with consumption level falling, and Proposition 2's verbal characterization omits a key parameter dependence.
+REASON: Notation inconsistency between table headers (V_0) and paper body (V_pre).
 
-## Details
+## Notation Inconsistency: Table vs. Body
 
-### 1. Imprecise SDF claim (line 142)
+**Location**: Exhibit 2 (`paper/exhibits/numerical-illustration.tex`) vs. Propositions 1–3 in Section 3
 
-The text states: "because the household's consumption falls at the singularity ($\Delta < 1$), its stochastic discount factor is high precisely when AI stocks pay well."
+The paper body consistently defines and uses `V_{\mathrm{pre}}` and `V_{\mathrm{post}}` notation for pre- and post-singularity price-dividend ratios (equations 5–10, all proofs). However, the numerical illustration table (Exhibit 2) uses `V_0^A`, `V_0^N`, `V_0^{A,\mathrm{CM}}` in its column headers and notes. A reader encountering `V_0` in the table would not immediately connect it to the `V_{\mathrm{pre}}` defined in the model section. This is a notation inconsistency within the paper.
 
-$\Delta < 1$ means the consumption *share* falls, not necessarily the consumption *level*. At the singularity transition, consumption growth is $\Delta(1+\tilde{g})$. Whether consumption actually falls (and the SDF is high) depends on whether $\Delta(1+\tilde{g}) < 1$. For the paper's calibration ($\Delta=0.75$, $\tilde{g}=0.05$), this holds ($0.7875 < 1$). But for larger $\tilde{g}$ (e.g., $\tilde{g}=0.50$ gives $1.125 > 1$), consumption rises and the SDF is actually *lower* than in normal states. The paper's own Remark 1 acknowledges that for extreme $\tilde{g}$ the hedging premium vanishes, but the informal argument at line 142 does not qualify the claim.
+The inconsistency originates in `code/numerical-illustration.R` (lines 71, 83), which generates the table with `V_0` notation rather than the `V_{\mathrm{pre}}` convention used in the paper body.
 
-### 2. Proposition 2 verbal characterization incomplete (lines 190-196)
+## Items Verified as Correct
 
-Proposition 2 states that the condition for $\partial V_{\mathrm{pre}}^A / \partial p > 0$ "holds when displacement is sufficiently severe ($\Delta$ small), risk aversion is sufficiently high ($\gamma$ large), or the AI share gain is sufficiently large ($\tilde{\theta}/\theta$ large)." This omits a critical dependence: the condition *fails* when post-singularity growth $\tilde{g}$ is sufficiently large, because $\Phi^A \to 0$ as $\tilde{g} \to \infty$ for $\gamma > 1$. This is economically important given the paper's framing around "large disruptions" and "singularities that vastly increase productivity."
-
-### 3. Broken figure reference (line 43)
-
-The introduction references "Figure~\ref{fig:ai-valuations}" but the figure environment is commented out (lines 45-50), producing a broken reference in the compiled paper.
-
-### 4. Exhibit numbering gap
-
-With Figure 1 (Exhibit 1) commented out, only Exhibit 2 (the numerical table) appears, creating a numbering gap.
-
-### 5. Notation mismatch between code and paper
-
-The R code uses $V_0$ subscripts while the paper uses $V_{\mathrm{pre}}$ subscripts in the generated table.
-
-### Verified correct
-
-- All numerical values in the paper match the code output
-- Proposition 1 derivation and formulas
-- Proposition 2 proof algebra (Appendix A)
-- Proposition 3 hedging premium formula
-- Extinction risk formula
-- Remark 1 (extreme singularity limit)
-- Literature characterizations (GKP 2012, Jones 2024, etc.)
+- **Propositions 1–3**: Mathematical derivations and proofs check out algebraically. The Euler equation expansion, probability-weighted contributions, closed-form solutions, quotient-rule derivative, and hedging premium formula are all correct.
+- **Numerical values**: All stated values (V_pre^A = 16.1, V_pre^N = 11.6, ratio of 1.4, hedging premium ~25%) verify against the model formulas.
+- **Assumption 3 (existence conditions)**: Correctly stated as automatically satisfied when gamma > 1 with positive growth rates.
+- **Remark 1 (extreme singularity)**: Correct limit behavior as g_tilde → ∞ for gamma > 1 and gamma = 1.
+- **Extinction risk formula (equation 12)**: Correctly multiplies singularity-state contribution by (1-q).
+- **GKP and Jones (2024) citations**: Descriptions accurately represent source papers.
+- **CRSP data methodology**: The query correctly uses CRSP permnos, which handle ticker changes (e.g., FB → META), so the AI basket is complete across the sample period.
+- **Model internal consistency**: Absorbing-event structure, consumption shares, market clearing, and budget constraints are all internally consistent.

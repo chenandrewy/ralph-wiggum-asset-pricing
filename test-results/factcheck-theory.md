@@ -1,55 +1,58 @@
 # tests/factcheck-theory.py
-Started: 2026-04-02 22:28:07 EDT
-Runtime: 6m 1s
-[ralph-garage/agent-logs/20260402T222807.259950-0400_factcheck-theory_claude_opus.log](../ralph-garage/agent-logs/20260402T222807.259950-0400_factcheck-theory_claude_opus.log)
+Started: 2026-04-02 22:39:49 EDT
+Runtime: 5m 50s
+[ralph-garage/agent-logs/20260402T223949.801599-0400_factcheck-theory_claude_opus.log](../ralph-garage/agent-logs/20260402T223949.801599-0400_factcheck-theory_claude_opus.log)
 
 # factcheck-theory
+
 VERDICT: PASS
-REASON: All notation is consistent, all assumptions are mutually consistent, and all mathematical objects trace back to the assumptions.
+REASON: All notation is internally consistent, all assumptions are mutually compatible, and all mathematical objects trace back to the assumptions with correct derivations.
 
-## Requirement 1: Notational Consistency
+## 1. Notational Consistency (Requirement 1): PASS
 
-**PASS.** 25 symbol families were catalogued. All conventions (tilde = post-singularity, superscripts A/N/P = asset type, subscripts pre/post/CM = regime) are introduced explicitly and applied uniformly. No true collisions or ambiguities found.
+21 symbol families were cataloged. Every symbol is defined before use, used consistently, and no symbol family is repurposed for a different formal object anywhere in the paper.
 
-Minor observations (none rising to failure):
-- LaTeX source uses `\text{CM}` in one place and `\mathrm{CM}` elsewhere; renders identically.
-- $R$ denotes a discount-factor composite rather than a gross return (conventional finance meaning), but is explicitly defined.
-- The letter $P$ serves as both the price base symbol and the "private" superscript, but $P_t^P$ never appears.
+**Conventions verified as consistent throughout:**
+- Tilde convention (post-singularity values): g̃, θ̃, ν̃, ω̃ — all uniform
+- Superscript convention (asset type / market structure): A, N, P, CM, q — all stable
+- Subscript convention (time vs. regime): t/t+1 on time-varying quantities; pre/post on regime-constant P/D ratios — no collision
 
-## Requirement 2: Assumption Consistency
+**Minor readability notes (no internal collisions):**
+- R is used for the normal-state pricing kernel β(1+g)^{1−γ}, which could be confused with gross returns by finance readers. No within-paper collision.
+- Δ is used as a ratio (ω̃/ω), not a difference operator. No within-paper collision.
+- `\text{CM}` vs `\mathrm{CM}` LaTeX source inconsistency (lines 203 vs 219) — visually identical output.
 
-**PASS.** 18 assumptions identified (3 formal, 4 parameter domain restrictions, 9 implicit structural, 2 proposition-level conditions). All are mutually consistent.
+## 2. Assumption Consistency (Requirement 2): PASS
 
-Key checks:
-- A1 ($\tilde{\omega} < \omega$) and A2 ($\tilde{\theta} > \theta$, $\tilde{\nu} < \nu$) are logically independent and jointly satisfiable: the non-AI loss must exceed the AI gain, with the difference captured by private capital.
-- A3 (existence conditions) is redundant given $\gamma > 1$, $\beta \in (0,1)$, and $g > 0$; the paper correctly notes this.
-- A14 (incomplete markets) and A18 (complete markets) are not imposed simultaneously; A18 is a counterfactual.
-- The numerical example ($\beta=0.96, \gamma=3, g=0.02, \tilde{g}=0.05, \theta=0.05, \tilde{\theta}=0.15, \nu=0.55, \tilde{\nu}=0.30$) satisfies all restrictions simultaneously, serving as a constructive witness.
+**Formal assumptions:**
+- A1 (Negative singularity): ω̃ < ω, i.e., Δ < 1
+- A2 (AI share growth): θ̃ > θ and ν̃ < ν
+- A3 (Existence): (1−p)β(1+g)^{1−γ} < 1 and β(1+g̃)^{1−γ} < 1
 
-## Requirement 3: Traceability of Mathematical Objects
+**Findings:**
+- A1 and A2 are logically independent (neither implies the other). Correct model design.
+- A3 is redundant given γ > 1, β ∈ (0,1), and positive growth rates. The paper correctly acknowledges this (line 148).
+- The paper's numerical illustration (β=0.96, γ=3, g=0.02, g̃=0.05, θ=0.05, θ̃=0.15, ν=0.55, ν̃=0.30, p=0.01) satisfies all assumptions simultaneously.
+- No conflicts between baseline and extension assumptions. Extension parameters (q, F, τ) are independent of baseline constraints.
 
-**PASS.** Every mathematical expression in the paper traces back to the model primitives ($p, \beta, \gamma, g, \tilde{g}, \theta, \tilde{\theta}, \nu, \tilde{\nu}$) and the Euler equation.
+**Minor notes:**
+- Output share positivity (θ, ν, θ̃, ν̃ ∈ (0,1) with θ+ν < 1, θ̃+ν̃ < 1) is required but never formally stated. Standard implicit assumption.
+- Remark 1 (line 241) mentions γ=1 (log utility), which is outside the maintained assumption γ > 1. This is a boundary observation, not a claimed result, but could be qualified.
 
-### Derived objects and their provenance
+## 3. Traceability of Mathematical Objects (Requirement 3): PASS
 
-| Object | Defined from |
-|--------|-------------|
-| $\omega, \tilde{\omega}, \Delta$ | Output share parameters $\theta, \tilde{\theta}, \nu, \tilde{\nu}$ |
-| $R$ | $\beta, g, \gamma$ |
-| $\Phi^A$ | $\beta, \Delta, \gamma, \tilde{g}, \tilde{\theta}, \theta$ |
-| $\Phi^N$ | $\beta, \Delta, \gamma, \tilde{g}, \tilde{\nu}, \nu$ |
-| $V_{\mathrm{post}}$ | $\beta, \tilde{g}, \gamma$ via Euler equation |
-| $V_{\mathrm{pre}}^A, V_{\mathrm{pre}}^N$ | $p, R, \Phi^{A/N}, V_{\mathrm{post}}$ via Euler equation |
-| $\Phi^{A,\mathrm{CM}}, V_{\mathrm{pre}}^{A,\mathrm{CM}}$ | Complete-markets counterfactual (removes $\Delta^{-\gamma}$) |
-| $V_{\mathrm{pre}}^{A,q}$ | Adds extinction parameter $q$; multiplies singularity term by $(1-q)$ |
-| $F, \tau, T$ | Self-contained extension parameters (Sec 4.2) |
-| $\mathcal{N}(p), \mathcal{D}(p)$ | Proof-local auxiliaries for Prop. 2 |
+Every mathematical expression in the paper traces back to the primitive parameters and assumptions through a clear derivation chain:
 
-### Derivation verification
+1. **Primitives** → β, γ, g, g̃, p, θ, θ̃, ν, ν̃ (from model environment and assumptions)
+2. **Definitions** → ω, ω̃, Δ (algebraic combinations of primitives)
+3. **Pricing objects** → R, Φ^A, Φ^N, V_post (from Euler equation applied to primitives)
+4. **Equilibrium** → c_t = ωY_t (from market clearing + dividend definitions)
+5. **Results** → V_pre^A, V_pre^N, V_pre^{A,CM}, hedging premium (from Euler equation + above)
+6. **Extension** → V_pre^{A,q}, friction cost eq (9) (from new parameters q, F, τ + baseline)
 
-- **Proposition 1:** Euler equation expanded over two states (no-singularity with prob $1-p$, singularity with prob $p$). Consumption growth and dividend growth in each state follow from the assumptions. Solving the fixed-point equation for $V_{\mathrm{pre}}^A$ yields the closed-form expression. Verified correct.
-- **Proposition 2:** Quotient rule applied to $V_{\mathrm{pre}}^A = \mathcal{N}(p)/\mathcal{D}(p)$. The numerator of the derivative simplifies to $\Phi^A(1+V_{\mathrm{post}})(1-R) - R$, giving the stated if-and-only-if condition. The identity $R/(1-R) = V_{\mathrm{pre}}^A\big|_{p=0}$ is the standard Gordon growth formula. Verified correct.
-- **Proposition 3:** Under complete markets, household consumption equals total output, so singularity-state consumption growth is $(1+\tilde{g})$ rather than $\Delta(1+\tilde{g})$. This removes $\Delta^{-\gamma}$ from $\Phi^A$. The hedging premium follows by subtraction. Verified correct.
-- **Eq. (18) (extinction):** Extinction state contributes zero to asset values (by stated convention). Singularity contribution is multiplied by $(1-q)$. Verified correct.
+**Proof verification:**
+- Proposition 1 (P/D ratios): Euler equation expansion verified. Two-state decomposition (no singularity / singularity) correctly yields eqs (6a)-(6b).
+- Proposition 2 (comparative static): Quotient rule derivative verified. Numerator simplification in eqs (15)-(16) is algebraically correct. The condition Φ^A(1+V_post) > R/(1−R) correctly characterizes positivity.
+- Proposition 3 (complete markets): Setting Δ=1 in Φ^A correctly yields Φ^{A,CM}. Subtraction yields eq (12), which is positive since Δ^{−γ} > 1 when Δ < 1 and γ > 1.
 
-No expression in the paper fails to derive from the stated assumptions and model structure.
+No expression in the paper fails to trace back to the assumptions.
