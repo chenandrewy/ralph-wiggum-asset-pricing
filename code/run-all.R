@@ -14,10 +14,10 @@ run_script <- function(script) {
   if (ret != 0) stop(sprintf("%s failed with exit code %d", script, ret), call. = FALSE)
 }
 
-# ---- Exhibit 1: Numerical Illustration Table ----
+# ---- Exhibit 2: Numerical Illustration Table ----
 run_script("code/numerical-illustration.R")
 
-# ---- Exhibit 2: AI vs Non-AI Valuations Figure ----
+# ---- Exhibit 1: AI vs Non-AI Valuations Figure ----
 run_script("code/ai-valuations-figure.R")
 
 cat("\n=== Pipeline complete ===\n")

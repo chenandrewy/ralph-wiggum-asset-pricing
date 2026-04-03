@@ -57,7 +57,7 @@ We derive the price-dividend ratio of AI stocks in closed form. Under natural pa
 
 In an extension, we connect to \citet{Jones2024} on the trade-off between AI-driven growth and existential risk. When the singularity produces very large output, the frictions that sustain displacement risk---the barriers to intergenerational risk-sharing emphasized by \citet{GKP2012}---can be overcome. Even modest transfer mechanisms suffice when the surplus is enormous. Paradoxically, the most extreme AI singularity reduces displacement risk. We also incorporate extinction risk: if the singularity may destroy the economy entirely, the hedging premium is attenuated.
 
-This paper itself illustrates the displacement risk it models. All analysis and writing were performed by AI agents working from a human-written specification. The human author contributed only the paper specification and testing framework---approximately 80 lines of instructions. The AI performed all economic modeling, derivations, writing, and typesetting.\footnote{The production process used Claude (Anthropic) as the AI system, operating within an automated loop that iteratively improved the paper against formal tests.}
+This paper itself illustrates the displacement risk it models. All analysis and writing were performed by AI agents working from a human-written specification. The human author contributed only the paper specification---approximately 80 lines---and the test suite. The AI performed all economic modeling, derivations, writing, and typesetting.\footnote{The production process used Claude (Anthropic) as the AI system, operating within an automated loop that iteratively improved the paper against formal tests.}
 
 \paragraph{Related literature.}
 Our paper builds most directly on \citet{GKP2012}, who introduce displacement risk in an overlapping-generations economy with innovation. They show that innovation creates a systematic risk factor because new entrants capture rents that existing agents cannot share. We apply their core insight---that incomplete intergenerational risk-sharing generates a priced risk factor---to the specific context of an AI singularity. Our contribution relative to GKP is purposefully modest: the main economic insights about displacement risk and incomplete markets originate in their work. We contribute a formal analysis of how the magnitude of displacement risk changes with singularity probability, and of the conditions under which intergenerational frictions can be overcome. \citet{KoganPapanikolaouStoffman2020} extend the displacement risk framework to study how creative destruction generates inequality and cross-sectional return premia, while \citet{KoganPapanikolaou2014} analyze how investment-specific technology shocks affect asset prices through growth opportunities.
@@ -154,7 +154,7 @@ These ensure that price-dividend ratios are finite. They are automatically satis
 \section{Results} % Section 3
 
 \begin{proposition}[Price-dividend ratios] \label{prop:pd} % Proposition 1
-Under Assumptions~\ref{as:neg-sing}--\ref{as:existence}, the price-dividend ratio of public AI stocks in the pre-singularity regime is
+Under Assumptions~\ref{as:neg-sing}--\ref{as:existence}, the price-dividend ratio of public AI stocks in the pre-singularity regime is (where subscripts 0 and 1 on $V$ denote pre- and post-singularity regimes, not time)
 \begin{equation}
 V_0^A = \frac{(1-p)\,R + p\,\Phi^A\,(1 + V_1)}{1 - (1-p)\,R}, \label{eq:pd-ai}
 \end{equation}
@@ -261,7 +261,7 @@ This observation complements \citet{Jones2024}: just as the curvature of utility
 
 \citet{GKP2012} assume that intergenerational risk-sharing fails due to frictions: future innovators cannot (or do not) trade with existing agents. This is what creates displacement risk. GKP discuss how mechanisms such as bequests, government debt, and intergenerational transfers would affect the magnitude of the displacement factor---noting, for instance, that in a representative dynasty with perfect altruism the displacement factor equals one---but do not conduct a formal analysis of how these mechanisms scale with output. We take up this question.
 
-Transfers---bequests, government programs, private insurance---can offset displacement. With no transfers, the displacement ratio is $\Delta_0 = \tilde{\omega}/\omega < 1$ as before. With full transfers, $\Delta = 1$ and the hedging premium vanishes, as in the complete-markets case. The key question is what determines the extent of risk-sharing. The Coase theorem implies that if property rights are well-defined and transaction costs are zero, the parties will bargain to an efficient (fully risk-sharing) outcome. GKP's assumption that displacement persists is driven by real-world frictions: the administrative cost of government transfers, the impossibility of contracting with unborn agents, legal barriers to intergenerational deals.
+Transfers---bequests, government programs, private insurance---can offset displacement. With no transfers, the displacement ratio is $\Delta = \tilde{\omega}/\omega < 1$ as before. With full transfers, $\Delta = 1$ and the hedging premium vanishes, as in the complete-markets case. The key question is what determines the extent of risk-sharing. The Coase theorem implies that if property rights are well-defined and transaction costs are zero, the parties will bargain to an efficient (fully risk-sharing) outcome. GKP's assumption that displacement persists is driven by real-world frictions: the administrative cost of government transfers, the impossibility of contracting with unborn agents, legal barriers to intergenerational deals.
 
 When the singularity produces very large output, the surplus from risk-sharing---the total gains from trade between AI owners and the household---grows with output. If the friction costs contain any fixed component, they become negligible relative to the surplus as output grows. Formally, suppose the cost of implementing transfers is $F + \tau T$, where $F > 0$ is a fixed cost, $\tau \geq 0$ is a proportional cost, and $T$ is the transfer amount. The transfer needed to keep the household's share at $\omega$ is $T = (\omega - \tilde{\omega})\,Y$. The net cost as a fraction of total output is
 \begin{equation}
@@ -297,11 +297,11 @@ Financial market solutions to AI disaster risk are under-discussed. Our analysis
 \section{Proofs} \label{app:proofs} % Appendix A
 
 \begin{proof}[Proof of Proposition~\ref{prop:comp-static}]
-From equation~\eqref{eq:pd-ai}, write $V_0^A = A(p)/B(p)$ where $A(p) = (1-p)\,R + p\,\Phi^A(1+V_1)$ and $B(p) = 1 - (1-p)\,R$. Then
+From equation~\eqref{eq:pd-ai}, write $V_0^A = \mathcal{N}(p)/\mathcal{D}(p)$ where $\mathcal{N}(p) = (1-p)\,R + p\,\Phi^A(1+V_1)$ and $\mathcal{D}(p) = 1 - (1-p)\,R$. Then
 \begin{equation}
-\frac{\partial V_0^A}{\partial p} = \frac{A'(p)\,B(p) - A(p)\,B'(p)}{B(p)^2}, \label{eq:deriv}
+\frac{\partial V_0^A}{\partial p} = \frac{\mathcal{N}'(p)\,\mathcal{D}(p) - \mathcal{N}(p)\,\mathcal{D}'(p)}{\mathcal{D}(p)^2}, \label{eq:deriv}
 \end{equation}
-where $A'(p) = -R + \Phi^A(1+V_1)$ and $B'(p) = R$. Expanding the numerator:
+where $\mathcal{N}'(p) = -R + \Phi^A(1+V_1)$ and $\mathcal{D}'(p) = R$. Expanding the numerator:
 \begin{align}
 &\bigl[-R + \Phi^A(1+V_1)\bigr]\bigl[1-(1-p)R\bigr] - \bigl[(1-p)R + p\,\Phi^A(1+V_1)\bigr]\,R \label{eq:numerator-expand} \\
 &= -R + \Phi^A(1+V_1) - R\,\Phi^A(1+V_1) \label{eq:numerator-simplify} \\

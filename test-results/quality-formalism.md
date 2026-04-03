@@ -1,48 +1,65 @@
 # tests/quality-formalism.py
-Started: 2026-04-02 18:45:35 EDT
-Runtime: 1m 38s
-[ralph-garage/agent-logs/20260402T184535.059891-0400_quality-formalism_claude_opus.log](../ralph-garage/agent-logs/20260402T184535.059891-0400_quality-formalism_claude_opus.log)
+Started: 2026-04-02 21:49:42 EDT
+Runtime: 1m 45s
+[ralph-garage/agent-logs/20260402T214942.812167-0400_quality-formalism_claude_opus.log](../ralph-garage/agent-logs/20260402T214942.812167-0400_quality-formalism_claude_opus.log)
 
 # quality-formalism
 VERDICT: PASS
-REASON: The paper maintains tight formalism throughout; every formal object does economic work, empirical and quantitative content is appropriately limited, and there are no scope detours.
+REASON: The paper maintains lean, economical formalism where each formal object does distinct economic work, and scope remains tightly controlled.
 
 ## 8a — Theory style
 
-**PASS** (with minor note)
+**PASS**
 
-### Dead-weight formalism: None found.
+### Dead-weight formalism: None found
 
-Every proposition, assumption, and remark advances the paper's economic claims. Propositions 1-4 each do distinct work: closed-form P/D ratios, cross-sectional spread, comparative statics in p, and the incomplete-vs-complete markets comparison. The two remarks in the extension handle the spec-required connections to Jones (2024): extreme singularity limits (Remark 1) and Coasean friction-overcoming (Remark 2). The appendix proof of Proposition 3 is necessary and compact.
+Every formal object (Assumptions 1--3, Propositions 1--4, Remarks 1--2) serves a distinct role:
 
-### Compressible formalism: None that warrant failure.
+- **Assumptions 1--3** are standard model primitives that define the economic environment and ensure well-defined equilibrium. No assumption is introduced and then ignored.
+- **Proposition 1** delivers the closed-form PD ratios that anchor all subsequent results. Both AI and non-AI formulas are needed (non-AI feeds Proposition 2).
+- **Proposition 2** (cross-section) is a direct subtraction but states the paper's key cross-sectional claim. It earns its place as a named result.
+- **Proposition 3** (comparative static) directly addresses the paper's central question: does singularity probability raise AI valuations? The sufficient condition is interpretable and economically meaningful.
+- **Proposition 4** (complete vs. incomplete markets) isolates the hedging premium, the paper's core contribution. Both the complete-market PD and the premium formula do distinct work.
+- **Remark 1** (extreme singularity) connects to Jones (2024) on utility curvature and extreme growth, a spec-permitted extension. Compact and necessary.
+- **Remark 2** (Coase/frictions) addresses the spec-required contribution relative to GKP on transfers and displacement. Necessary.
 
-Candidate examined: **Equation (17), the friction cost formula** (F + tau * T) / Y = F/Y + tau(omega - omega_tilde). The qualitative point ("fixed costs become negligible as output grows") could be stated in English. However, the spec explicitly requires "formal analysis" of how transfers scale with output (spec 6a), and this is that analysis. It is two lines of algebra. Not compressible given the spec mandate.
+### Compressible formalism: No strong candidates
 
-Candidate examined: **The budget constraint (eq 7) and share holdings n_t^A, n_t^N.** These are introduced, then immediately collapsed by market clearing. They are standard model primitives required to derive equilibrium consumption, not ceremonial formalism.
+Closest candidate is equation (21), the friction cost formula $F/Y + \tau(\omega - \tilde\omega)$. The insight ("fixed costs vanish when output is enormous") is nearly verbal, but the formula is a single line that makes the Coase-theorem argument precise and directly supports Remark 2. This is within the spec-permitted extension on transfers/GKP contribution. Not compressible enough to fail.
 
-### Orphan notation: Minor borderline case only.
+The budget constraint (eq. 7) and market-clearing derivation of equilibrium consumption (eq. 8) are standard model-building primitives needed to make the equilibrium self-contained. The Euler equation (eq. 9) is the workhorse pricing equation. All are necessary.
 
-**D_t^P (private AI capital dividends):** Defined in equations (3) and (4) but never referenced in any proposition, proof, remark, or interpretation. The paper could replace the D_t^P lines with prose ("the remaining fraction of output goes to AI owners") without weakening any claim. However, D_t^P appears as part of an output-accounting identity that makes visible why the household's share is omega < 1 — the existence of private AI capital that the household cannot access is central to the incomplete-markets argument. Including it in the display equation is a natural presentation choice, not orphan notation in any meaningful sense.
+### Orphan notation: None found
 
-All other named variables (R, Phi^A, Phi^N, V_1, Delta, omega, omega_tilde, q, F, tau, T) are used in subsequent results or interpretations.
+Every named variable, parameter, or function is used in at least one result, calibration, or interpretation:
 
-### Prose detours: None found.
+- $D_t^P$ (private AI dividends): defined to close the output-share accounting; implicitly referenced in complete-markets discussion.
+- $n_t^A$, $n_t^N$ (holdings): used in budget constraint and consumed into market-clearing consumption.
+- $F$, $\tau$, $T$ (friction parameters): local to Section 4.2 and serve Remark 2.
+- All pricing objects ($R$, $\Phi^A$, $\Phi^N$, $V_1$, $\Delta$) are used in multiple propositions.
 
-The extension (Section 4) stays within the spec-permitted scope: extinction risk, extreme output limits, and the Coase/transfers analysis relative to GKP. No new agent heterogeneity, bargaining variants, mortality channels, or auxiliary mechanisms are introduced. The conclusion's one-sentence policy suggestion (expanding tradeable AI assets) connects directly to the paper's main argument about incomplete markets.
+### Prose detours: None found
 
-### Ceremonial formalism: None found.
+The Jones (2024) discussion in Section 4.1 (connecting utility curvature to the hedging premium limit) is brief interpretive prose tied to a spec-permitted extension, not a new mechanism or scope expansion. Section 4.2's Coase-theorem discussion is the spec-required GKP contribution on transfers. No new heterogeneity, bargaining variants, mortality channels, or dynamic laws of motion are introduced.
 
-Assumptions 1-3 are concise and each is invoked in subsequent results. No assumption is introduced for show. Proofs are appropriately placed (short ones inline, Proposition 3's proof in the appendix).
+### Ceremonial formalism: None found
+
+The paper avoids inflated theorem environments. Remarks are used for limit results rather than full propositions. Proofs are short and inline except Proposition 3's, which is appropriately in the appendix.
 
 ## 8b — Empirical scope
 
-**PASS.** The paper contains exactly one empirical exhibit: Figure 1, showing P/D ratios for AI vs. non-AI stocks using CRSP data. No regressions, no additional empirical analysis, no data tables. This matches the spec's ideal of "a single figure in the introduction."
+**PASS**
+
+Empirical content is limited to a single CRSP-based figure (Figure 1) in the introduction showing AI vs. non-AI price-dividend ratios. No regression tables, event studies, or additional empirical analysis. This matches the spec's ideal of "a single figure in the introduction."
 
 ## 8c — Testable predictions
 
-**PASS.** The paper generates three direct implications of the model: (1) AI stocks trade at higher P/D ratios (Prop 2), (2) the spread increases with singularity probability (Prop 3), (3) the premium vanishes under complete markets (Prop 4). These are organic outputs of the model, not a generated laundry list. The conclusion does not attempt to enumerate additional auxiliary predictions.
+**PASS**
+
+The paper's predictions are direct implications of the model: (i) AI stocks trade at higher PD ratios than non-AI stocks, (ii) the spread increases with perceived singularity risk, (iii) the premium vanishes under complete markets. These are a handful of core implications, not a laundry list. The conclusion does not generate auxiliary predictions beyond the model's main arguments.
 
 ## 8d — Quantitative material
 
-**PASS.** The numerical illustration (one paragraph + one table) uses a single parameterization to "gauge magnitudes." It is explicitly framed as illustrative. There is no calibration to data moments, no estimation, no sensitivity analysis, and no attempt to match specific valuation levels (the conclusion explicitly disclaims this).
+**PASS**
+
+Quantitative content is limited to a single numerical illustration (Table 1) with rough parameterizations ($\beta = 0.96$, $\gamma = 3$, etc.) to gauge magnitudes. The text explicitly frames this as illustrative: "To gauge magnitudes, consider the following parameterization." There is no systematic calibration, estimation, moment-matching, or sensitivity analysis.

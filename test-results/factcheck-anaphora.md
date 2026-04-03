@@ -1,33 +1,28 @@
 # tests/factcheck-anaphora.py
-Started: 2026-04-02 18:45:35 EDT
-Runtime: 3m 38s
-[ralph-garage/agent-logs/20260402T184535.060571-0400_factcheck-anaphora_claude_opus.log](../ralph-garage/agent-logs/20260402T184535.060571-0400_factcheck-anaphora_claude_opus.log)
+Started: 2026-04-02 21:49:42 EDT
+Runtime: 1m 57s
+[ralph-garage/agent-logs/20260402T214942.812049-0400_factcheck-anaphora_claude_opus.log](../ralph-garage/agent-logs/20260402T214942.812049-0400_factcheck-anaphora_claude_opus.log)
 
 # factcheck-anaphora
 VERDICT: PASS
-REASON: No demonstrative near a cross-reference resolves to a meaning that differs from its target.
+REASON: All demonstratives near cross-references correctly resolve to meanings matching their referenced targets.
 
-## Findings
-
-All six sections were checked in parallel. No anaphora resolution problems were found.
+## Findings by section
 
 ### Introduction (lines 41–71)
-- **Line 43**: "Figure~\ref{fig:ai-valuations} illustrates **this pattern**" — "this pattern" refers to the preceding clause about elevated price-dividend ratios. The figure caption confirms it shows exactly that. No problem.
+No issues found. "this pattern" near `\ref{fig:ai-valuations}` correctly refers to the elevated AI P/D ratios shown in the figure.
 
 ### Model (lines 72–153)
-- **Line 115**: "Assumption~\ref{as:neg-sing} states that $\Delta < 1$" — direct attribution, no demonstrative ambiguity.
-- **Line 149**: "These ensure that price-dividend ratios are finite" — "These" refers to the two inequalities in the immediately preceding Assumption 3. No nearby \ref/\eqref creates ambiguity. No problem.
+No issues found. References to Assumptions 1–3, the displacement ratio, Euler equation, and consumption equation all match their targets.
 
 ### Results (lines 154–239)
-- **Line 185**: "these high-marginal-utility states" and "such a hedge" — no adjacent cross-references. No problem.
-- **Line 198**: "These comparative statics" — refers to the relationships stated in the same sentence, no adjacent cross-reference. No problem.
-- **Line 212**: "Condition~\eqref{eq:comp-static} requires... When this holds" — "this" resolves unambiguously to the condition just cited. The equation target matches. No problem.
+No issues found. All demonstratives near `\eqref` and `\ref` commands resolve correctly, including "Condition~\eqref{eq:comp-static}" (line 212), "Proposition~\ref{prop:complete}" (line 230), and equation range references in line 185.
 
 ### Extension (lines 240–280)
-- No \ref or \eqref citations appear in this section (only \label definitions and \citet citations). Demonstratives ("This connects," "This observation," "This implies," "This result") all refer to immediately preceding prose. No problem.
+No issues found. References to `\eqref{eq:pd-extinction}`, `\ref{rem:extreme}`, `\eqref{eq:friction-cost}`, and `\ref{rem:coase}` all match the prose descriptions of their targets.
 
 ### Conclusion (lines 281–296)
-- **Line 287**: "(Remark~\ref{rem:extreme})" and "(Remark~\ref{rem:coase})" — parenthetical citations appended to clauses that accurately describe each remark's content. Nearby demonstratives ("This," "these channels") are not adjacent to cross-references. No problem.
+No issues found. `Remark~\ref{rem:extreme}` and `Remark~\ref{rem:coase}` in line 287 correctly describe the marginal-utility channel and the Coasean risk-sharing channel, respectively.
 
 ### Proofs (lines 297–313)
-- **Line 310**: "This is positive... condition~\eqref{eq:comp-static} follows" — "This" refers to the numerator expression on the immediately preceding line. The cited condition matches. No problem.
+No issues found. References to `\ref{prop:comp-static}`, `\eqref{eq:pd-ai}`, and `\eqref{eq:comp-static}` all match their targets.

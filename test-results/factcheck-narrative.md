@@ -1,145 +1,120 @@
 # tests/factcheck-narrative.py
-Started: 2026-04-02 18:45:35 EDT
-Runtime: 2m 6s
-[ralph-garage/agent-logs/20260402T184535.063782-0400_factcheck-narrative_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260402T184535.063782-0400_factcheck-narrative_claude_claude-opus-4-6.log)
+Started: 2026-04-02 21:49:42 EDT
+Runtime: 1m 49s
+[ralph-garage/agent-logs/20260402T214942.811301-0400_factcheck-narrative_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260402T214942.811301-0400_factcheck-narrative_claude_claude-opus-4-6.log)
 
 # factcheck-narrative
-
 VERDICT: PASS
-REASON: Every section delivers what its title and framing promise, cross-references are accurate, and no verbal claim exceeds the evidence provided.
+REASON: Every section delivers what its title and framing promise; cross-references resolve correctly; no verbal claim exceeds the evidence provided.
 
 ---
 
 ## Section-by-Section Analysis
 
 ### Abstract
-
-- **Contract**: Summarize the paper's main results: hedging premium, role of incomplete markets, effect of singularity probability, complete-markets benchmark, and abundance/transfers result.
-- **Deliverables**: Six claims: (1) AI stocks command a valuation premium as a hedge, (2) representative household cannot invest in private AI capital, (3) P/D ratio increases with singularity probability when displacement is severe, (4) complete markets eliminates the premium, (5) abundant output + modest transfers can eliminate displacement risk.
-- **Status**: FULFILLED. Each claim maps to a specific result in the body: (1) Proposition 2, (2) Section 2.1/2.3, (3) Proposition 3, (4) Proposition 4, (5) Remark 2. The abstract's qualifier "when displacement is sufficiently severe" correctly reflects Proposition 3's condition.
-
-### Preface (TBC) (unnumbered)
-
-- **Contract**: Left blank per spec requirement.
-- **Deliverables**: Empty section.
-- **Status**: FULFILLED. The spec requires this section to be blank.
+- **Contract**: Summarize why AI stocks are expensive, the model mechanism, key results on P/D ratios, complete markets, and abundant-output transfers.
+- **Deliverables**: Six claims: (1) AI stocks hedge against negative singularity, (2) household cannot invest in private AI capital, (3) P/D ratio increases with singularity probability when displacement is severe, (4) complete markets eliminates premium, (5) abundant output enables transfers that eliminate displacement.
+- **Status**: FULFILLED. Each claim is delivered by the body: (1) Propositions 1--2, (2) Section 2.1 and 2.3, (3) Proposition 3, (4) Proposition 4, (5) Remark 2 and Section 4.2.
 
 ### Section 1: Introduction
+- **Contract**: Motivate the paper empirically, state the argument, summarize the model and results, position relative to literature.
+- **Deliverables**: Empirical motivation with Figure 1, intuitive description of mechanism, model overview (two assets, representative household, AI owners, singularity), summary of four main results (closed-form P/D, comparative statics, complete markets, extension), self-referential AI-authorship paragraph, literature review.
+- **Status**: FULFILLED. Every result previewed in the introduction is delivered in the body. The empirical figure is present. The literature review is appropriately scoped. The AI-authorship paragraph is factual and consistent with the spec.
 
-- **Contract**: Motivate the paper, present empirical evidence, outline the model and main results, situate in the literature.
-- **Deliverables**: (a) Empirical motivation with Figure 1 (AI vs. non-AI P/D ratios from CRSP), (b) intuitive explanation of the hedging channel, (c) model overview (two assets, representative household, AI owners, singularity as absorbing event), (d) summary of four main results (closed-form P/D, increasing in p, complete-markets benchmark, extension), (e) self-referential paragraph on AI authorship, (f) literature review paragraph.
-- **Status**: FULFILLED. Every claim made in the introduction is delivered by a corresponding section in the body. The intro says "We derive the price-dividend ratio of AI stocks in closed form" (Proposition 1 delivers), "the ratio increases with the probability of a singularity" with qualifier "Under natural parameter restrictions" (Proposition 3 delivers with condition), "Under complete markets, the household could invest in private AI capital, eliminating displacement risk and the hedging premium" (Proposition 4 delivers), and the extension claims are delivered by Section 4.
+### Section 2: Model
 
-### Section 2.1: Environment
+#### Section 2.1: Environment
+- **Contract**: Define the economic environment (agents, technology, singularity).
+- **Deliverables**: Discrete time, output growth (normal and post-singularity), singularity as absorbing event with probability $p$, two agent types (household and AI owners), interpretation following GKP.
+- **Status**: FULFILLED. All primitives of the environment are specified. The GKP interpretation is clearly stated and distinguished from the paper's own modeling choice.
 
-- **Contract**: Define the economic environment: time, output, agents, singularity.
-- **Deliverables**: Discrete time, aggregate output with normal growth rate g, singularity as absorbing event with probability p producing higher growth rate g-tilde, two agent types (representative household, AI owners), interpretation of AI owners following GKP.
-- **Status**: FULFILLED. All elements of the economic environment are specified.
-
-### Section 2.2: Assets and Dividends
-
+#### Section 2.2: Assets and dividends
 - **Contract**: Define the asset structure and dividend processes.
-- **Deliverables**: Three dividend streams (public AI, non-AI, private AI) as shares of output, pre- and post-singularity shares, two named assumptions (Assumption 1: negative singularity; Assumption 2: AI share growth), definition of displacement ratio Delta.
-- **Status**: FULFILLED. The section defines exactly what the title promises.
+- **Deliverables**: Three dividend streams (public AI, non-AI, private AI) as output shares, pre- and post-singularity share parameters, two assumptions (negative singularity, AI share growth), displacement ratio definition.
+- **Status**: FULFILLED. The section fully specifies the dividend structure and the economic content of each assumption.
 
-### Section 2.3: The Household's Problem
+#### Section 2.3: The household's problem
+- **Contract**: State the household's optimization problem and derive equilibrium consumption.
+- **Deliverables**: CRRA utility, budget constraint, market clearing, equilibrium consumption expression, Euler equation.
+- **Status**: FULFILLED. The section derives equilibrium consumption from market clearing and states the Euler equation that will be used in Section 3.
 
-- **Contract**: Specify the household's optimization problem.
-- **Deliverables**: CRRA preferences, budget constraint with two traded assets, market clearing (n=1 for both), equilibrium consumption, Euler equation.
-- **Status**: FULFILLED. The household's problem is fully specified, including the key restriction that the household cannot invest in private AI capital.
-
-### Section 2.4: Equilibrium
-
-- **Contract**: Characterize the equilibrium.
-- **Deliverables**: Statement that P/D ratios are constant in each regime (with explanation: i.i.d. growth rates), Assumption 3 (existence conditions ensuring finite P/D ratios), note that these are automatic for gamma > 1.
-- **Status**: FULFILLED. The section establishes that equilibrium P/D ratios exist and are constant, setting up the derivation in Section 3. This is a standard theory-paper structure where model setup (Section 2) precedes results (Section 3).
+#### Section 2.4: Equilibrium
+- **Contract**: Characterize the equilibrium structure.
+- **Deliverables**: Statement that P/D ratios are constant in each regime (with economic reasoning), parameter restrictions for existence (Assumption 3).
+- **Status**: FULFILLED. The section establishes the equilibrium concept (constant P/D ratios in each regime) and the existence conditions. The actual closed-form solutions are deferred to Section 3 ("Results"), which is standard practice.
 
 ### Section 3: Results
-
-- **Contract**: Present the paper's main theoretical results.
-- **Deliverables**: Four propositions with proofs, a numerical illustration, and interpretive discussion.
-- **Status**: FULFILLED. See sub-analysis below.
-
-**Proposition 1 (P/D ratios)**: Delivers closed-form expressions for AI and non-AI P/D ratios. Proof is inline and complete.
-
-**Proposition 2 (AI stocks trade at a premium)**: Delivers the cross-sectional spread V_0^A - V_0^N > 0 with inline proof.
-
-**Post-Proposition 2 paragraph**: States that the spread increases with p and (1-Delta). These are informal comparative statics supported by inspection of equation (12). No formal proof is given, but the claims are presented as observations from the formula, which is standard practice.
-
-**Proposition 3 (Singularity probability raises AI valuations)**: Delivers the comparative static dV_0^A/dp > 0 with an explicit necessary-and-sufficient condition. Proof is deferred to Appendix A, which contains it.
-
-**Proposition 4 (Incomplete vs. complete markets)**: Derives complete-markets P/D ratio, isolates hedging premium, proves it is positive. Inline proof.
-
-**Numerical illustration**: Reports specific parameter values and resulting P/D ratios. Claims: V_0^A ~ 16.1 at p=0.01 (Table: 16.1), V_0^N ~ 11.6 (Table: 11.6), ratio ~1.4 (16.1/11.6 = 1.39), no-singularity baseline ~11.9 (Table: 11.9/11.9), complete-markets V_0^{A,CM} ~ 12.9 (Table: 12.9), hedging premium "about 25%" (Table: 24.8%). All verified against Table 1.
+- **Contract**: Derive the main pricing results.
+- **Deliverables**: Proposition 1 (closed-form P/D ratios with proof), Proposition 2 (AI premium with proof), Proposition 3 (comparative statics with condition, proof in appendix), Proposition 4 (complete vs. incomplete markets with proof and hedging premium formula), numerical illustration with table.
+- **Status**: FULFILLED. Four propositions are stated and proved (Proposition 3's proof is in Appendix A, as stated). The numerical illustration provides specific parameter values and reports magnitudes. Each proposition delivers exactly what its title claims.
 
 ### Section 4: Extension: Singularity, Extinction, and Frictions
+- **Contract**: Extend the baseline model to incorporate extinction risk and conditions under which frictions can be overcome.
+- **Deliverables**: Two subsections delivering on the two promised extensions.
+- **Status**: FULFILLED. The section title accurately describes the two extensions that follow.
 
-- **Contract**: Extend the baseline model in two directions: extinction risk and overcoming frictions.
-- **Deliverables**: Two subsections addressing each direction.
-- **Status**: FULFILLED.
-
-### Section 4.1: Extinction Risk
-
+#### Section 4.1: Extinction risk
 - **Contract**: Incorporate the possibility that the singularity destroys the economy.
-- **Deliverables**: Modified P/D ratio formula with extinction probability q (equation 17), discussion of how extinction attenuates the hedging premium, connection to Jones (2024) on utility curvature, Remark 1 on the limit as g-tilde goes to infinity.
-- **Status**: FULFILLED. The section delivers a formal modification of the pricing formula and interprets it economically.
+- **Deliverables**: Modified P/D formula with extinction probability $q$, explanation of attenuation, connection to Jones (2024) on utility curvature, Remark 1 on the extreme-singularity limit.
+- **Status**: FULFILLED. The section derives the extinction-adjusted formula, explains its economics, and connects to Jones (2024) as promised by the introduction.
 
-### Section 4.2: Overcoming Frictions
-
-- **Contract**: Analyze when the frictions that sustain displacement risk can be overcome (the "Coase theorem in the singularity").
-- **Deliverables**: Discussion of GKP's friction assumption, transfer cost model (F + tau*T), equation (18) showing fixed costs vanish as Y grows, Remark 2 formalizing the result.
-- **Status**: FULFILLED. The section promises a formal analysis of how transfer mechanisms scale with output, and delivers it via a cost model with fixed and proportional components. This goes beyond merely citing a number---it provides a structured argument with a displayed equation.
+#### Section 4.2: Overcoming frictions: the Coase theorem in the singularity
+- **Contract**: Analyze when intergenerational frictions can be overcome, connecting GKP to Jones.
+- **Deliverables**: Discussion of GKP's friction assumption, transfer cost model ($F + \tau T$), analysis of fixed vs. proportional costs as $Y \to \infty$, Remark 2 (Coase theorem applies when output is unbounded), interpretive paragraph connecting GKP and Jones.
+- **Status**: FULFILLED. The section delivers the formal analysis promised in the introduction and spec. It explicitly addresses GKP's discussion of bequests/transfers, provides the friction-cost formalization, and derives the limiting result.
 
 ### Section 5: Conclusion
-
-- **Contract**: Summarize the paper's contributions.
-- **Deliverables**: Restates main results (hedging premium, cross-sectional prediction, complete-markets benchmark), summarizes the extension's two channels (Remark 1 and Remark 2), notes that financial market solutions to AI disaster risk are under-discussed, suggests policy implications (expanding tradeable AI assets).
-- **Status**: FULFILLED. Every claim in the conclusion is supported by results in the body. The cross-references to Remark 1 and Remark 2 are accurate.
+- **Contract**: Summarize results and discuss implications.
+- **Deliverables**: Summary of four main results (hedging premium, cross-section, comparative statics, complete markets), restatement of the extension's two channels (utility curvature, Coasean risk-sharing), policy implication (expanding tradeable AI assets).
+- **Status**: FULFILLED. Every result summarized in the conclusion is delivered in the body. The conclusion does not introduce new claims beyond what the paper has shown.
 
 ### Appendix A: Proofs
-
 - **Contract**: Provide deferred proofs.
 - **Deliverables**: Proof of Proposition 3.
-- **Status**: FULFILLED. The only deferred proof (Proposition 3) is provided.
+- **Status**: FULFILLED. The proof referenced by Proposition 3 ("See Appendix A") is present and complete.
 
 ---
 
-## Cross-Reference Audit
+## Cross-Reference Checks
 
 | Reference | Location | Target | Status |
 |-----------|----------|--------|--------|
-| Figure 1 (ai-valuations) | Section 1 | exhibits/ai-valuations.pdf | EXISTS |
-| Table 1 (numerical) | Section 3 | exhibits/numerical-illustration.tex | EXISTS |
-| Assumption 1 | Propositions 1-4 | Section 2.2 | EXISTS |
-| Assumption 2 | Propositions 1-4 | Section 2.2 | EXISTS |
-| Assumption 3 | Propositions 1-4 | Section 2.4 | EXISTS |
-| Appendix A | Proposition 3 proof | Appendix A | EXISTS, contains proof |
-| Remark 1 | Conclusion | Section 4.1 | EXISTS |
-| Remark 2 | Conclusion | Section 4.2 | EXISTS |
-| Equation references | Throughout | Throughout | ALL VALID |
+| Figure 1 (ai-valuations) | Section 1 | `exhibits/ai-valuations.pdf` | EXISTS |
+| Table (numerical-illustration) | Section 3 | `exhibits/numerical-illustration.tex` | EXISTS |
+| Assumption 1 refs in Propositions | Section 3 | Section 2.2 | CORRECT |
+| Assumption 2 refs in Propositions | Section 3 | Section 2.2 | CORRECT |
+| Assumption 3 refs in Propositions | Section 3 | Section 2.4 | CORRECT |
+| "See Appendix A" in Prop 3 | Section 3 | Appendix A | CORRECT — proof present |
+| Remark 1 ref in Conclusion | Section 5 | Section 4.1 | CORRECT |
+| Remark 2 ref in Conclusion | Section 5 | Section 4.2 | CORRECT |
+| Euler equation ref in Prop 1 proof | Section 3 | Eq. (7) in Section 2.3 | CORRECT |
+| GKP interpretation ref | Section 2.1, 4.2 | Consistent usage | CORRECT |
+| Jones (2024) ref | Section 4.1, 4.2 | Consistent usage | CORRECT |
 
-No broken cross-references found.
-
----
-
-## Claim-Strength Audit
-
-1. **"We show that publicly traded AI stocks command a valuation premium"** (Abstract, Conclusion): Supported by Proposition 2 and Proposition 4. APPROPRIATE.
-
-2. **"The price-dividend ratio of AI stocks increases with the probability of a singularity when displacement is sufficiently severe"** (Abstract): Accurately reflects the conditional result in Proposition 3. APPROPRIATE.
-
-3. **"The valuation spread...increases with the singularity probability p and with the severity of displacement"** (post-Proposition 2): Informal comparative static stated without formal proof. The claim follows from inspection of equation (12), which is displayed. APPROPRIATE for the context, though slightly stronger than what is formally proved.
-
-4. **"Automatically satisfied for gamma > 1, the empirically relevant case"** (Assumption 3): Mathematical claim about the existence conditions. APPROPRIATE---standard observation for CRRA models.
-
-5. **"A 1% annual singularity probability generates a hedging premium of about 25%"** (numerical illustration): Table shows 24.8% at p=0.01. APPROPRIATE.
-
-6. **"Our contribution relative to GKP is purposefully modest"** (Introduction): Consistent with the paper's framing throughout. The paper explicitly states that the main insights originate in GKP. APPROPRIATE.
-
-7. **"GKP...do not conduct a formal analysis of how these mechanisms scale with output. We take up this question."** (Section 4.2): The paper does provide a formal cost-scaling argument. Whether GKP truly omit this is a factual claim about an external paper, which this test cannot verify, but the claim is specific and falsifiable. NOTED but not flagged.
+All internal cross-references resolve to content that exists at the referenced location.
 
 ---
 
-## Narrative Consistency
+## Claim-Strength Checks
 
-The paper tells a coherent, linear story: empirical motivation (Section 1) -> model setup (Section 2) -> closed-form results with numerical illustration (Section 3) -> extensions connecting to broader literature (Section 4) -> conclusion (Section 5). Later sections consistently build on earlier ones without relying on unfulfilled promises. The abstract and introduction accurately preview what the body delivers.
+1. **"We derive the price-dividend ratio of AI stocks in closed form"** (Introduction): Proposition 1 provides an explicit closed-form expression. Claim strength: APPROPRIATE.
+
+2. **"the ratio increases with the probability of a singularity"** (Introduction): Proposition 3 establishes this under a stated condition. The introduction qualifies this with "Under natural parameter restrictions." Claim strength: APPROPRIATE.
+
+3. **"Under complete markets, the hedging premium vanishes"** (Abstract/Introduction): Proposition 4 derives this explicitly. Claim strength: APPROPRIATE.
+
+4. **"The valuation spread $V_0^A - V_0^N$ increases with the singularity probability $p$ and with the severity of displacement"** (after Proposition 2): Stated without formal proof, but follows directly by inspection of equation (11) — the numerator is linear in $p$ with positive coefficient and the denominator $1-(1-p)R$ is decreasing in $p$ with $R < 1$. Claim strength: APPROPRIATE (simple enough to state without separate proof).
+
+5. **"Even modest transfer mechanisms suffice when the surplus is enormous"** (Abstract): Remark 2 and the friction-cost analysis in Section 4.2 support this. The word "modest" maps to "any mechanism with a fixed-cost component." Claim strength: APPROPRIATE.
+
+6. **"The model delivers a cross-sectional prediction"** (Conclusion): Proposition 2 formally establishes this. Claim strength: APPROPRIATE.
+
+7. **"deliberately stylized and not designed to match specific valuation levels"** (Conclusion): Consistent with the numerical illustration being presented as illustrative rather than calibration. Claim strength: APPROPRIATE.
+
+No verbal claim was found to exceed the evidence provided by the paper's formal results.
+
+---
+
+## Summary
+
+The paper's narrative is internally consistent and well-aligned across all sections. Every section delivers what its title and opening framing promise. All cross-references resolve correctly. Verbal claims are appropriately calibrated to the formal results — no claim is stronger than the evidence. The Abstract and Introduction accurately preview the body's content without overstatement.

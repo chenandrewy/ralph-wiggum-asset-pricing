@@ -1,32 +1,42 @@
 # Improvement Plan
-AUTHOR PLAN — 2026-04-02 18:44:28 EDT
+AUTHOR PLAN — 2026-04-02 21:47:58 EDT
 
-## Current State
+## Status
 
-**Tests: 14/16 passing.** Two failures: `quality-formalism` and `spec-paper`. No build issues. No referee outputs (referees disabled).
+Paper compiles (13 pages). No overhaul needed — the model section is structurally sound. Three tests failing; all fixable with targeted edits.
 
 ## Failing Tests
 
-### 1. `spec-paper` — Exhibit numbering and `\notag` violations
+### 1. factcheck-theory — Notational ambiguities
 
-Two issues:
+Two medium issues causing the failure:
 
-**a. Exhibit comments mislabeled.** The table (`numerical-illustration.tex`) is labeled `% Exhibit 1` but should be `% Exhibit 2` (the figure is Exhibit 1). Also, the `\input` line for the table in `paper.tex` (line 235) lacks an exhibit comment.
+**Issue A: V subscript convention.** Throughout the paper, subscripts denote time ($Y_t$, $c_t$). But $V_0^A$ and $V_1$ use subscripts for regimes (pre/post-singularity). The convention is never stated.
 
-- **Fix in `paper/exhibits/numerical-illustration.tex`**: Change `% Exhibit 1` → `% Exhibit 2`.
-- **Fix in `paper/paper.tex` line 235**: Add `% Exhibit 2` comment after the `\input` line.
+- **Fix:** Add an explicit statement when $V_0^A$ is first introduced in Proposition 1, e.g., "where subscripts 0 and 1 on $V$ denote pre- and post-singularity regimes."
 
-**b. Unnumbered display equations in appendix.** The proof of Proposition 3 (Appendix A) uses `\notag` on two intermediate lines of the multi-line derivation, violating Style Req 9 (all display equations numbered). 
+**Issue B: A(p) collides with superscript A.** In the Appendix proof of Proposition 3, $V_0^A = A(p)/B(p)$ uses $A$ as both a function name and the AI-stock superscript in the same expression.
 
-- **Fix in `paper/paper.tex` appendix proof**: Remove both `\notag` tags so all display lines are numbered.
+- **Fix:** Rename the proof auxiliaries to non-colliding symbols, e.g., $\mathcal{N}(p)/\mathcal{D}(p)$ or $f(p)/h(p)$.
 
-### 2. `quality-formalism` — Compressible equation in Section 4.2
+**Minor issues to also fix:**
+- Remove orphaned $\Delta_0$ in Section 4.2 (used once, identical to $\Delta$, never appears in equations).
 
-Equation (15), `Δ(λ) = 1 - (1 - Δ₀)(1 - λ)`, is never used beyond its endpoints (λ=0 and λ=1). The paper's Coasean argument only needs: no transfers → Δ₀, full transfers → Δ=1. The displayed equation is ceremonial formalism that doesn't advance the argument.
+### 2. quality-writing — Inaccurate self-demonstration description
 
-- **Fix**: Remove the displayed equation for Δ(λ). Instead, state inline that transfers interpolate between Δ₀ (no risk-sharing) and 1 (full risk-sharing), then move directly to the Coase theorem discussion. This tightens the prose and satisfies the "no ceremonial formalism" requirement.
+The self-demonstration paragraph says "the paper specification and testing framework---approximately 80 lines." This implies 80 lines covers both spec and tests. The accurate description: the human wrote the spec (~80 lines) and the tests separately.
 
-## Additional Observations (from passing tests, low priority)
+- **Fix:** Rewrite to: "The human author contributed only the paper specification---approximately 80 lines---and the test suite. The AI performed all economic modeling, derivations, writing, and typesetting."
 
-- `factcheck-theory` flagged five low-severity notational issues (e.g., Δ used as both constant and function, R convention clash). These are cosmetic and do not block any tests, but could be cleaned up in a future pass.
-- `factcheck-bysection` noted minor wording imprecision on line 252 ("shrinking fraction"). Non-blocking.
+### 3. spec-paper — Exhibit numbering comments inconsistent
+
+In `paper.tex`: figure = Exhibit 1, table = Exhibit 2. But `paper/exhibits/numerical-illustration.tex` labels itself Exhibit 1, and `code/run-all.R` reverses the ordering.
+
+- **Fix:** Align all exhibit number comments across `paper/exhibits/numerical-illustration.tex` and `code/run-all.R` to match `paper.tex` (figure = Exhibit 1, table = Exhibit 2).
+
+## Execution Order
+
+1. Fix notational ambiguities in `paper/paper.tex` (factcheck-theory).
+2. Fix self-demonstration paragraph in `paper/paper.tex` (quality-writing).
+3. Fix exhibit numbering comments in `paper/exhibits/numerical-illustration.tex` and `code/run-all.R` (spec-paper).
+4. Rebuild paper and rerun tests.
