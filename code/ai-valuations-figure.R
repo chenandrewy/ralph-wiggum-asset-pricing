@@ -44,8 +44,9 @@ cat("  Connected to WRDS.\n")
 
 # --- Query: Monthly prices and dividends for AI vs broad market ---
 # AI tickers: NVDA, MSFT, GOOG/GOOGL, META, AMZN
-# We use CRSP monthly stock file and distributions for trailing 12-month dividends.
-# Compute price-dividend ratios at the portfolio level.
+# We compute dollar dividends from returns: (ret - retx) * lagged market cap.
+# This avoids split-adjustment issues that arise when combining per-share divamt
+# from msedist with month-end shrout from msf (e.g., NVDA 10:1 split, June 2024).
 
 query <- "
 WITH ai_permnos AS (
@@ -57,31 +58,26 @@ WITH ai_permnos AS (
 ),
 monthly AS (
   SELECT m.permno, m.date,
-         ABS(m.prc) AS prc, m.shrout,
-         ABS(m.prc) * m.shrout AS mcap
+         ABS(m.prc) * m.shrout AS mcap,
+         m.ret, m.retx,
+         LAG(ABS(m.prc) * m.shrout)
+           OVER (PARTITION BY m.permno ORDER BY m.date) AS mcap_lag
   FROM crsp.msf m
-  WHERE m.date BETWEEN '2018-01-01' AND '2025-12-31'
+  WHERE m.date BETWEEN '2017-01-01' AND '2025-12-31'
     AND m.prc IS NOT NULL
     AND m.shrout IS NOT NULL
     AND m.shrout > 0
-),
-divs AS (
-  SELECT d.permno,
-         DATE_TRUNC('month', d.exdt)::date AS month,
-         SUM(d.divamt) AS div_total
-  FROM crsp.msedist d
-  WHERE d.exdt BETWEEN '2017-01-01' AND '2025-12-31'
-    AND d.divamt > 0
-  GROUP BY d.permno, DATE_TRUNC('month', d.exdt)::date
 )
 SELECT m.date,
        CASE WHEN ai.permno IS NOT NULL THEN 'AI' ELSE 'Non-AI' END AS group_label,
        SUM(m.mcap) AS total_mcap,
-       SUM(m.mcap / NULLIF(m.prc, 0) * COALESCE(d.div_total, 0)) AS total_div_shares
+       SUM(GREATEST((m.ret - m.retx) * m.mcap_lag, 0)) AS total_div
 FROM monthly m
 LEFT JOIN ai_permnos ai ON m.permno = ai.permno
-LEFT JOIN divs d ON m.permno = d.permno
-  AND DATE_TRUNC('month', m.date)::date = d.month
+WHERE m.date >= '2018-01-01'
+  AND m.ret IS NOT NULL
+  AND m.retx IS NOT NULL
+  AND m.mcap_lag IS NOT NULL
 GROUP BY m.date, CASE WHEN ai.permno IS NOT NULL THEN 'AI' ELSE 'Non-AI' END
 ORDER BY m.date, group_label
 "
@@ -107,7 +103,7 @@ for (grp_name in names(groups)) {
   for (i in 1:n) {
     window_start <- grp$date[i] - 365
     window <- grp$date >= window_start & grp$date <= grp$date[i]
-    grp$trail_div[i] <- sum(grp$total_div_shares[window], na.rm = TRUE)
+    grp$trail_div[i] <- sum(grp$total_div[window], na.rm = TRUE)
   }
   grp$pd_ratio <- ifelse(grp$trail_div > 0, grp$total_mcap / grp$trail_div, NA)
   result_list[[grp_name]] <- grp

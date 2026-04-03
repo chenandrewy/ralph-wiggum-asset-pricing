@@ -1,165 +1,185 @@
 # tests/spec-paper.py
-Started: 2026-04-02 21:59:20 EDT
-Runtime: 3m 6s
-[ralph-garage/agent-logs/20260402T215920.395739-0400_spec-paper_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260402T215920.395739-0400_spec-paper_claude_claude-opus-4-6.log)
+Started: 2026-04-02 22:13:44 EDT
+Runtime: 2m 58s
+[ralph-garage/agent-logs/20260402T221344.370061-0400_spec-paper_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260402T221344.370061-0400_spec-paper_claude_claude-opus-4-6.log)
 
 # spec-paper
-VERDICT: FAIL
-REASON: Exhibit number comment in generated table file is inconsistent with paper numbering (III.2b).
+VERDICT: PASS
+REASON: All non-Quality top-level requirement sections (I, II, III) are satisfied.
 
-## I. Economic Requirements
-**VERDICT: PASS**
-**Reason:** All 22 sub-requirements are satisfied with concrete textual and formal evidence.
+---
+
+## Section I. Economic Requirements — PASS
+
+All 6 requirements and all sub-requirements are satisfied.
 
 ### 1. Academic asset pricing theory paper with tightly limited empirical content
-PASS. The paper is a formal theory paper with propositions and proofs. Empirical content is limited to one CRSP figure and one numerical illustration table.
+**PASS.** The paper is a formal asset pricing theory paper. Empirical content is limited to a single CRSP figure (Figure 1). The conclusion confirms: *"It does not generate a broad menu of testable predictions, nor does it attempt to match specific valuation levels."*
 
-### 2a. AI singularity definition used consistently
-PASS. "A sudden AI breakthrough---a singularity---could dramatically increase productivity" (intro). Formalized with higher post-singularity growth $\tilde{g} > g$.
+### 2. Economic ideas consistently used throughout
 
-### 2b. Negative AI singularity definition used consistently
-PASS. Assumption 1 labeled "Negative singularity": "The household's share of output falls at the singularity: $\tilde{\theta} + \tilde{\nu} < \theta + \nu$." Displacement ratio $\Delta < 1$ formalizes this throughout.
+**2a. AI singularity as sudden productivity improvement — PASS.**
+Defined in Section 2.1: *"A singularity is an absorbing event that arrives with independent probability $p$... output grows at a strictly higher rate, reflecting the productivity increase that accompanies the singularity."*
 
-### 2c. Incomplete markets definition used consistently
-PASS. "the typical investor cannot buy these assets. They are either privately held, illiquid, or simply do not yet exist. In this world of incomplete markets." No reference to Arrow-Debreu securities.
+**2b. Negative AI singularity is devastating for the typical investor — PASS.**
+Assumption 1: *"The household's share of output falls at the singularity: $\tilde{\theta} + \tilde{\nu} < \theta + \nu$."* Introduction: *"a negative AI singularity---a sudden AI-driven productivity surge that displaces existing workers and firms."*
 
-### 3a. Main argument: AI stocks hedge negative singularity
-PASS. Abstract: "publicly traded AI stocks command a valuation premium because they hedge against a negative AI singularity." Proposition 2 proves $V_0^A > V_0^N$; Proposition 4 isolates the hedging premium.
+**2c. Incomplete markets = some assets cannot be bought by the representative investor — PASS.**
+*"The household trades in two publicly available assets---AI stocks and non-AI stocks---but cannot invest in private AI capital."* No Arrow-Debreu language used; instead framed as assets that are *"privately held, illiquid, or simply do not yet exist."*
 
-### 3b. Incomplete markets are key
-PASS. Proposition 4 shows under complete markets the hedging premium vanishes. "Under complete markets, the household could invest in private AI capital, eliminating displacement risk and the hedging premium."
+### 3. Paper makes the required arguments
 
-### 3c. Financial market solutions under-discussed
-PASS. Conclusion opens: "Financial market solutions to AI disaster risk are under-discussed."
+**3a. AI stocks hedge against negative singularity — PASS.**
+Abstract: *"publicly traded AI stocks command a valuation premium because they hedge against a negative AI singularity."*
 
-### 3d. Singularity overcomes frictions
-PASS. Remark 2: "if the singularity produces unbounded output ($Y \to \infty$), any transfer mechanism with a fixed-cost component becomes negligible. In this limit, the Coase theorem applies."
+**3b. Incomplete markets are key — PASS.**
+Proposition 3 derives the complete-markets price and shows: *"it arises entirely from the displacement channel. If the household could trade with AI owners... the hedging motive would vanish."*
 
-### 4a. Infinite-horizon, discrete-time model
-PASS. "Time is discrete: $t = 0, 1, 2, \ldots$." Utility sums from $t=0$ to $\infty$.
+**3c. Financial market solutions under-discussed — PASS.**
+Conclusion: *"Financial market solutions to AI disaster risk are under-discussed."*
 
-### 4b. Two agents
-PASS. "The economy has two types of agents: a representative household and AI owners. The household is the marginal investor in public markets. AI owners hold private AI capital and do not participate in public stock markets."
+**3d. Singularity abundance overcomes frictions — PASS.**
+Remark 2: *"if the singularity produces unbounded output ($Y \to \infty$), any transfer mechanism with a fixed-cost component becomes negligible. In this limit, the Coase theorem applies."*
 
-### 4c. Two publicly traded assets; AI stocks grow as share
-PASS. Three dividend streams defined; two publicly traded. Assumption 2: "$\tilde{\theta} > \theta$" (AI stocks gain share).
+### 4. Main model features
 
-### 4d. Focus on P/D ratio of AI stocks
-PASS. Proposition 1 derives P/D ratio in closed form. Proposition 3 analyzes $\partial V_0^A / \partial p > 0$. Numerical illustration varies $p$ and reports P/D ratios.
+**4a. Infinite-horizon, discrete-time — PASS.**
+*"Time is discrete: $t = 0, 1, 2, \ldots$"* and utility: $E_0 \sum_{t=0}^{\infty} \beta^t u(c_t)$.
 
-### 4e. AI owners as unborn/future owners (GKP interpretation)
-PASS. "Following \citet{GKP2012}, AI owners can be interpreted as future innovators and entrepreneurs who have not yet entered the economy."
+**4b. Two agents (household + AI owners) — PASS.**
+*"a representative household and AI owners. The household is the marginal investor in public markets. AI owners hold private AI capital and do not participate in public stock markets."* GKP interpretation: *"AI owners can be interpreted as future innovators and entrepreneurs who have not yet entered the economy."*
 
-### 5a. Singularity may cause extinction
-PASS. Section 4.1: "conditional on a singularity occurring, there is a probability $q \in [0,1)$ that the event is catastrophic---all output is permanently destroyed."
+**4c. Two public assets; AI stocks grow at singularity — PASS.**
+Dividends: $D_t^A = \theta Y_t$, $D_t^N = \nu Y_t$. Assumption 2: *"$\tilde{\theta} > \theta$ and $\tilde{\nu} < \nu$."*
 
-### 5b. Consumption may become infinite (only for AI owners)
-PASS. "as $\tilde{g} \to \infty$, the AI owners---who hold private AI capital---enjoy unbounded consumption, while the household's consumption, though growing, remains a shrinking fraction."
+**4d. Focus on P/D ratio of AI stocks vs. singularity probability — PASS.**
+Proposition 1 derives P/D ratios. Proposition 2: *"$\partial V_0^A / \partial p > 0$."*
 
-### 5c. Infinite output affects trade assumptions
-PASS. Section 4.2 analyzes this with Coase theorem argument and formal cost analysis showing $F/Y \to 0$ as $Y \to \infty$.
+**4e. AI owners as unborn/future owners per GKP — PASS.**
+*"Following \citet{GKP2012}, AI owners can be interpreted as future innovators and entrepreneurs who have not yet entered the economy."*
 
-### 5d. Extension keeps main argument simple
-PASS. All three ideas (extinction, infinite consumption, overcoming frictions) confined to Section 4 "Extension: Singularity, Extinction, and Frictions." Main model (Sections 2-3) contains none.
+### 5. Extension incorporates Jones (2024) ideas
 
-### 6a. GKP contribution: formal analysis of transfers
-PASS. "GKP discuss how mechanisms such as bequests, government debt, and intergenerational transfers would affect the magnitude of the displacement factor... but do not conduct a formal analysis... We take up this question."
+**5a. Singularity may cause extinction — PASS.**
+Section 4.1: *"there is a probability $q$ that the event is catastrophic---all output is permanently destroyed."*
 
-### 6b. Coase Theorem logic and GKP's friction assumption
-PASS. "The Coase theorem implies that if property rights are well-defined and transaction costs are zero, the parties will bargain to an efficient (fully risk-sharing) outcome. GKP's assumption that displacement persists is driven by real-world frictions."
+**5b. Consumption may become infinite for AI owners — PASS.**
+Remark 1: *"as $\tilde{g} \to \infty$, the AI owners... enjoy unbounded consumption, while the household's consumption... remains a shrinking fraction."*
 
-### 6c. Singularity overcomes frictions (Jones-2024)
-PASS. Formal cost model with $F + \tau T$. Remark 2: "Following \citet{Jones2024}, if the singularity produces unbounded output ($Y \to \infty$), any transfer mechanism with a fixed-cost component becomes negligible."
+**5c. Infinite output and trade frictions — PASS.**
+Section 4.2 develops the Coase theorem analysis: *"If the friction costs contain any fixed component, they become negligible relative to the surplus as output grows."*
 
-### 6d. Purposefully modest contribution
-PASS. "Our contribution relative to GKP is purposefully modest: the main economic insights about displacement risk and incomplete markets originate in their work."
+**5d. Kept in an extension — PASS.**
+Section 4 is titled *"Extension: Singularity, Extinction, and Frictions"* and is separate from the main model (Sections 2-3).
 
----
+### 6. Contribution relative to GKP
 
-## II. Style Requirements
-**VERDICT: PASS**
-**Reason:** All 11 requirements satisfied.
+**6a. Formal analysis where GKP only mentions — PASS.**
+*"GKP discuss how mechanisms such as bequests, government debt, and intergenerational transfers would affect the magnitude of the displacement factor... but do not conduct a formal analysis of how these mechanisms scale with output. We take up this question."*
 
-### 1. Tone between academic and blog
-PASS. Formal theorem-proof structure combined with accessible language ("Why are AI stocks so expensive?").
+**6b. Coase theorem logic; GKP assumes frictions — PASS.**
+*"GKP's assumption that displacement persists is driven by real-world frictions: the administrative cost of government transfers, the impossibility of contracting with unborn agents, legal barriers to intergenerational deals."*
 
-### 2. Author is anonymous
-PASS. `\author{}` is empty.
+**6c. Quantify friction-overcoming given infinite output — PASS.**
+Formal model: $\frac{F + \tau(\omega - \tilde{\omega})Y}{Y} = \frac{F}{Y} + \tau(\omega - \tilde{\omega})$. *"As $Y \to \infty$, the fixed component vanishes."*
 
-### 3. Abstract is 100 words or less
-PASS. Abstract is approximately 97 words.
-
-### 4. Title is short, evocative, not cringey
-PASS. "Hedging the Singularity" — three words, combines finance and AI concepts.
-
-### 5. Paper length at most 20 pages
-PASS. Compiled PDF is 13 pages.
-
-### 6. Every page has a visible page number
-PASS. `\pagestyle{plain}` on line 19 and `\thispagestyle{plain}` on line 27 ensure all pages have numbers.
-
-### 7. At most 6 exhibits
-PASS. Exactly 2 exhibits (1 figure, 1 table).
-
-### 8. Lit review at most half a page, at end of introduction
-PASS. Lit review begins with `\paragraph{Related literature.}` and ends before Section 2. Approximately 256 words (~half a page at 12pt, 1.5 spacing).
-
-### 9. All display equations numbered
-PASS. All display math uses `equation` or `align` environments (no starred/unnumbered variants).
-
-### 10. All propositions explicitly proved; long proofs in appendix
-PASS. All 4 propositions have explicit proofs. Proposition 3's proof (the longest) is deferred to Appendix A.
-
-### 11. First section is "Preface (TBC)", unnumbered, left blank
-PASS. `\section*{Preface (TBC)}` with no content. Introduction follows as Section 1, with standard numbering thereafter.
-
-### 11a. Introduction follows normally
-PASS. `\section{Introduction}` is numbered Section 1. Subsequent sections numbered 2-5 as if Preface doesn't exist.
+**6d. Purposefully modest characterization — PASS.**
+*"Our contribution relative to GKP is purposefully modest: the main economic insights about displacement risk and incomplete markets originate in their work."*
 
 ---
 
-## III. Technical Requirements
-**VERDICT: FAIL**
-**Reason:** Exhibit number comment in generated file `numerical-illustration.tex` is inconsistent with paper numbering.
+## Section II. Style Requirements — PASS
 
-### 1a. `paper.tex` is the main paper file
-PASS. File exists and contains the full paper.
+All 11 requirements and sub-requirements are satisfied.
 
-### 1b. All figures use PDFs in `paper/exhibits/`
-PASS. One figure: `\includegraphics{exhibits/ai-valuations.pdf}`.
+### 1. Tone between academic paper and blog post — PASS
+Conversational opening (*"Why are AI stocks so expensive?"*) mixed with formal mathematical development.
 
-### 1c. All tables use tex files in `paper/exhibits/`
-PASS. One table: `\input{exhibits/numerical-illustration.tex}`.
+### 2. Author is anonymous — PASS
+`\author{}` (empty).
 
-### 1d. All files in `paper/exhibits/` are used
-PASS. Exactly two files in `paper/exhibits/` (`ai-valuations.pdf`, `numerical-illustration.tex`), both referenced in `paper.tex`.
+### 3. Abstract is 100 words or less — PASS
+Word count: ~85 words.
 
-### 2a. Sections have number comments
-PASS. All sections and subsections have inline comments with their numbers (e.g., `\section{Introduction} % Section 1`, `\subsection{Environment} % Section 2.1`).
+### 4. Title is short, evocative, eye-catching, not cringey — PASS
+*"Hedging the Singularity"* — 3 words, evocative pairing of finance and AI concepts.
 
-### 2b. Exhibits have number comments
-**FAIL.** The figure in `paper.tex` is correctly labeled `% Exhibit 1`. The table input in `paper.tex` is correctly labeled `% Exhibit 2`. However, the generated file `paper/exhibits/numerical-illustration.tex` line 5 contains `\label{tab:numerical} % Exhibit 1`, which conflicts with the paper's `% Exhibit 2` label. The code that generates this file (`code/numerical-illustration.R`) hardcodes the wrong exhibit number. This is an inconsistency: the same exhibit is labeled "Exhibit 1" in the generated file and "Exhibit 2" in the paper.
+### 5. Paper length at most 20 pages — PASS
+Estimated ~11 pages with the specified formatting (12pt, 1.5 spacing, 1.5in margins).
 
-### 2c. Theorem environments have number comments
-PASS. All assumptions, propositions, and remarks have inline comments with their numbers (e.g., `% Assumption 1`, `% Proposition 1`, `% Remark 1`).
+### 6. Every page has a visible page number — PASS
+`\pagestyle{plain}` ensures bottom-center page numbers on every page.
 
-### 3a. Code is written in R
-PASS. All three files (`run-all.R`, `ai-valuations-figure.R`, `numerical-illustration.R`) are R scripts.
+### 7. At most 6 exhibits — PASS
+2 exhibits: Figure 1 (ai-valuations.pdf) and Table (numerical-illustration.tex).
 
-### 3b. One canonical entry point
-PASS. `code/run-all.R` calls both exhibit-generating scripts.
+### 8. Lit review at most half a page, at end of introduction — PASS
+"Related literature" paragraph appears at the end of the introduction, approximately 0.4 pages.
 
-### 3c. Pipeline runs from scratch, no caches
-PASS. Both scripts generate outputs fresh from parameters or live WRDS queries. No precomputed caches or intermediate files are relied upon. Note: `run-all.R` comments claim graceful degradation without WRDS credentials, but the pipeline actually fails if credentials are absent; however, the requirement is about not relying on caches, which is satisfied.
+### 9. All display equations numbered — PASS
+All display equations use `\label{}` and are numbered sequentially.
 
-### 3d. Executes in less than 180 seconds
-PASS (assumed). The numerical illustration is pure computation (<1s). The CRSP query is simple and should complete well within budget.
+### 10. All propositions explicitly proved, long proofs in appendix — PASS
+Propositions 1 and 3 have inline proofs. Proposition 2's proof is deferred to Appendix A.
 
-### 3e. External data queries in canonical pipeline
-PASS. The WRDS query is embedded in `ai-valuations-figure.R`, called by `run-all.R`.
+### 11. First section is "Preface (TBC)", unnumbered, left blank — PASS
+`\section*{Preface (TBC)}` with no content. Introduction follows as Section 1.
 
-### 3f. Code outputs to `paper/exhibits/`
-PASS. `ai-valuations-figure.R` outputs to `paper/exhibits/ai-valuations.pdf`. `numerical-illustration.R` outputs to `paper/exhibits/numerical-illustration.tex`.
+**11a. Introduction follows, rest is standard — PASS.**
+`\section{Introduction}` immediately after the blank preface; Sections 2-5 follow standard structure.
 
-### 3g. No silent reliance on cached/mismatched objects
-PASS. Pipeline has two clean code paths producing outputs fresh.
+---
+
+## Section III. Technical Requirements — PASS
+
+All 3 requirements and all sub-requirements are satisfied.
+
+### 1. Directory structure
+
+**1a. paper.tex is the main file — PASS.**
+`/workspace/paper/paper.tex` exists and is the main LaTeX source.
+
+**1b. Figures use PDFs in paper/exhibits/ — PASS.**
+`\includegraphics[width=0.85\textwidth]{exhibits/ai-valuations.pdf}` references `paper/exhibits/ai-valuations.pdf`.
+
+**1c. Tables use TeX files in paper/exhibits/ — PASS.**
+`\input{exhibits/numerical-illustration.tex}` references `paper/exhibits/numerical-illustration.tex`.
+
+**1d. All files in paper/exhibits/ are used — PASS.**
+Two files exist (`ai-valuations.pdf`, `numerical-illustration.tex`); both are referenced in paper.tex.
+
+### 2. Comments listing object numbers
+
+**2a. Section comments — PASS.**
+Examples: `\section{Introduction} % Section 1`, `\section{Model} % Section 2`, `\subsection{Environment} % Section 2.1`.
+
+**2b. Exhibit comments — PASS.**
+`\label{fig:ai-valuations} % Exhibit 1`, `\input{exhibits/numerical-illustration.tex} % Exhibit 2`.
+
+**2c. Theorem environment comments — PASS.**
+Examples: `% Assumption 1`, `% Proposition 1`, `% Proposition 2`, `% Remark 1`, etc.
+
+### 3. Code pipeline
+
+**3a. Code written in R — PASS.**
+All files (`run-all.R`, `numerical-illustration.R`, `ai-valuations-figure.R`) are R scripts.
+
+**3b. One canonical entry point — PASS.**
+`code/run-all.R` calls both subscripts and regenerates all exhibits.
+
+**3c. Pipeline runs from scratch — PASS.**
+No precomputed caches (`readRDS`, `load`) found. Pipeline regenerates all outputs.
+
+**3d. Executes in under 180 seconds — PASS.**
+Actual execution: ~3.5 seconds.
+
+**3e. WRDS query is part of canonical pipeline — PASS.**
+`code/ai-valuations-figure.R` executes the WRDS query at runtime within the time budget.
+
+**3f. Outputs to paper/exhibits/ in correct format — PASS.**
+Outputs: `paper/exhibits/numerical-illustration.tex` (TeX table) and `paper/exhibits/ai-valuations.pdf` (PDF figure).
+
+**3g. No silent reliance on cached/manual files — PASS.**
+The pipeline regenerates all exhibits from code. When WRDS credentials are unavailable, the script fails *loudly* with a clear error message rather than silently falling back to stale cached files. The spec (3e) explicitly anticipates WRDS queries as part of the canonical pipeline, implying credentials are an expected runtime dependency.
+
+*Note:* A comment in `run-all.R` states "If WRDS credentials are unavailable, the numerical table is still generated," but the script currently errors out rather than continuing gracefully. This is a minor documentation inconsistency in the code, not a spec violation — the spec does not require graceful degradation without credentials.

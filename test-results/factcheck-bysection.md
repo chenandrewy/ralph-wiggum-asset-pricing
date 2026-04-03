@@ -1,133 +1,150 @@
 # tests/factcheck-bysection.py
-Started: 2026-04-02 21:59:20 EDT
-Runtime: 9m 21s
-[ralph-garage/agent-logs/20260402T215920.395960-0400_factcheck-bysection_claude_opus.log](../ralph-garage/agent-logs/20260402T215920.395960-0400_factcheck-bysection_claude_opus.log)
+Started: 2026-04-02 22:13:44 EDT
+Runtime: 4m 54s
+[ralph-garage/agent-logs/20260402T221344.370061-0400_factcheck-bysection_claude_opus.log](../ralph-garage/agent-logs/20260402T221344.370061-0400_factcheck-bysection_claude_opus.log)
 
 # factcheck-bysection
 VERDICT: PASS
-REASON: All arithmetic is correct; all verbal claims are supported; no material errors found.
+REASON: All arithmetic is correct, all verbal claims are supported, and no claim is materially wrong.
 
 ## Introduction (lines 41–68)
+
 - **Line 41** — section header
-- **Line 43** [VERBAL] OK — contextual claim about AI stock valuations 2023–2025 is consistent with well-known market facts
-- **Line 43** [FIGURE/TABLE] OK — `Figure~\ref{fig:ai-valuations}` references label defined at line 49; file `paper/exhibits/ai-valuations.pdf` exists
-- **Line 43** [VERBAL] OK — "price-dividend ratio of major AI stocks has risen sharply relative to non-AI stocks" is consistent with figure caption (line 48) describing CRSP-based PD ratios for AI vs non-AI stocks
-- **Line 43** [VERBAL] OK — thesis statement ("hedge against a negative AI singularity") is subsequently formalized in the model
-- **Line 48** [FIGURE/TABLE] OK — caption correctly describes CRSP data with trailing 12-month dividends for NVDA, MSFT, GOOGL, META, AMZN vs rest of CRSP
-- **Line 52** [VERBAL] OK — narrative about displacement, private ventures, and incomplete markets accurately previews Assumptions 1–2 (lines 105–111) and the budget constraint (lines 126–130)
-- **Line 54** [VERBAL] OK — "infinite-horizon, discrete-time" confirmed at line 78; "two publicly traded assets" confirmed at line 92; "representative household who is the marginal investor" confirmed at line 88
-- **Line 54** [REFERENCE] OK — GKP interpretation of AI owners as future innovators confirmed at line 88 and in GKP lit file
-- **Line 54** [VERBAL] OK — "Each period, with some probability, a singularity occurs" confirmed by Assumption 2 (lines 109–111); "household is displaced" confirmed by Assumption 1 (lines 105–107)
-- **Line 56** [REFERENCE] OK — "closed form" confirmed by Proposition 1 (line 159); "increases with probability" confirmed by Proposition 3 (line 203)
-- **Line 56** [VERBAL] OK — hedging premium mechanism (high marginal utility when AI stocks pay well) confirmed by discussion at line 188
-- **Line 56** [VERBAL] OK — valuation spread and complete markets claims confirmed by Propositions 2 and 4
-- **Line 58** [REFERENCE] OK — Jones (2024) connection confirmed in Extension (lines 243–261); Coase/frictions argument confirmed at lines 263–279; extinction risk confirmed at lines 247–253
-- **Line 58** [VERBAL] OK — "most extreme AI singularity reduces displacement risk" confirmed by Remark 2 (line 275)
-- **Line 60** [VERBAL] OK — AI authorship description is a framing claim; spec confirms human wrote ~80 lines
-- **Line 63** [REFERENCE] OK — GKP characterization ("displacement risk in an overlapping-generations economy with innovation") confirmed by GKP lit file
-- **Line 63** [REFERENCE] OK — "new entrants capture rents that existing agents cannot share" confirmed by GKP lit file
-- **Line 63** [VERBAL] OK — KPS2020 and KP2014 characterizations are standard descriptions of those papers (no lit files available to independently verify)
-- **Line 65** [VERBAL] OK — rare disasters literature framing (Rietz, Barro, Wachter) is standard; sectoral asymmetry claim is confirmed by Assumption 2 and Proposition 2
-- **Line 67** [REFERENCE] OK — Jones (2024) characterization confirmed by Jones lit file; Korinek-Suh (2024) wage collapse confirmed by lit file; Hobijn-Jovanovic (2001) confirmed via GKP lit file
-- **Line 67** [VERBAL] OK — Acemoglu-Restrepo (2018) and Pastor-Veronesi (2009) characterizations are standard (no lit files)
+- **Line 43** [VERBAL] OK — stylized fact about AI stock valuations 2023–2025 is well-known and supported by Figure 1
+- **Line 43** [VERBAL] OK — "we propose an additional channel: publicly traded AI stocks command a valuation premium because they serve as a hedge" — supported by Proposition 3
+- **Line 48** [FIGURE/TABLE] OK — caption lists NVDA, MSFT, GOOGL, META, AMZN and trailing 12-month dividends; matches code in `code/ai-valuations-figure.R`
+- **Line 52** [VERBAL] OK — "singularity could dramatically increase productivity while shifting the economy's structure, displacing traditional businesses" — supported by Assumptions 1–2
+- **Line 52** [VERBAL] OK — "the typical investor cannot buy these assets" — supported by model setup (household cannot invest in private AI capital)
+- **Line 54** [VERBAL] OK — "infinite-horizon, discrete-time asset pricing model" — confirmed at line 78, eq (7)
+- **Line 54** [REFERENCE] OK — "following GKP2012, can be interpreted as future innovators" — GKP line 23 confirms future innovators who cannot trade with current agents
+- **Line 54** [VERBAL] OK — "each period, with some probability, a singularity occurs" — confirmed by model at line 78
+- **Line 56** [VERBAL] OK — "we derive the price-dividend ratio of AI stocks in closed form" — Proposition 1 provides explicit formula
+- **Line 56** [VERBAL] OK — "the ratio increases with the probability of a singularity" — Proposition 2 proves this under condition (13)
+- **Line 56** [VERBAL] OK — "hedging premium" mechanism described (high MU in singularity states, AI stocks pay more) — confirmed by Delta^{-gamma} > 1 and theta_tilde/theta > 1
+- **Line 56** [VERBAL] OK — "Under complete markets, the household could invest in private AI capital, eliminating displacement risk and the hedging premium" — Proposition 3
+- **Line 58** [REFERENCE] OK — "connect to Jones2024 on the trade-off between AI-driven growth and existential risk" — Jones (2024) summary confirms this topic
+- **Line 58** [REFERENCE] OK — "the barriers to intergenerational risk-sharing emphasized by GKP2012" — GKP confirms intergenerational risk-sharing failure is central
+- **Line 58** [VERBAL] OK — "the most extreme AI singularity reduces displacement risk" — Remark 1 confirms hedging premium vanishes as g_tilde → ∞ for gamma > 1
+- **Line 58** [VERBAL] OK — "extinction risk attenuates the hedging premium" — eq (14) confirms factor (1-q)
+- **Line 60** [VERBAL] OK — "paper specification—approximately 80 lines" — spec is 84 lines; "approximately 80" is accurate
+- **Line 60** [VERBAL] OK — "the AI performed all economic modeling, derivations, writing, and typesetting" — consistent with spec section II.5.d
+- **Line 63** [REFERENCE] OK — "GKP2012, who introduce displacement risk in an overlapping-generations economy with innovation" — confirmed by GKP abstract
+- **Line 63** [REFERENCE] OK — "innovation creates a systematic risk factor because new entrants capture rents that existing agents cannot share" — GKP line 23 confirms
+- **Line 63** [VERBAL] OK — "our contribution relative to GKP is purposefully modest" — matches spec requirement 6d
+- **Line 63** [REFERENCE] OK — "KoganPapanikolaouStoffman2020 extend the displacement risk framework" — standard characterization
+- **Line 63** [REFERENCE] OK — "KoganPapanikolaou2014 analyze how investment-specific technology shocks affect asset prices" — standard characterization
+- **Line 65** [REFERENCE] OK — rare disasters literature citations (Rietz1988, Barro2006, Wachter2013) are canonical
+- **Line 65** [VERBAL] OK — "asymmetric effects across sectors" distinguishes from standard disaster models — confirmed by the model
+- **Line 67** [REFERENCE] OK — "Jones2024 analyzes the trade-off between AI-driven growth and existential risk, showing that the curvature of utility is central" — Jones summary line 25 confirms
+- **Line 67** [REFERENCE] OK — remaining lit review citations (KorinekSuh2024, AcemogluRestrepo2018, PastorVeronesi2009, HobijnJovanovic2001) — standard characterizations; HobijnJovanovic2001 confirmed via GKP line 41
 
-## Model (lines 72–156)
+## Model (lines 72–153)
+
 - **Line 72** — section header
-- **Line 74** [VERBAL] OK — preview of model purpose consistent with Propositions 2 and 4
-- **Line 78** [DEFINITION] OK — discrete time, singularity as absorbing event with independent probability p
-- **Lines 79–81** [DEFINITION] OK — normal growth Y_{t+1} = (1+g)Y_t; used consistently in R definition
-- **Lines 82–85** [DEFINITION] OK — post-singularity growth Y_{t+1} = (1+g̃)Y_t with g̃ > g; used in Φ^A, Φ^N, V₁
-- **Line 86** [REFERENCE] OK — "the extension explores the limit g̃→∞" confirmed at lines 257–259
-- **Line 88** [REFERENCE] OK — GKP unborn-cohorts interpretation accurately attributed; paper's own modeling choice clearly distinguished
-- **Lines 92–96** [DEFINITION] OK — pre-singularity dividend shares θ, ν, (1−θ−ν) sum to 1
-- **Lines 98–101** [DEFINITION] OK — post-singularity shares θ̃, ν̃, (1−θ̃−ν̃) sum to 1
-- **Lines 105–107** [ASSUMPTION] OK — Assumption 1: θ̃+ν̃ < θ+ν (household share falls); implies Δ < 1
-- **Lines 109–111** [ASSUMPTION] OK — Assumption 2: θ̃ > θ and ν̃ < ν; independent of Assumption 1 (both needed)
-- **Lines 113–116** [DEFINITION] OK — ω ≡ θ+ν, ω̃ ≡ θ̃+ν̃, Δ ≡ ω̃/ω < 1 follows from Assumption 1
-- **Line 117** [VERBAL] OK — accurately restates Assumption 1 using Δ notation
-- **Lines 121–124** [DEFINITION] OK — standard CRRA utility with γ > 1, β ∈ (0,1)
-- **Lines 126–130** [DEFINITION] OK — budget constraint with ex-dividend prices; consistent with two-asset setup
-- **Line 132** [ASSUMPTION] OK — market clearing n^A = n^N = 1; household is sole public-market investor
-- **Lines 132–136** [ARITHMETIC] OK — c_t = θY_t + νY_t = ωY_t (pre-singularity); c_t = ω̃Y_t (post-singularity)
-- **Lines 138–141** [DEFINITION] OK — standard CRRA Euler equation; sign convention consistent with budget constraint
-- **Line 142** [VERBAL] OK — "consumption falls at the singularity" is correct for the paper's parameter regime (Δ(1+g̃) = 0.7875 < 1); the formal results only require Δ < 1 and are unaffected
-- **Lines 146–147** [VERBAL] OK — constant PD ratios within each regime justified by i.i.d. growth rates
-- **Lines 148–150** [ASSUMPTION] OK — existence conditions ensure finite PD ratios; denominators of V₁ and V₀ formulas are positive
-- **Line 152** [VERBAL] OK — "automatically satisfied for γ > 1" is correct since (1+g)^{1−γ} < 1 for γ > 1 and g > 0
+- **Line 74** [VERBAL] OK — accurately describes section purpose
+- **Line 78** [DEFINITION] OK — discrete time, absorbing singularity with probability p each period
+- **Line 80** [DEFINITION] OK — pre-singularity growth equation
+- **Line 84** [ASSUMPTION] OK — g_tilde > g stated; code uses 0.05 > 0.02
+- **Line 86** [REFERENCE] OK — "the extension explores the limit g_tilde → ∞" — confirmed at lines 244–245
+- **Line 88** [REFERENCE] OK — GKP interpretation of AI owners as future innovators confirmed by GKP
+- **Line 88** [VERBAL] OK — carefully distinguishes paper's own modeling choice from GKP's mechanism
+- **Line 92** [DEFINITION] OK — three dividend streams with shares theta, nu, 1-theta-nu summing to 1
+- **Line 94** [ARITHMETIC] OK — D^A + D^N + D^P = theta*Y + nu*Y + (1-theta-nu)*Y = Y
+- **Line 100** [ARITHMETIC] OK — post-singularity shares sum to 1
+- **Line 106** [DEFINITION] OK — Assumption 1: tilde_theta + tilde_nu < theta + nu; code: 0.45 < 0.60
+- **Line 110** [DEFINITION] OK — Assumption 2: tilde_theta > theta and tilde_nu < nu; code: 0.15 > 0.05, 0.30 < 0.55
+- **Line 113** [ARITHMETIC] OK — omega = theta + nu = 0.60, tilde_omega = tilde_theta + tilde_nu = 0.45
+- **Line 115** [ARITHMETIC] OK — Delta = 0.45/0.60 = 0.75 < 1
+- **Line 117** [VERBAL] OK — correct restatement that Assumption 1 is equivalent to Delta < 1
+- **Line 123** [DEFINITION] OK — CRRA utility with gamma > 1, beta in (0,1); code: gamma=3, beta=0.96
+- **Line 128** [DEFINITION] OK — standard budget constraint with ex-dividend prices
+- **Line 132** [VERBAL] OK — market clearing n^A = n^N = 1 follows from household being sole public investor
+- **Line 134** [ARITHMETIC] OK — c_t = D^A + D^N = (theta + nu)*Y = omega*Y
+- **Line 136** [VERBAL] OK — post-singularity: c_t = tilde_omega * Y
+- **Line 140** [DEFINITION] OK — standard CRRA Euler equation
+- **Line 142** [VERBAL] OK — correctly explains hedging mechanism: SDF high when AI stocks pay well
+- **Line 146** [VERBAL] OK — P/D ratios constant within each regime because growth rates are constant
+- **Line 149** [DEFINITION] OK — Assumption 3: existence conditions for finite P/D ratios
+- **Line 152** [VERBAL] OK — "automatically satisfied for gamma > 1" — correct since all factors are strictly < 1 when gamma > 1, g > 0, g_tilde > 0, beta < 1, p > 0
 
-## Results (lines 157–242)
+## Results (lines 157–226)
+
 - **Line 157** — section header
-- **Lines 159–176** [DEFINITION] OK — Proposition 1 states closed-form PD ratios V₀^A, V₀^N with auxiliary definitions R, Φ^A, Φ^N, V₁
-- **Line 175** [VERBAL] OK — verbal descriptions of R, Φ^A, Φ^N, V₁ are accurate
-- **Line 179** [ARITHMETIC] OK — post-singularity Euler V₁ = β(1+g̃)^{1−γ}(1+V₁) rearranges to eq (7); numerically V₁ = 6.7368
-- **Line 185** [ARITHMETIC] OK — normal-state contribution: consumption growth (1+g), dividend growth (1+g), contribution (1−p)R(1+V₀^A)
-- **Line 185** [ARITHMETIC] OK — singularity-state: consumption growth Δ(1+g̃), AI dividend growth (θ̃/θ)(1+g̃); SDF × div_growth = Φ^A; numerically Φ^A = 6.192
-- **Line 185** [ARITHMETIC] OK — solving for V₀^A yields eq (2)
-- **Line 188** [VERBAL] OK — Δ^{−γ} > 1 because Δ < 1 (displacement); θ̃/θ > 1 (AI share gain); ν̃/ν < 1 (non-AI share loss)
-- **Lines 190–194** [ARITHMETIC] OK — V₀^A − V₀^N formula: common denominator, numerator difference = p·β·Δ^{−γ}(1+g̃)^{1−γ}(θ̃/θ − ν̃/ν)(1+V₁) > 0
-- **Lines 197–199** [ARITHMETIC] OK — θ̃/θ = 3.0 > 1 > ν̃/ν ≈ 0.545, so difference is positive by Assumption 2
-- **Line 201** [VERBAL] OK — spread increases with p (linear in numerator) and with 1−Δ (Δ^{−γ} increasing as Δ falls); confirmed by table data
-- **Lines 203–208** [ARITHMETIC] OK — condition Φ^A(1+V₁) > R/(1−R) correctly derived in appendix (lines 296–310)
-- **Line 208** [ARITHMETIC] OK — R/(1−R) = V₀^A|_{p=0} = 0.9227/0.0773 = 11.94; confirmed
-- **Line 208** [VERBAL] OK — condition holds for small Δ, large γ, or large θ̃/θ because all three raise Φ^A
-- **Lines 211–212** [REFERENCE] OK — "See Appendix" correctly points to lines 296–310 which contain the full proof
-- **Line 215** [VERBAL] OK — correct restatement of Proposition 3's economic content
-- **Lines 217–226** [ARITHMETIC] OK — complete markets: c_t = Y_t, so Δ^{−γ} replaced by 1; Φ^{A,CM} = β(1+g̃)^{1−γ}(θ̃/θ) = 2.612; hedging premium formula correctly factors out (Δ^{−γ}−1)
-- **Line 226** [VERBAL] OK — premium increasing in p, θ̃/θ, and 1−Δ; all enter the formula monotonically
-- **Lines 229–231** [ARITHMETIC] OK — proof logic correct: complete markets consumption growth is (1+g̃) not Δ(1+g̃)
-- **Line 233** [VERBAL] OK — correct interpretation: complete markets → Δ^{−γ} = 1 → hedging premium = 0
-- **Line 236** [ARITHMETIC] OK — ω = 0.05+0.55 = 0.60; ω̃ = 0.15+0.30 = 0.45; Δ = 0.75
-- **Line 236** [ARITHMETIC] OK — V₀^A = 16.098 ≈ 16.1 at p = 0.01
-- **Line 236** [ARITHMETIC] OK — V₀^N = 11.567 ≈ 11.6 at p = 0.01
-- **Line 236** [ARITHMETIC] OK — ratio 16.098/11.567 = 1.392 ≈ "roughly 1.4"
-- **Line 236** [ARITHMETIC] OK — V₀^A|_{p=0} = V₀^N|_{p=0} = R/(1−R) = 11.94 ≈ 11.9
-- **Line 236** [ARITHMETIC] OK — V₀^{A,CM} = 12.896 ≈ 12.9 at p = 0.01
-- **Line 236** [ARITHMETIC] OK — hedging premium = (16.098−12.896)/12.896 = 24.8% ≈ "about 25%"
-- **Line 238** [FIGURE/TABLE] OK — all five rows of Table 1 match independent recomputation:
-  - p=0.000: V₀^A=11.9, V₀^N=11.9, V₀^{A,CM}=11.9, Spread=0.0, HedgePrem=0.0%
-  - p=0.005: V₀^A=14.1, V₀^N=11.7, V₀^{A,CM}=12.4, Spread=2.4, HedgePrem=13.6%
-  - p=0.010: V₀^A=16.1, V₀^N=11.6, V₀^{A,CM}=12.9, Spread=4.5, HedgePrem=24.8%
-  - p=0.020: V₀^A=19.5, V₀^N=11.3, V₀^{A,CM}=13.7, Spread=8.2, HedgePrem=42.3%
-  - p=0.050: V₀^A=26.5, V₀^N=10.6, V₀^{A,CM}=15.3, Spread=15.9, HedgePrem=73.4%
+- **Line 160** [DEFINITION] OK — subscripts 0,1 on V denote pre- and post-singularity regimes, not time
+- **Line 162** [ARITHMETIC] OK — V_0^A formula verified by re-derivation from Euler equation
+- **Line 166** [ARITHMETIC] OK — V_0^N formula identical structure with nu_tilde/nu
+- **Line 170** [DEFINITION] OK — R = beta*(1+g)^{1-gamma}; computed R = 0.9227
+- **Line 171** [DEFINITION] OK — Phi^A = beta * Delta^{-gamma} * (1+g_tilde)^{1-gamma} * (theta_tilde/theta)
+- **Line 172** [DEFINITION] OK — Phi^N analogous with nu_tilde/nu
+- **Line 173** [DEFINITION] OK — V_1 = beta*(1+g_tilde)^{1-gamma} / [1 - beta*(1+g_tilde)^{1-gamma}]; computed V_1 = 6.737
+- **Line 175** [VERBAL] OK — verbal descriptions of R, Phi^A, Phi^N, V_1 are accurate
+- **Line 179** [ARITHMETIC] OK — post-singularity Euler equation V_1 = beta*(1+g_tilde)^{1-gamma}*(1+V_1) rearranges correctly
+- **Line 185** [ARITHMETIC] OK — pre-singularity expansion: normal state contributes (1-p)*R*(1+V_0^A), singularity state contributes p*Phi^A*(1+V_1); solving yields eq (5)
+- **Line 188** [VERBAL] OK — Delta < 1 ⟹ Delta^{-gamma} > 1; theta_tilde/theta = 3 > 1 > nu_tilde/nu = 0.545; hence V_0^A > V_0^N
+- **Line 188** [VERBAL] OK — "valuation spread increases with singularity probability p" — confirmed by numerical table (Spread: 0.0, 2.4, 4.5, 8.2, 15.9)
+- **Line 193** [ARITHMETIC] OK — condition Phi^A(1+V_1) > R/(1-R): LHS ≈ 47.9 > 11.9 ≈ RHS
+- **Line 195** [VERBAL] OK — R/(1-R) = V_0^A|_{p=0} confirmed by substituting p=0 into eq (5)
+- **Line 195** [VERBAL] OK — comparative statics in Delta, gamma, theta_tilde/theta are directionally correct
+- **Line 207** [ARITHMETIC] OK — complete-markets formula with Phi^{A,CM} replacing Phi^A
+- **Line 209** [DEFINITION] OK — Phi^{A,CM} = beta*(1+g_tilde)^{1-gamma}*(theta_tilde/theta) = Phi^A without Delta^{-gamma}
+- **Line 211** [ARITHMETIC] OK — hedging premium formula V_0^A - V_0^{A,CM} verified; at p=0.01 gives ≈ 3.20
+- **Line 213** [VERBAL] OK — hedging premium increasing in p, theta_tilde/theta, and (1-Delta) — all enter numerator positively
+- **Line 217** [VERBAL] OK — under complete markets, consumption growth at singularity is (1+g_tilde) not Delta*(1+g_tilde), eliminating Delta^{-gamma}
+- **Line 220** [VERBAL] OK — correctly identifies hedging premium as arising entirely from displacement channel
+- **Line 223** [ARITHMETIC] OK — omega = 0.05 + 0.55 = 0.60
+- **Line 223** [ARITHMETIC] OK — tilde_omega = 0.15 + 0.30 = 0.45
+- **Line 223** [ARITHMETIC] OK — Delta = 0.45/0.60 = 0.75
+- **Line 223** [ARITHMETIC] OK — V_0^A ≈ 16.1 at p=0.01; recomputed 16.098
+- **Line 223** [ARITHMETIC] OK — V_0^N ≈ 11.6 at p=0.01; recomputed 11.567
+- **Line 223** [ARITHMETIC] OK — "ratio of roughly 1.4"; 16.098/11.567 = 1.392 ≈ 1.4
+- **Line 223** [ARITHMETIC] OK — "both equal approximately 11.9" at p=0; R/(1-R) = 11.940
+- **Line 223** [ARITHMETIC] OK — V_0^{A,CM} ≈ 12.9 at p=0.01; recomputed 12.896
+- **Line 223** [ARITHMETIC] OK — "hedging premium of about 25%"; (16.098-12.896)/12.896 = 24.8% ≈ 25%
+- **Line 225** [FIGURE/TABLE] OK — all five rows of Table 1 verified against recomputation; Spread and Hedge Premium columns correct
 
-## Extension: Singularity, Extinction, and Frictions (lines 243–283)
-- **Line 243** — section header
-- **Line 245** [VERBAL] OK — correctly frames two extension directions (extinction risk, frictions) citing Jones (2024)
-- **Line 249** [DEFINITION] OK — q ∈ [0,1) as conditional extinction probability given singularity
-- **Lines 250–252** [ARITHMETIC] OK — extinction formula V₀^{A,q}: singularity term multiplied by (1−q); denominator unchanged because extinction only affects singularity states
-- **Line 253** [VERBAL] OK — "extinction risk attenuates the hedging premium" follows directly from (1−q) factor; q→1 limit correctly described
-- **Line 255** [REFERENCE] OK — Jones (2024) utility curvature claim confirmed by Jones lit file
-- **Line 255** [VERBAL] OK — "γ > 1, utility is bounded" is correct for CRRA
-- **Line 255** [VERBAL] OK — as g̃→∞, AI owners' consumption is unbounded while household retains fraction ω̃ of output
-- **Lines 257–259** [ARITHMETIC] OK — for γ > 1: (1+g̃)^{1−γ}→0 as g̃→∞, so Φ^A→0 and V₁→0; hedging premium vanishes
-- **Lines 257–259** [ARITHMETIC] OK — for γ = 1 (log utility): (1+g̃)^0 = 1, so Φ^A and V₁ are independent of g̃
-- **Line 261** [VERBAL] OK — accurate synthesis connecting Jones's curvature result to the hedging premium
-- **Lines 265–266** [REFERENCE] OK — GKP discussion of bequests, government debt, and intergenerational transfers confirmed by GKP lit file; claim that GKP note displacement factor equals one in representative dynasty with perfect altruism confirmed; claim that GKP do not conduct formal scaling analysis confirmed
-- **Line 267** [VERBAL] OK — Δ = 1 → hedging premium = 0 follows from Proposition 4 (Δ^{−γ}−1 = 0)
-- **Lines 269–272** [ARITHMETIC] OK — cost/Y = F/Y + τ(ω−ω̃); as Y→∞, F/Y→0
-- **Line 273** [ARITHMETIC] OK — AI owners' gains = (1−ω̃)Y − (1−ω)Y = (ω−ω̃)Y
-- **Lines 275–277** [VERBAL] OK — "hedging premium largest for moderate singularities" is a qualitative synthesis of two boundary results (Remark 1: premium vanishes as g̃→∞ for γ > 1; Remark 2: Coase theorem eliminates displacement as Y→∞); directionally correct
-- **Line 279** [VERBAL] OK — accurate summary connecting GKP displacement risk to Jones singularity analysis
+## Extension: Singularity, Extinction, and Frictions (lines 230–267)
 
-## Conclusion (lines 284–289)
-- **Line 284** — section header
-- **Line 286** [VERBAL] OK — "reduce the displacement premium" supported by Proposition 4
-- **Line 286** [VERBAL] OK — "improve welfare" is a reasonable inference: under complete markets the household's consumption is Y_t > ωY_t, yielding higher CRRA utility, though no formal welfare theorem is stated
-- **Line 286** [VERBAL] OK — "policy lever is market completeness" directly supported by Proposition 4
-- **Line 286** [VERBAL] OK — "any mechanism allowing household to share AI upside reduces hedging premium" supported by Proposition 4 formula (increasing Δ toward 1 reduces Δ^{−γ}−1)
-- **Line 286** [VERBAL] OK — "sufficiently abundant output makes modest transfers effective" supported by Remark 2 and eq (12)
-- **Line 288** [VERBAL] OK — "omits heterogeneous households, production-side frictions, and endogenous innovation" is accurate
-- **Line 288** [VERBAL] OK — "does not generate a broad menu of testable predictions" consistent with model scope
-- **Line 288** [VERBAL] OK — "hedging premium is largest for moderate singularities" is a qualitative synthesis of Remarks 1–2 boundary results; directionally supported but not formally proved as a monotonicity/maximality result
+- **Line 230** — section header
+- **Line 232** [REFERENCE] OK — accurately describes baseline model and two extension directions; Jones (2024) reference appropriate
+- **Line 236** [DEFINITION] OK — extinction probability q conditional on singularity
+- **Line 238** [ARITHMETIC] OK — extinction formula correctly modifies baseline by factor (1-q) on singularity term only
+- **Line 240** [VERBAL] OK — "extinction risk reduces the singularity-state contribution by (1-q)" — directly from formula
+- **Line 240** [VERBAL] OK — "in the limit q→1, singularity contributes nothing" — numerator term → 0, leaving no-singularity P/D ratio
+- **Line 242** [REFERENCE] OK — Jones (2024) confirms that gamma > 1 means utility is bounded and infinite consumption generates finite utility
+- **Line 242** [VERBAL] OK — "AI owners enjoy unbounded consumption" — their consumption (1-tilde_omega)*Y grows without bound
+- **Line 242** [VERBAL] OK — "household's consumption...remains a shrinking fraction tilde_omega of total output" — tilde_omega < omega is a one-time drop at singularity; the fraction tilde_omega is fixed post-singularity, not progressively shrinking. Reading is slightly ambiguous but refers to the level shift from omega to tilde_omega.
+- **Line 245** [ARITHMETIC] OK — for gamma > 1: (1+g_tilde)^{1-gamma} → 0 as g_tilde → ∞, so Phi^A → 0 and V_1 → 0
+- **Line 245** [VERBAL] OK — "hedging premium vanishes" — follows from Phi^A → 0 and V_1 → 0 in eq (16)
+- **Line 245** [VERBAL] OK — "household's marginal utility in singularity states becomes negligible because consumption is so high" — correct economic intuition
+- **Line 245** [ARITHMETIC] OK — "for gamma = 1 (log utility), the premium is independent of g_tilde" — (1+g_tilde)^0 = 1, so Phi^A and V_1 do not depend on g_tilde. Note: gamma = 1 is outside the model's stated assumption gamma > 1, but the remark is a valid mathematical observation about the formula.
+- **Line 248** [VERBAL] OK — correctly summarizes parallel with Jones (2024) on curvature of utility
+- **Line 252** [REFERENCE] OK — "GKP assume that intergenerational risk-sharing fails due to frictions" — confirmed by GKP
+- **Line 252** [REFERENCE] OK — "GKP discuss how mechanisms such as bequests, government debt, and intergenerational transfers would affect the magnitude of the displacement factor" — confirmed by GKP p.16–17: "extensions of the model that would allow for bequests and gifts across generations, government debt, intergenerational transfers mandated by the government...would only affect the magnitude of the displacement factor"
+- **Line 252** [REFERENCE] OK — "in a representative dynasty with perfect altruism the displacement factor equals one" — confirmed by GKP footnote 14
+- **Line 252** [VERBAL] OK — GKP "do not conduct a formal analysis of how these mechanisms scale with output" — correct; GKP's treatment is in a footnote
+- **Line 254** [VERBAL] OK — Coase theorem statement is standard and correctly applied
+- **Line 254** [ARITHMETIC] OK — "with full transfers, Delta = 1 and the hedging premium vanishes" — eq (16) has (Delta^{-gamma} - 1) = 0 when Delta = 1
+- **Line 258** [ARITHMETIC] OK — friction cost formula F/Y + tau*(omega - tilde_omega) verified
+- **Line 260** [ARITHMETIC] OK — AI owners' gains: (1-tilde_omega)Y - (1-omega)Y = (omega - tilde_omega)Y; algebra correct
+- **Line 260** [VERBAL] OK — "as Y → ∞, fixed component vanishes" — F/Y → 0
+- **Line 260** [VERBAL] OK — net surplus positive when tau is small — (1-tau)*(omega - tilde_omega)*Y - F > 0 for large Y and tau < 1
+- **Line 263** [VERBAL] OK — Remark 2: "hedging premium is largest for moderate singularities" — correct: extreme singularities eliminate premium via utility saturation (Remark 1) or abundance-enabled risk-sharing (this remark)
 
-## Proofs (lines 296–312)
-- **Line 296** — appendix header
-- **Line 298** — proof header for Proposition 3
-- **Line 299** [DEFINITION] OK — N(p) = (1−p)R + pΦ^A(1+V₁), D(p) = 1−(1−p)R; consistent with eq (2)
-- **Line 301** [ARITHMETIC] OK — quotient rule correctly stated
-- **Line 303** [ARITHMETIC] OK — N'(p) = −R + Φ^A(1+V₁); D'(p) = R; both derivatives correct
-- **Line 305** [ARITHMETIC] OK — raw numerator correctly substituted from quotient rule
-- **Line 306** [ARITHMETIC] OK — expansion verified: (1−p)R² terms cancel; p and (1−p) coefficients on RΦ^A(1+V₁) combine to give −RΦ^A(1+V₁); result is −R + Φ^A(1+V₁) − RΦ^A(1+V₁)
-- **Line 307** [ARITHMETIC] OK — regrouping to Φ^A(1+V₁)(1−R) − R is correct
-- **Line 309** [ARITHMETIC] OK — positive iff Φ^A(1+V₁) > R/(1−R), since 1−R > 0 (R < 1 by Assumption 3)
-- **Line 309** [ARITHMETIC] OK — R/(1−R) = V₀^A|_{p=0} confirmed by substituting p = 0 into eq (2)
+## Conclusion (lines 271–276)
+
+- **Line 271** — section header
+- **Line 273** [VERBAL] OK — "expanding the set of tradeable AI-related claims...could reduce the displacement premium" — supported by Proposition 3 (complete markets eliminate hedging premium)
+- **Line 273** [VERBAL] OK — "sufficiently abundant post-singularity output can make even modest transfer mechanisms effective" — supported by Remark 2
+- **Line 275** [VERBAL] OK — "the model is intentionally stylized" and acknowledged omissions (heterogeneous households, production frictions, endogenous innovation) — accurate self-assessment
+- **Line 275** [VERBAL] OK — "hedging premium is largest for moderate singularities" — supported by Remarks 1 and 2
+
+## Proofs (lines 283–297)
+
+- **Line 283** — appendix header
+- **Line 286** [ARITHMETIC] OK — N(p) = (1-p)R + p*Phi^A(1+V_1), D(p) = 1-(1-p)R match eq (5)
+- **Line 290** [ARITHMETIC] OK — N'(p) = -R + Phi^A(1+V_1), D'(p) = R are correct derivatives
+- **Line 292** [ARITHMETIC] OK — quotient rule expansion N'D - ND' correctly stated
+- **Line 293** [ARITHMETIC] OK — intermediate simplification: (1-p)R^2 terms cancel, (1-p)+p=1 collapse in Phi^A coefficient
+- **Line 294** [ARITHMETIC] OK — final numerator Phi^A(1+V_1)(1-R) - R is correct factoring
+- **Line 296** [ARITHMETIC] OK — R/(1-R) = V_0^A|_{p=0} confirmed by substituting p=0 into eq (5)
+- **Line 296** [VERBAL] OK — positive iff Phi^A(1+V_1) > R/(1-R) follows since 1-R > 0 by Assumption 3

@@ -1,35 +1,34 @@
 # Improvement Plan
-AUTHOR PLAN — 2026-04-02 21:58:06 EDT
+AUTHOR PLAN — 2026-04-02 22:09:53 EDT
 
 ## Status
-- **Build:** Compiles cleanly (13 pages).
-- **Tests:** 15/16 pass. One failure: `quality-writing`.
-- **Referees:** Disabled (no referee outputs).
 
-## Key Issue
+- **Build**: Clean (13 pages, no errors)
+- **Tests**: 13/16 pass; 3 failures below
+- **Overhaul needed**: No. Model section is well-structured and correct.
 
-The `quality-writing` test fails on the "compelling throughout" criterion. Two problems identified:
+## Failing Tests
 
-1. **Conclusion (primary failure).** Three of four paragraphs are mechanical recap that restate the abstract and results. The test calls this out explicitly: "a reader scanning a JF issue would stop reading here." Only the final sentence ("Financial market solutions to AI disaster risk are under-discussed") adds forward-looking content.
+### 1. `spec-paper` — Exhibit comment mismatch in generated table file
 
-2. **Model section (secondary concern).** Opens with textbook-style exposition ("Time is discrete...") and proceeds mechanically through subsections without narrative connecting the formalism to the economic story. The test notes the contrast with the introduction's tone. The section's brevity partly mitigates this, but it still falls short of the paper's own "between academic paper and blog post" target.
+**Problem**: `code/numerical-illustration.R` line 68 writes `\label{tab:numerical} % Exhibit 1`, but `paper.tex` line 238 marks the table as `% Exhibit 2` (the figure is Exhibit 1). The generated file's comment contradicts the paper's numbering.
 
-## Plan
+**Fix**: In `code/numerical-illustration.R`, change `% Exhibit 1` to `% Exhibit 2` on line 68.
 
-### 1. Rewrite the conclusion (Section 5)
+### 2. `factcheck-code` — CRSP split-adjustment inconsistency
 
-This is where the test fails. Changes:
+**Problem**: The CRSP query in `code/ai-valuations-figure.R` computes total dividends as `mcap / prc * divamt`, which multiplies month-end `shrout` by ex-date per-share `divamt`. If a stock split occurs between the ex-date and month-end (e.g., NVDA's 10-for-1 in June 2024), post-split shares outstanding are multiplied by pre-split per-share dividends, overstating total dividends.
 
-- **Cut the recap.** Remove the first two paragraphs that restate the abstract. The reader just read the paper — they don't need a summary of it.
-- **Lead with the forward-looking insight.** Open with the under-discussed policy point: expanding tradeable AI claims (public listings, derivatives, government risk-sharing) could reduce the displacement premium. This is the conclusion's only genuinely new content — make it the lead.
-- **Add a "what's left unsaid" paragraph.** Briefly note what the model deliberately omits and why — e.g., the model is intentionally stylized, avoids calibration, and does not generate a broad menu of testable predictions. Frame these as scope choices, not apologies.
-- **End with the paradox.** Close on the extension's punchline: the most extreme singularity eliminates displacement risk, so the hedging premium is largest for moderate singularities. This is the paper's most memorable result — let it be the last thing the reader sees.
-- **Target: 2 paragraphs max.** A compact conclusion that leaves the reader thinking, not skimming.
+**Fix**: Use CRSP's split-adjusted fields to ensure consistency. Specifically, replace the current dividend aggregation with a query that uses `cfacpr` (cumulative factor to adjust price) and `cfacshr` (cumulative factor to adjust shares) from `crsp.msf` to bring `divamt` and `shrout` to the same split-adjustment basis. Alternatively, compute total dividends as `divamt * shrout_on_exdate` by joining distributions with monthly data on the ex-date month rather than mixing timing. The simplest correct approach: multiply `divamt` by `shrout` from the same month as the ex-date (join `msf` to `msedist` on the ex-date's month-end, not the current observation month).
 
-### 2. Add narrative connective tissue to the model section (Section 2)
+### 3. `quality-formalism` — Proposition 2 is compressible
 
-This is the secondary concern flagged by the test. Changes:
+**Problem**: Proposition 2 (the cross-section result $V_0^A > V_0^N$) follows in one step from Proposition 1 and Assumption 2. The displayed formula for the spread is never used downstream. The test flags it as ceremonial formalism that could be stated as a prose observation.
 
-- **Add a brief motivating sentence at the top of Section 2** that connects back to the introduction's intuition before diving into formalism. Something like: "We now translate the intuition from the introduction into a formal environment."
-- **Add a one-sentence forward pointer after the household's problem** (Section 2.3) linking the setup to the results: what will the Euler equation deliver?
-- **Keep it light.** The model section is already short (~1.5 pages). Do not pad it — just add the connective sentences that make it feel less like a textbook appendix.
+**Fix**: Demote Proposition 2 to a one- or two-sentence prose observation immediately after Proposition 1's proof. State that $V_0^A > V_0^N$ follows from $\tilde{\theta}/\theta > 1 > \tilde{\nu}/\nu$ and the shared denominator. Remove equation (12). Renumber Propositions 3→2 and 4→3, updating all references (including the appendix proof header). Update exhibit/theorem number comments throughout.
+
+## Sequencing
+
+1. Fix the exhibit comment (test 1) — trivial, one-line change.
+2. Fix the CRSP split-adjustment (test 2) — modify the SQL query in `ai-valuations-figure.R`.
+3. Demote Proposition 2 to prose (test 3) — edit `paper.tex`, renumber propositions, update cross-references and comments.

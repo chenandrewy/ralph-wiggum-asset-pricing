@@ -1,40 +1,32 @@
 # tests/factcheck-freely.py
-Started: 2026-04-02 21:59:20 EDT
-Runtime: 3m 21s
-[ralph-garage/agent-logs/20260402T215920.397310-0400_factcheck-freely_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260402T215920.397310-0400_factcheck-freely_claude_claude-opus-4-6.log)
+Started: 2026-04-02 22:13:44 EDT
+Runtime: 8m 32s
+[ralph-garage/agent-logs/20260402T221344.372837-0400_factcheck-freely_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260402T221344.372837-0400_factcheck-freely_claude_claude-opus-4-6.log)
 
 # factcheck-freely
-VERDICT: PASS
-REASON: All mathematical derivations, proofs, economic arguments, and citation characterizations are correct with no factual errors or logical inconsistencies found.
+VERDICT: FAIL
+REASON: The paper contains a mislabeled economic quantity in the Coase-theorem discussion and an incomplete logical claim about Assumption 3.
 
-## Detailed Review
+## Issues Found
 
-### Mathematical Derivations
-- **Proposition 1 (P/D ratios):** Post-singularity V_1 derivation correct. Pre-singularity V_0^A derivation verified step by step: consumption growth Delta*(1+g_tilde), dividend growth (theta_tilde/theta)*(1+g_tilde), solving for V_0^A yields eq. (8). Correct.
-- **Proposition 2 (Cross-section):** Subtraction of eqs. (8)-(9) with identical denominators. Phi^A - Phi^N > 0 follows from Assumption 2. Correct.
-- **Proposition 3 (Comparative static):** Appendix A proof verified by expanding quotient rule numerator. All cancellations check out, yielding condition Phi^A(1+V_1) > R/(1-R). Claim that R/(1-R) = V_0^A|_{p=0} confirmed. Correct.
-- **Proposition 4 (Complete markets):** Replacing Delta^{-gamma} with 1 under complete markets is logically justified. Hedging premium formula follows by subtraction. Correct.
-- **Extinction risk (eq. 23):** Scaling singularity contribution by (1-q) is correct.
-- **Remark 1 (g_tilde -> infinity):** For gamma > 1, (1+g_tilde)^{1-gamma} -> 0, so Phi^A -> 0 and V_1 -> 0. Log utility independence also correct. Correct.
+### 1. AI owners' "gains" mislabeled (Section 4.2)
+The paper states: "If the proportional cost $\tau$ is small relative to the AI owners' gains -- which are $(1-\tilde{\omega})Y - (1-\omega)Y = (\omega - \tilde{\omega})Y$ --"
 
-### Numerical Illustration
-Recomputed with stated parameters (beta=0.96, gamma=3, g=0.02, g_tilde=0.05, theta=0.05, theta_tilde=0.15, nu=0.55, nu_tilde=0.30):
-- R = 0.9224, V_1 = 6.74
-- At p=0: V_0^A = 11.9 (matches)
-- At p=0.01: V_0^A = 16.0 (matches ~16.1), V_0^N = 11.5 (matches ~11.6), ratio ~1.4 (matches)
-- Complete markets: V_0^{A,CM} = 12.8 (matches ~12.9), hedging premium ~25% (matches)
+The expression $(\omega - \tilde{\omega})Y$ is the **transfer amount** needed to restore the household's consumption share, not the AI owners' "gains" from the singularity. The AI owners' actual gain depends on both the share change and the output level change (from $Y$ to $(1+\tilde{g})Y$). Calling the transfer cost the "gains" conflates two distinct quantities and mischaracterizes the Coasean surplus.
 
-### Citation Accuracy
-- **GKP (2012):** Displacement risk from incomplete intergenerational risk-sharing accurately characterized. Paper's distinction between its own AI-owners interpretation and GKP's unborn-cohorts mechanism explicitly noted. Discussion of GKP's treatment of bequests/transfers verified against source.
-- **Jones (2024):** Growth-vs-existential-risk trade-off and role of utility curvature accurately described. Bounded utility claim for gamma > 1 correct.
-- **Other citations** (Rietz 1988, Barro 2006, Wachter 2013, Kogan et al. 2014/2020, Pastor & Veronesi 2009, Hobijn & Jovanovic 2001, Korinek & Suh 2024, Acemoglu & Restrepo 2018): All characterizations are standard and accurate.
+### 2. Incomplete claim about Assumption 3 (Section 2.4)
+The paper claims the transversality conditions "are automatically satisfied for $\gamma > 1$, the empirically relevant case." This is only true when growth rates $g > 0$ and $\tilde{g} > 0$. For $\gamma > 1$, $(1+g)^{1-\gamma} < 1$ requires $1+g > 1$, i.e., $g > 0$. If $g$ were negative, the condition could fail even with $\gamma > 1$. The claim is logically incomplete without stating positive growth as a requirement.
 
-### Logical Consistency
-- Model assumptions are internally consistent throughout.
-- Budget constraint, market clearing, and equilibrium consumption are mutually consistent.
-- Coase theorem discussion is economically sound (fixed costs become negligible as Y -> infinity).
-- Comparative statics claims follow from the formulas.
+### 3. Extinction state Euler equation subtlety (Section 4.1, eq. 13)
+When the singularity is catastrophic, consumption drops to zero, making the SDF $\beta(c_{t+1}/c_t)^{-\gamma} \to \infty$ while the asset payoff is zero. The resulting $\infty \times 0$ is mathematically indeterminate. The paper implicitly treats this product as zero (the standard rare-disasters convention), but provides no justification. This is a lack of rigor rather than an outright error, but it leaves a gap in the formal argument.
 
-### Minor Notes (not errors)
-- Assumption 3's "automatically satisfied for gamma > 1" also requires beta < 1, which is already assumed in eq. (6).
-- The Coase discussion's reference to "AI owners' gains" as (omega - omega_tilde)Y is the change in their share rather than total surplus, but the economic logic is sound.
+## Items Verified as Correct
+- Proposition 1 (P/D ratio formulas): correct closed-form derivation
+- Proposition 2 (comparative static): algebraically correct derivative and condition
+- Proposition 3 (complete vs. incomplete markets): hedging premium formula correct
+- Post-singularity P/D ratio being common across stocks: correct
+- Valuation spread increasing in $p$: analytically verified
+- Remarks 1 and 2: qualitatively sound
+- Numerical illustration: all computed values match formulas; parameters consistent between code and paper
+- CRSP figure code: standard methodology correctly implemented
+- Literature citations (GKP 2012, Jones 2024): accurately represent source content

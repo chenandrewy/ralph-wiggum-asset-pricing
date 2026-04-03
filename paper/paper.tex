@@ -185,22 +185,9 @@ V_0^A = E_t\!\left[\beta\!\left(\frac{c_{t+1}}{c_t}\right)^{\!-\gamma} \frac{D_{
 With probability $(1-p)$, no singularity occurs: consumption growth is $(1+g)$, AI dividend growth is $(1+g)$, and $V_{\text{next}}^A = V_0^A$, contributing $(1-p)\,R\,(1 + V_0^A)$. With probability $p$, the singularity occurs: consumption growth is $\Delta(1+\tilde{g})$, AI dividend growth is $(\tilde{\theta}/\theta)(1+\tilde{g})$, and $V_{\text{next}}^A = V_1$, contributing $p\,\Phi^A\,(1 + V_1)$. Solving for $V_0^A$ gives~\eqref{eq:pd-ai}. The derivation for $V_0^N$ is identical with $\tilde{\nu}/\nu$ replacing $\tilde{\theta}/\theta$.
 \end{proof}
 
-The key object in equations~\eqref{eq:PhiA}--\eqref{eq:PhiN} is $\Delta^{-\gamma}$. Because the household is displaced at the singularity ($\Delta < 1$), its marginal utility is high in singularity states: $\Delta^{-\gamma} > 1$. Assets that pay more in these high-marginal-utility states are valuable hedges and command higher prices. AI stocks gain share at the singularity ($\tilde{\theta}/\theta > 1$), so they are precisely such a hedge. Non-AI stocks lose share ($\tilde{\nu}/\nu < 1$), so their singularity payoff is relatively poor.
+The key object in equations~\eqref{eq:PhiA}--\eqref{eq:PhiN} is $\Delta^{-\gamma}$. Because the household is displaced at the singularity ($\Delta < 1$), its marginal utility is high in singularity states: $\Delta^{-\gamma} > 1$. Assets that pay more in these high-marginal-utility states are valuable hedges and command higher prices. AI stocks gain share at the singularity ($\tilde{\theta}/\theta > 1$), so they are precisely such a hedge. Non-AI stocks lose share ($\tilde{\nu}/\nu < 1$), so their singularity payoff is relatively poor. Because $\tilde{\theta}/\theta > 1 > \tilde{\nu}/\nu$ by Assumption~\ref{as:ai-share} and the two price-dividend ratios share the same denominator, it follows immediately that $V_0^A > V_0^N$: AI stocks trade at a premium. The valuation spread increases with the singularity probability $p$ and with the severity of displacement $(1 - \Delta)$---the more likely or severe the displacement, the more the household values AI stocks relative to non-AI stocks.
 
-\begin{proposition}[AI stocks trade at a premium] \label{prop:cross-section} % Proposition 2
-Under Assumptions~\ref{as:neg-sing}--\ref{as:existence}, AI stocks have a higher price-dividend ratio than non-AI stocks:
-\begin{equation}
-V_0^A - V_0^N = \frac{p\,\beta\,\Delta^{-\gamma}\,(1+\tilde{g})^{1-\gamma}\!\left(\frac{\tilde{\theta}}{\theta} - \frac{\tilde{\nu}}{\nu}\right)(1 + V_1)}{1 - (1-p)\,R} > 0. \label{eq:cross-section}
-\end{equation}
-\end{proposition}
-
-\begin{proof}
-Subtract~\eqref{eq:pd-nonai} from~\eqref{eq:pd-ai}. The denominators are identical, and $\Phi^A - \Phi^N = \beta\,\Delta^{-\gamma}(1+\tilde{g})^{1-\gamma}(\tilde{\theta}/\theta - \tilde{\nu}/\nu)$, which is positive since $\tilde{\theta}/\theta > 1 > \tilde{\nu}/\nu$ by Assumption~\ref{as:ai-share}.
-\end{proof}
-
-The valuation spread $V_0^A - V_0^N$ increases with the singularity probability $p$ and with the severity of displacement $(1 - \Delta)$. These comparative statics reflect the hedging channel: the more likely or severe the displacement, the more the household values AI stocks relative to non-AI stocks.
-
-\begin{proposition}[Singularity probability raises AI valuations] \label{prop:comp-static} % Proposition 3
+\begin{proposition}[Singularity probability raises AI valuations] \label{prop:comp-static} % Proposition 2
 Under Assumptions~\ref{as:neg-sing}--\ref{as:existence}, the price-dividend ratio of AI stocks is increasing in the singularity probability:
 \begin{equation}
 \frac{\partial V_0^A}{\partial p} > 0 \quad \text{if and only if} \quad \Phi^A(1 + V_1) > \frac{R}{1 - R}. \label{eq:comp-static}
@@ -214,7 +201,7 @@ See Appendix~\ref{app:proofs}.
 
 The economic interpretation is direct. Condition~\eqref{eq:comp-static} requires that the singularity-state contribution to the AI stock's value, $\Phi^A(1 + V_1)$, exceeds the no-singularity price-dividend ratio. When this holds, adding singularity risk increases the AI stock's price because the hedging benefit outweighs the direct effect of the regime change on discount rates.
 
-\begin{proposition}[Incomplete vs.\ complete markets] \label{prop:complete} % Proposition 4
+\begin{proposition}[Incomplete vs.\ complete markets] \label{prop:complete} % Proposition 3
 Under complete markets, the household can also invest in private AI capital, so its consumption equals total output: $c_t = Y_t$. The price-dividend ratio of AI stocks under complete markets is
 \begin{equation}
 V_0^{A,\mathrm{CM}} = \frac{(1-p)\,R + p\,\Phi^{A,\mathrm{CM}}\,(1 + V_1)}{1 - (1-p)\,R}, \label{eq:pd-complete}
