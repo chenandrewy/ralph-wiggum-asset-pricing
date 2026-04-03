@@ -103,6 +103,7 @@ This is an accuracy test, not a style test. Your job is to examine each exhibit 
    - values near impossible or highly implausible boundaries
    - dominant rows, cells, or plotted objects that look mechanically generated
    - labels, legends, or captions that do not seem to match the object
+   - distracting seasonality or noise
 4. For each suspicious feature, trace it back to the local generating code and local data or cached outputs when possible.
 5. Decide whether each suspicious feature is real and correctly generated, or whether it is an artifact, coding error, aggregation error, labeling error, or unsupported feature.
 6. If a suspicious feature is real, explain briefly how the code generates it and why that logic is correct.
