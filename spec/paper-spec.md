@@ -18,15 +18,15 @@
     - c. Two publicly traded assets: AI stocks and non-AI stocks. AI stocks grow as a share of the economy with each singularity.
     - d. The main focus is on the price/dividend ratio of public AI stocks, and how it changes with the probability of a negative AI singularity.
     - e. The private AI capital and AI owners can also be thought of as unborn capital and future owners that do not yet exist, as in `spec/lit/GKP-2012-WP.md`.
-5. An extension of the main model formally incorporates ideas from `spec/lit/Jones-2024-AERI.md`:
-    - a. The singularity may cause extinction.
+5. An extension of the main model addresses the referee's suggestions in `spec/CFR-R1-report.md`:
+    - a. The singularity may cause extinction, following `spec/lit/Jones-2024-AERI.md`.
     - b. Consumption may become infinite (in our case, only for the AI owners).
-    - c. Consider how infinite output and consumption affects the assumption that agents cannot make trades despite the mutual benefit (see `spec/lit/GKP-2012-WP.md`).
+    - c. Government transfer programs attenuate displacement risk, emphasizing the role of heterogeneity at the singularity (cf. `spec/lit/Jones-2024-AERI.md`). Illustrate quantitatively: for a range of plausible singularity growth rates, how large can the deadweight cost of the program be before the attenuation is wiped out?
     - d. Keep these ideas in an extension, so that the main argument stays simple.
 6. The paper explains how it contributes relative to `spec/lit/GKP-2012-WP.md`
-    - a. GKP mentions that government debt or intergenerational transfers would affect the magnitude of the displacement factor, but do not conduct further analysis. The paper contributes with a formal analysis.
+    - a. GKP note that government transfers would affect the magnitude of the displacement factor but do not conduct further analysis. The paper contributes a formal analysis with a quantitative illustration.
     - b. Without frictions, intergenerational transfers (bequests, gifts, government debt) would allow existing agents to share in the gains of new entrants, eliminating displacement risk — this is the Coase Theorem logic. GKP's modeling assumes, quite reasonably, that such frictions exist and preserve the risk premium.
-    - c. In the case of a singularity, perhaps these frictions can be overcome. Following the modeling in `spec/lit/Jones-2024-AERI.md`, we can quantify the size of frictions that can be overcome, given infinite output.
+    - c. A transfer program with deadweight costs can still attenuate displacement if output is large enough. The paper provides a quantitative illustration calibrated to a range of singularity growth rates, showing how much inefficiency the program can absorb.
     - d. The characterization of the contribution is purposefully modest. The main insights about displacement risk and incomplete markets are already in GKP.
 
 ## II. Style Requirements
