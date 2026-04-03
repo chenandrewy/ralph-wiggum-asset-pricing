@@ -18,9 +18,6 @@ run_script <- function(script) {
 run_script("code/numerical-illustration.R")
 
 # ---- Exhibit 1: AI vs Non-AI Valuations Figure ----
-tryCatch(
-  run_script("code/ai-valuations-figure.R"),
-  error = function(e) cat(sprintf("Skipping CRSP figure: %s\n", e$message))
-)
+run_script("code/ai-valuations-figure.R")
 
 cat("\n=== Pipeline complete ===\n")

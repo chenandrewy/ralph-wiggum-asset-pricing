@@ -1,36 +1,50 @@
 # tests/quality-formalism.py
-Started: 2026-04-02 22:39:49 EDT
-Runtime: 1m 45s
-[ralph-garage/agent-logs/20260402T223949.798406-0400_quality-formalism_claude_opus.log](../ralph-garage/agent-logs/20260402T223949.798406-0400_quality-formalism_claude_opus.log)
+Started: 2026-04-02 22:54:31 EDT
+Runtime: 1m 57s
+[ralph-garage/agent-logs/20260402T225431.391133-0400_quality-formalism_claude_opus.log](../ralph-garage/agent-logs/20260402T225431.391133-0400_quality-formalism_claude_opus.log)
 
 # quality-formalism
 VERDICT: PASS
-REASON: The paper maintains lean formalism throughout; every formal object does economic work, notation is used after introduction, and scope stays compact.
+REASON: The paper's formalism is lean and well-targeted; each formal object does identifiable economic work, and scope remains compact.
 
 ## 8a — Theory style
 
-**PASS.** Audited every displayed equation, proposition, assumption, remark, and proof for dead-weight, compressible, or orphan content.
+### Dead-weight formalism: PASS
 
-**Propositions and proofs.** All three propositions carry distinct economic weight: Proposition 1 delivers the closed-form P/D ratios (the paper's core object), Proposition 2 gives the comparative static on singularity probability (the paper's headline claim), and Proposition 3 isolates the hedging premium by contrasting incomplete and complete markets (the central result per the abstract). No proposition contains subparts that merely restate qualitative points already obvious from the text. The inline proof of Proposition 1 is economically informative because it traces the origin of the displacement term Delta^{-gamma} through the Euler equation. The proof of Proposition 3 is two sentences. The appendix proof of Proposition 2 is standard quotient-rule calculus, appropriately deferred.
+No dead-weight formal objects found. Every proposition, assumption, and remark connects to the paper's economic claims. The three propositions (price-dividend ratios, comparative static on singularity probability, incomplete vs. complete markets) form a tight logical chain. The two remarks address spec-required extensions (extreme singularity limit, Coase theorem in the singularity). The three assumptions define essential model primitives.
 
-**Assumptions.** Assumptions 1-2 encode the paper's economic premises (negative singularity, AI share growth). Assumption 3 is a standard transversality/existence condition. All three are referenced by every proposition. No assumption is orphaned or ceremonial.
+### Compressible formalism: PASS (borderline items noted)
 
-**Notation audit.** Every named variable introduced in the model section (theta, nu, omega, Delta, R, Phi^A, Phi^N, V_post, V_pre^A, V_pre^N) appears in at least one proposition or its economic interpretation. The closest candidate for orphan notation is D_t^P (private AI capital dividends, eq 3-4), which never reappears in any formula — but it serves the standard purpose of closing the output-accounting identity and is not ceremonially named or developed further. The extension introduces F, tau, T for the friction-cost formula (eq 17); these are local notation used in the immediately following remark and not inflated into a separate result.
+**Borderline candidates examined:**
 
-**Borderline item: equation (17), friction-cost formula.** This is trivial algebra (F/Y vanishes as Y grows). A skeptic could argue the qualitative point ("fixed costs become negligible relative to output") needs no display equation. However, the spec explicitly calls for "a formal analysis" of how transfers scale with output (spec I.6.a), and the equation is one line. Keeping it is defensible under the spec; inflating it into a proposition would not be.
+1. **Equation (12), extinction-risk P/D ratio.** The economic point is simply "multiply the singularity term by the survival probability $(1-q)$." This could be stated in English. However, the spec explicitly requires formal incorporation of extinction risk (spec I.5.a: "formally incorporates ideas from Jones-2024"), and the equation is a single compact line. Justified.
 
-**Prose detours.** The extension section discusses the Coase theorem, Jones (2024) on utility curvature, and the extinction-state product convention. All three are tightly scoped to the spec-permitted extensions (extinction risk, infinite output, GKP transfer mechanism). No new agent heterogeneity, bargaining variants, mortality channels, or auxiliary mechanisms are introduced. The conclusion explicitly disclaims omitted features (heterogeneous households, production frictions, endogenous innovation) rather than sketching them as future work.
+2. **Equation (11), friction cost formula.** The point is "fixed costs become negligible as output grows." Again statable in English, but the spec requires formal analysis of how transfers scale with output (spec I.6.a-c). The equation is minimal and serves the Coase-theorem argument. Justified.
 
-**No compressible formal objects.** Each displayed equation either (a) defines a model primitive needed for self-containment, (b) states a result used in a proposition or its interpretation, or (c) supports a spec-required extension. No subpart could be replaced by plain English without either making a claim imprecise or violating the spec's call for formal analysis.
+3. **Non-AI P/D ratio $V_{\mathrm{pre}}^N$ in Proposition 1.** One could argue the cross-sectional comparison $V_{\mathrm{pre}}^A > V_{\mathrm{pre}}^N$ follows immediately from $\tilde{\theta}/\theta > 1 > \tilde{\nu}/\nu$ and the shared denominator, so the full formula for $V_{\mathrm{pre}}^N$ is dispensable. However, displaying both formulas makes the comparison transparent and the proposition is more useful as a reference. The cost is one additional equation with identical structure; the benefit is completeness of the main pricing result. Acceptable.
 
-## 8b — Empirical scope
+No compressible formal object rises to the level of a failure. The paper consistently uses its formalism to advance economic claims.
 
-**PASS.** Empirical content is limited to a single introductory figure (Figure 1) showing AI vs. non-AI price-dividend ratios from CRSP data. No regressions, no additional empirical exhibits, no data tables beyond the theoretical numerical illustration.
+### Orphan notation: PASS (one minor flag)
 
-## 8c — Testable predictions
+**$D_t^P$ (private AI capital dividends):** Named in equations (3)-(4) and never referenced again in any result, calibration, or interpretation. The paper could replace these with prose ("the remainder $1-\theta-\nu$ of output accrues to private AI capital") without losing anything. However, this falls under the standard-primitives exception (guideline 3): displaying the full output decomposition is conventional model accounting that keeps the environment self-contained. One named variable in a display equation is not a meaningful violation.
 
-**PASS.** The paper generates only the direct implications of the main model: AI stocks trade at a premium over non-AI stocks, the premium increases with singularity probability and displacement severity, and the premium vanishes under complete markets. The conclusion explicitly states: "It does not generate a broad menu of testable predictions." No auxiliary cross-sectional predictions, no factor-model implications, no laundry list of corollaries.
+No other orphan notation found. All other named variables ($R$, $\Phi^A$, $\Phi^N$, $V_{\mathrm{post}}$, $\Delta$, $\omega$, $\tilde{\omega}$, etc.) appear in results, interpretations, or calibration.
 
-## 8d — Quantitative material
+### Pompous/ceremonial formalism and scope detours: PASS
 
-**PASS.** One numerical illustration (Table 1) with a single parameterization varying p across a few values. Described as illustrative ("To gauge magnitudes"). No calibration to data moments, no estimation, no sensitivity analysis across parameter grids. The parameters are round numbers chosen for transparency, not fitted.
+The paper avoids gratuitous formalism. There are no unnecessary lemmas, no "without loss of generality" invocations, no displayed sufficient conditions that go unused, and no named examples or cases beyond what the argument requires. Proofs are either inline (short) or in the appendix (Proposition 2). The extension (Section 4) stays within spec-permitted territory: extinction risk and overcoming frictions. No additional heterogeneity, bargaining variants, mortality channels, or auxiliary mechanisms are introduced.
+
+The prose is disciplined. The conclusion explicitly acknowledges what the model omits ("heterogeneous households, production-side frictions, and endogenous innovation") without developing these as future-work channels. The self-referential paragraph about AI authorship is spec-required (spec IV.5.d) and kept to one paragraph.
+
+## 8b — Empirical scope: PASS
+
+Empirical content consists of a single introductory figure (Figure 1) showing AI vs. non-AI price-dividend ratios using CRSP data. No additional empirical analysis, regressions, event studies, or data tables appear anywhere in the paper. This matches the spec's ideal of "a single figure in the introduction" (spec II.8.b).
+
+## 8c — Testable predictions: PASS
+
+The paper generates only direct implications of the model: (i) AI stocks trade at a P/D premium over non-AI stocks; (ii) the premium increases with singularity probability and displacement severity; (iii) the premium vanishes under complete markets; (iv) the premium is largest for moderate singularities. The conclusion explicitly states: "It does not generate a broad menu of testable predictions." No auxiliary predictions, cross-sectional sorts, or empirical hypotheses beyond the model's core logic.
+
+## 8d — Quantitative material: PASS
+
+Quantitative content consists of one numerical illustration (Table 1) with a single parameter vector ($\beta=0.96$, $\gamma=3$, $g=0.02$, $\tilde{g}=0.05$, etc.) reported for several values of $p$. The conclusion explicitly states the paper "does not attempt to match specific valuation levels." There is no calibration to data moments, no estimation, no sensitivity analysis, and no model-vs-data comparison. The parameterization is purely illustrative.

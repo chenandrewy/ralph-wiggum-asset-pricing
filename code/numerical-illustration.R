@@ -68,7 +68,7 @@ cat("\\caption{Numerical Illustration: Price-Dividend Ratios}\n")
 cat("\\label{tab:numerical} % Exhibit 2\n")
 cat("\\begin{tabular}{@{}cccccc@{}}\n")
 cat("\\toprule\n")
-cat("$p$ & $V_0^A$ & $V_0^N$ & $V_0^{A,\\mathrm{CM}}$ & Spread & Hedge Prem.\\ (\\%) \\\\\n")
+cat("$p$ & $V_{\\mathrm{pre}}^A$ & $V_{\\mathrm{pre}}^N$ & $V_{\\mathrm{pre}}^{A,\\mathrm{CM}}$ & Spread & Hedge Prem.\\ (\\%) \\\\\n")
 cat("\\midrule\n")
 for (i in seq_len(nrow(results))) {
   cat(sprintf("%.3f & %.1f & %.1f & %.1f & %.1f & %.1f \\\\\n",
@@ -80,7 +80,7 @@ cat("\\end{tabular}\n")
 cat("\\par\\smallskip\n")
 cat("{\\small\\textit{Notes.} Parameters: $\\beta = 0.96$, $\\gamma = 3$, $g = 0.02$, $\\tilde{g} = 0.05$, ")
 cat("$\\theta = 0.05$, $\\tilde{\\theta} = 0.15$, $\\nu = 0.55$, $\\tilde{\\nu} = 0.30$. ")
-cat("Spread is $V_0^A - V_0^N$. Hedge Prem.\\ is $(V_0^A - V_0^{A,\\mathrm{CM}})/V_0^{A,\\mathrm{CM}} \\times 100$.}\n")
+cat("Spread is $V_{\\mathrm{pre}}^A - V_{\\mathrm{pre}}^N$. Hedge Prem.\\ is $(V_{\\mathrm{pre}}^A - V_{\\mathrm{pre}}^{A,\\mathrm{CM}})/V_{\\mathrm{pre}}^{A,\\mathrm{CM}} \\times 100$.}\n")
 cat("\\end{table}\n")
 sink()
 
