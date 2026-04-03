@@ -42,12 +42,12 @@
 
 The recent surge in AI stock valuations has drawn widespread attention. Between 2023 and 2025, the largest AI-related companies collectively gained trillions of dollars in market value, trading at price-dividend ratios far above historical norms. Figure~\ref{fig:ai-valuations} illustrates this pattern using CRSP data: the price-dividend ratio of major AI stocks has risen sharply relative to non-AI stocks. Standard explanations point to expected cash flows from AI products and services. We propose an additional channel: publicly traded AI stocks command a valuation premium because they serve as a hedge against a negative AI singularity.
 
-\begin{figure}[ht]
-\centering
-\includegraphics[width=0.85\textwidth]{exhibits/ai-valuations.pdf}
-\caption{Price-dividend ratios for AI stocks (NVDA, MSFT, GOOGL, META, AMZN) versus the rest of the CRSP universe, computed using trailing 12-month dividends.}
-\label{fig:ai-valuations} % Exhibit 1
-\end{figure}
+% \begin{figure}[ht]
+% \centering
+% \includegraphics[width=0.85\textwidth]{exhibits/ai-valuations.pdf}
+% \caption{Price-dividend ratios for AI stocks (NVDA, MSFT, GOOGL, META, AMZN) versus the rest of the CRSP universe, computed using trailing 12-month dividends.}
+% \label{fig:ai-valuations} % Exhibit 1
+% \end{figure}
 
 Consider a representative investor whose wealth is largely tied to existing firms and human capital. A sudden AI breakthrough---a singularity---could dramatically increase productivity while shifting the economy's structure, displacing traditional businesses and reducing the investor's share of total output. Private AI ventures and yet-to-be-created firms would capture much of the new value, but the typical investor cannot buy these assets. They are either privately held, illiquid, or simply do not yet exist. In this world of incomplete markets, publicly traded AI stocks offer the best available hedge: they are the investor's only tradeable claim on the AI upside.
 
@@ -60,11 +60,11 @@ In an extension, we connect to \citet{Jones2024} on the trade-off between AI-dri
 This paper itself illustrates the displacement risk it models. All analysis and writing were performed by AI agents working from a human-written specification. The human author contributed only the paper specification---approximately 80 lines---and the test suite. The AI performed all economic modeling, derivations, writing, and typesetting.\footnote{The production process used Claude (Anthropic) as the AI system, operating within an automated loop that iteratively improved the paper against formal tests.}
 
 \paragraph{Related literature.}
-Our paper builds most directly on \citet{GKP2012}, who introduce displacement risk in an overlapping-generations economy with innovation. They show that innovation creates a systematic risk factor because new entrants capture rents that existing agents cannot share. We apply their core insight---that incomplete intergenerational risk-sharing generates a priced risk factor---to the specific context of an AI singularity. Our contribution relative to GKP is purposefully modest: the main economic insights about displacement risk and incomplete markets originate in their work. We contribute a formal analysis of how the magnitude of displacement risk changes with singularity probability, and of the conditions under which intergenerational frictions can be overcome. \citet{KoganPapanikolaouStoffman2020} extend the displacement risk framework to study how creative destruction generates inequality and cross-sectional return premia, while \citet{KoganPapanikolaou2014} analyze how investment-specific technology shocks affect asset prices through growth opportunities.
+Our paper builds most directly on \citet{GKP2012}, who introduce displacement risk in an overlapping-generations economy with innovation. They show that innovation creates a systematic risk factor because new entrants capture rents that existing agents cannot share. We apply their core insight---that incomplete intergenerational risk-sharing generates a priced risk factor---to the specific context of an AI singularity. Our contribution relative to GKP is purposefully modest: the main economic insights about displacement risk and incomplete markets originate in their work. We contribute a formal analysis of how the magnitude of displacement risk changes with singularity probability, and of the conditions under which intergenerational frictions can be overcome. \citet{GarleanuPanageas2015} further develop the OLG asset pricing framework with heterogeneous agents and finite lives, characterizing how incomplete intergenerational risk-sharing shapes portfolio choice and prices---the same friction that drives our hedging premium. \citet{KoganPapanikolaouStoffman2020} extend the displacement risk framework to creative destruction and inequality, while \citet{KoganPapanikolaou2014} analyze how technology shocks affect asset prices through growth opportunities. \citet{Knesl2023} develops a model in which automation displaces labor, generating a displacement risk premium in the cross section of stock returns; our model complements his by focusing on how incomplete markets create a hedging motive specific to AI stocks.
 
 Our model shares features with the rare disasters literature \citep{Rietz1988, Barro2006, Wachter2013}. The singularity is a type of rare disaster, but with asymmetric effects across sectors: AI stocks benefit while non-AI stocks suffer. This sectoral asymmetry generates cross-sectional predictions absent from standard disaster models.
 
-On the economics of AI, \citet{Jones2024} analyzes the trade-off between AI-driven growth and existential risk, showing that the curvature of utility is central to evaluating this trade-off. \citet{KorinekSuh2024} study scenarios for the transition to artificial general intelligence, characterizing conditions under which wages collapse. \citet{AcemogluRestrepo2018} model the race between automation and labor. \citet{PastorVeronesi2009} study how technological revolutions affect stock prices through uncertainty about productivity, and \citet{HobijnJovanovic2001} document the negative impact of IT innovation on incumbent firms.
+On the economics of AI, \citet{Jones2024} analyzes the trade-off between AI-driven growth and existential risk, showing that the curvature of utility is central to evaluating this trade-off. \citet{BabinaEtAl2024} provide empirical evidence that AI adoption drives firm growth and product innovation, consistent with the premise that AI stocks capture a growing share of output. \citet{KorinekSuh2024} study scenarios for the transition to artificial general intelligence. \citet{AcemogluRestrepo2018} model the race between automation and labor. \citet{PastorVeronesi2009} study how technological revolutions affect stock prices through uncertainty about productivity, and \citet{HobijnJovanovic2001} document the negative impact of IT innovation on incumbent firms.
 
 %% ============================================================
 %% Section 2: Model
@@ -83,7 +83,7 @@ In the period the singularity occurs, and in all subsequent periods, output grow
 \begin{equation}
 Y_{t+1} = (1 + \tilde{g})\, Y_t, \quad \tilde{g} > g. \label{eq:sing-growth}
 \end{equation}
-The model allows for any magnitude of productivity increase; the extension explores the limit $\tilde{g} \to \infty$, corresponding to a singularity that vastly increases output.
+The algebra holds for any $\tilde{g} > g$, but the paper's economic focus is on large disruptions---singularities that vastly increase productivity and substantially displace existing firms. The numerical illustration is calibrated to such a scenario, and the extension explores the limit $\tilde{g} \to \infty$.
 
 The economy has two types of agents: a representative household and AI owners. The household is the marginal investor in public markets. AI owners hold private AI capital and do not participate in public stock markets. Following \citet{GKP2012}, AI owners can be interpreted as future innovators and entrepreneurs who have not yet entered the economy. In our application, they may also represent holders of illiquid private AI ventures---this is our own modeling choice, distinct from but inspired by GKP's unborn-cohorts mechanism.
 
@@ -149,7 +149,7 @@ We focus on the pre-singularity regime, in which the economy may transition to t
 $(1-p)\,\beta\,(1+g)^{1-\gamma} < 1$ and $\beta\,(1+\tilde{g})^{1-\gamma} < 1$.
 \end{assumption}
 
-These ensure that price-dividend ratios are finite. They are automatically satisfied for $\gamma > 1$, the empirically relevant case.
+These ensure that price-dividend ratios are finite. They are automatically satisfied for $\gamma > 1$ with positive growth rates, the empirically relevant case.
 
 %% ============================================================
 %% Section 3: Results
@@ -157,70 +157,70 @@ These ensure that price-dividend ratios are finite. They are automatically satis
 \section{Results} % Section 3
 
 \begin{proposition}[Price-dividend ratios] \label{prop:pd} % Proposition 1
-Under Assumptions~\ref{as:neg-sing}--\ref{as:existence}, the price-dividend ratio of public AI stocks in the pre-singularity regime is (where subscripts 0 and 1 on $V$ denote pre- and post-singularity regimes, not time)
+Under Assumptions~\ref{as:neg-sing}--\ref{as:existence}, the price-dividend ratio of public AI stocks in the pre-singularity regime is
 \begin{equation}
-V_0^A = \frac{(1-p)\,R + p\,\Phi^A\,(1 + V_1)}{1 - (1-p)\,R}, \label{eq:pd-ai}
+V_{\mathrm{pre}}^A = \frac{(1-p)\,R + p\,\Phi^A\,(1 + V_{\mathrm{post}})}{1 - (1-p)\,R}, \label{eq:pd-ai}
 \end{equation}
 and that of non-AI stocks is
 \begin{equation}
-V_0^N = \frac{(1-p)\,R + p\,\Phi^N\,(1 + V_1)}{1 - (1-p)\,R}, \label{eq:pd-nonai}
+V_{\mathrm{pre}}^N = \frac{(1-p)\,R + p\,\Phi^N\,(1 + V_{\mathrm{post}})}{1 - (1-p)\,R}, \label{eq:pd-nonai}
 \end{equation}
 where
 \begin{align}
 R &\equiv \beta\,(1+g)^{1-\gamma}, \label{eq:R} \\
 \Phi^A &\equiv \beta\,\Delta^{-\gamma}\,(1+\tilde{g})^{1-\gamma}\,\frac{\tilde{\theta}}{\theta}, \label{eq:PhiA} \\
 \Phi^N &\equiv \beta\,\Delta^{-\gamma}\,(1+\tilde{g})^{1-\gamma}\,\frac{\tilde{\nu}}{\nu}, \label{eq:PhiN} \\
-V_1 &\equiv \frac{\beta\,(1+\tilde{g})^{1-\gamma}}{1 - \beta\,(1+\tilde{g})^{1-\gamma}}. \label{eq:V1}
+V_{\mathrm{post}} &\equiv \frac{\beta\,(1+\tilde{g})^{1-\gamma}}{1 - \beta\,(1+\tilde{g})^{1-\gamma}}. \label{eq:V1}
 \end{align}
-Here $R$ is the normal-state pricing kernel, $\Phi^A$ and $\Phi^N$ are the singularity-state pricing contributions for AI and non-AI stocks, and $V_1$ is the common post-singularity price-dividend ratio.
+Here $R$ is the normal-state pricing kernel, $\Phi^A$ and $\Phi^N$ are the singularity-state pricing contributions for AI and non-AI stocks, and $V_{\mathrm{post}}$ is the common post-singularity price-dividend ratio.
 \end{proposition}
 
 \begin{proof}
-In the post-singularity regime, consumption growth and dividend growth are both $(1 + \tilde{g})$ each period. The Euler equation~\eqref{eq:euler} gives $V_1 = \beta\,(1+\tilde{g})^{1-\gamma}(1+V_1)$, which yields~\eqref{eq:V1}.
+In the post-singularity regime, consumption growth and dividend growth are both $(1 + \tilde{g})$ each period. The Euler equation~\eqref{eq:euler} gives $V_{\mathrm{post}} = \beta\,(1+\tilde{g})^{1-\gamma}(1+V_{\mathrm{post}})$, which yields~\eqref{eq:V1}.
 
-In the pre-singularity regime, the price-dividend ratio $V_0^A$ satisfies
+In the pre-singularity regime, the price-dividend ratio $V_{\mathrm{pre}}^A$ satisfies
 \begin{equation}
-V_0^A = E_t\!\left[\beta\!\left(\frac{c_{t+1}}{c_t}\right)^{\!-\gamma} \frac{D_{t+1}^A}{D_t^A}\,(1 + V_{\text{next}}^A)\right]. \label{eq:euler-expand}
+V_{\mathrm{pre}}^A = E_t\!\left[\beta\!\left(\frac{c_{t+1}}{c_t}\right)^{\!-\gamma} \frac{D_{t+1}^A}{D_t^A}\,(1 + V_{\text{next}}^A)\right]. \label{eq:euler-expand}
 \end{equation}
-With probability $(1-p)$, no singularity occurs: consumption growth is $(1+g)$, AI dividend growth is $(1+g)$, and $V_{\text{next}}^A = V_0^A$, contributing $(1-p)\,R\,(1 + V_0^A)$. With probability $p$, the singularity occurs: consumption growth is $\Delta(1+\tilde{g})$, AI dividend growth is $(\tilde{\theta}/\theta)(1+\tilde{g})$, and $V_{\text{next}}^A = V_1$, contributing $p\,\Phi^A\,(1 + V_1)$. Solving for $V_0^A$ gives~\eqref{eq:pd-ai}. The derivation for $V_0^N$ is identical with $\tilde{\nu}/\nu$ replacing $\tilde{\theta}/\theta$.
+With probability $(1-p)$, no singularity occurs: consumption growth is $(1+g)$, AI dividend growth is $(1+g)$, and $V_{\text{next}}^A = V_{\mathrm{pre}}^A$, contributing $(1-p)\,R\,(1 + V_{\mathrm{pre}}^A)$. With probability $p$, the singularity occurs: consumption growth is $\Delta(1+\tilde{g})$, AI dividend growth is $(\tilde{\theta}/\theta)(1+\tilde{g})$, and $V_{\text{next}}^A = V_{\mathrm{post}}$, contributing $p\,\Phi^A\,(1 + V_{\mathrm{post}})$. Solving for $V_{\mathrm{pre}}^A$ gives~\eqref{eq:pd-ai}. The derivation for $V_{\mathrm{pre}}^N$ is identical with $\tilde{\nu}/\nu$ replacing $\tilde{\theta}/\theta$.
 \end{proof}
 
-The key object in equations~\eqref{eq:PhiA}--\eqref{eq:PhiN} is $\Delta^{-\gamma}$. Because the household is displaced at the singularity ($\Delta < 1$), its marginal utility is high in singularity states: $\Delta^{-\gamma} > 1$. Assets that pay more in these high-marginal-utility states are valuable hedges and command higher prices. AI stocks gain share at the singularity ($\tilde{\theta}/\theta > 1$), so they are precisely such a hedge. Non-AI stocks lose share ($\tilde{\nu}/\nu < 1$), so their singularity payoff is relatively poor. Because $\tilde{\theta}/\theta > 1 > \tilde{\nu}/\nu$ by Assumption~\ref{as:ai-share} and the two price-dividend ratios share the same denominator, it follows immediately that $V_0^A > V_0^N$: AI stocks trade at a premium. The valuation spread increases with the singularity probability $p$ and with the severity of displacement $(1 - \Delta)$---the more likely or severe the displacement, the more the household values AI stocks relative to non-AI stocks.
+The key object in equations~\eqref{eq:PhiA}--\eqref{eq:PhiN} is $\Delta^{-\gamma}$. Because the household is displaced at the singularity ($\Delta < 1$), its marginal utility is high in singularity states: $\Delta^{-\gamma} > 1$. Assets that pay more in these high-marginal-utility states are valuable hedges and command higher prices. AI stocks gain share at the singularity ($\tilde{\theta}/\theta > 1$), so they are precisely such a hedge. Non-AI stocks lose share ($\tilde{\nu}/\nu < 1$), so their singularity payoff is relatively poor. Because $\tilde{\theta}/\theta > 1 > \tilde{\nu}/\nu$ by Assumption~\ref{as:ai-share} and the two price-dividend ratios share the same denominator, it follows immediately that $V_{\mathrm{pre}}^A > V_{\mathrm{pre}}^N$: AI stocks trade at a premium. The valuation spread increases with the singularity probability $p$ and with the severity of displacement $(1 - \Delta)$---the more likely or severe the displacement, the more the household values AI stocks relative to non-AI stocks.
 
 \begin{proposition}[Singularity probability raises AI valuations] \label{prop:comp-static} % Proposition 2
 Under Assumptions~\ref{as:neg-sing}--\ref{as:existence}, the price-dividend ratio of AI stocks is increasing in the singularity probability:
 \begin{equation}
-\frac{\partial V_0^A}{\partial p} > 0 \quad \text{if and only if} \quad \Phi^A(1 + V_1) > \frac{R}{1 - R}. \label{eq:comp-static}
+\frac{\partial V_{\mathrm{pre}}^A}{\partial p} > 0 \quad \text{if and only if} \quad \Phi^A(1 + V_{\mathrm{post}}) > \frac{R}{1 - R}. \label{eq:comp-static}
 \end{equation}
-The right-hand side equals $V_0^A\big|_{p=0}$, the price-dividend ratio in a world with no singularity risk. The condition holds when displacement is sufficiently severe ($\Delta$ small), risk aversion is sufficiently high ($\gamma$ large), or the AI share gain is sufficiently large ($\tilde{\theta}/\theta$ large).
+The right-hand side equals $V_{\mathrm{pre}}^A\big|_{p=0}$, the price-dividend ratio in a world with no singularity risk. The condition holds when displacement is sufficiently severe ($\Delta$ small), risk aversion is sufficiently high ($\gamma$ large), or the AI share gain is sufficiently large ($\tilde{\theta}/\theta$ large).
 \end{proposition}
 
 \begin{proof}
 See Appendix~\ref{app:proofs}.
 \end{proof}
 
-The economic interpretation is direct. Condition~\eqref{eq:comp-static} requires that the singularity-state contribution to the AI stock's value, $\Phi^A(1 + V_1)$, exceeds the no-singularity price-dividend ratio. When this holds, adding singularity risk increases the AI stock's price because the hedging benefit outweighs the direct effect of the regime change on discount rates.
+The economic interpretation is direct. Condition~\eqref{eq:comp-static} requires that the singularity-state contribution to the AI stock's value, $\Phi^A(1 + V_{\mathrm{post}})$, exceeds the no-singularity price-dividend ratio. When this condition holds, the singularity-state contribution to valuation exceeds the no-singularity baseline, so adding singularity risk raises the AI stock's price.
 
 \begin{proposition}[Incomplete vs.\ complete markets] \label{prop:complete} % Proposition 3
 Under complete markets, the household can also invest in private AI capital, so its consumption equals total output: $c_t = Y_t$. The price-dividend ratio of AI stocks under complete markets is
 \begin{equation}
-V_0^{A,\mathrm{CM}} = \frac{(1-p)\,R + p\,\Phi^{A,\mathrm{CM}}\,(1 + V_1)}{1 - (1-p)\,R}, \label{eq:pd-complete}
+V_{\mathrm{pre}}^{A,\mathrm{CM}} = \frac{(1-p)\,R + p\,\Phi^{A,\mathrm{CM}}\,(1 + V_{\mathrm{post}})}{1 - (1-p)\,R}, \label{eq:pd-complete}
 \end{equation}
 where $\Phi^{A,\mathrm{CM}} = \beta\,(1+\tilde{g})^{1-\gamma}\,\tilde{\theta}/\theta$. The hedging premium is
 \begin{equation}
-V_0^A - V_0^{A,\mathrm{CM}} = \frac{p\,\beta\,(1+\tilde{g})^{1-\gamma}\,\frac{\tilde{\theta}}{\theta}\,(\Delta^{-\gamma} - 1)\,(1 + V_1)}{1 - (1-p)\,R} > 0. \label{eq:hedging-premium}
+V_{\mathrm{pre}}^A - V_{\mathrm{pre}}^{A,\mathrm{CM}} = \frac{p\,\beta\,(1+\tilde{g})^{1-\gamma}\,\frac{\tilde{\theta}}{\theta}\,(\Delta^{-\gamma} - 1)\,(1 + V_{\mathrm{post}})}{1 - (1-p)\,R} > 0. \label{eq:hedging-premium}
 \end{equation}
 The hedging premium is increasing in singularity probability $p$, the AI share gain $\tilde{\theta}/\theta$, and displacement severity $1 - \Delta$.
 \end{proposition}
 
 \begin{proof}
-Under complete markets, the household's consumption growth in the singularity state is $(1+\tilde{g})$ rather than $\Delta(1+\tilde{g})$, so $\Delta^{-\gamma}$ in the incomplete-markets formula is replaced by~1. The rest follows by subtraction.
+Under complete markets, the household's consumption growth in the singularity state is $(1+\tilde{g})$ rather than $\Delta(1+\tilde{g})$, so $\Delta^{-\gamma}$ in the incomplete-markets $\Phi^A$ is replaced by~1. The rest follows by subtraction.
 \end{proof}
 
 Proposition~\ref{prop:complete} is the central result: the gap between incomplete- and complete-market valuations isolates the hedging premium. It arises entirely from the displacement channel. If the household could trade with AI owners---or equivalently, if future innovators could sell claims on their forthcoming ventures to current investors---the household's consumption would not fall at the singularity, and the hedging motive would vanish.
 
 \paragraph{Numerical illustration.}
-To gauge magnitudes, consider the following parameterization: $\beta = 0.96$, $\gamma = 3$, $g = 0.02$, $\tilde{g} = 0.05$, $\theta = 0.05$, $\tilde{\theta} = 0.15$, $\nu = 0.55$, $\tilde{\nu} = 0.30$. These imply a household output share of $\omega = 0.60$ falling to $\tilde{\omega} = 0.45$ at the singularity ($\Delta = 0.75$). Table~\ref{tab:numerical} reports price-dividend ratios for several values of $p$. At $p = 0.01$, the AI stock price-dividend ratio is $V_0^A \approx 16.1$, versus $V_0^N \approx 11.6$ for non-AI stocks---a ratio of roughly $1.4$. Without singularity risk ($p = 0$), both equal approximately $11.9$. Under complete markets, the AI stock price-dividend ratio drops to $V_0^{A,\text{CM}} \approx 12.9$. A 1\% annual singularity probability generates a hedging premium of about 25\% of the complete-markets valuation.
+To gauge magnitudes, consider the following parameterization: $\beta = 0.96$, $\gamma = 3$, $g = 0.02$, $\tilde{g} = 0.05$, $\theta = 0.05$, $\tilde{\theta} = 0.15$, $\nu = 0.55$, $\tilde{\nu} = 0.30$. These imply a household output share of $\omega = 0.60$ falling to $\tilde{\omega} = 0.45$ at the singularity ($\Delta = 0.75$). Table~\ref{tab:numerical} reports price-dividend ratios for several values of $p$. At $p = 0.01$, the AI stock price-dividend ratio is $V_{\mathrm{pre}}^A \approx 16.1$, versus $V_{\mathrm{pre}}^N \approx 11.6$ for non-AI stocks---a ratio of roughly $1.4$. Without singularity risk ($p = 0$), both equal approximately $11.9$. Under complete markets, the AI stock price-dividend ratio drops to $V_{\mathrm{pre}}^{A,\text{CM}} \approx 12.9$. A 1\% annual singularity probability generates a hedging premium of about 25\% of the complete-markets valuation.
 
 \input{exhibits/numerical-illustration.tex} % Exhibit 2
 
@@ -235,14 +235,14 @@ The baseline model treats the singularity as a displacement event with certainty
 
 Suppose that, conditional on a singularity occurring, there is a probability $q \in [0,1)$ that the event is catastrophic---all output is permanently destroyed. With probability $(1-q)$, the singularity plays out as before. The pre-singularity price-dividend ratio of AI stocks becomes
 \begin{equation}
-V_0^{A,q} = \frac{(1-p)\,R + p\,(1-q)\,\Phi^A\,(1 + V_1)}{1 - (1-p)\,R}. \label{eq:pd-extinction}
+V_{\mathrm{pre}}^{A,q} = \frac{(1-p)\,R + p\,(1-q)\,\Phi^A\,(1 + V_{\mathrm{post}})}{1 - (1-p)\,R}. \label{eq:pd-extinction}
 \end{equation}
-Extinction risk reduces the singularity-state contribution by the factor $(1-q)$, attenuating the hedging premium. In the limit $q \to 1$, the singularity contributes nothing to AI stock valuations---the hedge is worthless if the economy is destroyed.
+Extinction risk reduces the singularity-state contribution by the factor $(1-q)$, attenuating the hedging premium. In the limit $q \to 1$, the singularity contributes nothing to AI stock valuations---the hedge is worthless if the economy is destroyed. (In the extinction state, consumption drops to zero, so the stochastic discount factor diverges while asset payoffs vanish; following the convention in the rare-disasters literature, we define the product as zero---assets are worthless in extinction.)
 
-\citet{Jones2024} shows that the trade-off between AI-driven growth and existential risk depends critically on the curvature of utility. With $\gamma > 1$, utility is bounded, and even infinite consumption generates finite utility. In our model, the asymmetry is stark: as $\tilde{g} \to \infty$, the AI owners---who hold private AI capital---enjoy unbounded consumption, while the household's consumption, though growing, remains a shrinking fraction $\tilde{\omega}$ of total output. This connects to our pricing results: when post-singularity growth $\tilde{g}$ is very large, the singularity-state pricing contribution $\Phi^A(1+V_1)$ is governed by two opposing forces.
+\citet{Jones2024} shows that the trade-off between AI-driven growth and existential risk depends critically on the curvature of utility. With $\gamma > 1$, utility is bounded, and even infinite consumption generates finite utility. In our model, the asymmetry is stark: as $\tilde{g} \to \infty$, the AI owners---who hold private AI capital---enjoy unbounded consumption, while the household's consumption, though growing, remains a shrinking fraction $\tilde{\omega}$ of total output. This connects to our pricing results: when post-singularity growth $\tilde{g}$ is very large, the singularity-state pricing contribution $\Phi^A(1+V_{\mathrm{post}})$ is governed by two opposing forces.
 
 \begin{remark}[Extreme singularity and the hedging premium] \label{rem:extreme} % Remark 1
-Consider the limit $\tilde{g} \to \infty$. For $\gamma > 1$, $(1+\tilde{g})^{1-\gamma} \to 0$, so both $\Phi^A \to 0$ and $V_1 \to 0$. The hedging premium vanishes: the household's marginal utility in singularity states becomes negligible because consumption is so high that additional dividends have little value. For $\gamma = 1$ (log utility), the premium is independent of $\tilde{g}$.
+Consider the limit $\tilde{g} \to \infty$. For $\gamma > 1$, $(1+\tilde{g})^{1-\gamma} \to 0$, so both $\Phi^A \to 0$ and $V_{\mathrm{post}} \to 0$. The hedging premium vanishes: the household's marginal utility in singularity states becomes negligible because consumption is so high that additional dividends have little value. For $\gamma = 1$ (log utility), the premium is independent of $\tilde{g}$.
 \end{remark}
 
 This observation complements \citet{Jones2024}: just as the curvature of utility determines whether infinite AI-driven consumption justifies existential risk, it determines whether extreme AI growth sustains or eliminates the hedging premium.
@@ -257,7 +257,7 @@ When the singularity produces very large output, the surplus from risk-sharing--
 \begin{equation}
 \frac{F + \tau(\omega - \tilde{\omega})\,Y}{Y} = \frac{F}{Y} + \tau(\omega - \tilde{\omega}). \label{eq:friction-cost}
 \end{equation}
-As $Y \to \infty$, the fixed component vanishes. If the proportional cost $\tau$ is small relative to the AI owners' gains---which are $(1 - \tilde{\omega})Y - (1-\omega)Y = (\omega - \tilde{\omega})Y$---then the net surplus from trade remains positive, and the efficient outcome is attainable.
+As $Y \to \infty$, the fixed component vanishes. If the proportional cost $\tau$ is small relative to the transfer amount $(\omega - \tilde{\omega})Y$, then the net surplus from trade remains positive, and the efficient outcome is attainable.
 
 \begin{remark}[Singularity-level output and displacement risk] \label{rem:coase} % Remark 2
 Following \citet{Jones2024}, if the singularity produces unbounded output ($Y \to \infty$), any transfer mechanism with a fixed-cost component becomes negligible. In this limit, the Coase theorem applies: displacement risk can be fully eliminated, and the hedging premium vanishes. This implies that the hedging premium is largest for moderate singularities---those severe enough to cause displacement but not so extreme that the resulting abundance makes risk-sharing trivial.
@@ -283,17 +283,17 @@ The model is intentionally stylized. It omits heterogeneous households, producti
 \section{Proofs} \label{app:proofs} % Appendix A
 
 \begin{proof}[Proof of Proposition~\ref{prop:comp-static}]
-From equation~\eqref{eq:pd-ai}, write $V_0^A = \mathcal{N}(p)/\mathcal{D}(p)$ where $\mathcal{N}(p) = (1-p)\,R + p\,\Phi^A(1+V_1)$ and $\mathcal{D}(p) = 1 - (1-p)\,R$. Then
+From equation~\eqref{eq:pd-ai}, write $V_{\mathrm{pre}}^A = \mathcal{N}(p)/\mathcal{D}(p)$ where $\mathcal{N}(p) = (1-p)\,R + p\,\Phi^A(1+V_{\mathrm{post}})$ and $\mathcal{D}(p) = 1 - (1-p)\,R$. Then
 \begin{equation}
-\frac{\partial V_0^A}{\partial p} = \frac{\mathcal{N}'(p)\,\mathcal{D}(p) - \mathcal{N}(p)\,\mathcal{D}'(p)}{\mathcal{D}(p)^2}, \label{eq:deriv}
+\frac{\partial V_{\mathrm{pre}}^A}{\partial p} = \frac{\mathcal{N}'(p)\,\mathcal{D}(p) - \mathcal{N}(p)\,\mathcal{D}'(p)}{\mathcal{D}(p)^2}, \label{eq:deriv}
 \end{equation}
-where $\mathcal{N}'(p) = -R + \Phi^A(1+V_1)$ and $\mathcal{D}'(p) = R$. Expanding the numerator:
+where $\mathcal{N}'(p) = -R + \Phi^A(1+V_{\mathrm{post}})$ and $\mathcal{D}'(p) = R$. Expanding the numerator:
 \begin{align}
-&\bigl[-R + \Phi^A(1+V_1)\bigr]\bigl[1-(1-p)R\bigr] - \bigl[(1-p)R + p\,\Phi^A(1+V_1)\bigr]\,R \label{eq:numerator-expand} \\
-&= -R + \Phi^A(1+V_1) - R\,\Phi^A(1+V_1) \label{eq:numerator-simplify} \\
-&= \Phi^A(1+V_1)(1 - R) - R. \label{eq:numerator}
+&\bigl[-R + \Phi^A(1+V_{\mathrm{post}})\bigr]\bigl[1-(1-p)R\bigr] - \bigl[(1-p)R + p\,\Phi^A(1+V_{\mathrm{post}})\bigr]\,R \label{eq:numerator-expand} \\
+&= -R + \Phi^A(1+V_{\mathrm{post}}) - R\,\Phi^A(1+V_{\mathrm{post}}) \label{eq:numerator-simplify} \\
+&= \Phi^A(1+V_{\mathrm{post}})(1 - R) - R. \label{eq:numerator}
 \end{align}
-This is positive if and only if $\Phi^A(1+V_1) > R/(1-R)$. Since $R/(1-R) = V_0^A\big|_{p=0}$ (the Gordon growth price-dividend ratio with no singularity risk), condition~\eqref{eq:comp-static} follows.
+This is positive if and only if $\Phi^A(1+V_{\mathrm{post}}) > R/(1-R)$. Since $R/(1-R) = V_{\mathrm{pre}}^A\big|_{p=0}$ (the Gordon growth price-dividend ratio with no singularity risk), condition~\eqref{eq:comp-static} follows.
 \end{proof}
 
 \end{document}

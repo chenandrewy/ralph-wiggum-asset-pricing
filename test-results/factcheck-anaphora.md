@@ -1,33 +1,28 @@
 # tests/factcheck-anaphora.py
-Started: 2026-04-02 22:13:44 EDT
-Runtime: 1m 17s
-[ralph-garage/agent-logs/20260402T221344.373516-0400_factcheck-anaphora_claude_opus.log](../ralph-garage/agent-logs/20260402T221344.373516-0400_factcheck-anaphora_claude_opus.log)
+Started: 2026-04-02 22:28:07 EDT
+Runtime: 4m 21s
+[ralph-garage/agent-logs/20260402T222807.263868-0400_factcheck-anaphora_claude_opus.log](../ralph-garage/agent-logs/20260402T222807.263868-0400_factcheck-anaphora_claude_opus.log)
 
 # factcheck-anaphora
-VERDICT: FAIL
-REASON: One demonstrative near a cross-reference resolves to a meaning not contained in the referenced target.
+VERDICT: PASS
+REASON: All demonstratives near cross-references resolve correctly to meanings that match their targets.
 
 ## Findings by section
 
-### Introduction (lines 41–68)
-No issues found.
+### Introduction (lines 41--68)
+No errors. Line 43 uses "this pattern" near `\ref{fig:ai-valuations}`; the demonstrative refers to elevated price-dividend ratios described in the preceding sentence, and the figure depicts exactly that (AI vs non-AI P/D ratios). Resolution is correct.
 
-### Model (lines 72–153)
-No issues found.
+### Model (lines 72--153)
+No errors. Checked demonstratives on lines 86 ("such a scenario"), 88 ("this is our own modeling choice"), 117 ("Assumption 1 states that Delta < 1"), 142 ("This equation"), and 152 ("These ensure"). All resolve correctly to their intended referents.
 
-### Results (lines 157–226)
+### Results (lines 157--226)
+No errors. Checked demonstratives on line 188 ("such a hedge" near `\ref{as:ai-share}`), line 202 ("this condition" near `\eqref{eq:comp-static}`), and line 220 (near `\ref{prop:complete}`). All cross-reference targets match the prose descriptions.
 
-**Line 202 — "this" + `\eqref{eq:comp-static}`**
+### Extension (lines 230--267)
+No errors. No demonstratives appear adjacent to `\ref` or `\eqref` commands in this section. Standalone demonstratives ("This connects," "In this limit") resolve unambiguously to their immediate antecedents.
 
-> Condition~\eqref{eq:comp-static} requires that the singularity-state contribution to the AI stock's value, $\Phi^A(1 + V_1)$, exceeds the no-singularity price-dividend ratio. When **this** holds, adding singularity risk increases the AI stock's price **because the hedging benefit outweighs the direct effect of the regime change on discount rates**.
+### Conclusion (lines 271--276)
+No errors. No cross-references appear in this section.
 
-The demonstrative "this" points to Condition (13), which is the inequality $\Phi^A(1+V_1) > R/(1-R)$. The referenced equation is a threshold inequality only — it contains no decomposition into a "hedging benefit" component versus a "direct discount-rate effect" component. The two-force framing is introduced by the prose but is not grounded in the target equation, making the causal claim appear to follow from the referenced condition when the condition itself says nothing about competing forces.
-
-### Extension (lines 230–267)
-No issues found. No `\ref` or `\eqref` cross-references appear in this section.
-
-### Conclusion (lines 271–276)
-No issues found. No cross-references appear in this section.
-
-### Proofs (lines 283–297)
-No issues found.
+### Proofs (lines 283--297)
+No errors. Line 296 "This is positive" correctly refers to the numerator expression on line 294, and "condition \eqref{eq:comp-static}" correctly maps to the inequality stated in Proposition 2.

@@ -1,32 +1,42 @@
 # tests/factcheck-freely.py
-Started: 2026-04-02 22:13:44 EDT
-Runtime: 8m 32s
-[ralph-garage/agent-logs/20260402T221344.372837-0400_factcheck-freely_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260402T221344.372837-0400_factcheck-freely_claude_claude-opus-4-6.log)
+Started: 2026-04-02 22:28:07 EDT
+Runtime: 7m 37s
+[ralph-garage/agent-logs/20260402T222807.260603-0400_factcheck-freely_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260402T222807.260603-0400_factcheck-freely_claude_claude-opus-4-6.log)
 
 # factcheck-freely
 VERDICT: FAIL
-REASON: The paper contains a mislabeled economic quantity in the Coase-theorem discussion and an incomplete logical claim about Assumption 3.
+REASON: The paper conflates the household's consumption share falling ($\Delta < 1$) with consumption level falling, and Proposition 2's verbal characterization omits a key parameter dependence.
 
-## Issues Found
+## Details
 
-### 1. AI owners' "gains" mislabeled (Section 4.2)
-The paper states: "If the proportional cost $\tau$ is small relative to the AI owners' gains -- which are $(1-\tilde{\omega})Y - (1-\omega)Y = (\omega - \tilde{\omega})Y$ --"
+### 1. Imprecise SDF claim (line 142)
 
-The expression $(\omega - \tilde{\omega})Y$ is the **transfer amount** needed to restore the household's consumption share, not the AI owners' "gains" from the singularity. The AI owners' actual gain depends on both the share change and the output level change (from $Y$ to $(1+\tilde{g})Y$). Calling the transfer cost the "gains" conflates two distinct quantities and mischaracterizes the Coasean surplus.
+The text states: "because the household's consumption falls at the singularity ($\Delta < 1$), its stochastic discount factor is high precisely when AI stocks pay well."
 
-### 2. Incomplete claim about Assumption 3 (Section 2.4)
-The paper claims the transversality conditions "are automatically satisfied for $\gamma > 1$, the empirically relevant case." This is only true when growth rates $g > 0$ and $\tilde{g} > 0$. For $\gamma > 1$, $(1+g)^{1-\gamma} < 1$ requires $1+g > 1$, i.e., $g > 0$. If $g$ were negative, the condition could fail even with $\gamma > 1$. The claim is logically incomplete without stating positive growth as a requirement.
+$\Delta < 1$ means the consumption *share* falls, not necessarily the consumption *level*. At the singularity transition, consumption growth is $\Delta(1+\tilde{g})$. Whether consumption actually falls (and the SDF is high) depends on whether $\Delta(1+\tilde{g}) < 1$. For the paper's calibration ($\Delta=0.75$, $\tilde{g}=0.05$), this holds ($0.7875 < 1$). But for larger $\tilde{g}$ (e.g., $\tilde{g}=0.50$ gives $1.125 > 1$), consumption rises and the SDF is actually *lower* than in normal states. The paper's own Remark 1 acknowledges that for extreme $\tilde{g}$ the hedging premium vanishes, but the informal argument at line 142 does not qualify the claim.
 
-### 3. Extinction state Euler equation subtlety (Section 4.1, eq. 13)
-When the singularity is catastrophic, consumption drops to zero, making the SDF $\beta(c_{t+1}/c_t)^{-\gamma} \to \infty$ while the asset payoff is zero. The resulting $\infty \times 0$ is mathematically indeterminate. The paper implicitly treats this product as zero (the standard rare-disasters convention), but provides no justification. This is a lack of rigor rather than an outright error, but it leaves a gap in the formal argument.
+### 2. Proposition 2 verbal characterization incomplete (lines 190-196)
 
-## Items Verified as Correct
-- Proposition 1 (P/D ratio formulas): correct closed-form derivation
-- Proposition 2 (comparative static): algebraically correct derivative and condition
-- Proposition 3 (complete vs. incomplete markets): hedging premium formula correct
-- Post-singularity P/D ratio being common across stocks: correct
-- Valuation spread increasing in $p$: analytically verified
-- Remarks 1 and 2: qualitatively sound
-- Numerical illustration: all computed values match formulas; parameters consistent between code and paper
-- CRSP figure code: standard methodology correctly implemented
-- Literature citations (GKP 2012, Jones 2024): accurately represent source content
+Proposition 2 states that the condition for $\partial V_{\mathrm{pre}}^A / \partial p > 0$ "holds when displacement is sufficiently severe ($\Delta$ small), risk aversion is sufficiently high ($\gamma$ large), or the AI share gain is sufficiently large ($\tilde{\theta}/\theta$ large)." This omits a critical dependence: the condition *fails* when post-singularity growth $\tilde{g}$ is sufficiently large, because $\Phi^A \to 0$ as $\tilde{g} \to \infty$ for $\gamma > 1$. This is economically important given the paper's framing around "large disruptions" and "singularities that vastly increase productivity."
+
+### 3. Broken figure reference (line 43)
+
+The introduction references "Figure~\ref{fig:ai-valuations}" but the figure environment is commented out (lines 45-50), producing a broken reference in the compiled paper.
+
+### 4. Exhibit numbering gap
+
+With Figure 1 (Exhibit 1) commented out, only Exhibit 2 (the numerical table) appears, creating a numbering gap.
+
+### 5. Notation mismatch between code and paper
+
+The R code uses $V_0$ subscripts while the paper uses $V_{\mathrm{pre}}$ subscripts in the generated table.
+
+### Verified correct
+
+- All numerical values in the paper match the code output
+- Proposition 1 derivation and formulas
+- Proposition 2 proof algebra (Appendix A)
+- Proposition 3 hedging premium formula
+- Extinction risk formula
+- Remark 1 (extreme singularity limit)
+- Literature characterizations (GKP 2012, Jones 2024, etc.)

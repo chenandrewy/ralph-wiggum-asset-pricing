@@ -1,85 +1,111 @@
 # tests/element-lit-review.py
-Started: 2026-04-02 22:13:44 EDT
-Runtime: 6m 57s
-[ralph-garage/agent-logs/20260402T221344.373587-0400_element-lit-review_claude_opus.log](../ralph-garage/agent-logs/20260402T221344.373587-0400_element-lit-review_claude_opus.log)
+Started: 2026-04-02 22:28:07 EDT
+Runtime: 4m 22s
+[ralph-garage/agent-logs/20260402T222807.263169-0400_element-lit-review_claude_opus.log](../ralph-garage/agent-logs/20260402T222807.263169-0400_element-lit-review_claude_opus.log)
 
 # element-lit-review
 
 VERDICT: FAIL
-REASON: One critical gap (Knesl 2023 JFE on automation displacement and asset pricing) and two important gaps (Garleanu-Panageas 2015 JPE, Babina et al 2024 JFE).
+REASON: Literature review clearly exceeds the half-page limit, and one important citation gap exists.
 
-## 1. Scope extracted from spec and paper
+## 1. Scope Extracted from Spec and Paper
 
-The paper "Hedging the Singularity" is an asset pricing theory paper arguing that publicly traded AI stocks command a valuation premium because they hedge against a negative AI singularity---a sudden AI-driven productivity surge that displaces existing workers and firms. The model features incomplete markets (representative household cannot invest in private AI capital), builds directly on Garleanu, Kogan, and Panageas (2012 JFE), and extends the analysis using Jones (2024 AER:Insights) on AI growth vs. existential risk.
+**Primary topic**: AI stocks command a valuation premium because they hedge against a negative AI singularity --- a sudden AI-driven productivity surge that displaces existing workers and firms under incomplete markets.
 
-**Primary topic**: Displacement risk from AI/automation and its asset pricing implications, with incomplete markets as the key mechanism.
+**Core contribution claims**:
+- Formalizes GKP's displacement risk insight in an AI singularity context
+- Derives conditions under which the AI hedging premium increases with singularity probability
+- Shows incomplete markets are key: under complete markets, the hedging premium vanishes
+- Extension connecting to Jones (2024): when singularity output is sufficiently large, frictions sustaining displacement risk can be overcome
 
-**Secondary themes**: Rare disasters, economics of AI and automation, technology shocks and stock prices, intergenerational risk-sharing frictions.
+**Themes requiring literature coverage**:
+1. Displacement risk and asset pricing (PRIMARY --- paper's direct lineage from GKP)
+2. Technology shocks / creative destruction and stock prices
+3. AI and financial markets / firm valuations
+4. Rare disasters and asset pricing (secondary --- singularity as asymmetric rare disaster)
+5. Incomplete markets and asset pricing (secondary --- mechanism, not main focus)
 
-**Required literature coverage** (from spec): Lit review at most half a page, centered on papers most relevant to the contribution, emphasizing target finance and economics journals.
+## 2. Current Bibliography Summary
 
-## 2. Current bibliography summary
+The paper cites 14 references spanning displacement risk, rare disasters, technology/AI economics, and related asset pricing theory:
 
-The paper cites 11 references:
-
-| Paper | Journal | Theme |
-|-------|---------|-------|
-| Garleanu, Kogan, Panageas (2012) | JFE | Displacement risk (core antecedent) |
-| Kogan, Papanikolaou, Stoffman (2020) | JPE | Creative destruction, inequality, returns |
-| Kogan, Papanikolaou (2014) | JF | Growth opportunities and asset prices |
-| Pastor, Veronesi (2009) | AER | Technological revolutions and stock prices |
-| Hobijn, Jovanovic (2001) | AER | IT revolution and incumbent firms |
+| Citation | Journal | Theme |
+|---|---|---|
+| Garleanu, Kogan, Panageas (2012) | JFE | Displacement risk (core) |
+| Garleanu & Panageas (2015) | JPE | OLG asset pricing, heterogeneous agents |
+| Kogan, Papanikolaou, Stoffman (2020) | JPE | Creative destruction, inequality, stocks |
+| Kogan & Papanikolaou (2014) | JF | Growth opportunities, technology shocks |
+| Knesl (2023) | JFE | Automation, labor displacement, asset pricing |
+| Babina et al. (2024) | JFE | AI adoption, firm growth |
+| Pastor & Veronesi (2009) | AER | Technological revolutions, stock prices |
+| Acemoglu & Restrepo (2018) | AER | Race between automation and labor |
+| Hobijn & Jovanovic (2001) | AER | IT revolution and incumbent firms |
+| Jones (2024) | AER: Insights | AI growth vs. existential risk |
 | Barro (2006) | QJE | Rare disasters |
-| Rietz (1988) | JME | Equity risk premium / disasters |
-| Wachter (2013) | JF | Rare disasters and volatility |
-| Jones (2024) | AER:Insights | AI growth vs. existential risk |
-| Acemoglu, Restrepo (2018) | AER | Automation and labor |
-| Korinek, Suh (2024) | NBER WP | AGI transition scenarios |
+| Rietz (1988) | J. Monetary Econ. | Rare disasters |
+| Wachter (2013) | JF | Time-varying rare disaster risk |
+| Korinek & Suh (2024) | NBER WP | AGI transition scenarios |
 
-Coverage is strong on the GKP displacement-risk lineage, rare disasters, and AI economics. The gap is in recent work directly connecting automation/displacement to asset pricing outside the Kogan-Papanikolaou group.
+Coverage of the primary topic (displacement risk / technology and asset pricing) is strong: GKP (2012), Garleanu-Panageas (2015), Kogan-Papanikolaou-Stoffman (2020), Kogan-Papanikolaou (2014), and Knesl (2023) form a coherent lineage. AI economics and rare disasters are also adequately covered.
 
-## 3. Missing references by topic area
+## 3. Missing References by Topic Area
 
-### CRITICAL
+### Displacement risk / technology substitution and asset pricing
 
-**Knesl (2023 JFE)** -- "Automation and the Displacement of Labor by Capital: Asset Pricing Theory and Empirical Evidence"
-- This paper develops an asset pricing model where firms with displaceable labor are negatively exposed to automation technology shocks, generating a displacement risk premium. It is published in JFE and is directly on-point for the paper's primary topic: how automation/AI displacement risk is priced in financial markets. A specialist referee would almost certainly flag this omission, as it is the most directly comparable recent paper in a target journal.
+**Zhang (2019, JF) --- "Labor-Technology Substitution: Implications for Asset Pricing"**
+- Classification: **IMPORTANT**
+- Models firms' option to replace routine-task labor with automation and derives cross-sectional return implications. This is the closest published JF paper to the paper's mechanism of technology displacing labor and affecting valuations. While Knesl (2023 JFE) covers similar ground, Zhang (2019) is a prominent JF paper that a referee specializing in technology and asset pricing would likely expect to see. Not CRITICAL because the paper already cites Knesl (2023), which is more directly comparable, and the paper's primary mechanism is incomplete intergenerational risk-sharing rather than labor-technology substitution per se.
 
-### IMPORTANT
+### Innovation, growth, and asset pricing
 
-**Garleanu and Panageas (2015 JPE)** -- "Young, Old, Conservative, and Bold: The Implications of Heterogeneity and Finite Lives for Asset Pricing"
-- A follow-up by two of the three GKP authors, studying OLG asset pricing with heterogeneous agents and incomplete intergenerational risk-sharing---the exact friction that drives the hedging premium in "Hedging the Singularity." Since the paper builds so heavily on GKP's framework and explicitly discusses intergenerational risk-sharing frictions, this JPE paper by the same authors is a natural expected citation.
+**Kung and Schmid (2015, JF) --- "Innovation, Growth, and Asset Prices"**
+- Classification: **MINOR**
+- Endogenous growth model where R&D-driven innovation creates long-run productivity risk, generating equity and term premia. Related thematically but the mechanism (long-run risk from innovation) differs from the paper's focus on displacement under incomplete markets. The paper does not claim to contribute to the endogenous-growth asset pricing literature.
 
-**Babina, Fedyk, He, and Hodson (2024 JFE)** -- "Artificial Intelligence, Firm Growth, and Product Innovation"
-- The most prominent recent paper on AI in a top finance journal. It provides empirical evidence on how AI adoption affects firm growth and labor reallocation. Given that "Hedging the Singularity" is specifically about AI and stock valuations, a referee would likely expect engagement with this leading empirical paper on AI in the same target journal.
+**Papanikolaou (2011, JPE) --- "Investment Shocks and Asset Prices"**
+- Classification: **MINOR**
+- Foundational model of investment-specific technology shocks and cross-sectional returns. Related but the paper already cites the more directly relevant Kogan and Papanikolaou (2014), which extends this work to growth opportunities and technology shocks.
 
-### MINOR
+### Incomplete markets / limited participation
 
-**Garleanu, Panageas, and Yu (2012 JF)** -- "Technological Growth and Asset Pricing"
-- A companion paper by overlapping authors studying technology adoption cycles and asset pricing. Related but focused on a different mechanism (adoption uncertainty rather than displacement risk). Understandable to omit given the paper's narrow scope.
+**Basak and Cuoco (1998, RFS) --- "An Equilibrium Model with Restricted Stock Market Participation"**
+- Classification: **MINOR**
+- Canonical model of limited participation and the equity premium. The paper's incomplete-markets mechanism is specifically about intergenerational risk-sharing (following GKP), not the general limited-participation literature. Citation would be warranted in a longer paper but is understandable to omit given the compact scope and the fact that GKP itself provides the relevant incomplete-markets framing.
 
-**Kung and Schmid (2015 JF)** -- "Innovation, Growth, and Asset Prices"
-- Endogenous growth model connecting R&D-driven innovation to asset pricing. Related to the innovation/creative destruction theme but tangential to the specific displacement mechanism.
+### Creative destruction and asset pricing
 
-**Eisfeldt and Papanikolaou (2013 JF)** -- "Organization Capital and the Cross-Section of Expected Returns"
-- Organization capital embodied in key talent generates a risk premium through a channel parallel to incomplete markets. Tangentially relevant.
+**Loualiche (2021, JF) --- "Asset Pricing with Entry and Imperfect Competition"**
+- Classification: **MINOR**
+- New firm entry displaces incumbents' rents and generates a priced risk factor. Related to the creative destruction channel but the paper already cites Kogan-Papanikolaou-Stoffman (2020) for this theme.
 
-## 4. Focus on the target journal set
+## 4. Focus on Target Journal Set
 
-The bibliography is well-focused on target journals. Of 11 references, 9 appear in target journals (JFE, JPE, JF, AER, AER:Insights, QJE). Rietz (1988) is in JME (not a target journal) but is a foundational disaster-risk paper whose inclusion is standard. Korinek and Suh (2024) is an NBER working paper, also reasonable given the nascent AI economics literature. The paper does not cite any RFS, JFQA, RAPS, MS, ECMA, or REStud papers, but this is not problematic given the paper's narrow theoretical focus---there is no obvious landmark paper in those journals that the paper must cite.
+The bibliography is well-focused on the target journal set. Of 14 references:
+- **Finance journals**: JFE (3), JF (2) = 5 papers in target finance journals
+- **Economics journals**: AER (3), JPE (2), QJE (1) = 6 papers in target economics journals
+- **Other**: J. Monetary Econ. (1), AER: Insights (1), NBER WP (1) = 3 outside the core target set
 
-The literature review appropriately prioritizes the most relevant work from the target journal set.
+The literature review appropriately emphasizes the displacement risk lineage (GKP and extensions in JFE/JPE/JF), rare disasters (QJE/JF), and technology/AI economics (AER). The balance between finance and economics journals is appropriate for the paper's theory-with-economics-foundations approach. No critical imbalance in journal coverage.
 
-## 5. Literature review length check
+## 5. Literature Review Length Check
 
-The "Related literature" paragraph begins approximately halfway down page 3 of the compiled PDF and continues through the first few lines of page 4, after which Section 2 (Model) begins. The total visible length is approximately half a page. The review is at or just under the half-page limit and does not clearly exceed it.
+**Spec requirement**: Literature review is at most half a page (Style Requirement 8).
 
-**Assessment**: PASS on length.
+**Finding**: The "Related literature" paragraph begins approximately 5 lines from the bottom of page 2 and continues through nearly all of page 3, with Section 2 ("Model") starting only at the very bottom of page 3. The visible lit review text spans approximately **3/4 to 1 full page** in the compiled PDF.
 
-## 6. Suggested additions
+- Classification: **IMPORTANT**
 
-| Authors | Year | Title | Journal | Relevance |
-|---------|------|-------|---------|-----------|
-| Knesl | 2023 | Automation and the Displacement of Labor by Capital: Asset Pricing Theory and Empirical Evidence | JFE | Directly models how automation displacement risk is priced in asset markets; the closest published paper to the present paper's core mechanism. |
-| Garleanu, Panageas | 2015 | Young, Old, Conservative, and Bold: The Implications of Heterogeneity and Finite Lives for Asset Pricing | JPE | Follow-up by GKP authors on OLG asset pricing with incomplete intergenerational risk-sharing, the key friction in the present paper. |
-| Babina, Fedyk, He, Hodson | 2024 | Artificial Intelligence, Firm Growth, and Product Innovation | JFE | Leading empirical paper on AI and firms in a top finance journal; provides empirical grounding for the paper's AI-stock-valuation premise. |
+This clearly exceeds the half-page limit. The lit review covers three substantial paragraphs: (1) displacement risk lineage (~half a page), (2) rare disasters (~3 lines), and (3) AI economics (~quarter page). The displacement risk paragraph could be condensed, and the AI economics paragraph could be trimmed to bring the total under half a page.
+
+## 6. Suggested Additions
+
+| Author(s) | Year | Title | Journal | Relevance |
+|---|---|---|---|---|
+| Zhang | 2019 | Labor-Technology Substitution: Implications for Asset Pricing | JF | Models firms' automation decisions and cross-sectional return implications; closest JF paper to the technology-displaces-labor mechanism |
+
+**Suggested removals to reduce lit review length** (to meet the half-page constraint): Consider condensing or removing discussion of papers that are tangential to the primary contribution:
+- The sentence on Acemoglu and Restrepo (2018) could be removed (general automation economics, not asset pricing)
+- The sentence on Korinek and Suh (2024) could be removed (AGI scenarios, not directly about asset pricing)
+- The discussion of Garleanu and Panageas (2015) and Kogan-Papanikolaou-Stoffman (2020) could be shortened to a single sentence listing them as extensions of GKP
+
+These trims would bring the lit review closer to the half-page target while preserving the essential citations.
