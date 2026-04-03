@@ -90,10 +90,17 @@ Step 3 — Derive evaluation scope from the spec and paper:
   abstract, and main argument are about.
 - Infer the minimum literature coverage needed to support those themes.
 - Do NOT assume subtopics unless the paper or spec explicitly includes them.
+- Also scan the paper text for specific claims, theorems, results, and
+  frameworks that the paper invokes or relies on, even if they are not part
+  of the paper's main themes. These in-text references are part of the
+  evaluation scope: any named result or concept the paper uses needs a
+  citation regardless of which journal it appeared in.
 
 Step 4 — Build a candidate set of expected citations:
 Using the paper, spec, and optional context, identify papers published in the
 target journals that are highly relevant to the paper's actual stated themes.
+Also include original sources for any specific results, theorems, or named
+concepts identified in Step 3 that the paper invokes without citing.
 
 Topic-proportionality rule: The candidate set must reflect the paper's topic
 emphasis. If the paper is primarily about topic X, then papers about X in the
@@ -121,7 +128,9 @@ Step 7 — Assess adequacy. Classify each issue as:
   - CRITICAL: A prominent paper in the target journals on the paper's PRIMARY
     topic that a specialist referee would expect to see cited. Also: any paper
     in the target journals that is directly on-point for a contribution claim
-    the paper makes.
+    the paper makes. Also: the original source for any named theorem, result,
+    or concept that the paper invokes by name without citing (regardless of
+    journal).
   - IMPORTANT: A well-known paper in the target journals on a secondary theme
     of the paper, or a literature review that is materially longer than half a
     page.
