@@ -83,8 +83,11 @@ Wipe these folders before making disposable code
 ## Time Zone
 - Use New York time zone for all timestamps.
 
-## Synonyms
-- Other terms that mean "Claude":
+## Interaction Guidelines
+- The user may refer to "Claude" with other names:
     - Claw, clawed
-- Other terms that mean "Ralph"
+- The user may refer to "Ralph" with other names:
     - Ralf, ralf, ralph
+- When discussing math, respond in Markdown-formatted math 
+    - Use $x_t = 2$ for in-line math
+    - Use $x_t = 2$ for displaymath
