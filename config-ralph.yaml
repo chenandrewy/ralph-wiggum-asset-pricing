@@ -1,6 +1,6 @@
 # == Basic loop configuration ==
-run-name: turn-off-referees
-max-iter: 4
+run-name: add*(gov+veto)
+max-iter: 10
 
 # Optional pre-loop baseline test run
 test-before-loop: off
