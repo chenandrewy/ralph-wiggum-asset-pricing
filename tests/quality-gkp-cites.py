@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 How to run: python tests/quality-gkp-cites.py
-Inputs: paper/paper.tex, spec/paper-spec.md, spec/CFR-R1-report.md, spec/lit/GKP-2012-WP.md
+Inputs: paper/paper.tex, spec/paper-spec.md, spec/CFR-R1-report.md, spec/lit/GKP-2012.md
 Outputs: test-results/quality-gkp-cites.md and process exit code (0=PASS, 1=FAIL)
 """
 
@@ -21,9 +21,9 @@ def main() -> int:
     paper_path = context.repo_root / "paper/paper.tex"
     spec_path = context.repo_root / "spec/paper-spec.md"
     referee_report_path = context.repo_root / "spec/CFR-R1-report.md"
-    gkp_wp_path = context.repo_root / "spec/lit/GKP-2012-WP.md"
+    gkp_path = context.repo_root / "spec/lit/GKP-2012.md"
     preflight = require_paths(
-        context, paper_path, spec_path, referee_report_path, gkp_wp_path
+        context, paper_path, spec_path, referee_report_path, gkp_path
     )
     if preflight is not None:
         return preflight
@@ -35,7 +35,7 @@ Read these files:
 - Referee report: {referee_report_path}
 - Paper: {paper_path}
 - Paper spec: {spec_path}
-- GKP working paper: {gkp_wp_path}
+- GKP published paper: {gkp_path}
 
 ## Context
 
@@ -48,7 +48,7 @@ The paper builds directly on GKP's displacement risk framework. The paper spec s
 "Modest" means: acknowledge that the core displacement-risk insight is GKP's; do not oversell the paper's contribution relative to GKP.
 
 ## Procedure
-1. Read the referee report first, then read the full paper, the full paper spec, and the GKP working paper.
+1. Read the referee report first, then read the full paper, the full paper spec, and the GKP published paper.
 2. Identify every passage in the paper that references GKP — by citation, by name, or by clear allusion to their model.
 3. For each passage, evaluate against the requirements below by comparing what the paper says with what GKP actually wrote.
 4. Pay special attention to: (a) how the paper characterizes GKP's discussion of intergenerational transfers, bequests, gifts, and government debt; (b) whether interpretations from other papers are attributed to GKP or correctly to the paper's own analysis; (c) how the paper characterizes the analogy between AI owners and GKP's unborn cohorts; (d) whether the paper's description of its own contribution is consistent with the modesty called for in the spec.

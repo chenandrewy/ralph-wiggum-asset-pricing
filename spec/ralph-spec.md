@@ -30,6 +30,7 @@ The author steps (`author-plan.py`, `author-improve.py`) may modify files in the
 
 - Core project state lives in the author working directories.
 - Loop intent lives in `spec/`, with `spec/paper-spec.md` used by the current author prompts.
+- When the spec or tests name a literature file as authoritative context, that named file is the Ralph loop's canonical source for that paper; for GKP, the canonical source is `spec/lit/GKP-2012.md`.
 - Test definitions live in `tests/`.
 - All prompts live inline in their respective scripts (e.g. `ralph/author-plan.py`, `ralph/author-improve.py`, `ralph/commit-iteration.py`).
 - Agent invocation settings such as agent choice, model choice, and effort level belong in the calling script, alongside constants such as `AGENT` and `MODEL`.

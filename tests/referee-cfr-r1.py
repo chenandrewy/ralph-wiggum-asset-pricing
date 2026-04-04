@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 How to run: python tests/referee-cfr-r1.py [--agent-log-mode MODE]
-Inputs: paper/paper.tex, spec/paper-spec.md, spec/CFR-R1-report.md, spec/lit/GKP-2012-WP.md, spec/lit/Jones-2024-AERI.md
+Inputs: paper/paper.tex, spec/paper-spec.md, spec/CFR-R1-report.md, spec/lit/GKP-2012.md, spec/lit/Jones-2024-AERI.md
 Outputs: test-results/referee-cfr-r1.md (always exits 0)
 """
 
@@ -25,7 +25,7 @@ def main() -> int:
     paper_path = repo_root / "paper/paper.tex"
     spec_path = repo_root / "spec/paper-spec.md"
     cfr_path = repo_root / "spec/CFR-R1-report.md"
-    gkp_path = repo_root / "spec/lit/GKP-2012-WP.md"
+    gkp_path = repo_root / "spec/lit/GKP-2012.md"
     jones_path = repo_root / "spec/lit/Jones-2024-AERI.md"
     for p in (paper_path, spec_path, cfr_path, gkp_path, jones_path):
         if not p.exists():

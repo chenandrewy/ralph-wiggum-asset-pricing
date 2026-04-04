@@ -18,15 +18,15 @@
     - c. Two publicly traded assets: AI stocks and non-AI stocks. AI stocks grow as a share of the economy with each singularity.
     - d. The main focus is on the price/dividend ratio of public AI stocks, and how it changes with the probability of a negative AI singularity.
         - i. The price/dividend ratio is studied quantitatively in a table with compelling magnitudes.
-    - e. The private AI capital and AI owners can also be thought of as unborn capital and future owners that do not yet exist, as in `spec/lit/GKP-2012-WP.md`.
+    - e. The private AI capital and AI owners can also be thought of as unborn capital and future owners that do not yet exist, as in `spec/lit/GKP-2012.md`.
 5. An extension of the main model makes the singularity analysis richer, following the advice in `spec/CFR-R1-report.md`. The extension includes the following features:
     - a. The singularity may cause extinction, as in `spec/lit/Jones-2024-AERI.md`.
     - b. Consumption may become infinite (in our case, only for the AI owners).
-    - c. A government transfer program can attenuate displacement risk (`spec/lit/GKP-2012-WP.md`), but produces deadweight costs that scale with the size of the program. But if output grows large enough in the singularity, these costs may be overcome. A table of quantitative illustrations for various output growth rates and deadweight costs.
+    - c. A government transfer program can attenuate displacement risk (`spec/lit/GKP-2012.md`), but produces deadweight costs that scale with the size of the program. But if output grows large enough in the singularity, these costs may be overcome. A table of quantitative illustrations for various output growth rates and deadweight costs.
         - i. In the singularity, output can be infinite (`spec/lit/Jones-2024-AERI.md`), which implies that even huge deadweight costs may be overcome.
         - ii. Applies Coase Theorem logic to the problem of AI displacement risk.
     - d. Keep these ideas in an extension, so that the main argument stays simple.
-6. The paper explains how it contributes relative to `spec/lit/GKP-2012-WP.md`
+6. The paper explains how it contributes relative to `spec/lit/GKP-2012.md`
     - a. GKP note that government transfers would affect the magnitude of the displacement factor but do not conduct further analysis. The paper contributes a formal analysis with a quantitative illustration.
         - i. The deadweight costs of such transfers may be very large, but in the singularity, such costs may be overcome.
     - b. The characterization of the contribution is purposefully modest. The main insights about displacement risk and incomplete markets are already in GKP.
@@ -77,7 +77,7 @@
     - b. The abstract is eye-catching yet rigorous. 
     - c. The introduction is engaging. Each paragraph moves the reader to the next one. 
     - d. The paper uses itself as a demonstration of the AI displacement risk it models, since all analysis and writing is done by AI agents. Discussion of this includes an accurate description of how the work was divided: the human only wrote the paper spec (80 lines) and tests.
-6. The paper is sensitive, cautious, and modest in how it cites `spec/lit/GKP-2012-WP.md`. 
+6. The paper is sensitive, cautious, and modest in how it cites `spec/lit/GKP-2012.md`. 
 7. The lit review is centered on the papers most relevant to the paper's contribution. It emphasizes papers in JF, JFE, RFS, JFQA, RAPS, and MS, as well as top economics journals. 
 8. The paper is intentionally limited in scope to a compact theoretical contribution.
     - a. Good theory style is essential. Mathematical formalism is kept to a minimum. Each piece of formalism contributes to the economic claims. The paper avoids pompous or ceremonial formalism, and it avoids auxiliary formal detours that do not advance the main argument.
