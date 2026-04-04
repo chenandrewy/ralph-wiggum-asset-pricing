@@ -44,33 +44,8 @@ Agent-backed tests must call `ralph/agent_wrapper.py` with:
 - `--step-label <test-id>`
 - `--failure-log-mode off`
 
-Agent-backed test prompts should include:
-- `Procedure`: a step by step process the agent should follow while evaluating the test
-- `Requirements`: declarative statements that must be true for the test to pass
-- `Output`: instructions for how to write the report body
+Agent-backed test prompts may use any structure.
 
-These sections should use parallel structure:
-- `Procedure` must be a numbered list so individual steps can be referenced unambiguously.
-- `Requirements` must be a numbered list so individual pass/fail conditions can be referenced unambiguously.
-- `Output` must explicitly instruct the agent to write the standard report body beginning with:
-  - `# <test-id>`
-  - `VERDICT: PASS` or `VERDICT: FAIL`
-  - `REASON: <one short sentence>`
-  - And then further details on the findings.
-
-In the `Requirements` section:
-- each item should be written as a declarative sentence or sentences
-- each item should state a condition for passing
-- items should not be phrased as questions
-- For tests that evaluate an external specification, the prompt `Requirements` section should define what must be true for the evaluation to pass, such as exhaustiveness, evidence standards, and fail-on-any-violation behavior. It need not restate every requirement from the external specification.
-
-Agent-backed tests should instruct the agent to apply a strict pass/fail standard. A numbered requirement should fail if the available evidence is missing, ambiguous, inconsistent, or only partially supports compliance.
-
-For tests that evaluate analysis code or reproducibility, prompts should distinguish clearly between:
-- the canonical analysis pipeline required by the paper spec
-- any optional or non-canonical exploratory workflows
-- and any caches, intermediate files, or downloaded inputs that the canonical pipeline creates or uses
-
-Such tests should fail if the canonical pipeline is ambiguous, relies silently on inconsistent cached objects or manually prepared files, or does not satisfy the paper spec's required execution model.
+Agent-backed tests should apply a strict pass/fail standard.
 
 Agent-backed tests should use sub-agents to divide independent evaluation work whenever the test covers multiple distinct requirement groups, paper sections, claims, or exhibits. Pure Python tests and narrowly scoped agent-backed tests need not use sub-agents.
