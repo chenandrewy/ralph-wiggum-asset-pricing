@@ -19,13 +19,14 @@
     - d. The main focus is on the price/dividend ratio of public AI stocks, and how it changes with the probability of a negative AI singularity.
         - i. The price/dividend ratio is studied quantitatively in a table with compelling magnitudes.
     - e. The private AI capital and AI owners can also be thought of as unborn capital and future owners that do not yet exist, as in `spec/lit/GKP-2012.md`.
+    - f. The singularity may cause extinction, as in `spec/lit/Jones-2024-AERI.md`.    
 5. An extension of the main model makes the singularity analysis richer, following the advice in `spec/CFR-R1-report.md`. The extension includes the following features:
-    - a. The singularity may cause extinction, as in `spec/lit/Jones-2024-AERI.md`.
-    - b. Consumption may become infinite (in our case, only for the AI owners).
-    - c. A government transfer program can attenuate displacement risk (`spec/lit/GKP-2012.md`), but produces deadweight costs that scale with the size of the program. But if output grows large enough in the singularity, these costs may be overcome. A table of quantitative illustrations for various output growth rates and deadweight costs.
-        - i. In the singularity, output can be infinite (`spec/lit/Jones-2024-AERI.md`), which implies that even huge deadweight costs may be overcome.
-        - ii. Applies Coase Theorem logic to the problem of AI displacement risk.
-    - d. Keep these ideas in an extension, so that the main argument stays simple.
+    - a. The household can block ("veto") AI deployment at a cost to its consumption.
+    - b. A government transfer program attenuates displacement risk (`spec/lit/GKP-2012.md`). The program incurs deadweight costs that scale with the size of the program. 
+    - c. For simplicity, no extinction risk.
+    - d. The section illustrates how inefficient AI deployment may occur due to the deadweight costs of the transfer program.
+    - e. A table illustrates how if output growth in the singularity is large enough, the deadweight costs can be overcome. The table should appeal to "intuitive" parameter values. 
+    - f. The section connects to the Coase Theorem (`spec/lit/Medema-2020.md`)
 6. The paper explains how it contributes relative to `spec/lit/GKP-2012.md`
     - a. GKP note that government transfers would affect the magnitude of the displacement factor but do not conduct further analysis. The paper contributes a formal analysis with a quantitative illustration.
         - i. The deadweight costs of such transfers may be very large, but in the singularity, such costs may be overcome.
