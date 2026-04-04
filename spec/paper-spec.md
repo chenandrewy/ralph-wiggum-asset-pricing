@@ -24,9 +24,10 @@
     - a. The household can block ("veto") AI deployment at a cost to its consumption.
     - b. A government transfer program attenuates displacement risk (`spec/lit/GKP-2012.md`). The program incurs deadweight costs that scale with the size of the program. 
     - c. For simplicity, no extinction risk.
-    - d. The section illustrates how inefficient AI deployment may occur due to the deadweight costs of the transfer program.
-    - e. A table illustrates how if output growth in the singularity is large enough, the deadweight costs can be overcome. The table should appeal to "intuitive" parameter values. 
-    - f. The section connects to the Coase Theorem (`spec/lit/Medema-2020.md`)
+    - d. The section illustrates how inefficient AI deployment may occur due to the deadweight costs of the transfer program. But if output growth in the singularity is large enough, the deadweight costs can be overcome. 
+    - e. The section illustrates how government transfers affect the price/dividend ratio of AI stocks, and how this depends on output growth in the singularity. It includes a baseline in which the transfers have limited effects on the price/dividend ratio.
+    - f. Tables or figures are used to illustrate the main points of the section.
+    - g. The section connects to the Coase Theorem, using `spec/lit/Medema-2020.md` as a guide to the large lit on this topic.
 6. The paper explains how it contributes relative to `spec/lit/GKP-2012.md`
     - a. GKP note that government transfers would affect the magnitude of the displacement factor but do not conduct further analysis. The paper contributes a formal analysis with a quantitative illustration.
     - b. The characterization of the contribution is purposefully modest. The main insights about displacement risk and incomplete markets are already in GKP.
