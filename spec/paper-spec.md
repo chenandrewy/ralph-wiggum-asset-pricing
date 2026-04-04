@@ -26,7 +26,7 @@
     - c. For simplicity, no extinction risk.
     - d. The section illustrates how inefficient AI deployment may occur due to the deadweight costs of the transfer program. But if output growth in the singularity is large enough, the deadweight costs can be overcome. 
     - e. The section illustrates how government transfers affect the price/dividend ratio of AI stocks, and how this depends on output growth in the singularity. It includes a baseline in which the transfers have limited effects on the price/dividend ratio.
-    - f. Tables or figures are used to illustrate the main points of the section.
+    - f. Exhibit(s) are used to illustrate the main points of the section.
     - g. The section connects to the Coase Theorem, using `spec/lit/Medema-2020.md` as a guide to the large lit on this topic.
 6. The paper explains how it contributes relative to `spec/lit/GKP-2012.md`
     - a. GKP note that government transfers would affect the magnitude of the displacement factor but do not conduct further analysis. The paper contributes a formal analysis with a quantitative illustration.
@@ -74,6 +74,7 @@
     - b. The abstract is eye-catching yet rigorous. 
     - c. The introduction is engaging. Each paragraph moves the reader to the next one. 
     - d. The paper uses itself as a demonstration of the AI displacement risk it models, since all analysis and writing is done by AI agents. Discussion of this includes an accurate description of how the work was divided: the human only wrote the paper spec (80 lines) and tests. This device is used in the abstract and introduction.
+    - e. The extension section features a compelling and eye-catching figure.
 6. The paper is sensitive, cautious, and modest in how it cites `spec/lit/GKP-2012.md`. 
 7. The lit review is centered on the papers most relevant to the paper's contribution. It emphasizes papers in JF, JFE, RFS, JFQA, RAPS, and MS, as well as top economics journals. 
 8. The paper is intentionally limited in scope to a compact theoretical contribution.
