@@ -40,11 +40,14 @@ It contains {exhibit_id}. Use the caption to understand what each panel shows.
 2. For each panel individually, evaluate readability.
 3. For each panel individually, evaluate distinguishability.
 4. Record every readability or distinguishability problem that bears on the requirements.
-5. Report back with a verdict, a one-sentence reason, and per-panel findings with assessments.
+5. Explain the figure's main message based on the figure and caption alone. 
+6. Explain the figure's main message based on the figure and the text of the paper.
+7. Report back with a verdict, a one-sentence reason, and per-panel findings with assessments.
 
 ## Requirements
 1. Readability: titles, axis labels, legends, tick labels, and font sizes are readable.
 2. Distinguishability: plotted series or marks are clearly distinguishable.
+3. Narrative clarity: a reader can understand the figure's main message from the figure and caption alone.
 
 ## Guidelines
 1. Treat text that is too small, overlapping, or cut off as a readability problem.
