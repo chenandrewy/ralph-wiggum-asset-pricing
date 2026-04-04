@@ -24,7 +24,7 @@
     - a. The household can block ("veto") AI deployment at a cost to its consumption.
     - b. A government transfer program attenuates displacement risk (`spec/lit/GKP-2012.md`). The program incurs deadweight costs that scale with the size of the program. 
     - c. For simplicity, no extinction risk.
-    - d. The section illustrates how inefficient AI deployment may occur due to the deadweight costs of the transfer program. But if output growth in the singularity is large enough, the deadweight costs can be overcome. 
+    - d. The section illustrates how sufficiently large output growth in the singularity can attenuate the consequences of incomplete markets by making transfers feasible despite deadweight costs. If output growth is too small, inefficient veto may still occur.
     - e. The section illustrates how government transfers affect the price/dividend ratio of AI stocks, and how this depends on output growth in the singularity. It includes a baseline in which the transfers have limited effects on the price/dividend ratio.
     - f. Exhibit(s) are used to illustrate the main points of the section.
 6. The paper explains how it contributes relative to `spec/lit/GKP-2012.md`
