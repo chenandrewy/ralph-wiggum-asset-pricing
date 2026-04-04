@@ -28,6 +28,8 @@ Procedure:
 1. Read:
 - `spec/paper-spec.md` for the paper specification.
 - `paper/paper.tex` for the current paper state.
+- `code/` for the current code state.
+- `data/` for currently generated datasets.
 - {test_results_instruction}
 - {referee_results_instruction}
 - `ralph/run-tests.py` and `tests/*.py` for available tests and test ids.
@@ -38,14 +40,17 @@ Procedure:
 3. Write a concise, actionable plan to `ralph-garage/improvement-plan.md`.
 
 Requirements of the plan:
-1. It summarizes key issues from current paper/tests.
-2. It outlines specific paper changes.
+1. It summarizes key issues from current paper/code/tests.
+2. It outlines specific paper/code changes.
 3. If an overhaul is needed, the ENTIRE plan should be focused on the overhaul.
 4. If an overhaul is not needed, the plan prioritizes fixing failing tests first, then addressing referee feedback.
 
 Guidance:
-- If `paper/.latex-build.log` exists, is less than 1 hour old, and shows a build failure, the entire plan must focus on fixing the build. No other improvements until the paper compiles.
 - Adjust the messaging to fit the best evidence.
+- Focus on getting the best evidence first.
+- Then adjust the exposition to match the best evidence.
+- Do NOT assume the current answer to the economic questions is correct.
+- Do NOT download additional data.
 - Keep the plan concise and actionable.
 - Do not modify `config-ralph.yaml`.
 - You may use `git diff` and `git log` to understand recent changes when useful."""
