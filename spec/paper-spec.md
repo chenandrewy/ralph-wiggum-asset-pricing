@@ -29,7 +29,6 @@
     - f. The section connects to the Coase Theorem (`spec/lit/Medema-2020.md`)
 6. The paper explains how it contributes relative to `spec/lit/GKP-2012.md`
     - a. GKP note that government transfers would affect the magnitude of the displacement factor but do not conduct further analysis. The paper contributes a formal analysis with a quantitative illustration.
-        - i. The deadweight costs of such transfers may be very large, but in the singularity, such costs may be overcome.
     - b. The characterization of the contribution is purposefully modest. The main insights about displacement risk and incomplete markets are already in GKP.
 
 ## II. Style Requirements
@@ -44,15 +43,13 @@
 8. Lit review is at most half a page and appears at the end of the introduction.
 9. All display equations should be numbered
 10. All propositions are explicitly proved, with long proofs in the appendix.
-11. The first section is called "Preface (TBC)", is unnumbered, and left blank
-    - a. The traditional "Introduction" follows, and then the rest of the paper is standard, as if the Preface is not there.
+11. The first section is called "Preface (TBC)", is unnumbered, and left blank. The traditional "Introduction" follows, and then the rest of the paper is standard, as if the Preface is not there.
 
 ## III. Technical Requirements
 
 1. `paper/` has the following structure
     - a. `paper.tex` is the main paper file
-    - b. All figures use pdfs in `paper/exhibits/`
-    - c. All tables use tex files in `paper/exhibits/`
+    - b. All figures and tables are sourced from `paper/exhibits/`
     - d. All files are `paper/exhibits/` are used in the paper
 2. `paper.tex` uses comments that list object numbers for ease of reference.
     - a. Sections come with comments that list the section number
@@ -62,10 +59,8 @@
     - a. Code is written in R
     - b. `code/` provides one canonical entry point that regenerates every exhibit used in `paper/paper.tex`.
     - c. The canonical pipeline runs from scratch. It does not rely on precomputed local caches or manually prepared intermediate files.
-    - d. The canonical pipeline executes in less than 180 seconds in routine test execution.
-    - e. Any external-data download or WRDS query required by the paper is part of the canonical pipeline and must fit within that time budget.
-    - f. The code outputs directly to `paper/exhibits/` in the correct format for use in the paper.
-    - g. The canonical pipeline does not silently rely on inconsistent cached objects, manually prepared files, or mismatched code paths.
+    - d. The canonical pipeline executes in less than 180 seconds, including any external data download.
+    - e. The code outputs directly to `paper/exhibits/` in the correct format for use in the paper.
 
 ## IV. Quality Requirements
 
@@ -77,7 +72,7 @@
     - a. Plain English is favored. Writing is direct and concise.
     - b. The abstract is eye-catching yet rigorous. 
     - c. The introduction is engaging. Each paragraph moves the reader to the next one. 
-    - d. The paper uses itself as a demonstration of the AI displacement risk it models, since all analysis and writing is done by AI agents. Discussion of this includes an accurate description of how the work was divided: the human only wrote the paper spec (80 lines) and tests.
+    - d. The paper uses itself as a demonstration of the AI displacement risk it models, since all analysis and writing is done by AI agents. Discussion of this includes an accurate description of how the work was divided: the human only wrote the paper spec (80 lines) and tests. This device is used in the abstract and introduction.
 6. The paper is sensitive, cautious, and modest in how it cites `spec/lit/GKP-2012.md`. 
 7. The lit review is centered on the papers most relevant to the paper's contribution. It emphasizes papers in JF, JFE, RFS, JFQA, RAPS, and MS, as well as top economics journals. 
 8. The paper is intentionally limited in scope to a compact theoretical contribution.
