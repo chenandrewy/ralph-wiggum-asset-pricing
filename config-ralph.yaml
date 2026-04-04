@@ -1,5 +1,5 @@
 # == Basic loop configuration ==
-run-name: add*(gov+veto)
+run-name: remove-coase
 max-iter: 10
 
 # Optional pre-loop baseline test run
@@ -25,6 +25,8 @@ selected-tests:
   - visual-figures
   - visual-pages
   - element-lit-review
+  - element-opening-fig
+  - element-rhetoric-meta
 
 # Agent log verbosity
 agent-log-mode: verbose
