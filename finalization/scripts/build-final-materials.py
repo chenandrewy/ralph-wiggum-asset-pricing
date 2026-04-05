@@ -1,0 +1,239 @@
+#!/usr/bin/env python3
+"""
+How to run: python3 finalization/scripts/build-final-materials.py
+Inputs: paper/paper.tex, finalization/inputs/*, finalization/templates/*
+Outputs: finalization/output/preface.tex, finalization/output/final-appendix.tex,
+    finalization/output/paper-anonymous.tex, finalization/output/paper-named.tex
+"""
+
+from __future__ import annotations
+
+import pathlib
+import re
+import tomllib
+
+
+REPO_ROOT = pathlib.Path(__file__).resolve().parents[2]
+FINALIZATION_DIR = REPO_ROOT / "finalization"
+INPUTS_DIR = FINALIZATION_DIR / "inputs"
+OUTPUT_DIR = FINALIZATION_DIR / "output"
+TEMPLATES_DIR = FINALIZATION_DIR / "templates"
+PAPER_PATH = REPO_ROOT / "paper" / "paper.tex"
+
+def load_toml(path: pathlib.Path) -> dict[str, object]:
+    return tomllib.loads(path.read_text(encoding="utf-8"))
+
+
+def render_template(path: pathlib.Path, replacements: dict[str, str]) -> str:
+    text = path.read_text(encoding="utf-8")
+    for key, value in replacements.items():
+        text = text.replace(f"{{{{ {key} }}}}", value)
+    return text
+
+
+def tex_escape(text: str) -> str:
+    replacements = {
+        "\\": r"\textbackslash{}",
+        "&": r"\&",
+        "%": r"\%",
+        "$": r"\$",
+        "#": r"\#",
+        "_": r"\_",
+        "{": r"\{",
+        "}": r"\}",
+        "~": r"\textasciitilde{}",
+        "^": r"\textasciicircum{}",
+    }
+    return "".join(replacements.get(char, char) for char in text)
+
+
+def markdown_paragraphs_to_tex(text: str) -> str:
+    paragraphs = [block.strip() for block in re.split(r"\n\s*\n", text.strip()) if block.strip()]
+    if not paragraphs:
+        return "This preface has not been provided yet."
+    return "\n\n".join(tex_escape(paragraph) + r"\par" for paragraph in paragraphs)
+
+
+def read_section(markdown_path: pathlib.Path, heading: str) -> str:
+    lines = markdown_path.read_text(encoding="utf-8").splitlines()
+    start = None
+    heading_level = heading.count("#")
+    for index, line in enumerate(lines):
+        if line.strip() == heading:
+            start = index + 1
+            break
+    if start is None:
+        raise ValueError(f"could not find heading {heading!r} in {markdown_path}")
+
+    collected: list[str] = []
+    for line in lines[start:]:
+        stripped = line.strip()
+        if stripped.startswith("#") and stripped.count("#") <= heading_level:
+            break
+        collected.append(line)
+    return "\n".join(collected).strip()
+
+
+def extract_prompt_block(script_path: pathlib.Path) -> str:
+    source = script_path.read_text(encoding="utf-8")
+    match = re.search(r'prompt\s*=\s*f?("""|\'\'\')\n?(.*?)(?:\1)', source, re.DOTALL)
+    if match is None:
+        raise ValueError(f"could not extract prompt block from {script_path}")
+    prompt = match.group(2).strip()
+    if prompt.startswith("\\\n"):
+        prompt = prompt[2:]
+    elif prompt == "\\":
+        prompt = ""
+    return prompt.strip()
+
+
+def format_preformatted_tex(body: str) -> str:
+    lines: list[str] = []
+    for raw_line in body.splitlines():
+        if not raw_line.strip():
+            lines.append(r"\vspace{0.4em}")
+            continue
+        indent = len(raw_line) - len(raw_line.lstrip(" "))
+        prefix = f"\\hspace*{{{0.5 * indent:.1f}em}}" if indent else ""
+        lines.append(prefix + tex_escape(raw_line.lstrip(" ")) + r"\\")
+    return "\n".join(lines)
+
+
+def build_verbatim_block(title: str, body: str) -> str:
+    return (
+        f"\\subsection{{{tex_escape(title)}}}\n"
+        "\\begingroup\n"
+        "\\ttfamily\n"
+        "\\small\n"
+        "\\setlength{\\parindent}{0pt}\n"
+        "\\setlength{\\parskip}{0.25em}\n"
+        f"{format_preformatted_tex(body.strip())}\n"
+        "\\endgroup\n"
+    )
+
+
+def build_appendix_tex(manifest: dict[str, object]) -> str:
+    parts: list[str] = []
+
+    for section in manifest.get("spec_sections", []):
+        item = dict(section)
+        path = REPO_ROOT / str(item["path"])
+        heading = str(item["heading"])
+        title = str(item["title"])
+        parts.append(build_verbatim_block(title, read_section(path, heading)))
+
+    for prompt_file in manifest.get("prompt_files", []):
+        item = dict(prompt_file)
+        path = REPO_ROOT / str(item["path"])
+        title = str(item["title"])
+        parts.append(build_verbatim_block(title, extract_prompt_block(path)))
+
+    return render_template(
+        TEMPLATES_DIR / "appendix.tex.j2",
+        {
+            "appendix_title": tex_escape(str(manifest.get("title", "Transparency Appendix"))),
+            "appendix_body": "\n".join(parts).strip(),
+        },
+    )
+
+
+def build_preface_tex(preface_markdown: str) -> str:
+    return render_template(
+        TEMPLATES_DIR / "preface.tex.j2",
+        {"preface_body": markdown_paragraphs_to_tex(preface_markdown)},
+    )
+
+
+def inject_preface(tex_source: str, preface_tex: str) -> str:
+    marker = "\\section*{Preface (TBC)}\n\\vspace{-1.5em}"
+    replacement = marker + "\n\n" + preface_tex
+    if marker not in tex_source:
+        raise ValueError("could not locate preface marker in paper.tex")
+    return tex_source.replace(marker, replacement, 1)
+
+
+def inject_appendix(tex_source: str, appendix_tex: str) -> str:
+    marker = "\\printbibliography"
+    replacement = appendix_tex + "\n\n" + marker
+    if marker not in tex_source:
+        raise ValueError("could not locate bibliography marker in paper.tex")
+    return tex_source.replace(marker, replacement, 1)
+
+
+def inject_final_packages(tex_source: str) -> str:
+    package_block = (
+        "\\usepackage{xcolor}\n"
+    )
+    marker = "\\usepackage{caption}\n"
+    replacement = marker + package_block
+    if marker not in tex_source:
+        raise ValueError("could not locate package insertion point in paper.tex")
+    return tex_source.replace(marker, replacement, 1)
+
+
+def rewrite_paths_for_output(tex_source: str) -> str:
+    updated = tex_source.replace(r"\addbibresource{references.bib}", r"\addbibresource{../../paper/references.bib}")
+    updated = updated.replace("{exhibits/", "{../../paper/exhibits/")
+    return updated
+
+
+def set_named_metadata(tex_source: str, author_info: dict[str, object]) -> str:
+    name = str(author_info.get("name", "")).strip()
+    affiliation = str(author_info.get("affiliation", "")).strip()
+    email = str(author_info.get("email", "")).strip()
+    date = str(author_info.get("date", "")).strip()
+
+    author_lines = [tex_escape(name)] if name else []
+    if affiliation:
+        author_lines.append(tex_escape(affiliation))
+    if email:
+        author_lines.append(r"\texttt{" + tex_escape(email) + "}")
+    author_tex = r" \\ ".join(author_lines)
+
+    updated = re.sub(
+        r"\\author\{.*?\}",
+        lambda _: f"\\author{{{author_tex}}}",
+        tex_source,
+        count=1,
+        flags=re.DOTALL,
+    )
+    updated = re.sub(
+        r"\\date\{.*?\}",
+        lambda _: f"\\date{{{tex_escape(date)}}}",
+        updated,
+        count=1,
+        flags=re.DOTALL,
+    )
+    return updated
+
+
+def build_variant(tex_source: str, author_info: dict[str, object], named: bool) -> str:
+    updated = inject_final_packages(tex_source)
+    if named:
+        updated = set_named_metadata(updated, author_info)
+    return rewrite_paths_for_output(updated)
+
+
+def main() -> None:
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+    manifest = load_toml(INPUTS_DIR / "appendix-manifest.toml")
+    author_info = load_toml(INPUTS_DIR / "author-info.toml")
+    preface_markdown = (INPUTS_DIR / "preface.md").read_text(encoding="utf-8")
+    canonical_tex = PAPER_PATH.read_text(encoding="utf-8")
+
+    preface_tex = build_preface_tex(preface_markdown)
+    appendix_tex = build_appendix_tex(manifest)
+
+    shared_tex = inject_appendix(inject_preface(canonical_tex, preface_tex), appendix_tex)
+    anonymous_tex = build_variant(shared_tex, author_info, named=False)
+    named_tex = build_variant(shared_tex, author_info, named=True)
+
+    (OUTPUT_DIR / "preface.tex").write_text(preface_tex + "\n", encoding="utf-8")
+    (OUTPUT_DIR / "final-appendix.tex").write_text(appendix_tex + "\n", encoding="utf-8")
+    (OUTPUT_DIR / "paper-anonymous.tex").write_text(anonymous_tex + "\n", encoding="utf-8")
+    (OUTPUT_DIR / "paper-named.tex").write_text(named_tex + "\n", encoding="utf-8")
+
+
+if __name__ == "__main__":
+    main()

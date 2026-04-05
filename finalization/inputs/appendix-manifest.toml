@@ -1,0 +1,30 @@
+title = "Transparency Appendix"
+
+[[spec_sections]]
+path = "spec/paper-spec.md"
+heading = "## I. Economic Requirements"
+title = "Paper Specification: Economic Requirements"
+
+[[prompt_files]]
+path = "tests/factcheck-theory.py"
+title = "factcheck-theory Prompt"
+
+[[prompt_files]]
+path = "tests/factcheck-narrative.py"
+title = "factcheck-narrative Prompt"
+
+[[prompt_files]]
+path = "tests/factcheck-anaphora.py"
+title = "factcheck-anaphora Prompt"
+
+[[prompt_files]]
+path = "tests/writing-econ-messaging.py"
+title = "writing-econ-messaging Prompt"
+
+[[prompt_files]]
+path = "tests/writing-flow.py"
+title = "writing-flow Prompt"
+
+[[prompt_files]]
+path = "tests/visual-figures-image-only.py"
+title = "visual-figures-image-only Prompt"
