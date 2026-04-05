@@ -1,6 +1,6 @@
 # == Basic loop configuration ==
-run-name: ext-spec-refined
-max-iter: 10
+run-name: ext-spec-refined-2
+max-iter: 15
 
 # Optional pre-loop baseline test run
 test-before-loop: off
@@ -9,27 +9,29 @@ test-before-loop: off
 test-mode: selected
 
 selected-tests:
-  - factcheck-anaphora
-  - factcheck-bysection
-  - factcheck-code
-  - factcheck-lit
-  - factcheck-theory
-  - factcheck-exhibits
-  - factcheck-narrative
-  - factcheck-freely
-  - quality-intro-payoff
-  - quality-deadweight
-  - quality-scope
-  - quality-intuition
-  - quality-writing
-  - quality-gkp-cites
-  - spec-economic
-  - spec-paper
-  - visual-figures
-  - visual-pages
+  - element-gkp-cites
   - element-lit-review
   - element-opening-fig
   - element-rhetoric-meta
+  - factcheck-anaphora
+  - factcheck-bysection
+  - factcheck-code
+  - factcheck-exhibits
+  - factcheck-freely
+  - factcheck-lit
+  - factcheck-narrative
+  - factcheck-theory
+  - spec-economic
+  - spec-paper
+  - spec-scope
+  - theory-deadweight
+  - visual-figures
+  - visual-figures-image-only
+  - visual-pages
+  - writing-econ-messaging
+  - writing-flow
+  - writing-intro-payoff
+  - writing-intuition
 
 # Agent log verbosity
 agent-log-mode: verbose
