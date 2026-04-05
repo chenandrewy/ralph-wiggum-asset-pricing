@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-How to run: python tests/quality-gkp-cites.py
+How to run: python tests/element-gkp-cites.py
 Inputs: paper/paper.tex, spec/paper-spec.md, spec/CFR-R1-report.md, spec/lit/GKP-2012.md
-Outputs: test-results/quality-gkp-cites.md and process exit code (0=PASS, 1=FAIL)
+Outputs: test-results/element-gkp-cites.md and process exit code (0=PASS, 1=FAIL)
 """
 
 from __future__ import annotations

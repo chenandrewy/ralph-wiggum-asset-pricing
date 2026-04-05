@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-How to run: python tests/quality-scope.py
+How to run: python tests/writing-intuition.py
 Inputs: paper/paper.tex
-Outputs: test-results/quality-scope.md and process exit code (0=PASS, 1=FAIL)
+Outputs: test-results/writing-intuition.md and process exit code (0=PASS, 1=FAIL)
 """
 
 from __future__ import annotations
@@ -22,7 +22,7 @@ def main() -> int:
         return preflight
 
     prompt = f"""
-Read `paper/paper.tex`. Does the paper stay within a compact theoretical scope — limited empirical content, no broad prediction menus, illustrative rather than calibrated quantitative material? Yes or no?
+Read `paper/paper.tex`. Examine how the paper discusses the propositions and key formulas. Do all of these discussions explain the intuition in terms of the mathematical objects used in the respective propositions and formulas? Yes or no?
 
 If yes, PASS. If no, FAIL.
 

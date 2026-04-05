@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-How to run: python tests/quality-deadweight.py
+How to run: python tests/theory-deadweight.py
 Inputs: paper/paper.tex
-Outputs: test-results/quality-deadweight.md and process exit code (0=PASS, 1=FAIL)
+Outputs: test-results/theory-deadweight.md and process exit code (0=PASS, 1=FAIL)
 """
 
 from __future__ import annotations

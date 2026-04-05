@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-How to run: python tests/quality-intro-payoff.py
+How to run: python tests/spec-scope.py
 Inputs: paper/paper.tex
-Outputs: test-results/quality-intro-payoff.md and process exit code (0=PASS, 1=FAIL)
+Outputs: test-results/spec-scope.md and process exit code (0=PASS, 1=FAIL)
 """
 
 from __future__ import annotations
@@ -22,7 +22,7 @@ def main() -> int:
         return preflight
 
     prompt = f"""
-Read `paper/paper.tex`. Study the economic modeling. Does every modeling feature lead to an economic result that is discussed in the introduction? Yes or no?
+Read `paper/paper.tex`. Does the paper stay within a compact theoretical scope — limited empirical content, no broad prediction menus, illustrative rather than calibrated quantitative material? Yes or no?
 
 If yes, PASS. If no, FAIL.
 
