@@ -1,290 +1,290 @@
 {
   "timestamps": {
-    "started_at_utc": "2026-04-05T03:45:08.919549+00:00",
-    "finished_at_utc": "2026-04-05T03:54:43.716527+00:00",
-    "started_at_ny": "2026-04-04T23:45:08.919549-04:00",
-    "finished_at_ny": "2026-04-04T23:54:43.716527-04:00",
+    "started_at_utc": "2026-04-05T03:59:28.911643+00:00",
+    "finished_at_utc": "2026-04-05T04:06:48.748596+00:00",
+    "started_at_ny": "2026-04-04T23:59:28.911643-04:00",
+    "finished_at_ny": "2026-04-05T00:06:48.748596-04:00",
     "timezone": "America/New_York"
   },
-  "duration_seconds": 574.797,
+  "duration_seconds": 439.837,
   "tests": [
     {
       "name": "element-lit-review",
-      "status": "fail",
-      "exit_code": 1,
+      "status": "pass",
+      "exit_code": 0,
       "timestamps": {
-        "started_at_utc": "2026-04-05T03:45:08.931645+00:00",
-        "finished_at_utc": "2026-04-05T03:51:01.964341+00:00",
-        "started_at_ny": "2026-04-04T23:45:08.931645-04:00",
-        "finished_at_ny": "2026-04-04T23:51:01.964341-04:00",
+        "started_at_utc": "2026-04-05T03:59:28.924731+00:00",
+        "finished_at_utc": "2026-04-05T04:06:48.743290+00:00",
+        "started_at_ny": "2026-04-04T23:59:28.924731-04:00",
+        "finished_at_ny": "2026-04-05T00:06:48.743290-04:00",
         "timezone": "America/New_York"
       },
-      "duration_seconds": 353.033
+      "duration_seconds": 439.819
     },
     {
       "name": "element-opening-fig",
       "status": "pass",
       "exit_code": 0,
       "timestamps": {
-        "started_at_utc": "2026-04-05T03:45:08.931777+00:00",
-        "finished_at_utc": "2026-04-05T03:45:57.742288+00:00",
-        "started_at_ny": "2026-04-04T23:45:08.931777-04:00",
-        "finished_at_ny": "2026-04-04T23:45:57.742288-04:00",
+        "started_at_utc": "2026-04-05T03:59:28.924814+00:00",
+        "finished_at_utc": "2026-04-05T04:00:09.489652+00:00",
+        "started_at_ny": "2026-04-04T23:59:28.924814-04:00",
+        "finished_at_ny": "2026-04-05T00:00:09.489652-04:00",
         "timezone": "America/New_York"
       },
-      "duration_seconds": 48.811
+      "duration_seconds": 40.565
     },
     {
       "name": "element-rhetoric-meta",
-      "status": "fail",
-      "exit_code": 1,
+      "status": "pass",
+      "exit_code": 0,
       "timestamps": {
-        "started_at_utc": "2026-04-05T03:45:08.931782+00:00",
-        "finished_at_utc": "2026-04-05T03:46:12.466009+00:00",
-        "started_at_ny": "2026-04-04T23:45:08.931782-04:00",
-        "finished_at_ny": "2026-04-04T23:46:12.466009-04:00",
+        "started_at_utc": "2026-04-05T03:59:28.924894+00:00",
+        "finished_at_utc": "2026-04-05T04:00:28.244726+00:00",
+        "started_at_ny": "2026-04-04T23:59:28.924894-04:00",
+        "finished_at_ny": "2026-04-05T00:00:28.244726-04:00",
         "timezone": "America/New_York"
       },
-      "duration_seconds": 63.534
+      "duration_seconds": 59.32
     },
     {
       "name": "factcheck-anaphora",
       "status": "pass",
       "exit_code": 0,
       "timestamps": {
-        "started_at_utc": "2026-04-05T03:45:08.931848+00:00",
-        "finished_at_utc": "2026-04-05T03:49:37.620919+00:00",
-        "started_at_ny": "2026-04-04T23:45:08.931848-04:00",
-        "finished_at_ny": "2026-04-04T23:49:37.620919-04:00",
+        "started_at_utc": "2026-04-05T03:59:28.924958+00:00",
+        "finished_at_utc": "2026-04-05T04:03:58.008908+00:00",
+        "started_at_ny": "2026-04-04T23:59:28.924958-04:00",
+        "finished_at_ny": "2026-04-05T00:03:58.008908-04:00",
         "timezone": "America/New_York"
       },
-      "duration_seconds": 268.689
+      "duration_seconds": 269.084
     },
     {
       "name": "factcheck-bysection",
       "status": "pass",
       "exit_code": 0,
       "timestamps": {
-        "started_at_utc": "2026-04-05T03:45:08.931987+00:00",
-        "finished_at_utc": "2026-04-05T03:50:11.375666+00:00",
-        "started_at_ny": "2026-04-04T23:45:08.931987-04:00",
-        "finished_at_ny": "2026-04-04T23:50:11.375666-04:00",
+        "started_at_utc": "2026-04-05T03:59:28.924996+00:00",
+        "finished_at_utc": "2026-04-05T04:06:22.987759+00:00",
+        "started_at_ny": "2026-04-04T23:59:28.924996-04:00",
+        "finished_at_ny": "2026-04-05T00:06:22.987759-04:00",
         "timezone": "America/New_York"
       },
-      "duration_seconds": 302.444
+      "duration_seconds": 414.063
     },
     {
       "name": "factcheck-code",
       "status": "pass",
       "exit_code": 0,
       "timestamps": {
-        "started_at_utc": "2026-04-05T03:45:08.932076+00:00",
-        "finished_at_utc": "2026-04-05T03:47:05.421194+00:00",
-        "started_at_ny": "2026-04-04T23:45:08.932076-04:00",
-        "finished_at_ny": "2026-04-04T23:47:05.421194-04:00",
+        "started_at_utc": "2026-04-05T03:59:28.925092+00:00",
+        "finished_at_utc": "2026-04-05T04:01:37.861712+00:00",
+        "started_at_ny": "2026-04-04T23:59:28.925092-04:00",
+        "finished_at_ny": "2026-04-05T00:01:37.861712-04:00",
         "timezone": "America/New_York"
       },
-      "duration_seconds": 116.489
+      "duration_seconds": 128.937
     },
     {
       "name": "factcheck-exhibits",
-      "status": "fail",
-      "exit_code": 1,
+      "status": "pass",
+      "exit_code": 0,
       "timestamps": {
-        "started_at_utc": "2026-04-05T03:45:08.932140+00:00",
-        "finished_at_utc": "2026-04-05T03:49:37.665860+00:00",
-        "started_at_ny": "2026-04-04T23:45:08.932140-04:00",
-        "finished_at_ny": "2026-04-04T23:49:37.665860-04:00",
+        "started_at_utc": "2026-04-05T03:59:28.925173+00:00",
+        "finished_at_utc": "2026-04-05T04:02:28.167143+00:00",
+        "started_at_ny": "2026-04-04T23:59:28.925173-04:00",
+        "finished_at_ny": "2026-04-05T00:02:28.167143-04:00",
         "timezone": "America/New_York"
       },
-      "duration_seconds": 268.734
+      "duration_seconds": 179.242
     },
     {
       "name": "factcheck-freely",
-      "status": "fail",
-      "exit_code": 1,
+      "status": "pass",
+      "exit_code": 0,
       "timestamps": {
-        "started_at_utc": "2026-04-05T03:45:08.932214+00:00",
-        "finished_at_utc": "2026-04-05T03:54:43.710490+00:00",
-        "started_at_ny": "2026-04-04T23:45:08.932214-04:00",
-        "finished_at_ny": "2026-04-04T23:54:43.710490-04:00",
+        "started_at_utc": "2026-04-05T03:59:28.925360+00:00",
+        "finished_at_utc": "2026-04-05T04:06:26.839094+00:00",
+        "started_at_ny": "2026-04-04T23:59:28.925360-04:00",
+        "finished_at_ny": "2026-04-05T00:06:26.839094-04:00",
         "timezone": "America/New_York"
       },
-      "duration_seconds": 574.778
+      "duration_seconds": 417.914
     },
     {
       "name": "factcheck-lit",
       "status": "pass",
       "exit_code": 0,
       "timestamps": {
-        "started_at_utc": "2026-04-05T03:45:08.932417+00:00",
-        "finished_at_utc": "2026-04-05T03:48:43.526928+00:00",
-        "started_at_ny": "2026-04-04T23:45:08.932417-04:00",
-        "finished_at_ny": "2026-04-04T23:48:43.526928-04:00",
+        "started_at_utc": "2026-04-05T03:59:28.925413+00:00",
+        "finished_at_utc": "2026-04-05T04:03:12.993862+00:00",
+        "started_at_ny": "2026-04-04T23:59:28.925413-04:00",
+        "finished_at_ny": "2026-04-05T00:03:12.993862-04:00",
         "timezone": "America/New_York"
       },
-      "duration_seconds": 214.595
+      "duration_seconds": 224.068
     },
     {
       "name": "factcheck-narrative",
       "status": "pass",
       "exit_code": 0,
       "timestamps": {
-        "started_at_utc": "2026-04-05T03:45:08.932435+00:00",
-        "finished_at_utc": "2026-04-05T03:47:58.361376+00:00",
-        "started_at_ny": "2026-04-04T23:45:08.932435-04:00",
-        "finished_at_ny": "2026-04-04T23:47:58.361376-04:00",
+        "started_at_utc": "2026-04-05T03:59:28.925512+00:00",
+        "finished_at_utc": "2026-04-05T04:00:48.046074+00:00",
+        "started_at_ny": "2026-04-04T23:59:28.925512-04:00",
+        "finished_at_ny": "2026-04-05T00:00:48.046074-04:00",
         "timezone": "America/New_York"
       },
-      "duration_seconds": 169.429
+      "duration_seconds": 79.121
     },
     {
       "name": "factcheck-theory",
       "status": "pass",
       "exit_code": 0,
       "timestamps": {
-        "started_at_utc": "2026-04-05T03:45:08.932576+00:00",
-        "finished_at_utc": "2026-04-05T03:51:40.647400+00:00",
-        "started_at_ny": "2026-04-04T23:45:08.932576-04:00",
-        "finished_at_ny": "2026-04-04T23:51:40.647400-04:00",
+        "started_at_utc": "2026-04-05T03:59:28.925652+00:00",
+        "finished_at_utc": "2026-04-05T04:05:36.483142+00:00",
+        "started_at_ny": "2026-04-04T23:59:28.925652-04:00",
+        "finished_at_ny": "2026-04-05T00:05:36.483142-04:00",
         "timezone": "America/New_York"
       },
-      "duration_seconds": 391.715
+      "duration_seconds": 367.557
     },
     {
       "name": "quality-deadweight",
       "status": "pass",
       "exit_code": 0,
       "timestamps": {
-        "started_at_utc": "2026-04-05T03:45:08.932734+00:00",
-        "finished_at_utc": "2026-04-05T03:46:39.836482+00:00",
-        "started_at_ny": "2026-04-04T23:45:08.932734-04:00",
-        "finished_at_ny": "2026-04-04T23:46:39.836482-04:00",
+        "started_at_utc": "2026-04-05T03:59:28.925819+00:00",
+        "finished_at_utc": "2026-04-05T04:01:04.882115+00:00",
+        "started_at_ny": "2026-04-04T23:59:28.925819-04:00",
+        "finished_at_ny": "2026-04-05T00:01:04.882115-04:00",
         "timezone": "America/New_York"
       },
-      "duration_seconds": 90.904
+      "duration_seconds": 95.956
     },
     {
       "name": "quality-gkp-cites",
       "status": "pass",
       "exit_code": 0,
       "timestamps": {
-        "started_at_utc": "2026-04-05T03:45:08.932861+00:00",
-        "finished_at_utc": "2026-04-05T03:47:22.942130+00:00",
-        "started_at_ny": "2026-04-04T23:45:08.932861-04:00",
-        "finished_at_ny": "2026-04-04T23:47:22.942130-04:00",
+        "started_at_utc": "2026-04-05T03:59:28.925919+00:00",
+        "finished_at_utc": "2026-04-05T04:02:01.788202+00:00",
+        "started_at_ny": "2026-04-04T23:59:28.925919-04:00",
+        "finished_at_ny": "2026-04-05T00:02:01.788202-04:00",
         "timezone": "America/New_York"
       },
-      "duration_seconds": 134.009
+      "duration_seconds": 152.862
     },
     {
       "name": "quality-intro-payoff",
       "status": "pass",
       "exit_code": 0,
       "timestamps": {
-        "started_at_utc": "2026-04-05T03:45:08.933007+00:00",
-        "finished_at_utc": "2026-04-05T03:45:53.693395+00:00",
-        "started_at_ny": "2026-04-04T23:45:08.933007-04:00",
-        "finished_at_ny": "2026-04-04T23:45:53.693395-04:00",
+        "started_at_utc": "2026-04-05T03:59:28.925977+00:00",
+        "finished_at_utc": "2026-04-05T04:00:03.291380+00:00",
+        "started_at_ny": "2026-04-04T23:59:28.925977-04:00",
+        "finished_at_ny": "2026-04-05T00:00:03.291380-04:00",
         "timezone": "America/New_York"
       },
-      "duration_seconds": 44.76
+      "duration_seconds": 34.365
     },
     {
       "name": "quality-intuition",
       "status": "pass",
       "exit_code": 0,
       "timestamps": {
-        "started_at_utc": "2026-04-05T03:45:08.933218+00:00",
-        "finished_at_utc": "2026-04-05T03:46:04.242175+00:00",
-        "started_at_ny": "2026-04-04T23:45:08.933218-04:00",
-        "finished_at_ny": "2026-04-04T23:46:04.242175-04:00",
+        "started_at_utc": "2026-04-05T03:59:28.926079+00:00",
+        "finished_at_utc": "2026-04-05T04:00:10.961295+00:00",
+        "started_at_ny": "2026-04-04T23:59:28.926079-04:00",
+        "finished_at_ny": "2026-04-05T00:00:10.961295-04:00",
         "timezone": "America/New_York"
       },
-      "duration_seconds": 55.309
+      "duration_seconds": 42.035
     },
     {
       "name": "quality-scope",
       "status": "pass",
       "exit_code": 0,
       "timestamps": {
-        "started_at_utc": "2026-04-05T03:45:08.933324+00:00",
-        "finished_at_utc": "2026-04-05T03:45:32.555003+00:00",
-        "started_at_ny": "2026-04-04T23:45:08.933324-04:00",
-        "finished_at_ny": "2026-04-04T23:45:32.555003-04:00",
+        "started_at_utc": "2026-04-05T03:59:28.926188+00:00",
+        "finished_at_utc": "2026-04-05T03:59:57.278151+00:00",
+        "started_at_ny": "2026-04-04T23:59:28.926188-04:00",
+        "finished_at_ny": "2026-04-04T23:59:57.278151-04:00",
         "timezone": "America/New_York"
       },
-      "duration_seconds": 23.622
+      "duration_seconds": 28.352
     },
     {
       "name": "quality-writing",
       "status": "fail",
       "exit_code": 1,
       "timestamps": {
-        "started_at_utc": "2026-04-05T03:45:08.933435+00:00",
-        "finished_at_utc": "2026-04-05T03:46:05.270667+00:00",
-        "started_at_ny": "2026-04-04T23:45:08.933435-04:00",
-        "finished_at_ny": "2026-04-04T23:46:05.270667-04:00",
+        "started_at_utc": "2026-04-05T03:59:28.926713+00:00",
+        "finished_at_utc": "2026-04-05T04:01:05.482207+00:00",
+        "started_at_ny": "2026-04-04T23:59:28.926713-04:00",
+        "finished_at_ny": "2026-04-05T00:01:05.482207-04:00",
         "timezone": "America/New_York"
       },
-      "duration_seconds": 56.337
+      "duration_seconds": 96.555
     },
     {
       "name": "spec-economic",
       "status": "pass",
       "exit_code": 0,
       "timestamps": {
-        "started_at_utc": "2026-04-05T03:45:08.934193+00:00",
-        "finished_at_utc": "2026-04-05T03:46:55.441346+00:00",
-        "started_at_ny": "2026-04-04T23:45:08.934193-04:00",
-        "finished_at_ny": "2026-04-04T23:46:55.441346-04:00",
+        "started_at_utc": "2026-04-05T03:59:28.926699+00:00",
+        "finished_at_utc": "2026-04-05T04:01:11.351627+00:00",
+        "started_at_ny": "2026-04-04T23:59:28.926699-04:00",
+        "finished_at_ny": "2026-04-05T00:01:11.351627-04:00",
         "timezone": "America/New_York"
       },
-      "duration_seconds": 106.507
+      "duration_seconds": 102.425
     },
     {
       "name": "spec-paper",
-      "status": "fail",
-      "exit_code": 1,
+      "status": "pass",
+      "exit_code": 0,
       "timestamps": {
-        "started_at_utc": "2026-04-05T03:45:08.933984+00:00",
-        "finished_at_utc": "2026-04-05T03:48:25.042881+00:00",
-        "started_at_ny": "2026-04-04T23:45:08.933984-04:00",
-        "finished_at_ny": "2026-04-04T23:48:25.042881-04:00",
+        "started_at_utc": "2026-04-05T03:59:28.927338+00:00",
+        "finished_at_utc": "2026-04-05T04:02:06.810337+00:00",
+        "started_at_ny": "2026-04-04T23:59:28.927338-04:00",
+        "finished_at_ny": "2026-04-05T00:02:06.810337-04:00",
         "timezone": "America/New_York"
       },
-      "duration_seconds": 196.109
+      "duration_seconds": 157.883
     },
     {
       "name": "visual-figures",
       "status": "pass",
       "exit_code": 0,
       "timestamps": {
-        "started_at_utc": "2026-04-05T03:45:08.934118+00:00",
-        "finished_at_utc": "2026-04-05T03:46:21.963393+00:00",
-        "started_at_ny": "2026-04-04T23:45:08.934118-04:00",
-        "finished_at_ny": "2026-04-04T23:46:21.963393-04:00",
+        "started_at_utc": "2026-04-05T03:59:28.928312+00:00",
+        "finished_at_utc": "2026-04-05T04:00:34.746061+00:00",
+        "started_at_ny": "2026-04-04T23:59:28.928312-04:00",
+        "finished_at_ny": "2026-04-05T00:00:34.746061-04:00",
         "timezone": "America/New_York"
       },
-      "duration_seconds": 73.029
+      "duration_seconds": 65.818
     },
     {
       "name": "visual-pages",
       "status": "pass",
       "exit_code": 0,
       "timestamps": {
-        "started_at_utc": "2026-04-05T03:45:08.934376+00:00",
-        "finished_at_utc": "2026-04-05T03:45:51.650235+00:00",
-        "started_at_ny": "2026-04-04T23:45:08.934376-04:00",
-        "finished_at_ny": "2026-04-04T23:45:51.650235-04:00",
+        "started_at_utc": "2026-04-05T03:59:28.928400+00:00",
+        "finished_at_utc": "2026-04-05T04:00:22.702846+00:00",
+        "started_at_ny": "2026-04-04T23:59:28.928400-04:00",
+        "finished_at_ny": "2026-04-05T00:00:22.702846-04:00",
         "timezone": "America/New_York"
       },
-      "duration_seconds": 42.716
+      "duration_seconds": 53.774
     }
   ],
   "summary": {
     "total": 21,
-    "passed": 15,
-    "failed": 6
+    "passed": 20,
+    "failed": 1
   }
 }

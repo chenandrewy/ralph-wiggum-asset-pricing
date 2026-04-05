@@ -225,7 +225,7 @@ for (i in seq_along(delta_vals)) {
   lines(G_range, y_clipped, col = colors[i], lty = ltys[i], lwd = 2.2)
 }
 
-# Reference line at V0 (asymptote as G -> infinity)
+# Reference line at V0 (P/D with no hedge benefit, H=0; asymptote as G -> infinity)
 abline(h = V0_fig, lty = 3, col = "gray50", lwd = 1)
 text(18.5, V0_fig + 1.2, expression(italic(V)[0]), col = "gray50", cex = 0.85)
 

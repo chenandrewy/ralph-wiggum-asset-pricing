@@ -1,34 +1,28 @@
 # tests/visual-pages.py
-Started: 2026-04-04 23:45:08 EDT
-Runtime: 43s
-[ralph-garage/agent-logs/20260404T234508.986641-0400_visual-pages_claude_opus.log](../ralph-garage/agent-logs/20260404T234508.986641-0400_visual-pages_claude_opus.log)
+Started: 2026-04-04 23:59:28 EDT
+Runtime: 54s
+[ralph-garage/agent-logs/20260404T235928.983518-0400_visual-pages_claude_opus.log](../ralph-garage/agent-logs/20260404T235928.983518-0400_visual-pages_claude_opus.log)
 
 # visual-pages
 VERDICT: PASS
-REASON: All 14 pages are well-formatted with visible page numbers, readable exhibits, and clear structure.
+REASON: All pages are well-formatted with visible page numbers, readable exhibits, and clear structure within the 20-page limit.
 
-## Page Numbers
-All 14 pages display a visible page number at the bottom center. Page 1 starts numbering at "1" and numbering continues consecutively through page 14.
+## Summary
 
-## Paper Length
-The paper is 14 pages, well within the 20-page limit specified in the spec.
+**Pages:** 15 (limit: 20) -- PASS
 
-## Figures and Tables
-- **Figure 1** (page 2): AI stocks as a share of total CRSP market capitalization. Clear axis labels, readable notes below the figure.
-- **Table 1** (page 8): Price-dividend ratios and the singularity probability. Two panels (A and B) are cleanly formatted with aligned columns and clear headers.
-- **Figure 2** (page 10): P/D ratio of AI stocks as a function of singularity output growth and deadweight costs. Legend is visible, curves are distinguishable, axis labels are clear.
+**Page numbers:** All 15 pages have visible page numbers at the bottom center. -- PASS
 
-## Structure
-The paper has clear section headings with standard academic formatting:
-- Title page with abstract
-- Preface (TBC) -- unnumbered, left blank as required
-- 1 Introduction
-- 2 Model (with subsections 2.1--2.4)
-- 3 Results (with subsections 3.1--3.3)
-- 4 Extensions (with subsections 4.1--4.3)
-- 5 Conclusion
-- References
-- A Proofs
+**Figures and tables:**
+- Figure 1 (page 2): AI stocks market capitalization chart. Clear axes, labels, and notes. Readable. -- PASS
+- Table 1 (page 9): Price-dividend ratios and the singularity. Two panels, well-organized with clear headers and notes. Readable. -- PASS
+- Figure 2 (page 11): P/D ratio as a function of singularity output growth and deadweight costs. Clear legend, axes, and notes. Readable. -- PASS
 
-## Formatting Issues
-No issues found. No overflowing text, no broken references, no missing figures. Citation hyperlinks render correctly (visible as colored boxes in the PDF).
+**Section headings:** Clear and well-structured throughout. Sections include Preface (TBC), Introduction, Model, Results, Extensions, Conclusion, References, and Appendix A (Proofs). Subsections are clearly numbered. -- PASS
+
+**Formatting issues:**
+- No overflowing text detected.
+- No broken references detected (all citations render correctly with years in parentheses).
+- No missing figures.
+- All display equations are numbered (equations 1--18).
+- Minor note: Page 10 has substantial whitespace at the bottom (roughly the lower third of the page is blank) because Figure 2 on page 11 could not fit. This is standard LaTeX float behavior and not a violation, but could be improved.

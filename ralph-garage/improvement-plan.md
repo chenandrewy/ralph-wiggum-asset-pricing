@@ -1,72 +1,48 @@
 # Improvement Plan
-AUTHOR PLAN — 2026-04-04 23:38:05 EDT
+AUTHOR PLAN — 2026-04-04 23:56:37 EDT
 
-## Current State
+## Status: 15/21 tests pass, 6 fail
 
-**Tests: 16/21 pass, 5 fail.** No overhaul needed — the model section is sound (correct derivations, clean structure, good economic logic). The issues are fixable without restructuring.
+## Failing Tests and Fixes
 
-## Failing Tests
+### 1. factcheck-exhibits + factcheck-freely — V₀ misdescribed (2 tests, same root cause)
+**Issue:** Text (line 180) calls V₀ "the P/D ratio in a world where the singularity never occurs." Caption (line 261) says V₀ "marks the P/D ratio with no singularity risk." Both are wrong: V₀ = (1−p)R / [1−(1−p)R] includes p and equals the P/D when the hedge factor H=0, not when p=0. The true no-singularity-risk P/D is V∞ = R/(1−R).
 
-| Test | Issue |
-|------|-------|
-| `element-opening-fig` | No figure in the introduction. Spec requires an empirical CRSP figure showing AI vs non-AI valuations. |
-| `element-rhetoric-meta` | Abstract's final sentence ("written entirely by AI agents") is too blunt; triggers reader aversion before they engage with the economics. |
-| `factcheck-theory` | Symbol collision: `τ` used for both singularity arrival time (§2) and tax rate (§4.1). |
-| `quality-writing` | Monotonous rhythm, weak paragraph transitions, extensions read as a laundry list, tone too academic. |
-| `spec-paper` | Three sub-failures: (1) paper never argues financial market solutions are "under-discussed" (spec I.3c), (2) appendix has unnumbered display equations (spec II.9), (3) theorem environment comments use wrong compiled numbers (spec III.2c). |
+**Fix (paper.tex):**
+- Line 180: Replace with accurate language, e.g., V₀ is the P/D ratio when the asset provides no hedge (H=0); V∞ is the P/D with no remaining singularity risk.
+- Line 261 (fig-transfers caption): Replace "V₀ marks the P/D ratio with no singularity risk" with "V₀ marks the P/D ratio of an asset with no hedge benefit (H=0)."
+- Also fix the code comment in run-all.R line 228 ("V0 (asymptote as G -> infinity)") to match the corrected description.
 
-## Plan
+### 2. spec-paper — \notag violates "all display equations numbered"
+**Issue:** Lines 344–345 in paper.tex use `\notag` inside an `align` environment in the appendix proof. Spec style requirement 9 says all display equations must be numbered.
 
-### Step 1: Code — Add CRSP opening figure
+**Fix (paper.tex):** Remove the two `\notag` commands. Alternatively, convert the multi-line derivation to a single `align` with all lines numbered, or use a single `equation` with `split` inside (which numbers the block once). The simplest fix: remove `\notag` so each line gets a number.
 
-Create an R script addition in `code/run-all.R` (or a sourced helper) that:
-- Downloads CRSP market-cap data for AI vs non-AI stocks (use code templates in `ralph/code-templates/` for WRDS access patterns).
-- Computes a valuation ratio (e.g., aggregate P/D or market-cap-weighted P/E) for an AI portfolio vs a non-AI portfolio over recent years.
-- Outputs `paper/exhibits/fig-opening.pdf`.
+### 3. element-lit-review — Missing critical citation
+**Issue:** The paper builds directly on GKP (2012) but omits Kogan, Papanikolaou, and Stoffman (2020, JPE), "Left Behind: Creative Destruction, Inequality, and the Stock Market," which directly extends GKP's displacement framework to stock prices and inequality. Also recommended: Kogan and Papanikolaou (2014, JF), "Growth Opportunities, Technology Shocks, and Asset Prices."
 
-If WRDS access is unavailable or too slow, use a simple illustrative figure with publicly available data (e.g., Magnificent 7 vs S&P 500 equal-weight P/E).
+**Fix:**
+- Add both citations to references.bib.
+- Add a sentence in the lit review paragraph citing KPS (2020) as extending GKP's framework to study how creative destruction affects stock prices, and KP (2014) on technology shocks and asset prices.
 
-### Step 2: Paper — Fix notation collision
+### 4. element-rhetoric-meta — Introduction AI-production paragraph too heavy-handed
+**Issue:** The penultimate introduction paragraph ("This paper demonstrates the very risk it models...") is too assertive. Claims like "produced entirely by AI agents" and "is not a gimmick; it is evidence" invite skepticism rather than intrigue. The abstract handles it well; the intro overplays it.
 
-Rename the tax rate from `τ` to `t` or `\theta` in §4.1 (equation 8 and surrounding text). Keep `τ` exclusively for the singularity arrival time.
+**Fix (paper.tex):** Soften the paragraph significantly. Remove "entirely" and the defensive "not a gimmick; it is evidence" line. Aim for the understated tone of the abstract: acknowledge the AI production as a quiet fact rather than a loud claim. For example: note that the analysis was produced by AI agents working from a human specification, and let the reader draw conclusions.
 
-### Step 3: Paper — Fix appendix equation numbering
+### 5. quality-writing — Model section lacks narrative flow
+**Issue:** Section 2 reads as a flat checklist of definitions and assumptions. The introduction promises engaging prose "between academic and blog post," but the model section reverts to standard academic template. Results section also follows a monotonous pattern of proposition → one-paragraph interpretation.
 
-Replace all `\[ ... \]` and `align*` environments in the appendix with `\begin{equation}` or `\begin{align}` (numbered). This fixes spec II.9.
-
-### Step 4: Paper — Fix theorem environment comments
-
-The shared counter means Definition 1, Proposition 1, Corollary 1 compile as 1, 2, 3, etc. Update comments to match compiled numbering:
-- `\begin{definition}` → `% Definition 1`
-- First `\begin{proposition}` → `% Proposition 2`
-- `\begin{corollary}` → `% Corollary 3`
-- Subsequent propositions → `% Proposition 4`, `% Proposition 5`, `% Proposition 6`
-
-### Step 5: Paper — Add "under-discussed" argument (spec I.3c)
-
-In the introduction or the opening of §4.1, add a sentence arguing that financial market solutions to AI disaster risk are under-discussed relative to the attention given to regulation and alignment. This is a natural claim — the literature focuses on AI safety, labor displacement, and regulation, while financial hedging gets little attention.
-
-### Step 6: Paper — Soften the abstract's AI-agent sentence
-
-Remove or substantially soften the abstract's final sentence. Options:
-- Delete it from the abstract entirely, letting the introduction carry the rhetorical weight.
-- Replace with something integrated: e.g., "We illustrate the displacement mechanism by noting that this paper's analysis was itself produced by AI agents."
-
-The introduction's treatment of the device is already good — the problem is only the abstract.
-
-### Step 7: Paper — Improve writing quality
-
-Target the specific issues flagged by `quality-writing`:
-1. **Introduction paragraph 3 (formalization):** Break into two shorter paragraphs. Add a bridge question before the quantitative paragraph (e.g., "How large are these effects?").
-2. **Introduction paragraph 5 (extensions):** Rewrite as a narrative arc, not a list. Connect each extension to the previous one with motivation.
-3. **Transitions in the model/results sections:** Add bridge sentences at the end of interpretation paragraphs that motivate the next subsection.
-4. **Tone:** Add 2–3 rhetorical questions or direct-address moments. Vary sentence length — use short punchy sentences for emphasis after key results.
-5. **Extensions opener:** Replace the flat roadmap sentence with a hook that motivates why the baseline model leaves important questions open.
-
-### Step 8: Paper — Add opening figure to introduction
-
-Insert the CRSP figure (from Step 1) into the introduction, before or after the first paragraph. Add 1–2 sentences of context: "Figure X shows..." This fixes `element-opening-fig`.
+**Fix (paper.tex):**
+- Add a brief opening paragraph to Section 2 that frames the modeling choices and tells the reader what to watch for (e.g., "We build the simplest model that isolates the hedging mechanism...").
+- Add short transitional sentences between subsections linking each piece to the economic question.
+- In Section 3, vary the rhythm: some results get longer discussion, some get a forward-looking hook. The quantitative subsection (3.3) could open with a motivating question rather than jumping straight to the table.
+- In Section 4, add a brief connective sentence between extensions (the intro previews them as a sequence; the body should echo that structure).
 
 ## Priority Order
 
-Steps 1–6 fix failing tests directly. Step 7 addresses writing quality. Step 8 integrates the new figure. Execute in roughly this order, but Steps 2–6 can be done in parallel as they touch different parts of the paper.
+1. **V₀ description fix** (factcheck-exhibits, factcheck-freely) — factual error, highest priority
+2. **\notag fix** (spec-paper) — mechanical, easy
+3. **Lit review additions** (element-lit-review) — straightforward
+4. **Rhetoric softening** (element-rhetoric-meta) — editorial
+5. **Model section narrative** (quality-writing) — most effort, save for last

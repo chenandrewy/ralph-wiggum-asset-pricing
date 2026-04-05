@@ -1,66 +1,82 @@
 # tests/factcheck-theory.py
-Started: 2026-04-04 23:45:08 EDT
-Runtime: 6m 32s
-[ralph-garage/agent-logs/20260404T234508.986317-0400_factcheck-theory_claude_opus.log](../ralph-garage/agent-logs/20260404T234508.986317-0400_factcheck-theory_claude_opus.log)
+Started: 2026-04-04 23:59:28 EDT
+Runtime: 6m 8s
+[ralph-garage/agent-logs/20260404T235928.981688-0400_factcheck-theory_claude_opus.log](../ralph-garage/agent-logs/20260404T235928.981688-0400_factcheck-theory_claude_opus.log)
 
 # factcheck-theory
 
 VERDICT: PASS
-REASON: All notation is consistent, all assumptions are mutually compatible, and all mathematical objects trace back to the assumptions.
+REASON: All notation is consistent (one minor collision), all assumptions are mutually consistent, and all mathematical objects trace back to the assumptions.
 
 ## Requirement 1: Notational Consistency — PASS
 
-26 symbol families were cataloged across the entire paper (body, extensions, and appendix). The notation is clean and internally consistent. Each symbol carries a single, stable meaning throughout the paper.
+20 symbol families identified and catalogued. The notation is clean and well-organized.
 
-**Minor issues noted (none substantive):**
+### Issues Found
 
-1. **$u(\cdot)$ never formally defined.** The per-period utility function $u(\cdot)$ is used in the Appendix veto proof (eqs A.5–A.7) but is never formally defined. The reader can infer $u(c) = c^{1-\gamma}/(1-\gamma)$ from eq (1), but this is left implicit.
+1. **$N$ dual usage (moderate):** The letter $N$ is used as a superscript for "non-AI stocks" ($P^N$, $D^N$, $H^N$) throughout the body, and as a subscript for "no-singularity regime" ($\pi_N^i$) in the Appendix. The implied expression $\pi_N^N$ (pre-singularity P/D of non-AI stocks) would stack two $N$'s with different meanings. The subscript/superscript distinction mitigates confusion, and $\pi_N^N$ is never written, so this does not rise to genuine ambiguity that could produce an incorrect interpretation.
 
-2. **Letter $N$ overloaded.** As a superscript, $N$ denotes "non-AI" ($D^N$, $P^N$, $H^N$); as a subscript in the Appendix, $N$ denotes "pre-singularity" ($\pi_N^i$). These are different semantic roles. The collision is contained — the expression $\pi_N^N$ never appears — but it is latent. Fix: rename $\pi_N^i$ to $\pi_0^i$.
+2. **$u(\cdot)$ undefined (minor):** The period utility function $u$ appears in the veto proof (Appendix, eqs. A.5–A.6) without formal definition. It is implicitly $u(c) = c^{1-\gamma}/(1-\gamma)$ from eq. (1). Standard convention; any finance reader would understand.
 
-3. **$\pi$ notation in Appendix vs. $P/D$ in body.** The Appendix introduces $\pi_S$ and $\pi_N^i$ as proof-local P/D variables. The relationship $\pi_S = V_\infty$ is stated, but $\pi_N^i = P^i/D^i$ is only implicit.
+3. **$\Lambda$ overloading (minor):** $\Lambda$ is defined as the constant $(1-\phi)G$ in eq. (4), then used as a function $\Lambda(\theta, \delta)$ in eq. (10). The function nests the constant at $\theta = 0$, and the two usages are scoped to different sections.
 
-None of these issues create actual ambiguity in any expression that appears in the paper.
+### Clean Areas
+
+- All 20 symbol families use consistent notation throughout.
+- Greek letters denote structural parameters; Latin letters denote variables/functions — clean separation.
+- Superscript conventions ($A$, $N$, $CM$, $IM$, $\text{pub}$) are stable.
+- No confusion between $R$ (discount compound) and any return or interest rate.
+- No confusion between $\alpha$ (AI share) and risk aversion ($\gamma$).
 
 ## Requirement 2: Assumption Consistency — PASS
 
-36 assumptions were identified across the baseline model, three extensions, and the appendix proofs. All are mutually consistent.
+22 assumptions identified across the baseline model, three extensions, and implicit modeling choices. All are mutually consistent.
 
-**Key consistency checks performed:**
+### Consistency Groups Verified
 
-- **Parameter restrictions compatible.** $\beta \in (0,1)$, $\gamma > 1$, $g > 0$ automatically imply $R = \beta(1+g)^{1-\gamma} < 1$. All share parameters ($\alpha, \alpha_S, \phi$) are on valid domains. $\Lambda = (1-\phi)G$ can be either above or below 1, and the paper correctly handles both cases.
-- **Budget constraint satisfied.** Pre-singularity: $C_t = D_t^A + D_t^N = Y_t$. Post-singularity: $C_{\tau+k} = Y_{\tau+k}^{\text{pub}} = (1-\phi)GY_0(1+g)^{\tau+k}$. The accounting identity $Y_t^{\text{total}} = Y_t^{\text{pub}} + Y_t^{\text{private}}$ holds in all states.
-- **Dividend jumps consistent with hedge factors.** AI dividend jump $D_{\tau+1}^A/D_\tau^A = (\alpha_S/\alpha)\Lambda(1+g)$ correctly yields $H^A = (\alpha_S/\alpha)\Lambda^{1-\gamma}$ through the Euler equation.
-- **Extensions reduce to baseline.** Transfers ($\theta=0$), veto ($\kappa=0$), extinction ($q=0$) all recover baseline formulas.
-- **Complete markets benchmark consistent.** $\Lambda^{CM} = G$ correctly removes the $(1-\phi)$ displacement factor.
-- **Algebraic derivations verified.** $V_\infty - V_0 = pR/[(1-R)(1-(1-p)R)]$, spread formula, and amplification factor $(1-\phi)^{1-\gamma}$ all check out.
+1. **Parameter domains:** All parameter restrictions ($\beta \in (0,1)$, $\gamma > 1$, $g > 0$, $\alpha \in (0,1)$, $p \in (0,1)$, $G > 1$, $\phi \in (0,1)$, $\alpha_S > \alpha$) are mutually compatible. The finiteness condition $R < 1$ is automatically implied by $\beta \in (0,1)$, $g > 0$, $\gamma > 1$ — redundant but not contradictory.
 
-**Minor observations (not inconsistencies):**
+2. **Consumption jump:** $\Lambda = (1-\phi)G \in (0, G)$. Can be above or below 1 depending on parameters. Both cases are discussed in the paper.
 
-- $\alpha_S < 1$ is implicit rather than stated.
-- "Zero utility" in the extinction extension should more precisely say "zero continuation value."
-- The veto cost accounting (where does $\kappa Y_t$ go?) is left unspecified, but the extension is qualitative.
+3. **Stochastic structure:** Pre-singularity has one source of uncertainty (singularity arrival, i.i.d. Bernoulli $p$). Post-singularity is deterministic Gordon growth. One-time permanent event. Internally coherent.
 
-## Requirement 3: Traceability — PASS
+4. **Market structure:** Household holds all public shares, consumes all publicly traded output, prices all public assets. AI owners are segmented, hold private capital, not marginal in public markets. Coherent endowment economy.
 
-All mathematical objects trace back to the assumptions.
+5. **P/D well-definedness:** P/D ratios are always positive and finite for all parameter values in the assumed domains. Verified algebraically.
 
-**Primitive objects (defined in assumptions):** $\beta$, $\gamma$, $C_t$, $Y_t$, $Y_0$, $g$, $\alpha$, $\alpha_S$, $p$, $\tau$, $G$, $\phi$, $\theta$, $\delta$, $\kappa$, $q$.
+6. **Complete vs. incomplete markets:** $\Lambda^{CM} = G$ correctly follows from household consuming total output. Amplification factor $(1-\phi)^{1-\gamma} > 1$ for $\gamma > 1$, $\phi \in (0,1)$.
 
-**Derived objects (all traceable):**
+7. **Transfer extension:** Correctly nests baseline ($\theta = 0$), complete markets ($\theta = 1, \delta = 0$), and full deadweight ($\theta = 1, \delta = 1$). Range $\Lambda(\theta,\delta) \in [(1-\phi)G, G]$.
 
-| Object | Derived from |
-|--------|-------------|
-| $\Lambda = (1-\phi)G$ | $\phi$, $G$ |
-| $R = \beta(1+g)^{1-\gamma}$ | $\beta$, $g$, $\gamma$ |
-| $V_0 = (1-p)R/[1-(1-p)R]$ | $p$, $R$ |
-| $V_\infty = R/(1-R)$ | $R$ |
-| $H^A = (\alpha_S/\alpha)\Lambda^{1-\gamma}$ | $\alpha_S$, $\alpha$, $\Lambda$, $\gamma$ |
-| $H^N = ((1-\alpha_S)/(1-\alpha))\Lambda^{1-\gamma}$ | $\alpha_S$, $\alpha$, $\Lambda$, $\gamma$ |
-| $P^i/D^i = (1-H^i)V_0 + H^iV_\infty$ | Euler equation + all primitives |
-| Spread $= (H^A - H^N)(V_\infty - V_0)$ | Difference of P/D ratios |
-| $\Lambda(\theta,\delta)$ | $\phi$, $G$, $\theta$, $\delta$ |
-| $\Lambda^{CM} = G$ | $G$ |
-| $\bar{\kappa}$ | Implicitly defined from $u$, $\Lambda$, $p$ |
+8. **Veto extension:** Under complete markets ($\Lambda = G > 1$), household never vetoes — consistent. Under incomplete markets with $\Lambda < 1$, veto threshold $\bar{\kappa} > 0$ exists by strict concavity — consistent.
 
-**Verification of key derivation chain:** The pre-singularity Euler equation yields $\pi_N^i = (1-p)R(\pi_N^i + 1) + pRH^i(V_\infty + 1)$, which solves to $\pi_N^i = (1-H^i)V_0 + H^iV_\infty$. The extinction extension correctly scales $H^i$ by $(1-q)$, yielding $[1-(1-q)H^i]V_0 + (1-q)H^iV_\infty$. No expression in the paper fails to derive from the stated assumptions.
+9. **Extinction extension:** Scaling $H^i$ by $(1-q)$ correctly reflects that only the survival branch contributes to asset values. The "zero utility thereafter" convention for extinction is standard (household ceases to exist), not contradictory with CRRA.
+
+10. **Cross-extension:** All three extensions modify different dimensions (consumption conditional on survival, singularity prevention, survival probability). Independent and mutually compatible.
+
+11. **Euler equation derivation:** SDF $\times$ dividend growth correctly yields $R \cdot H^i$ in the singularity branch. Verified algebraically for both AI and non-AI stocks.
+
+12. **Spread formula:** $(H^A - H^N) = \frac{\alpha_S - \alpha}{\alpha(1-\alpha)} \Lambda^{1-\gamma}$. Algebraically correct.
+
+## Requirement 3: Object Traceability — PASS
+
+All derived mathematical objects trace back to the assumptions:
+
+| Derived Object | Source Assumptions |
+|---|---|
+| $R = \beta(1+g)^{1-\gamma}$ | A1 ($\beta, \gamma$), A2 ($g$) |
+| $V_0, V_\infty$ | $R$, A4 ($p$) |
+| $\Lambda = (1-\phi)G$ | A5 ($G$), A6 ($\phi$) |
+| $H^A, H^N$ | A1 ($\gamma$), A3 ($\alpha$), A7 ($\alpha_S$), $\Lambda$ |
+| $P^i/D^i$ | Euler equation (A1, A9), dividends (A20), consumption (A18) |
+| Spread (eq. 9) | Algebraic from $H^A, H^N, V_0, V_\infty$ |
+| Amplification (eq. 6) | A1 ($\gamma$), A6 ($\phi$) |
+| $\Lambda(\theta, \delta)$ | A13 ($\theta, \delta$), A5, A6 |
+| $\Lambda^{CM} = G$ | A15 |
+| $\bar{\kappa}$ | A1 ($\gamma$), A14 ($\kappa$), $\Lambda$ |
+| $u(\cdot)$ | Implied by A1 |
+| Extinction P/D (eq. 12) | A16 ($q$), baseline objects |
+| Extinction spread (eq. 13) | Algebraic from eq. 12 |
+| $\pi_S, \pi_N^i$ (Appendix) | Proof notation for P/D ratios |
+
+No expression was found that cannot be logically derived from the assumptions.

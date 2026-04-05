@@ -1,20 +1,20 @@
 # tests/quality-scope.py
-Started: 2026-04-04 23:45:08 EDT
-Runtime: 24s
-[ralph-garage/agent-logs/20260404T234508.981918-0400_quality-scope_claude_opus.log](../ralph-garage/agent-logs/20260404T234508.981918-0400_quality-scope_claude_opus.log)
+Started: 2026-04-04 23:59:28 EDT
+Runtime: 28s
+[ralph-garage/agent-logs/20260404T235928.980306-0400_quality-scope_claude_opus.log](../ralph-garage/agent-logs/20260404T235928.980306-0400_quality-scope_claude_opus.log)
 
 # quality-scope
 VERDICT: PASS
-REASON: The paper maintains a compact theoretical scope with illustrative parameterizations rather than calibrated empirics, and no broad prediction menus.
+REASON: The paper maintains a compact theoretical scope with illustrative (not calibrated) quantitative material, no broad prediction menus, and minimal empirical content.
 
 ## Findings
 
-**Theoretical core.** The paper presents one baseline model (Section 2) with three closed-form propositions and one corollary, all focused on a single mechanism: displacement-driven hedging demand for AI stocks under incomplete markets.
+**Theoretical focus.** The paper is a tightly scoped theory piece built around a single mechanism — displacement risk from an AI singularity under incomplete markets. It derives closed-form propositions (P/D ratios, hedging premium, incomplete vs. complete markets comparison, veto result, extinction risk dilution) and does not attempt to test them empirically.
 
-**Extensions are tightly scoped.** The three extensions (government transfers, deployment efficiency, extinction risk) each modify the baseline along exactly one dimension and are independent of one another. No extension introduces new empirical content or broadens the prediction set into a menu.
+**Limited empirical content.** The only empirical element is a single motivating figure (Figure 1) showing the Magnificent 7 market cap share over time. This is purely illustrative context-setting, not an empirical test or calibration exercise.
 
-**Quantitative material is illustrative, not calibrated.** Section 3.3 presents a single table of P/D ratios under a "baseline parameterization" and explicitly labels these as illustrative. The conclusion states: "We model the singularity as a single binary event, abstract from many realistic frictions, and rely on illustrative parameterizations rather than formal calibration." There is no GMM estimation, no structural calibration, no moment-matching exercise.
+**No broad prediction menu.** The paper does not generate a laundry list of testable predictions or cross-sectional implications. The results section focuses on the hedging premium and its comparative statics along two dimensions (singularity probability and displacement severity). The extensions (government transfers, deployment efficiency, extinction risk) each modify a single dimension and are kept brief.
 
-**Empirical content is minimal.** The only empirical element is Figure 1 (Mag-7 market cap share from CRSP), used purely as motivation. There is no regression analysis, no event study, no empirical testing of the model's predictions.
+**Illustrative rather than calibrated quantitative material.** The quantitative section (Section 3.3 and Table 1) uses a "baseline parameterization" to show magnitudes are "plausible" and "consistent with" observed valuations. The conclusion explicitly states: "We ... rely on illustrative parameterizations rather than formal calibration." There is no GMM estimation, no moment-matching, no structural estimation.
 
-**No broad prediction menus.** The paper does not enumerate a laundry list of testable implications or cross-sectional predictions. It isolates one mechanism and derives its qualitative and quantitative properties.
+**Compact structure.** The paper has five sections (Introduction, Model, Results, Extensions, Conclusion) plus a proofs appendix. Three extensions are each handled in roughly one page. The conclusion reaffirms the intentionally compact scope.

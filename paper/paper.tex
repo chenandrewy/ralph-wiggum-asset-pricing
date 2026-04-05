@@ -62,10 +62,10 @@ A quantitative parameterization shows that the magnitudes are compelling. With m
 
 We study three extensions, each branching directly from the baseline. Government transfers are a natural first remedy: the household cannot buy private AI capital, but perhaps the government can tax it. Following \citet{Jones2024}, if the singularity generates sufficiently large output growth---potentially infinite---then even transfers that waste 90\% of their value dramatically reduce displacement risk. This leads naturally to a second question: if transfers can restore the household's welfare, can they also restore efficient AI deployment? We show that under incomplete markets, the household may find it rational to block the singularity entirely---but that sufficiently generous transfers eliminate this incentive. Finally, we consider extinction risk: the possibility that the singularity destroys all life rather than generating growth. Extinction dilutes the hedging premium by introducing a state where all assets are equally worthless.
 
-This paper demonstrates the very risk it models. The research, derivations, code, and writing were produced entirely by AI agents. The human author contributed only a 600-word economic specification and a set of test scripts. If AI can produce academic research---a task previously requiring years of specialized training---then the displacement of traditional knowledge workers is not a distant hypothetical but a present reality. The AI-agent production device is not a gimmick; it is evidence.
+This paper offers a small illustration of the displacement it models. The research, derivations, code, and writing were produced by AI agents working from a human-written economic specification and test scripts. If the boundary of what AI can produce continues to expand, the displacement risks studied here become increasingly concrete.
 
 \paragraph{Related literature.}
-Our paper builds directly on the displacement risk framework of \citet{GKP2012}, who show that innovation creates a systematic risk factor through incomplete intergenerational risk sharing. The main economic insights---that displacement risk is priced, that market incompleteness amplifies its effects, and that certain assets offer a hedge---are already present in their work. Our contribution is to apply this logic to the AI singularity setting and to extend it in three directions: quantitative analysis of government transfers, deployment efficiency, and extinction risk. \citet{GKP2012} note that government transfers would affect the magnitude of displacement but do not pursue this formally; we contribute a simple analysis with quantitative illustrations.
+Our paper builds directly on the displacement risk framework of \citet{GKP2012}, who show that innovation creates a systematic risk factor through incomplete intergenerational risk sharing. The main economic insights---that displacement risk is priced, that market incompleteness amplifies its effects, and that certain assets offer a hedge---are already present in their work. Our contribution is to apply this logic to the AI singularity setting and to extend it in three directions: quantitative analysis of government transfers, deployment efficiency, and extinction risk. \citet{GKP2012} note that government transfers would affect the magnitude of displacement but do not pursue this formally; we contribute a simple analysis with quantitative illustrations. \citet{KoganPapanikolaouStoffman2020} extend the GKP framework to study how creative destruction affects stock prices and inequality; \citet{KoganPapanikolaou2014} show how technology shocks generate cross-sectional return differences through differential exposure to growth opportunities.
 
 \citet{Jones2024} studies the tradeoff between AI-driven growth and existential risk; we complement his analysis by examining asset prices. \citet{KorinekSuh2024} study macroeconomic scenarios for the transition to artificial general intelligence, with a focus on wages and output. \citet{PastorVeronesi2009} study how technological revolutions affect stock prices and return volatility; see also \citet{PastorVeronesi2006}. \citet{HobijnJovanovic2001} document the displacement of incumbent firms during the IT revolution. \citet{Barro2006} shows that rare disasters can explain the equity premium; our singularity event shares features with rare disaster models. \citet{Nordhaus2021} examines whether an economic singularity is approaching. On the macroeconomics of AI-driven growth, see \citet{AghionJonesJones2019} and \citet{AcemogluRestrepo2018}. For the foundational overlapping-generations asset-pricing framework, see \citet{Blanchard1985} and \citet{GarleanuPanageas2015}.
 
@@ -73,6 +73,8 @@ Our paper builds directly on the displacement risk framework of \citet{GKP2012},
 % Section 2: Model
 %=============================================================
 \section{Model} % Section 2
+
+We build the simplest model that isolates the hedging mechanism. The key tension is between two forces: an AI singularity that vastly increases total output, and a market friction that prevents the representative household from sharing in the gains. Everything that follows---the preferences, the singularity event, the two traded assets---serves to make this tension precise.
 
 \subsection{Environment}
 
@@ -101,7 +103,7 @@ A separate group holds private AI capital that is not publicly traded. This capi
 
 \subsection{The singularity}
 
-In each period, with probability $p \in (0,1)$, an AI singularity occurs. The singularity is a one-time, permanent event: once it occurs, the economy transitions to a new regime. Conditional on not having occurred, the probability remains $p$ each period.
+With the players in place, we introduce the event that drives everything: the singularity. In each period, with probability $p \in (0,1)$, an AI singularity occurs. The singularity is a one-time, permanent event: once it occurs, the economy transitions to a new regime. Conditional on not having occurred, the probability remains $p$ each period.
 
 When the singularity occurs at time $\tau$:
 \begin{enumerate}
@@ -127,7 +129,7 @@ is the household's consumption jump factor. When $\Lambda < 1$---a \emph{negativ
 
 \subsection{Assets and incomplete markets}
 
-Two assets are publicly traded:
+The singularity creates winners and losers. Whether the household is among the winners depends on what it can trade. Two assets are publicly traded:
 \begin{itemize}
     \item \textbf{AI stocks} with dividend $D_t^A = \alpha_t \, Y_t^{\text{pub}}$, and
     \item \textbf{Non-AI stocks} with dividend $D_t^N = (1 - \alpha_t)\, Y_t^{\text{pub}}$,
@@ -155,7 +157,7 @@ Since the household is the only investor, its stochastic discount factor prices 
 
 \subsection{Price-dividend ratios}
 
-The stationary structure of the model yields closed-form price-dividend ratios.
+Because the singularity is a one-time event with constant arrival probability, the model admits a clean closed form.
 
 \begin{proposition}[P/D ratios] \label{prop:pd} % Proposition 2
 In the pre-singularity equilibrium, the price-dividend ratio of asset $i \in \{A, N\}$ is:
@@ -177,7 +179,7 @@ We require $R < 1$ for the price-dividend ratios to be finite.
 See Appendix~\ref{app:proofs}.
 \end{proof}
 
-The formula has a clean economic interpretation. Each P/D ratio is a weighted average of two benchmarks: $V_0$, the P/D ratio in a world where the singularity never occurs, and $V_\infty$, the P/D ratio when no singularity risk remains. The weight $H^i$ captures how much the singularity state contributes to the asset's value through the stochastic discount factor. It is the product of two forces: (i) the dividend jump $\alpha_S / \alpha$ or $(1-\alpha_S)/(1-\alpha)$, reflecting how much the asset's dividends grow in the singularity, and (ii) $\Lambda^{1-\gamma}$, reflecting the marginal utility in the singularity state. When $\gamma > 1$ and $\Lambda < 1$ (negative singularity), marginal utility is very high in the singularity state, amplifying the hedge value of assets that pay well in that state.
+The formula has a clean economic interpretation. Each P/D ratio is a weighted average of two benchmarks: $V_0$, the P/D ratio of an asset that provides no hedge against the singularity ($H^i = 0$), and $V_\infty = R/(1-R)$, the standard Gordon growth P/D that obtains when no singularity risk remains. The weight $H^i$ captures how much the singularity state contributes to the asset's value through the stochastic discount factor. It is the product of two forces: (i) the dividend jump $\alpha_S / \alpha$ or $(1-\alpha_S)/(1-\alpha)$, reflecting how much the asset's dividends grow in the singularity, and (ii) $\Lambda^{1-\gamma}$, reflecting the marginal utility in the singularity state. When $\gamma > 1$ and $\Lambda < 1$ (negative singularity), marginal utility is very high in the singularity state, amplifying the hedge value of assets that pay well in that state.
 
 \begin{corollary}[Hedging premium] \label{cor:premium} % Corollary 3
 If $\alpha_S > \alpha$, then for all $p > 0$:
@@ -212,7 +214,7 @@ This result quantifies the role of market incompleteness. If the household could
 
 \subsection{Quantitative magnitudes} \label{sec:quant}
 
-Table~\ref{tab:pd} reports P/D ratios for a baseline parameterization: $\beta = 0.96$, $g = 0.02$, $\gamma = 3$, $\alpha = 0.15$, $\alpha_S = 0.50$.
+Can the hedging mechanism generate the kinds of valuation spreads we see in the data? Table~\ref{tab:pd} reports P/D ratios for a baseline parameterization: $\beta = 0.96$, $g = 0.02$, $\gamma = 3$, $\alpha = 0.15$, $\alpha_S = 0.50$.
 
 % Exhibit 2
 \begin{table}[H]
@@ -258,14 +260,14 @@ In a conventional economic setting, deadweight costs of even 10--20\% would rend
 \caption{P/D ratio of AI stocks as a function of singularity output growth and deadweight costs} \label{fig:transfers}
 
 \smallskip
-\parbox{0.85\textwidth}{\footnotesize\textit{Notes.} P/D ratios from Proposition~\ref{prop:pd} with $\Lambda$ from equation~\eqref{eq:Lambda-transfer} at $\theta = 1$ (full transfer). Parameters: $\beta = 0.96$, $g = 0.02$, $\gamma = 3$, $\alpha = 0.15$, $\alpha_S = 0.50$, $\phi = 0.50$, $p = 0.05$. The ``No transfers'' line uses $\Lambda = (1-\phi)G$. $V_0$ marks the P/D ratio with no singularity risk; $V_\infty$ marks the no-singularity-risk benchmark.}
+\parbox{0.85\textwidth}{\footnotesize\textit{Notes.} P/D ratios from Proposition~\ref{prop:pd} with $\Lambda$ from equation~\eqref{eq:Lambda-transfer} at $\theta = 1$ (full transfer). Parameters: $\beta = 0.96$, $g = 0.02$, $\gamma = 3$, $\alpha = 0.15$, $\alpha_S = 0.50$, $\phi = 0.50$, $p = 0.05$. The ``No transfers'' line uses $\Lambda = (1-\phi)G$. $V_0$ marks the P/D ratio of an asset with no hedge benefit ($H = 0$); $V_\infty$ marks the no-singularity-risk benchmark.}
 \end{figure}
 
 Figure~\ref{fig:transfers} illustrates. For low $G$, the no-transfer P/D ratio is very high: the singularity devastates the household, and AI stocks carry an enormous hedge premium. As $G$ increases, the singularity becomes good enough that the hedge premium shrinks, and all curves converge to $V_0$. The key insight is in the vertical gap between the curves: even with $\delta = 0.9$---transfers that destroy 90\% of their value---the P/D drops substantially relative to the no-transfer baseline, especially for moderate $G$. For very large $G$, all transfer policies converge because the household benefits regardless.
 
 \subsection{Deployment efficiency} % Section 4.2
 
-Transfers address displacement after the singularity occurs. But what if the household can prevent the singularity altogether? Market incompleteness affects not only valuations but also real decisions. Suppose the household can block the singularity---a ``veto''---at cost $\kappa\, C_t$ per period, where $\kappa > 0$ is small. Blocking prevents the singularity from occurring and thereby prevents unborn AI capital from coming into existence.
+Transfers address displacement after the singularity occurs. But they raise a deeper question: what if the household can prevent the singularity altogether? Market incompleteness affects not only valuations but also real decisions. Suppose the household can block the singularity---a ``veto''---at cost $\kappa\, C_t$ per period, where $\kappa > 0$ is small. Blocking prevents the singularity from occurring and thereby prevents unborn AI capital from coming into existence.
 
 Under complete markets, the household shares in the full output gains from the singularity. Since $G > 1$, the singularity always raises total output and, through risk sharing, the household's consumption. The household never vetoes.
 
@@ -283,7 +285,7 @@ This result connects to Extension~1. If government transfers raise $\Lambda$ abo
 
 \subsection{Extinction risk} % Section 4.3
 
-The preceding extensions assume the singularity is survivable. What if it is not? \citet{Jones2024} emphasizes that the AI singularity may carry existential risk: with some probability, the singularity destroys all life rather than generating growth. Following his framework, suppose that conditional on the singularity occurring, there is a probability $q \in [0,1)$ of extinction. In the extinction state, all assets are worthless and the household receives zero utility thereafter.
+The preceding extensions assume the singularity is survivable---that the household emerges, displaced or not, into a functioning economy. What if it does not? \citet{Jones2024} emphasizes that the AI singularity may carry existential risk: with some probability, the singularity destroys all life rather than generating growth. Following his framework, suppose that conditional on the singularity occurring, there is a probability $q \in [0,1)$ of extinction. In the extinction state, all assets are worthless and the household receives zero utility thereafter.
 
 The P/D formula from Proposition~\ref{prop:pd} extends naturally: the hedge factor $H^i$ is scaled by $(1-q)$:
 %
@@ -340,11 +342,13 @@ Pre-singularity, define $\pi_N^i$ as the P/D ratio of asset $i$. The Euler equat
 where the first term corresponds to no singularity next period (probability $1-p$, consumption and dividends grow at rate $g$, and the P/D ratio remains $\pi_N^i$), and the second term corresponds to the singularity occurring (probability $p$). In the singularity term, the SDF contribution is $\beta[(1+g)\Lambda]^{-\gamma}$ and the dividend growth is $(1+g)$ times the dividend jump factor ($(\alpha_S/\alpha)\Lambda$ for AI stocks), yielding $R\, H^i$ where $H^i = (\text{share ratio}) \times \Lambda^{1-\gamma}$. Post-singularity, the P/D is $\pi_S = V_\infty$, so the total payoff is $(\pi_S + 1) = 1/(1-R)$.
 
 Solving for $\pi_N^i$:
-\begin{align} \label{eq:app-solve}
-\pi_N^i\bigl[1 - (1-p)R\bigr] &= (1-p)R + \frac{p\, R\, H^i}{1-R} \notag \\
-\pi_N^i &= \frac{(1-p)R}{1-(1-p)R} + \frac{p\, R\, H^i}{(1-R)\bigl(1-(1-p)R\bigr)} \notag \\
+\begin{equation} \label{eq:app-solve}
+\begin{split}
+\pi_N^i\bigl[1 - (1-p)R\bigr] &= (1-p)R + \frac{p\, R\, H^i}{1-R} \\
+\pi_N^i &= \frac{(1-p)R}{1-(1-p)R} + \frac{p\, R\, H^i}{(1-R)\bigl(1-(1-p)R\bigr)} \\
 &= V_0 + H^i(V_\infty - V_0) = (1-H^i)\, V_0 + H^i\, V_\infty,
-\end{align}
+\end{split}
+\end{equation}
 where the last equality uses $V_\infty - V_0 = \frac{pR}{(1-R)(1-(1-p)R)}$. \qed
 
 \subsection*{Proof of Proposition~\ref{prop:veto}}

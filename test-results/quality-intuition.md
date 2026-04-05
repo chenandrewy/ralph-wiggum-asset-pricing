@@ -1,30 +1,34 @@
 # tests/quality-intuition.py
-Started: 2026-04-04 23:45:08 EDT
-Runtime: 55s
-[ralph-garage/agent-logs/20260404T234508.986823-0400_quality-intuition_claude_opus.log](../ralph-garage/agent-logs/20260404T234508.986823-0400_quality-intuition_claude_opus.log)
+Started: 2026-04-04 23:59:28 EDT
+Runtime: 42s
+[ralph-garage/agent-logs/20260404T235928.982488-0400_quality-intuition_claude_opus.log](../ralph-garage/agent-logs/20260404T235928.982488-0400_quality-intuition_claude_opus.log)
 
 # quality-intuition
 VERDICT: PASS
-REASON: Every proposition and key formula is accompanied by intuition grounded in the specific mathematical objects of that result.
+REASON: Every proposition and key formula is discussed with intuition that explicitly references the mathematical objects involved.
 
 ## Detailed Findings
 
-### Proposition 2 (P/D ratios, lines 160-174)
-Discussion (line 180) explains each mathematical object: $V_0$ as the no-singularity P/D, $V_\infty$ as the post-singularity P/D, $H^i$ decomposed into (i) the dividend jump ratio ($\alpha_S/\alpha$ or $(1-\alpha_S)/(1-\alpha)$) and (ii) the marginal-utility factor $\Lambda^{1-\gamma}$. The weighted-average structure of the formula is made explicit.
+### Proposition 2 (P/D ratios, lines 162-182)
+The discussion after the proposition explains the P/D formula as a weighted average of two benchmarks ($V_0$ and $V_\infty$), with weight $H^i$. It decomposes $H^i$ into (i) the dividend jump ratio ($\alpha_S/\alpha$ or $(1-\alpha_S)/(1-\alpha)$) and (ii) $\Lambda^{1-\gamma}$, explaining that when $\gamma > 1$ and $\Lambda < 1$, marginal utility is high in the singularity state, amplifying hedge value. All key objects in the formula are addressed.
 
-### Corollary 3 (Hedging premium, lines 182-192)
-Discussion (line 194) explains why the spread increases in $p$ (more probable singularity raises hedge value) and decreases in $\Lambda$ when $\gamma > 1$ (more devastating singularity raises marginal utility in that state). Both channels are tied to specific terms in the spread formula.
+### Corollary 3 (Hedging premium, lines 184-196)
+The discussion explains the premium grows with $p$ (more probable singularity makes the hedge more valuable) and with displacement severity (lower $\Lambda$ raises marginal utility of payoffs in the singularity state). Both comparative statics are linked to the formula's components.
 
-### Proposition 4 (Incomplete markets amplify, lines 200-209)
-Discussion (lines 210-211) explains the amplification factor $(1-\phi)^{1-\gamma}$, noting it is large when $\phi$ is close to 1 (severe displacement) and $\gamma$ is high (high risk aversion). The comparison of $\Lambda = (1-\phi)G$ vs. $\Lambda = G$ is explicit.
+### Proposition 4 (Incomplete markets amplification, lines 202-213)
+The discussion explains the amplification factor $(1-\phi)^{1-\gamma}$ in terms of $\Lambda = (1-\phi)G$ under incomplete markets versus $\Lambda = G$ under complete markets, and notes this factor is large when $\phi$ is close to 1 and $\gamma$ is high.
 
-### Proposition 5 (Veto, lines 274-276)
-Discussion (lines 270-282) explains part (a) via $G > 1$ ensuring consumption rises under complete markets, and part (b) via $\Lambda < 1$ ensuring consumption falls under incomplete markets, making the veto worthwhile for small $\kappa$. The connection to transfers raising $\Lambda$ above 1 is also grounded in the formula.
+### Consumption jump factor (equations 3-4, lines 117-128)
+$\Lambda = (1-\phi)G$ is clearly explained as the household's consumption jump factor, with the displacement scenario ($\Lambda < 1$) identified as the driver of hedging demand.
 
-### Proposition 6 (Extinction, lines 294-299)
-Discussion (line 305) explains that extinction probability $q$ scales down the differential hedge factor $(H^A - H^N)$ because extinction destroys all assets equally, adding a state with no differential payoff. The $(1-q)$ scaling is explicitly connected to the intuition.
+### Transfer formula (equation 9, lines 248-266)
+$\Lambda(\theta, \delta)$ is explained at three boundary cases ($\theta=0$, $\theta=1/\delta=0$, $\theta=1$ with $\delta$), and the figure discussion links the P/D behavior to $G$, $\Lambda$, $V_0$, and the hedge premium.
 
-### Key formulas
-- $\Lambda = (1-\phi)G$ (eq. 4): Explained at line 126 — when $\Lambda < 1$, household consumption falls despite output growth.
-- $\Lambda(\theta, \delta)$ (eq. 7): Limiting cases ($\theta = 0$, $\theta = 1$ with $\delta = 0$, $\theta = 1$ with $\delta > 0$) are all explained in terms of the formula's parameters.
-- Extinction P/D (eq. 11): The modification from Proposition 2 — scaling $H^i$ by $(1-q)$ — is explained as extinction diluting the hedge.
+### Proposition 5 (Veto, lines 276-284)
+The discussion explains that under complete markets $\Lambda = G > 1$ so the household always benefits from the singularity, while under incomplete markets $\Lambda < 1$ means consumption falls, motivating the veto. The connection to transfers raising $\Lambda$ above 1 is also made explicit.
+
+### Proposition 6 (Extinction, lines 296-307)
+The discussion explains that extinction scales $H^i$ by $(1-q)$, destroying all assets equally and adding a state with no differential hedge, thereby diluting the premium. The formula $(1-q)(H^A - H^N)(V_\infty - V_0)$ is directly interpreted.
+
+### Quantitative section (lines 215-233)
+The discussion of Table 1 ties the numerical results back to $\Lambda$, marginal utility, and the hedge mechanism, explaining why AI stocks' P/D increases with $p$ under negative singularity ($\Lambda = 0.8$).
