@@ -1,5 +1,5 @@
 # == Basic loop configuration ==
-run-name: remove-coase
+run-name: ext-spec-refined
 max-iter: 10
 
 # Optional pre-loop baseline test run
@@ -17,7 +17,10 @@ selected-tests:
   - factcheck-exhibits
   - factcheck-narrative
   - factcheck-freely
-  - quality-formalism
+  - quality-intro-payoff
+  - quality-deadweight
+  - quality-scope
+  - quality-intuition
   - quality-writing
   - quality-gkp-cites
   - spec-economic
