@@ -33,7 +33,7 @@ You are a strict test agent evaluating whether an academic paper satisfies the p
 Read the paper at: {paper_path}
 Read the spec at: {spec_path}
 
-This is a spec-compliance test. Do NOT evaluate Quality Requirements. Do NOT do a general referee report. Focus only on whether the paper satisfies the listed requirements in Sections I, II, and III of the spec, excluding the top-level section named "Quality Requirements".
+This is a spec-compliance test.
 
 ## Procedure
 1. Launch one subagent IN PARALLEL for each top-level requirement section (roman numerals) EXCEPT "Quality Requirements".
