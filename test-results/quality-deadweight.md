@@ -1,74 +1,63 @@
 # tests/quality-deadweight.py
-Started: 2026-04-04 23:25:45 EDT
-Runtime: 1m 56s
-[ralph-garage/agent-logs/20260404T232545.929532-0400_quality-deadweight_claude_opus.log](../ralph-garage/agent-logs/20260404T232545.929532-0400_quality-deadweight_claude_opus.log)
+Started: 2026-04-04 23:45:08 EDT
+Runtime: 1m 31s
+[ralph-garage/agent-logs/20260404T234508.986878-0400_quality-deadweight_claude_opus.log](../ralph-garage/agent-logs/20260404T234508.986878-0400_quality-deadweight_claude_opus.log)
 
 # quality-deadweight
 VERDICT: PASS
-REASON: Every formal object in the paper does meaningful economic or narrative work; no deadweight formalism found.
+REASON: Every formal object in the paper contributes to the economic argument, quantitative illustrations, or both; no formalism is abandoned, ceremonial, or replaceable by plain English without weakening claims.
 
-## Audit methodology
+## Audit of every formal object
 
-Catalogued every formal object (equations, definitions, propositions, corollaries), every parameter/variable, and every prose mechanism. Checked each against two criteria: (1) Is it used in at least one result, calibration, figure, or interpretation? (2) Does it advance the paper's economic argument or could it be replaced by plain English without loss?
+### Parameters and variables
+| Symbol | Introduced | Used in |
+|--------|-----------|---------|
+| $\beta, \gamma$ | Eq (1) | $R$, all P/D results, calibration (Table 1) |
+| $C_t$ | Eq (1) | Consumption jump, veto proof, throughout |
+| $g$ | Eq (2) | $R$, all P/D results, calibration |
+| $\alpha, \alpha_S$ | Sec 2.1/2.2 | $H^A$, $H^N$, spread, calibration |
+| $p$ | Sec 2.2 | $V_0$, spread, calibration |
+| $G$ | Sec 2.2 | $\Lambda$, transfer extension, calibration |
+| $\phi$ | Sec 2.2 | $\Lambda$, amplification (Prop 4), calibration |
+| $\Lambda$ | Eq (4) | Central to all results |
+| $R$ | Eq (7) | $V_0$, $V_\infty$, all P/D formulas |
+| $V_0, V_\infty$ | Eq (7) | P/D formula, spread, figure annotation |
+| $H^A, H^N$ | Eq (8) | P/D formula, spread, extinction extension |
+| $\theta, \delta$ | Eq (9) | Transfer extension, Figure 2 |
+| $\kappa$ | Sec 4.2 | Veto proposition (Prop 5) |
+| $q$ | Sec 4.3 | Extinction proposition (Prop 6) |
+| $Y_0$ | Eq (2) | Initial condition only—standard, absorbed into $C_t$ |
+| $Y_t^{pub}, \alpha_t$ | Sec 2.3 | Define dividend structure; intermediate notation used once but necessary for clarity |
+| $\tau$ | Sec 2.2 | Time of singularity; used in consumption jump (Eq 3) |
 
-## Parameters and variables
+**Finding:** No variable or parameter is introduced and then unused in any result, calibration, or interpretation.
 
-| Symbol | Introduced | Used in results? | Verdict |
-|--------|-----------|-------------------|---------|
-| $\beta, \gamma$ | Eq (1) | $R$, all P/D formulas | Active |
-| $C_t$ | Eq (1) | Euler equation, proofs | Active |
-| $g$ | Eq (2) | $R$, all P/D formulas, table, figure | Active |
-| $Y_0$ | Eq (2) | Not directly in any result | Standard normalization; trivial |
-| $\alpha, \alpha_S$ | Model setup | $H^A, H^N$, spread, table, figure | Active |
-| $p$ | Singularity setup | $V_0$, spread, table, figure | Active |
-| $G$ | Singularity setup | $\Lambda$, transfers extension, veto | Active |
-| $\phi$ | Singularity setup | $\Lambda$, amplification (Prop 2), table | Active |
-| $\Lambda$ | Eq (4) | Central to all results | Active |
-| $R, V_0, V_\infty$ | Eq (6) | P/D formulas, spread, figure | Active |
-| $H^A, H^N$ | Eq (7) | P/D formulas, spread, extinction | Active |
-| $\tau, \delta$ | Extension 1 | $\Lambda(\tau,\delta)$, figure | Active |
-| $\kappa$ | Extension 2 | Prop 3 (veto threshold) | Active |
-| $q$ | Extension 3 | Prop 4 (extinction spread) | Active |
-| $Y_t^{pub}$ | Dividend defs | Bridges output to dividends | Standard modeling notation |
-| $D_t^A, D_t^N, P_t^A, P_t^N$ | Model setup | Euler equation, P/D ratios | Active |
+### Propositions and formal results
+1. **Definition 1 (Equilibrium):** States Euler equation and market clearing. The Euler equation is directly used to derive Proposition 2. Standard practice in theory papers—not ceremonial.
+2. **Proposition 2 (P/D ratios):** Core result. Closed-form P/D ratios drive Table 1, the spread corollary, and all extensions. Essential.
+3. **Corollary 3 (Hedging premium):** Derives the spread and its comparative statics in $p$ and $\Lambda$. Directly interpreted in the text and quantified in Table 1. Essential.
+4. **Proposition 4 (Incomplete vs. complete markets):** The amplification factor $(1-\phi)^{1-\gamma}$ quantifies the role of incompleteness. Could the qualitative point be made in English? Yes, but the factor is what makes the quantitative claim ("can be very large when $\phi$ close to 1 and $\gamma$ high") credible. Earns its keep.
+5. **Proposition 5 (Veto):** Almost plain-English already (parts a and b). The formal proof in the appendix adds rigor at minimal cost. Links directly to Extension 1 via $\Lambda > 1$. Not deadweight.
+6. **Proposition 6 (Extinction):** The $(1-q)$ scaling is clean, one line, and used to discuss the tension between displacement severity and extinction risk. Not deadweight.
 
-$Y_0$ is the only symbol not used in any result, but it appears solely as the standard normalization constant in $Y_t = Y_0(1+g)^t$. Removing it would require removing the output equation entirely, which would hurt the exposition. This is not deadweight.
+### Equations
+- **Eq (1) (Utility):** CRRA. Standard, minimal, all parameters used.
+- **Eq (2) (Output):** One line, sets up $g$ notation. Could be prose, but it's one equation and establishes the growth path that the Gordon model and all results build on.
+- **Eq (3)–(4) (Consumption jump and $\Lambda$):** $\Lambda$ is the paper's central object. Essential.
+- **Eq (5) (Euler equation in Definition 1):** Used to derive Proposition 2 in the appendix proof. Essential.
+- **Eq (6)–(8) (P/D ratios, benchmarks, hedge factors):** Core results.
+- **Eq (9) (Transfer $\Lambda$):** Enables Figure 2 and the transfer discussion. Essential.
+- **Eq (10)–(11) (Extinction P/D and spread):** Enable Proposition 6. Essential.
 
-## Equations (13 numbered)
+### Prose mechanisms
+- The four-item list describing the singularity (Sec 2.2) is informal and sets up the formal results efficiently.
+- The complete-markets comparison (Sec 3.2) uses $\Lambda^{CM} = G$ inline rather than a separate proposition. Appropriately light.
+- The transfer discussion links Eq (9) to Figure 2 without unnecessary formalism.
+- The veto-to-transfer connection ("If government transfers raise $\Lambda$ above 1...") is made in prose, not a separate proposition. Good restraint.
 
-All 13 numbered equations are load-bearing:
-- Eqs (1)–(5): Define the model primitives (utility, output, consumption jump, $\Lambda$, Euler equation). Each feeds into the proof of Proposition 1.
-- Eqs (6)–(8): State the main P/D result. Core of the paper.
-- Eq (9): Closed-form spread. Core result.
-- Eq (10): Amplification ratio. Quantifies the role of incomplete markets (Prop 2).
-- Eq (11): $\Lambda(\tau,\delta)$. Needed for the transfers figure and discussion.
-- Eqs (12)–(13): Extinction-adjusted P/D and spread. Needed for Proposition 4.
-
-No equation is introduced and abandoned. No equation restates something already established.
-
-## Theorem environments (1 Definition, 4 Propositions, 1 Corollary)
-
-- **Definition 1 (Equilibrium):** Anchors the Euler equation used in all proofs. Standard for theory papers. Concise (two conditions: Euler equation + market clearing). Not ceremonial.
-- **Proposition 1 (P/D ratios):** Main result. Used in table, figure, all extensions.
-- **Corollary 1 (Hedging premium):** Closed-form spread. Core economic claim.
-- **Proposition 2 (Incomplete markets amplify):** Quantifies the central friction. Used in interpretation.
-- **Proposition 3 (Veto):** Connects incomplete markets to deployment. Ties back to Extension 1.
-- **Proposition 4 (Extinction):** Shows extinction dilutes the premium. Introduces a tension for interpretation.
-
-Each environment states a result that is interpreted in the prose and contributes to the paper's argument. No proposition is purely technical filler.
-
-## Prose mechanisms
-
-- The four-item singularity specification (lines 95–100) efficiently parameterizes the event; every item is used.
-- The incomplete markets paragraph (lines 125–126) establishes the key friction and cites GKP. Essential.
-- Quantitative parameterization (Section 3.3) is explicitly illustrative, not a calibration exercise. Consistent with the spec.
-
-## Potential concerns considered and dismissed
-
-1. **Equation (2)** ($Y_t = Y_0(1+g)^t$): Could be stated in prose ("output grows at rate $g$"), but the display equation sets up notation used in the dividend definitions and is standard in theory papers. One line; not deadweight.
-2. **$Y_t^{pub}$ notation**: Appears only in the dividend definitions. It serves the important role of distinguishing publicly traded output from total output—the distinction at the heart of the incomplete-markets friction. Not dispensable.
-3. **Definition environment for equilibrium**: Wrapping the Euler equation in a formal Definition is standard in finance theory. It is concise (three lines) and the Euler equation it anchors is used in every proof.
-
-## Conclusion
-
-The paper's formalism is lean and purposeful. Every parameter is used in at least one result. Every equation feeds into a proposition, corollary, table, or figure. Every proposition advances the economic argument. No auxiliary detours, no ceremonial formalism, no abandoned notation.
+### Checks for deadweight patterns
+- **Introduced then abandoned?** No. Every formal object is referenced in at least one result, figure, or proof.
+- **Qualitative takeaway replaceable by plain English?** The main results (Props 2–4) require formalism for their quantitative claims. Props 5–6 are nearly plain English already, with formal proofs adding necessary rigor.
+- **Unused parameters?** No. All parameters appear in at least one result and in the calibration.
+- **Pompous or ceremonial formalism?** No lemmas, no unnecessary technical conditions, no auxiliary constructions. Definition 1 is the only "ceremony" and it states the Euler equation that is directly used.
+- **Auxiliary formal detours?** None. Each extension is one equation and one proposition, directly advancing the argument.

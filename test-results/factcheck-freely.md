@@ -1,33 +1,26 @@
 # tests/factcheck-freely.py
-Started: 2026-04-04 23:25:45 EDT
-Runtime: 4m 25s
-[ralph-garage/agent-logs/20260404T232545.919357-0400_factcheck-freely_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260404T232545.919357-0400_factcheck-freely_claude_claude-opus-4-6.log)
+Started: 2026-04-04 23:45:08 EDT
+Runtime: 9m 35s
+[ralph-garage/agent-logs/20260404T234508.978535-0400_factcheck-freely_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260404T234508.978535-0400_factcheck-freely_claude_claude-opus-4-6.log)
 
 # factcheck-freely
-VERDICT: PASS
-REASON: The paper's core mathematics and economic logic are correct with no factual errors or internal contradictions, though there are minor rigor gaps in one proof and imprecise language in the abstract.
+VERDICT: FAIL
+REASON: The paper misdescribes $V_0$ as the "no singularity risk" benchmark in two places, when that role belongs to $V_\infty$.
 
-## Detailed Findings
+## Issue 1 (Factual error): Misdescription of $V_0$
 
-### Mathematics Verified (No Errors)
-- Post-singularity Gordon growth P/D ratio $V_\infty = R/(1-R)$ is correct.
-- Pre-singularity P/D formula $P^i/D^i = (1-H^i)V_0 + H^i V_\infty$ correctly derives from the Euler equation.
-- Hedge factors $H^A$ and $H^N$ are correctly computed from dividend growth and the SDF.
-- The P/D spread formula in the Corollary follows from Proposition 1.
-- Comparative statics (spread increasing in $p$, decreasing in $\Lambda$ for $\gamma > 1$) are verified.
-- The incomplete-markets amplification factor $(1-\phi)^{1-\gamma}$ is correct.
-- The government transfers formula $\Lambda(\tau, \delta)$ and its special cases are correct.
-- The extinction risk extension is correct.
+**Locations:** Line 180 (main text interpretation of Proposition 2) and line 261 (Figure 2 caption).
 
-### Literature Claims Verified (No Errors)
-- Characterization of GKP (2012) on displacement risk and incomplete markets is accurate.
-- Claim that GKP note government transfers affect displacement magnitude but do not pursue formal analysis is verified.
-- References to Jones (2024) and other cited works are accurate.
+- Line 180: "$V_0$, the P/D ratio in a world where the singularity never occurs"
+- Line 261: "$V_0$ marks the P/D ratio with no singularity risk; $V_\infty$ marks the no-singularity-risk benchmark."
 
-### Minor Issues (Not Rising to Factual Error or Logical Inconsistency)
+**Problem:** Both $V_0$ and $V_\infty$ are described as relating to "no singularity risk," which is contradictory. By the paper's own definitions:
 
-1. **Abstract language ("earn a hedging premium")**: In standard finance, "earning a premium" typically connotes higher expected returns, but the model delivers a *valuation* (P/D) premium. AI stocks that hedge bad states would command high valuations but potentially *lower* expected returns. This is imprecise rather than factually wrong -- "hedging premium" can refer to a valuation premium -- but finance readers may initially misinterpret it.
+- $V_0 = (1-p)R / (1-(1-p)R)$ — this depends on $p$ and equals the P/D of an asset with zero hedge factor ($H^i = 0$), i.e., an asset that provides no payoff in the singularity state.
+- $V_\infty = R/(1-R)$ — this is the standard Gordon growth P/D, which is indeed the P/D with no singularity risk (i.e., $p = 0$ gives $V_0 = V_\infty$).
 
-2. **Veto proof (Proposition 3b) uses flow utilities rather than value functions**: The proof defines the veto threshold $\bar{\kappa}$ by comparing single-period expected utilities. Since the veto is a permanent decision affecting the entire continuation value, a complete proof would compare value functions. The result itself is correct (at $\kappa = 0$ vetoing is strictly preferred when $\Lambda < 1$, and by continuity of the value function there exists $\bar{\kappa} > 0$), but the written proof has a rigor gap. This is an incomplete argument, not a logical inconsistency -- the paper does not contradict itself.
+$V_0$ should be described as "the P/D ratio of an asset with zero hedge factor" or "the P/D reflecting only the no-singularity path." Calling it the P/D "in a world where the singularity never occurs" is incorrect — that world has $p = 0$, yielding $V_\infty$.
 
-3. **LaTeX counter collision**: The `definition` environment shares the `proposition` counter (line 19), so Definition 1 consumes number 1 and all subsequent propositions are numbered one higher than the source comments suggest. Cross-references via `\ref{}` are internally consistent, so the compiled paper would not contradict itself, but numbering may not match what authors intended.
+## Minor issue: Proof gap in Proposition 5(b)
+
+The proof of part (b) compares single-period flow utilities to establish the veto threshold $\bar{\kappa}$. However, this is an infinite-horizon problem where vetoing vs. not vetoing yields different continuation values (under no-veto, the household may transition to the post-singularity regime). The proof does not explicitly justify why the per-period flow comparison extends to the lifetime comparison. The result is correct (due to CRRA homogeneity and the fact that the singularity is bad for the household when $\Lambda < 1$), but the proof as written is incomplete.

@@ -1,79 +1,57 @@
 # tests/quality-writing.py
-Started: 2026-04-04 23:25:45 EDT
-Runtime: 59s
-[ralph-garage/agent-logs/20260404T232545.920131-0400_quality-writing_claude_opus.log](../ralph-garage/agent-logs/20260404T232545.920131-0400_quality-writing_claude_opus.log)
+Started: 2026-04-04 23:45:08 EDT
+Runtime: 56s
+[ralph-garage/agent-logs/20260404T234508.980021-0400_quality-writing_claude_opus.log](../ralph-garage/agent-logs/20260404T234508.980021-0400_quality-writing_claude_opus.log)
 
 # quality-writing
 VERDICT: FAIL
-REASON: The writing is competent but reads like a well-organized textbook rather than a compelling, conversational narrative that pulls the reader forward.
+REASON: The introduction's paragraph transitions are strong, but the model section reads as flat exposition rather than a persuasive narrative, and the tone is academic-stiff rather than conversational.
 
 ## Detailed Findings
 
 ### Requirement 1: Does every paragraph convince the reader to move to the next paragraph?
-**FAIL**
 
-The introduction does a reasonable job of forward momentum through its first four paragraphs, but there are clear stalls:
+**FAIL.** The introduction is the paper's strongest section on this dimension. It opens with a striking empirical fact (Mag 7 market cap), poses a question ("Are these valuations rational?"), and each paragraph propels the reader forward: mechanism → model → key result → magnitudes → extensions → meta-device. The transitions are explicit and well-crafted ("How large are these effects?", "But the baseline model leaves important questions open").
 
-- **Paragraph 3 (formalization):** After the clean economic logic in paragraphs 1-2, paragraph 3 dumps the full model setup---agents, assets, frictions, closed-form results, and the role of incomplete markets---into a single dense block. The reader's reward for finishing it is another paragraph of quantitative details. There is no tension, question, or hook pulling the reader onward. It reads like a summary rather than an argument.
+However, this momentum dies at Section 2. The model section reads as a sequence of definitions and assumptions laid end-to-end. Nothing in the "Household" paragraph compels the reader to read "Output." Nothing in "Output" compels the reader to read "AI capital owners." These are items on a checklist, not steps in an argument. Compare with the intro, where every paragraph ends by teasing the next idea.
 
-- **Paragraph 4 (quantitative magnitudes):** This paragraph lands well on its own ("spreads exceeding 20") but ends flatly with "consistent with the extraordinary valuations observed in AI-related equities." It doesn't set up why the reader should care about the extensions that follow.
+The extensions section partially recovers momentum. The opening paragraph ("the baseline model isolates the hedging mechanism cleanly, but it leaves the household with no recourse") is effective. The transition from transfers to deployment ("This leads naturally to a second question") works well in the intro but is not replicated in the body of Section 4 itself—each extension subsection just starts without connecting back.
 
-- **Paragraph 5 (extensions):** This is a laundry list. Three extensions are compressed into a single paragraph with no narrative thread connecting them. The reader is told what will happen but not why it matters or why these three extensions, in this order, form a compelling arc. There is no suspense or payoff structure.
-
-- **Paragraph 6 (AI-agent device):** This is the paper's most distinctive element, but it appears as a coda after the technical summary, disconnected from the economic argument. It should create a "wow" moment but instead feels tacked on. Moving it earlier (or weaving it into the opening) would dramatically improve forward pull.
-
-- **The model and results sections** are workmanlike. Each subsection follows the pattern: setup, proposition, interpretation paragraph. This is standard but not compelling. The interpretation paragraphs rarely end with a question or tension that motivates the next subsection. For example, the paragraph after Corollary 1 ends with a complete thought ("raises the marginal utility of payoffs in that state") and the next subsection ("Incomplete versus complete markets") starts cold.
-
-- **The extensions section** opens with "Each extension modifies the baseline model along a single dimension. The extensions are independent of one another." This is a roadmap sentence, not a hook. It tells the reader the extensions don't build on each other---which actually reduces the incentive to keep reading.
+The conclusion is fine but doesn't build—it summarizes.
 
 ### Requirement 2: Are all paragraphs logically connected?
-**MARGINAL FAIL**
 
-The logical skeleton is sound: problem, model, results, extensions, conclusion. But the *connections between paragraphs* are often implicit rather than explicit:
-
-- The transition from the quantitative magnitudes paragraph to the extensions paragraph is abrupt. There is no bridge sentence explaining *why* the baseline model's results motivate extensions.
-
-- The transition from Proposition 2 (incomplete markets amplify the premium) to the quantitative section is purely structural ("Table X reports..."). A sentence like "How large are these effects?" would create a logical bridge.
-
-- Within the extensions, the connection between government transfers and deployment efficiency is stated only in hindsight (end of Section 4.2: "This result connects to Extension 1"). The reader encounters deployment efficiency cold, without understanding why it follows transfers.
-
-- The conclusion's final paragraph (AI-agent device) is logically disconnected from the preceding paragraph about the paper's scope. Two separate closing thoughts compete.
+**PASS (borderline).** The logical structure is sound throughout. The introduction builds a clear argumentative arc. The model → results → extensions sequence is natural. Within each section, paragraphs follow a logical order. The weakest link is the transition from Section 3.2 (incomplete vs. complete markets) to Section 3.3 (quantitative magnitudes), which ends with "The question is whether these theoretical effects produce economically meaningful magnitudes"—a serviceable but formulaic bridge. The connections between the three extension subsections within Section 4 could be tighter in the body text (the intro previews them as a connected sequence, but the subsections themselves are somewhat siloed).
 
 ### Requirement 3: Are the dynamics and rhythm of the writing utilized effectively?
-**FAIL**
 
-The paper has a uniform rhythm: medium-length paragraphs of declarative sentences. It lacks variation in:
+**FAIL.** The paper has a rhythm problem: the introduction is paced well, with short punchy sentences alternating with longer analytical ones. But the model and results sections settle into a monotonous pattern: short setup sentence, equation, paragraph of interpretation, next subsection. Every subsection in Section 2 follows exactly the same template. There is no variation in sentence length, no rhetorical acceleration, no strategic use of short sentences for emphasis.
 
-- **Sentence length:** Almost every sentence is 15-30 words, mid-complexity. There are no short, punchy sentences for emphasis and no longer sentences that build suspense. Compare: "The logic is straightforward" (good, short) is immediately followed by another long explanatory sentence rather than letting the short sentence breathe.
-
-- **Paragraph length:** The introduction paragraphs are all roughly the same size. The formalization paragraph and the extensions paragraph are both walls of text that would benefit from being broken up or having their density varied.
-
-- **Tension and release:** The paper never builds tension. It states results and then explains them. A more dynamic approach would pose questions ("But what if displacement is severe?") and then answer them, creating a push-pull rhythm.
-
-- **The quantitative magnitudes paragraph (Panel B discussion)** is the most dynamic passage in the paper ("Panel B tells a more dramatic story... AI stocks function as insurance"). This shows the authors can write with energy, but this energy is rare.
-
-- **The extensions section is rhythmically flat.** Each extension follows the same template: setup, proposition, one-paragraph discussion. The reader can predict the structure, which kills momentum.
+Specific issues:
+- Section 2 opens with "Time is discrete, $t = 0, 1, 2, \ldots$ The economy is populated by a representative household and a group of AI capital owners." This is completely flat. There's no sense of why we're building this model or what the reader should watch for.
+- The proof interpretations in Section 3 are consistently well-written but uniformly paced—each one is exactly one paragraph of moderate length. Some results deserve a beat of silence (a one-sentence paragraph for emphasis); others deserve a longer buildup.
+- The extensions section has better rhythm, partly because the economic stakes are higher and the writing reflects it ("The singularity is not a conventional setting").
 
 ### Requirement 4: Is the tone conversational and inviting?
-**MARGINAL FAIL**
 
-The tone is *accessible* but not truly *conversational*. It reads like a well-written academic paper, which is fine, but the spec calls for a tone "between an academic paper and a blog post," and this lands firmly on the academic side.
+**FAIL.** The introduction achieves a tone that is close to the spec's target ("between an academic paper and a blog post"), with phrases like "tells the story," "The logic is straightforward," and "This paper demonstrates the very risk it models." These are engaging and conversational.
 
-- Phrases like "We formalize this mechanism," "The stationary structure of the model yields," and "This result quantifies the role of" are standard academic register. They are clear but not inviting.
+But the rest of the paper reverts to standard academic prose. Sections 2–3 are written in the impersonal, declarative style of a typical theory paper:
+- "The stationary structure of the model yields closed-form price-dividend ratios." (Section 3 opener—dry, passive)
+- "Two assets are publicly traded:" (flat enumeration)
+- "The formula has a clean economic interpretation." (telling rather than showing)
+- "This result quantifies the role of market incompleteness." (textbook voice)
 
-- The paper rarely addresses the reader directly or uses rhetorical questions. A more conversational tone might ask: "How much would you pay for insurance against your own obsolescence?"
+The spec asks for a tone "between an academic paper and a blog post." The model and results sections are firmly on the academic side without any blog-post warmth. A conversational paper would occasionally address the reader ("Notice that..."), use concrete analogies, or break the fourth wall. The intro does this; the body does not.
 
-- The one genuinely conversational passage is the AI-agent device paragraph: "The AI-agent production device is not a gimmick; it is evidence." This has personality. But it's an isolated moment.
+The extensions section is somewhat better—"perhaps the government can tax it" and "But what if the household can prevent the singularity altogether?" have conversational energy. But these moments are isolated.
 
-- The related literature paragraph is dense and citation-heavy, which is expected, but it further drags down the conversational momentum of the introduction.
+### Summary of Issues (in order of priority)
 
-- The conclusion is dutiful rather than memorable. "The paper is intentionally compact" is defensive rather than inviting. The final sentence is good but comes after a flat middle paragraph.
+1. **Section 2 is a dead zone for reader engagement.** It needs opening framing ("Before diving into formalism, here is the key tension the model captures..."), transitional hooks between subsections, and at least one moment of plain-English insight amid the definitions.
 
-## Summary of Key Issues
+2. **Section 3's interpretive paragraphs are good but monotonous.** Vary the pacing: let some results land with a short, punchy sentence before the longer explanation. The sentence "When $\Lambda < 1$—a *negative* AI singularity—the household's consumption falls despite a massive increase in total output" (Section 2) is great writing; Section 3 needs more moments like this.
 
-1. **The introduction's forward pull breaks in paragraphs 3-5**, where the writing shifts from argument to summary.
-2. **Paragraph transitions are implicit** rather than creating explicit bridges that pull the reader forward.
-3. **The rhythm is monotonous**: uniform sentence and paragraph lengths with no tension-release structure.
-4. **The tone is academic-accessible, not conversational.** It lacks rhetorical questions, direct address, or tonal variation that would make it inviting.
-5. **The paper's strongest rhetorical device (AI-agent authorship) is buried** at the end of the introduction rather than woven into the narrative arc.
-6. **The extensions section reads like three mini-papers** stapled together rather than a compelling progression.
+3. **The tone shift between intro and body is jarring.** The intro promises a paper that talks to you; the body delivers a paper that talks at you. The conversational touches in the intro set expectations that the rest of the paper doesn't meet.
+
+4. **Extension subsections don't connect to each other in the body.** The intro previews them as a sequence ("This leads naturally to a second question..."), but in Section 4 each subsection begins as if the previous one didn't exist. Adding one-sentence bridges between 4.1→4.2 and 4.2→4.3 would maintain narrative momentum.

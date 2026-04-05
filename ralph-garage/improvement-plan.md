@@ -1,74 +1,72 @@
 # Improvement Plan
-AUTHOR PLAN — 2026-04-04 23:04:01 EDT
+AUTHOR PLAN — 2026-04-04 23:38:05 EDT
 
 ## Current State
 
-The paper is entirely placeholder (lorem ipsum, placeholder title/abstract/citations, no exhibits, no code, no data). This is a full build from scratch.
+**Tests: 16/21 pass, 5 fail.** No overhaul needed — the model section is sound (correct derivations, clean structure, good economic logic). The issues are fixable without restructuring.
 
-## Key Issues
+## Failing Tests
 
-1. **No model**: The paper needs an infinite-horizon discrete-time model with a representative household and AI owners, two public assets (AI and non-AI stocks), and incomplete markets.
-2. **No code or exhibits**: Need R pipeline producing up to 6 exhibits into `paper/exhibits/`.
-3. **No content**: Every section is lorem ipsum.
-4. **No bibliography**: Only placeholder bib entries.
+| Test | Issue |
+|------|-------|
+| `element-opening-fig` | No figure in the introduction. Spec requires an empirical CRSP figure showing AI vs non-AI valuations. |
+| `element-rhetoric-meta` | Abstract's final sentence ("written entirely by AI agents") is too blunt; triggers reader aversion before they engage with the economics. |
+| `factcheck-theory` | Symbol collision: `τ` used for both singularity arrival time (§2) and tax rate (§4.1). |
+| `quality-writing` | Monotonous rhythm, weak paragraph transitions, extensions read as a laundry list, tone too academic. |
+| `spec-paper` | Three sub-failures: (1) paper never argues financial market solutions are "under-discussed" (spec I.3c), (2) appendix has unnumbered display equations (spec II.9), (3) theorem environment comments use wrong compiled numbers (spec III.2c). |
 
 ## Plan
 
-Since the paper needs a complete overhaul, the entire plan focuses on building the paper from the ground up.
+### Step 1: Code — Add CRSP opening figure
 
-### Step 1: Build the Model and Code
+Create an R script addition in `code/run-all.R` (or a sourced helper) that:
+- Downloads CRSP market-cap data for AI vs non-AI stocks (use code templates in `ralph/code-templates/` for WRDS access patterns).
+- Computes a valuation ratio (e.g., aggregate P/D or market-cap-weighted P/E) for an AI portfolio vs a non-AI portfolio over recent years.
+- Outputs `paper/exhibits/fig-opening.pdf`.
 
-Write the baseline model in `paper/paper.tex` and the R code in `code/`.
+If WRDS access is unavailable or too slow, use a simple illustrative figure with publicly available data (e.g., Magnificent 7 vs S&P 500 equal-weight P/E).
 
-**Baseline model (Section 2):**
-- Infinite-horizon, discrete-time economy.
-- Two agents: representative household (marginal investor) and AI owners (hold private AI capital, not marginal in public stocks). AI owners can also be interpreted as unborn/future capital holders per GKP.
-- Two publicly traded assets: AI stocks and non-AI stocks.
-- Singularity event: arrives with probability $p$ each period, causes AI stocks to grow as a share of the economy, devastating for the household's consumption from non-AI sources.
-- Incomplete markets: household cannot trade private AI capital (the key friction from GKP, adapted to AI setting).
-- Derive price/dividend ratios for AI and non-AI stocks as functions of singularity probability $p$.
-- Proposition: AI stocks command a higher P/D ratio because they hedge displacement risk under incomplete markets.
-- Quantitative table: P/D ratios for AI vs non-AI stocks across plausible $p$ values.
+### Step 2: Paper — Fix notation collision
 
-**R code (`code/`):**
-- Single entry-point script that generates all exhibits.
-- Exhibit 1 (intro figure): CRSP-based figure showing AI stock valuations vs non-AI stocks.
-- Exhibit 2 (table): Quantitative parameterization table showing P/D ratios vs singularity probability.
-- Exhibit 3 (extension figure): Government transfers -- P/D ratio of AI stocks as function of singularity output growth and deadweight costs.
+Rename the tax rate from `τ` to `t` or `\theta` in §4.1 (equation 8 and surrounding text). Keep `τ` exclusively for the singularity arrival time.
 
-### Step 2: Write the Extensions (Section 4)
+### Step 3: Paper — Fix appendix equation numbering
 
-Three independent extensions branching from the baseline:
+Replace all `\[ ... \]` and `align*` environments in the appendix with `\begin{equation}` or `\begin{align}` (numbered). This fixes spec II.9.
 
-1. **Government transfers**: Transfers attenuate incomplete markets problem. Deadweight costs make this unattractive normally, but with singularity-level output growth (per Jones 2024), even enormous costs are worth bearing. Figure: P/D vs output growth and deadweight cost.
+### Step 4: Paper — Fix theorem environment comments
 
-2. **Veto/deployment**: Household can block the singularity at a consumption cost. Under complete markets, household never vetoes. Under incomplete markets, veto can occur. Informally link to Extension 1: large enough output growth + transfers can restore efficient deployment.
+The shared counter means Definition 1, Proposition 1, Corollary 1 compile as 1, 2, 3, etc. Update comments to match compiled numbering:
+- `\begin{definition}` → `% Definition 1`
+- First `\begin{proposition}` → `% Proposition 2`
+- `\begin{corollary}` → `% Corollary 3`
+- Subsequent propositions → `% Proposition 4`, `% Proposition 5`, `% Proposition 6`
 
-3. **Extinction risk**: Per Jones (2024), singularity may carry existential risk. Show how extinction probability affects AI stock P/D and its relationship with singularity probability.
+### Step 5: Paper — Add "under-discussed" argument (spec I.3c)
 
-### Step 3: Write Remaining Sections
+In the introduction or the opening of §4.1, add a sentence arguing that financial market solutions to AI disaster risk are under-discussed relative to the attention given to regulation and alignment. This is a natural claim — the literature focuses on AI safety, labor displacement, and regulation, while financial hedging gets little attention.
 
-- **Title**: Short, evocative, eye-catching.
-- **Abstract**: Under 100 words. Mention AI-agent authorship. Rigorous yet eye-catching.
-- **Preface (TBC)**: Unnumbered, left blank per spec.
-- **Introduction**: Engaging, each paragraph flows to the next. Include the AI-agent authorship device. Lit review (max half page) at end of intro, centered on GKP, Jones, and top finance/econ journals.
-- **Results (Section 3)**: Main propositions with proofs (long proofs in appendix). Quantitative table.
-- **Extensions (Section 4)**: Three extensions as above.
-- **Conclusion**: Brief.
-- **Appendix**: Proofs.
+### Step 6: Paper — Soften the abstract's AI-agent sentence
 
-### Step 4: Bibliography
+Remove or substantially soften the abstract's final sentence. Options:
+- Delete it from the abstract entirely, letting the introduction carry the rhetorical weight.
+- Replace with something integrated: e.g., "We illustrate the displacement mechanism by noting that this paper's analysis was itself produced by AI agents."
 
-Build `references.bib` with real entries:
-- Garleanu, Kogan, Panageas (2012 JFE)
-- Jones (2024 AERI)
-- Korinek and Suh (2024)
-- Other relevant papers from top finance/econ journals for the lit review.
+The introduction's treatment of the device is already good — the problem is only the abstract.
 
-### Priorities
+### Step 7: Paper — Improve writing quality
 
-1. Get the model right first -- this is the hardest part and everything depends on it.
-2. Write the R code to produce exhibits.
-3. Draft the full paper text around the model and exhibits.
-4. Ensure GKP citations are sensitive, cautious, and modest.
-5. Keep scope compact: illustrative quantitative content, minimal empirical content, no calibration exercise.
+Target the specific issues flagged by `quality-writing`:
+1. **Introduction paragraph 3 (formalization):** Break into two shorter paragraphs. Add a bridge question before the quantitative paragraph (e.g., "How large are these effects?").
+2. **Introduction paragraph 5 (extensions):** Rewrite as a narrative arc, not a list. Connect each extension to the previous one with motivation.
+3. **Transitions in the model/results sections:** Add bridge sentences at the end of interpretation paragraphs that motivate the next subsection.
+4. **Tone:** Add 2–3 rhetorical questions or direct-address moments. Vary sentence length — use short punchy sentences for emphasis after key results.
+5. **Extensions opener:** Replace the flat roadmap sentence with a hook that motivates why the baseline model leaves important questions open.
+
+### Step 8: Paper — Add opening figure to introduction
+
+Insert the CRSP figure (from Step 1) into the introduction, before or after the first paragraph. Add 1–2 sentences of context: "Figure X shows..." This fixes `element-opening-fig`.
+
+## Priority Order
+
+Steps 1–6 fix failing tests directly. Step 7 addresses writing quality. Step 8 integrates the new figure. Execute in roughly this order, but Steps 2–6 can be done in parallel as they touch different parts of the paper.

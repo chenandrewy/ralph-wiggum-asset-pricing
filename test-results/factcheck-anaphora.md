@@ -1,28 +1,22 @@
 # tests/factcheck-anaphora.py
-Started: 2026-04-04 23:25:45 EDT
-Runtime: 4m 47s
-[ralph-garage/agent-logs/20260404T232545.922375-0400_factcheck-anaphora_claude_opus.log](../ralph-garage/agent-logs/20260404T232545.922375-0400_factcheck-anaphora_claude_opus.log)
+Started: 2026-04-04 23:45:08 EDT
+Runtime: 4m 29s
+[ralph-garage/agent-logs/20260404T234508.979897-0400_factcheck-anaphora_claude_opus.log](../ralph-garage/agent-logs/20260404T234508.979897-0400_factcheck-anaphora_claude_opus.log)
 
 # factcheck-anaphora
 VERDICT: PASS
-REASON: No demonstrative near a cross-reference resolves to a meaning that conflicts with the referenced target.
+REASON: All demonstratives near cross-references resolve unambiguously to meanings consistent with their targets.
 
 ## Findings by section
 
-### Introduction (lines 41–62)
-No `\ref` or `\eqref` cross-references appear in this section. All demonstratives refer to concepts introduced in surrounding prose. No issues.
+**Introduction (lines 41--74):** No issues. Demonstratives ("these magnitudes", "this logic", "this displacement") all resolve clearly to their intended antecedents. The single \ref (Figure~\ref{fig:opening}) has no nearby demonstrative.
 
-### Model (lines 63–141)
-No demonstrative appears adjacent to a `\ref` or `\eqref`. Demonstratives such as "This capital" (line 88) and "This is the key friction" (line 125) resolve to immediately preceding noun phrases, not to cross-referenced targets. No issues.
+**Model (lines 75--153):** No issues. Demonstratives ("This capital", "This is the displacement scenario", "This is the key friction", "such trade") are either not adjacent to cross-references or resolve unambiguously.
 
-### Results (lines 142–223)
-Cross-references include `\ref{app:proofs}`, `\ref{prop:pd}`, and `\eqref` uses in proofs. The one demonstrative near a formal result—"This result quantifies the role of market incompleteness" (line 199)—correctly resolves to Proposition 3 (incomplete markets amplify the premium), which is the immediately preceding proposition. No issues.
+**Results (lines 154--235):** No issues. "This result" after Proposition 4 correctly refers to the preceding proposition. Table and proposition references (Proposition~\ref{prop:pd}, Table~\ref{tab:pd}) have no ambiguous demonstratives nearby.
 
-### Extensions (lines 224–297)
-Cross-references include `\ref{prop:pd}`, `\eqref{eq:Lambda-transfer}`, `\ref{fig:transfers}`, `\ref{app:proofs}`, and `\eqref{eq:pd-extinction}`. No demonstrative appears adjacent to any of these. "This result connects to Extension 1" (line 270) correctly resolves to the preceding Proposition (veto and market completeness). No issues.
+**Extensions (lines 236--309):** No issues. "This result connects to Extension~1" correctly refers to Proposition 5. References to Proposition~\ref{prop:pd} and equation~\eqref{eq:Lambda-transfer} in figure notes have no nearby demonstratives. "equation~\eqref{eq:pd-extinction}" in the extinction proof is used without demonstrative ambiguity.
 
-### Conclusion (lines 298–314)
-No `\ref` or `\eqref` cross-references appear. Demonstratives ("This paper") refer to the paper itself. No issues.
+**Conclusion (lines 310--326):** No issues. "This paper" is a clear self-reference. No \ref or \eqref commands appear.
 
-### Proofs (lines 315–352)
-Cross-references include `\ref{prop:pd}`, `\ref{prop:veto}`, and `\eqref{eq:euler}`. No demonstrative appears near any cross-reference. All references are introduced with definite articles or noun phrases ("The Euler equation", "Proof of Proposition"). No issues.
+**Proofs (lines 327--364):** No issues. Cross-references to \eqref{eq:euler}, Proposition~\ref{prop:pd}, and Proposition~\ref{prop:veto} have no nearby demonstratives with ambiguous resolution.

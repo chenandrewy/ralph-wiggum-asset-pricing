@@ -1,13 +1,107 @@
 #!/usr/bin/env Rscript
 
 # How to run: Rscript code/run-all.R
-# Inputs: None (all parameters defined inline).
+# Inputs: WRDS credentials via environment variables (WRDS_USERNAME, WRDS_PASSWORD).
 # Outputs:
+#   paper/exhibits/fig-opening.pdf      — Opening figure (AI stock market cap share, CRSP)
 #   paper/exhibits/table-pd-ratios.tex  — Table 1 (P/D ratios vs singularity probability)
-#   paper/exhibits/fig-transfers.pdf    — Figure 1 (P/D vs output growth and deadweight costs)
+#   paper/exhibits/fig-transfers.pdf    — Figure 2 (P/D vs output growth and deadweight costs)
 
 # ---- Create output directory ----
 dir.create("paper/exhibits", recursive = TRUE, showWarnings = FALSE)
+
+# ==============================================================
+# EXHIBIT 0: Opening figure — AI stock market cap share (CRSP)
+# ==============================================================
+
+suppressPackageStartupMessages({
+  library(DBI)
+  library(RPostgres)
+})
+
+wrds_user <- Sys.getenv("WRDS_USERNAME", unset = Sys.getenv("PGUSER", unset = ""))
+wrds_pass <- Sys.getenv("WRDS_PASSWORD", unset = Sys.getenv("PGPASSWORD", unset = ""))
+
+if (wrds_user == "") {
+  stop("Set WRDS_USERNAME (or PGUSER) before running this script.", call. = FALSE)
+}
+
+connect_args <- list(
+  drv      = Postgres(),
+  host     = "wrds-pgdata.wharton.upenn.edu",
+  port     = 9737L,
+  dbname   = "wrds",
+  user     = wrds_user,
+  sslmode  = "require"
+)
+if (wrds_pass != "") connect_args$password <- wrds_pass
+
+con <- do.call(dbConnect, connect_args)
+
+# Magnificent 7 permnos (AAPL, AMZN, GOOG, GOOGL, META, MSFT, NVDA, TSLA)
+ai_permnos <- c(14593, 84788, 14542, 90319, 13407, 10107, 86580, 93436)
+
+# Query: monthly market cap for all common stocks on major exchanges, 2015-2024
+query <- sprintf("
+  SELECT m.date,
+         m.permno,
+         ABS(m.prc) * m.shrout AS mcap
+  FROM crsp.msf AS m
+  INNER JOIN crsp.msenames AS n
+    ON m.permno = n.permno
+    AND m.date >= n.namedt
+    AND m.date <= n.nameendt
+  WHERE m.date >= '2015-01-01'
+    AND m.date <= '2024-12-31'
+    AND n.shrcd IN (10, 11)
+    AND n.exchcd IN (1, 2, 3)
+    AND m.prc IS NOT NULL
+    AND m.shrout IS NOT NULL
+    AND m.shrout > 0
+")
+
+cat("Downloading CRSP monthly data (2015-2024)...\n")
+msf <- dbGetQuery(con, query)
+dbDisconnect(con)
+cat(sprintf("  Retrieved %d rows.\n", nrow(msf)))
+
+msf$date <- as.Date(msf$date)
+msf$is_ai <- msf$permno %in% ai_permnos
+
+# Aggregate by month
+months <- sort(unique(msf$date))
+ai_share <- sapply(months, function(d) {
+  sub <- msf[msf$date == d, ]
+  total <- sum(sub$mcap, na.rm = TRUE)
+  ai    <- sum(sub$mcap[sub$is_ai], na.rm = TRUE)
+  if (total > 0) ai / total else NA
+})
+
+# Plot
+pdf("paper/exhibits/fig-opening.pdf", width = 7, height = 4.5)
+par(mar = c(4, 4.5, 1.5, 1), family = "serif")
+
+plot(months, ai_share * 100, type = "l", lwd = 2.5, col = "#0072B2",
+     xlab = "", ylab = "Share of total CRSP market capitalization (%)",
+     las = 1, cex.lab = 1.05, cex.axis = 0.9,
+     ylim = c(0, max(ai_share * 100, na.rm = TRUE) * 1.08))
+
+# Shade area under the curve
+polygon(c(months, rev(months)),
+        c(ai_share * 100, rep(0, length(months))),
+        col = adjustcolor("#0072B2", alpha.f = 0.12), border = NA)
+
+# Label
+last_idx <- length(months)
+text(months[last_idx], ai_share[last_idx] * 100 + 1.0,
+     sprintf("%.0f%%", ai_share[last_idx] * 100),
+     col = "#0072B2", cex = 0.9, adj = c(1, 0))
+
+mtext("AI stocks (Magnificent 7)", side = 3, line = 0.2, adj = 0,
+      cex = 0.95, font = 2)
+
+dev.off()
+cat("Wrote paper/exhibits/fig-opening.pdf\n")
 
 # ---- Common parameters ----
 beta    <- 0.96       # discount factor

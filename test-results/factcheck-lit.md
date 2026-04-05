@@ -1,11 +1,11 @@
 # tests/factcheck-lit.py
-Started: 2026-04-04 23:25:45 EDT
-Runtime: 2m 57s
-[ralph-garage/agent-logs/20260404T232545.921661-0400_factcheck-lit_claude_opus.log](../ralph-garage/agent-logs/20260404T232545.921661-0400_factcheck-lit_claude_opus.log)
+Started: 2026-04-04 23:45:08 EDT
+Runtime: 3m 35s
+[ralph-garage/agent-logs/20260404T234508.986059-0400_factcheck-lit_claude_opus.log](../ralph-garage/agent-logs/20260404T234508.986059-0400_factcheck-lit_claude_opus.log)
 
 # factcheck-lit
 VERDICT: PASS
-REASON: All 12 cited works are externally verified with accurate metadata and supported in-text claims; only minor issues found.
+REASON: All 12 cited works are externally verified with accurate metadata and well-supported in-text claims; only two minor issues were found.
 
 ## 1. Citation inventory audited
 
@@ -28,44 +28,56 @@ Three bibliography entries are never cited in the paper text and were excluded f
 
 ## 2. External verification coverage
 
-| # | Citation Key | Status | External Sources Used |
-|---|---|---|---|
-| 1 | GKP2012 | VERIFIED | EconPapers/RePEc, ScienceDirect, MIT DSpace |
-| 2 | Jones2024 | VERIFIED | AEA journal page, IDEAS/RePEc, NBER Working Paper page |
-| 3 | KorinekSuh2024 | VERIFIED | NBER page, IDEAS/RePEc, SSRN |
-| 4 | PastorVeronesi2009 | VERIFIED | AEA journal page, EconPapers/RePEc |
-| 5 | PastorVeronesi2006 | VERIFIED | IDEAS/RePEc, ScienceDirect |
-| 6 | HobijnJovanovic2001 | VERIFIED | AEA journal page, IDEAS/RePEc |
-| 7 | Barro2006 | VERIFIED | Oxford Academic/QJE, EconPapers/RePEc, Harvard DASH |
-| 8 | Nordhaus2021 | VERIFIED | AEA journal page, IDEAS/RePEc, NBER Working Paper |
-| 9 | AghionJonesJones2019 | VERIFIED | NBER Working Paper page, De Gruyter/UChicago Press DOI, SSRN, IDEAS/RePEc |
-| 10 | AcemogluRestrepo2018 | VERIFIED | AEA journal page, IDEAS/RePEc, MIT Economics |
-| 11 | Blanchard1985 | VERIFIED | IDEAS/RePEc, NBER Working Paper, EconPapers/RePEc |
-| 12 | GarleanuPanageas2015 | VERIFIED | Journal of Political Economy/UChicago, IDEAS/RePEc, ResearchGate, SSRN |
+| Key | Status | External sources used |
+|-----|--------|-----------------------|
+| GKP2012 | VERIFIED | EconPapers/RePEc, MIT DSpace, ScienceDirect |
+| Jones2024 | VERIFIED | AEA journal page, RePEc, Stanford GSB |
+| KorinekSuh2024 | VERIFIED | NBER, RePEc, SSRN |
+| PastorVeronesi2009 | VERIFIED | AEA journal page, EconPapers, SSRN |
+| PastorVeronesi2006 | VERIFIED | RePEc, ScienceDirect, SSRN |
+| HobijnJovanovic2001 | VERIFIED | AEA journal page, RePEc, NBER |
+| Barro2006 | VERIFIED | Oxford Academic/QJE, Harvard DASH, EconPapers |
+| Nordhaus2021 | VERIFIED | AEA journal page, RePEc, NBER |
+| AghionJonesJones2019 | VERIFIED | De Gruyter/UChicago Press, NBER, RePEc |
+| AcemogluRestrepo2018 | VERIFIED | AEA journal page, MIT DSpace, RePEc |
+| Blanchard1985 | VERIFIED | RePEc, NBER, JHU lecture notes |
+| GarleanuPanageas2015 | VERIFIED | UChicago Press/JPE, RePEc, SSRN |
 
 Coverage: 12/12 cited works externally verified (100%).
 
 ## 3. Metadata accuracy findings
 
-All 12 cited works have materially accurate bibliographic metadata (authors, year, title, journal/outlet). One minor page-range discrepancy was found:
+All 12 citation keys have materially accurate bibliographic metadata. Authors, titles, journals/outlets, volumes, issues, pages, and years all match external sources. No errors found.
 
-- **AghionJonesJones2019:** The bib file lists pages 237--282. The publisher's DOI landing page (De Gruyter/UChicago Press) indicates pages 237--290. The discrepancy likely reflects whether the range covers only the chapter text (ending p. 282) or also the appended discussion (ending p. 290). This is a cosmetic issue that does not affect identification of the work.
+- **AghionJonesJones2019**: Bib lists pages 237--282; the publisher page at De Gruyter shows 237--290 (likely including discussant comments). The 237--282 range matches the standard NBER/RePEc listing for the chapter itself. No material error.
 
 ## 4. In-text description accuracy findings
 
-All 12 in-text descriptions are materially accurate and supported by the cited works, as confirmed by external sources. One sub-claim could not be externally confirmed or denied:
+All 12 in-text descriptions are materially accurate and supported by the cited works, with two minor qualifications:
 
-- **GKP2012:** The paper states that GKP2012 "note that government transfers would affect the magnitude of displacement but do not pursue this formally." This characterization of a passing remark within the full text could not be verified from externally accessible abstracts and metadata. Per audit guidelines, a concern lacking adequate external support is not treated as an error.
+- **GKP2012**: The paper claims GKP2012 "note that government transfers would affect the magnitude of displacement but do not pursue this formally." External sources (abstracts, metadata pages) do not mention government transfers. This likely refers to a remark in the body of the GKP2012 paper not captured in abstracts. It remains a verification gap, not evidence of error.
+
+- **Blanchard1985**: The paper cites Blanchard (1985) as part of "the foundational overlapping-generations asset-pricing framework." Blanchard (1985) is primarily a fiscal-policy paper about debt, deficits, and finite horizons. It establishes the perpetual-youth OLG framework that subsequent papers (including Garleanu and Panageas 2015) adapted for asset pricing. The characterization is a common shorthand in the finance literature and not materially misleading, but slightly overstates the paper's direct asset-pricing contribution.
 
 ## 5. Flagged issues by citation key and severity
 
-| Citation Key | Severity | Issue |
-|---|---|---|
-| AghionJonesJones2019 | MINOR | Page range 237--282 in bib may need updating to 237--290 per publisher DOI landing page |
-| GKP2012 | MINOR | Sub-claim about government transfers remark unverifiable from abstracts/metadata alone |
+| Key | Severity | Issue |
+|-----|----------|-------|
+| GKP2012 | MINOR | Claim that GKP2012 note government transfers would affect displacement cannot be externally verified from abstracts; verification gap only. |
+| Blanchard1985 | MINOR | Described as "foundational overlapping-generations asset-pricing framework" but the paper itself is about fiscal policy (debt, deficits, finite horizons), not asset pricing directly. Common shorthand but slightly imprecise. |
+| Jones2024 | NONE | -- |
+| KorinekSuh2024 | NONE | -- |
+| PastorVeronesi2009 | NONE | -- |
+| PastorVeronesi2006 | NONE | -- |
+| HobijnJovanovic2001 | NONE | -- |
+| Barro2006 | NONE | -- |
+| Nordhaus2021 | NONE | -- |
+| AghionJonesJones2019 | NONE | -- |
+| AcemogluRestrepo2018 | NONE | -- |
+| GarleanuPanageas2015 | NONE | -- |
 
 No CRITICAL or IMPORTANT issues found.
 
 ## 6. Overall reliability of the paper's citations
 
-The paper's citations are highly reliable. All 12 cited works were externally verified. Bibliographic metadata is accurate across the board, with only one minor page-range discrepancy. All in-text characterizations of cited works are materially accurate and well-supported by the external evidence. The two MINOR issues identified are cosmetic and do not affect the substantive accuracy of the paper's literature engagement.
+The paper's citations are highly reliable. All 12 cited works were externally verified with accurate metadata across authors, titles, journals, volumes, pages, and years. In-text descriptions faithfully characterize the cited works. The two minor issues identified -- a verification gap for a specific sub-claim about GKP2012 and a slight overstatement of Blanchard (1985)'s direct asset-pricing contribution -- are cosmetic and do not affect the paper's scholarly integrity.
