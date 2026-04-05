@@ -140,8 +140,9 @@ def parse_verdict_from_report(report_path: pathlib.Path) -> str | None:
     if not report_path.exists():
         return None
     for line in report_path.read_text(encoding="utf-8").splitlines():
-        if line.strip().upper().startswith("VERDICT:"):
-            verdict = line.split(":", 1)[1].strip().upper()
+        stripped = line.strip().strip("*").strip()
+        if stripped.upper().startswith("VERDICT:"):
+            verdict = stripped.split(":", 1)[1].strip().strip("*").strip().upper()
             if verdict in {"PASS", "FAIL"}:
                 return verdict
     return None
@@ -151,8 +152,9 @@ def parse_reason_from_report(report_path: pathlib.Path) -> str | None:
     if not report_path.exists():
         return None
     for line in report_path.read_text(encoding="utf-8").splitlines():
-        if line.strip().upper().startswith("REASON:"):
-            reason = line.split(":", 1)[1].strip()
+        stripped = line.strip().strip("*").strip()
+        if stripped.upper().startswith("REASON:"):
+            reason = stripped.split(":", 1)[1].strip().strip("*").strip()
             if reason:
                 return reason
     return None
