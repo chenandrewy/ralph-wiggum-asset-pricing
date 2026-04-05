@@ -2,7 +2,7 @@
 
 ## I. Economic Requirements
 
-1. Academic asset pricing theory paper.
+1. Unconventional academic asset pricing theory paper.
 2. The following economic ideas are consistently used throughout
     - a. An AI singularity is a sudden improvement in AI that vastly increases productivity and output.
     - b. A *negative* AI singularity is an AI singularity that is devastating for the typical investor.
@@ -12,24 +12,29 @@
     - b. Incomplete markets are key: if markets are complete, there would be no need to hedge
     - c. Financial market solutions to AI disaster risk are under-discussed, though frictions can limit their effectiveness.
     - d. If the singularity occurs, then market frictions can be overcome due to the abundance of resources.
-    - e. Incomplete markets may distort not only valuations, but also the implementation of AI deployment.
-4. The main model has the following features:
+    - e. Incomplete markets may distort not only valuations, but also the development of AI.
+4. Main model: singularity with displacement risk.
     - a. Infinite-horizon, discrete-time model.
     - b. Two agents: A representative household, who is the marginal investor, and AI owners who hold private AI capital, including unborn or not-yet-marketable capital, and are not marginal investors in public stocks.
     - c. Two publicly traded assets: AI stocks and non-AI stocks. AI stocks grow as a share of the economy with each singularity.
     - d. The private AI capital and AI owners can also be thought of as unborn capital and future owners that do not yet exist, as in `spec/lit/GKP-2012.md`.
-    - e. The relationship between price/dividend ratios and the singularity probability is studied quantitatively in a table with compelling magnitudes.    
-5. An extension section examines multiple simple extensions of the main model that capture essential features of the singularity, following the advice in `spec/CFR-R1-report.md`. Each extension branches directly off the baseline model rather than building on the others, so the paper avoids a single sprawling model even as it studies several margins.
-    - a. Extension 1: Government transfers could help attenuate the incomplete markets problem.
-        - i. The ideal way to resolve the market incompleteness is to allow broader trading of AI capital. But as pointed out by `spec/lit/GKP-2012.md`, this capital may not yet exist, and thus sufficiently broad trading may be impossible.
-        - ii. Government transfers help resolve this problem, as mentioned in `spec/lit/GKP-2012.md`. But they incur sizeable deadweight costs that make the solution ineffective for a setting without the singularity (as in `spec/lit/GKP-2012.md`).
-        - iii. In a singularity, with potentially infinite output growth (`spec/lit/Jones-2024-AERI.md`), the government solution is worth considering, even in the face of immense deadweight costs.
-        - iv. A figure illustrates how the price/dividend ratio of AI stocks depends on the output growth in the singularity, as well as the deadweight costs
-    - b. Extension 2: Market incompleteness is closely related to efficient deployment of AI. 
-        - i. The household can block ("veto") the singularity at a cost to its consumption. This includes preventing unborn AI capital from ever coming into existence.
-        - ii. If markets were complete, the household would never veto.
-        - iii. Informally, based on Extension 1, if output growth in the singularity is sufficiently large, then government transfers, even with huge deadweight costs, can lead to an efficient AI deployment.
-    - c. Extension 3: Extinction risk (as in `spec/lit/Jones-2024-AERI.md`) can affect the price/dividend ratio of AI stocks, and its relationship with the singularity probability.
+    - e. The singularity may cause extinction, as in `spec/lit/Jones-2024-AERI.md`.
+    - f. The relationship between price/dividend ratios and the singularity probability is studied quantitatively in a table with compelling magnitudes. The interaction with extinction risk is examined too.
+5. Extension section: closer look at market incompleteness and the singularity.
+    - a. This section aims to address the referee report `spec/CFR-R1-report.md`. 
+    - b. Each extension branches directly off the baseline model rather than building on the others, to keep the modeling simple.
+    - c. Extension 1: Government transfers could attenuate the incomplete markets problem, despite their deadweight costs.
+        - i. The ideal resolution of market incompleteness is to allow broader trading of AI capital. But as pointed out by `spec/lit/GKP-2012.md`, this capital may not yet exist, and thus this ideal solution has limits.
+        - ii. Government transfers may help resolve this deeper incompleteness problem, as mentioned in `spec/lit/GKP-2012.md`. But they incur sizeable deadweight costs (waste, fraud, abuse) that make the solution ineffective and unattractive in standard settings. 
+        - iii. But in a singularity, with potentially infinite output growth (`spec/lit/Jones-2024-AERI.md`), the government solution is worth considering, even in the face of immense deadweight costs. This possibility is analyzed quantitatively. 
+        - iv. A figure illustrates how the price/dividend ratio of AI stocks depends on the output growth in the singularity, as well as the deadweight costs. 
+    - d. Extension 2: Market incompleteness is closely related to efficient development of AI. 
+        - i. There is a chance of a *positive* singularity, in which the household also benefits. The positive singularity is the most likely outcome. 
+        - ii. AI development is socially efficient in the sense that the positive singularity outweighs the negative singularity in a welfare calculation.
+        - iii. The household can block ("veto") development of AI at a significant cost. The cost is significant because it requires intense government intervention and associated deadweight costs. 
+        - iv. There is a base case, in which the household vetoes development of AI, due to the disaster risk and risk aversion. 
+        - v. But if markets are complete, the household would never veto.
+        - vi. Informally, based on Extension 1, if output growth in the singularity is sufficiently large, then government transfers, even with huge deadweight costs, can lead to an efficient AI deployment. 
 6. The paper explains how it contributes relative to `spec/lit/GKP-2012.md`
     - a. It connects GKP's ideas to the AI singularity.
     - b. It takes a closer look at how government transfers can affect displacement risk. GKP mention this phenomenon briefly.
