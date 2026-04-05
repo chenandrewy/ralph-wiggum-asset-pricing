@@ -31,8 +31,8 @@
         - iii. Informally, based on Extension 1, if output growth in the singularity is sufficiently large, then government transfers, even with huge deadweight costs, can lead to an efficient AI deployment.
     - c. Extension 3: Extinction risk (as in `spec/lit/Jones-2024-AERI.md`) can affect the price/dividend ratio of AI stocks, and its relationship with the singularity probability.
 6. The paper explains how it contributes relative to `spec/lit/GKP-2012.md`
-    - a. GKP note that government transfers would affect the magnitude of the displacement factor but do not conduct further analysis. The paper contributes a formal analysis with quantitative illustrations.
-    - b. The paper also studies simple implications of AI-specific singularity features for deployment and tail-risk pricing, while keeping the economics closely tied to the same incomplete-markets logic.
+    - a. It connects GKP's ideas to the AI singularity.
+    - b. It takes a closer look at how government transfers can affect displacement risk. GKP mention this phenomenon briefly.
     - c. The characterization of the contribution is purposefully modest. The main insights about displacement risk and incomplete markets are already in GKP.
 
 ## II. Style Requirements
