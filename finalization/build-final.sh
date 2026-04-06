@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # How to run: bash finalization/build-final.sh
 # Inputs: paper/paper.tex, paper/references.bib, paper/exhibits/*, finalization/inputs/*
-# Outputs: finalization/output/preface.tex, finalization/output/final-appendix.tex,
+# Outputs: finalization/output/preface.tex, finalization/output/acknowledgments.tex,
+#     finalization/output/final-appendix.tex,
 #     finalization/output/paper-anonymous.tex, finalization/output/paper-named.tex,
 #     finalization/output/paper-anonymous.pdf, finalization/output/paper-named.pdf
 set -euo pipefail
@@ -228,7 +229,25 @@ def rewrite_paths_for_output(tex_source: str) -> str:
     return updated
 
 
-def set_named_metadata(tex_source: str, author_info: dict[str, object]) -> str:
+def build_acknowledgments_tex(markdown: str) -> str:
+    """Render acknowledgments markdown to a single TeX blob for a \\thanks footnote.
+
+    Collapses paragraphs with \\par, minimally escapes &, %, _, $, #. Leaves
+    braces and backslashes alone so authors can embed small LaTeX commands.
+    """
+    paragraphs = [block.strip() for block in re.split(r"\n\s*\n", markdown.strip()) if block.strip()]
+    if not paragraphs:
+        return ""
+
+    def escape(text: str) -> str:
+        for char, repl in (("&", r"\&"), ("%", r"\%"), ("_", r"\_"), ("$", r"\$"), ("#", r"\#")):
+            text = text.replace(char, repl)
+        return text
+
+    return r"\par ".join(escape(p) for p in paragraphs)
+
+
+def set_named_metadata(tex_source: str, author_info: dict[str, object], acknowledgments_tex: str) -> str:
     name = str(author_info.get("name", "")).strip()
     affiliation = str(author_info.get("affiliation", "")).strip()
     email = str(author_info.get("email", "")).strip()
@@ -255,13 +274,28 @@ def set_named_metadata(tex_source: str, author_info: dict[str, object]) -> str:
         count=1,
         flags=re.DOTALL,
     )
+
+    if acknowledgments_tex:
+        updated = re.sub(
+            r"\\title\{(.*?)\}",
+            lambda m: f"\\title{{{m.group(1)}\\thanks{{{acknowledgments_tex}}}}}",
+            updated,
+            count=1,
+            flags=re.DOTALL,
+        )
+
     return updated
 
 
-def build_variant(tex_source: str, author_info: dict[str, object], named: bool) -> str:
+def build_variant(
+    tex_source: str,
+    author_info: dict[str, object],
+    acknowledgments_tex: str,
+    named: bool,
+) -> str:
     updated = inject_final_packages(tex_source)
     if named:
-        updated = set_named_metadata(updated, author_info)
+        updated = set_named_metadata(updated, author_info, acknowledgments_tex)
     return rewrite_paths_for_output(updated)
 
 
@@ -271,16 +305,22 @@ def main() -> None:
     manifest = load_toml(INPUTS_DIR / "appendix-manifest.toml")
     author_info = load_toml(INPUTS_DIR / "author-info.toml")
     preface_markdown = (INPUTS_DIR / "preface.md").read_text(encoding="utf-8")
+    acknowledgments_path = INPUTS_DIR / "acknowledgments.md"
+    acknowledgments_markdown = (
+        acknowledgments_path.read_text(encoding="utf-8") if acknowledgments_path.exists() else ""
+    )
     canonical_tex = PAPER_PATH.read_text(encoding="utf-8")
 
     preface_tex = build_preface_tex(preface_markdown)
     appendix_tex = build_appendix_tex(manifest)
+    acknowledgments_tex = build_acknowledgments_tex(acknowledgments_markdown)
 
     shared_tex = inject_appendix(inject_preface(canonical_tex, preface_tex), appendix_tex)
-    anonymous_tex = build_variant(shared_tex, author_info, named=False)
-    named_tex = build_variant(shared_tex, author_info, named=True)
+    anonymous_tex = build_variant(shared_tex, author_info, acknowledgments_tex, named=False)
+    named_tex = build_variant(shared_tex, author_info, acknowledgments_tex, named=True)
 
     (OUTPUT_DIR / "preface.tex").write_text(preface_tex + "\n", encoding="utf-8")
+    (OUTPUT_DIR / "acknowledgments.tex").write_text(acknowledgments_tex + "\n", encoding="utf-8")
     (OUTPUT_DIR / "final-appendix.tex").write_text(appendix_tex + "\n", encoding="utf-8")
     (OUTPUT_DIR / "paper-anonymous.tex").write_text(anonymous_tex + "\n", encoding="utf-8")
     (OUTPUT_DIR / "paper-named.tex").write_text(named_tex + "\n", encoding="utf-8")
