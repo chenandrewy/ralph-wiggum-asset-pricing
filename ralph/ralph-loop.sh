@@ -59,11 +59,13 @@ python3 ralph/check-setup.py || { log "ERROR: setup check failed"; exit 1; }
 
 # --- branch setup ---
 CURRENT_BRANCH="$(git branch --show-current)"
+APPEND_LOOP_LOG=0
 if [ "$CURRENT_BRANCH" = "ralph/run" ]; then
-    :
+    APPEND_LOOP_LOG=1
 else
     startup_paths=()
     if git show-ref --verify --quiet refs/heads/ralph/run; then
+        APPEND_LOOP_LOG=1
         log "--- switch to existing ralph/run and fast-forward from $CURRENT_BRANCH ---"
         if ! git merge-base --is-ancestor ralph/run "$CURRENT_BRANCH"; then
             log "ERROR: branch 'ralph/run' has commits not merged into '$CURRENT_BRANCH'"
@@ -100,7 +102,11 @@ else
 fi
 
 mkdir -p ralph-garage ralph-garage/history ralph-garage/page-images test-results ralph-garage/agent-logs
-exec > >(tee ralph-garage/loop.log) 2>&1
+if [ "$APPEND_LOOP_LOG" -eq 1 ]; then
+    exec > >(tee -a ralph-garage/loop.log) 2>&1
+else
+    exec > >(tee ralph-garage/loop.log) 2>&1
+fi
 
 if [ -n "$RUN_NAME" ]; then
     log "=== ralph loop started: $RUN_NAME (branch ralph/run, max $MAX_ITER iterations, agent-log-mode $AGENT_LOG_MODE) ==="
