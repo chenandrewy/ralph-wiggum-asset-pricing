@@ -33,7 +33,7 @@
         - i. The ideal resolution of market incompleteness is to allow broader trading of AI capital. But as pointed out by `spec/lit/GKP-2012.md`, this capital may not yet exist, and thus this ideal solution has limits.
         - ii. Government transfers may help resolve this deeper incompleteness problem, as mentioned in `spec/lit/GKP-2012.md`. But they incur sizeable deadweight costs (waste, fraud, abuse) that scale with the size of the transfers, making this solution ineffective and unattractive in standard settings. 
         - iii. But in a singularity, with potentially infinite output growth (`spec/lit/Jones-2024-AERI.md`), the government solution is worth considering, even in the face of immense deadweight costs. This possibility is analyzed quantitatively.         
-        - iv. A two-panel figure illustrates how price/div of AI stocks and the household's consumption growth in the singularity depend on the tax rate. It illustrates the baseline case where the deadweight costs make transfers ineffective, as well as a case where the singularity growth overcomes the deadweight costs. 
+        - iv. A two-panel figure illustrates how price/div of AI stocks and the household's consumption growth in the singularity depend on the tax rate. It illustrates the baseline case where the deadweight costs make transfers ineffective, as well as a case where the singularity growth overcomes the deadweight costs. It must show that the singularity is catastrophic for the household absent transfers.
 6. The paper explains how it contributes relative to `spec/lit/GKP-2012.md`
     - a. It connects GKP's ideas to the AI singularity.
     - b. It takes a closer look at how government transfers can affect displacement risk. GKP mention this phenomenon briefly.
