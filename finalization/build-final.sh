@@ -57,60 +57,271 @@ def tex_escape(text: str) -> str:
     return "".join(replacements.get(char, char) for char in text)
 
 
-def markdown_preface_to_tex(text: str) -> str:
-    """Render the preface markdown using the Prompts-to-Paper readme-appendix style.
+def count_leading_spaces(text: str) -> int:
+    return len(text) - len(text.lstrip(" "))
 
-    Supports: headings (#, ##, ...), links [text](url), inline code `x`.
-    Minimally escapes &, %, _, $ so authored literals survive. Other LaTeX
-    metacharacters (\\, {, }, #) are left untouched so injected commands work,
-    matching Prompts-to-Paper's trade-off.
-    """
+
+def render_inline_preface_tex(text: str) -> str:
+    tokens: dict[str, str] = {}
+
+    def stash(prefix: str, value: str) -> str:
+        token = f"@@{prefix}{len(tokens)}@@"
+        tokens[token] = value
+        return token
+
+    text = re.sub(
+        r"\[(.*?)\]\((.*?)\)",
+        lambda m: stash("LINK", rf"\href{{{m.group(2)}}}{{\textcolor{{blue}}{{{tex_escape(m.group(1))}}}}}"),
+        text,
+    )
+    text = re.sub(
+        r"`(.*?)`",
+        lambda m: stash("CODE", rf"\colorbox{{gray!10}}{{\textcolor{{red!70!black}}{{{tex_escape(m.group(1))}}}}}"),
+        text,
+    )
+
+    rendered = tex_escape(text)
+    rendered = re.sub(r"\*\*(.+?)\*\*", r"\\textbf{\1}", rendered)
+    rendered = re.sub(r"(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)", r"\\textit{\1}", rendered)
+
+    for token, value in tokens.items():
+        rendered = rendered.replace(tex_escape(token), value)
+    return rendered
+
+
+def render_preface_heading(line: str) -> str | None:
+    match = re.match(r"^(#{1,3})\s+(.*)$", line.strip())
+    if match is None:
+        return None
+
+    hashes = match.group(1)
+    heading_text = render_inline_preface_tex(match.group(2).strip())
+    size = r"\Large" if len(hashes) == 1 else r"\normalsize"
+    escaped_marker = hashes.replace("#", r"\#")
+    return (
+        r"\par"
+        "\n"
+        rf"{{{size}\bfseries\textcolor{{red!70!black}}{{{escaped_marker} {heading_text}}}}}"
+        "\n"
+        r"\par"
+    )
+
+
+def render_preface_paragraph(lines: list[str]) -> str:
+    parts = [line.strip() for line in lines if line.strip()]
+    return render_inline_preface_tex(" ".join(parts)) + r"\par"
+
+
+def render_preface_blockquote(lines: list[str]) -> str:
+    paragraphs: list[str] = []
+    current: list[str] = []
+    for line in lines:
+        stripped = line.strip()
+        content = stripped[1:].lstrip() if stripped.startswith(">") else stripped
+        if not content:
+            if current:
+                paragraphs.append(render_preface_paragraph(current))
+                current = []
+            continue
+        current.append(content)
+    if current:
+        paragraphs.append(render_preface_paragraph(current))
+
+    body = "\n".join(paragraphs)
+    return (
+        "\\begin{quote}\n"
+        "\\setlength{\\parskip}{0.3em}\n"
+        f"{body}\n"
+        "\\end{quote}"
+    )
+
+
+def render_preface_fenced_block(lines: list[str]) -> str:
+    body = "\n".join(tex_escape(raw_line) for raw_line in lines)
+    return (
+        "\\begin{mdframed}["
+        "backgroundcolor=gray!10,"
+        "linewidth=0.6pt,"
+        "linecolor=gray!70,"
+        "roundcorner=2pt,"
+        "innerleftmargin=0.6em,"
+        "innerrightmargin=0.6em,"
+        "innertopmargin=0.5\\baselineskip,"
+        "innerbottommargin=0.5\\baselineskip"
+        "]\n"
+        "\\begingroup\n"
+        "\\small\n"
+        "\\setlength{\\parindent}{0pt}\n"
+        "\\setlength{\\parskip}{0pt}\n"
+        "\\begin{alltt}\n"
+        f"{body}\n"
+        "\\end{alltt}\n"
+        "\\endgroup\n"
+        "\\end{mdframed}"
+    )
+
+
+def render_preface_list(lines: list[str], start: int, indent: int) -> tuple[str, int]:
+    first_content = lines[start][indent:]
+    ordered = re.match(r"\d+\.\s+", first_content) is not None
+    marker_pattern = r"\d+\.\s+" if ordered else r"[-*]\s+"
+    env = "enumerate" if ordered else "itemize"
+
+    items: list[str] = []
+    index = start
+    while index < len(lines):
+        raw_line = lines[index]
+        if not raw_line.strip():
+            index += 1
+            continue
+
+        current_indent = count_leading_spaces(raw_line)
+        stripped = raw_line[current_indent:]
+        if current_indent < indent:
+            break
+        if current_indent != indent or re.match(marker_pattern, stripped) is None:
+            break
+
+        item_text = re.sub(marker_pattern, "", stripped, count=1)
+        item_parts = [render_inline_preface_tex(item_text)]
+        index += 1
+
+        child_start = index
+        while index < len(lines):
+            probe = lines[index]
+            if not probe.strip():
+                index += 1
+                continue
+
+            probe_indent = count_leading_spaces(probe)
+            probe_stripped = probe[probe_indent:]
+            if probe_indent < indent:
+                break
+            if probe_indent == indent:
+                break
+            index += 1
+
+        child_lines = lines[child_start:index]
+        child_nonblank = [line for line in child_lines if line.strip()]
+        if child_nonblank:
+            child_indent = min(count_leading_spaces(line) for line in child_nonblank)
+            child_body, consumed = render_preface_blocks(child_lines, 0, child_indent)
+            if consumed != len(child_lines):
+                raise ValueError("failed to consume nested preface list block")
+            if child_body.strip():
+                item_parts.append(child_body.strip())
+
+        items.append("\\item " + "\n".join(item_parts))
+
+    body = "\n".join(items)
+    return (
+        "\\begin{"
+        + env
+        + "}\n"
+        + "\\setlength{\\itemsep}{0.15em}\n"
+        + "\\setlength{\\parskip}{0pt}\n"
+        + body
+        + "\n\\end{"
+        + env
+        + "}"
+    ), index
+
+
+def render_preface_blocks(lines: list[str], start: int = 0, base_indent: int = 0) -> tuple[str, int]:
+    parts: list[str] = []
+    index = start
+    while index < len(lines):
+        raw_line = lines[index]
+        if not raw_line.strip():
+            index += 1
+            continue
+
+        indent = count_leading_spaces(raw_line)
+        if indent < base_indent:
+            break
+
+        stripped = raw_line[indent:]
+        heading = render_preface_heading(stripped)
+        if indent == base_indent and heading is not None:
+            parts.append(heading)
+            index += 1
+            continue
+
+        if indent == base_indent and stripped.startswith("```"):
+            fence_lines: list[str] = []
+            index += 1
+            while index < len(lines):
+                probe = lines[index]
+                probe_indent = count_leading_spaces(probe)
+                probe_stripped = probe[probe_indent:]
+                if probe_indent == base_indent and probe_stripped.startswith("```"):
+                    index += 1
+                    break
+                fence_lines.append(probe[base_indent:] if probe.startswith(" " * base_indent) else probe)
+                index += 1
+            else:
+                raise ValueError("unterminated fenced block in preface markdown")
+
+            parts.append(render_preface_fenced_block(fence_lines))
+            continue
+
+        if indent == base_indent and re.match(r"(?:\d+\.\s+|[-*]\s+)", stripped):
+            rendered_list, index = render_preface_list(lines, index, indent)
+            parts.append(rendered_list)
+            continue
+
+        if indent == base_indent and stripped.startswith(">"):
+            quote_lines: list[str] = []
+            while index < len(lines):
+                probe = lines[index]
+                if not probe.strip():
+                    quote_lines.append(probe)
+                    index += 1
+                    continue
+
+                probe_indent = count_leading_spaces(probe)
+                probe_stripped = probe[probe_indent:]
+                if probe_indent != base_indent or not probe_stripped.startswith(">"):
+                    break
+                quote_lines.append(probe)
+                index += 1
+            parts.append(render_preface_blockquote(quote_lines))
+            continue
+
+        paragraph_lines = [stripped]
+        index += 1
+        while index < len(lines):
+            probe = lines[index]
+            if not probe.strip():
+                break
+
+            probe_indent = count_leading_spaces(probe)
+            probe_stripped = probe[probe_indent:]
+            if probe_indent < base_indent:
+                break
+            if probe_indent == base_indent and (
+                render_preface_heading(probe_stripped) is not None
+                or re.match(r"(?:\d+\.\s+|[-*]\s+)", probe_stripped)
+                or probe_stripped.startswith(">")
+            ):
+                break
+
+            paragraph_lines.append(probe[probe_indent:].strip())
+            index += 1
+        parts.append(render_preface_paragraph(paragraph_lines))
+
+    return "\n\n".join(parts), index
+
+
+def markdown_preface_to_tex(text: str) -> str:
+    """Render a narrow markdown subset for the boxed preface."""
     if not text.strip():
         return "This preface has not been provided yet."
 
-    # Minimal escape first (do NOT touch \, {, }, #)
-    for char, repl in (("&", r"\&"), ("%", r"\%"), ("_", r"\_"), ("$", r"\$")):
-        text = text.replace(char, repl)
-
-    # Promote markdown headings to larger colored lines (before escaping #)
-    def render_heading(match: re.Match[str]) -> str:
-        hashes = match.group(1)
-        heading_text = match.group(2).strip()
-        size = r"\Large" if len(hashes) == 1 else r"\normalsize"
-        escaped_marker = hashes.replace("#", r"\#")
-        return (
-            r"\par"
-            "\n"
-            rf"{{{size}\bfseries\textcolor{{red!70!black}}{{{escaped_marker} {heading_text}}}}}"
-            "\n"
-            r"\par"
-        )
-
-    text = re.sub(
-        r"^(#{1,3})\s+(.*)$",
-        render_heading,
-        text,
-        flags=re.MULTILINE,
-    )
-
-    # Escape remaining #
-    text = re.sub(r"(?<!\\)#", r"\\#", text)
-
-    # Markdown links -> colored \href
-    text = re.sub(
-        r"\[(.*?)\]\((.*?)\)",
-        r"\\href{\2}{\\textcolor{blue}{\1}}",
-        text,
-    )
-
-    # Inline code -> colorbox
-    text = re.sub(
-        r"`(.*?)`",
-        r"\\colorbox{gray!10}{\\textcolor{red!70!black}{\1}}",
-        text,
-    )
-
-    return text.strip()
+    rendered, consumed = render_preface_blocks(text.splitlines())
+    if consumed != len(text.splitlines()):
+        raise ValueError("failed to consume preface markdown")
+    return rendered.strip()
 
 
 def read_section(markdown_path: pathlib.Path, heading: str) -> str:
@@ -233,6 +444,7 @@ def inject_final_packages(tex_source: str) -> str:
     packages = [
         "\\usepackage{xcolor}",
         "\\usepackage{mdframed}",
+        "\\usepackage{alltt}",
         "\\usepackage{hyperref}",
     ]
     to_add = [pkg for pkg in packages if pkg not in tex_source]
