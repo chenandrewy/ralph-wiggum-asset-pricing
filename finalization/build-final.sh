@@ -56,11 +56,47 @@ def tex_escape(text: str) -> str:
     return "".join(replacements.get(char, char) for char in text)
 
 
-def markdown_paragraphs_to_tex(text: str) -> str:
-    paragraphs = [block.strip() for block in re.split(r"\n\s*\n", text.strip()) if block.strip()]
-    if not paragraphs:
+def markdown_preface_to_tex(text: str) -> str:
+    """Render the preface markdown using the Prompts-to-Paper readme-appendix style.
+
+    Supports: headings (#, ##, ...), links [text](url), inline code `x`.
+    Minimally escapes &, %, _, $ so authored literals survive. Other LaTeX
+    metacharacters (\\, {, }, #) are left untouched so injected commands work,
+    matching Prompts-to-Paper's trade-off.
+    """
+    if not text.strip():
         return "This preface has not been provided yet."
-    return "\n\n".join(tex_escape(paragraph) + r"\par" for paragraph in paragraphs)
+
+    # Minimal escape first (do NOT touch \, {, }, #)
+    for char, repl in (("&", r"\&"), ("%", r"\%"), ("_", r"\_"), ("$", r"\$")):
+        text = text.replace(char, repl)
+
+    # Color markdown headings dark red and bold (before escaping #)
+    text = re.sub(
+        r"^(#.*?)$",
+        r"\\textbf{\\textcolor{red!70!black}{\1}}",
+        text,
+        flags=re.MULTILINE,
+    )
+
+    # Escape remaining #
+    text = re.sub(r"(?<!\\)#", r"\\#", text)
+
+    # Markdown links -> colored \href
+    text = re.sub(
+        r"\[(.*?)\]\((.*?)\)",
+        r"\\href{\2}{\\textcolor{blue}{\1}}",
+        text,
+    )
+
+    # Inline code -> colorbox
+    text = re.sub(
+        r"`(.*?)`",
+        r"\\colorbox{gray!10}{\\textcolor{red!70!black}{\1}}",
+        text,
+    )
+
+    return text.strip()
 
 
 def read_section(markdown_path: pathlib.Path, heading: str) -> str:
@@ -149,7 +185,7 @@ def build_appendix_tex(manifest: dict[str, object]) -> str:
 def build_preface_tex(preface_markdown: str) -> str:
     return render_template(
         TEMPLATES_DIR / "preface.tex.j2",
-        {"preface_body": markdown_paragraphs_to_tex(preface_markdown)},
+        {"preface_body": markdown_preface_to_tex(preface_markdown)},
     )
 
 
@@ -170,14 +206,19 @@ def inject_appendix(tex_source: str, appendix_tex: str) -> str:
 
 
 def inject_final_packages(tex_source: str) -> str:
-    package_line = "\\usepackage{xcolor}\n"
-    if package_line in tex_source:
+    packages = [
+        "\\usepackage{xcolor}",
+        "\\usepackage{mdframed}",
+        "\\usepackage{hyperref}",
+    ]
+    to_add = [pkg for pkg in packages if pkg not in tex_source]
+    if not to_add:
         return tex_source
 
     marker = "\\title{"
-    replacement = package_line + "\n" + marker
     if marker not in tex_source:
         raise ValueError("could not locate package insertion point in paper.tex")
+    replacement = "\n".join(to_add) + "\n\n" + marker
     return tex_source.replace(marker, replacement, 1)
 
 
