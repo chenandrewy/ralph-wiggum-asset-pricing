@@ -1,6 +1,6 @@
 # == Basic loop configuration ==
-run-name: ext-spec-refined-2
-max-iter: 15
+run-name: ext-spec-refined-3
+max-iter: 10
 
 # Optional pre-loop baseline test run
 test-before-loop: off
@@ -13,6 +13,7 @@ selected-tests:
   - element-lit-review
   - element-opening-fig
   - element-rhetoric-meta
+  - element-transfers-fig
   - factcheck-anaphora
   - factcheck-bysection
   - factcheck-code
@@ -25,6 +26,7 @@ selected-tests:
   - spec-paper
   - spec-scope
   - theory-deadweight
+  - theory-clarity
   - visual-figures
   - visual-figures-image-only
   - visual-pages
