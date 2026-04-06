@@ -191,11 +191,22 @@ def build_preface_tex(preface_markdown: str) -> str:
 
 
 def inject_preface(tex_source: str, preface_tex: str) -> str:
-    marker = "\\section*{Preface (TBC)}\n\\vspace{-1.5em}"
-    replacement = marker + "\n\n" + preface_tex
-    if marker not in tex_source:
-        raise ValueError("could not locate preface marker in paper.tex")
-    return tex_source.replace(marker, replacement, 1)
+    pattern = re.compile(
+        r"(\\section\*\{Preface[^}]*\}\s*\n(?:\\vspace\{[^}]*\}\s*\n)?)(.*?)(\n\\section\{Introduction\})",
+        re.DOTALL,
+    )
+    match = pattern.search(tex_source)
+    if match is None:
+        raise ValueError("could not locate preface block in paper.tex")
+    return (
+        tex_source[:match.start()]
+        + match.group(1)
+        + "\n"
+        + preface_tex
+        + "\n"
+        + match.group(3)
+        + tex_source[match.end():]
+    )
 
 
 def inject_appendix(tex_source: str, appendix_tex: str) -> str:
