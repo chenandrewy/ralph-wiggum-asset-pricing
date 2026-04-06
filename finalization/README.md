@@ -20,16 +20,9 @@ All generated artifacts live in `finalization/output/`.
 - `inputs/preface.md` — human-authored preface text
 - `inputs/appendix-manifest.toml` — allowlist of spec sections and prompt files
 - `inputs/author-info.toml` — author metadata for the named variant
-- `scripts/build-final-materials.py` — generates derived TeX files in `output/`
-- `build-final.sh` — generates files and compiles both PDFs
+- `build-final.sh` — generates derived TeX files in `output/` and compiles both PDFs
 
 ## How to run
-
-Generate the derived TeX files:
-
-```bash
-python3 finalization/scripts/build-final-materials.py
-```
 
 Generate the derived TeX files and compile both PDFs:
 
