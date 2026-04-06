@@ -72,10 +72,23 @@ def markdown_preface_to_tex(text: str) -> str:
     for char, repl in (("&", r"\&"), ("%", r"\%"), ("_", r"\_"), ("$", r"\$")):
         text = text.replace(char, repl)
 
-    # Color markdown headings dark red and bold (before escaping #)
+    # Promote markdown headings to larger colored lines (before escaping #)
+    def render_heading(match: re.Match[str]) -> str:
+        hashes = match.group(1)
+        heading_text = match.group(2).strip()
+        size = r"\Large" if len(hashes) == 1 else r"\normalsize"
+        escaped_marker = hashes.replace("#", r"\#")
+        return (
+            r"\par"
+            "\n"
+            rf"{{{size}\bfseries\textcolor{{red!70!black}}{{{escaped_marker} {heading_text}}}}}"
+            "\n"
+            r"\par"
+        )
+
     text = re.sub(
-        r"^(#.*?)$",
-        r"\\textbf{\\textcolor{red!70!black}{\1}}",
+        r"^(#{1,3})\s+(.*)$",
+        render_heading,
         text,
         flags=re.MULTILINE,
     )
@@ -192,7 +205,7 @@ def build_preface_tex(preface_markdown: str) -> str:
 
 def inject_preface(tex_source: str, preface_tex: str) -> str:
     pattern = re.compile(
-        r"(\\section\*\{Preface[^}]*\}\s*\n(?:\\vspace\{[^}]*\}\s*\n)?)(.*?)(\n\\section\{Introduction\})",
+        r"\n\\section\*\{Preface[^}]*\}\s*\n(?:\\vspace\{[^}]*\}\s*\n)?(.*?)(\n\\section\{Introduction\})",
         re.DOTALL,
     )
     match = pattern.search(tex_source)
@@ -200,11 +213,10 @@ def inject_preface(tex_source: str, preface_tex: str) -> str:
         raise ValueError("could not locate preface block in paper.tex")
     return (
         tex_source[:match.start()]
-        + match.group(1)
-        + "\n"
+        + "\n\\vspace{1.0em}\n"
         + preface_tex
         + "\n"
-        + match.group(3)
+        + match.group(2)
         + tex_source[match.end():]
     )
 
