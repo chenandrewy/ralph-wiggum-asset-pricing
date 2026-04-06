@@ -28,3 +28,7 @@ title = "writing-flow Prompt"
 [[prompt_files]]
 path = "tests/visual-figures-image-only.py"
 title = "visual-figures-image-only Prompt"
+
+[[prompt_files]]
+path = "tests/element-rhetoric-meta.py"
+title = "element-rhetoric-meta Prompt"

@@ -150,7 +150,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Run several isolated AuthorPlan+AuthorImprove trials and copy back only paper.tex outputs.",
     )
-    parser.add_argument("--runs", type=int, default=5, help="number of trials to run (default: 5)")
+    parser.add_argument("--runs", type=int, default=3, help="number of trials to run (default: 3)")
     parser.add_argument("--base-ref", default="HEAD", help="git ref to seed each worktree from (default: HEAD)")
     parser.add_argument(
         "--keep-worktrees",
