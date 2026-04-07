@@ -389,11 +389,28 @@ def build_verbatim_block(title: str, body: str) -> str:
     )
 
 
-def build_anchored_verbatim_block(title: str, body: str, anchor: str | None = None) -> str:
+def build_markdown_block(title: str, body: str) -> str:
+    rendered_body = markdown_preface_to_tex(body)
+    return (
+        f"\\subsection{{{tex_escape(title)}}}\n"
+        "\\begingroup\n"
+        "\\setlength{\\parindent}{0pt}\n"
+        "\\setlength{\\parskip}{0.5em}\n"
+        f"{rendered_body}\n"
+        "\\endgroup\n"
+    )
+
+
+def build_anchored_block(
+    title: str,
+    body: str,
+    anchor: str | None = None,
+    renderer=build_verbatim_block,
+) -> str:
     prefix = ""
     if anchor:
         prefix = f"\\hypertarget{{{tex_escape(anchor)}}}{{}}\n"
-    return prefix + build_verbatim_block(title, body)
+    return prefix + renderer(title, body)
 
 
 def build_appendix_tex(manifest: dict[str, object]) -> str:
@@ -405,14 +422,14 @@ def build_appendix_tex(manifest: dict[str, object]) -> str:
         heading = str(item["heading"])
         title = str(item["title"])
         anchor = str(item["anchor"]).strip() if "anchor" in item else None
-        parts.append(build_anchored_verbatim_block(title, read_section(path, heading), anchor))
+        parts.append(build_anchored_block(title, read_section(path, heading), anchor, build_markdown_block))
 
     for prompt_file in manifest.get("prompt_files", []):
         item = dict(prompt_file)
         path = REPO_ROOT / str(item["path"])
         title = str(item["title"])
         anchor = str(item["anchor"]).strip() if "anchor" in item else None
-        parts.append(build_anchored_verbatim_block(title, extract_prompt_block(path), anchor))
+        parts.append(build_anchored_block(title, extract_prompt_block(path), anchor, build_markdown_block))
 
     return render_template(
         TEMPLATES_DIR / "appendix.tex.j2",
