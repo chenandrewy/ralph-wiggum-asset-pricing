@@ -9,12 +9,12 @@ anchor = "econ-spec"
 [[prompt_files]]
 path = "tests/factcheck-theory.py"
 title = "factcheck-theory Prompt"
-anchor = "theory"
+anchor = "factcheck-theory"
 
 [[prompt_files]]
 path = "tests/factcheck-narrative.py"
 title = "factcheck-narrative Prompt"
-anchor = "narrative"
+anchor = "factcheck-narrative"
 
 [[prompt_files]]
 path = "tests/factcheck-anaphora.py"
@@ -39,4 +39,4 @@ anchor = "figures"
 [[prompt_files]]
 path = "tests/element-rhetoric-meta.py"
 title = "element-rhetoric-meta Prompt"
-anchor = "rhetoric"
+anchor = "rhetoric-meta"
