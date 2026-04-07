@@ -22,6 +22,7 @@ All generated artifacts live in `finalization/output/`.
 - `inputs/acknowledgments.md` — acknowledgments; injected as `\thanks` on the
   title of the named variant only (anonymous variant is left clean)
 - `inputs/appendix-manifest.toml` — allowlist of spec sections and prompt files
+  with optional internal link anchors for Preface jump links
 - `inputs/author-info.toml` — author metadata for the named variant
 - `build-final.sh` — generates derived TeX files in `output/` and compiles both PDFs
 
@@ -52,3 +53,6 @@ The build writes:
   `finalization/output/`.
 - The appendix is manifest-driven on purpose. Do not auto-include all tests or
   all Ralph prompts.
+- Preface markdown supports internal jump links of the form
+  `[link text](#anchor-name)` when the corresponding appendix manifest item sets
+  `anchor = "anchor-name"`.

@@ -71,7 +71,14 @@ def render_inline_preface_tex(text: str) -> str:
 
     text = re.sub(
         r"\[(.*?)\]\((.*?)\)",
-        lambda m: stash("LINK", rf"\href{{{m.group(2)}}}{{\textcolor{{blue}}{{{tex_escape(m.group(1))}}}}}"),
+        lambda m: stash(
+            "LINK",
+            (
+                rf"\hyperlink{{{tex_escape(m.group(2)[1:])}}}{{\textcolor{{blue}}{{{tex_escape(m.group(1))}}}}}"
+                if m.group(2).startswith("#")
+                else rf"\href{{{m.group(2)}}}{{\textcolor{{blue}}{{{tex_escape(m.group(1))}}}}}"
+            ),
+        ),
         text,
     )
     text = re.sub(
@@ -382,6 +389,13 @@ def build_verbatim_block(title: str, body: str) -> str:
     )
 
 
+def build_anchored_verbatim_block(title: str, body: str, anchor: str | None = None) -> str:
+    prefix = ""
+    if anchor:
+        prefix = f"\\hypertarget{{{tex_escape(anchor)}}}{{}}\n"
+    return prefix + build_verbatim_block(title, body)
+
+
 def build_appendix_tex(manifest: dict[str, object]) -> str:
     parts: list[str] = []
 
@@ -390,13 +404,15 @@ def build_appendix_tex(manifest: dict[str, object]) -> str:
         path = REPO_ROOT / str(item["path"])
         heading = str(item["heading"])
         title = str(item["title"])
-        parts.append(build_verbatim_block(title, read_section(path, heading)))
+        anchor = str(item["anchor"]).strip() if "anchor" in item else None
+        parts.append(build_anchored_verbatim_block(title, read_section(path, heading), anchor))
 
     for prompt_file in manifest.get("prompt_files", []):
         item = dict(prompt_file)
         path = REPO_ROOT / str(item["path"])
         title = str(item["title"])
-        parts.append(build_verbatim_block(title, extract_prompt_block(path)))
+        anchor = str(item["anchor"]).strip() if "anchor" in item else None
+        parts.append(build_anchored_verbatim_block(title, extract_prompt_block(path), anchor))
 
     return render_template(
         TEMPLATES_DIR / "appendix.tex.j2",
