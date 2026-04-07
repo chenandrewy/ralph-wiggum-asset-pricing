@@ -38,6 +38,10 @@ selected-tests:
 # Agent log verbosity
 agent-log-mode: verbose
 
+# Stop before batch test runs when Claude's observed five-hour utilization is too high
+quota-preflight: on
+claude-5h-utilization-limit: 0.67
+
 # == Referees and continual-improvement mode ==
 continual-improvement: false
 

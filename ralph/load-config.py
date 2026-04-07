@@ -19,6 +19,8 @@ DEFAULTS = {
     "test-before-loop": "off",
     "referees": "false",
     "continual-improvement": "false",
+    "quota-preflight": "off",
+    "claude-5h-utilization-limit": "0.67",
     "run-name": "",
 }
 
@@ -29,6 +31,17 @@ VALID_BOOLEANS = {"off", "on", "1", "true", "yes", "false", "no", "0"}
 def fail(msg: str) -> int:
     print(f"ERROR: {msg}", file=sys.stderr)
     return 1
+
+
+def parse_unit_interval(name: str, raw_value: object) -> float:
+    text = str(raw_value).strip()
+    try:
+        value = float(text)
+    except ValueError as exc:
+        raise ValueError(f"{name} must be a number between 0 and 1 (got: {text})") from exc
+    if value < 0.0 or value > 1.0:
+        raise ValueError(f"{name} must be between 0 and 1 inclusive (got: {text})")
+    return value
 
 
 def main() -> int:
@@ -55,6 +68,16 @@ def main() -> int:
 
     referees = get("referees")
     continual = get("continual-improvement")
+    quota_preflight = get("quota-preflight")
+    if quota_preflight not in VALID_BOOLEANS:
+        return fail(f"quota-preflight must be a boolean value (got: {quota_preflight})")
+    try:
+        claude_5h_utilization_limit = parse_unit_interval(
+            "claude-5h-utilization-limit",
+            config.get("claude-5h-utilization-limit", DEFAULTS["claude-5h-utilization-limit"]),
+        )
+    except ValueError as exc:
+        return fail(str(exc))
     run_name = str(config.get("run-name", "")).strip()
 
     print(f"MAX_ITER={max_iter}")
@@ -62,6 +85,8 @@ def main() -> int:
     print(f"TEST_BEFORE_LOOP={test_before}")
     print(f"REFEREES_ENABLED={referees}")
     print(f"CONTINUAL_IMPROVEMENT={continual}")
+    print(f"QUOTA_PREFLIGHT={quota_preflight}")
+    print(f"CLAUDE_5H_UTILIZATION_LIMIT={claude_5h_utilization_limit}")
     print(f"RUN_NAME={shlex.quote(run_name)}")
     return 0
 

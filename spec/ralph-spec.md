@@ -44,6 +44,7 @@ The author steps (`author-plan.py`, `author-improve.py`) may modify files in the
 - `config-ralph.yaml` may optionally enable continual-improvement mode with `continual-improvement`; this requires `referees: true`.
 - `config-ralph.yaml` may optionally enable a baseline pre-loop test run with `test-before-loop`.
 - `config-ralph.yaml` may optionally specify a `run-name` that labels the current run for traceability in commit subjects and logs.
+- `config-ralph.yaml` may optionally enable a Claude quota preflight with `quota-preflight` and may set its stop threshold with `claude-5h-utilization-limit`.
 
 ## Test Artifact Preparation
 
@@ -85,6 +86,8 @@ The author steps (`author-plan.py`, `author-improve.py`) may modify files in the
 
 If `test-before-loop` is enabled, Ralph first runs the LaTeX build gate. If that baseline build succeeds, Ralph prepares the remaining test artifacts and then runs `ralph/run-tests.py` once before iteration 1 to establish the current baseline. If `referees` is also enabled, Ralph runs the selected referees once after the baseline test run completes. If the baseline LaTeX build fails, Ralph skips the baseline test and referee phase and proceeds to iteration 1.
 
+If `quota-preflight` is enabled, Ralph runs a lightweight active Claude quota probe immediately before each batch test phase. If the probe observes five-hour utilization at or above `claude-5h-utilization-limit`, Ralph stops the loop cleanly before launching the test batch.
+
 Let the current Ralph stretch begin at the most recent startup commit on `ralph/run`. For each iteration from the next unfinished iteration through `max-iter` for that stretch:
 
 1. Run `ralph/author-plan.py`.
@@ -94,11 +97,12 @@ Let the current Ralph stretch begin at the most recent startup commit on `ralph/
 5. If the LaTeX build gate fails, run `ralph/author-fix-build.py` to attempt a focused build recovery, then re-run the LaTeX build gate.
 6. If the build gate still fails after the fix attempt, record the iteration as failed, skip page-image generation, skip tests and referees, create the iteration commit, and continue according to the normal exit rules.
 7. If the LaTeX build gate succeeds (on the first try or after the fix attempt), prepare the remaining test artifacts.
-8. Run `ralph/run-tests.py`.
-9. If referees are enabled, run `ralph/run-referees.py` after the test phase completes.
-10. Create one git commit for the iteration with `ralph/commit-iteration.py`.
-11. If continual-improvement is disabled, exit successfully as soon as the test phase returns success.
-12. If continual-improvement is enabled, continue to the next iteration regardless of test results.
+8. If enabled, run the Claude quota preflight for the test phase.
+9. Run `ralph/run-tests.py`.
+10. If referees are enabled, run `ralph/run-referees.py` after the test phase completes.
+11. Create one git commit for the iteration with `ralph/commit-iteration.py`.
+12. If continual-improvement is disabled, exit successfully as soon as the test phase returns success.
+13. If continual-improvement is enabled, continue to the next iteration regardless of test results.
 
 ## Commit Model
 
@@ -124,4 +128,5 @@ Let the current Ralph stretch begin at the most recent startup commit on `ralph/
 
 - When continual-improvement is disabled (default): exit `0` immediately after the first iteration whose selected tests all pass.
 - When continual-improvement is enabled: exit `0` after the current Ralph stretch reaches `max-iter` total iterations.
+- Exit `0` early if the active Claude quota preflight stops the loop before a batch test phase due to low observed headroom.
 - Exit `1` if an author step fails, planning does not produce `ralph-garage/improvement-plan.md`, the commit step fails, or (when continual-improvement is disabled) the iteration limit is reached without a passing test run.

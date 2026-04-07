@@ -50,6 +50,26 @@ build_paper_artifacts() {
     python3 ralph/generate-page-images.py || { log "ERROR: page image generation failed"; exit 1; }
 }
 
+run_test_quota_preflight() {
+    local phase_label="$1"
+    local preflight_rc
+    if ! is_truthy "$QUOTA_PREFLIGHT"; then
+        return 0
+    fi
+    python3 ralph/check-claude-budget.py \
+        --phase "$phase_label" \
+        --utilization-limit "$CLAUDE_5H_UTILIZATION_LIMIT" && preflight_rc=0 || preflight_rc=$?
+    if [ "$preflight_rc" -eq 0 ]; then
+        return 0
+    fi
+    if [ "$preflight_rc" -eq 2 ]; then
+        log "=== stopping Ralph loop before $phase_label due to low Claude quota headroom ==="
+        exit 0
+    fi
+    log "ERROR: Claude quota preflight failed before $phase_label"
+    exit 1
+}
+
 # --- load config and validate ---
 _CONFIG="$(python3 ralph/load-config.py)"
 eval "$_CONFIG"
@@ -124,6 +144,7 @@ if is_truthy "$TEST_BEFORE_LOOP"; then
     if ! build_paper_artifacts; then
         log "=== pre-loop LaTeX build failed; skipping baseline test & referee phase ==="
     else
+        run_test_quota_preflight "pre-loop tests"
         python3 ralph/run-tests.py && test_rc=0 || test_rc=$?
         if [ "$test_rc" -eq 0 ]; then
             log "=== pre-loop tests passed ==="
@@ -174,6 +195,7 @@ while true; do
 
     # 3. Run tests and referees
     log "--- test phase ---"
+    run_test_quota_preflight "test phase"
     python3 ralph/run-tests.py && test_rc=0 || test_rc=$?
 
     if is_truthy "$REFEREES_ENABLED"; then
