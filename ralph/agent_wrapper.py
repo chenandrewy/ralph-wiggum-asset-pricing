@@ -13,13 +13,10 @@ fail clearly at the wrapper or provider boundary.
 import subprocess
 import sys
 import os
-import re
 import shlex
 import shutil
 import tempfile
 import threading
-import time
-import json
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
@@ -32,13 +29,6 @@ VALID_FAILURE_LOG_MODES = ("on", "off", "auto")
 VALID_CLAUDE_EFFORTS = ("low", "medium", "high", "max")
 VALID_CODEX_EFFORTS = ("none", "low", "medium", "high", "xhigh")
 NEW_YORK_TZ = ZoneInfo("America/New_York")
-TRANSIENT_ERROR_PATTERNS = (
-    re.compile(r"\bAPI Error:\s*(429|500|502|503|504)\b", re.IGNORECASE),
-    re.compile(r"\bInternal server error\b", re.IGNORECASE),
-)
-MAX_TRANSIENT_RETRIES = 2
-TRANSIENT_RETRY_BASE_DELAY_SECONDS = 2.0
-RATE_LIMIT_SLEEP_BUFFER_SECONDS = 60.0
 
 
 def write_log(path, text):
@@ -297,84 +287,10 @@ def should_write_failure_log(step_label, failure_log_mode):
     return label.startswith("author-")
 
 
-def is_transient_failure(stdout_text, stderr_text):
-    stderr_payload = stderr_text or ""
-    if any(pattern.search(stderr_payload) for pattern in TRANSIENT_ERROR_PATTERNS):
-        return True
-    if stderr_payload.strip():
-        return False
-    stdout_payload = stdout_text or ""
-    return any(pattern.search(stdout_payload) for pattern in TRANSIENT_ERROR_PATTERNS)
-
-
-def retry_delay_seconds(attempt_index):
-    return TRANSIENT_RETRY_BASE_DELAY_SECONDS * (2 ** (attempt_index - 1))
-
-
 def append_live_log(live_log_path, prefix, message):
     if not live_log_path:
         return
     append_log(live_log_path, f"[{prefix}] {message}")
-
-
-def extract_rate_limit_reset_at(stream_json_text):
-    if not stream_json_text.strip():
-        return None, None
-    latest_five_hour_reset = None
-    saw_seven_day = False
-    for line in stream_json_text.splitlines():
-        raw = line.strip()
-        if not raw:
-            continue
-        try:
-            payload = json.loads(raw)
-        except json.JSONDecodeError:
-            continue
-        if payload.get("type") != "rate_limit_event":
-            continue
-        info = payload.get("rate_limit_info")
-        if not isinstance(info, dict):
-            continue
-        reset_at = info.get("resetsAt")
-        if not isinstance(reset_at, (int, float)):
-            continue
-        rate_limit_type = info.get("rateLimitType")
-        if rate_limit_type == "five_hour":
-            latest_five_hour_reset = float(reset_at)
-        elif rate_limit_type == "seven_day":
-            saw_seven_day = True
-    if latest_five_hour_reset is not None:
-        return latest_five_hour_reset, "five_hour"
-    if saw_seven_day:
-        return None, "seven_day"
-    return None, None
-
-
-def maybe_wait_for_rate_limit(stream_json_text, live_log_path, step_label):
-    reset_at, rate_limit_type = extract_rate_limit_reset_at(stream_json_text)
-    if rate_limit_type == "seven_day":
-        message = (
-            f"[agent-wrapper] seven-day rate limit for step '{safe_label(step_label or 'run')}'; "
-            f"manual intervention required, not retrying automatically\n"
-        )
-        append_live_log(live_log_path, "ERROR", message)
-        return False, message, True
-    if reset_at is None:
-        return False, "", False
-
-    now_ts = time.time()
-    sleep_seconds = max(0.0, reset_at - now_ts) + RATE_LIMIT_SLEEP_BUFFER_SECONDS
-    reset_ny = datetime.fromtimestamp(reset_at, tz=NEW_YORK_TZ)
-    wake_ny = datetime.fromtimestamp(now_ts + sleep_seconds, tz=NEW_YORK_TZ)
-    message = (
-        f"[agent-wrapper] rate limit for step '{safe_label(step_label or 'run')}'; "
-        f"waiting until {reset_ny.isoformat(timespec='seconds')} "
-        f"(retry scheduled for {wake_ny.isoformat(timespec='seconds')}, "
-        f"sleep {sleep_seconds:.1f}s)\n"
-    )
-    append_live_log(live_log_path, "WAIT", message)
-    time.sleep(sleep_seconds)
-    return True, message, False
 
 
 def read_and_clear_stream_capture(stream_capture_path):
@@ -390,64 +306,6 @@ def read_and_clear_stream_capture(stream_capture_path):
     except OSError:
         pass
     return payload
-
-
-def run_with_transient_retries(bash_command, env, live_log_path, stream_capture_path, step_label):
-    attempts = 1 + MAX_TRANSIENT_RETRIES
-    retry_log_text = ""
-    rate_limit_wait_used = False
-
-    for attempt in range(1, attempts + 1):
-        if attempt > 1:
-            read_and_clear_stream_capture(stream_capture_path)
-
-        append_live_log(
-            live_log_path,
-            "ATTEMPT",
-            f"[agent-wrapper] starting attempt {attempt}/{attempts} for step "
-            f"'{safe_label(step_label or 'run')}'\n",
-        )
-        rc, stdout_text, stderr_text = run_command_with_live_capture(
-            bash_command,
-            env,
-            live_log_path=live_log_path,
-        )
-        stream_json_text = read_and_clear_stream_capture(stream_capture_path)
-        append_live_log(
-            live_log_path,
-            "RESULT",
-            f"[agent-wrapper] attempt {attempt}/{attempts} finished with exit code {rc}\n",
-        )
-
-        if rc == 0:
-            return rc, stdout_text, stderr_text, stream_json_text, retry_log_text
-
-        if not rate_limit_wait_used:
-            waited, wait_message, stop_for_rate_limit = maybe_wait_for_rate_limit(
-                stream_json_text,
-                live_log_path,
-                step_label,
-            )
-            if stop_for_rate_limit:
-                retry_log_text = f"{retry_log_text}{wait_message}"
-                return rc, stdout_text, stderr_text, stream_json_text, retry_log_text
-            if waited:
-                retry_log_text = f"{retry_log_text}{wait_message}"
-                rate_limit_wait_used = True
-                continue
-
-        if attempt >= attempts or not is_transient_failure(stdout_text, stderr_text):
-            return rc, stdout_text, stderr_text, stream_json_text, retry_log_text
-
-        delay_seconds = retry_delay_seconds(attempt)
-        retry_message = (
-            f"[agent-wrapper] transient agent failure for step "
-            f"'{safe_label(step_label or 'run')}' (attempt {attempt}/{attempts}); "
-            f"retrying in {delay_seconds:.1f}s\n"
-        )
-        retry_log_text = f"{retry_log_text}{retry_message}"
-        append_live_log(live_log_path, "RETRY", retry_message)
-        time.sleep(delay_seconds)
 
 
 def handle_failure(agent, model, step_label, failure_log_mode, rc, stdout_text, stderr_text):
@@ -503,16 +361,20 @@ def main():
                 f"status: running\n"
                 f"{'-' * 72}\n"
                 f"[LIVE]\n"
-                f"[ATTEMPT] [agent-wrapper] wrapper started for step '{safe_label(step_label or 'run')}'\n"
+                f"[RUN] [agent-wrapper] wrapper started for step '{safe_label(step_label or 'run')}'\n"
             ),
         )
 
-    rc, stdout_text, stderr_text, stream_json_text, retry_log_text = run_with_transient_retries(
+    rc, stdout_text, stderr_text = run_command_with_live_capture(
         bash_command,
         env,
+        live_log_path=live_log_path,
+    )
+    stream_json_text = read_and_clear_stream_capture(stream_capture_path)
+    append_live_log(
         live_log_path,
-        stream_capture_path,
-        step_label,
+        "RESULT",
+        f"[agent-wrapper] finished with exit code {rc} for step '{safe_label(step_label or 'run')}'\n",
     )
 
     if should_echo_output(step_label, rc):
@@ -529,13 +391,13 @@ def main():
         log_mode,
         rc,
         stdout_text,
-        f"{retry_log_text}{stderr_text}",
+        stderr_text,
         stream_json_text,
         log_path=live_log_path,
     )
 
     if rc != 0:
-        handle_failure(agent, model, step_label, failure_log_mode, rc, stdout_text, f"{retry_log_text}{stderr_text}")
+        handle_failure(agent, model, step_label, failure_log_mode, rc, stdout_text, stderr_text)
 
     sys.exit(0)
 
