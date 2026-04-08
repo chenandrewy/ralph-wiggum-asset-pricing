@@ -139,11 +139,24 @@ def render_markdown_blockquote(lines: list[str], monochrome: bool = False) -> st
         paragraphs.append(render_markdown_paragraph(current, monochrome=monochrome))
 
     body = "\n".join(paragraphs)
+    line_color = "black!55" if monochrome else "blue!45!black"
     return (
-        "\\begin{quote}\n"
+        "\\begin{tcolorbox}["
+        "enhanced,"
+        "breakable,"
+        "colback=white,"
+        "boxrule=0pt,"
+        "frame hidden,"
+        "sharp corners,"
+        "left=0.9em,right=0em,"
+        "top=0.15em,bottom=0.15em,"
+        "before skip=0.75\\baselineskip,"
+        "after skip=0.6\\baselineskip,"
+        f"borderline west={{2pt}}{{0pt}}{{{line_color}}}"
+        "]\n"
         "\\setlength{\\parskip}{0.3em}\n"
         f"{body}\n"
-        "\\end{quote}"
+        "\\end{tcolorbox}"
     )
 
 
@@ -499,6 +512,7 @@ def inject_final_packages(tex_source: str) -> str:
     packages = [
         "\\usepackage{xcolor}",
         "\\usepackage{mdframed}",
+        "\\usepackage[most]{tcolorbox}",
         "\\usepackage{alltt}",
         "\\usepackage{hyperref}",
     ]
