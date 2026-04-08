@@ -22,11 +22,12 @@ This project was also inspired by [Garleanu, Kogan, and Panageas's (2012)](https
 
 Last, I drew from [Hadfield-Menell and Hadfield (2018)](https://arxiv.org/abs/1804.04268) and [Bengio (2023)](https://www.journalofdemocracy.org/ai-and-catastrophic-risk/), who apply ideas from economics to AI catastrophe risk. [Hadfield-Menell and Hadfield (2018)](https://arxiv.org/abs/1804.04268) explains the connection between incomplete contracting and AI alignment. [Bengio (2023)](https://www.journalofdemocracy.org/ai-and-catastrophic-risk/) frames AI catastrophe risk in terms of what I would call decision theory and human incentives---though the essay is written in plain English. 
 
-### The First (April 2025) Paper Generation Algo and R&R Decision
+### The First Draft (April 2025) and R&R Decision
 
-The first draft was finished 4 weeks later (April 9, 2025). It comes with a [Github repo](https://github.com/chenandrewy/Prompts-to-Paper), in which `make-many-papers.py` generates many papers as through a series of LLM (mostly Claude Sonnet 3.7) [prompts](https://github.com/chenandrewy/Prompts-to-Paper/blob/master/plan0408-piecewise.yaml)
+The first draft was finished 4 weeks later (April 9, 2025). It comes with a [Github repo](https://github.com/chenandrewy/Prompts-to-Paper), in which `make-many-papers.py` generates many papers through a series of LLM (mostly Claude Sonnet 3.7) [prompts](https://github.com/chenandrewy/Prompts-to-Paper/blob/master/plan0408-piecewise.yaml)
 
 ```
+
 Algo 2025:
 ----------------
 - Prompt 1: draft the model description based on human-specified 
@@ -57,13 +58,13 @@ The editor also said the human-written appendix was the best part, and should be
 
 ## The April 2026 Paper Generation Algorithm
 
-The biggest change in AI relative to April 2025 is, of course, agents. Anthropic's Claude Code and OpenAI's Codex don't just provide responses to prompts, they are fluent with navigating computing environments, and persist through challenging tasks. 
+The biggest change in AI relative to April 2025 is, of course, agents. Anthropic's Claude Code and OpenAI's Codex don't just provide responses to prompts, they are fluent with navigating, writing, and executing in computing environments. They also persist through challenging tasks. 
 
-These agents allow for a *real* demonstration of AI displacement. These agents really looked like they could take my job. 
+These agents allow for a *real* demonstration of AI displacement. They really looked like they could take my job. 
 
 ### The Ralph Loop
 
-The new algo employs agents following Geoff Huntley's [Ralph Wiggum](https://ghuntley.com/ralph/) loop. The idea behind the Ralph loop is that Ralph Wiggum (from [the Simpsons](https://en.wikipedia.org/wiki/The_Simpsons)) may not be the smartest, but he can be extremely persistent.
+The new algo employs agents following Geoff Huntley's [Ralph Wiggum](https://ghuntley.com/ralph/) loop. The idea behind the Ralph loop is that Ralph Wiggum (from [the Simpsons](https://en.wikipedia.org/wiki/The_Simpsons)) may not be the smartest, but he doesn't mind doing the same thing over, and over, and over again.
 
 For my paper, the Ralph loop is:
 
@@ -115,7 +116,7 @@ I didn't want to have 25 tests! I was hoping for four: for one for theory, for c
 
 Arriving at 25 tests was empirical. I would run the Ralph loop overnight, read the paper output in the morning, and then get frustrated by the result. This would lead to test updates and new tests.
 
-The many tests helped a lot. Like Ralph Wiggum, Claude is easily distracted, and breaking up the tests into smaller tasks helped Claude focus. Actually, since many of the tests used subagents (e.g. N subagents would test the N sections of the paper), you could say there were more like 40 or 50 tests.
+The many tests helped a lot. Like [Ralph Wiggum](https://en.wikipedia.org/wiki/Ralph_Wiggum), Claude is easily distracted, and breaking up the tests into smaller tasks helped Claude focus. Actually, since many of the tests used subagents (e.g. N subagents would test the N sections of the paper), you could say there were more like 40 or 50 tests.
 
 ### 20 Reusable, General-Purpose Tests
 
@@ -138,7 +139,7 @@ The other factchecks were not obvious, a priori:
 I had never heard of an "anaphora" before encountering this nightmarish passage in one of the Ralph loop runs:
 
 > Part (iii) [of Proposition 2] captures the interaction: existential risk *attenuates* the sensitivity of AI valuations to singularity beliefs.
->
+
 > If the singularity also accelerates growth Jones (2024), AI owners' resources could grow large enough to make the cost of compensating the household negligible---the friction becomes self-resolving. Section 4 quantifies this attenuation.
 
 "this attenuation" could refer either to the friction or to valuations. Technically, Section 4 addressed "this attenuation", but only if it referred to valuations. No other test was able to catch this error, aside `factcheck-anaphora`, which is dedicated to checking "anaphora resolution problems".
@@ -202,49 +203,110 @@ Most importantly, the human should get hands on with citing the most closely rel
 
 - `element-gkp-cites`
 
-which instructs the AI to read [Garleanu, Kogan, and Panageas's (2012)](https://www.sciencedirect.com/science/article/abs/pii/S0304405X12000621), read the CFR referee report, and accurately represent these ideas, while also being sensitive, gracious, and not-awkward in its citations. Right now, humans in the field are much better at citing graciously. Naturally, all our study and practice of citing people graciously is hidden from the training data.
+which instructs the AI to read [Garleanu, Kogan, and Panageas's (2012)](https://www.sciencedirect.com/science/article/abs/pii/S0304405X12000621), read the CFR referee report, and accurately represent these ideas, while also being sensitive, gracious, and not-awkward in its citations. Right now, humans scholars are much better at citing graciously. Naturally, all our study and practice of citing people graciously is hidden from the training data... 
 
-... 
+...
 
 ...I guess that's our comparative advantage?
 
 ### The Paper Spec
 
-The `paper-spec.md` was critical. I originally wanted to have a very short, perhaps 100 word, paper spec. But the quality of the paper was too low. Or, maybe, my standards increased after seeing what Claude Code can do. 
+The [paper-spec](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/main/spec/paper-spec.md) was critical. I originally wanted to have a very short, perhaps 100 word, paper spec. But the quality of the paper was too low. Or, maybe, my standards increased after seeing what Claude Code can do. 
 
-The ultimate paper spec was 700 words. It doesn't describe any functional forms, but it does lay out the main model's agents, assets, and environment in a few sentences. 
+The ultimate paper spec was 700 words. It's basically the paper in bullet points. For example, Extension 1 is described as:
+1. Extension 1: Market incompleteness is closely related to efficient development of AI. 
+    1. There is a chance of a *positive* singularity, in which the household also benefits. The positive singularity is the most likely outcome. 
+    2. AI development is socially efficient in the sense that the positive singularity outweighs the negative singularity in a welfare calculation.
+    3. The household can block ("veto") development of AI at a significant cost. The cost is significant because it requires intense government intervention and associated deadweight costs. 
+    4. There is a base case, in which the household vetoes development of AI, due to the disaster risk and risk aversion. 
+    5. But if markets are complete, the household would never veto.
 
-is a [700-word human written outline of the paper](#econ-spec). 
+This extension responds to the CFR referee's advise to connect more deeply with the singularity concept. 
 
+As you can see, the extension is rather hard coded. I had hoped that the AIs could just read the referee report and come up with a sketch like this. But unfortunately (or fortunately), I had to go in there and hand-design the extensions.
 
-The tests were almost all done by Opus. Appendices [B.2](factcheck-theory) to [B.TBC](element-rhetoric) provide examples of the prompts.
-
+You should be able to clone this [Github repo](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/main/spec/paper-spec.md), change the spec, turn off the specialized `element-` tests, run `go-ralph-go.sh`, and return to a well-written, error-free paper.
 
 ## Comparison with the Paper Generation Process in April 9, 2025
 
-## Comparison with UCLA Project
+In April 2025, the paper generation algo was pure gimmick. It would have made so much more sense for me to use LLMs as a souped-up Google query, and write the paper more-or-less the old fashioned way. 
+
+In 12 months later, the algo is mostly practical. The only impractical element is the human-as-Clockmaker design. Following Huntley's "human on the loop" method would be more practical, but inspecting the paper, updating the spec, and then letting the Ralph loop do its job is absolutely a real way to produce research. 
+
+The human on the loop research is quite satisfying, in a way. I find the spec to be the most fun part. There were several nights where I was quite excited to tell my 
 
 
-## Limitations of AI in April 9, 2026
+## AI is Better at Empirical Work
 
-TBC
-- Much harder to do theory than empirics. Link to UCLA project.
-- 
+I used a Ralph loop to write a (straightforward) empirical paper for my [submission to the UCLA HumanxAI competition](chenandrewy/HumanxAI-ChenAY: Repurposed from FinRep).  
 
+It was much easier. I rarely woke to find frustrating errors. I never spent all day designing a test. The AI did a good job generating ideas for empirical tests. 
+
+Most notably, I was able to use an Opus-generated open ended [referee review](HumanxAI-ChenAY/ralph/reviews/top3-referee.py at main · chenandrewy/HumanxAI-ChenAY) as part of the Ralph loop. The referee would offer helpful new empirical tests, which the author agent would implement nicely. 
+
+The open ended referee made a mess in this theory paper. It would lead to idle speculation and stray loose ends in the modeling. I ultimately turned off this feature. 
+
+It’s kind of intuitive that theory is "harder." But it’s not obvious this applies to AI. 
+
+My interpretation is that good theory is harder to define. I not only had to turn off the open-ended referee, I also had to include a special test for limiting the scope, as well as targeted [theory-clarity](ralph-wiggum-asset-pricing/tests/theory-clarity.py at main · chenandrewy/ralph-wiggum-asset-pricing) and [theory-deadweight](ralph-wiggum-asset-pricing/tests/theory-clarity.py at main · chenandrewy/ralph-wiggum-asset-pricing) tests. 
 
 
 ## Lessons about Research
 
-A common response to [Novy-Marx and Velikov (2025)](https://www.nber.org/papers/w33363) is: "people are not ready for this." I heard concerns that peer review will be inundated with AI-generated slop.
+A common response to Novy-Marx and Velikov (2025) was: "people are not ready for this." I heard concerns that peer review will be inundated with AI-generated slop. 
 
 Working on this paper gave me a different perspective. It made me think about the fundamentals. I think the fundamentals are the following:
 
 1. Readers want to learn something interesting and true.
-
 2. Readers don't want to check all the math.
-
 3. A system of author reputations makes 1 and 2 possible.
 
-AI-generated papers don't change any of these fundamentals.  Critically, fundamental 3 made me quite wary of putting my name on AI slop. As a result, I don't think AI-generated papers will change much about peer review, at least not the current generation of AI.
+AI-generated papers don't change any of these fundamentals. Critically, fundamental 3 made me quite wary of putting my name on AI slop. 
+As a result, I made a [prediction](https://github.com/chenandrewy/Prompts-to-Paper/edit/master/README.md#lessons-about-research) in the April 2025 draft:
+> I don't think AI-generated papers will change much about peer review, at least not the current generation of AI.
+So far, this prediction has been born out. The JF and RFS journal statistics pages show no sign of an increase in submissions. 
 
-## The Future of AI and Economics Research (Speculative)
+| Sub Year	| JF 	| RFS* |
+| ---       | ---        | ---  |
+|2023 		| 1,142 	 | 1534 |
+|2024 		|  937		 | 1544 |
+|2025 		|  1,100 (p) | 1474 |
+
+where 2025 is projected, and * indicates RFS counts end in May (2025 means May 8, 2024 to May 8, 2025).
+There could be an “AI investment” effect in this table. Perhaps many scholars, like myself, took time off producing papers in favor of investing in AI tools.
+But I personally found the AI developments also led me to invest *more* in any individual paper. Now I can do so much! I can’t settle for the kind of work I did way back in 2024, or even 2025! I have a reputation to maintain. 
+
+## Limitations of Current AI (April 9, 2026)
+
+12 months ago, I said AI was (limited)[https://github.com/chenandrewy/Prompts-to-Paper/blob/master/README.md#limitations-of-the-current-ai-april-9-2025] in that 
+
+1. AI economic modeling was unsatsifying
+2. AI empirical and numerical work required a plethora of technical challenges
+3. AI lit reviews over-interpreted or mis-cited papers. 
+
+I also speculated that 2024-style economic analysis will be "on tap" at some point inspired by (Josh Gans' essay on (p)research)[https://joshuagans.substack.com/p/what-will-ai-do-to-presearch?triedRedirect=true]. 
+
+All three limitations are gone now. And we're almost at the point where 2024-style economics is "on tap". You should be able to clone my repo (or my [Human x AI submission](https://github.com/chenandrewy/HumanxAI-ChenAY/commits/main/)), modify the spec and tests, run `go-ralph-go.sh`, and come back to a completed paper, with satisfying economic modeling, empirical work, and lit reviews. The quality is probably high enough to have publishable in 2024. But I think it will get there soon.
+
+
+
+
+
+## The Future of AI and Economics Research
+
+
+That point is almost here. 
+
+"Economics on tap" could be a disaster for the economics labor market (could be). It certainly *will* be an extremely cheap substitute for at least some economists' labor. I suppose the questions is whether that will result in a strong substitution away from labor.
+
+The optimistic argument is that AI also *complements* economists' labor. Perhaps, the number of economists will remain the same, but our research output increases in terms of both quantity and quality. 
+
+But there are reasons why total research output is limited. Two key factors in academic publishing are attention and reputation ([Klamer and van Dalen 2001, J of Economic Methodology](https://repub.eur.nl/pub/6875/2001-0221.pdf)). Readers can only pay attention to so many scholars.  Put another way, I might augment the fundamentals of economics research with a sub-bullet:
+
+1. Readers want to learn something interesting and true.
+    1. **What bleeding edge experts are studying is interesting**
+
+By definition, there are a limited number of experts at the bleeding edge. These experts, in turn, can only pay attention to so many projects.
+
+I'm not saying that I *expect* a disaster for the economics labor market.  But even if it's highly unlikely, it's still a scenario that economists should consider. 
+
