@@ -120,7 +120,7 @@ def render_markdown_heading(line: str, monochrome: bool = False) -> str | None:
 
 def render_markdown_paragraph(lines: list[str], monochrome: bool = False) -> str:
     parts = [line.strip() for line in lines if line.strip()]
-    return render_inline_markdown_tex(" ".join(parts), monochrome=monochrome) + r"\par"
+    return render_inline_markdown_tex(" ".join(parts), monochrome=monochrome)
 
 
 def render_markdown_blockquote(lines: list[str], monochrome: bool = False) -> str:
@@ -189,6 +189,7 @@ def render_markdown_list(
     lines: list[str],
     start: int,
     indent: int,
+    first_level: bool = False,
     monochrome: bool = False,
 ) -> tuple[str, int]:
     first_content = lines[start][indent:]
@@ -241,7 +242,8 @@ def render_markdown_list(
 
     body = "\n".join(items)
     return (
-        "\\begin{"
+        ("\\vspace{-2ex}\n" if first_level else "")
+        + "\\begin{"
         + env
         + "}\n"
         + "\\setlength{\\itemsep}{0.15em}\n"
@@ -249,7 +251,8 @@ def render_markdown_list(
         + body
         + "\n\\end{"
         + env
-        + "}"
+        + "}\n"
+        + ("\\vspace{-2ex}" if first_level else "")
     ), index
 
 
@@ -297,7 +300,13 @@ def render_markdown_blocks(
             continue
 
         if indent == base_indent and re.match(r"(?:\d+\.\s+|[-*]\s+)", stripped):
-            rendered_list, index = render_markdown_list(lines, index, indent, monochrome=monochrome)
+            rendered_list, index = render_markdown_list(
+                lines,
+                index,
+                indent,
+                first_level=(base_indent == 0),
+                monochrome=monochrome,
+            )
             parts.append(rendered_list)
             continue
 
