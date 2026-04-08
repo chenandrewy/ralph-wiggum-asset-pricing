@@ -50,7 +50,7 @@ def count_leading_spaces(text: str) -> int:
     return len(text) - len(text.lstrip(" "))
 
 
-def render_inline_preface_tex(text: str) -> str:
+def render_inline_markdown_tex(text: str, monochrome: bool = False) -> str:
     tokens: dict[str, str] = {}
 
     def stash(prefix: str, value: str) -> str:
@@ -63,16 +63,29 @@ def render_inline_preface_tex(text: str) -> str:
         lambda m: stash(
             "LINK",
             (
-                rf"\hyperlink{{{tex_escape(m.group(2)[1:])}}}{{\textcolor{{blue}}{{{tex_escape(m.group(1))}}}}}"
-                if m.group(2).startswith("#")
-                else rf"\href{{{m.group(2)}}}{{\textcolor{{blue}}{{{tex_escape(m.group(1))}}}}}"
+                (
+                    rf"\hyperlink{{{tex_escape(m.group(2)[1:])}}}{{{tex_escape(m.group(1))}}}"
+                    if m.group(2).startswith("#")
+                    else rf"\href{{{m.group(2)}}}{{{tex_escape(m.group(1))}}}"
+                )
+                if monochrome
+                else (
+                    rf"\hyperlink{{{tex_escape(m.group(2)[1:])}}}{{\textcolor{{blue}}{{{tex_escape(m.group(1))}}}}}"
+                    if m.group(2).startswith("#")
+                    else rf"\href{{{m.group(2)}}}{{\textcolor{{blue}}{{{tex_escape(m.group(1))}}}}}"
+                )
             ),
         ),
         text,
     )
     text = re.sub(
         r"`(.*?)`",
-        lambda m: stash("CODE", rf"\colorbox{{gray!10}}{{\textcolor{{red!70!black}}{{{tex_escape(m.group(1))}}}}}"),
+        lambda m: stash(
+            "CODE",
+            rf"\texttt{{{tex_escape(m.group(1))}}}"
+            if monochrome
+            else rf"\colorbox{{gray!10}}{{\textcolor{{red!70!black}}{{{tex_escape(m.group(1))}}}}}",
+        ),
         text,
     )
 
@@ -85,30 +98,32 @@ def render_inline_preface_tex(text: str) -> str:
     return rendered
 
 
-def render_preface_heading(line: str) -> str | None:
+def render_markdown_heading(line: str, monochrome: bool = False) -> str | None:
     match = re.match(r"^(#{1,3})\s+(.*)$", line.strip())
     if match is None:
         return None
 
     hashes = match.group(1)
-    heading_text = render_inline_preface_tex(match.group(2).strip())
-    size = r"\Large" if len(hashes) == 1 else r"\normalsize"
-    escaped_marker = hashes.replace("#", r"\#")
+    heading_text = render_inline_markdown_tex(match.group(2).strip(), monochrome=monochrome)
+    size = r"\Large" if len(hashes) == 1 else r"\large"
+    color_prefix = "" if monochrome else r"\textcolor{red!70!black}{"
+    color_suffix = "" if monochrome else "}"
+    marker_text = "" if monochrome else hashes.replace("#", r"\#") + " "
     return (
         r"\par"
         "\n"
-        rf"{{{size}\bfseries\textcolor{{red!70!black}}{{{escaped_marker} {heading_text}}}}}"
+        rf"{{{size}\bfseries {color_prefix}{marker_text}{heading_text}{color_suffix}}}"
         "\n"
         r"\par"
     )
 
 
-def render_preface_paragraph(lines: list[str]) -> str:
+def render_markdown_paragraph(lines: list[str], monochrome: bool = False) -> str:
     parts = [line.strip() for line in lines if line.strip()]
-    return render_inline_preface_tex(" ".join(parts)) + r"\par"
+    return render_inline_markdown_tex(" ".join(parts), monochrome=monochrome) + r"\par"
 
 
-def render_preface_blockquote(lines: list[str]) -> str:
+def render_markdown_blockquote(lines: list[str], monochrome: bool = False) -> str:
     paragraphs: list[str] = []
     current: list[str] = []
     for line in lines:
@@ -116,12 +131,12 @@ def render_preface_blockquote(lines: list[str]) -> str:
         content = stripped[1:].lstrip() if stripped.startswith(">") else stripped
         if not content:
             if current:
-                paragraphs.append(render_preface_paragraph(current))
+                paragraphs.append(render_markdown_paragraph(current, monochrome=monochrome))
                 current = []
             continue
         current.append(content)
     if current:
-        paragraphs.append(render_preface_paragraph(current))
+        paragraphs.append(render_markdown_paragraph(current, monochrome=monochrome))
 
     body = "\n".join(paragraphs)
     return (
@@ -157,7 +172,12 @@ def render_preface_fenced_block(lines: list[str]) -> str:
     )
 
 
-def render_preface_list(lines: list[str], start: int, indent: int) -> tuple[str, int]:
+def render_markdown_list(
+    lines: list[str],
+    start: int,
+    indent: int,
+    monochrome: bool = False,
+) -> tuple[str, int]:
     first_content = lines[start][indent:]
     ordered = re.match(r"\d+\.\s+", first_content) is not None
     marker_pattern = r"\d+\.\s+" if ordered else r"[-*]\s+"
@@ -179,7 +199,7 @@ def render_preface_list(lines: list[str], start: int, indent: int) -> tuple[str,
             break
 
         item_text = re.sub(marker_pattern, "", stripped, count=1)
-        item_parts = [render_inline_preface_tex(item_text)]
+        item_parts = [render_inline_markdown_tex(item_text, monochrome=monochrome)]
         index += 1
 
         child_start = index
@@ -198,7 +218,7 @@ def render_preface_list(lines: list[str], start: int, indent: int) -> tuple[str,
         child_nonblank = [line for line in child_lines if line.strip()]
         if child_nonblank:
             child_indent = min(count_leading_spaces(line) for line in child_nonblank)
-            child_body, consumed = render_preface_blocks(child_lines, 0, child_indent)
+            child_body, consumed = render_markdown_blocks(child_lines, 0, child_indent, monochrome=monochrome)
             if consumed != len(child_lines):
                 raise ValueError("failed to consume nested preface list block")
             if child_body.strip():
@@ -220,7 +240,12 @@ def render_preface_list(lines: list[str], start: int, indent: int) -> tuple[str,
     ), index
 
 
-def render_preface_blocks(lines: list[str], start: int = 0, base_indent: int = 0) -> tuple[str, int]:
+def render_markdown_blocks(
+    lines: list[str],
+    start: int = 0,
+    base_indent: int = 0,
+    monochrome: bool = False,
+) -> tuple[str, int]:
     parts: list[str] = []
     index = start
     while index < len(lines):
@@ -234,7 +259,7 @@ def render_preface_blocks(lines: list[str], start: int = 0, base_indent: int = 0
             break
 
         stripped = raw_line[indent:]
-        heading = render_preface_heading(stripped)
+        heading = render_markdown_heading(stripped, monochrome=monochrome)
         if indent == base_indent and heading is not None:
             parts.append(heading)
             index += 1
@@ -259,7 +284,7 @@ def render_preface_blocks(lines: list[str], start: int = 0, base_indent: int = 0
             continue
 
         if indent == base_indent and re.match(r"(?:\d+\.\s+|[-*]\s+)", stripped):
-            rendered_list, index = render_preface_list(lines, index, indent)
+            rendered_list, index = render_markdown_list(lines, index, indent, monochrome=monochrome)
             parts.append(rendered_list)
             continue
 
@@ -278,7 +303,7 @@ def render_preface_blocks(lines: list[str], start: int = 0, base_indent: int = 0
                     break
                 quote_lines.append(probe)
                 index += 1
-            parts.append(render_preface_blockquote(quote_lines))
+            parts.append(render_markdown_blockquote(quote_lines, monochrome=monochrome))
             continue
 
         paragraph_lines = [stripped]
@@ -293,7 +318,7 @@ def render_preface_blocks(lines: list[str], start: int = 0, base_indent: int = 0
             if probe_indent < base_indent:
                 break
             if probe_indent == base_indent and (
-                render_preface_heading(probe_stripped) is not None
+                render_markdown_heading(probe_stripped, monochrome=monochrome) is not None
                 or re.match(r"(?:\d+\.\s+|[-*]\s+)", probe_stripped)
                 or probe_stripped.startswith(">")
             ):
@@ -301,7 +326,7 @@ def render_preface_blocks(lines: list[str], start: int = 0, base_indent: int = 0
 
             paragraph_lines.append(probe[probe_indent:].strip())
             index += 1
-        parts.append(render_preface_paragraph(paragraph_lines))
+        parts.append(render_markdown_paragraph(paragraph_lines, monochrome=monochrome))
 
     return "\n\n".join(parts), index
 
@@ -311,9 +336,20 @@ def markdown_preface_to_tex(text: str) -> str:
     if not text.strip():
         return "This preface has not been provided yet."
 
-    rendered, consumed = render_preface_blocks(text.splitlines())
+    rendered, consumed = render_markdown_blocks(text.splitlines())
     if consumed != len(text.splitlines()):
         raise ValueError("failed to consume preface markdown")
+    return rendered.strip()
+
+
+def markdown_appendix_to_tex(text: str) -> str:
+    """Render a narrow markdown subset for the appendix in black-and-white."""
+    if not text.strip():
+        return ""
+
+    rendered, consumed = render_markdown_blocks(text.splitlines(), monochrome=True)
+    if consumed != len(text.splitlines()):
+        raise ValueError("failed to consume appendix markdown")
     return rendered.strip()
 
 
@@ -376,7 +412,7 @@ def build_verbatim_block(title: str, body: str) -> str:
 
 
 def build_markdown_block(title: str, body: str) -> str:
-    rendered_body = markdown_preface_to_tex(body)
+    rendered_body = markdown_appendix_to_tex(body)
     return (
         f"\\subsection{{{tex_escape(title)}}}\n"
         "\\begingroup\n"
