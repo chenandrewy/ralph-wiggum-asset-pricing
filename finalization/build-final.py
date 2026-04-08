@@ -91,7 +91,7 @@ def render_inline_markdown_tex(text: str, monochrome: bool = False) -> str:
 
     rendered = tex_escape(text)
     rendered = re.sub(r"\*\*(.+?)\*\*", r"\\textbf{\1}", rendered)
-    rendered = re.sub(r"(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)", r"\\textit{\1}", rendered)
+    rendered = re.sub(r"(?<!\*)\*(?![\s*])(.+?)(?<![\s*])\*(?!\*)", r"\\textit{\1}", rendered)
 
     for token, value in tokens.items():
         rendered = rendered.replace(tex_escape(token), value)
@@ -183,6 +183,89 @@ def render_preface_fenced_block(lines: list[str]) -> str:
         "\\endgroup\n"
         "\\end{mdframed}"
     )
+
+
+def split_markdown_table_row(row: str) -> list[str]:
+    stripped = row.strip()
+    if stripped.startswith("|"):
+        stripped = stripped[1:]
+    if stripped.endswith("|"):
+        stripped = stripped[:-1]
+    return [cell.strip() for cell in stripped.split("|")]
+
+
+def is_markdown_table_separator(line: str) -> bool:
+    cells = split_markdown_table_row(line)
+    if not cells:
+        return False
+    return all(re.fullmatch(r":?-{3,}:?", cell) is not None for cell in cells)
+
+
+def is_markdown_table_start(lines: list[str], index: int, base_indent: int) -> bool:
+    if index + 1 >= len(lines):
+        return False
+    first_line = lines[index]
+    second_line = lines[index + 1]
+    if not first_line.strip() or not second_line.strip():
+        return False
+
+    first_indent = count_leading_spaces(first_line)
+    second_indent = count_leading_spaces(second_line)
+    if first_indent != base_indent or second_indent != base_indent:
+        return False
+
+    first_stripped = first_line[first_indent:]
+    second_stripped = second_line[second_indent:]
+    if "|" not in first_stripped or "|" not in second_stripped:
+        return False
+
+    header_cells = split_markdown_table_row(first_stripped)
+    separator_cells = split_markdown_table_row(second_stripped)
+    if len(header_cells) < 2 or len(header_cells) != len(separator_cells):
+        return False
+    return is_markdown_table_separator(second_stripped)
+
+
+def render_markdown_table(lines: list[str], start: int, base_indent: int, monochrome: bool = False) -> tuple[str, int]:
+    header_cells = split_markdown_table_row(lines[start][base_indent:])
+
+    body_rows: list[list[str]] = []
+    index = start + 2
+    while index < len(lines):
+        raw_line = lines[index]
+        if not raw_line.strip():
+            break
+        indent = count_leading_spaces(raw_line)
+        if indent != base_indent:
+            break
+        stripped = raw_line[indent:]
+        if "|" not in stripped:
+            break
+        cells = split_markdown_table_row(stripped)
+        if len(cells) != len(header_cells) or is_markdown_table_separator(stripped):
+            break
+        body_rows.append(cells)
+        index += 1
+
+    alignment = "l" * len(header_cells)
+
+    def render_row(cells: list[str]) -> str:
+        rendered_cells = [render_inline_markdown_tex(cell, monochrome=monochrome) for cell in cells]
+        return " & ".join(rendered_cells) + r" \\"
+
+    rendered_lines = [
+        r"\begin{center}",
+        r"\small",
+        rf"\begin{{tabular}}{{{alignment}}}",
+        r"\toprule",
+        render_row(header_cells),
+        r"\midrule",
+        *[render_row(row) for row in body_rows],
+        r"\bottomrule",
+        r"\end{tabular}",
+        r"\end{center}",
+    ]
+    return "\n".join(rendered_lines), index
 
 
 def render_markdown_list(
@@ -328,6 +411,11 @@ def render_markdown_blocks(
             parts.append(render_markdown_blockquote(quote_lines, monochrome=monochrome))
             continue
 
+        if indent == base_indent and is_markdown_table_start(lines, index, base_indent):
+            rendered_table, index = render_markdown_table(lines, index, base_indent, monochrome=monochrome)
+            parts.append(rendered_table)
+            continue
+
         paragraph_lines = [stripped]
         index += 1
         while index < len(lines):
@@ -343,6 +431,7 @@ def render_markdown_blocks(
                 render_markdown_heading(probe_stripped, monochrome=monochrome) is not None
                 or re.match(r"(?:\d+\.\s+|[-*]\s+)", probe_stripped)
                 or probe_stripped.startswith(">")
+                or is_markdown_table_start(lines, index, base_indent)
             ):
                 break
 
