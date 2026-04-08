@@ -38,52 +38,175 @@ Algo 2025:
 - Prompt 10: write the full paper, based on the prose generated 
             by previous prompts
 ```
-I ran 5 papers, and chose the [best one](https://raw.githubusercontent.com/chenandrewy/Prompts-to-Paper/master/manyout0408-pdf/paper-run05.pdf). The paper included a [human-written appendix](https://github.com/chenandrewy/Prompts-to-Paper/blob/master/README.md), which was just the README.md for the Github repo.
+I ran 5 papers, and chose the [best one](https://raw.githubusercontent.com/chenandrewy/Prompts-to-Paper/master/manyout0408-pdf/paper-run05.pdf). 
 
-I was told the human-written appendix was the best part. 
+As you can see from this algo, the AIs required substantial hand-holding. They were a pain. You couldn't just ask them to "write down a model of hedging disaster risk" and expect a good result. You really needed to talk them patiently through the process. In a way, it's not *that* different with human co-authors. But as of April 2025, they were in no way a replacement.
 
-Sadly (and hilariously) the paper was rejected from arxiv.org:
+The first draft included a [human-written appendix](https://github.com/chenandrewy/Prompts-to-Paper/blob/master/README.md), which was just the README.md for the Github repo. I was told this was the best part. 
+
+Sadly (hilariously), the paper was rejected from arxiv.org:
 
 > Our moderators determined that your submission does not contain sufficient original or substantive scholarly research and is not of interest to arxiv.
 
 Fortunately, the Critical Finance Review offered me an R&R. 
 
-The editor tasked me with rewriting (re-programming?) the paper from scratch, based on what I've learned about AI since April 2025. The referee provided suggestions for improving the differentiation relative to [Garleanu, Kogan, and Panageas (2012)](https://www.sciencedirect.com/science/article/abs/pii/S0304405X12000621), by incorporating deeper notions of the singularity from [Jones (2024, AERI)](https://www.aeaweb.org/articles?id=10.1257/aeri.20230570). 
+The editor tasked me with rewriting (re-programming?) the paper from scratch, based on what I've learned about AI since April 2025. The referee provided helpful suggestions for improving the differentiation relative to [Garleanu, Kogan, and Panageas (2012)](https://www.sciencedirect.com/science/article/abs/pii/S0304405X12000621), by incorporating deeper notions of the singularity from [Jones (2024, AERI)](https://www.aeaweb.org/articles?id=10.1257/aeri.20230570). 
 
-The editor also said the human-written appendix was the best part, and should be in the main text. I agreed, and so we have this strange preface. The strangeness is part of why it's good, right?
+The editor also said the human-written appendix was the best part, and should be in the main text. I agreed, hence this long and strange preface. The strangeness is good...  ...right?
 
 
 ## The April 2026 Paper Generation Algorithm
 
-To really demonstrate AI displacement, I wanted the AI 
+The biggest change in AI relative to April 2025 is, of course, agents. Anthropic's Claude Code and OpenAI's Codex don't just provide responses to prompts, they are fluent with navigating computing environments, and persist through challenging tasks. 
 
-a completely hands-off method. The human should just run the code, and come back to a paper that is good enough, 
+These agents allow for a *real* demonstration of AI displacement. These agents really looked like they could take my job. 
 
+### The Ralph Loop
 
-The paper is generated using Geoff Huntley's [Ralph Wiggum](https://ghuntley.com/ralph/) method. The idea behind the loop is that Ralph Wiggum (from the Simpsons) may not be the smartest, but he is very persistent.
+The new algo employs agents following Geoff Huntley's [Ralph Wiggum](https://ghuntley.com/ralph/) loop. The idea behind the Ralph loop is that Ralph Wiggum (from [the Simpsons](https://en.wikipedia.org/wiki/The_Simpsons)) may not be the smartest, but he can be extremely persistent.
 
 For my paper, the Ralph loop is:
 
 ```
+
 Algo 2026:
 ----------------
-1. Claude Code (Claude Opus 4.6) improves the paper based on
-    - `paper-spec.md`: a human-written paper specification
+1. Author Prompt: improve the paper and code based on
+    - paper-spec.md: a human-written paper specification
+    - other documentation (e.g. the CFR referee report)
     - Previous test results
 
-2. Run tests:
-    - test 01: Factcheck the theory
+2. Test Prompts: evaluate the improved paper and code:
+    - test 01:  Factcheck the theory
     - ...
-    - test 25: Check that the "AI writes a paper about AI taking my job" 
-      rhetoric is subtle
+    - test 25:  Check that the "AI writes a paper about AI taking my job" 
+                rhetoric is subtle
+
 3. If any test fails, go back to 1.
 ```
+Like Ralph Wiggum, Claude doesn't seem to mind working on this, day and night. 
 
-Huntley's idea is "human on the loop": the human keeps an eye on what the AI is doing. This is the practical way to deploy AI. 
+Huntley's idea is actually "human on the loop": the humans keeps an eye on what the AIs are doing, and they update the specs and tests (perhaps turning off or on selected tests) to steer the ship.
 
-To really demonstrate AI displacement, my goal is "human as Clockmarker". The human carefully designs the clock. The he/she runs `go-ralph-go.sh`, and comes back later to see a paper that is good enough, and trustworthy enough, that they can put their name on it---at least for now. 
+But to demonstrate AI displacement, my goal is "human as Clockmarker". The humans carefully design the clock. When finished designing, they run `go-ralph-go.sh`, and come back later to see a paper that is good enough, and trustworthy enough, that they can put their name on it---at least for now. 
 
-I expect our standards for a "good enough" paper will change soon (see below).
+I expect our standards for a "good enough" paper will change (see below).
+
+### Agent Selection
+
+I used Claude Code + Opus throughout the algo, as it is the best at writing, and I wanted to get this done with a single $100/month subscription. That was a mistake. 
+
+I ended up with two $200/month Claude Code subscriptions, and even that struggled to crunch through the 25 test suite. 
+
+With hindsight, I would have aimed for:
+
+1. One $100/month Claude Code sub for the writing
+2. One $200/month ChatGPT sub for testing 
+
+Because while Claude Code Opus wins on creativity and fun, Codex with gpt-5.4 is so much more reliable, logical, and efficient. Peter Steinberger (creator of OpenClaw) [put it well](https://lexfridman.com/peter-steinberger-transcript/)
+
+> In general, it’s almost like Opus was… Is a little bit too American. And I shouldn’t… Maybe that’s a bad analogy.
+
+As an American, I think it's a great analogy.
+
+### 25 Tests?!
+
+I didn't want to have 25 tests! I was hoping for four: for one for theory, for code, for writing, and for visuals.
+
+Arriving at 25 tests was empirical. I would run the Ralph loop overnight, read the paper output in the morning, and then get frustrated by the result. This would lead to test updates and new tests.
+
+The many tests helped a lot. Like Ralph Wiggum, Claude is easily distracted, and breaking up the tests into smaller tasks helped Claude focus. Actually, since many of the tests used subagents (e.g. N subagents would test the N sections of the paper), you could say there were more like 40 or 50 tests.
+
+### 20 Reusable, General-Purpose Tests
+
+The beauty of making tests is that they can be applied to future papers. Of course we want our papers to be fact checked:
+
+- `factcheck-theory`
+- `factcheck-narrative`
+- `factcheck-code`
+- `factcheck-lit`
+
+These are intuitive. You gotta check the theory. Gotta check that the narrative matches the theory. And of course you gotta check the code and the citations for accuracy.
+
+The other factchecks were not obvious, a priori:
+
+- `factcheck-anaphora`
+- `factcheck-exhibits`
+- `factcheck-freely`
+- `factcheck-bysection`
+
+I had never heard of an "anaphora" before encountering this nightmarish passage in one of the Ralph loop runs:
+
+> Part (iii) [of Proposition 2] captures the interaction: existential risk *attenuates* the sensitivity of AI valuations to singularity beliefs.
+>
+> If the singularity also accelerates growth Jones (2024), AI owners' resources could grow large enough to make the cost of compensating the household negligible---the friction becomes self-resolving. Section 4 quantifies this attenuation.
+
+"this attenuation" could refer either to the friction or to valuations. Technically, Section 4 addressed "this attenuation", but only if it referred to valuations. No other test was able to catch this error, aside `factcheck-anaphora`, which is dedicated to checking "anaphora resolution problems".
+
+`factcheck-freely` is also interesting. This test just asks Claude to "Review the paper. Look for flaws." Consistent with [Tam et al. (2024)](https://arxiv.org/abs/2408.02442), letting the AI speak freely often led to higher quality results. Hamstringing Claude with process and reporting requirements seemed to distract it, sometimes preventing insight.
+
+Then there are the quality tests. We generally want econmoic theory to be clear and concise (no deadweight)
+
+- `theory-clarity`
+- `theory-deadweight`
+
+And we want good visuals too:
+
+- `visual-figures`
+- `visual-figures-image-only`
+- `visual-pages`
+
+`visual-figures` judges the figures together with the surrounding text. `visual-figures-image-only` uses only the figure images. A human might do both at the same time naturally, but Opus struggled with this.
+
+And, of course, we want good writing:
+
+- `writing-econ-messaging`
+- `writing-flow`
+- `writing-intro-payoff`
+- `writing-intuition`
+
+Last, we want the paper to stick to the spec: 
+
+- `spec-paper`
+- `spec-economic`
+- `spec-scope`
+
+There was both a paper spec (more on this below), as well as an economic background spec (for general asset pricing and "singularity" concepts). I also found it helped to require that Claude stay within the scope of the paper spec, in a specialized test. 
+
+### Specialized Tests (for now)
+
+All of the previous tests will be useful beyond my paper. I really do see researchers using Ralph loops regularly, very soon. I believe we'll be teaching it to grad students. 
+
+But a proper Ralph loop is human *on* the loop. The humans should get their hands dirty for the key elements. 
+
+For my curious goal of human as Clockmaker, I required tests to automate *everything*, including compelling figures:
+
+- `element-opening-fig`
+- `element-transfers-fig`
+
+Right now, Claude makes beautiful webapp front ends. But it does not do great academic "money figures"---not naturally. But it's just a matter of time. Someone will make a generalizable tool for this soon.
+
+I also wanted a specific style of short lit review:
+
+- `element-lit-review`
+
+Really, the human should be on the loop here. I don't see that ever changing. Scholars are supposed to know the literature.
+
+For my paper, I needed to ensure that the "AI writing a paper about AI taking my job" rhetoric is carefully done:
+
+- `element-rhetoric-meta`
+
+Claude would occasionaly start the abstract *and* introduction with "This paper was written by AI". The writing evaluations (above) would all say "this is great! So engaging!" So `element-rhetoric-meta` informs poor Claude that, unfortunately, humans strongly prefer to read human-written text (even if it has typos and errors, right?). 
+
+Most importantly, the human should get hands on with citing the most closely related papers. But in my case, I needed the AI to take care of it, leading to:
+
+- `element-gkp-cites`
+
+which instructs the AI to read [Garleanu, Kogan, and Panageas's (2012)](https://www.sciencedirect.com/science/article/abs/pii/S0304405X12000621), read the CFR referee report, and accurately represent these ideas, while also being sensitive, gracious, and not-awkward in its citations. Right now, humans in the field are much better at citing graciously. Naturally, all our study and practice of citing people graciously is hidden from the training data.
+
+... 
+
+...I guess that's our comparative advantage?
 
 ### The Paper Spec
 
@@ -96,13 +219,6 @@ is a [700-word human written outline of the paper](#econ-spec).
 
 The tests were almost all done by Opus. Appendices [B.2](factcheck-theory) to [B.TBC](element-rhetoric) provide examples of the prompts.
 
-### 25 tests?!
-
-It seems overboard to run 25 tests
-
-TBC
-- explain why we need so many tests
-- some tests are reusable
 
 ## Comparison with the Paper Generation Process in April 9, 2025
 
