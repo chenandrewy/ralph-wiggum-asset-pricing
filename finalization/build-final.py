@@ -58,24 +58,32 @@ def render_inline_markdown_tex(text: str, monochrome: bool = False) -> str:
         tokens[token] = value
         return token
 
-    text = re.sub(
-        r"\[(.*?)\]\((.*?)\)",
-        lambda m: stash(
+    def render_link(label: str, target: str) -> str:
+        return stash(
             "LINK",
             (
                 (
-                    rf"\hyperlink{{{tex_escape(m.group(2)[1:])}}}{{{tex_escape(m.group(1))}}}"
-                    if m.group(2).startswith("#")
-                    else rf"\href{{{m.group(2)}}}{{{tex_escape(m.group(1))}}}"
+                    rf"\hyperlink{{{tex_escape(target[1:])}}}{{{tex_escape(label)}}}"
+                    if target.startswith("#")
+                    else rf"\href{{{target}}}{{{tex_escape(label)}}}"
                 )
                 if monochrome
                 else (
-                    rf"\hyperlink{{{tex_escape(m.group(2)[1:])}}}{{\textcolor{{blue}}{{{tex_escape(m.group(1))}}}}}"
-                    if m.group(2).startswith("#")
-                    else rf"\href{{{m.group(2)}}}{{\textcolor{{blue}}{{{tex_escape(m.group(1))}}}}}"
+                    rf"\hyperlink{{{tex_escape(target[1:])}}}{{\textcolor{{blue}}{{{tex_escape(label)}}}}}"
+                    if target.startswith("#")
+                    else rf"\href{{{target}}}{{\textcolor{{blue}}{{{tex_escape(label)}}}}}"
                 )
             ),
-        ),
+        )
+
+    text = re.sub(
+        r"\[(.*?)\]\((.*?)\)",
+        lambda m: render_link(m.group(1), m.group(2)),
+        text,
+    )
+    text = re.sub(
+        r"\((.*?)\)\[(.*?)\]",
+        lambda m: render_link(m.group(1), m.group(2)),
         text,
     )
     text = re.sub(
@@ -88,10 +96,23 @@ def render_inline_markdown_tex(text: str, monochrome: bool = False) -> str:
         ),
         text,
     )
+    text = re.sub(
+        r"\*\*(.+?)\*\*",
+        lambda m: stash("BOLD", rf"\textbf{{{tex_escape(m.group(1))}}}"),
+        text,
+    )
+    text = re.sub(
+        r"__(.+?)__",
+        lambda m: stash("BOLD", rf"\textbf{{{tex_escape(m.group(1))}}}"),
+        text,
+    )
+    text = re.sub(
+        r"(?<!\*)\*(?![\s*])(.+?)(?<![\s*])\*(?!\*)",
+        lambda m: stash("ITALIC", rf"\textit{{{tex_escape(m.group(1))}}}"),
+        text,
+    )
 
     rendered = tex_escape(text)
-    rendered = re.sub(r"\*\*(.+?)\*\*", r"\\textbf{\1}", rendered)
-    rendered = re.sub(r"(?<!\*)\*(?![\s*])(.+?)(?<![\s*])\*(?!\*)", r"\\textit{\1}", rendered)
 
     for token, value in tokens.items():
         rendered = rendered.replace(tex_escape(token), value)
