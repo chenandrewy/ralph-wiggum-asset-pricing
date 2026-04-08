@@ -170,7 +170,7 @@ def build_bash_command(agent, forwarded_args, log_mode, effort=None, stream_capt
 def should_echo_output(step_label, rc):
     label = (step_label or '').strip().lower()
     if label.startswith('author-'):
-        return rc != 0
+        return False
     return True
 
 
