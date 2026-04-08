@@ -27,6 +27,23 @@ class RateLimitSnapshot:
     resets_at: float | None
 
 
+def format_budget_snapshot(snapshot: RateLimitSnapshot | None) -> str:
+    if snapshot is None:
+        return "unavailable"
+
+    parts = [f"status={snapshot.status or 'unknown'}"]
+    if snapshot.utilization is not None:
+        remaining = max(0.0, 1.0 - snapshot.utilization)
+        parts.append(f"used={snapshot.utilization:.2f}")
+        parts.append(f"remaining={remaining:.2f}")
+    else:
+        parts.append("used=unknown")
+        parts.append("remaining=unknown")
+    if snapshot.resets_at is not None:
+        parts.append(f"resets_at={snapshot.resets_at:.0f}")
+    return " ".join(parts)
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Probe Claude quota telemetry before launching a costly phase")
     parser.add_argument("--phase", required=True, help="Short label for the upcoming phase")
@@ -110,13 +127,14 @@ def main() -> int:
         )
         return 1
 
+    print(
+        f"[quota-preflight] phase={args.phase} model={args.model} "
+        f"five_hour_budget={format_budget_snapshot(latest_five_hour)} "
+        f"seven_day_budget={format_budget_snapshot(latest_seven_day)}"
+    )
+
     if latest_five_hour is not None and latest_five_hour.utilization is not None:
-        print(
-            f"[quota-preflight] phase={args.phase} model={args.model} "
-            f"five_hour_status={latest_five_hour.status or 'unknown'} "
-            f"five_hour_utilization={latest_five_hour.utilization:.2f} "
-            f"limit={args.utilization_limit:.2f}"
-        )
+        print(f"[quota-preflight] five_hour_limit={args.utilization_limit:.2f}")
         if latest_five_hour.status == "rejected" or latest_five_hour.utilization >= args.utilization_limit:
             print(
                 f"[quota-preflight] stopping before {args.phase}: five-hour utilization is too high for a clean batch run"
@@ -125,25 +143,15 @@ def main() -> int:
         return 0
 
     if latest_five_hour is not None and latest_five_hour.status == "rejected":
-        print(
-            f"[quota-preflight] phase={args.phase} model={args.model} "
-            f"five_hour_status=rejected limit={args.utilization_limit:.2f}"
-        )
+        print(f"[quota-preflight] five_hour_limit={args.utilization_limit:.2f}")
         print(f"[quota-preflight] stopping before {args.phase}: five-hour quota is already rejected")
         return 2
 
     if latest_seven_day is not None and latest_seven_day.status == "rejected":
-        print(
-            f"[quota-preflight] phase={args.phase} model={args.model} "
-            f"seven_day_status=rejected"
-        )
         print(f"[quota-preflight] stopping before {args.phase}: seven-day quota is already rejected")
         return 2
 
-    print(
-        f"[quota-preflight] phase={args.phase} model={args.model} "
-        f"no rate-limit telemetry observed; continuing"
-    )
+    print(f"[quota-preflight] no rate-limit telemetry observed; continuing")
     return 0
 
 
