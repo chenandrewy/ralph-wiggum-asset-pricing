@@ -15,7 +15,8 @@
     - e. Incomplete markets may distort not only valuations, but also the development of AI.
 4. Main model: singularity with displacement risk.
     - a. Infinite-horizon, discrete-time model.
-    - b. Two agents: A representative household, who is the marginal investor, and AI owners who hold private AI capital, including unborn or not-yet-marketable capital, and are not marginal investors in public stocks.
+    - b. Two agents: A representative household, who is the marginal investor, and AI owners who own private AI capital, and are not marginal investors in public stocks. 
+    - c. The AI owners can also be thought of as representing owners and capital that does not yet exist but **importantly, we do not explicitly model their life cycle**. 
     - c. Two publicly traded assets: AI stocks and non-AI stocks. AI stocks grow as a share of the economy with each singularity.
     - d. The private AI capital and AI owners can also be thought of as unborn capital and future owners that do not yet exist, as in `spec/lit/GKP-2012.md`.
     - e. The singularity may cause extinction, as in `spec/lit/Jones-2024-AERI.md`.
@@ -80,7 +81,7 @@
     - a. Plain English is favored. Writing is direct and concise.
     - b. The abstract is eye-catching yet rigorous. 
     - c. The introduction is engaging. Each paragraph moves the reader to the next one. 
-    - d. The paper uses itself as a demonstration of the AI displacement risk it models, since all analysis and writing is done by AI agents. Discussion of this includes an accurate description of how the work was divided: the human only wrote the "economic specification" of the paper (600 words) and test scripts. This device is used in the abstract and introduction.
+    - d. The paper uses itself as a demonstration of the AI displacement risk it models, since all analysis and writing is done by AI agents. Discussion of this includes an accurate description of how the work was divided: the human only wrote the "economic specification" of the paper (700 words) and test scripts. This device is used in the abstract and introduction.
     - e. The extension section features a compelling and eye-catching figure.
 6. The paper is sensitive, cautious, and modest in how it cites `spec/lit/GKP-2012.md`. 
 7. The lit review is centered on the papers most relevant to the paper's contribution. It emphasizes papers in JF, JFE, RFS, JFQA, RAPS, and MS, as well as top economics journals. 
