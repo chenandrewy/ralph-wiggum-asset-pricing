@@ -140,11 +140,12 @@ df_ext <- expand.grid(tau = tau_grid,
   ) %>%
   ungroup()
 
-theme_paper <- theme_bw(base_size = 12) +
+theme_paper <- theme_bw(base_size = 14) +
   theme(
     legend.position = "bottom",
     legend.title = element_blank(),
-    panel.grid.minor = element_blank()
+    panel.grid.minor = element_blank(),
+    panel.grid.major = element_line(color = "gray70")
   )
 
 scenario_labels <- c(
@@ -152,13 +153,13 @@ scenario_labels <- c(
   "Large singularity" = expression(Large ~ singularity ~ (list(eta == 9, phi == 0.05)))
 )
 
-panel_a <- ggplot(df_ext %>% filter(!is.na(pd_ai)),
+panel_a <- ggplot(df_ext %>% filter(!is.na(pd_ai) & tau <= 0.40),
                   aes(x = tau, y = pd_ai, color = scenario, linetype = scenario)) +
   geom_line(linewidth = 1) +
   labs(x = expression("Tax rate " * tau),
        y = "P/D Ratio (AI Stocks)",
        title = "(a) AI Stock Valuations") +
-  scale_x_continuous(labels = scales::percent_format()) +
+  scale_x_continuous(labels = scales::percent_format(), limits = c(0, 0.40)) +
   scale_color_discrete(labels = scenario_labels) +
   scale_linetype_discrete(labels = scenario_labels) +
   theme_paper
@@ -166,17 +167,20 @@ panel_a <- ggplot(df_ext %>% filter(!is.na(pd_ai)),
 panel_b <- ggplot(df_ext, aes(x = tau, y = cons_growth, color = scenario, linetype = scenario)) +
   geom_line(linewidth = 1) +
   geom_hline(yintercept = 1, linetype = "dashed", color = "gray20") +
-  annotate("text", x = 0.55, y = 1.3, label = "No change", color = "gray20", size = 3) +
+  geom_hline(yintercept = 0.5, linetype = "dotted", color = "firebrick") +
+  annotate("text", x = 0.55, y = 1.15, label = "No change", color = "gray20", size = 4) +
+  annotate("text", x = 0.55, y = 0.38, label = "50% consumption loss", color = "firebrick", size = 3.5) +
   labs(x = expression("Tax rate " * tau),
        y = "Household Consumption Growth\nin Singularity",
        title = "(b) Household Consumption") +
   scale_x_continuous(labels = scales::percent_format()) +
+  scale_y_continuous(limits = c(0, NA)) +
   scale_color_discrete(labels = scenario_labels) +
   scale_linetype_discrete(labels = scenario_labels) +
   theme_paper
 
 fig <- arrangeGrob(panel_a, panel_b, ncol = 2)
-ggsave(file.path(outdir, "fig-extension-panels.pdf"), fig, width = 10, height = 4.5)
+ggsave(file.path(outdir, "fig-extension-panels.pdf"), fig, width = 11, height = 5)
 cat("Wrote", file.path(outdir, "fig-extension-panels.pdf"), "\n")
 
 # =============================================================================

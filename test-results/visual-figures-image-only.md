@@ -1,13 +1,13 @@
 # tests/visual-figures-image-only.py
-Started: 2026-04-09 18:48:38 EDT
-Runtime: 1m 21s
-[ralph-garage/agent-logs/20260409T184838.247508-0400_visual-figures-image-only_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260409T184838.247508-0400_visual-figures-image-only_claude_claude-opus-4-6.log)
+Started: 2026-04-09 19:03:08 EDT
+Runtime: 1m 13s
+[ralph-garage/agent-logs/20260409T190308.215887-0400_visual-figures-image-only_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260409T190308.215887-0400_visual-figures-image-only_claude_claude-opus-4-6.log)
 
 # visual-figures-image-only
 
 VERDICT: FAIL
 
-REASON: Panel (a) of fig-extension-panels has a severe use-of-space problem (curves flatten by ~20% tax rate but x-axis extends to 70%), and fig-ai-valuations has low-contrast gridlines.
+REASON: Both figures have light-gray, low-contrast grid lines; fig-ai-valuations lacks a self-contained caption; fig-extension-panels Panel (a) wastes vertical space below the data.
 
 ---
 
@@ -15,21 +15,19 @@ REASON: Panel (a) of fig-extension-panels has a severe use-of-space problem (cur
 
 VERDICT: FAIL
 
-REASON: Horizontal gridlines are low-contrast light gray, failing the contrast requirement.
+REASON: Grid lines are light gray with low contrast, and the caption lacks enough detail for narrative clarity.
 
-### Full Figure (single panel)
+### Single Panel
 
-- **Readability: PASS.** Y-axis label ("Price-Earnings Ratio"), x-axis tick labels (2015–2025), y-axis tick labels (20, 40, 60), and legend entries ("AI-Exposed Firms", "S&P 500") are all clearly readable with appropriate font sizes. No overlapping or cut-off text.
+- **Readability: PASS.** The y-axis label ("Price-Earnings Ratio"), x-axis tick labels (2015–2025), y-axis tick labels (20, 40, 60), and legend entries ("AI-Exposed Firms", "S&P 500") are all clearly readable with adequate font sizes.
 
-- **Distinguishability: PASS.** Two series are clearly distinguishable: solid blue line with filled circles (AI-Exposed Firms) vs. dashed dark red/maroon line with filled circles (S&P 500). Color and line-style contrasts are strong. Legend is in the upper-left and does not obstruct data.
+- **Distinguishability: PASS.** The two series are immediately distinguishable: solid blue line for AI-Exposed Firms, dashed dark red line for S&P 500. Different colors and line types provide clear separation. The legend does not obscure data.
 
-- **Contrast: FAIL.** Horizontal gridlines are very light gray with weak contrast against the white background. Every drawn element must have strong visual contrast; these gridlines are faint. The data lines themselves have excellent contrast.
+- **Contrast: FAIL.** The vertical and horizontal grid lines are light gray and thin, failing the contrast requirement. The two data series (blue solid, dark red dashed) themselves have strong contrast and pass.
 
-- **Use of space: PASS.** X-axis spans 2015–2025, matching the data range. Y-axis runs from ~10 to ~75–80; data spans ~18 to ~73 (range ≈ 55). Bottom gap is ~8 (15% of range), within the 20% threshold. Top has only slight headroom above the ~73 peak.
+- **Use of Space: PASS.** Y-axis data ranges from ~18 to ~75; axis runs ~15 to ~80. Data span is ~57; gap at top is ~5 (under 20% threshold of 11.4); gap at bottom is ~3. X-axis runs 2015–2025 matching the data. No wasted space.
 
-- **Narrative clarity: PASS.** The figure clearly shows AI-exposed firms have dramatically higher and rising P/E ratios compared to the S&P 500, with a sharp divergence beginning around 2019–2020 and accelerating through 2025. The "(Illustrative)" qualifier is noted in the caption.
-
-**Main message:** AI-exposed stocks have seen their price-earnings ratios surge far above the broader market since ~2019, with the gap widening dramatically through 2025, consistent with investors pricing in expectations of transformative AI-driven growth or a hedging premium against displacement risk.
+- **Narrative Clarity: FAIL.** The caption reads "Valuations of AI Stocks vs. the Broader Market (Illustrative)" but provides no information about which firms constitute "AI-Exposed Firms," what P/E measure is used (trailing vs. forward), or data source. The "(Illustrative)" tag raises more questions than it answers. A reader can see AI-exposed valuations diverged sharply upward from the S&P 500 starting around 2020, but the message is not self-contained.
 
 ---
 
@@ -37,30 +35,28 @@ REASON: Horizontal gridlines are low-contrast light gray, failing the contrast r
 
 VERDICT: FAIL
 
-REASON: Panel (a) has a severe use-of-space problem — both curves flatten and converge by ~20% tax rate, yet the x-axis extends to 70%, leaving the right half as wasted space.
+REASON: Light-gray grid lines in both panels fail the contrast requirement, and Panel (a) wastes vertical space below the data.
 
-### Panel (a): AI Stock Valuations
+### Panel (a) — AI Stock Valuations
 
-- **Readability: PASS.** Title "(a) AI Stock Valuations", axis labels ("Tax rate tau", "P/D Ratio (AI Stocks)"), legend text, and tick labels are all legible at appropriate font sizes. Nothing is cut off or overlapping.
+- **Readability: PASS.** Panel title "(a) AI Stock Valuations" is clearly readable. Y-axis label "P/D Ratio (AI Stocks)" and x-axis label "Tax rate tau" are legible. Tick labels and legend are clear and appropriately sized.
 
-- **Distinguishability: PASS.** Two series use different colors (salmon/red for Baseline, cyan for Large singularity) and different line types (solid vs. dashed). They are immediately distinguishable.
+- **Distinguishability: PASS.** The two series — solid coral ("Baseline") and dashed cyan ("Large singularity") — are immediately distinguishable through both color and linetype. Line widths are adequate.
 
-- **Contrast: PASS.** Both lines are thick and rendered in saturated colors against a white background. No contrast issues.
+- **Contrast: FAIL.** Grid lines throughout the panel are light gray with weak contrast against the white background.
 
-- **Use of space: FAIL.** The large-singularity (cyan dashed) curve drops sharply from above 40 near tau = 0 to about 10 by tau ≈ 10%, then essentially flattens and merges with the baseline curve by tau ≈ 20%. From 20% to 70% (more than half the x-axis), both curves are flat, overlapping, and carry no additional visual information. The right ~50 percentage points of x-axis range are wasted. The x-max should be reduced to roughly 30–40% to let the interesting region fill the panel.
+- **Use of Space: FAIL.** The y-axis ranges from ~0 to ~45. The data spans roughly 9 to 43 (range = 34). The y-min is near 0 while the nearest data is around 9 — a gap of 9, which is 26% of the data range, exceeding the 20% threshold. The bottom of the y-axis wastes space.
 
-- **Narrative clarity: PASS.** The message is clear: higher taxes reduce AI stock valuations, and the large-singularity scenario is far more sensitive to low tax rates.
+### Panel (b) — Household Consumption
 
-### Panel (b): Household Consumption
+- **Readability: PASS.** Panel title "(b) Household Consumption" is legible. Axis labels are readable. Annotations "No change" and "50% consumption loss" are readable, though the latter is slightly small.
 
-- **Readability: PASS.** Title, axis labels, tick marks, and legend are all legible. The "No change" annotation at the y = 1 reference line is readable.
+- **Distinguishability: PASS.** The two main series (coral solid and cyan dashed) are clearly distinguishable. Reference lines (dark gray dashed at y=1, firebrick dotted at y=0.5) are distinguishable from main series through color and linetype.
 
-- **Distinguishability: PASS.** Same color/linetype encoding as Panel (a). The two series diverge strongly across the tax-rate range and are easy to tell apart. The "No change" dashed reference line is dark gray and clearly distinct from the data series.
+- **Contrast: FAIL.** Grid lines are light gray and low-contrast, same issue as Panel (a).
 
-- **Contrast: PASS.** The reference line at y = 1 uses dark gray, providing adequate contrast. All data lines are strongly colored.
+- **Use of Space: PASS.** X-axis runs 0%–~65–70% matching the data range. Y-axis runs 0–~7 with the cyan series reaching ~6.5. No edge has excessive wasted space.
 
-- **Use of space: PASS.** The large-singularity curve rises from near 0 to about 7 across the full 0–70% range, using the full extent of both axes. No significant wasted space on any edge.
+### Narrative Clarity: PASS
 
-- **Narrative clarity: PASS.** The message is clear: in a large singularity, even inefficient (high-tau) transfers produce large household consumption gains, whereas in the baseline scenario consumption barely budges above the "no change" line.
-
-**Main message:** The two panels together show that while AI stock valuations are highly sensitive to taxes only at low rates (Panel a), the consumption gains from redistribution are substantial and rise across the full tax range in the large-singularity scenario (Panel b).
+The figure's main message is clear: under a large AI singularity scenario, AI stock valuations spike dramatically at low tax rates but collapse as taxes rise, while household consumption grows enormously with higher transfer tax rates. In the baseline scenario, valuations decline gently and consumption barely changes. The key takeaway — government transfers are far more effective when the singularity is large — is understandable from the figure and caption alone.

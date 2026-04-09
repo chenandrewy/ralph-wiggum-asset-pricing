@@ -1,55 +1,97 @@
 # tests/factcheck-theory.py
-Started: 2026-04-09 18:48:38 EDT
-Runtime: 6m 45s
-[ralph-garage/agent-logs/20260409T184838.241906-0400_factcheck-theory_claude_opus.log](../ralph-garage/agent-logs/20260409T184838.241906-0400_factcheck-theory_claude_opus.log)
+Started: 2026-04-09 19:03:08 EDT
+Runtime: 10m 18s
+[ralph-garage/agent-logs/20260409T190308.208787-0400_factcheck-theory_claude_opus.log](../ralph-garage/agent-logs/20260409T190308.208787-0400_factcheck-theory_claude_opus.log)
 
 # factcheck-theory
-VERDICT: PASS
-REASON: All notation is consistent, all assumptions are mutually consistent, and all mathematical objects trace back to stated assumptions.
+
+VERDICT: FAIL
+
+REASON: The P/D formula (Proposition 1) requires an unstated existence condition that the paper's own Extension 2 calibration violates, producing undefined price-dividend ratios.
+
+---
 
 ## Requirement 1: Notational Consistency — PASS
 
-The paper uses 26 symbol families. No collisions, reuse for different formal objects, or substantive ambiguities were found.
+No symbol collisions found. All 22 symbol families were catalogued; no symbol is reused for a different formal object anywhere in the paper.
 
-**Minor observations (non-failing):**
-- Time subscripts on $\alpha$ and $\theta$ are dropped in Sections 3–4 (standard practice in stationary/one-period contexts).
-- $\delta_0$ uses an unmotivated subscript "0" (unambiguous but mildly unconventional).
-- $v^N$ for non-AI P/D ratio is implicitly rather than explicitly defined.
+**Minor issues (not failures):**
+- $\alpha_t$ and $\theta_t$ silently lose their time subscripts in Section 4 and the $\Gamma$ definitions (standard but unstated convention).
+- $\Delta\theta$ is a parameter, not the actual change $\theta_{t+1} - \theta_t$, while $\Delta U^H$ uses $\Delta$ as a genuine difference. Semantic inconsistency in the $\Delta$ prefix, but $\Delta\theta$ is explicitly defined.
+- $c^H_{no\text{-}transfer}$ used in Eq (7) without standalone definition.
+- $u_\text{ext}$ appears in prose without formal definition.
+- $\delta_0$ has an unexplained subscript (no $\delta_1$ exists).
 
-Full notation audit: `ralph-garage/scratch/factcheck-notation.md`
+**Conclusion:** These are minor stylistic imperfections. No ambiguity that would cause a reader to confuse one formal object with another.
 
-## Requirement 2: Mutual Consistency of Assumptions — PASS
+---
 
-22 structural assumptions, 9 parameter restrictions, 10 Extension 1 assumptions, 4 Extension 2 assumptions, and 4 implicit proof assumptions were cataloged. No contradictions found.
+## Requirement 2: Assumption Consistency — PASS
 
-**Budget constraints** balance exactly, including under government transfers (verified algebraically).
+44 assumptions catalogued across 6 categories. No contradictions found between any pair of stated assumptions.
 
-**Extensions** branch cleanly off the baseline with no conflicts (Extension 1 augments the singularity with positive/negative types; Extension 2 adds transfers).
+- All parameter domains are mutually compatible.
+- All probability trees sum to 1.
+- Accounting identities hold ($\alpha_t C_t + (1-\alpha_t)C_t = C_t$; $\theta_t C_t + (1-\theta_t)C_t = C_t$).
+- Extinction utility normalization ($u_\text{ext} = 0$) is internally consistent.
+- Extensions nest the baseline (set $\lambda = 0$ or $\tau = 0$).
+- Comparative statics (Proposition 2) are consistent with the model structure.
+- Transfer ratio (Eq 7) correctly derived from Eq (6) and is $\eta$-independent as claimed.
+- $\theta_t$ dynamics preserve $\theta_t \in (0,1)$.
 
-**Missing regularity conditions (non-contradictions):**
-1. Convergence condition for P/D formula ($A < 1$ in denominator) is not stated. Fails for $p \gtrsim 2\%$ with $\xi = 0$ under the calibration.
-2. The condition $\phi + \Delta\theta \leq 1$ (needed to preserve $\alpha_t \leq 1 - \theta_t$ after singularity) is implicit. Holds for the calibration ($0.5 + 0.2 = 0.7 \leq 1$).
-3. No upper bound on $\phi^+$ ensures $\alpha_t \leq 1 - \theta_t$ after a positive singularity in Extension 1.
-4. The deadweight cost feasibility condition $\delta_0 \tau < 1$ is economically necessary but not stated.
-5. The stationarity approximation (post-singularity P/D ≈ pre-singularity P/D) is explicitly acknowledged as approximate.
-6. The $0 \times \infty$ product in the extinction-state Euler equation is handled by convention (standard in the rare disasters literature) but not discussed.
+**Unstated restrictions (not contradictions, but omissions):**
+1. $\phi \leq 1 - \Delta\theta$ is needed for the domain $\alpha_t \leq 1-\theta_t$ to be preserved after singularities when $\alpha_t$ is at its upper bound. All calibrations satisfy it. Severity: low.
+2. Extension 1 does not specify $\theta$ dynamics in a positive singularity and does not bound $\phi^+$. Severity: low (Extension 1 is qualitative).
+3. No constraint ensures $\delta_0 \tau < 1$, needed for net transfers to be positive. Severity: low.
 
-These are standard omissions in theoretical asset pricing, not logical contradictions between assumptions.
+**Conclusion:** The stated assumptions are mutually consistent. The omissions are parameter-domain gaps, not contradictions.
 
-Full assumption audit: `ralph-garage/scratch/factcheck-assumptions.md`
+---
 
-## Requirement 3: Traceability of Mathematical Objects — PASS
+## Requirement 3: Traceability — FAIL
 
-All mathematical objects in the paper trace back to the stated assumptions:
+### Objects traced successfully
 
-| Derived Object | Source Assumptions |
-|---|---|
-| $\Gamma^{AI}, \Gamma^{N}$ (dividend growth factors) | Dividend definitions (S13, S14, S16), $\Delta\theta$ (P7), $\eta$ (P5) |
-| P/D ratios (Eqs. 4–5) | Euler equation (S20), CRRA preferences (S19), consumption process (S5, S6, S8–S12), stationarity (S21–S22) |
-| Corollary 1 (valuation spread) | P/D formula structure + $\Delta\theta > 0$ (P7) |
-| Proposition 2 (comparative statics) | P/D formula + parameter restrictions (P6, P8) |
-| $\Delta U^H$ (Eq. 9, veto gain) | $p$ (S8), $\xi$ (S9), $\lambda$ (E3), $\phi^+$ (E1), $\phi$ (P6), $\alpha$ (S6), $\eta$ (P5), $g$ (P1), $u(\cdot)$ (S19, E9) |
-| $c^H_{post}$ (Eq. 12, transfer consumption) | $\phi$ (P6), $\alpha$ (S6), $\eta$ (P5), $g$ (P1), $\tau$ (T1), $\delta_0$ (T3) |
-| Transfer ratio (Eq. 13) | Algebraic consequence of Eq. 12 |
+All primitive parameters are defined in the assumptions: $\beta, g, \gamma, p, \xi, \eta, \phi, \Delta\theta, \theta, \alpha, \lambda, \phi^+, \kappa, \tau, \delta_0$.
 
-No expression was found that cannot be logically derived from the assumptions.
+The following derived objects are fully traceable to the assumptions:
+- $\Gamma^{AI} = \frac{\theta + \Delta\theta(1-\theta)}{\theta}(1+\eta)$ — from $\theta, \Delta\theta, \eta$.
+- $\Gamma^{N} = \frac{1-\theta-\Delta\theta(1-\theta)}{1-\theta}(1+\eta)$ — from $\theta, \Delta\theta, \eta$.
+- $\Delta U^H$ (Eq 5) — from $p, \xi, \lambda, \phi^+, \phi, \alpha, \eta, g, C_t, u(\cdot)$.
+- $c^H_{post}$ (Eq 6) — from $\phi, \alpha, \eta, C_t, g, \tau, \delta_0$.
+- Transfer ratio (Eq 7) — derived from Eq 6.
+
+### Critical failure: P/D formula existence condition
+
+The P/D formula (Proposition 1, Eqs 4–4b) has the form $A/(1-A)$ where:
+
+$$A = \beta(1+g)^{1-\gamma}\left[(1-p) + p(1-\xi)(1+\eta)^{-\gamma}\phi^{-\gamma}\Gamma^j\right]$$
+
+This formula produces a valid (positive, finite) price-dividend ratio only when $A < 1$. **This condition is never stated as an assumption.**
+
+**The paper's own Extension 2 calibration violates it.** Using $\eta = 9$, $\phi = 0.05$, $p = 0.005$, $\xi = 0.05$, $\theta = 0.15$, $\Delta\theta = 0.2$, $\beta = 0.96$, $g = 0.02$, $\gamma = 4$:
+
+| Asset | $\Gamma^j$ | $A$ | $A < 1$? |
+|-------|-----------|-----|----------|
+| AI stocks | 21.33 | **2.37** | No |
+| Non-AI stocks | 8.00 | **1.45** | No |
+
+At $\tau = 0$ (no transfers), the P/D formula produces **negative** (meaningless) values for both asset classes under the large-singularity parameters. The formula diverges because the SDF-weighted expected dividend growth exceeds 1: the household's marginal utility in the singularity state ($\phi^{-\gamma} = 0.05^{-4} = 160{,}000$) is so extreme that the geometric pricing sum does not converge.
+
+This matters because Extension 2's Figure 2 plots P/D ratios against $\tau$, and at $\tau = 0$ the formula should reduce to the baseline Proposition 1 formula — which is undefined at these parameters.
+
+The baseline calibration ($\eta = 0.5$, $\phi = 0.5$) satisfies the condition: $A_{AI} = 0.94$, $A_N = 0.92$.
+
+### Summary of untraceable expressions
+
+| Expression | Issue |
+|-----------|-------|
+| $P^{AI}/D^{AI}$ (Eq 4) at $\eta=9, \phi=0.05$ | Requires unstated $A < 1$; violated by Extension 2 calibration |
+| $P^{N}/D^{N}$ (Eq 4b) at $\eta=9, \phi=0.05$ | Same |
+
+---
+
+## Detailed Reports
+
+- Notational consistency: `ralph-garage/scratch/factcheck-notation.md`
+- Assumptions consistency: `ralph-garage/scratch/factcheck-assumptions.md`

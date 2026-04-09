@@ -1,58 +1,59 @@
 # Improvement Plan
-AUTHOR PLAN — 2026-04-09 18:33:48 EDT
+AUTHOR PLAN — 2026-04-09 18:58:33 EDT
 
-## Status: 17/25 tests pass, 8 fail
+## Current State
 
-## Key Issues
+17/25 tests pass. 8 failures across visual, writing, factual, and spec-compliance categories. No overhaul needed — the model section is sound. Focus is on fixing failing tests, then polishing.
 
-### A. Transfers figure is broken (code + paper)
-The extension figure (fig-extension-panels) has two severe problems:
-1. **Panel (a) visual spike**: P/D blows up to ~1500 at τ≈10% for the baseline scenario, compressing all other data into an unreadable strip. The `compute_pd_with_transfer` formula has K→1 at certain τ values, causing a mathematical singularity.
-2. **Panel (b) wrong message**: At τ=0 with large singularity (η=9), household consumption growth is φ(1+η)=0.5×10=5x. The household is doing great without transfers, undermining the entire motivation. The spec requires showing the singularity is *catastrophic* absent transfers.
+## Failing Tests and Fixes
 
-**Root cause**: With η=9 and φ=0.5, displacement is severe in share terms but not in levels—aggregate growth swamps the share loss. A more powerful singularity should also cause more severe displacement (smaller φ).
+### 1. visual-pages (hyperref link boxes)
+**Problem:** Colored hyperref boxes (red/green rectangles) visible around cross-references.
+**Fix:** Add `\hypersetup{hidelinks}` after `\usepackage{hyperref}` in `paper.tex`.
 
-**Fix**: In `generate-exhibits.R`, for the large singularity scenario, pair η=9 with a much smaller φ (e.g., φ=0.05), so φ(1+η)=0.5 and household consumption halves even with enormous growth. This is economically natural: a singularity powerful enough to produce 10x growth would plausibly displace far more labor. For panel (a), the reparameterization should eliminate the K→1 blow-up; if not, cap or filter extreme P/D values. Update the paper text at line 279 to describe the new parameterization.
+### 2. spec-paper (long proof inline)
+**Problem:** Proposition 1's proof (~28 lines) is inline, violating spec II.9 (long proofs go in appendix).
+**Fix:** Move the Proposition 1 proof to a new appendix. Leave a one-line "See Appendix" note inline. Keep the short proofs (Corollary 1, Proposition 2) inline.
 
-### B. Extinction risk contradiction (intro line 64)
-Line 64 says extinction interacts with displacement "to amplify valuation premia." But Proposition 2(iii) proves the spread is *decreasing* in ξ, and line 57 correctly says "extinction risk compresses this gap." This is a direct logical contradiction.
+### 3. factcheck-freely (factual errors)
+**Problem:** Three issues:
+  - (a) Kogan, Papanikolaou, Stoffman (2020) — actual fourth author is Song, not Stoffman.
+  - (b) Kogan & Papanikolaou (2014) described as introducing "displacement risk factor" — that concept originates in GKP (2012).
+  - (c) Transfer model uses "income" and "surplus" inconsistently for AI owners' share.
+**Fix:**
+  - (a) Correct citation to Kogan, Papanikolaou, Schmidt, and Song (2020) in both `paper.tex` and `references.bib`.
+  - (b) Reword the Kogan & Papanikolaou (2014) sentence to describe what they actually show (technology shocks create cross-sectional return differences), attributing "displacement risk" to GKP.
+  - (c) Standardize on "surplus" throughout the transfer model section.
 
-**Fix**: Rewrite line 64 to say extinction *attenuates* the premium or interacts in a "countervailing" way, consistent with Prop 2(iii).
+### 4. element-lit-review (too long)
+**Problem:** Lit review spans ~75% of a page; spec says at most half a page.
+**Fix:** Trim the lit review paragraph. Cut the Garleanu & Panageas (2015) and Acemoglu (2024) sentences — they are least central. Tighten remaining sentences. Target ~60% of current length.
 
-### C. Eq (7) limit is misleading (paper lines 271-275)
-The ratio $c^H_{post}/c^H_{no-transfer}$ is exactly constant in η—the (1+η) factors cancel for any η>0. Presenting it as $\lim_{\eta→∞}$ and saying it "converges to a finite constant" is incorrect. Two tests flag this independently.
+### 5. writing-intro (flow and coverage)
+**Problem:** (a) Spec arguments (c) "financial market solutions under-discussed" and (d) "singularity abundance overcomes frictions" are not prominent — buried in non-skimmable positions. (b) Abrupt transitions between paragraphs in second half of intro.
+**Fix:**
+  - Add a dedicated short paragraph after the hedging-motive paragraph that makes arguments (c) and (d) prominent and skimmable.
+  - Smooth transitions: connect the extensions paragraph (P4→P5) with a bridging sentence; reorder quantitative preview before the meta-commentary paragraph; tighten the meta paragraph so it reads as a closing flourish, not a topic shift.
 
-**Fix**: Present eq (7) as an exact identity, not a limit. Rewrite the surrounding text to clarify: the *ratio* is η-invariant, but the *level* of consumption grows without bound. The economic insight (transfers scale with surplus) operates on levels, not ratios.
+### 6. element-transfers-fig (catastrophe not visible at τ=0)
+**Problem:** Panel (b) of the extension figure doesn't clearly show that zero transfers are catastrophic. The large-singularity line at τ=0 starts near the baseline, not visibly below 1.
+**Fix:** In `code/generate-exhibits.R`, verify that consumption_growth at τ=0 for the large singularity is `phi_large*(1+eta_large) = 0.05*10 = 0.5`, i.e., consumption halves. This should already be the case. The visual problem may be the y-axis scale — the large-singularity curve rises so steeply that 0.5 looks close to the baseline. Fix: add a horizontal reference line at y=0.5 with an annotation like "50% consumption loss", or adjust the y-axis to start at 0 so the catastrophe is visually dramatic. Also ensure the "No change" annotation at y=1 is clear.
 
-### D. GKP misattribution at line 261
-The paper says GKP "observe that broader trading... would help resolve displacement risk." GKP actually calls transfers/bequests "inessential extensions" that only change magnitude. The paper repackages GKP's robustness argument as a policy observation.
+### 7. visual-figures-image-only (gridlines + wasted space)
+**Problem:** (a) fig-ai-valuations has low-contrast light gray gridlines. (b) Extension panel (a) has wasted space — both curves flatten by 20% tax rate but x-axis goes to 70%.
+**Fix:**
+  - (a) In fig-ai-valuations: remove minor gridlines or darken them. Use `panel.grid.major = element_line(color = "gray70")`.
+  - (b) In extension panel (a): truncate x-axis at ~40% tax rate (or wherever the curves have essentially flatlined). This concentrates visual information and eliminates dead space. Keep panel (b) x-axis at 70% since the large-singularity curve still has meaningful variation there.
 
-**Fix**: Reframe as the paper's own interpretation, e.g.: "GKP note that intergenerational transfers affect the magnitude of displacement risk but treat them as inessential. We take a closer look at this channel..."
-
-### E. Introduction flow and topic sentences (writing-intro)
-Main arguments are buried inside paragraphs. Topic sentences are questions or background rather than claims. The AI authorship repetition ("As noted in the abstract") is clunky (rhetoric-meta also flags this).
-
-**Fix**: Rewrite intro paragraph topic sentences so each leads with its main claim. Rework the AI-authorship introduction version to do different rhetorical work than the abstract—frame it as evidence that displacement is empirically grounded rather than repeating the same sentence.
-
-### F. Appendix A is ceremonial (theory-deadweight)
-The appendix contains no real proof details. It restates Prop 3's proof in SDF language that isn't used in the actual proof. factcheck-bysection also flags the SDF mischaracterization.
-
-**Fix**: Remove the appendix entirely. The spec requires proofs in the paper; they're already in the main text. Remove the unused `\newtheorem{lemma}` too.
-
-### G. Line 57 overstates "two to six times"
-Table ratios range 1.1–5.8. "Two to six times" overstates the lower bound.
-
-**Fix**: Change to "up to roughly six times higher" or "1.1 to nearly 6 times."
-
-### H. Minor model issues
-1. **Prop 2(i) proof** (line 185): says decrease in φ "makes the divergence between Γ^AI and Γ^N more valuable"—but Γs don't depend on φ. The mechanism is entirely through φ^{-γ} amplification. Fix the wording.
-2. **Corollary 1**: φ<1 condition is redundant (Δθ>0 alone suffices since φ^{-γ} is common). Remove it.
-3. **δ(τ) notation** (line 263): function wrapper introduced and never used again. Just write δ₀τ directly.
-4. **GKP "creative destruction"** (line 194): GKP models displacement through expanding variety, not Schumpeterian creative destruction. Fix to "continuous displacement from innovation."
+### 8. visual-figures (text too small in Figure 2)
+**Problem:** Axis labels, tick labels, and legend text in extension figure are too small.
+**Fix:** Increase `base_size` in `theme_paper` from 12 to 14. Increase figure dimensions from 10×4.5 to 11×5 to accommodate larger text.
 
 ## Execution Order
 
-1. **Fix the code** (`generate-exhibits.R`): reparameterize the large-singularity scenario with smaller φ. Regenerate exhibits. Verify panel (b) shows catastrophe at τ=0 and panel (a) has no spike.
-2. **Fix the paper model/theory issues** (B, C, F, G, H): extinction contradiction, eq (7) presentation, remove appendix, fix overstated range, minor proof/notation issues.
-3. **Fix GKP attribution** (D): rewrite line 261.
-4. **Rewrite the introduction** (E): topic sentences, AI authorship device, flow.
+1. **LaTeX quick fixes** (tests 1, 2): hyperref hidelinks, move proof to appendix.
+2. **Factual corrections** (test 3): fix citations and terminology.
+3. **Lit review trim** (test 4): cut to half-page.
+4. **Intro rewrite** (test 5): restructure flow, make arguments (c)/(d) prominent.
+5. **Figure fixes** (tests 6, 7, 8): update `generate-exhibits.R` for extension figure x-axis, text size, gridlines, and catastrophe visibility.
+6. **Regenerate exhibits**, rebuild paper, re-run tests.

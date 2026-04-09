@@ -1,94 +1,104 @@
 # tests/factcheck-lit.py
-Started: 2026-04-09 18:48:38 EDT
-Runtime: 3m 50s
-[ralph-garage/agent-logs/20260409T184838.271179-0400_factcheck-lit_claude_opus.log](../ralph-garage/agent-logs/20260409T184838.271179-0400_factcheck-lit_claude_opus.log)
+Started: 2026-04-09 19:03:08 EDT
+Runtime: 3m 58s
+[ralph-garage/agent-logs/20260409T190308.201870-0400_factcheck-lit_claude_opus.log](../ralph-garage/agent-logs/20260409T190308.201870-0400_factcheck-lit_claude_opus.log)
 
 # factcheck-lit
-VERDICT: PASS
-REASON: All 11 cited works are externally verified with accurate metadata and supported in-text claims; only two minor issues found.
+VERDICT: FAIL
+REASON: One CRITICAL author-list error (KoganPapanikolaouSchmidtSong2020) and one IMPORTANT misleading citation framing (Nordhaus2021).
 
 ## 1. Citation inventory audited
 
-The following 11 citation keys are actually cited in the paper text (including footnotes):
+The following 9 citation keys appear in the paper text (including footnotes):
 
 1. GKP2012
 2. Jones2024
 3. KoganPapanikolaou2014
-4. KoganPapanikolaouStoffman2020
+4. KoganPapanikolaouSchmidtSong2020
 5. Barro2006
 6. Wachter2013
 7. PastorVeronesi2009
-8. GarleanuPanageas2015
-9. KorinekSuh2024
-10. Acemoglu2024
-11. Nordhaus2021
+8. KorinekSuh2024
+9. Nordhaus2021
 
-The following 4 bibliography entries are **not cited** in the paper and were excluded from the audit: MehraPrescott1985, CampbellCochrane1999, BabinaMotta2024, FamaFrench1993, AghionJonesJones2019.
+Bibliography entries that are never cited in the paper text (not audited): MehraPrescott1985, CampbellCochrane1999, GarleanuPanageas2015, Acemoglu2024, BabinaMotta2024, FamaFrench1993, AghionJonesJones2019.
 
 ## 2. External verification coverage
 
-| Key | Status | External sources |
-|-----|--------|-----------------|
-| GKP2012 | VERIFIED | EconPapers/RePEc, ScienceDirect, SSRN |
-| Jones2024 | VERIFIED | AEA journal page, RePEc, AEI summary, EA Forum summary |
-| KoganPapanikolaou2014 | VERIFIED | Wiley/Journal of Finance, EconPapers/RePEc, NBER |
-| KoganPapanikolaouStoffman2020 | VERIFIED | Journal of Political Economy / U Chicago Press, RePEc, MIT DSpace |
-| Barro2006 | VERIFIED | Oxford Academic/QJE, Harvard DASH, RePEc |
-| Wachter2013 | VERIFIED | Wiley/Journal of Finance, EconPapers/RePEc, NBER, Wharton repository |
-| PastorVeronesi2009 | VERIFIED | AEA journal page, EconPapers/RePEc, NBER, SSRN |
-| GarleanuPanageas2015 | VERIFIED | Journal of Political Economy / U Chicago Press, RePEc, SSRN |
-| KorinekSuh2024 | VERIFIED | NBER Working Paper w32255, IDEAS/RePEc, SSRN |
-| Acemoglu2024 | VERIFIED | NBER Working Paper w32487, IDEAS/RePEc, SSRN, MIT author page |
-| Nordhaus2021 | VERIFIED | AEA journal page, IDEAS/RePEc, NBER Working Paper w21547, author page |
+| Citation Key | Status | External Sources |
+|---|---|---|
+| GKP2012 | VERIFIED | EconPapers, ScienceDirect, SSRN |
+| Jones2024 | VERIFIED | AEA, RePEC, Stanford GSB |
+| KoganPapanikolaou2014 | VERIFIED | Wiley/JF, EconPapers, NBER |
+| KoganPapanikolaouSchmidtSong2020 | VERIFIED | JPE, RePEC, Northwestern Scholars, SSRN |
+| Barro2006 | VERIFIED | Oxford Academic/QJE, EconPapers, Harvard |
+| Wachter2013 | VERIFIED | EconPapers, Wharton, UPenn Repository |
+| PastorVeronesi2009 | VERIFIED | AEA, EconPapers, SSRN |
+| KorinekSuh2024 | VERIFIED | NBER, RePEC, SSRN |
+| Nordhaus2021 | VERIFIED | AEA, NBER, IDEAS/RePEC |
 
-**Coverage: 11/11 cited works externally verified (100%).**
+All 9 cited works are externally verified. Coverage: 9/9 (100%).
 
 ## 3. Metadata accuracy findings
 
-All 11 cited works have materially accurate bibliographic metadata:
+| Citation Key | Title | Authors | Journal/Outlet | Vol/Pages/Year | Verdict |
+|---|---|---|---|---|---|
+| GKP2012 | Correct | Correct | Correct (JFE) | 105(3):491--510, 2012 | Accurate |
+| Jones2024 | Correct | Correct | Correct (AER: Insights) | 6(4):575--590, 2024 | Accurate |
+| KoganPapanikolaou2014 | Correct | Correct | Correct (JF) | 69(2):675--718, 2014 | Accurate |
+| KoganPapanikolaouSchmidtSong2020 | Correct | **WRONG** | Correct (JPE) | 128(3):855--906, 2020 | **Error** |
+| Barro2006 | Correct | Correct | Correct (QJE) | 121(3):823--866, 2006 | Accurate |
+| Wachter2013 | Correct | Correct | Correct (JF) | 68(3):987--1035, 2013 | Accurate |
+| PastorVeronesi2009 | Correct | Correct | Correct (AER) | 99(4):1451--1483, 2009 | Accurate |
+| KorinekSuh2024 | Correct | Correct | Correct (NBER WP 32255) | 2024 | Accurate |
+| Nordhaus2021 | Correct | Correct | Correct (AEJ: Macro) | 13(1):299--332, 2021 | Accurate |
 
-- **GKP2012**: Authors, title, journal (JFE), volume 105, number 3, pages 491–510, year 2012 — all correct.
-- **Jones2024**: Author, title, journal (AER: Insights), volume 6, number 4, pages 575–590, year 2024 — all correct.
-- **KoganPapanikolaou2014**: Authors, title, journal (Journal of Finance), volume 69, number 2, pages 675–718, year 2014 — all correct.
-- **KoganPapanikolaouStoffman2020**: Authors, title, journal (JPE), volume 128, number 3, pages 855–906, year 2020 — all correct.
-- **Barro2006**: Author, title, journal (QJE), volume 121, number 3, pages 823–866, year 2006 — all correct.
-- **Wachter2013**: Author, title, journal (Journal of Finance), volume 68, number 3, pages 987–1035, year 2013 — all correct.
-- **PastorVeronesi2009**: Authors, title, journal (AER), volume 99, number 4, pages 1451–1483, year 2009 — all correct.
-- **GarleanuPanageas2015**: Authors, title, journal (JPE), volume 123, number 3, pages 670–685, year 2015 — all correct.
-- **KorinekSuh2024**: Authors, title, NBER Working Paper No. 32255, year 2024 — all correct.
-- **Acemoglu2024**: Author, title, NBER Working Paper No. 32487, year 2024 — all correct. (Note: subsequently published in *Economic Policy* vol. 40(121), 2025, but citing the 2024 WP version is not inaccurate.)
-- **Nordhaus2021**: Author, title, journal (AEJ: Macroeconomics), volume 13, number 1, pages 299–332, year 2021 — all correct.
-
-**No metadata errors found.**
+**KoganPapanikolaouSchmidtSong2020 error detail:** The published JPE article "Left Behind: Creative Destruction, Inequality, and the Stock Market" is authored by Kogan, Papanikolaou, and **Stoffman** — not Kogan, Papanikolaou, Schmidt, and Song. The bib entry conflates this paper with a different working paper by Kogan, Papanikolaou, Schmidt, and Song ("Technological Innovation and Labor Income Risk," NBER WP 26964).
 
 ## 4. In-text description accuracy findings
 
-All in-text descriptions are materially accurate. Two minor characterization issues were identified (see Section 5).
+| Citation Key | In-text Claim | Supported? | Verdict |
+|---|---|---|---|
+| GKP2012 | Innovation creates systematic displacement risk under incomplete markets; growth stocks provide partial hedge; rents accrue to agents current investors cannot trade with | Yes | Accurate |
+| Jones2024 | Trade-off between AI-driven growth and existential risk; bounded utility makes agents conservative about extinction; states powerful enough for growth are those where existential risk is highest | Yes | Accurate |
+| KoganPapanikolaou2014 | Technology shocks generate cross-sectional return differences through heterogeneous exposures to growth opportunities | Yes | Accurate |
+| KoganPapanikolaouSchmidtSong2020 | Creative destruction generates inequality and valuations | Yes (for the actual "Left Behind" paper) | Accurate for content, wrong attribution |
+| Barro2006 | Part of rare disasters literature providing methodological foundation for pricing discrete catastrophic events | Yes | Accurate |
+| Wachter2013 | Part of rare disasters literature providing methodological foundation for pricing discrete catastrophic events | Yes | Accurate |
+| PastorVeronesi2009 | Technological revolutions affect stock prices through uncertainty about long-run productivity | Yes | Accurate |
+| KorinekSuh2024 | Analyzes scenarios for transition to AGI and implications for wages, output, welfare | Yes | Accurate |
+| Nordhaus2021 | Cited alongside Jones2024 for "the kind of explosive output growth discussed by" both | Misleading | **Overstatement** |
 
-Key claim-support findings:
-
-- **GKP2012**: All claims supported — displacement risk from innovation under incomplete markets, growth stocks as partial hedge, inability to trade future innovators' rents.
-- **Jones2024**: All claims supported — AI growth vs. existential risk trade-off, bounded utility making agents conservative about extinction, correlation between AI power and existential risk.
-- **KoganPapanikolaou2014**: Claim that KP2014 shows "technology shocks create a displacement risk factor" is substantively supported but terminologically imprecise (see MINOR issue below).
-- **KoganPapanikolaouStoffman2020**: Claim about creative destruction, inequality, and stock market valuations is supported.
-- **Barro2006**: Claim about rare disasters and asset pricing methodology is supported.
-- **Wachter2013**: Claim about rare disasters methodology is supported.
-- **PastorVeronesi2009**: Claim about technological revolutions and stock prices through productivity uncertainty is supported.
-- **GarleanuPanageas2015**: Claim about heterogeneity, finite lives, and risk premia is supported.
-- **KorinekSuh2024**: Claim about AGI transition scenarios and implications for wages, output, welfare is supported.
-- **Acemoglu2024**: Claim about skeptical view of AI macro impact and task automation not translating to large productivity gains is supported.
-- **Nordhaus2021**: Claim about "explosive output growth" is technically accurate but mildly misleading (see MINOR issue below).
+**Nordhaus2021 framing issue:** The paper states: "if an AI singularity produces the kind of explosive output growth discussed by \citet{Jones2024} and \citet{Nordhaus2021}." While Nordhaus does *discuss* the concept of an economic singularity with explosive growth, his central conclusion is that "the Singularity is not near." Grouping Nordhaus alongside Jones implies both authors support or predict explosive growth, whereas Nordhaus argues against it. The word "discussed" is literally defensible but rhetorically misleading.
 
 ## 5. Flagged issues by citation key and severity
 
-### KoganPapanikolaou2014 — MINOR
-The paper states KP2014 "show that technology shocks create a displacement risk factor that is priced in the cross-section of stock returns." KP2014 actually frames its contribution in terms of investment-specific technology (IST) shocks differentially affecting growth opportunities vs. assets in place. The term "displacement risk factor" originates from GKP2012, not KP2014. The economic intuition is closely related, so the characterization is substantively reasonable but terminologically imprecise.
+### CRITICAL
 
-### Nordhaus2021 — MINOR
-The paper cites Nordhaus alongside Jones2024 for "the kind of explosive output growth discussed by Jones (2024) and Nordhaus (2021)." While Nordhaus does discuss the concept of an economic singularity with explosive growth, his paper's conclusion is that "the Singularity is not near." The citation is technically accurate (Nordhaus does discuss the concept), but grouping him with Jones could give a misleading impression that both authors view explosive growth as a plausible near-term scenario, when Nordhaus is skeptical.
+**KoganPapanikolaouSchmidtSong2020 — Wrong author list**
+The bibliography attributes "Left Behind: Creative Destruction, Inequality, and the Stock Market" (JPE 2020) to Kogan, Papanikolaou, Schmidt, and Song. The correct authors are Kogan, Papanikolaou, and **Stoffman**. This is a factual error that misattributes a published journal article. The citation key should also be updated.
 
-### All other keys — NONE
+*External sources:* JPE publisher page, RePEC, Northwestern Scholars profile.
+
+### IMPORTANT
+
+**Nordhaus2021 — Misleading citation framing**
+Nordhaus2021 is cited alongside Jones2024 in a way that implies both authors discuss explosive growth as a plausible scenario. Nordhaus's paper is actually a skeptical empirical examination that concludes the singularity is not near. A more accurate phrasing would distinguish Nordhaus's skeptical examination from Jones's modeling of explosive growth (e.g., "the kind of explosive output growth modeled by Jones (2024) and examined by Nordhaus (2021)").
+
+*External sources:* AEA publisher page, NBER working paper page.
+
+### MINOR
+
+None.
 
 ## 6. Overall reliability of the paper's citations
 
-The paper's citation practices are strong. All 11 cited works are correctly identified, bibliographic metadata is accurate across the board, and in-text descriptions faithfully represent the cited works' contributions. The two minor issues identified are characterization nuances rather than factual errors: one involves terminological imprecision (attributing "displacement risk factor" language to KP2014 when it originates in GKP2012), and the other involves a mildly misleading grouping (Nordhaus alongside Jones on "explosive output growth" when Nordhaus is skeptical). Neither rises to the level of misrepresentation. The citations are reliable for an academic finance paper.
+Of the 9 cited works, 7 have fully accurate metadata and claim-support (GKP2012, Jones2024, KoganPapanikolaou2014, Barro2006, Wachter2013, PastorVeronesi2009, KorinekSuh2024). These citations are well-chosen and accurately described.
+
+Two issues require attention:
+
+1. The KoganPapanikolaouSchmidtSong2020 author error is a clear factual mistake that would be caught by any reader familiar with the "Left Behind" paper. It requires correction before publication.
+
+2. The Nordhaus2021 framing is a subtler issue — not a factual error, but a rhetorical choice that could mislead readers about Nordhaus's stance on the economic singularity.
+
+Overall, the paper's citation practices are solid. The core theoretical citations (GKP2012, Jones2024) are used accurately and with appropriate nuance. The CRITICAL author error is an isolated metadata mistake rather than a systematic problem.

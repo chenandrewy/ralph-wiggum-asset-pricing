@@ -1,67 +1,50 @@
 # tests/writing-intro.py
-Started: 2026-04-09 18:48:38 EDT
-Runtime: 2m 39s
-[ralph-garage/agent-logs/20260409T184838.248924-0400_writing-intro_claude_opus.log](../ralph-garage/agent-logs/20260409T184838.248924-0400_writing-intro_claude_opus.log)
+Started: 2026-04-09 19:03:08 EDT
+Runtime: 2m 41s
+[ralph-garage/agent-logs/20260409T190308.203878-0400_writing-intro_claude_opus.log](../ralph-garage/agent-logs/20260409T190308.203878-0400_writing-intro_claude_opus.log)
 
 # writing-intro
 VERDICT: FAIL
-REASON: Main arguments (c) and (d) from the spec are not recoverable by a skimming reader, and the introduction has significant flow problems in its second half.
+REASON: One of three subagents failed — argument (d) from the spec (singularity abundance overcomes market frictions) is not accessible to a skim-reader.
 
-## Subagent 1: Clarity of Main Arguments to a Skimming Reader — FAIL
+## Subagent Results
 
-Evaluated whether each of the five main arguments from `spec/paper-spec.md` is clear to a reader who reads only first/last sentences of each paragraph, bold text, and figure captions.
+### 1. Skim-Clarity of Main Arguments — FAIL
+
+Each of the five main arguments from the spec was checked for visibility to a reader scanning only the first sentence of each paragraph and any bold/italic text.
 
 | Argument | Verdict | Notes |
 |----------|---------|-------|
-| (a) AI stocks have high valuations partly because they hedge against a negative AI singularity | CLEAR | First sentence of P2 ("Part of this premium, we argue, reflects a hedging motive") is immediately visible to skimmers. |
-| (b) Incomplete markets are key: if markets were complete, there would be no need to hedge | PARTIALLY CLEAR | Present in P2 ("If markets were complete, investors could insure...") and P5 ("Complete markets would eliminate this distortion"), but incompleteness is not foregrounded as the *central* mechanism in first sentences. A skimmer may treat it as supporting detail. |
-| (c) Financial market solutions to AI disaster risk are under-discussed, though frictions can limit their effectiveness | NOT CLEAR | The "under-explored" clause is a trailing sentence in P4. The friction-limiting-effectiveness half is absent from any skimmable position. |
-| (d) If the singularity occurs, market frictions can be overcome due to the abundance of resources | NOT CLEAR | The government-transfers-overwhelm-deadweight-costs point is buried mid-paragraph in P5, not in any first or last sentence. The broader "abundance overcomes frictions" framing is not stated anywhere in a skimmable position. |
-| (e) Incomplete markets may distort not only valuations but also the development of AI | CLEAR | First sentence of P5 states this directly. |
+| (a) AI stocks hedge against negative singularity | Clear | Paragraph 2 opens with "Part of this premium, we argue, reflects a hedging motive." |
+| (b) Incomplete markets are key | Clear | Paragraph 6 opens with "market incompleteness distorts the development of AI itself"; paragraph 2 interior also states it clearly. |
+| (c) Financial market solutions are under-discussed | Clear | Paragraph 3 opens with this almost verbatim. |
+| (d) Singularity abundance can overcome frictions | **Buried** | Appears only mid-paragraph in paragraphs 3 and 6. Never a lead sentence; no typographic emphasis. A skim-reader catches the *problem* (frictions) but misses the *resolution* (abundance overwhelms them). |
+| (e) Incomplete markets distort AI development | Clear | Paragraph 6 lead sentence. |
 
-**Recommendation:** Make arguments (c) and (d) more prominent. Consider giving each its own paragraph-opening sentence, or restructuring P4–P5 so that these points land in first/last sentence positions.
+**Suggested fix:** Give argument (d) its own lead sentence, e.g., restructure paragraph 3 so its opening names both ideas, or add a dedicated short paragraph for the abundance-overcomes-frictions point.
 
-## Subagent 2: Introduction Flow — FAIL
+### 2. Introduction Flow — PASS
 
-Evaluated paragraph-by-paragraph transitions and overall arc.
+The introduction follows a clear progression: empirical motivation → economic intuition → literature gap → model description → intellectual lineage → extensions → quantitative results and closing flourish. Each paragraph logically leads to the next.
 
-| Transition | Assessment |
-|---|---|
-| P1 → P2 (empirical puzzle → hedging argument) | **Pass** — clean pivot from observation to explanation |
-| P2 → P3 (argument → model formalization) | **Pass** — "We formalize this argument" is a clear handoff |
-| P3 → P4 (model → contribution/literature) | **Weak** — abrupt topic shift with no bridging sentence. P3 ends on P/D ratios; P4 opens on GKP's framework. Reader expects contribution but gets prior work first. |
-| P4 → P5 (contribution → extensions preview) | **Fail** — extensions introduced without any transitional signal. The "not only... but also" construction in P5 implies contrast with P4 but P4 doesn't set it up. "Both extensions branch directly off the baseline model" is a defensive technical remark that interrupts rhetorical momentum. |
-| P5 → P6 (extensions → quantitative preview) | **Weak** — reader moves from policy extensions to baseline quantitative results with no connection. P6 should follow P3 (model) or precede P5 (extensions), not follow it. The internal "Proposition 2(iii)" reference is inappropriate for an introduction — the reader hasn't seen the propositions. |
-| P6 → P7 (quantitative preview → meta-commentary) | **Fail** — P7 (paper written by AI agents) abandons the argumentative arc. Tonally inconsistent with academic theory register. Ends the introduction on production method rather than economics. |
+Minor notes:
+- The P5-to-P6 transition (from GKP contribution positioning to welfare/efficiency) is the weakest link but still serviceable.
+- Paragraph 3 is dense (literature gap + two extension ideas), but within normal bounds.
+- The AI-authorship disclosure at the end of P7 is tonally distinct but works as a deliberate rhetorical device.
 
-**Structural diagnosis:** The first half (P1–P3) flows well. The second half (P4–P7) has ordering problems: the "under-explored" motivation in P4 belongs in P1–P2; the quantitative preview in P6 should precede the extensions preview in P5; and P7 breaks the academic register.
+### 3. Introduction Promises vs. Delivery — PASS
 
-**Recommendations:**
-1. Add transitional sentences at P3→P4 and P4→P5 seams.
-2. Move quantitative preview (P6) to follow the model description (P3), before extensions.
-3. Remove internal proposition reference from P6.
-4. Move the "under-explored" sentence from P4 to P1 or P2 where motivation belongs.
-5. Consider relocating P7's meta-commentary (AI-written paper) to the conclusion or a footnote, or at minimum adding a bridge so it doesn't end the introduction on a non-economic note.
+Every promise or implied analysis in the Introduction is fulfilled in Sections 2–5:
 
-## Subagent 3: Promises Fulfilled in Analysis Sections — PASS
+1. "Consumption-based model with closed-form solutions" — Proposition 1 delivers closed-form P/D ratios.
+2. "P/D ratios depend on displacement severity, singularity probability, extinction risk" — All three appear as parameters in Proposition 1.
+3. "Extinction risk interaction" — Modeled via ξ; Proposition 2(iii) shows it attenuates the spread.
+4. "Market incompleteness distorts AI development" — Extension 1, Proposition 3(i).
+5. "Complete markets eliminate the distortion" — Proposition 3(ii).
+6. "Government transfers effective when growth overwhelms waste" — Extension 2 with equation 9 and Figure 2.
+7. "Both extensions branch off baseline" — Confirmed structurally.
+8. "P/D ratios up to ~6× higher" — Table 1 at p = 1%.
+9. "Extinction risk attenuates the gap" — Proposition 2(iii) and Table 1.
+10. GKP and Jones connections — Delivered in Section 2.3.
 
-Every analysis promised or implied in the Introduction is fulfilled in the body:
-
-| Promise | Fulfilled? |
-|---------|------------|
-| Figure 1: AI vs. market P/E ratios | Yes — Figure 1 present |
-| Consumption-based model with closed-form solutions | Yes — Section 2, Proposition 1 with full formulas |
-| Closed-form P/D ratios depending on displacement, singularity prob, extinction risk | Yes — Equations (4)–(5) in Proposition 1 |
-| Connection to GKP (2012) | Yes — Section 2.3 Discussion |
-| Jones (2024) extinction risk in model | Yes — extinction probability ξ throughout |
-| Comparative statics (Proposition 2) | Yes — all three parts proved |
-| Market incompleteness distorts AI development; veto result | Yes — Extension 1, Proposition 3 |
-| Government transfers effective when growth overwhelms deadweight costs | Yes — Extension 2, Figure 2 |
-| P/D ratios up to ~6x for AI vs. non-AI stocks | Yes — Table 1 in Section 3 |
-| Related literature review | Yes — present at end of Introduction |
-
-No broken promises identified.
-
-## Overall Assessment
-
-The introduction **fails** on two of three dimensions. While all promised analyses are delivered in the paper body (subagent 3: PASS), the introduction has clarity problems for skimming readers (subagent 1: FAIL on arguments c and d) and significant flow problems in its second half (subagent 2: FAIL on P4→P5, P6→P7 transitions and paragraph ordering). The first half of the introduction is strong; the second half needs restructuring.
+No unfulfilled promises found.

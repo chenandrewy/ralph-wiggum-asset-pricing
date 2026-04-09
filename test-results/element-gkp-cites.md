@@ -1,71 +1,86 @@
 # tests/element-gkp-cites.py
-Started: 2026-04-09 18:48:38 EDT
-Runtime: 2m 32s
-[ralph-garage/agent-logs/20260409T184838.242235-0400_element-gkp-cites_claude_opus.log](../ralph-garage/agent-logs/20260409T184838.242235-0400_element-gkp-cites_claude_opus.log)
+Started: 2026-04-09 19:03:08 EDT
+Runtime: 2m 37s
+[ralph-garage/agent-logs/20260409T190308.198651-0400_element-gkp-cites_claude_opus.log](../ralph-garage/agent-logs/20260409T190308.198651-0400_element-gkp-cites_claude_opus.log)
 
 # element-gkp-cites
 VERDICT: PASS
-REASON: Every passage referencing GKP accurately represents their ideas, uses analogical rather than equivalence language, attributes the paper's own extensions to itself rather than to GKP, and maintains a gracious, modest tone throughout.
+REASON: Every passage referencing GKP accurately represents their work, frames analogies as analogies, credits their core insight, and maintains a modest, collegial tone throughout.
 
 ## Passage-by-passage evaluation
 
-### 1. Introduction, paragraph 2 (line 48)
+### Passage 1 (line 49, Introduction — first GKP citation)
 > "This market incompleteness, emphasized by \citet{GKP2012} in the context of displacement risk from innovation, forces investors into publicly traded AI stocks as an imperfect substitute."
 
-**What it does:** Credits GKP for emphasizing the link between market incompleteness and displacement risk.
-**Assessment:** PASS. Accurate attribution. The phrase "in the context of displacement risk from innovation" correctly locates GKP's contribution. The sentence describes the paper's own model's form of incompleteness (private AI capital) without attributing that specific form to GKP. Slightly loose in isolation—GKP's incompleteness is specifically about intergenerational risk sharing, not private capital per se—but later passages (lines 52, 63, 197) make GKP's actual mechanism explicit, so no reader would be misled.
+**What it does:** Credits GKP for the concept of market incompleteness in the context of displacement risk.
+**Assessment:** The passage first describes the paper's own AI setting (private capital held by founders, firms that may not yet exist) and then cites GKP for the general principle. It does not claim GKP's mechanism is about private AI capital — it says GKP emphasized market incompleteness "in the context of displacement risk from innovation," which is accurate. PASSES Req. 1, 2, 3.
 
-### 2. Introduction, paragraph 3 (line 52)
-> "The core mechanism builds on \citet{GKP2012}, who show that innovation creates a systematic risk factor because the rents from new technologies accrue to agents that current investors cannot trade with. Our contribution connects their framework to the specific features of AI: the possibility of a discrete singularity with severe displacement, the interaction with extinction risk \citep{Jones2024}, and the policy implications that arise when singularity-driven growth overwhelms the deadweight costs of government intervention."
+### Passage 2 (lines 55–56, Introduction — core mechanism)
+> "The core mechanism builds on \citet{GKP2012}, who show that innovation creates a systematic risk factor because the rents from new technologies accrue to agents that current investors cannot trade with."
 
-**What it does:** Credits GKP for the core mechanism; characterizes the paper's own contribution as connecting GKP's framework to AI.
-**Assessment:** PASS on all requirements. "Builds on" is appropriately modest. "Agents that current investors cannot trade with" accurately captures GKP's point about unborn cohorts. The contribution claim—connecting GKP to AI-specific features—is modest and accurately scoped. The Jones (2024) connection and government transfer policy implications are attributed to the paper's own work, not to GKP. (Req 1, 2, 3 satisfied.)
+**What it does:** Credits GKP for the core economic mechanism the paper inherits.
+**Assessment:** "builds on" is appropriately modest. The characterization — innovation creates a systematic risk factor because rents accrue to agents current investors cannot trade with — correctly captures GKP's central point (Introduction, p. 492: "economic rents from innovation are captured largely by the future cohorts of inventors through the firms they create, existing agents cannot use financial markets to avoid the negative effects of displacement"). Critically, the paper says "agents that current investors cannot trade with," not "capital they cannot buy," preserving GKP's emphasis on the failure of intergenerational risk sharing. PASSES Req. 1, 3.
 
-### 3. Related literature paragraph (lines 63–64)
+### Passage 3 (lines 55–56, continued — contribution claim)
+> "Our contribution connects their framework to the specific features of AI: the possibility of a discrete singularity with severe displacement, the interaction with extinction risk \citep{Jones2024}, and the policy implications that arise when singularity-driven growth overwhelms the deadweight costs of government intervention."
+
+**What it does:** Claims the paper's contribution relative to GKP.
+**Assessment:** The contribution is framed as connecting GKP's existing framework to AI-specific features. This is modest — it does not claim to supersede or substantially improve on GKP. The connections to Jones (2024) and policy implications are attributed to the paper's own analysis, not to GKP. PASSES Req. 2, 3.
+
+### Passage 4 (lines 64–65, Lit review)
 > "Our paper builds most directly on \citet{GKP2012}, who develop a general-equilibrium model in which innovation displaces existing agents and creates a systematic risk factor under incomplete markets. We adopt their insight that displacement risk is distinct from aggregate consumption risk and that growth stocks provide a partial hedge. Our model simplifies their overlapping-generations structure to focus on the specific features of an AI singularity but inherits their central economic logic."
 
-**What it does:** Lit review positioning; credits GKP as the primary predecessor.
-**Assessment:** PASS. This is generous and accurate. "Builds most directly on" places GKP at the center. "We adopt their insight" gives full credit. "Simplifies their overlapping-generations structure" is honest about what the paper does (and does not do) relative to GKP. "Inherits their central economic logic" is both modest and respectful. GKP's ideas are described accurately: general-equilibrium model, displacement of existing agents, systematic risk factor, incomplete markets, growth stocks as partial hedge. (Req 1, 3 satisfied.)
+**What it does:** Full literature credit to GKP; describes the paper's relationship.
+**Assessment:** "builds most directly on" gives GKP pride of place. "We adopt their insight" explicitly credits GKP for the core ideas. "inherits their central economic logic" acknowledges the paper is derivative of GKP's framework. "Our model simplifies their overlapping-generations structure" is accurate (the paper uses a representative household rather than OLG). The tone is respectful and collegial throughout. This is the strongest passage for modesty. PASSES all requirements.
 
-### 4. Model setup, paragraph 1 (line 76)
+### Passage 5 (line 77, Model setup — AI owners analogy)
 > "The AI owners can also be thought of as future capital owners who do not yet participate in markets, as in \citet{GKP2012}. Importantly, we do not explicitly model the entry of new cohorts of firms or workers; AI owners are a static group whose share changes only through the singularity mechanism."
 
-**What it does:** Draws an analogy between AI owners and GKP's future cohorts; disclaims modeling the entry dynamics.
-**Assessment:** PASS. "Can also be thought of as" is clearly analogical, not claiming equivalence. The second sentence explicitly prevents the reader from confusing the paper's static setup with GKP's OLG dynamics. This is the right way to handle the relationship per the spec (spec I.4.d: "this is just an analogy"). Not defensive or over-explaining—it is a necessary clarification that a careful reader would want. (Req 1 fail condition 3 avoided; Req 4 satisfied.)
+**What it does:** Draws an analogy between AI owners and GKP's unborn cohorts; disclaims modeling entry dynamics.
+**Assessment:** "can also be thought of as" frames this as an analogy, not an equivalence. The immediate follow-up explicitly disclaims modeling the OLG entry dynamics that are central to GKP. This is exactly the right approach: it tells the reader the conceptual connection without overclaiming structural equivalence. The disclaimer is not defensive — it is a necessary clarification of what the model does and does not include, and the spec requires it (spec I.4.d: "this is just an analogy... we do not explicitly model this entry dynamic and should not allow the reader to think that we do"). PASSES Req. 1, 4.
 
-### 5. Discussion section, paragraph 1 (line 195)
+### Passage 6 (lines 170–173, Discussion — mechanism comparison)
 > "The model's mechanism parallels \citet{GKP2012}, who show that growth stocks earn lower expected returns because they hedge displacement risk from innovation. In their framework, displacement is driven by new cohorts of firms entering the economy; in ours, it is driven by a discrete AI singularity. The key difference is the nature of the displacement event: GKP model continuous displacement from expanding technological variety, while we model a sudden, severe shift in which the household's consumption falls even as aggregate output rises."
 
-**What it does:** Compares the two models' mechanisms; identifies a specific difference.
-**Assessment:** PASS. "Parallels" is appropriate analogical language. The characterization of GKP's mechanism—growth stocks hedge displacement, displacement driven by new cohorts entering, continuous displacement from expanding variety—is accurate to GKP's model (Section 2 of GKP: expanding intermediate goods variety, new entrants capturing rents). The difference claimed (continuous vs. discrete) is genuine and modestly stated. (Req 1, 3 satisfied.)
+**What it does:** Compares the paper's mechanism to GKP's; identifies the key difference.
+**Assessment:** "parallels" is appropriately framed. The description of GKP's mechanism — displacement driven by new cohorts of firms entering — is accurate (GKP intro: "economic rents from innovation are captured largely by the future cohorts of inventors through the firms they create"). The stated difference — continuous vs. discrete displacement — is a fair characterization. The paper does not claim its mechanism is superior; it simply identifies the structural difference. PASSES Req. 1, 3.
 
-### 6. Discussion section, paragraph 2 (line 197)
+### Passage 7 (lines 172–173, Discussion — incomplete markets echo)
 > "This echoes \citet{GKP2012}'s point that future innovators' rents cannot be traded because the innovators have not yet entered the economy. Our AI owners play an analogous role, though we do not model the entry dynamics that are central to their framework; the displacement in our model comes from the singularity's reallocation of consumption shares rather than from creative destruction by new entrants."
 
-**What it does:** Connects the paper's market incompleteness to GKP's; emphasizes the analogy and the differences.
-**Assessment:** PASS. "Echoes" and "analogous role" maintain analogical framing. "Future innovators' rents cannot be traded because the innovators have not yet entered the economy" accurately captures GKP's key mechanism—the failure of intergenerational risk sharing. Critically, this is where the paper makes GKP's actual mechanism most explicit, satisfying Req 1 fail condition 1: GKP's mechanism is clearly about unborn cohorts' inability to trade, not mere inability to buy private capital. The disclaimer "we do not model the entry dynamics that are central to their framework" is appropriately modest—it acknowledges that entry dynamics are "central" to GKP's work. (Req 1, 3, 4 satisfied.)
+**What it does:** Explicitly frames AI owners as analogous (not identical) to GKP's future cohorts.
+**Assessment:** "echoes" and "analogous role" are well-chosen — they signal similarity without claiming equivalence. "we do not model the entry dynamics that are central to their framework" correctly acknowledges that OLG entry is central to GKP. This passage accurately captures GKP's key mechanism: "future innovators' rents cannot be traded because the innovators have not yet entered the economy" closely tracks GKP's own language (intro: "future innovators, who are yet to enter the economy, are not able to trade with the current population of agents"). PASSES Req. 1, 4.
 
-### 7. Extension 2, opening (line 262)
+### Passage 8 (lines 236–237, Extension 2 — transfers)
 > "\citet{GKP2012} note that intergenerational transfers affect the magnitude of displacement risk but treat such mechanisms as inessential extensions to their framework. We take a closer look."
 
-**What it does:** Characterizes what GKP say about intergenerational transfers; positions the paper's Extension 2 as exploring this further.
-**Assessment:** PASS, with detailed justification required given Req 1 fail condition 2 ("FAIL if the paper says GKP 'note in passing' or 'raise in a footnote'"). The paper uses "note" without "in passing." Is "note" minimizing? GKP's actual text (Section 3, p. 498) reads: "Eq. (22) would still hold in several realistic but inessential extensions of the model that would allow for bequests and gifts across generations, government debt, intergenerational transfers mandated by the government... Such extensions would not change the functional form of Eq. (25) and would only affect the magnitude of the displacement factor." This appears in the middle of a derivation as a robustness remark—not a developed argument or a main result. "Note" is an accurate characterization of what GKP do here: they observe a point briefly and move on. The paper then says GKP "treat such mechanisms as inessential extensions"—which is GKP's own word ("inessential"). The characterization is textually precise. "We take a closer look" is a factual statement: GKP mention transfers without exploring them; this paper explores them. It does not diminish GKP's choice to leave transfers aside.
+**What it does:** Cites GKP for the observation about transfers; positions Extension 2 as elaborating on GKP's remark.
+**Assessment:** This is the passage requiring closest scrutiny. Checking against the GKP source text (Section 3, p. 497): "Eq. (22) would still hold in several realistic but inessential extensions of the model that would allow for bequests and gifts across generations, government debt, intergenerational transfers mandated by the government... Such extensions would not change the functional form of Eq. (25) and would only affect the magnitude of the displacement factor."
 
-**Cross-check against GKP source text:** GKP also mention intergenerational transfers in their conclusion (p. 510): "Our model abstracts from many elements of asset-price behavior, intergenerational transfers, life-cycle effects, cross-sectional characteristics of firms, etc., to highlight the economic intuition behind the displacement risk factor." This confirms that transfers are something GKP explicitly chose to abstract from. The paper's characterization is faithful to this. (Req 1, 2 satisfied.)
+The paper says GKP "note" this — GKP do mention it in a single paragraph in the body text (not a footnote). The verb "note" is neutral and accurate; the paper does not say "in a footnote" or "in passing."
 
-### 8. Extension 2, continued (line 262)
+The paper says GKP say transfers "affect the magnitude of displacement risk" — GKP say transfers "would only affect the magnitude of the displacement factor." Displacement factor and displacement risk are closely related (the factor measures the risk), and this is a fair paraphrase.
+
+The paper says GKP "treat such mechanisms as inessential extensions" — GKP literally use the phrase "inessential extensions." The paper is using GKP's own language.
+
+"We take a closer look" modestly positions the paper's extension as elaborating on GKP's observation. This is appropriately modest. PASSES Req. 1, 2, 3.
+
+### Passage 9 (line 237, Extension 2 — trading infeasibility)
 > "Because the displacing capital may not yet exist---it belongs to future cohorts of innovators---direct trading is infeasible, and government transfers offer an alternative."
 
-**What it does:** Motivates government transfers as a policy response to the intergenerational trading problem.
-**Assessment:** PASS. This sentence follows the GKP citation but does not cite GKP for the "government transfers offer an alternative" claim—that is the paper's own contribution. The reasoning about future cohorts echoes GKP's insight (correctly) but the policy implication is the paper's own extension. Properly attributed. (Req 2 satisfied.)
+**What it does:** Explains why direct trading fails, motivating government transfers.
+**Assessment:** This sentence follows the GKP citation and presents the paper's own reasoning about why transfers are needed. The logic draws on GKP's insight (future cohorts haven't entered) but applies it to the paper's AI context. It is not attributed to GKP — it follows "We take a closer look," clearly marking it as the paper's own extension. PASSES Req. 2.
 
-## Summary of fail-condition checks
+## Fail condition checklist
 
-| Fail condition | Status | Evidence |
-|---|---|---|
-| Characterizes GKP as mere inability to buy private AI capital | NOT TRIGGERED | Lines 52, 63, 197 all specify that GKP's mechanism is about agents/cohorts that cannot yet trade |
-| Says GKP "raise in a footnote" or "note in passing" | NOT TRIGGERED | Paper says "note" (line 262), which is accurate—GKP's transfer discussion is a brief robustness remark, not a footnote or passing comment |
-| Presents AI owners and GKP's future cohorts as exact counterparts | NOT TRIGGERED | "Can also be thought of as" (line 76), "analogous role" (line 197), with explicit disclaimers about not modeling entry dynamics |
-| Attributes paper's own interpretations to GKP | NOT TRIGGERED | Jones (2024) connections and government transfer policy analysis are attributed to the paper, not GKP |
-| Awkward, defensive, or over-explaining passages | NOT TRIGGERED | The disclaimers on lines 76 and 197 are proportionate clarifications, not unprompted defenses |
-| Diminishes GKP's contribution | NOT TRIGGERED | "Builds most directly on," "adopt their insight," "inherits their central economic logic," "central to their framework" |
+1. **Does the paper characterize GKP's mechanism as mere inability to buy private AI capital?** No. Multiple passages (lines 55, 64, 170, 172) describe GKP's mechanism in terms of agents/cohorts/innovators who have not yet entered the economy and cannot trade. The failure of intergenerational risk sharing is clearly conveyed. PASS.
+
+2. **Does the paper say GKP "raise in a footnote" or "note in passing"?** No. The paper says "GKP note" (line 236), which is accurate — GKP mention transfers in a body-text paragraph, not a footnote. The paper does not minimize this with "in passing" or similar language. PASS.
+
+3. **Does the paper present AI owners and GKP's future cohorts as exact counterparts?** No. Every relevant passage uses analogical language: "can also be thought of as" (line 77), "analogous role" (line 172), "parallels" (line 170), "echoes" (line 172). The paper twice explicitly disclaims modeling entry dynamics. PASS.
+
+4. **Are connections to other papers attributed to the paper's own interpretation?** Yes. The connection to Jones (2024) is presented as "Our contribution connects their framework to..." (line 55). Policy implications are the paper's own development, clearly separated from what GKP said. PASS.
+
+5. **Is the tone gracious, respectful, and modest?** Yes. "builds most directly on," "adopt their insight," "inherits their central economic logic," "we take a closer look." No passage diminishes GKP or overclaims. PASS.
+
+6. **Are there awkward, defensive, or over-explaining passages?** No. The disclaimers about not modeling entry dynamics (lines 77, 172) are necessary clarifications given the structural difference between the models, not preemptive defenses against unmade criticisms. They are concise and functional. PASS.

@@ -1,47 +1,44 @@
 # tests/factcheck-freely.py
-Started: 2026-04-09 18:48:38 EDT
-Runtime: 6m 40s
-[ralph-garage/agent-logs/20260409T184838.245391-0400_factcheck-freely_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260409T184838.245391-0400_factcheck-freely_claude_claude-opus-4-6.log)
+Started: 2026-04-09 19:03:08 EDT
+Runtime: 3m 42s
+[ralph-garage/agent-logs/20260409T190308.199207-0400_factcheck-freely_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260409T190308.199207-0400_factcheck-freely_claude_claude-opus-4-6.log)
 
 # factcheck-freely
-VERDICT: FAIL
-REASON: The paper misattributes the authorship of Kogan, Papanikolaou, Schmidt, and Song (2020) and contains an internal terminological inconsistency in the transfer model.
+VERDICT: PASS
+REASON: No factually incorrect statements or logical inconsistencies found in the paper.
 
-## Factual Errors
+## Detailed Review
 
-### 1. Wrong authors for "Left Behind" (JPE 2020)
-**Location:** `references.bib` lines 134–142; cited on line 67 of `paper.tex`.
+### Mathematical Correctness
+- **Proposition 1 (P/D Ratios):** The Euler equation derivation in Appendix A is algebraically correct. The three states are properly enumerated, SDF terms are correct, and the fixed-point solution $v = K/(1-K)$ follows. The expressions for $\Gamma^{AI}$ and $\Gamma^{N}$ correctly capture dividend growth conditional on a non-extinction singularity.
+- **Proposition 2 (Comparative Statics):** All three parts are correctly stated and proved. (i) Decreasing $\phi$ raises $\phi^{-\gamma}$, amplifying the singularity term more for the asset with higher $\Gamma^j$. (ii) The qualification "for $\gamma$ sufficiently large" is appropriate. (iii) Higher $\xi$ proportionally reduces the singularity term weight.
+- **Proposition 3 (Veto):** Equation (6) correctly computes the one-period utility gain. The extinction normalization ($u_{ext}=0$) is properly noted as conservative for $\gamma > 1$. Both parts (i) and (ii) are logically sound.
+- **Transfer ratio (Equation 9):** Correctly derived from Equation (8). The independence from $\eta$ is verified algebraically.
 
-The bibliography entry attributes "Left Behind: Creative Destruction, Inequality, and the Stock Market" (JPE, Vol 128, No 3, 2020, pp. 855–906) to Kogan, Papanikolaou, and **Stoffman**. The actual paper is by Kogan, Papanikolaou, **Schmidt**, and **Song** (four authors, not three). Noah Stoffman is not an author of this paper. The citation key `KoganPapanikolaouStoffman2020`, the author list, and the in-text citation are all incorrect.
+### Internal Consistency — Numerical Examples
+- $\phi(1+\eta) = 0.75$ with $\phi=0.5$, $\eta=0.5$: $0.5 \times 1.5 = 0.75$. **Correct.**
+- $\phi(1+\eta) = 0.5$ with $\phi=0.05$, $\eta=9$: $0.05 \times 10 = 0.5$. **Correct.**
+- AI P/D ~18 and non-AI P/D ~11 at $p=0.5\%$, $\xi=0$: Hand calculation yields AI P/D ~17.4 and non-AI P/D ~11.0, ratio ~1.58. Paper says "roughly 18" and "near 11" with "a ratio of about 1.6." **Consistent** within stated approximation.
 
-### 2. Mischaracterization of Kogan and Papanikolaou (2014)
-**Location:** Line 67 of `paper.tex`.
+### Economic Logic
+- **Hedging mechanism:** Sound. AI stocks pay off in singularity states where household marginal utility is high due to displacement.
+- **Market incompleteness:** Correctly motivated. If the household could trade private AI capital, the valuation spread would collapse.
+- **Veto proposition:** Logically correct. Risk-averse household facing unhedgeable downside may block socially efficient development.
+- **Transfer mechanism:** Sound. The transfer ratio being independent of $\eta$ while levels grow with $\eta$ is correctly derived and economically meaningful.
 
-The paper states KP2014 "show that technology shocks create a displacement risk factor that is priced in the cross-section." KP2014 is about investment-specific technology shocks and growth opportunities, not "displacement risk" per se. The term "displacement risk" as a named concept originates in GKP (2012). KP2014's mechanism involves differential exposure to IST shocks across firms with different growth-opportunity ratios. Calling their factor a "displacement risk factor" conflates two related but distinct concepts.
+### Citation Accuracy
+- **GKP (2012):** Accurately represented as showing displacement risk is a systematic factor, growth stocks hedge it, and market incompleteness arises from future innovators being untradeable. The paper's deliberately modest characterization of its contribution relative to GKP is appropriate.
+- **Jones (2024):** Accurately represented regarding bounded utility, extinction risk, and the connection between powerful AI and existential risk.
+- Other citations (Kogan-Papanikolaou, Barro, Wachter, Pastor-Veronesi, Korinek-Suh) are used appropriately and consistently with the cited works.
 
-## Logical Inconsistencies
+### Factual Claims
+- AI-exposed firms trading at P/E ratios "two to five times the market average" is plausible (e.g., NVIDIA P/E of 50-70+ vs. S&P 500 P/E of ~20-22).
+- Figure 1 is appropriately labeled "Illustrative."
 
-### 3. "Income" vs. "surplus" in the transfer model
-**Location:** Lines 264 and 270 of `paper.tex`.
+### Code-Paper Consistency
+- The R code's `compute_pd` function implements the exact formula from Propositions 1. Parameters match those stated in the paper.
+- The extension code correctly implements the transfer consumption formula (Equation 8) and modifies the P/D formula accordingly.
 
-Line 264 defines the tax as levied on "AI owners' income." Line 270 then refers to the same tax base as "AI owners' surplus." These are different economic concepts: income is the total amount received; surplus is the gain relative to a baseline. The formula in equation (11) taxes the full post-displacement income share $(1 - \phi\alpha)$, not the surplus from the singularity. The text should use one term consistently.
-
-## Additional Issues (Not Determinative)
-
-### 4. Explosive P/D in extension figure (undiscussed)
-For the "Large singularity" scenario ($\eta = 9$, $\phi = 0.05$), the P/D formula yields $K > 1$ at low tax rates, meaning valuations are infinite. The code silently drops these points. The paper text discusses the figure without noting that the large-singularity P/D curve starts at a positive $\tau$, which could mislead readers.
-
-### 5. Post-singularity stationarity approximation
-The proof of Proposition 1 assumes the post-singularity P/D ratio equals the pre-singularity one, but acknowledges this is approximate. Since $\theta$ increases and $\alpha$ decreases after each singularity, the actual post-singularity $\Gamma^{AI}$ would differ, potentially affecting the quantitative results.
-
-### 6. Informal veto proof (Proposition 3)
-The proof argues qualitatively that "for $\gamma$ sufficiently large" the household vetoes, but does not establish formal conditions on the parameters. Part (ii) asserts that complete markets let the household share the social surplus without demonstrating this within the model.
-
-## Items Verified as Correct
-- Euler equation derivation and P/D formulas (Proposition 1)
-- Corollary 1 (valuation spread)
-- Proposition 2 comparative statics
-- GKP (2012) and Jones (2024) characterizations
-- Transfer ratio formula (equation 12), correctly independent of $\eta$
-- Code output matches formulas and table values
-- Parameter constraints satisfied across singularity transitions
+### Minor Notes (Not Errors)
+- The stationarity approximation (treating post-singularity P/D as approximately equal to pre-singularity P/D) is acknowledged in the proof and is standard in this class of models.
+- The description of Jones (2024) on "bounded utility functions" is technically correct ($\gamma > 1$ implies bounded utility) though Jones's result is more nuanced about the specific $\gamma$ threshold. This is an acceptable simplification, not an error.
