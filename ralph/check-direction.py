@@ -198,15 +198,6 @@ def main() -> int:
         if contexts and not args.keep_worktrees:
             cleanup_worktrees([context for context in contexts if context.index not in failed_indices])
 
-    for index, _detail in failures:
-        print(
-            f"run-{index:02d}: preserved failed worktree at /workspace/worktrees/check-direction/run-{index:02d}/",
-            file=sys.stderr,
-        )
-
-    if failures:
-        return 1
-
     # Build PDFs inside each run's paper/ subdirectory for preview purposes.
     run_dirs = sorted(OUTPUT_DIR.glob("run-*/"))
     if run_dirs:
@@ -220,6 +211,15 @@ def main() -> int:
             else:
                 print(f"  {label}/paper/paper.pdf: build failed", file=sys.stderr)
             cleanup_latex_intermediates(run_dir)
+
+    for index, _detail in failures:
+        print(
+            f"run-{index:02d}: preserved failed worktree at /workspace/worktrees/check-direction/run-{index:02d}/",
+            file=sys.stderr,
+        )
+
+    if failures:
+        return 1
 
     return 0
 
