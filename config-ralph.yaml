@@ -1,10 +1,10 @@
 # == Basic loop configuration ==
 # Internal-use note for this Ralph stretch; not included in iteration commit subjects.
-run-note: rm writing-flow, fix theory-clarity, add unmodeled-channels + writing-intro
+run-note: add set-ralph-direction, rm conversational
 max-iter: 20
 
 # Optional pre-loop baseline test run
-test-before-loop: off
+test-before-loop: on
 
 # == Test Set ==
 test-mode: selected
@@ -26,22 +26,21 @@ selected-tests:
   - spec-economic
   - spec-paper
   - spec-scope
-  - theory-clarity  
+  - theory-clarity
   - theory-deadweight
-  - theory-intro-payoff  
+  - theory-intro-payoff
   - theory-unmodeled-channels
   - visual-figures
   - visual-figures-image-only
   - visual-pages
-  - writing-intro  
+  - writing-intro
   - writing-intuition
-
 
 # Agent log verbosity
 agent-log-mode: verbose
 
-# Stop before batch test runs when Claude's observed five-hour utilization is too high
-quota-preflight: on
+# Stop before tests if Claude's budget is low
+quota-preflight: false
 claude-5h-utilization-limit: 0.67
 
 # == Referees and continual-improvement mode ==
