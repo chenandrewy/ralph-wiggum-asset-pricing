@@ -1,7 +1,7 @@
 # == Basic loop configuration ==
 # Internal-use note for this Ralph stretch; not included in iteration commit subjects.
-run-note: ext-spec-refined-3
-max-iter: 30
+run-note: rm writing-flow, fix theory-clarity, add unmodeled-channels + writing-intro
+max-iter: 20
 
 # Optional pre-loop baseline test run
 test-before-loop: off
@@ -26,15 +26,16 @@ selected-tests:
   - spec-economic
   - spec-paper
   - spec-scope
+  - theory-clarity  
   - theory-deadweight
-  - theory-clarity
+  - theory-intro-payoff  
+  - theory-unmodeled-channels
   - visual-figures
   - visual-figures-image-only
   - visual-pages
-  - writing-econ-messaging
-  - writing-flow
-  - theory-intro-payoff
+  - writing-intro  
   - writing-intuition
+
 
 # Agent log verbosity
 agent-log-mode: verbose
