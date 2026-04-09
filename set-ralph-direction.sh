@@ -37,7 +37,12 @@ if [ "$KEEP_WORKTREES" -eq 1 ]; then
     cmd+=(--keep-worktrees)
 fi
 
-"${cmd[@]}"
+check_direction_rc=0
+if "${cmd[@]}"; then
+    check_direction_rc=0
+else
+    check_direction_rc=$?
+fi
 
 OUTPUT_ROOT="$REPO_ROOT/ralph-garage/check-direction"
 if [ ! -d "$OUTPUT_ROOT" ]; then
@@ -45,9 +50,24 @@ if [ ! -d "$OUTPUT_ROOT" ]; then
     exit 1
 fi
 
+shopt -s nullglob
+run_dirs=("$OUTPUT_ROOT"/run-*)
+shopt -u nullglob
+if [ "${#run_dirs[@]}" -eq 0 ]; then
+    if [ "$check_direction_rc" -ne 0 ]; then
+        echo "ERROR: check-direction failed and produced no candidates." >&2
+        exit "$check_direction_rc"
+    fi
+    echo "ERROR: no direction candidates found in $OUTPUT_ROOT" >&2
+    exit 1
+fi
+
+if [ "$check_direction_rc" -ne 0 ]; then
+    echo "WARNING: one or more runs failed, but successful candidates are available below." >&2
+fi
+
 printf '\nAvailable direction candidates:\n'
-for run_dir in "$OUTPUT_ROOT"/run-*; do
-    [ -d "$run_dir" ] || continue
+for run_dir in "${run_dirs[@]}"; do
     printf '  %s\n' "$(basename "$run_dir")"
 done
 

@@ -134,6 +134,14 @@ def cleanup_latex_intermediates(run_dir: pathlib.Path) -> None:
             f.unlink()
 
 
+def copy_preview_pdf(run_dir: pathlib.Path) -> None:
+    paper_pdf = run_dir / "paper" / "paper.pdf"
+    if not paper_pdf.is_file():
+        return
+    suffix = run_dir.name.removeprefix("run-")
+    shutil.copy2(paper_pdf, OUTPUT_DIR / f"paper-{suffix}.pdf")
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Run several isolated AuthorPlan+AuthorImprove trials and export candidate paper/ and code/ states.",
@@ -173,6 +181,7 @@ def main() -> int:
 
     contexts: list[RunContext] = []
     failures: list[tuple[int, str]] = []
+    failed_indices: set[int] = set()
     try:
         contexts = prepare_worktrees(resolved_base, args.runs)
         with concurrent.futures.ThreadPoolExecutor(max_workers=args.runs) as executor:
@@ -183,10 +192,17 @@ def main() -> int:
                     print(f"run-{index:02d}: wrote ralph-garage/check-direction/run-{index:02d}/")
                 else:
                     failures.append((index, detail))
+                    failed_indices.add(index)
                     print(f"run-{index:02d}: failed ({detail})", file=sys.stderr)
     finally:
         if contexts and not args.keep_worktrees:
-            cleanup_worktrees(contexts)
+            cleanup_worktrees([context for context in contexts if context.index not in failed_indices])
+
+    for index, _detail in failures:
+        print(
+            f"run-{index:02d}: preserved failed worktree at /workspace/worktrees/check-direction/run-{index:02d}/",
+            file=sys.stderr,
+        )
 
     if failures:
         return 1
@@ -199,6 +215,7 @@ def main() -> int:
             run_dir, ok, detail = build_pdf(run_dir)
             label = run_dir.name
             if ok:
+                copy_preview_pdf(run_dir)
                 print(f"  {label}/paper/paper.pdf: ok")
             else:
                 print(f"  {label}/paper/paper.pdf: build failed", file=sys.stderr)
