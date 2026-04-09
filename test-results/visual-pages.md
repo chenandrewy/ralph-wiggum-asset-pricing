@@ -1,28 +1,36 @@
 # tests/visual-pages.py
-Started: 2026-04-09 18:20:05 EDT
-Runtime: 57s
-[ralph-garage/agent-logs/20260409T182005.714595-0400_visual-pages_claude_opus.log](../ralph-garage/agent-logs/20260409T182005.714595-0400_visual-pages_claude_opus.log)
+Started: 2026-04-09 18:48:38 EDT
+Runtime: 58s
+[ralph-garage/agent-logs/20260409T184838.253284-0400_visual-pages_claude_opus.log](../ralph-garage/agent-logs/20260409T184838.253284-0400_visual-pages_claude_opus.log)
 
 # visual-pages
-VERDICT: PASS
-REASON: All 14 pages have visible page numbers, figures and tables are well-formatted and readable, no formatting defects found, and the paper is within the 20-page limit.
+VERDICT: FAIL
+REASON: Hyperref colored link boxes are visible around cross-references, creating a distracting formatting artifact.
 
 ## Page Numbers
-All 14 pages display a centered page number at the bottom. No pages are missing numbers.
-
-## Figures and Tables
-- **Figure 1** (page 2): AI valuations chart with two series (AI-Exposed Firms vs. S&P 500). Readable axes, legend, and labels. Lines are clearly distinguishable by color.
-- **Table 1** (page 9): Price-dividend ratios grid. Clean horizontal rules, well-aligned columns, readable parameter notes below. Professional formatting.
-- **Figure 2** (page 13): Two-panel figure (AI Stock Valuations and Household Consumption). Both panels have clear axes, legends, and distinguishable line styles. Readable at printed size.
-
-Total exhibits: 3 (well within the 6-exhibit limit).
-
-## Formatting Issues
-- No overflowing text detected on any page.
-- No broken references (e.g., "??") observed. Cross-references to figures, tables, propositions, and equations all render correctly.
-- No missing figures or tables.
-- All display equations appear numbered.
-- Page 8 has moderate whitespace below the Section 3 introduction paragraph due to a LaTeX page break before Table 1. This is a minor cosmetic issue, not a defect.
+All 14 pages have visible page numbers at the bottom center. PASS.
 
 ## Paper Length
-14 pages total (including references and appendix start), well within the 20-page maximum specified in the paper spec.
+The paper is 14 pages, well within the 20-page limit specified in the spec. PASS.
+
+## Exhibits
+Three exhibits total (Figure 1, Table 1, Figure 2), within the 6-exhibit limit. PASS.
+
+## Figures and Tables
+
+- **Figure 1 (page 2):** AI Valuations chart. Readable but rendered at a small size on the page. Legend and axis labels are legible. Acceptable.
+- **Table 1 (page 9):** Price-Dividend Ratios. Cleanly formatted with clear column headers and horizontal rules. Well structured and easy to read. PASS.
+- **Figure 2 (page 13 top):** Government Transfers and the Singularity, two-panel figure. Panels are clearly labeled (a) and (b). Legends are small but legible. PASS.
+
+## Formatting Issues
+
+1. **Hyperref colored link boxes:** Visible colored rectangles (red, green) appear around cross-references throughout the paper. Examples include:
+   - Page 1: red box around "1" in the "Figure 1" reference.
+   - Page 8: green box around "(2012)" citation.
+   - Page 5: colored boxes around equation references.
+   - Page 11: colored boxes around cross-references.
+   This is the default `hyperref` behavior in LaTeX. The fix is to add `\hypersetup{hidelinks}` or pass the `hidelinks` option to the hyperref package. For a paper targeting top finance journals, these boxes should be suppressed.
+
+2. **White space on page 8:** The bottom half of page 8 is blank after the quantitative analysis parameterization paragraph. This is a natural page break before Section 3's table, so it is acceptable but slightly wasteful.
+
+3. **No other issues detected:** No overflowing text, broken references, or missing figures observed. All equations are numbered. Section headings and body text are cleanly typeset.

@@ -1,128 +1,58 @@
 # Improvement Plan
-AUTHOR PLAN — 2026-04-09 17:48:46 EDT
+AUTHOR PLAN — 2026-04-09 18:33:48 EDT
 
-## Current State
+## Status: 17/25 tests pass, 8 fail
 
-**Tests: 9 pass / 16 fail.** No overhaul needed — the model structure is sound — but the paper has critical formula display errors, a broken narrative about "catastrophic" displacement, and several content gaps.
+## Key Issues
 
----
+### A. Transfers figure is broken (code + paper)
+The extension figure (fig-extension-panels) has two severe problems:
+1. **Panel (a) visual spike**: P/D blows up to ~1500 at τ≈10% for the baseline scenario, compressing all other data into an unreadable strip. The `compute_pd_with_transfer` formula has K→1 at certain τ values, causing a mathematical singularity.
+2. **Panel (b) wrong message**: At τ=0 with large singularity (η=9), household consumption growth is φ(1+η)=0.5×10=5x. The household is doing great without transfers, undermining the entire motivation. The spec requires showing the singularity is *catastrophic* absent transfers.
 
-## Priority 1: Fix Mathematical Errors (paper + code)
+**Root cause**: With η=9 and φ=0.5, displacement is severe in share terms but not in levels—aggregate growth swamps the share loss. A more powerful singularity should also cause more severe displacement (smaller φ).
 
-### 1a. P/D formula display errors (eqs 4, 5, 8)
+**Fix**: In `generate-exhibits.R`, for the large singularity scenario, pair η=9 with a much smaller φ (e.g., φ=0.05), so φ(1+η)=0.5 and household consumption halves even with enormous growth. This is economically natural: a singularity powerful enough to produce 10x growth would plausibly displace far more labor. For panel (a), the reparameterization should eliminate the K→1 blow-up; if not, cap or filter extreme P/D values. Update the paper text at line 279 to describe the new parameterization.
 
-The displayed formulas use $(1+\eta)^{1-\gamma}$ but the correct expression (matching the proof and the code) is $(1+\eta)^{-\gamma}$ when multiplied by $\Gamma^j$. The paper has an extra factor of $(1+\eta)$. Additionally, eq (4) has numerator $A/(1-AB)$ but the proof derives $AB/(1-AB)$ (i.e., $K/(1-K)$). Fix the displayed formulas to match the code.
+### B. Extinction risk contradiction (intro line 64)
+Line 64 says extinction interacts with displacement "to amplify valuation premia." But Proposition 2(iii) proves the spread is *decreasing* in ξ, and line 57 correctly says "extinction risk compresses this gap." This is a direct logical contradiction.
 
-**Affected tests:** factcheck-code, factcheck-bysection, factcheck-freely, factcheck-exhibits
+**Fix**: Rewrite line 64 to say extinction *attenuates* the premium or interacts in a "countervailing" way, consistent with Prop 2(iii).
 
-### 1b. Fix "catastrophic" narrative and parameterization
+### C. Eq (7) limit is misleading (paper lines 271-275)
+The ratio $c^H_{post}/c^H_{no-transfer}$ is exactly constant in η—the (1+η) factors cancel for any η>0. Presenting it as $\lim_{\eta→∞}$ and saying it "converges to a finite constant" is incorrect. Two tests flag this independently.
 
-With $\phi = 0.7$ and $\eta = 0.5$, household consumption *grows* by 5% in a singularity ($\phi(1+\eta) = 1.05$). The paper falsely claims consumption "drops sharply." Two options:
-- **Option A (preferred):** Lower $\phi$ to 0.5, so $\phi(1+\eta) = 0.75$ — a genuine 25% consumption drop. Regenerate table and figures.
-- **Option B:** Reframe narrative to emphasize *share* loss rather than absolute consumption decline.
+**Fix**: Present eq (7) as an exact identity, not a limit. Rewrite the surrounding text to clarify: the *ratio* is η-invariant, but the *level* of consumption grows without bound. The economic insight (transfers scale with surplus) operates on levels, not ratios.
 
-Option A is preferred because it makes the "catastrophic" framing truthful, strengthens the hedging motivation, and makes Figure 2 panel (b) visually compelling (consumption below 1 at $\tau=0$).
+### D. GKP misattribution at line 261
+The paper says GKP "observe that broader trading... would help resolve displacement risk." GKP actually calls transfers/bequests "inessential extensions" that only change magnitude. The paper repackages GKP's robustness argument as a policy observation.
 
-**Affected tests:** factcheck-code, factcheck-bysection, element-transfers-fig, factcheck-exhibits
+**Fix**: Reframe as the paper's own interpretation, e.g.: "GKP note that intergenerational transfers affect the magnitude of displacement risk but treat them as inessential. We take a closer look at this channel..."
 
-### 1c. Fix limit equation (10)
+### E. Introduction flow and topic sentences (writing-intro)
+Main arguments are buried inside paragraphs. Topic sentences are questions or background rather than claims. The AI authorship repetition ("As noted in the abstract") is clunky (rhetoric-meta also flags this).
 
-The ratio $c^H_{post}/c^H_{no\text{-}transfer}$ is actually a finite constant independent of $\eta$. The paper incorrectly writes $\to \infty$. Fix to show that the *level* of post-transfer consumption grows without bound, not the ratio. Or redefine the ratio relative to pre-singularity consumption.
+**Fix**: Rewrite intro paragraph topic sentences so each leads with its main claim. Rework the AI-authorship introduction version to do different rhetorical work than the abstract—frame it as evidence that displacement is empirically grounded rather than repeating the same sentence.
 
-**Affected tests:** factcheck-bysection, factcheck-freely
+### F. Appendix A is ceremonial (theory-deadweight)
+The appendix contains no real proof details. It restates Prop 3's proof in SDF language that isn't used in the actual proof. factcheck-bysection also flags the SDF mischaracterization.
 
-### 1d. Fix Proposition 2(iii)
+**Fix**: Remove the appendix entirely. The spec requires proofs in the paper; they're already in the main text. Remove the unused `\newtheorem{lemma}` too.
 
-The claim that the P/D *ratio* may increase in $\xi$ is contradicted by the table (monotonic decrease at every $p$). Either prove it for different parameters, or correct the proposition to state the ratio decreases.
+### G. Line 57 overstates "two to six times"
+Table ratios range 1.1–5.8. "Two to six times" overstates the lower bound.
 
-**Affected tests:** factcheck-bysection, factcheck-freely
+**Fix**: Change to "up to roughly six times higher" or "1.1 to nearly 6 times."
 
-### 1e. Remove dangling $R_f$ from Proposition 1
-
-Defined but never used. Delete the sentence.
-
-**Affected tests:** theory-deadweight, factcheck-theory
-
-### 1f. Fix $\alpha_t$ domain
-
-Change $\alpha_t \in (0,1]$ to $\alpha_t \in (0, 1 - \theta_t]$ to prevent negative private AI capital dividends.
-
-**Affected tests:** factcheck-theory
-
----
-
-## Priority 2: Fix Content Gaps
-
-### 2a. Add entry-dynamics disclaimer
-
-The spec (I.4.d) requires an explicit statement that we do NOT model entry dynamics. Add a sentence in Section 2.1 (near the AI owners paragraph) and in Section 2.3: "Importantly, we do not explicitly model the entry of new cohorts; AI owners are a static group."
-
-**Affected tests:** theory-unmodeled-channels
-
-### 2b. Fix Figure 1 — fabricated data
-
-Either:
-- **(Preferred)** Label the figure clearly as "illustrative" in caption and text. Change paper text from "plots the price-to-earnings ratios" to "illustrates the pattern of price-to-earnings ratios" with a note that values are approximate.
-- Or download real CRSP/market data (but spec says do not download additional data, and scope should stay limited).
-
-Also address P/E vs P/D conflation: add a brief note that P/E ratios proxy for P/D ratios here.
-
-**Affected tests:** element-opening-fig, factcheck-code, factcheck-exhibits
-
-### 2c. Add missing lit citations
-
-Add to the lit review:
-- **Kogan and Papanikolaou (2014, JF)** — technology shocks, displacement risk, and cross-section of returns
-- **Kogan, Papanikolaou, and Stoffman (2020, JPE)** — creative destruction, stock returns, inequality
-
-These are the most critical gaps. Consider also Papanikolaou (2011, JFE) if space permits.
-
-**Affected tests:** element-lit-review
-
-### 2d. Fix GKP citation issues
-
-- Remove defensive meta-commentary: "We are intentionally modest about our incremental contribution relative to their framework." Show modesty through substance, not proclamation.
-- Fix misattribution in Section 4.2: GKP mention broader trading as a technical remark, not a normative policy prescription. Soften the framing.
-
-**Affected tests:** element-gkp-cites
-
-### 2e. Trim abstract to 100 words
-
-Currently ~103 words. Cut 3-4 words.
-
-**Affected tests:** spec-paper
-
----
-
-## Priority 3: Presentation Fixes
-
-### 3a. Tone down AI-authorship paragraph in intro
-
-The standalone disclosure paragraph is too prominent and self-congratulatory. Fold the disclosure into 1-2 sentences within another paragraph rather than giving it its own block. Remove "If AI can produce passable academic research..." — it alienates the reader.
-
-**Affected tests:** element-rhetoric-meta, writing-intro
-
-### 3b. Fix Figure 2 legend rendering
-
-Unicode $\eta$ renders as ".." in PDF. Use R expression syntax or plotmath instead of Unicode characters in legend labels.
-
-**Affected tests:** visual-figures-image-only
-
-### 3c. Improve intro flow
-
-- Give more prominence to arguments (c) and (d) from the spec: financial market solutions are under-discussed; singularity overcomes frictions.
-- Smooth transition between GKP comparison paragraph and the extensions discussion.
-- Ensure extinction risk claim matches Proposition 2(iii) after it's corrected.
-
-**Affected tests:** writing-intro, factcheck-narrative
-
----
+### H. Minor model issues
+1. **Prop 2(i) proof** (line 185): says decrease in φ "makes the divergence between Γ^AI and Γ^N more valuable"—but Γs don't depend on φ. The mechanism is entirely through φ^{-γ} amplification. Fix the wording.
+2. **Corollary 1**: φ<1 condition is redundant (Δθ>0 alone suffices since φ^{-γ} is common). Remove it.
+3. **δ(τ) notation** (line 263): function wrapper introduced and never used again. Just write δ₀τ directly.
+4. **GKP "creative destruction"** (line 194): GKP models displacement through expanding variety, not Schumpeterian creative destruction. Fix to "continuous displacement from innovation."
 
 ## Execution Order
 
-1. **Code first:** Update `generate-exhibits.R` — change $\phi$ to 0.5 (or chosen value), fix legend rendering. Regenerate all exhibits.
-2. **Formulas:** Fix eqs (4), (5), (8), (10) in `paper.tex`. Fix Proposition 2(iii). Remove $R_f$. Fix $\alpha_t$ domain.
-3. **Narrative:** Rewrite "catastrophic" claims in Section 4.2, fix limit discussion, update table commentary to match new numbers.
-4. **Content:** Add entry-dynamics disclaimer, fix Figure 1 labeling, add missing citations, fix GKP framing.
-5. **Writing:** Trim abstract, tone down AI-authorship paragraph, improve intro flow.
-6. **Verify:** Recompile paper, rerun tests.
+1. **Fix the code** (`generate-exhibits.R`): reparameterize the large-singularity scenario with smaller φ. Regenerate exhibits. Verify panel (b) shows catastrophe at τ=0 and panel (a) has no spike.
+2. **Fix the paper model/theory issues** (B, C, F, G, H): extinction contradiction, eq (7) presentation, remove appendix, fix overstated range, minor proof/notation issues.
+3. **Fix GKP attribution** (D): rewrite line 261.
+4. **Rewrite the introduction** (E): topic sentences, AI authorship device, flow.

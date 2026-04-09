@@ -1,77 +1,71 @@
 # tests/visual-figures.py
-Started: 2026-04-09 18:20:05 EDT
-Runtime: 1m 3s
-[ralph-garage/agent-logs/20260409T182005.683836-0400_visual-figures_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260409T182005.683836-0400_visual-figures_claude_claude-opus-4-6.log)
+Started: 2026-04-09 18:48:38 EDT
+Runtime: 1m 12s
+[ralph-garage/agent-logs/20260409T184838.255886-0400_visual-figures_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260409T184838.255886-0400_visual-figures_claude_claude-opus-4-6.log)
 
 # visual-figures
 
+VERDICT: FAIL
+
+REASON: Figure 2 has axis labels, tick labels, and legend text that are too small to read comfortably in both panels.
+
+---
+
+## Figure 1 — Valuations of AI Stocks vs. the Broader Market (page 2)
+
 VERDICT: PASS
 
-REASON: Both figures have readable labels, distinguishable series, and clear narrative messages.
+REASON: The single-panel figure has readable labels, clearly distinguishable series, and a self-explanatory caption-plus-legend combination.
+
+### Full Figure (single panel)
+
+**Readability: PASS**
+- Figure title is clearly legible.
+- Y-axis label ("Price-Earnings Ratio") is readable.
+- Tick labels on both axes are adequately sized; none overlap or are cut off.
+- Legend text ("AI-Exposed Firms" and "S&P 500") is legible.
+- X-axis years (2015–2025) at two-year intervals are clearly readable.
+
+**Distinguishability: PASS**
+- Two series use distinct colors (blue vs. red) and distinct line types (solid vs. dashed), providing redundant visual channels.
+- Both series have point markers reinforcing their positions.
+- Series are spatially close in early years but remain distinguishable through color and line-type differences.
+- Legend is positioned where it does not obscure data.
+
+**Narrative clarity: PASS**
+- From figure and caption alone: AI-exposed firms have dramatically higher P/E ratios than the S&P 500, with the gap widening sharply after ~2023. The "(Illustrative)" qualifier signals approximate values. The main message is immediately clear.
+- From figure and paper text: The valuation premium reflects a hedging motive against displacement risk under incomplete markets; the figure motivates the theoretical argument.
 
 ---
 
-## Figure 1: Valuations of AI Stocks vs. the Broader Market (Illustrative)
+## Figure 2 — Government Transfers and the Singularity (page 13)
 
-**VERDICT: PASS**
+VERDICT: FAIL
 
-**REASON:** The single-panel figure is readable, distinguishable, and clearly conveys the valuation gap between AI-exposed firms and the S&P 500.
+REASON: Axis labels, tick labels, and legend text in both panels are too small to read comfortably.
 
-**Panel identification:** Single panel (no sub-panels).
+### Panel (a): AI Stock Valuations
 
-### Readability — PASS
-- Title at top is clearly legible.
-- Y-axis label ("Price / earnings ratio") is readable.
-- X-axis year tick labels (2015, 2017, 2019, 2021, 2023, 2025) are legible.
-- Y-axis tick labels (15, 20, 25, 30, 35) are legible.
-- Legend ("AI-Exposed Firms" in red, "S&P 500" in blue) is placed in the upper-left and is readable.
-- Font sizes are adequate throughout; no text is cut off or overlapping.
+**Readability: FAIL**
+- Y-axis label ("P/D Ratio (Multiple)") and x-axis label ("Tax rate τ") are very small and difficult to read.
+- Tick labels are small but barely legible.
+- Legend text listing parameter values (baseline vs. large singularity) is very small and hard to parse, with multiple Greek letters and numeric parameters packed tightly.
+- Panel subtitle "(a) AI Stock Valuations" is small but legible.
 
-### Distinguishability — PASS
-- Two series use distinct colors: red for AI-exposed firms and blue for the S&P 500; clearly separable.
-- Lines are thick enough to follow easily.
-- Legend does not obscure any important data.
-- The two series diverge substantially after ~2023, making the key pattern visually immediate. Before 2023 the lines are close but still distinguishable by color.
+**Distinguishability: PASS**
+- Two series (baseline and large singularity) use distinct line styles (solid vs. dashed) and are well separated vertically across the full range of τ.
 
-### Narrative clarity — PASS
-- **From figure and caption alone:** AI-exposed firms trade at much higher P/E ratios than the broad market, with a dramatic widening since ~2023.
-- **From figure and paper text:** The paper states the figure "illustrates the pattern of price-to-earnings ratios for AI-exposed firms versus the broader market since 2015" and that "the gap has widened dramatically since 2023, as advances in generative AI have accelerated expectations of transformative productivity gains." The figure supports the paper's motivating observation that AI stocks carry a valuation premium, which the theoretical model explains through a displacement-risk hedging channel.
+### Panel (b): Household Consumption
 
----
+**Readability: FAIL**
+- Same issues as Panel (a): axis labels, tick labels, and legend text are all too small.
+- Y-axis label ("Household Consumption / Cₜ") is particularly small.
+- Legend repeats the same small-font parameter listings.
 
-## Figure 2: Government Transfers and the Singularity
+**Distinguishability: PASS**
+- Two series are clearly separated and use distinct line styles. The large-singularity line rises steeply while the baseline rises gently, making them visually distinct without effort.
 
-**VERDICT: PASS**
+### Narrative Clarity
 
-**REASON:** Both panels have readable labels, clearly distinguishable series with large vertical separation, and the figure's main message is immediately apparent from the figure and caption alone.
-
-**Panel identification:** Two panels — (a) AI Stock Valuations, (b) Household Consumption.
-
-### Panel (a): AI Stock Valuations — PASS
-
-#### Readability
-- Axis labels ("Tax rate" on x, "P/D ratio (AI Stock)" on y) are legible.
-- Tick labels are readable.
-- Panel title "(a) AI Stock Valuations" is clear.
-- Legend at the bottom is small but legible.
-
-#### Distinguishability
-- Two lines ("Baseline (eta = 0.5)" and "Large singularity (eta = 9)") are clearly separated vertically.
-- Both lines use different dash patterns and are easy to tell apart spatially.
-- No overlapping text, no cut-off text, no legend covering data.
-
-### Panel (b): Household Consumption — PASS
-
-#### Readability
-- Axis labels ("Tax rate" on x, "Household Consumption Growth (% change)" on y) are legible.
-- Tick labels are readable.
-- Panel title "(b) Household Consumption" is clear.
-
-#### Distinguishability
-- Two lines are well separated — the large-singularity line rises steeply to very high values (thousands of percent), while the baseline line stays near zero.
-- Legend at the bottom matches Panel (a). Lines are easy to tell apart.
-- No overlapping text, no cut-off text, no legend covering data.
-
-### Narrative clarity — PASS
-- **From figure and caption alone:** Panel (a) shows that AI stock valuations (P/D ratios) decrease with higher tax rates and are much higher under a large singularity. Panel (b) shows household consumption growth increases with the tax rate, dramatically so under a large singularity. Government transfers funded by taxing AI owners can materially boost household consumption when singularity-driven output growth is large.
-- **From figure and paper text:** Without transfers (tau = 0), a singularity actually reduces household consumption (displacement). Increasing tau under a large singularity produces substantial household consumption gains because enormous output growth swamps deadweight costs. The figure confirms this and reinforces the paper's argument that contingent transfer policies triggered by a singularity are worth designing in advance.
+- From figure and caption alone: Increasing the tax rate reduces AI stock valuations (Panel a) and raises household consumption (Panel b), with effects much larger under the large-singularity scenario. The caption is a bare title with no descriptive note, and the small legend text weakens standalone comprehension.
+- From figure and paper text: The text explains that absent transfers, households face consumption losses from displacement. As the tax rate increases, the large-singularity scenario responds dramatically because enormous output growth swamps deadweight costs.

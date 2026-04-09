@@ -1,68 +1,73 @@
 # tests/factcheck-code.py
-Started: 2026-04-09 18:20:05 EDT
-Runtime: 1m 45s
-[ralph-garage/agent-logs/20260409T182005.674550-0400_factcheck-code_claude_opus.log](../ralph-garage/agent-logs/20260409T182005.674550-0400_factcheck-code_claude_opus.log)
+Started: 2026-04-09 18:48:38 EDT
+Runtime: 2m 9s
+[ralph-garage/agent-logs/20260409T184838.247359-0400_factcheck-code_claude_opus.log](../ralph-garage/agent-logs/20260409T184838.247359-0400_factcheck-code_claude_opus.log)
 
 # factcheck-code
-
 VERDICT: PASS
-REASON: The canonical analysis path runs from scratch, produces all exhibits, and is consistent with the paper's formulas and quantitative claims.
+REASON: The canonical analysis path runs from scratch, produces all exhibits, and its outputs are consistent with the paper's quantitative claims.
 
 ## Canonical local analysis path
 
-- Single entry point: `code/generate-exhibits.R`
-- Run command: `Rscript code/generate-exhibits.R`
-- No external inputs: all parameters defined inline; no data downloads, no WRDS queries, no credentials
-- Produces 3 exhibits directly to `paper/exhibits/`:
-  - `table-pd-ratios.tex` (Exhibit 1: P/D ratio table)
-  - `fig-extension-panels.pdf` (Exhibit 2: government transfers two-panel figure)
-  - `fig-ai-valuations.pdf` (Exhibit 3: illustrative AI vs market valuations)
-- All 3 exhibits are referenced in `paper/paper.tex`; no unused exhibits in the directory
-- Dependencies: R with `ggplot2`, `dplyr`, `tidyr`, `gridExtra` (all standard CRAN packages)
-- The code structure is logically organized: parameters, then exhibits 1–3 in sequence
+- **Entry point:** `Rscript code/generate-exhibits.R` (single canonical script, documented in header comment).
+- **Inputs:** None external. All parameters are defined inline; the illustrative empirical figure uses hardcoded approximate data.
+- **Outputs:** Three exhibit files written directly to `paper/exhibits/`:
+  1. `table-pd-ratios.tex` — P/D ratio table (Exhibit 1)
+  2. `fig-extension-panels.pdf` — Government transfers two-panel figure (Exhibit 2)
+  3. `fig-ai-valuations.pdf` — Illustrative AI valuations figure (Exhibit 3)
+- **Dependencies:** R with packages `ggplot2`, `dplyr`, `tidyr`, `gridExtra`, `scales`.
+- **No WRDS queries, no credentials, no network access, no precomputed caches.**
+
+The structure satisfies spec III.3: single canonical entry point in `code/`, written in R, runs from scratch, outputs directly to `paper/exhibits/`. All files in `paper/exhibits/` are used in the paper, and vice versa.
 
 ## Execution status
 
-- **Executed successfully from scratch** in this environment
-- Runtime: well under 180 seconds (spec requirement III.3.d)
-- All 3 output files regenerated with correct content
-- No precomputed caches or intermediate files required (spec requirement III.3.c satisfied)
+- **Locally reproducible.** The script ran successfully from scratch in this environment in under 10 seconds. All three output files were regenerated.
+- No execution blockers (R and all required packages are available).
+- No credentials or downloads required.
 
 ## Paper-code consistency
 
-### Formulas
-- **P/D ratios (Proposition 1):** Code implements Γ^AI, Γ^N, and the K/(1-K) formula exactly as in equations (4)–(5). Verified by static comparison.
-- **Transfer consumption (eq. 6):** Code's `consumption_growth()` function computes c^H_post / c^H_pre = φ(1+η) + τ(1-δ₀τ)(1-φα)/α · (1+η), consistent with equation (6) divided by pre-singularity household consumption.
-- **P/D with transfers:** Code computes an effective φ_eff that correctly incorporates the transfer into the household's SDF.
+### Exhibit 1: P/D ratio table
 
-### Parameters
-- Paper states: β=0.96, g=0.02, γ=4, φ=0.5, η=0.5, θ=0.15, Δθ=0.2. Code matches exactly.
-- Extension uses p=3%, ξ=5%, α₀=0.70, δ₀=0.50, η∈{0.5, 9.0}. These are in the code and consistent with the paper's discussion.
+- **Formula verification:** The code's `compute_pd` implements $K/(1-K)$ where $K = \beta(1+g)^{1-\gamma}[(1-p) + p(1-\xi)(1+\eta)^{-\gamma}\phi^{-\gamma}\Gamma^j]$. This matches the paper's equations (5)-(6) exactly.
+- **Dividend growth factors:** $\Gamma^{AI} = [\theta + \Delta\theta(1-\theta)]/\theta \cdot (1+\eta) = 3.2$ and $\Gamma^N = [1-\theta-\Delta\theta(1-\theta)]/(1-\theta) \cdot (1+\eta) = 1.2$. Matches the paper's definition.
+- **Parameter values:** Code uses $\beta=0.96$, $g=0.02$, $\gamma=4$, $\phi=0.5$, $\eta=0.5$, $\theta=0.15$, $\Delta\theta=0.2$. All match the paper's stated parameterization (Section 3).
+- **Paper claims vs. table output:**
+  - "P/D of roughly 18" at $p=0.5\%$, $\xi=0$: table shows 17.5. Consistent.
+  - "non-AI stocks trade near 11": table shows 11.1. Consistent.
+  - "ratio of about 1.6": table shows 1.6. Consistent.
+  - "At $p=1\%$, the ratio rises to nearly 6 to 1": table shows 5.8. Consistent.
+  - "up to roughly six times higher": max ratio in table is 5.8 at $p=1\%$, $\xi=0$. Consistent with "roughly six."
+- **Comparative statics:** Extinction risk compresses the spread (decreasing ratio with increasing $\xi$) — visible in table. Consistent with Proposition 2(iii).
 
-### Quantitative claims
-- "P/D of roughly 18" at p=0.5%, ξ=0%: table shows 17.5. Consistent with "roughly."
-- "ratio rises to nearly 6 to 1" at p=1%: table shows 5.8. Consistent with "nearly 6."
-- "household consumption falls to 75%": φ(1+η) = 0.5×1.5 = 0.75. Exact match.
-- "two to six times higher across a range of singularity probabilities": table ratios range 1.1–5.8; the stated range is approximate and refers to the salient region (p ≥ 0.5%), which is reasonable.
-- Extinction compresses the AI premium: confirmed across all ξ columns in the table.
+### Exhibit 2: Extension panels
 
-### Illustrative figure (Exhibit 3)
-- Uses hardcoded approximate P/E data for AI-exposed firms vs. S&P 500, 2015–2025.
-- Paper caption labels it "(Illustrative)" and text says "approximate values from public sources."
-- This is appropriate: spec requirement I.8.b calls for limited empirical content that is illustrative.
+- **Consumption growth formula:** Code computes $\phi(1+\eta) + \tau(1-\delta_0\tau)(1-\phi\alpha_0)/\alpha_0 \cdot (1+\eta)$, which equals $c^H_{post}/c^H_{pre}$. Derived correctly from paper equation (8).
+- **P/D with transfers:** Code computes an effective $\phi_{eff}$ and substitutes into the P/D formula. This correctly captures how transfers change the household's singularity consumption and hence the SDF.
+- **Parameters:** Baseline ($\eta=0.5$, $\phi=0.5$) and large singularity ($\eta=9$, $\phi=0.05$) with $p=0.5\%$, $\xi=5\%$, $\alpha_0=0.70$, $\delta_0=0.50$.
+- **Paper claims:**
+  - "consumption halves under the large singularity ($\phi(1+\eta)=0.5$)": $0.05 \times 10 = 0.5$. Correct.
+  - "falls by 25% under the baseline ($\phi(1+\eta)=0.75$)": $0.5 \times 1.5 = 0.75$. Correct.
+  - "transfers reduce the hedge value of AI stocks, compressing P/D ratios": left panel shows declining P/D with $\tau$. Consistent.
+
+### Exhibit 3: AI valuations figure
+
+- **Data source:** Hardcoded illustrative P/E ratios, not from any external dataset.
+- **Labeling:** Figure caption says "(Illustrative)"; paper text says "based on approximate values from public sources." Properly labeled as non-canonical empirical content.
+
+### Per-share data handling (Requirement 5)
+
+Not applicable. The code uses no per-share market data. All quantities are model-derived parameters or illustrative hardcoded values.
 
 ## Reproducibility classification
 
 | Output | Classification |
 |--------|---------------|
-| `table-pd-ratios.tex` (Exhibit 1) | **Locally reproducible** — regenerated from scratch |
-| `fig-extension-panels.pdf` (Exhibit 2) | **Locally reproducible** — regenerated from scratch |
-| `fig-ai-valuations.pdf` (Exhibit 3) | **Locally reproducible** — uses hardcoded illustrative data, labeled as such in the paper |
+| `table-pd-ratios.tex` | Locally reproducible |
+| `fig-extension-panels.pdf` | Locally reproducible |
+| `fig-ai-valuations.pdf` | Locally reproducible (illustrative data, properly labeled) |
+| Paper's theoretical propositions | Not code-dependent (analytical proofs) |
+| Paper's quantitative claims (Section 3) | Locally reproducible, consistent with code output |
 
-## Per-share data handling (Requirement 5)
-
-Not applicable. The code works entirely with model-derived ratios and shares (θ, α, φ), not with per-share market data from different sources. No share-count or split-adjustment issues arise.
-
-## Violations
-
-None found.
+No violations found.

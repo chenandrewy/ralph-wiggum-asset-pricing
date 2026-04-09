@@ -1,63 +1,82 @@
 # tests/factcheck-exhibits.py
-Started: 2026-04-09 18:20:05 EDT
-Runtime: 4m 54s
-[ralph-garage/agent-logs/20260409T182005.673607-0400_factcheck-exhibits_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260409T182005.673607-0400_factcheck-exhibits_claude_claude-opus-4-6.log)
+Started: 2026-04-09 18:48:38 EDT
+Runtime: 4m 55s
+[ralph-garage/agent-logs/20260409T184838.243845-0400_factcheck-exhibits_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260409T184838.243845-0400_factcheck-exhibits_claude_claude-opus-4-6.log)
 
 # factcheck-exhibits
-
 VERDICT: PASS
-REASON: All three exhibits are correctly generated, and all paper claims about exhibit values match the underlying computations.
+REASON: All three exhibits are correctly generated from the code; no artifacts, labeling errors, or unsupported features found.
 
-## Figure 1: AI Valuations vs. the Broader Market
+## Figure 1: Valuations of AI Stocks vs. the Broader Market (Illustrative)
 
-**Description:** A line chart comparing price-earnings ratios for "AI-Exposed Firms" and the "S&P 500" from 2015 to 2025. The AI line rises steeply after 2022 (from ~38 to ~75), while the market line stays in the 18--25 range.
-
-### Suspicious features
-
-1. **Hardcoded data with no external source file.** The P/E values are defined inline in the code (`pe_market` and `pe_ai` vectors at `generate-exhibits.R:186-187`) rather than loaded from a data file.
-2. **Sharp acceleration in AI P/E from 2023 onward** (42 to 62 to 75).
-
-### Code check
-
-1. The caption explicitly says "(Illustrative)" and the paper text says "based on approximate values from public sources." The code comments say "Illustrative P/E data based on publicly available market patterns." The hardcoded values are intentional and transparently disclosed. The S&P 500 values (18--26 range) and AI-firm values are broadly plausible for the stated period. **Verified: correctly labeled as illustrative.**
-2. The sharp rise from 2023 onward reflects the generative-AI boom. The paper does not claim these are exact figures. **Verified: consistent with the illustrative framing.**
-
-**Exhibit verdict: PASS** -- Data is illustrative, transparently labeled, and plausible.
-
-## Table 1: Price-Dividend Ratios (AI Stocks vs. Non-AI Stocks)
-
-**Description:** A table of P/D ratios for AI and non-AI stocks across a grid of singularity probabilities ($p \in \{0.1\%, 0.2\%, 0.5\%, 0.8\%, 1.0\%\}$) and extinction probabilities ($\xi \in \{0\%, 5\%, 10\%, 20\%\}$), with parameters $\beta=0.96$, $g=0.02$, $\gamma=4$, $\phi=0.5$, $\eta=0.5$, $\theta=0.15$, $\Delta\theta=0.2$.
+**Description:** Time-series plot (2015–2025) of price-earnings ratios for AI-exposed firms vs. the S&P 500. AI-exposed firms show a dramatic divergence starting around 2023, reaching ~75 by 2025.
 
 ### Suspicious features
 
-1. **Extreme AI P/D at $p=1\%$, $\xi=0\%$ (76.4)** -- roughly 6x the non-AI value. Potentially near a pole in the valuation formula.
-2. **Non-AI P/D increases with $p$** (from 9.8 at $p=0.1\%$ to 13.3 at $p=1\%$ for $\xi=0\%$), which is less intuitive since singularity displaces non-AI firms.
+1. **Hardcoded data with no external data file.** The P/E series (`pe_ai`, `pe_market`) are defined as literal vectors in `code/generate-exhibits.R:189–190` with no external CSV or API call. No local data files exist under `/workspace/data/`.
+
+2. **Steep AI P/E spike (42 → 62 → 75 from 2023–2025).** The trajectory implies ~80% P/E growth over two years.
+
+3. **Y-axis does not start at zero.** The default ggplot range (~18–76) visually amplifies the gap.
 
 ### Code check
 
-1. **P/D=76.4 at $p=1\%$, $\xi=0\%$:** Independently recomputed. The formula is $K / (1-K)$ where $K = \beta(1+g)^{1-\gamma}[(1-p) + p(1-\xi)\phi^{-\gamma}(1+\eta)^{-\gamma}\gamma_j^{AI}]$. At these parameters, $K = 0.987$ (close to 1), producing $P/D = 0.987/0.013 = 76.4$. All 20 table cells verified to match the code output exactly. **Verified: correct.**
-2. **Non-AI P/D rising with $p$:** The SDF in the singularity state is $\phi^{-\gamma}(1+\eta)^{-\gamma}\gamma_j^{N}$. With $\gamma_j^{N} = 0.8 \times 1.5 = 1.2$ and $\phi^{-4}(1.5)^{-4} = 16 \times 0.1975 = 3.16$, the singularity-state SDF contribution is $3.16 \times 1.2 = 3.79$, which exceeds 1. So singularity states are high marginal-utility states where even non-AI dividends (which shrink in share but benefit from aggregate growth) are valued. Higher $p$ increases the weight on these high-SDF states, raising non-AI P/D. **Verified: economically and mathematically correct.**
+1. The caption explicitly says "(Illustrative)" and the paper text (line 39) says "based on approximate values from public sources." The hardcoded values are within plausible ranges for the period: S&P 500 trailing P/E was 18–28 over 2015–2025; mega-cap AI firms (NVIDIA, Microsoft, Alphabet) saw P/Es in the 40–75 range post-2023. The illustrative label makes exact verification unnecessary; directional correctness suffices.
 
-**Paper cross-check:** The text says "roughly 18" for AI P/D at $p=0.5\%$, $\xi=0\%$ (actual: 17.5) and "nearly 6 to 1" for the ratio at $p=1\%$ (actual: 5.8). Both are acceptable approximations.
+2. The steep AI spike reflects the post-ChatGPT AI boom. NVIDIA's P/E alone exceeded 60 in this period. A basket of AI-exposed firms at 75 in 2025 is aggressive but not implausible for an illustrative figure.
 
-**Exhibit verdict: PASS** -- All 20 cells independently verified; paper claims match.
+3. Not starting the y-axis at zero is standard practice for ratio plots and does not misrepresent the data.
+
+**Exhibit verdict: PASS** — Illustrative data is transparently labeled and directionally plausible.
+
+---
+
+## Table 1: Price-Dividend Ratios: AI Stocks vs. Non-AI Stocks
+
+**Description:** Grid of model-implied P/D ratios across singularity probability $p$ (0.1%–1.0%) and extinction probability $\xi$ (0%–20%). Shows AI stocks, non-AI stocks, and their ratio.
+
+### Suspicious features
+
+1. **Extreme P/D at high $p$.** At $p = 1\%$, $\xi = 0\%$, AI P/D = 76.4 — roughly 7× the non-AI value (13.3). This explodes because $K \to 1$.
+
+2. **Non-AI P/D increases with $p$ despite non-AI stocks losing share.** Non-AI P/D rises from 9.8 ($p = 0.1\%$) to 13.3 ($p = 1.0\%$) at $\xi = 0\%$.
+
+### Code check
+
+1. **Verified numerically.** At $p = 1\%$, $\xi = 0\%$: $K_{AI} = 0.9871$, giving $P/D = 0.9871 / 0.0129 = 76.4$. The near-unit $K$ arises because the SDF-weighted singularity payoff ($\phi^{-\gamma} (1+\eta)^{-\gamma} \gamma_{AI} = 10.11$) is large: severe household displacement ($\phi = 0.5$) raises marginal utility, amplifying the value of AI dividends. This is the core hedging mechanism of the paper and is mathematically correct.
+
+2. **Non-AI P/D increase is correct.** Non-AI dividend growth in singularity is $\gamma_{non} = 0.8 \times 1.5 = 1.2$, but the SDF factor $\phi^{-\gamma}(1+\eta)^{-\gamma} = 3.16$ means the SDF-weighted singularity payoff is $3.16 \times 1.2 = 3.79 > 1$. Since the singularity state has high marginal utility, even non-AI stocks (which lose share but benefit from aggregate growth) carry a premium. Higher $p$ amplifies this, raising non-AI P/D. Economically sound: non-AI stocks still pay something in the high-marginal-utility singularity state.
+
+3. **Spot-checked five rows** against independent R computation: $p = 0.5\%/\xi = 0\%$ (AI = 17.5, Non = 11.1), $p = 1.0\%/\xi = 0\%$ (AI = 76.4, Non = 13.3), $p = 0.5\%/\xi = 5\%$ (AI = 16.7, Non = 11.0), $p = 0.8\%/\xi = 20\%$ (AI = 21.7, Non = 11.4). All match the table to the displayed precision.
+
+4. **Parameter footnote matches code:** $\beta = 0.96$, $g = 0.02$, $\gamma = 4$, $\phi = 0.5$, $\eta = 0.5$, $\theta = 0.15$, $\Delta\theta = 0.2$ — all verified at `code/generate-exhibits.R:18–24`.
+
+**Exhibit verdict: PASS** — All values verified; extreme P/D at high $p$ is a correct model property.
+
+---
 
 ## Figure 2: Government Transfers and the Singularity
 
-**Description:** Two-panel figure. Panel (a) shows AI stock P/D ratio vs. tax rate $\tau$ for Baseline ($\eta=0.5$) and Large singularity ($\eta=9$) scenarios. Panel (b) shows household consumption growth in the singularity state vs. $\tau$, with a dashed "No change" reference line at $y=1$.
+**Description:** Two-panel figure. Panel (a) shows AI stock P/D ratio vs. tax rate $\tau$ for baseline ($\eta = 0.5, \phi = 0.5$) and large singularity ($\eta = 9, \phi = 0.05$). Panel (b) shows household consumption growth in the singularity state vs. $\tau$.
 
 ### Suspicious features
 
-1. **Baseline P/D appears to start at an extremely high value and drop steeply** in Panel (a), suggesting near-singular behavior at low $\tau$.
-2. **Large singularity P/D appears essentially flat** across all $\tau$ values in Panel (a), showing almost no response to transfers.
-3. **Baseline consumption growth starts below 1** in Panel (b), meaning the singularity hurts households absent transfers.
+1. **Large singularity line in Panel (a) starts partway through the $\tau$ range** — it does not appear at low $\tau$, unlike the baseline which spans the full range.
+
+2. **Large singularity consumption growth in Panel (b) reaches very high values (~7×)** while baseline stays modest (~1.4×).
+
+3. **"No change" annotation positioned at $y = 1.3$** rather than at the reference line $y = 1$.
 
 ### Code check
 
-1. **Near-singular Baseline P/D:** At $p=3\%$, $\xi=5\%$, the Euler-equation coefficient $K$ exceeds 1 for $\tau < 0.12$ (producing NA / infinite P/D). At $\tau=0.12$, $K=0.9993$ yielding $P/D=1510$; at $\tau=0.15$, $P/D=53.7$; at $\tau=0.30$, $P/D=13.9$. The code filters out NA values (`filter(!is.na(pd_ai))`), so the plotted line begins at the first finite value and drops steeply. This is a genuine feature of the Gordon-growth-style formula: as $K \to 1^-$, $P/D \to \infty$. **Verified: mathematically correct, real model feature.**
-2. **Flat Large singularity line:** With $\eta=9$, $(1+\eta)^{-\gamma} = 10^{-4} = 0.0001$, making the singularity-state SDF contribution negligible. P/D varies from 7.22 ($\tau=0$) to 7.17 ($\tau=0.7$), a range of 0.05. Changes in $\phi_{\text{eff}}$ via transfers cannot move the needle when the SDF weight on the singularity state is $10^{-4}$. **Verified: correct and economically sensible.**
-3. **Baseline consumption at $\tau=0$:** $\phi(1+\eta) = 0.5 \times 1.5 = 0.75$. The paper states "household consumption falls to 75% of its pre-singularity level," which matches. **Verified: correct.**
+1. **Truncated large-singularity line is correct.** At $\tau = 0$, $\phi_{eff} = 0.05$, giving $K = 2.37 > 1$ (verified numerically). The code returns `NA` when $K \geq 1$ (`generate-exhibits.R:46`), and Panel (a) filters NAs (`filter(!is.na(pd_ai))` at line 155). The line only appears once $\phi_{eff}$ grows large enough (via transfers) to bring $K < 1$. This is economically correct: without transfers, the SDF diverges because extreme displacement ($\phi = 0.05$) creates enormous marginal utility in the singularity state.
 
-**Paper cross-check:** The text correctly states that "absent transfers ($\tau=0$), the singularity reduces household consumption" and that "under a large singularity, even high tax rates produce substantial consumption gains." Both match the computed values (consumption growth = 5.0 to 9.2 for $\eta=9$).
+2. **High consumption growth verified.** At $\tau = 0.7$: consumption\_growth for large singularity = $0.05 \times 10 + 0.7 \times (1 - 0.35) \times \frac{1 - 0.035}{0.70} \times 10 = 0.5 + 0.7 \times 0.65 \times 1.379 \times 10 = 0.5 + 6.27 = 6.77$. The enormous transfer base (10× aggregate growth) swamps the deadweight costs, exactly as the paper argues (line 280: "the enormous output growth swamps the deadweight costs").
 
-**Exhibit verdict: PASS** -- All features trace to correct model mechanics; paper claims match.
+3. **"No change" annotation is a label, not a data point.** The text at $(0.55, 1.3)$ labels the dashed reference line at $y = 1$ (`code/generate-exhibits.R:168–169`). Placing annotation text slightly above its reference line is standard practice. The dashed line itself is correctly at $y = 1$.
+
+4. **Transfer formula matches paper.** Equation (8) in the paper: $c^H_{post} = \phi \alpha (1+\eta) C_t (1+g) + \tau(1-\delta_0 \tau)(1-\phi\alpha)(1+\eta) C_t (1+g)$. The code's `consumption_growth` function (`generate-exhibits.R:112–113`) divides by $\alpha C_t (1+g)$ to get the ratio, yielding $\phi(1+\eta) + \tau(1-\delta_0\tau)(1-\phi\alpha)/\alpha \cdot (1+\eta)$. Verified consistent.
+
+5. **Paper's inline claims match the figure.** The text states "consumption halves under the large singularity ($\phi(1+\eta) = 0.5$)" — $0.05 \times 10 = 0.5$ ✓ — and "falls by 25% under the baseline ($\phi(1+\eta) = 0.75$)" — $0.5 \times 1.5 = 0.75$ ✓.
+
+**Exhibit verdict: PASS** — All features traced to correct code logic and consistent with the paper's economic arguments.

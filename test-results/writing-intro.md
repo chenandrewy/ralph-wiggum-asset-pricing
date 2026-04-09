@@ -1,70 +1,67 @@
 # tests/writing-intro.py
-Started: 2026-04-09 18:20:05 EDT
-Runtime: 3m 18s
-[ralph-garage/agent-logs/20260409T182005.677348-0400_writing-intro_claude_opus.log](../ralph-garage/agent-logs/20260409T182005.677348-0400_writing-intro_claude_opus.log)
+Started: 2026-04-09 18:48:38 EDT
+Runtime: 2m 39s
+[ralph-garage/agent-logs/20260409T184838.248924-0400_writing-intro_claude_opus.log](../ralph-garage/agent-logs/20260409T184838.248924-0400_writing-intro_claude_opus.log)
 
 # writing-intro
 VERDICT: FAIL
-REASON: The introduction buries its main arguments inside paragraphs, making them invisible to skimming readers, and has flow problems at key transitions.
+REASON: Main arguments (c) and (d) from the spec are not recoverable by a skimming reader, and the introduction has significant flow problems in its second half.
 
-## Subagent Results
+## Subagent 1: Clarity of Main Arguments to a Skimming Reader — FAIL
 
-| Check | Verdict |
-|-------|---------|
-| 1. Main arguments clear to skimming reader | FAIL |
-| 2. Introduction flows well | FAIL |
-| 3. Intro promises fulfilled in analysis sections | PASS (minor flag) |
+Evaluated whether each of the five main arguments from `spec/paper-spec.md` is clear to a reader who reads only first/last sentences of each paragraph, bold text, and figure captions.
 
----
+| Argument | Verdict | Notes |
+|----------|---------|-------|
+| (a) AI stocks have high valuations partly because they hedge against a negative AI singularity | CLEAR | First sentence of P2 ("Part of this premium, we argue, reflects a hedging motive") is immediately visible to skimmers. |
+| (b) Incomplete markets are key: if markets were complete, there would be no need to hedge | PARTIALLY CLEAR | Present in P2 ("If markets were complete, investors could insure...") and P5 ("Complete markets would eliminate this distortion"), but incompleteness is not foregrounded as the *central* mechanism in first sentences. A skimmer may treat it as supporting detail. |
+| (c) Financial market solutions to AI disaster risk are under-discussed, though frictions can limit their effectiveness | NOT CLEAR | The "under-explored" clause is a trailing sentence in P4. The friction-limiting-effectiveness half is absent from any skimmable position. |
+| (d) If the singularity occurs, market frictions can be overcome due to the abundance of resources | NOT CLEAR | The government-transfers-overwhelm-deadweight-costs point is buried mid-paragraph in P5, not in any first or last sentence. The broader "abundance overcomes frictions" framing is not stated anywhere in a skimmable position. |
+| (e) Incomplete markets may distort not only valuations but also the development of AI | CLEAR | First sentence of P5 states this directly. |
 
-## 1. Clarity for a Skimming Reader: FAIL
+**Recommendation:** Make arguments (c) and (d) more prominent. Consider giving each its own paragraph-opening sentence, or restructuring P4–P5 so that these points land in first/last sentence positions.
 
-A skimming reader reads first sentences of each paragraph and any bolded/emphasized text. None of the five main arguments from the spec are reliably surfaced this way:
+## Subagent 2: Introduction Flow — FAIL
 
-- **(a) AI stocks hedge against a negative singularity:** The hedging explanation is buried in the interior of paragraph 2. The first sentence ("Why would investors pay such a premium?") is a question, not a statement of the argument.
-- **(b) Incomplete markets are key:** Appears mid-paragraph in P2 ("If markets were complete...") and again in the interior of P5. No first sentence signals this.
-- **(c) Financial market solutions are under-discussed:** Appears only in the interior of P4 ("the financial market implications...remain under-explored"). P5's opening sentence is close but frames it as motivation for extensions rather than a standalone observation.
-- **(d) Singularity abundance overcomes market frictions:** The government-transfers mechanism is entirely in the interior of P5. No first sentence signals this.
-- **(e) Incomplete markets distort AI development:** Also buried in the interior of P5, never surfaced in a topic sentence.
+Evaluated paragraph-by-paragraph transitions and overall arc.
 
-**Recommendation:** Rewrite topic sentences so each paragraph leads with its main claim. Consider selective bolding or italics for key phrases.
+| Transition | Assessment |
+|---|---|
+| P1 → P2 (empirical puzzle → hedging argument) | **Pass** — clean pivot from observation to explanation |
+| P2 → P3 (argument → model formalization) | **Pass** — "We formalize this argument" is a clear handoff |
+| P3 → P4 (model → contribution/literature) | **Weak** — abrupt topic shift with no bridging sentence. P3 ends on P/D ratios; P4 opens on GKP's framework. Reader expects contribution but gets prior work first. |
+| P4 → P5 (contribution → extensions preview) | **Fail** — extensions introduced without any transitional signal. The "not only... but also" construction in P5 implies contrast with P4 but P4 doesn't set it up. "Both extensions branch directly off the baseline model" is a defensive technical remark that interrupts rhetorical momentum. |
+| P5 → P6 (extensions → quantitative preview) | **Weak** — reader moves from policy extensions to baseline quantitative results with no connection. P6 should follow P3 (model) or precede P5 (extensions), not follow it. The internal "Proposition 2(iii)" reference is inappropriate for an introduction — the reader hasn't seen the propositions. |
+| P6 → P7 (quantitative preview → meta-commentary) | **Fail** — P7 (paper written by AI agents) abandons the argumentative arc. Tonally inconsistent with academic theory register. Ends the introduction on production method rather than economics. |
 
----
+**Structural diagnosis:** The first half (P1–P3) flows well. The second half (P4–P7) has ordering problems: the "under-explored" motivation in P4 belongs in P1–P2; the quantitative preview in P6 should precede the extensions preview in P5; and P7 breaks the academic register.
 
-## 2. Introduction Flow: FAIL
+**Recommendations:**
+1. Add transitional sentences at P3→P4 and P4→P5 seams.
+2. Move quantitative preview (P6) to follow the model description (P3), before extensions.
+3. Remove internal proposition reference from P6.
+4. Move the "under-explored" sentence from P4 to P1 or P2 where motivation belongs.
+5. Consider relocating P7's meta-commentary (AI-written paper) to the conclusion or a footnote, or at minimum adding a bridge so it doesn't end the introduction on a non-economic note.
 
-**Strengths:**
-- The overall arc (motivation -> hypothesis -> model -> extensions -> results) is correct.
-- P1 -> P2 and P2 -> P3 transitions are clean.
+## Subagent 3: Promises Fulfilled in Analysis Sections — PASS
 
-**Weaknesses:**
-- **P1 credibility:** The qualifier "based on approximate values from public sources" undercuts the empirical foundation before any argument is made.
-- **P3 -> P4 transition:** Weak. P4 opens with literature credit ("builds on the displacement risk framework of GKP") that reads as an append rather than a motivated segue. GKP was already cited in P2, creating redundancy.
-- **P5 -> P6 transition:** Jarring. P5 discusses two substantive extensions. P6 then crams quantitative results, a specific proposition citation (unusual for an intro), and the AI authorship disclosure into one paragraph. The AI authorship point lands as a non sequitur after calibration results.
-- **P6 inline proposition reference:** Citing "Proposition 2(iii)" in the introduction disrupts narrative flow; propositions belong in the body.
-- **Dead spots:** The middle of P4 ("despite a growing literature...remains under-explored") is boilerplate and drains energy.
+Every analysis promised or implied in the Introduction is fulfilled in the body:
 
-**Recommendation:**
-1. Separate the AI authorship disclosure into its own paragraph or a footnote.
-2. Remove the inline Proposition reference from the intro.
-3. Sharpen the P3->P4 transition by explaining why the GKP connection matters before invoking it.
-4. Either strengthen the empirical claim in P1 with standard data sources or drop the qualifying language.
+| Promise | Fulfilled? |
+|---------|------------|
+| Figure 1: AI vs. market P/E ratios | Yes — Figure 1 present |
+| Consumption-based model with closed-form solutions | Yes — Section 2, Proposition 1 with full formulas |
+| Closed-form P/D ratios depending on displacement, singularity prob, extinction risk | Yes — Equations (4)–(5) in Proposition 1 |
+| Connection to GKP (2012) | Yes — Section 2.3 Discussion |
+| Jones (2024) extinction risk in model | Yes — extinction probability ξ throughout |
+| Comparative statics (Proposition 2) | Yes — all three parts proved |
+| Market incompleteness distorts AI development; veto result | Yes — Extension 1, Proposition 3 |
+| Government transfers effective when growth overwhelms deadweight costs | Yes — Extension 2, Figure 2 |
+| P/D ratios up to ~6x for AI vs. non-AI stocks | Yes — Table 1 in Section 3 |
+| Related literature review | Yes — present at end of Introduction |
 
----
+No broken promises identified.
 
-## 3. Intro Promises Fulfilled: PASS (minor flag)
+## Overall Assessment
 
-All major promises are delivered:
-
-| Promise | Status |
-|---------|--------|
-| Consumption-based model with closed-form P/D ratios | Delivered (Prop 1) |
-| Comparative statics on displacement, singularity prob, extinction | Delivered (Prop 2) |
-| AI stocks hedge displacement via rising dividend share | Delivered (Corollary 1) |
-| Extinction risk modeled following Jones (2024) | Delivered |
-| Market incompleteness as key friction | Delivered |
-| Veto under incomplete markets / no veto under complete markets | Delivered (Prop 3) |
-| Government transfers effective under large singularity | Delivered (Section 4.2, Figure 2) |
-| GKP framework connected to AI-specific features | Delivered |
-
-**Minor flag:** The introduction claims P/D ratios "two to six times higher" for AI stocks, but the reported numbers at p=0.5% show a ratio of roughly 18/11 = 1.6x, which is below the claimed lower bound of 2x. The 6x figure appears at p=1%. Either expand the calibration grid to show where 2x first appears, or revise the characterization to match reported results (e.g., "1.5 to 6 times higher").
+The introduction **fails** on two of three dimensions. While all promised analyses are delivered in the paper body (subagent 3: PASS), the introduction has clarity problems for skimming readers (subagent 1: FAIL on arguments c and d) and significant flow problems in its second half (subagent 2: FAIL on P4→P5, P6→P7 transitions and paragraph ordering). The first half of the introduction is strong; the second half needs restructuring.

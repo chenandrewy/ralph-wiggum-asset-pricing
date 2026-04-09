@@ -1,20 +1,18 @@
 # tests/spec-scope.py
-Started: 2026-04-09 18:20:05 EDT
-Runtime: 35s
-[ralph-garage/agent-logs/20260409T182005.686793-0400_spec-scope_claude_opus.log](../ralph-garage/agent-logs/20260409T182005.686793-0400_spec-scope_claude_opus.log)
+Started: 2026-04-09 18:48:38 EDT
+Runtime: 23s
+[ralph-garage/agent-logs/20260409T184838.244562-0400_spec-scope_claude_opus.log](../ralph-garage/agent-logs/20260409T184838.244562-0400_spec-scope_claude_opus.log)
 
 # spec-scope
 VERDICT: PASS
-REASON: The paper maintains a compact theoretical scope with illustrative (not calibrated) quantitative material and no empirical estimation.
+REASON: The paper maintains a compact theoretical scope with closed-form solutions, illustrative (not calibrated) quantitative material, and no broad prediction menus.
 
 ## Findings
 
-**Theoretical core.** The paper develops a simple discrete-time, closed-form consumption-based model (Section 2) with two focused extensions: a veto/efficiency result (Section 4.1) and a government-transfers result (Section 4.2). The model has a small parameter set and three propositions with proofs in the main text.
+**Theoretical core.** The paper presents a single consumption-based asset pricing model (Section 2) with two propositions (P/D ratios, comparative statics) and one corollary (valuation spread). All results are closed-form. The two extensions (Section 4) — veto/efficient development and government transfers — branch directly off the baseline and add one proposition each. There is no sprawling menu of predictions or auxiliary models.
 
-**Quantitative material is illustrative, not calibrated.** Section 3 ("Quantitative Analysis") uses a single parameterization to populate a P/D ratio table across a grid of singularity probabilities and extinction risks. There is no estimation, no moment-matching, no calibration exercise, no GMM/SMM, and no goodness-of-fit statistics. The parameters are described as "plausible" and the comparison to data is qualitative ("broadly consistent with observed valuation spreads"). The conclusion explicitly states: "Our model is deliberately simple."
+**Empirical content.** The paper contains no empirical estimation, regression analysis, or data-driven calibration. Figure 1 is explicitly labeled "Illustrative." The quantitative analysis (Section 3) evaluates the closed-form expressions over a parameter grid with round-number inputs ($\beta=0.96$, $g=0.02$, $\gamma=4$, etc.) — this is illustrative exploration of the model, not a calibration exercise targeting specific moments.
 
-**No broad prediction menu.** The paper makes three comparative-statics predictions (Proposition 2) directly tied to the model's parameters. It does not generate a laundry list of testable implications or auxiliary predictions.
+**Quantitative material.** One table (P/D ratios across a grid of $p$ and $\xi$) and two figures (AI valuations, extension panels). All are used to illustrate the model's mechanisms rather than to make precise quantitative claims. The text frames magnitudes as "broadly consistent" and "illustrative," not as fitted estimates.
 
-**Empirical content is minimal.** The only empirical content is Figure 1, which shows illustrative P/E ratios for AI vs. non-AI stocks and is labeled "Illustrative." There are no regressions, no panel data, no event studies, and no empirical tables.
-
-**Exhibits.** Three exhibits total: one illustrative figure (AI valuations), one table (P/D ratio grid), one two-panel figure (extensions). All serve to illustrate the model's mechanisms rather than to test them against data.
+**No broad prediction menus.** The paper focuses on a single channel (hedging displacement under incomplete markets) and derives a small set of comparative statics (displacement severity, singularity probability, extinction risk). The conclusion explicitly notes the model is "deliberately simple" and abstracts from many features.

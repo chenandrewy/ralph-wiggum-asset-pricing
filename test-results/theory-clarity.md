@@ -1,53 +1,52 @@
 # tests/theory-clarity.py
-Started: 2026-04-09 18:20:05 EDT
-Runtime: 1m 48s
-[ralph-garage/agent-logs/20260409T182005.707812-0400_theory-clarity_claude_opus.log](../ralph-garage/agent-logs/20260409T182005.707812-0400_theory-clarity_claude_opus.log)
+Started: 2026-04-09 18:48:38 EDT
+Runtime: 1m 35s
+[ralph-garage/agent-logs/20260409T184838.239656-0400_theory-clarity_claude_opus.log](../ralph-garage/agent-logs/20260409T184838.239656-0400_theory-clarity_claude_opus.log)
 
 # theory-clarity
 VERDICT: PASS
-REASON: Nearly all key model assumptions are introduced in clearly labeled setup paragraphs or display math before the results that use them; the one notable gap is that the dividend growth factors are defined only inside a proposition statement.
+REASON: All key model assumptions are introduced in clearly structured setup paragraphs before the results that use them; the most critical expressions appear in display math, with two minor gaps that do not impair readability.
 
 ## Key items identified
 
-### Should appear in display math (and do)
-1. Aggregate consumption growth $C_{t+1} = (1+g)C_t$ — eq. (1), display math
-2. Displacement rule $\alpha_{t+1} = \phi\alpha_t$ — eq. (2), display math
-3. CRRA utility — eq. (3), display math
-4. Post-transfer consumption — eq. (6), display math
-5. Transfer limit as $\eta\to\infty$ — eq. (7), display math
+**Display math (critical expressions):**
+1. Aggregate consumption growth $C_{t+1} = (1+g)C_t$ (eq 1)
+2. Displacement rule $\alpha_{t+1} = \phi\alpha_t$ (eq 2)
+3. CRRA utility (eq 3)
+4. AI share jump $\theta_{t+1} = \theta_t + \Delta\theta(1-\theta_t)$ — currently inline prose
+5. $\Gamma^{AI}$, $\Gamma^N$ definitions — currently inside Proposition 1 only
+6. P/D ratio formulas (eqs 4–5, inside Proposition 1)
+7. Veto gain $\Delta U^H$ (eq 8, inside Proposition 3)
+8. Post-transfer consumption (eq 9)
+9. Transfer ratio (eq 10)
 
-### Should appear in display math but does not
-6. **Dividend growth factors $\Gamma^{AI}$ and $\Gamma^{N}$** — defined only inside Proposition 1's statement (line 132). These drive Corollary 1 and all of Proposition 2; a reader scanning the model setup will not encounter them until mid-proposition.
-
-### Prose assumptions (properly placed at or near paragraph starts)
-7. Household consumption share $c_t^H = \alpha_t C_t$ — early in Consumption paragraph (line 84)
-8. Singularity probability $p$ — opens Singularity paragraph (line 87)
-9. Extinction probability $\xi$ and $C_{t+1}=0$ — item 2 in Singularity enumeration (line 95)
-10. Productivity boost $(1+\eta)$ — item 1 in Singularity enumeration (line 91)
-11. AI dividends $D_t^{AI} = \theta_t C_t$ and share jump $\Delta\theta$ — Assets bullet list (lines 103–104)
-12. Non-AI dividends $D_t^N = (1-\theta_t)C_t$ — Assets bullet list (line 105)
-13. Market incompleteness (private AI capital) — end of Assets paragraph (line 108)
-14. Positive singularity $\lambda$, $\phi^+>1$ — Extension 1 bullet list (lines 228–229)
-15. $\lambda > 1/2$ — Extension 1 setup prose (line 232)
-16. Veto cost $\kappa > 0$ — Extension 1 setup prose (line 234)
-17. Tax rate $\tau$ and deadweight cost $\delta(\tau) = \delta_0\tau$ — Extension 2 setup prose (line 263)
-
-### Borderline: defined inside a proposition but acceptable
-18. $\Delta U^H$ expression — display math inside Proposition 3's definitional preamble (eq. 5, line 240). This straddles the proposition boundary but serves as setup before the enumerated claims.
+**Prose assumptions:**
+10. Household consumption share $c_t^H = \alpha_t C_t$
+11. Singularity probability $p$, extinction probability $\xi$, productivity boost $\eta$
+12. $\gamma > 1$, $\beta \in (0,1)$, $\Delta\theta \in (0,1)$
+13. Market incompleteness (cannot trade private AI capital)
+14. $\lambda > 1/2$ (positive singularity most likely)
+15. Veto cost $\kappa > 0$, deadweight cost $\delta_0 > 0$, tax rate $\tau$
 
 ## Findings by section
 
-### Section 2.1 (Setup)
-Well-organized into labeled paragraphs (Consumption, Singularity, Assets, Preferences). All baseline assumptions are introduced before any results. The three-outcome probability tree (no singularity / non-extinction singularity / extinction) is spread across an enumerated list and prose, but the structure is clear enough.
+### Section 2 (Model)
+- **Setup paragraphs (2.1):** Well-organized with named paragraph headers (Consumption, Singularity, Assets, Preferences). Each introduces assumptions at the top of its paragraph. Satisfies criteria A and C.
+- **Display math:** The most critical structural expressions — consumption growth (eq 1), displacement (eq 2), utility (eq 3) — are all in display math. Satisfies criterion B for these items.
+- **Minor gap (item 4):** The AI share jump rule $\theta_{t+1} = \theta_t + \Delta\theta(1-\theta_t)$ is stated inline in a bullet list (line 105) rather than in display math. This expression directly drives the valuation spread (Corollary 1) and all comparative statics. Promoting it to display math would make it easier for the reader to locate. This is a suggestion, not a failure — the bullet list is clearly structured and the expression is easy to find.
+- **Minor gap (item 5):** $\Gamma^{AI}$ and $\Gamma^N$ are defined only inside Proposition 1 (line 133). Since these are the pivot of every comparative static and the hedging interpretation discussed in the text after Proposition 1, defining them in a display equation before the proposition would improve navigability. Again a suggestion, not a failure — defining notation inside a proposition statement is standard practice.
+- **Market incompleteness (item 13):** Clearly stated at the end of the Assets paragraph (line 109) with emphasis ("cannot"). Well-placed.
 
 ### Section 2.2 (Equilibrium prices)
-The P/D ratio formulas appear in display math inside Proposition 1. The dividend growth factors $\Gamma^{AI}$ and $\Gamma^{N}$ are defined only in the "where" clause of Proposition 1 (line 132), not in the model setup. Since these factors are the mechanical heart of Corollary 1 and Proposition 2, moving their definitions to a labeled display equation in Section 2.1 (after the Assets paragraph) would improve scanability. This is the paper's main clarity gap but does not rise to a failure because the definitions do appear before the results that use them (Corollary 1 and Proposition 2), just inside the proposition rather than in the setup.
+- P/D ratios and $\Gamma$ factors appear inside Proposition 1, which is standard for formal results. The discussion paragraph after the proof (line 166) effectively recaps the hedging channel. No issues.
 
 ### Section 3 (Quantitative Analysis)
-No new assumptions. Parameter values are clearly stated in prose. References back to Proposition 2(iii) are correct.
+- References parameterization clearly. No new assumptions introduced. No issues.
 
-### Section 4.1 (Veto extension)
-New assumptions ($\lambda$, $\phi^+$, $\lambda > 1/2$, $\kappa$) are introduced in setup prose before Proposition 3. The $\Delta U^H$ expression appears as display math inside Proposition 3's preamble, which is a common and acceptable convention for propositions that need to define notation before stating claims.
+### Section 4.1 (Veto and efficient development)
+- New assumptions ($\lambda > 1/2$, $\phi^+ > 1$, veto cost $\kappa$) are introduced in a setup paragraph and bullet list before Proposition 3. Well-structured.
+- The veto gain $\Delta U^H$ (eq 8) appears inside Proposition 3. This is appropriate — it is a derived quantity used to state the result, not a new primitive assumption.
 
-### Section 4.2 (Transfers extension)
-New assumptions ($\tau$, $\delta_0$) are introduced in setup prose. The post-transfer consumption and limit expressions appear in display math. Well-structured.
+### Section 4.2 (Government transfers)
+- New assumptions ($\tau$, $\delta_0$) are introduced in prose at the start of the subsection (line 264), before the display equations. Well-structured.
+- Post-transfer consumption (eq 9) and transfer ratio (eq 10) are in display math in the main text. Satisfies criterion B.

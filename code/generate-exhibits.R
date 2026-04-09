@@ -22,6 +22,7 @@ phi    <- 0.50   # displacement: household share multiplier upon negative singul
 eta    <- 0.50   # aggregate consumption jump factor (50% increase)
 theta  <- 0.15   # initial AI dividend share
 dtheta <- 0.20   # AI share jump (fraction of non-AI remainder)
+phi_large <- 0.05 # severe displacement for large singularity: phi_large*(1+9)=0.5
 
 # =============================================================================
 # Exhibit 1: Table of P/D ratios
@@ -107,14 +108,14 @@ alpha0 <- 0.70   # household's initial consumption share
 delta0 <- 0.50   # deadweight cost parameter
 
 # Household consumption growth in singularity state with transfers
-# c_H_post / c_H_pre = phi*(1+eta) + tau*(1-delta0*tau)*(1-phi*alpha0)/alpha0 * (1+eta)
-consumption_growth <- function(tau, eta_val) {
-  phi * (1 + eta_val) + tau * pmax(0, 1 - delta0 * tau) * (1 - phi * alpha0) / alpha0 * (1 + eta_val)
+# c_H_post / c_H_pre = phi_val*(1+eta) + tau*(1-delta0*tau)*(1-phi_val*alpha0)/alpha0 * (1+eta)
+consumption_growth <- function(tau, eta_val, phi_val) {
+  phi_val * (1 + eta_val) + tau * pmax(0, 1 - delta0 * tau) * (1 - phi_val * alpha0) / alpha0 * (1 + eta_val)
 }
 
 # P/D with transfers: effective phi changes
-compute_pd_with_transfer <- function(p_val, xi_val, tau_val, eta_val, gamma_j) {
-  phi_eff <- phi + tau_val * pmax(0, 1 - delta0 * tau_val) * (1 - phi * alpha0) / alpha0
+compute_pd_with_transfer <- function(p_val, xi_val, tau_val, eta_val, gamma_j, phi_val) {
+  phi_eff <- phi_val + tau_val * pmax(0, 1 - delta0 * tau_val) * (1 - phi_val * alpha0) / alpha0
   sdf_sing <- phi_eff^(-gamma) * (1 + eta_val)^(-gamma) * gamma_j
   base <- beta * (1 + g)^(1 - gamma)
   K <- base * ((1 - p_val) + p_val * (1 - xi_val) * sdf_sing)
@@ -122,20 +123,20 @@ compute_pd_with_transfer <- function(p_val, xi_val, tau_val, eta_val, gamma_j) {
   return(K / (1 - K))
 }
 
-p_ext <- 0.03  # 3% singularity probability
+p_ext <- 0.005  # 0.5% singularity probability
 xi_ext <- 0.05 # 5% extinction
 
-# Baseline (eta=0.5) and large singularity (eta=9)
+# Baseline (eta=0.5, phi=0.5) and large singularity (eta=9, phi=0.05)
 df_ext <- expand.grid(tau = tau_grid,
                       scenario = c("Baseline", "Large singularity"),
                       stringsAsFactors = FALSE) %>%
   rowwise() %>%
   mutate(
     eta_val = ifelse(grepl("Baseline", scenario), 0.5, 9.0),
-    # For the large singularity, recalculate gamma_ai with the new eta
+    phi_val = ifelse(grepl("Baseline", scenario), phi, phi_large),
     gamma_j_val = share_ratio_ai * (1 + eta_val),
-    pd_ai = compute_pd_with_transfer(p_ext, xi_ext, tau, eta_val, gamma_j_val),
-    cons_growth = consumption_growth(tau, eta_val)
+    pd_ai = compute_pd_with_transfer(p_ext, xi_ext, tau, eta_val, gamma_j_val, phi_val),
+    cons_growth = consumption_growth(tau, eta_val, phi_val)
   ) %>%
   ungroup()
 
@@ -146,8 +147,10 @@ theme_paper <- theme_bw(base_size = 12) +
     panel.grid.minor = element_blank()
   )
 
-scenario_labels <- c("Baseline" = expression(Baseline ~ (eta == 0.5)),
-                     "Large singularity" = expression(Large ~ singularity ~ (eta == 9)))
+scenario_labels <- c(
+  "Baseline" = expression(Baseline ~ (list(eta == 0.5, phi == 0.5))),
+  "Large singularity" = expression(Large ~ singularity ~ (list(eta == 9, phi == 0.05)))
+)
 
 panel_a <- ggplot(df_ext %>% filter(!is.na(pd_ai)),
                   aes(x = tau, y = pd_ai, color = scenario, linetype = scenario)) +
@@ -163,7 +166,7 @@ panel_a <- ggplot(df_ext %>% filter(!is.na(pd_ai)),
 panel_b <- ggplot(df_ext, aes(x = tau, y = cons_growth, color = scenario, linetype = scenario)) +
   geom_line(linewidth = 1) +
   geom_hline(yintercept = 1, linetype = "dashed", color = "gray20") +
-  annotate("text", x = 0.55, y = 0.93, label = "No change", color = "gray20", size = 3) +
+  annotate("text", x = 0.55, y = 1.3, label = "No change", color = "gray20", size = 3) +
   labs(x = expression("Tax rate " * tau),
        y = "Household Consumption Growth\nin Singularity",
        title = "(b) Household Consumption") +
