@@ -18,7 +18,7 @@ dir.create(outdir, showWarnings = FALSE, recursive = TRUE)
 beta   <- 0.96   # discount factor
 g      <- 0.02   # consumption growth rate
 gamma  <- 4      # risk aversion
-phi    <- 0.70   # displacement: household share multiplier upon negative singularity
+phi    <- 0.50   # displacement: household share multiplier upon negative singularity (phi*(1+eta)=0.75)
 eta    <- 0.50   # aggregate consumption jump factor (50% increase)
 theta  <- 0.15   # initial AI dividend share
 dtheta <- 0.20   # AI share jump (fraction of non-AI remainder)
@@ -46,7 +46,7 @@ compute_pd <- function(p, xi, gamma_j) {
   return(K / (1 - K))
 }
 
-p_grid  <- c(0.005, 0.01, 0.02, 0.03, 0.05)
+p_grid  <- c(0.001, 0.002, 0.005, 0.008, 0.01)
 xi_grid <- c(0.00, 0.05, 0.10, 0.20)
 
 results <- expand.grid(p = p_grid, xi = xi_grid) %>%
@@ -87,7 +87,7 @@ for (i in seq_len(nrow(results))) {
 
 lines <- c(lines,
   "\\bottomrule",
-  "\\multicolumn{5}{p{0.85\\textwidth}}{\\footnotesize Parameters: $\\beta=0.96$, $g=0.02$, $\\gamma=4$, $\\phi=0.7$, $\\eta=0.5$, $\\theta=0.15$, $\\Delta\\theta=0.2$. $p$ is the annual singularity probability; $\\xi$ is the extinction probability conditional on singularity. The ratio column reports $\\text{P/D}^{AI} / \\text{P/D}^{N}$.} \\\\",
+  "\\multicolumn{5}{p{0.85\\textwidth}}{\\footnotesize Parameters: $\\beta=0.96$, $g=0.02$, $\\gamma=4$, $\\phi=0.5$, $\\eta=0.5$, $\\theta=0.15$, $\\Delta\\theta=0.2$. $p$ is the annual singularity probability; $\\xi$ is the extinction probability conditional on singularity. The ratio column reports $\\text{P/D}^{AI} / \\text{P/D}^{N}$.} \\\\",
   "\\end{tabular}"
 )
 
@@ -127,7 +127,7 @@ xi_ext <- 0.05 # 5% extinction
 
 # Baseline (eta=0.5) and large singularity (eta=9)
 df_ext <- expand.grid(tau = tau_grid,
-                      scenario = c("Baseline (\u03b7 = 0.5)", "Large singularity (\u03b7 = 9)"),
+                      scenario = c("Baseline", "Large singularity"),
                       stringsAsFactors = FALSE) %>%
   rowwise() %>%
   mutate(
@@ -146,6 +146,9 @@ theme_paper <- theme_bw(base_size = 12) +
     panel.grid.minor = element_blank()
   )
 
+scenario_labels <- c("Baseline" = expression(Baseline ~ (eta == 0.5)),
+                     "Large singularity" = expression(Large ~ singularity ~ (eta == 9)))
+
 panel_a <- ggplot(df_ext %>% filter(!is.na(pd_ai)),
                   aes(x = tau, y = pd_ai, color = scenario, linetype = scenario)) +
   geom_line(linewidth = 1) +
@@ -153,16 +156,20 @@ panel_a <- ggplot(df_ext %>% filter(!is.na(pd_ai)),
        y = "P/D Ratio (AI Stocks)",
        title = "(a) AI Stock Valuations") +
   scale_x_continuous(labels = scales::percent_format()) +
+  scale_color_discrete(labels = scenario_labels) +
+  scale_linetype_discrete(labels = scenario_labels) +
   theme_paper
 
 panel_b <- ggplot(df_ext, aes(x = tau, y = cons_growth, color = scenario, linetype = scenario)) +
   geom_line(linewidth = 1) +
-  geom_hline(yintercept = 1, linetype = "dashed", color = "gray50") +
-  annotate("text", x = 0.55, y = 0.93, label = "No change", color = "gray50", size = 3) +
+  geom_hline(yintercept = 1, linetype = "dashed", color = "gray20") +
+  annotate("text", x = 0.55, y = 0.93, label = "No change", color = "gray20", size = 3) +
   labs(x = expression("Tax rate " * tau),
        y = "Household Consumption Growth\nin Singularity",
        title = "(b) Household Consumption") +
   scale_x_continuous(labels = scales::percent_format()) +
+  scale_color_discrete(labels = scenario_labels) +
+  scale_linetype_discrete(labels = scenario_labels) +
   theme_paper
 
 fig <- arrangeGrob(panel_a, panel_b, ncol = 2)
