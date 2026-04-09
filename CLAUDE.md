@@ -72,7 +72,7 @@ Wipe these folders before making disposable code
 
 ## Git Usage
 - For commits that update the ralph algorithm, start with "algo update:"
-- For commits where the ralph loop updates the paper, start with "rloop" (e.g., `rloop [run-name]: ...`)
+- For commits where the ralph loop updates the paper, start with "rloop" (e.g., `rloop-01: ...`)
 - "The beginning of the run" means the commit immediately before the first `rloop` commit on the current branch — not the merge base with main. Use `git log --oneline <branch> | tail` to find it.
 
 ## Journal

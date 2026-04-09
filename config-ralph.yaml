@@ -1,6 +1,7 @@
 # == Basic loop configuration ==
-run-name: ext-spec-refined-3
-max-iter: 10
+# Internal-use note for this Ralph stretch; not included in iteration commit subjects.
+run-note: ext-spec-refined-3
+max-iter: 30
 
 # Optional pre-loop baseline test run
 test-before-loop: off

@@ -21,7 +21,7 @@ DEFAULTS = {
     "continual-improvement": "false",
     "quota-preflight": "off",
     "claude-5h-utilization-limit": "0.67",
-    "run-name": "",
+    "run-note": "",
 }
 
 VALID_AGENT_LOG_MODES = {"off", "verbose", "all", "1", "true", "yes"}
@@ -78,7 +78,7 @@ def main() -> int:
         )
     except ValueError as exc:
         return fail(str(exc))
-    run_name = str(config.get("run-name", "")).strip()
+    run_note = str(config.get("run-note", "")).strip()
 
     print(f"MAX_ITER={max_iter}")
     print(f"AGENT_LOG_MODE={agent_log_mode}")
@@ -87,7 +87,7 @@ def main() -> int:
     print(f"CONTINUAL_IMPROVEMENT={continual}")
     print(f"QUOTA_PREFLIGHT={quota_preflight}")
     print(f"CLAUDE_5H_UTILIZATION_LIMIT={claude_5h_utilization_limit}")
-    print(f"RUN_NAME={shlex.quote(run_name)}")
+    print(f"RUN_NOTE={shlex.quote(run_note)}")
     return 0
 
 

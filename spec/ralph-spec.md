@@ -43,7 +43,7 @@ The author steps (`author-plan.py`, `author-improve.py`) may modify files in the
 - `config-ralph.yaml` may optionally enable referees with `referees`.
 - `config-ralph.yaml` may optionally enable continual-improvement mode with `continual-improvement`; this requires `referees: true`.
 - `config-ralph.yaml` may optionally enable a baseline pre-loop test run with `test-before-loop`.
-- `config-ralph.yaml` may optionally specify a `run-name` that labels the current run for traceability in commit subjects and logs.
+- `config-ralph.yaml` may optionally specify a `run-note` for internal traceability in loop logs and config history.
 - `config-ralph.yaml` may optionally enable a Claude quota preflight with `quota-preflight` and may set its stop threshold with `claude-5h-utilization-limit`.
 
 ## Test Artifact Preparation
@@ -109,7 +109,7 @@ Let the current Ralph stretch begin at the most recent startup commit on `ralph/
 - Ralph creates one commit per iteration.
 - Ralph may also create one startup commit per fresh Ralph stretch before iteration 1 to record the initial condition on `ralph/run`.
 - The commit step uses `--allow-empty`.
-- Commits created by the Ralph loop must start with `rloop` (e.g., `rloop [run-name]: ...`).
+- Commits created by the Ralph loop must start with `rloop-` plus the zero-padded iteration number (e.g., `rloop-01: ...`).
 - Ralph commit subjects should headline the substantive paper change.
 - Ralph commit bodies should describe the failing tests the iteration attempted to fix.
 

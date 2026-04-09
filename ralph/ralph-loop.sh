@@ -34,7 +34,7 @@ count_completed_iterations() {
     fi
     git log --first-parent --format=%s "${start_commit}..HEAD" | awk '
         BEGIN { count = 0 }
-        /^rloop( \[[^]]+\])?:/ { count++ }
+        /^rloop-[0-9]+:/ { count++ }
         END { print count }
     '
 }
@@ -128,9 +128,8 @@ else
     exec > >(tee ralph-garage/loop.log) 2>&1
 fi
 
-if [ -n "$RUN_NAME" ]; then
-    log "=== ralph loop started: $RUN_NAME (branch ralph/run, max $MAX_ITER iterations, agent-log-mode $AGENT_LOG_MODE) ==="
-    export RALPH_RUN_NAME="$RUN_NAME"
+if [ -n "$RUN_NOTE" ]; then
+    log "=== ralph loop started: $RUN_NOTE (branch ralph/run, max $MAX_ITER iterations, agent-log-mode $AGENT_LOG_MODE) ==="
 else
     log "=== ralph loop started (branch ralph/run, max $MAX_ITER iterations, agent-log-mode $AGENT_LOG_MODE) ==="
 fi
@@ -184,7 +183,7 @@ while true; do
         if ! build_paper_artifacts; then
             log "=== iteration $iteration LaTeX build failed after fix attempt; skipping tests and referees ==="
             log "--- commit iteration $iteration ---"
-            python3 ralph/commit-iteration.py
+            python3 ralph/commit-iteration.py "$iteration"
             iteration=$((iteration + 1))
             continue
         fi
@@ -206,7 +205,7 @@ while true; do
 
     # 4. Commit and compile history
     log "--- commit iteration $iteration ---"
-    python3 ralph/commit-iteration.py
+    python3 ralph/commit-iteration.py "$iteration"
     python3 ralph/compile-improvement-plan-history.py || true
     python3 ralph/compile-test-result-history.py || true
 

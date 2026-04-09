@@ -5,6 +5,7 @@
 
 import argparse
 import json
+import re
 import subprocess
 from pathlib import Path
 
@@ -12,6 +13,7 @@ SUMMARY_PATH = "test-results/summary.json"
 TEST_RESULTS_DIR = "test-results"
 DEFAULT_REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT = DEFAULT_REPO_ROOT / "ralph-garage" / "history" / "test-result-history.md"
+ITERATION_SUBJECT_RE = re.compile(r"^rloop-(\d+):")
 
 
 def run_git(repo_root: Path, *args: str, check: bool = True) -> subprocess.CompletedProcess[str]:
@@ -122,11 +124,15 @@ def build_section(repo_root: Path, index: int, full_hash: str, short_hash: str, 
 def build_document(repo_root: Path, base_ref: str) -> str:
     commits = commit_list(repo_root, base_ref)
     sections: list[str] = []
+    fallback_index = 1
 
-    for index, (full_hash, short_hash, subject) in enumerate(commits, start=1):
-        section = build_section(repo_root, index, full_hash, short_hash, subject)
+    for full_hash, short_hash, subject in commits:
+        match = ITERATION_SUBJECT_RE.match(subject)
+        iteration = int(match.group(1)) if match else fallback_index
+        section = build_section(repo_root, iteration, full_hash, short_hash, subject)
         if section is not None:
             sections.append(section)
+            fallback_index += 1
 
     if not sections:
         body = "_No committed test results found in this branch range._"

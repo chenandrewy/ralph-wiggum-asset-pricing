@@ -1,17 +1,16 @@
 #!/usr/bin/env python3
-# How to run: python3 ralph/commit-iteration.py
+# How to run: python3 ralph/commit-iteration.py ITERATION
 # Inputs: staged changes in author working directories, test-results/, improvement plan.
 # Outputs: one git commit for the iteration; exits non-zero if no commit is created.
 
 import json
+import sys
 import subprocess
 import tempfile
 from pathlib import Path
 
-from utils import load_config
-
 REPO_ROOT = Path(__file__).resolve().parents[1]
-COMMIT_PREFIX_BASE = "rloop"
+COMMIT_PREFIX_BASE = "rloop-"
 COMMIT_MODEL = "sonnet"
 COMMIT_AUTHOR_NAME = "Ralph Loop"
 COMMIT_AUTHOR_EMAIL = "noreply@gmail.com"
@@ -38,12 +37,20 @@ Do not wrap output in code fences or include explanations outside the commit mes
 TEST_RESULTS_DIR = REPO_ROOT / "test-results"
 
 
-def commit_prefix() -> str:
-    config = load_config(REPO_ROOT / "config-ralph.yaml")
-    run_name = str(config.get("run-name", "")).strip()
-    if run_name:
-        return f"{COMMIT_PREFIX_BASE} [{run_name}]:"
-    return f"{COMMIT_PREFIX_BASE}:"
+def parse_iteration(argv: list[str]) -> int:
+    if len(argv) != 2:
+        raise SystemExit("usage: python3 ralph/commit-iteration.py ITERATION")
+    try:
+        iteration = int(argv[1])
+    except ValueError as exc:
+        raise SystemExit(f"iteration must be an integer (got: {argv[1]})") from exc
+    if iteration < 1:
+        raise SystemExit(f"iteration must be at least 1 (got: {iteration})")
+    return iteration
+
+
+def commit_prefix(iteration: int) -> str:
+    return f"{COMMIT_PREFIX_BASE}{iteration:02d}:"
 
 
 def git(*args: str) -> str:
@@ -110,13 +117,13 @@ def generate_commit_message() -> str:
     raw = proc.stdout.strip()
     if not raw:
         raise RuntimeError("claude returned an empty commit message")
-    return compose_commit_message(raw)
+    return raw
 
 
-def compose_commit_message(raw: str) -> str:
+def compose_commit_message(raw: str, iteration: int) -> str:
     lines = raw.strip().splitlines()
     subject_tail = lines[0].strip()
-    prefix = commit_prefix()
+    prefix = commit_prefix(iteration)
     # Strip prefix if Claude included it despite instructions.
     if subject_tail.startswith(prefix):
         subject_tail = subject_tail[len(prefix):].strip()
@@ -144,10 +151,11 @@ def commit(message: str) -> None:
 
 
 def main() -> int:
+    iteration = parse_iteration(sys.argv)
     old_head = git("rev-parse", "HEAD")
     stage_paths()
     message = generate_commit_message()
-    commit(message)
+    commit(compose_commit_message(message, iteration))
     new_head = git("rev-parse", "HEAD")
     if new_head == old_head:
         raise RuntimeError("commit was not created")

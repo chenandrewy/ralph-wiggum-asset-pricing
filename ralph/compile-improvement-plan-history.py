@@ -4,6 +4,7 @@
 # Outputs: a single compiled markdown file under ralph-garage/history/
 
 import argparse
+import re
 import subprocess
 from pathlib import Path
 
@@ -11,6 +12,7 @@ from pathlib import Path
 PLAN_PATH = "ralph-garage/improvement-plan.md"
 DEFAULT_REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT = DEFAULT_REPO_ROOT / "ralph-garage" / "history" / "improvement-plan-history.md"
+ITERATION_SUBJECT_RE = re.compile(r"^rloop-(\d+):")
 
 
 def run_git(repo_root: Path, *args: str, check: bool = True) -> subprocess.CompletedProcess[str]:
@@ -63,15 +65,19 @@ def show_file(repo_root: Path, commit_hash: str, path: str) -> str | None:
 def build_document(repo_root: Path, base_ref: str) -> str:
     commits = commit_list(repo_root, base_ref)
     sections: list[str] = []
+    fallback_index = 1
 
-    for index, (full_hash, short_hash, subject) in enumerate(commits, start=1):
+    for full_hash, short_hash, subject in commits:
         plan_text = show_file(repo_root, full_hash, PLAN_PATH)
         if plan_text is None:
             continue
+        match = ITERATION_SUBJECT_RE.match(subject)
+        iteration = int(match.group(1)) if match else fallback_index
+        fallback_index += 1
         sections.append(
             "\n".join(
                 [
-                    f"## Iteration {index}",
+                    f"## Iteration {iteration}",
                     f"- Commit: `{short_hash}`",
                     f"- Subject: {subject}",
                     "",
