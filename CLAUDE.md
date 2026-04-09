@@ -74,6 +74,9 @@ Wipe these folders before making disposable code
 - For commits that update the ralph algorithm, start with "algo update:"
 - For commits where the ralph loop updates the paper, start with "rloop" (e.g., `rloop-01: ...`)
 - "The beginning of the run" means the commit immediately before the first `rloop` commit on the current branch — not the merge base with main. Use `git log --oneline <branch> | tail` to find it.
+- Treat `ralph-garage/` and `test-results/` as transient artifacts rather than durable source files.
+- Normal commits must not include files under `ralph-garage/` or `test-results/`.
+- If transient artifacts need to be preserved, commit them separately in an artifacts-only commit. Do not mix them with changes in `ralph/`, `tests/`, `spec/`, `paper/`, `code/`, `README.md`, `CLAUDE.md`, `config-ralph.yaml`, or `dev/journal/`.
 
 ## Journal
 - When requested, take notes in `dev/journal/`
