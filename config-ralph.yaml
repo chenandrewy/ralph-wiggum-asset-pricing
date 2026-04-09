@@ -1,6 +1,7 @@
 # == Basic loop configuration ==
 # Internal-use note for this Ralph stretch; not included in iteration commit subjects.
-run-note: add set-ralph-direction, rm conversational
+run-note: startup-source initialization plumbing
+startup-source: ralph/research-template
 max-iter: 20
 
 # Optional pre-loop baseline test run

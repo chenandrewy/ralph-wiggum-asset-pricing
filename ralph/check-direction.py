@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # How to run: python3 ralph/check-direction.py [--runs 5] [--base-ref HEAD] [--keep-worktrees]
-# Inputs: current git state, ralph/wipe.sh, ralph/author-plan.py, ralph/author-improve.py
+# Inputs: current git state, ralph/install-startup-source.py, ralph/author-plan.py, ralph/author-improve.py
 # Outputs: ralph-garage/check-direction/run-XX/{paper/, code/}
 
 from __future__ import annotations
@@ -43,7 +43,7 @@ def run_cmd(cmd: list[str], *, cwd: pathlib.Path, check: bool = False) -> subpro
 
 def validate_inputs() -> None:
     required_paths = [
-        REPO_ROOT / "ralph" / "wipe.sh",
+        REPO_ROOT / "ralph" / "install-startup-source.py",
         REPO_ROOT / "ralph" / "author-plan.py",
         REPO_ROOT / "ralph" / "author-improve.py",
         REPO_ROOT / "spec" / "paper-spec.md",
@@ -81,9 +81,17 @@ def cleanup_worktrees(contexts: list[RunContext]) -> None:
     run_cmd(["git", "worktree", "prune"], cwd=REPO_ROOT)
 
 
+def reset_trial_workspace(worktree_path: pathlib.Path) -> None:
+    for dirname in ("data", "test-results", "ralph-garage"):
+        target = worktree_path / dirname
+        if target.exists():
+            shutil.rmtree(target)
+
+
 def run_single(context: RunContext) -> tuple[int, bool, str]:
+    reset_trial_workspace(context.worktree_path)
     steps = [
-        ["bash", "ralph/wipe.sh", "--yes"],
+        [sys.executable, "ralph/install-startup-source.py", "ralph/research-template"],
         [sys.executable, "ralph/author-plan.py"],
         [sys.executable, "ralph/author-improve.py"],
     ]

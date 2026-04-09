@@ -7,16 +7,29 @@ Outputs: setup-check report to stdout/stderr and process exit code (0 pass, non-
 
 from __future__ import annotations
 
+import argparse
 import pathlib
 import subprocess
 import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from install_startup_source import require_source_layout, validate_startup_source
 from utils import is_truthy, load_config
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--fresh-main-start",
+        action="store_true",
+        help="validate the fresh-start preflight rules that apply before switching from main to ralph/run",
+    )
+    return parser.parse_args()
 
 
 def main() -> int:
     print("Checking setup...")
+    args = parse_args()
 
     config_path = pathlib.Path("config-ralph.yaml")
     if not config_path.is_file():
@@ -26,14 +39,43 @@ def main() -> int:
     raw = load_config(config_path)
     config_values = {k: v.lower() if isinstance(v, str) else v for k, v in raw.items()}
 
+    try:
+        current_branch = subprocess.run(
+            ["git", "branch", "--show-current"],
+            check=True,
+            capture_output=True,
+            text=True,
+        ).stdout.strip()
+    except subprocess.CalledProcessError:
+        print("FAIL: unable to determine current git branch", file=sys.stderr)
+        return 2
+
     # --- required files ---
-    required_files = [
-        pathlib.Path("paper/paper.tex"),
-        pathlib.Path("spec/paper-spec.md"),
-    ]
+    required_files = [pathlib.Path("spec/paper-spec.md")]
+    if current_branch == "ralph/run":
+        required_files.append(pathlib.Path("paper/paper.tex"))
     for path in required_files:
         if not path.is_file():
             print(f"FAIL: missing required file: {path}", file=sys.stderr)
+            return 2
+
+    if args.fresh_main_start:
+        if current_branch != "main":
+            print("FAIL: --fresh-main-start requires starting from main", file=sys.stderr)
+            return 2
+        for path in (pathlib.Path("paper"), pathlib.Path("code")):
+            if path.exists():
+                print(
+                    f"FAIL: {path} must not exist on main before a fresh Ralph stretch; startup installs it from startup-source",
+                    file=sys.stderr,
+                )
+                return 2
+        startup_source_raw = str(raw.get("startup-source", "")).strip()
+        try:
+            startup_source = validate_startup_source(startup_source_raw)
+            require_source_layout(pathlib.Path(startup_source), startup_source_raw)
+        except ValueError as exc:
+            print(f"FAIL: {exc}", file=sys.stderr)
             return 2
 
     paper_spec_path = pathlib.Path("spec/paper-spec.md")

@@ -56,13 +56,23 @@ Non-canonical debugging output.
 ## Build Helpers
 
 - `bash ralph/build-paper.sh` builds the canonical paper.
-- `bash ralph/init.sh` initializes `paper/` from templates.
+- `bash check-ralph-direction.sh` generates candidate startup baselines under `ralph-garage/check-direction/`.
 
 ## Ralph Loop
 
 The Ralph workflow is specified in `spec/ralph-spec.md`.
 
-To run: `bash ralph/ralph-loop.sh`
+Fresh start from `main`:
+
+1. Set `startup-source` in `config-ralph.yaml` to either `ralph/research-template` or a selected `ralph-garage/check-direction/run-*` candidate.
+2. Commit `config-ralph.yaml`.
+3. Run `bash go-ralph-go.sh` or `bash ralph/ralph-loop.sh`.
+
+On a fresh start from `main`, Ralph clears live `paper/` and `code/`, installs them from `startup-source`, and then creates the startup commit on `ralph/run`.
+
+Resume an existing stretch:
+
+- Run Ralph from `ralph/run`. Resumes do not re-install from `startup-source`.
 
 ## `.devcontainer/` folder
 

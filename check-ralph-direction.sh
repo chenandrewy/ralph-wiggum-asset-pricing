@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# How to run: bash set-ralph-direction.sh [--runs 5] [--base-ref HEAD] [--keep-worktrees]
+# How to run: bash check-ralph-direction.sh [--runs 5] [--base-ref HEAD] [--keep-worktrees]
 # Inputs: current git state, ralph/check-direction.py
-# Outputs: updates live paper/ and code/ from one selected candidate under ralph-garage/check-direction/
+# Outputs: candidate directories under ralph-garage/check-direction/ and a suggested startup-source value
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -26,7 +26,7 @@ while [ "$#" -gt 0 ]; do
             shift
             ;;
         *)
-            echo "Usage: bash set-ralph-direction.sh [--runs N] [--base-ref REF] [--keep-worktrees]" >&2
+            echo "Usage: bash check-ralph-direction.sh [--runs N] [--base-ref REF] [--keep-worktrees]" >&2
             exit 2
             ;;
     esac
@@ -71,7 +71,7 @@ for run_dir in "${run_dirs[@]}"; do
     printf '  %s\n' "$(basename "$run_dir")"
 done
 
-read -r -p "Select a candidate to promote into paper/ and code/ (example: run-03): " selection
+read -r -p "Choose a candidate to use as startup-source (example: run-03): " selection
 SELECTED_DIR="$OUTPUT_ROOT/$selection"
 if [ ! -d "$SELECTED_DIR" ]; then
     echo "ERROR: candidate not found: $selection" >&2
@@ -83,14 +83,6 @@ if [ ! -d "$SELECTED_DIR/paper" ] || [ ! -d "$SELECTED_DIR/code" ]; then
     exit 1
 fi
 
-read -r -p "Overwrite live paper/ and code/ with $selection? [y/N] " confirm
-if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
-    echo "Aborted."
-    exit 0
-fi
-
-rm -rf "$REPO_ROOT/paper" "$REPO_ROOT/code"
-cp -R "$SELECTED_DIR/paper" "$REPO_ROOT/paper"
-cp -R "$SELECTED_DIR/code" "$REPO_ROOT/code"
-
-printf 'Promoted %s into live paper/ and code/.\n' "$selection"
+STARTUP_SOURCE="ralph-garage/check-direction/$selection"
+printf '\nSet this in config-ralph.yaml before starting Ralph from main:\n'
+printf 'startup-source: %s\n' "$STARTUP_SOURCE"

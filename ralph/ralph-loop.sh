@@ -25,6 +25,21 @@ has_tracked_files() {
     git ls-files --error-unmatch -- "$1" >/dev/null 2>&1
 }
 
+require_clean_committed_config() {
+    if ! has_tracked_files "config-ralph.yaml"; then
+        log "ERROR: config-ralph.yaml must be tracked in git before starting Ralph from main"
+        exit 1
+    fi
+    if ! git diff --quiet -- config-ralph.yaml; then
+        log "ERROR: config-ralph.yaml has unstaged changes; commit it before starting Ralph from main"
+        exit 1
+    fi
+    if ! git diff --cached --quiet -- config-ralph.yaml; then
+        log "ERROR: config-ralph.yaml has staged but uncommitted changes; commit it before starting Ralph from main"
+        exit 1
+    fi
+}
+
 count_completed_iterations() {
     local start_commit
     start_commit="$(git log --first-parent --grep='^rloop start: record initial condition before author steps$' --format=%H -n 1 HEAD 2>/dev/null || true)"
@@ -74,15 +89,19 @@ run_test_quota_preflight() {
 _CONFIG="$(python3 ralph/load-config.py)"
 eval "$_CONFIG"
 
-log "--- setup check ---"
-python3 ralph/check-setup.py || { log "ERROR: setup check failed"; exit 1; }
-
 # --- branch setup ---
 CURRENT_BRANCH="$(git branch --show-current)"
 APPEND_LOOP_LOG=0
 if [ "$CURRENT_BRANCH" = "ralph/run" ]; then
     APPEND_LOOP_LOG=1
 else
+    if [ "$CURRENT_BRANCH" != "main" ]; then
+        log "ERROR: Ralph must be started from 'main' for a fresh stretch or from 'ralph/run' to continue"
+        exit 1
+    fi
+    require_clean_committed_config
+    log "--- setup check (fresh main start) ---"
+    python3 ralph/check-setup.py --fresh-main-start || { log "ERROR: setup check failed"; exit 1; }
     startup_paths=()
     if git show-ref --verify --quiet refs/heads/ralph/run; then
         APPEND_LOOP_LOG=1
@@ -101,13 +120,19 @@ else
             log "ERROR: could not create branch 'ralph/run' from '$CURRENT_BRANCH'"; exit 1
         }
     fi
-    read -r -p "Run ralph/wipe.sh before starting this Ralph stretch? [y/N] " response
-    if [[ "$response" =~ ^[Yy]$ ]]; then
-        bash ralph/wipe.sh --yes
-    fi
     mkdir -p ralph-garage ralph-garage/history ralph-garage/page-images test-results ralph-garage/agent-logs
     log "--- wipe agent logs for fresh Ralph stretch from $CURRENT_BRANCH ---"
     clear_dir ralph-garage/agent-logs
+    log "--- install startup baseline from $STARTUP_SOURCE ---"
+    python3 ralph/install-startup-source.py "$STARTUP_SOURCE" || {
+        log "ERROR: could not install startup baseline from $STARTUP_SOURCE"; exit 1
+    }
+fi
+
+log "--- setup check ---"
+python3 ralph/check-setup.py || { log "ERROR: setup check failed"; exit 1; }
+
+if [ "$CURRENT_BRANCH" != "ralph/run" ]; then
     log "--- commit startup state before author steps ---"
     for path in paper code; do
         if [ -e "$path" ] || has_tracked_files "$path"; then

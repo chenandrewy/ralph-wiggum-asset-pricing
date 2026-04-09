@@ -22,6 +22,7 @@ DEFAULTS = {
     "quota-preflight": "off",
     "claude-5h-utilization-limit": "0.67",
     "run-note": "",
+    "startup-source": "",
 }
 
 VALID_AGENT_LOG_MODES = {"off", "verbose", "all", "1", "true", "yes"}
@@ -79,6 +80,7 @@ def main() -> int:
     except ValueError as exc:
         return fail(str(exc))
     run_note = str(config.get("run-note", "")).strip()
+    startup_source = str(config.get("startup-source", "")).strip()
 
     print(f"MAX_ITER={max_iter}")
     print(f"AGENT_LOG_MODE={agent_log_mode}")
@@ -88,6 +90,7 @@ def main() -> int:
     print(f"QUOTA_PREFLIGHT={quota_preflight}")
     print(f"CLAUDE_5H_UTILIZATION_LIMIT={claude_5h_utilization_limit}")
     print(f"RUN_NOTE={shlex.quote(run_note)}")
+    print(f"STARTUP_SOURCE={shlex.quote(startup_source)}")
     return 0
 
 
