@@ -41,16 +41,15 @@
 
 ## II. Style Requirements
 
-1. Tone is between an academic paper and a blog post.
-2. The author is anonymous.
-3. The abstract is 100 words or less.
-4. The title is short, evocative and eye-catching, but not cringey.
-5. Paper length is at most 20 pages.
-6. Every page has a visible page number.
-7. At most 6 exhibits.
-8. Lit review is at most half a page and appears at the end of the introduction.
-9. All display equations should be numbered
-10. All propositions are explicitly proved, with long proofs in the appendix.
+1. The author is anonymous.
+2. The abstract is 100 words or less.
+3. The title is short, evocative and eye-catching, but not cringey.
+4. Paper length is at most 20 pages.
+5. Every page has a visible page number.
+6. At most 6 exhibits.
+7. Lit review is at most half a page and appears at the end of the introduction.
+8. All display equations should be numbered
+9. All propositions are explicitly proved, with long proofs in the appendix.
 
 ## III. Technical Requirements
 
@@ -75,16 +74,15 @@
 2. Theoretical derivations are correct
 3. Each claim is supported by either the paper's results, or by a literature citation
 4. Each citation accurately represents the referenced paper(s).
-5. The writing is compelling and conversationally, yet rigorous.
-    - a. Plain English is favored. Writing is direct and concise.
-    - b. The abstract is eye-catching yet rigorous. 
-    - c. The introduction is engaging. Each paragraph moves the reader to the next one. 
-    - d. The paper uses itself as a demonstration of the AI displacement risk it models, since all analysis and writing is done by AI agents. Discussion of this includes an accurate description of how the work was divided: the human only wrote the "economic specification" of the paper (700 words) and test scripts. This device is used in the abstract and introduction.
-    - e. The extension section features a compelling and eye-catching figure.
+5. The writing is clear, engaging, and rigorous.
+    - a. Plain English is favored. Writing is direct and concise. It avoids overly turgid and excessively formal speech.
+    - b. The introduction keeps the reader's attention. Each paragraph moves the reader to the next one. 
+    - c. The paper uses itself as a demonstration of the AI displacement risk it models, since all analysis and writing is done by AI agents. Discussion of this includes an accurate description of how the work was divided: the human only wrote the "economic specification" of the paper and test scripts. This device is used in the abstract and introduction.
+    - d. The extension section features a compelling and eye-catching figure.
 6. The paper is sensitive, cautious, and modest in how it cites `spec/lit/GKP-2012.md`. 
 7. The lit review is centered on the papers most relevant to the paper's contribution. It emphasizes papers in JF, JFE, RFS, JFQA, RAPS, and MS, as well as top economics journals. 
 8. The paper is intentionally limited in scope to a compact but richer theoretical contribution.
-    - a. Good theory style is essential. Mathematical formalism is kept to a minimum. Each piece of formalism contributes to the economic claims. The paper avoids pompous or ceremonial formalism, and it avoids auxiliary formal detours that do not advance the main argument.
-    - b. The empirical content remains very limited, ideally to a single figure in the introduction illustrating the valuation of publicly traded AI stocks compared with non-AI stocks using CRSP data.
+    - a. Good theory style is essential. Mathematical formalism is kept to a minimum. Each piece of formalism contributes to the economic claims. The paper avoids pompous or ceremonial formalism, and it avoids auxiliary formal detours.
+    - b. The empirical content remains very limited, ideally to a single figure in the introduction illustrating how the high valuation ratios of publicly traded AI stocks are higher than those of other stocks.
     - c. The paper does not try to generate a broad menu of novel testable predictions beyond the model's main arguments.
     - d. The paper may include rough quantitative parameterizations for illustration, but quantitative material remains illustrative rather than becoming a calibration or estimation exercise.
