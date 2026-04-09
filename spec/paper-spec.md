@@ -51,7 +51,6 @@
 8. Lit review is at most half a page and appears at the end of the introduction.
 9. All display equations should be numbered
 10. All propositions are explicitly proved, with long proofs in the appendix.
-11. The first section is called "Preface (TBC)", is unnumbered, and left blank. The traditional "Introduction" follows, and then the rest of the paper is standard, as if the Preface is not there.
 
 ## III. Technical Requirements
 
