@@ -1,38 +1,40 @@
 # tests/theory-unmodeled-channels.py
-Started: 2026-04-09 19:03:08 EDT
-Runtime: 54s
-[ralph-garage/agent-logs/20260409T190308.201960-0400_theory-unmodeled-channels_claude_opus.log](../ralph-garage/agent-logs/20260409T190308.201960-0400_theory-unmodeled-channels_claude_opus.log)
+Started: 2026-04-09 19:33:01 EDT
+Runtime: 1m 15s
+[ralph-garage/agent-logs/20260409T193302.024585-0400_theory-unmodeled-channels_claude_opus.log](../ralph-garage/agent-logs/20260409T193302.024585-0400_theory-unmodeled-channels_claude_opus.log)
 
 # theory-unmodeled-channels
 VERDICT: PASS
-REASON: The paper consistently flags unmodeled channels with explicit caveats and hedging language, never overclaiming about mechanisms it does not formally capture.
+REASON: The paper consistently uses cautious language and explicit disclaimers for channels it does not formally model.
 
 ## Channels and Modeling Status
 
-### Explicitly Modeled
-1. **Hedging motive / displacement risk** — Core model: parameter φ governs displacement severity, household uses AI stocks as partial hedge.
-2. **Market incompleteness** — Household cannot trade private AI capital; this is the source of the valuation spread.
-3. **Extinction risk** — Parameter ξ; follows Jones (2024).
-4. **Positive singularity and veto** — Extension 1: household can block socially efficient AI development under incomplete markets.
-5. **Government transfers with deadweight costs** — Extension 2: tax-and-transfer with waste parameter δ₀.
+| Channel | Modeled? | Discussion |
+|---------|----------|------------|
+| Hedging/displacement via singularity | Yes | Core model: consumption share displacement (φ), P/D ratios |
+| Market incompleteness (private AI capital) | Yes | Household cannot trade private AI capital |
+| Extinction risk | Yes | Probability ξ conditional on singularity |
+| Positive singularity | Yes | Extension 1: probability λ of positive outcome |
+| Veto / blocking AI development | Yes | Extension 1: household can block at cost κ |
+| Government transfers with deadweight costs | Yes | Extension 2: tax rate τ with waste parameter δ₀ |
+| Entry of new cohorts / creative destruction (GKP) | No | Clearly disclaimed at lines 80 and 183 |
+| Labor income channel | No | Intro mentions "labor income" (line 51) but model uses consumption shares; reasonable interpretation |
+| Continuous-time dynamics | No | Acknowledged in conclusion (line 286) |
+| Heterogeneous beliefs | No | Acknowledged in conclusion (line 286) |
+| Production-side details | No | Acknowledged in conclusion (line 286) |
+| AI regulation implications | No | Discussed with cautious "may partly reflect" (line 244) |
+| Contingent transfer policy design | No | Suggested with hedged "suggests" and "may be worth" (line 277) |
 
-### Discussed but Not Modeled
-6. **Entry dynamics / overlapping generations (GKP)** — AI owners are analogized to future entrants, but the paper does NOT model entry.
-7. **Continuous-time dynamics** — Acknowledged as omitted in the conclusion.
-8. **Heterogeneous beliefs** — Acknowledged as omitted in the conclusion.
-9. **Production-side details** — Acknowledged as omitted in the conclusion.
-10. **Technology uncertainty / technological revolutions** (Pastor & Veronesi) — Referenced in lit review only.
-11. **Creative destruction and inequality** (Kogan et al.) — Referenced in lit review only.
-12. **AGI transition dynamics** (Korinek & Suh) — Referenced in lit review only.
+## Assessment
 
-## Assessment of Caution
+The paper handles unmodeled channels well:
 
-The paper is consistently cautious about every unmodeled channel:
+1. **GKP entry dynamics**: Disclaimed twice. Line 80: "Importantly, we do not explicitly model the entry of new cohorts of firms or workers; AI owners are a static group whose share changes only through the singularity mechanism." Line 183: "we do not model the entry dynamics that are central to their framework."
 
-- **GKP entry dynamics** (the most critical unmodeled channel): Explicitly flagged twice. Line 77: "Importantly, we do not explicitly model the entry of new cohorts of firms or workers; AI owners are a static group whose share changes only through the singularity mechanism." Line 172: "though we do not model the entry dynamics that are central to their framework."
-- **Scope limitations**: The conclusion (line 273) explicitly lists omissions: "It abstracts from continuous-time dynamics, heterogeneous beliefs, production-side details, and many other features that would enrich the analysis."
-- **Hedging language throughout**: The paper uses "part of this premium" (line 49), "may partly reflect" (line 233), "suggests" and "may be worth" (line 264), avoiding overclaiming.
-- **Modest framing**: Line 273–274: "The goal is not to provide a definitive account of AI stock valuations but to highlight a specific channel."
-- **Lit review channels**: Papers cited in the literature review are positioned as related work, not as channels the model captures.
+2. **Scope limitations**: The conclusion (line 286) explicitly states: "It abstracts from continuous-time dynamics, heterogeneous beliefs, production-side details, and many other features that would enrich the analysis."
 
-No instance was found where the paper claims to capture a mechanism it does not formally model.
+3. **Hedging language throughout**: The paper uses "part of this premium" (line 50), "may partly reflect" (line 244), "suggests" and "may be worth" (line 277) when discussing implications beyond the model.
+
+4. **Model described as deliberately simple**: Line 286: "Our model is deliberately simple." Line 286-287: "The goal is not to provide a definitive account of AI stock valuations but to highlight a specific channel."
+
+No instances found where the paper overstates or makes unqualified claims about channels it does not formally capture.

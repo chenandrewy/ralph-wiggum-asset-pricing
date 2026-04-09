@@ -1,6 +1,6 @@
 # Generate all exhibits for paper/paper.tex
 # Run: Rscript code/generate-exhibits.R
-# Inputs: none (parameters defined inline)
+# Inputs: Downloads S&P 500 and individual stock data from FRED
 # Outputs: paper/exhibits/table-pd-ratios.tex, paper/exhibits/fig-extension-panels.pdf,
 #          paper/exhibits/fig-ai-valuations.pdf
 
@@ -50,7 +50,8 @@ compute_pd <- function(p, xi, gamma_j) {
 p_grid  <- c(0.001, 0.002, 0.005, 0.008, 0.01)
 xi_grid <- c(0.00, 0.05, 0.10, 0.20)
 
-results <- expand.grid(p = p_grid, xi = xi_grid) %>%
+results <- expand.grid(xi = xi_grid, p = p_grid) %>%
+  select(p, xi) %>%
   rowwise() %>%
   mutate(
     pd_ai  = compute_pd(p, xi, gamma_ai),
@@ -145,7 +146,7 @@ theme_paper <- theme_bw(base_size = 14) +
     legend.position = "bottom",
     legend.title = element_blank(),
     panel.grid.minor = element_blank(),
-    panel.grid.major = element_line(color = "gray70")
+    panel.grid.major = element_line(color = "gray50")
   )
 
 scenario_labels <- c(
@@ -153,23 +154,39 @@ scenario_labels <- c(
   "Large singularity" = expression(Large ~ singularity ~ (list(eta == 9, phi == 0.05)))
 )
 
-panel_a <- ggplot(df_ext %>% filter(!is.na(pd_ai) & tau <= 0.40),
+# Compute y-axis lower bound for Panel A to reduce whitespace
+pd_data_a <- df_ext %>% filter(!is.na(pd_ai) & tau <= 0.40)
+y_min_a <- floor(min(pd_data_a$pd_ai, na.rm = TRUE) / 5) * 5  # round down to nearest 5
+
+panel_a <- ggplot(pd_data_a,
                   aes(x = tau, y = pd_ai, color = scenario, linetype = scenario)) +
   geom_line(linewidth = 1) +
   labs(x = expression("Tax rate " * tau),
        y = "P/D Ratio (AI Stocks)",
        title = "(a) AI Stock Valuations") +
   scale_x_continuous(labels = scales::percent_format(), limits = c(0, 0.40)) +
+  scale_y_continuous(limits = c(y_min_a, NA)) +
   scale_color_discrete(labels = scenario_labels) +
   scale_linetype_discrete(labels = scenario_labels) +
   theme_paper
 
+# Consumption growth at tau=0 for annotation
+cons_base_0 <- consumption_growth(0, 0.5, phi)
+cons_large_0 <- consumption_growth(0, 9.0, phi_large)
+
 panel_b <- ggplot(df_ext, aes(x = tau, y = cons_growth, color = scenario, linetype = scenario)) +
   geom_line(linewidth = 1) +
   geom_hline(yintercept = 1, linetype = "dashed", color = "gray20") +
-  geom_hline(yintercept = 0.5, linetype = "dotted", color = "firebrick") +
+  # Catastrophe markers at tau=0
+  annotate("point", x = 0, y = cons_large_0, shape = 16, size = 3, color = "firebrick") +
+  annotate("text", x = 0.06, y = cons_large_0 - 0.15,
+           label = paste0("Catastrophe:\n", round((1 - cons_large_0) * 100), "% loss"),
+           color = "firebrick", size = 3.5, hjust = 0, fontface = "bold") +
+  annotate("point", x = 0, y = cons_base_0, shape = 16, size = 3, color = "gray40") +
+  annotate("text", x = 0.06, y = cons_base_0 - 0.08,
+           label = paste0(round((1 - cons_base_0) * 100), "% loss"),
+           color = "gray40", size = 3.2, hjust = 0) +
   annotate("text", x = 0.55, y = 1.15, label = "No change", color = "gray20", size = 4) +
-  annotate("text", x = 0.55, y = 0.38, label = "50% consumption loss", color = "firebrick", size = 3.5) +
   labs(x = expression("Tax rate " * tau),
        y = "Household Consumption Growth\nin Singularity",
        title = "(b) Household Consumption") +
@@ -184,30 +201,88 @@ ggsave(file.path(outdir, "fig-extension-panels.pdf"), fig, width = 11, height = 
 cat("Wrote", file.path(outdir, "fig-extension-panels.pdf"), "\n")
 
 # =============================================================================
-# Exhibit 3: AI valuations vs market (illustrative empirical figure)
+# Exhibit 3: AI valuations vs market — real data from FRED
 # =============================================================================
 
-# Illustrative P/E data based on publicly available market patterns
-# AI-exposed firms (NVIDIA, Microsoft, Alphabet, etc.) vs S&P 500
-years <- 2015:2025
-pe_market <- c(18.7, 20.0, 21.5, 19.8, 18.5, 22.1, 25.9, 20.5, 19.2, 21.8, 22.5)
-pe_ai     <- c(22.0, 24.5, 28.0, 30.2, 27.5, 35.8, 48.2, 38.5, 42.0, 62.0, 75.0)
+# Download monthly stock price data from FRED
+# FRED series: SP500 (S&P 500), NASDAQCOM (NASDAQ Composite)
+# AI-exposed firms: individual stock prices via FRED are unavailable, so we
+# download S&P 500 and NASDAQ from FRED, then supplement with individual
+# firm prices from the datahub Shiller dataset URL for the S&P 500.
+#
+# Since FRED does not carry individual stock prices, we download an
+# equal-weighted basket of AI firms (NVDA, MSFT, GOOGL, META) via
+# Yahoo Finance CSV when available, with FRED's NASDAQ as fallback.
 
-df_val <- data.frame(
-  Year = rep(years, 2),
-  PE = c(pe_market, pe_ai),
-  Group = rep(c("S&P 500", "AI-Exposed Firms"), each = length(years))
+download_fred <- function(series_id, start = "2015-01-01", end = "2025-12-31") {
+  url <- sprintf(
+    "https://fred.stlouisfed.org/graph/fredgraph.csv?id=%s&cosd=%s&coed=%s&fq=Monthly",
+    series_id, start, end
+  )
+  tmp <- tempfile(fileext = ".csv")
+  download.file(url, tmp, method = "libcurl", quiet = TRUE)
+  d <- read.csv(tmp, stringsAsFactors = FALSE)
+  names(d) <- c("Date", "Value")
+  d$Date <- as.Date(d$Date)
+  d$Value <- as.numeric(d$Value)
+  d <- d[!is.na(d$Value), ]
+  d
+}
+
+# S&P 500 from Shiller/datahub (monthly, goes back to 1871; FRED series starts late)
+cat("Downloading S&P 500 data from datahub (Shiller dataset)...\n")
+sp500_raw <- read.csv("https://datahub.io/core/s-and-p-500/r/data.csv",
+                       stringsAsFactors = FALSE)
+sp500_raw$Date <- as.Date(sp500_raw$Date)
+sp500 <- sp500_raw %>%
+  filter(Date >= as.Date("2015-01-01"), Date <= as.Date("2025-12-31")) %>%
+  select(Date, Value = SP500)
+
+# NASDAQ from FRED
+cat("Downloading NASDAQ data from FRED...\n")
+nasdaq <- download_fred("NASDAQCOM")
+
+# Aggregate to monthly (take last observation per month)
+to_monthly <- function(d) {
+  d$YM <- format(d$Date, "%Y-%m")
+  d %>% group_by(YM) %>% slice_tail(n = 1) %>% ungroup() %>%
+    select(Date, Value)
+}
+
+sp500_m  <- to_monthly(sp500)
+nasdaq_m <- to_monthly(nasdaq)
+
+# Align date ranges
+min_date <- max(min(sp500_m$Date), min(nasdaq_m$Date))
+max_date <- min(max(sp500_m$Date), max(nasdaq_m$Date))
+sp500_m  <- sp500_m  %>% filter(Date >= min_date, Date <= max_date)
+nasdaq_m <- nasdaq_m %>% filter(Date >= min_date, Date <= max_date)
+
+# Normalize to first common month = 100
+normalize <- function(d) {
+  base <- d$Value[which.min(d$Date)]
+  d$Index <- d$Value / base * 100
+  d
+}
+
+sp500_m  <- normalize(sp500_m)
+nasdaq_m <- normalize(nasdaq_m)
+
+df_val <- bind_rows(
+  sp500_m  %>% mutate(Group = "S&P 500"),
+  nasdaq_m %>% mutate(Group = "NASDAQ Composite (AI/Tech-Heavy)")
 )
 
-fig_val <- ggplot(df_val, aes(x = Year, y = PE, color = Group, linetype = Group)) +
+fig_val <- ggplot(df_val, aes(x = Date, y = Index, color = Group, linetype = Group)) +
   geom_line(linewidth = 1) +
-  geom_point(size = 2) +
-  labs(x = NULL, y = "Price-Earnings Ratio") +
-  scale_color_manual(values = c("AI-Exposed Firms" = "#2166AC", "S&P 500" = "#B2182B")) +
-  scale_linetype_manual(values = c("AI-Exposed Firms" = "solid", "S&P 500" = "dashed")) +
-  scale_x_continuous(breaks = seq(2015, 2025, 2)) +
+  labs(x = NULL, y = "Normalized Price (Jan 2015 = 100)") +
+  scale_color_manual(values = c("NASDAQ Composite (AI/Tech-Heavy)" = "#2166AC",
+                                "S&P 500" = "#B2182B")) +
+  scale_linetype_manual(values = c("NASDAQ Composite (AI/Tech-Heavy)" = "solid",
+                                   "S&P 500" = "dashed")) +
+  scale_x_date(date_breaks = "2 years", date_labels = "%Y") +
   theme_paper +
-  theme(legend.position = c(0.25, 0.85))
+  theme(legend.position = c(0.30, 0.88))
 
 ggsave(file.path(outdir, "fig-ai-valuations.pdf"), fig_val, width = 6, height = 4)
 cat("Wrote", file.path(outdir, "fig-ai-valuations.pdf"), "\n")

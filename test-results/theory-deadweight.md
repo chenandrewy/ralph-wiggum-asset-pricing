@@ -1,70 +1,81 @@
 # tests/theory-deadweight.py
-Started: 2026-04-09 19:03:08 EDT
-Runtime: 1m 42s
-[ralph-garage/agent-logs/20260409T190308.202000-0400_theory-deadweight_claude_opus.log](../ralph-garage/agent-logs/20260409T190308.202000-0400_theory-deadweight_claude_opus.log)
+Started: 2026-04-09 19:33:01 EDT
+Runtime: 2m 33s
+[ralph-garage/agent-logs/20260409T193302.006220-0400_theory-deadweight_claude_opus.log](../ralph-garage/agent-logs/20260409T193302.006220-0400_theory-deadweight_claude_opus.log)
 
 # theory-deadweight
 VERDICT: PASS
-REASON: Every formal object in the paper contributes to an economic claim, quantitative result, or narrative mechanism; no deadweight formalism was found.
+REASON: Every formal object, parameter, and equation contributes to the paper's economic claims or is used in subsequent analysis; no deadweight formalism found.
 
-## Audit methodology
+## Audit Methodology
 
-Every formal object was catalogued and checked against four criteria: (1) is it introduced and then abandoned? (2) could its takeaway be stated in plain English without weakening economic claims? (3) is any variable/parameter unused in results, calibration, or interpretation? (4) is any formalism pompous, ceremonial, or a detour from the main argument?
+Inventoried every formal object (propositions, corollary, remark, displayed equations, parameters, and functions) and traced each forward to check whether it appears in a result, calibration, interpretation, or narrative that matters for the paper's conclusions.
 
-## Parameters (16 total)
+## Parameter Inventory (all used)
 
-| Parameter | Where introduced | Where used | Verdict |
-|-----------|-----------------|------------|---------|
-| $C_t$ | Setup (Sec 2.1) | All derivations, calibration | Essential |
-| $g$ | eq:agg-consumption-growth | P/D formulas, calibration ($g=0.02$) | Essential |
-| $\alpha_t$ | Setup | Defines household consumption; displacement mechanism via $\phi$ | Essential |
-| $\theta_t$ | Assets paragraph | Defines dividends; enters $\Gamma^{AI}$, $\Gamma^N$; calibrated ($\theta=0.15$) | Essential |
-| $p$ | Singularity paragraph | P/D formulas, comparative statics (Prop 2(ii)), calibration grid | Essential |
-| $\xi$ | Singularity paragraph | P/D formulas, comparative statics (Prop 2(iii)), calibration grid | Essential |
-| $\eta$ | Singularity paragraph | P/D formulas, calibration ($\eta=0.5$, $\eta=9$), transfer analysis | Essential |
-| $\phi$ | eq:displacement | P/D formulas, comparative statics (Prop 2(i)), calibration ($\phi=0.5$, $\phi=0.05$) | Essential |
-| $\Delta\theta$ | Assets paragraph | $\Gamma^{AI}$, $\Gamma^N$; Corollary 1; calibrated ($\Delta\theta=0.2$) | Essential |
-| $\gamma$ | Preferences | P/D formulas, Prop 2(ii), Prop 3(i); calibrated ($\gamma=4$) | Essential |
-| $\beta$ | Preferences | P/D formulas; calibrated ($\beta=0.96$) | Essential |
-| $\lambda$ | Extension 1 | Prop 3; governs positive vs negative singularity | Essential |
-| $\phi^+$ | Extension 1 | Prop 3; positive singularity share gain | Essential |
-| $\kappa$ | Extension 1 | Veto cost in Prop 3 | Essential |
-| $\tau$ | Extension 2 | Transfer consumption (eq 7), transfer ratio (eq 8), figure | Essential |
-| $\delta_0$ | Extension 2 | Deadweight cost in eqs 7-8, figure | Essential |
+| Parameter | Introduced | Used in |
+|-----------|-----------|---------|
+| $\beta, g, \gamma$ | Preferences (§2.1) | P/D formulas (Prop 1), calibration (§3), veto (Prop 3) |
+| $\phi$ | Displacement (§2.1) | P/D formulas, Prop 2(i), transfers (§4.2), calibration |
+| $\eta$ | Singularity growth (§2.1) | P/D formulas, $\Gamma$ factors, transfer ratio (eq 8), calibration |
+| $p$ | Singularity probability (§2.1) | P/D formulas, Prop 2(ii), calibration |
+| $\xi$ | Extinction probability (§2.1) | P/D formulas, Prop 2(iii), veto discussion, calibration |
+| $\alpha_t$ | Household share (§2.1) | Consumption, displacement, transfers |
+| $\theta, \Delta\theta$ | AI dividend share (§2.1) | $\Gamma^{AI}, \Gamma^{N}$, Corollary 1, calibration |
+| $\lambda$ | Positive singularity prob (§4.1) | Prop 3, $\Delta U^H$ formula |
+| $\phi^+$ | Positive displacement (§4.1) | Prop 3 |
+| $\kappa$ | Veto cost (§4.1) | Prop 3 veto condition |
+| $\tau$ | Tax rate (§4.2) | Transfer consumption (eq 7), transfer ratio (eq 8), figure |
+| $\delta_0$ | Deadweight cost (§4.2) | Transfer consumption, transfer ratio, figure |
 
-No parameter is introduced and then abandoned. All 16 appear in at least one result, calibration exercise, or figure.
+**No orphaned parameters.** Every parameter introduced appears in at least one result, equation, or calibration that directly supports the paper's conclusions.
 
-## Equations (11 total, including appendix)
+## Formal Environments
 
-1. **eq:agg-consumption-growth** ($C_{t+1}=(1+g)C_t$): Foundation of the consumption process. Used in all derivations.
-2. **eq:displacement** ($\alpha_{t+1}=\phi\alpha_t$): Core mechanism. Enters P/D formulas through $\phi^{-\gamma}$.
-3. **eq:utility** (CRRA): Defines preferences. Generates the SDF used in all pricing.
-4. **eq:pd-ai**: Core quantitative result. Used in Table 1, Figure 2, Propositions 1-2.
-5. **eq:pd-nonai**: Companion to eq 4. Used in Table 1, Corollary 1, Proposition 2.
-6. **eq:veto-gain** ($\Delta U^H$): States the veto condition precisely. Used in Proposition 3.
-7. **eq:transfer-consumption**: Defines the transfer mechanism. Basis for eq 8 and Figure 2.
-8. **eq:transfer-ratio**: Delivers the key insight that the consumption ratio is independent of $\eta$. Discussed in text and illustrated in Figure 2.
-9-11. **Appendix eqs** (Euler equation, expansion, solution): Required by the spec ("all propositions are explicitly proved, with long proofs in the appendix"). These constitute the proof of Proposition 1.
+### Proposition 1 (P/D ratios) — necessary
+Core result. Delivers the closed-form pricing formulas that the entire paper builds on. Referenced in Corollary 1, Proposition 2, the quantitative analysis (§3), and Extension 2.
 
-No equation is ornamental. Each either states a result, defines a mechanism, or proves a claim.
+### Remark 1 (Existence condition) — necessary
+Introduces the $A^j < 1$ condition. This is not a throwaway technicality: it is directly invoked in Extension 2 (§4.2) to explain why P/D ratios are undefined under severe displacement, which motivates the role of government transfers. The formal statement earns its place.
 
-## Propositions and corollary
+### Corollary 1 (Valuation spread) — lightweight but justified
+States $P^{AI}/D^{AI} > P^N/D^N$ when $\Delta\theta > 0$. This is the paper's central testable prediction. While the result follows quickly from Proposition 1, giving it a named environment makes it citable and highlights the key economic takeaway. The proof is one sentence. This is standard practice in theory papers and well within the norms of top finance journals.
 
-- **Proposition 1** (P/D ratios): Core result driving the entire quantitative analysis.
-- **Corollary 1** (valuation spread): Direct implication but highlights the paper's central prediction. Short (3 lines) and provides a clean reference point for the discussion.
-- **Proposition 2** (comparative statics): All three parts are verified quantitatively in Section 3 and referenced in the discussion of Table 1.
-- **Proposition 3** (veto): Delivers the extension's main result about how incompleteness distorts AI development.
+### Proposition 2 (Comparative statics) — necessary, all three parts used
+- Part (i): referenced in quantitative discussion (§3) and calibration.
+- Part (ii): referenced in quantitative discussion ("increasing the singularity probability raises the AI stock premium").
+- Part (iii): referenced by number on lines 62 and 199; drives the extinction-risk discussion.
 
-## Items examined for potential deadweight
+No subpart is orphaned.
 
-1. **Corollary 1**: Could be folded into prose after Proposition 1. However, it isolates the paper's central empirical prediction in a citable result, which is standard in finance theory papers. At 3 lines including the proof, the overhead is negligible.
+### Proposition 3 (Veto under incomplete markets) — necessary
+Both parts do essential work: (i) establishes the distortion, (ii) shows complete markets eliminate it. The contrast is the economic point of Extension 1.
 
-2. **eq:veto-gain in Proposition 3**: The proof of Proposition 3 is qualitative ("for $\gamma$ sufficiently large, the downside dominates"). One could ask whether the explicit formula adds value beyond the verbal argument. However, the formula makes the veto condition precise and verifiable, and it clarifies the role of extinction normalization ($u_\text{ext}=0$). This is standard practice for stating a formal result.
+## Displayed Equations
 
-3. **Private AI capital dividends** ($(1-\alpha_t)C_t - D_t^{AI}$): Stated once in the setup as a definitional aside. Not used in any equation or proof. However, it serves a necessary narrative function: it explains what AI owners receive and why the household cannot trade this residual. One line of text, not a formal object.
+| Eq | Content | Used in |
+|----|---------|---------|
+| (1) | Consumption growth | All pricing derivations |
+| (2) | Displacement | Core mechanism, $\phi^{-\gamma}$ in P/D |
+| (3) | Utility | Euler equation, veto |
+| (4)–(5) | P/D ratios | Core results, calibration, figure |
+| (6) | Existence condition $A^j$ | Extension 2 discussion |
+| (7) | Veto utility gain $\Delta U^H$ | Proposition 3 |
+| (8) | Transfer consumption | Extension 2, figure |
+| (9) | Transfer ratio | Key insight ($\eta$-independence) |
+| (10)–(13) | Appendix proof steps | Derivation of Prop 1 |
 
-4. **Domain restriction $\alpha_t \in (0, 1-\theta_t]$**: Stated once, never binding in any result. But this is a standard modeling boundary condition ensuring the household cannot consume more than is available after AI dividends. Not formalism — just a well-posedness condition.
+No equation is introduced and abandoned. Each feeds forward into a result, discussion, or exhibit.
 
-## Conclusion
+## Prose Mechanisms
 
-The paper is lean. Every parameter appears in at least one result or calibration. Every equation either states a core result, defines a mechanism, or proves a proposition. No formal object is introduced and then abandoned. No qualitative takeaway could be stated in plain English in a way that would eliminate an equation without weakening the paper's claims. The formalism is purposeful and proportionate to the economic content.
+- **Private AI capital dividends** $(1-\alpha_t)C_t - D_t^{AI}$ (inline, not displayed): introduced to clarify the source of market incompleteness. Not used in any formula, but it serves essential narrative work — explaining what the household *cannot* trade. This is an inline expression, not a formal object.
+- **$\Gamma^{AI}$ and $\Gamma^{N}$ definitions**: introduced in Proposition 1, discussed in the paragraph following it, used in Corollary 1 and Proposition 2. Do clear economic work (dividend growth divergence drives the hedging channel).
+
+## Checks Against Audit Criteria
+
+1. **Introduced and abandoned?** No. Every formal object is referenced after introduction.
+2. **Qualitative takeaway statable in plain English?** No formal object reduces to a claim that would be equally convincing without the math. Corollary 1 is the closest case but it names the paper's central prediction and is extremely compact (6 lines including proof).
+3. **Unused variables/parameters/functions?** None found. Full inventory above.
+4. **Pompous or ceremonial formalism?** No. The paper uses three propositions, one corollary, and one remark across a 20-page theory paper — well within norms. No unnecessary lemmas, definitions, or assumptions environments. Proofs are concise (Prop 1's proof is in the appendix per the spec).
+5. **Auxiliary formal detours?** No. Both extensions branch directly from the baseline and advance the main argument (market incompleteness distorts real decisions; transfers can overcome frictions under singularity growth).

@@ -1,34 +1,33 @@
 # tests/writing-intuition.py
-Started: 2026-04-09 19:03:08 EDT
-Runtime: 1m 7s
-[ralph-garage/agent-logs/20260409T190308.202724-0400_writing-intuition_claude_opus.log](../ralph-garage/agent-logs/20260409T190308.202724-0400_writing-intuition_claude_opus.log)
+Started: 2026-04-09 19:33:01 EDT
+Runtime: 39s
+[ralph-garage/agent-logs/20260409T193302.014242-0400_writing-intuition_claude_opus.log](../ralph-garage/agent-logs/20260409T193302.014242-0400_writing-intuition_claude_opus.log)
 
 # writing-intuition
 VERDICT: PASS
-REASON: All propositions and key formulas have their intuition explained in terms of the specific mathematical objects they use.
+REASON: Every proposition and key formula is accompanied by intuition that explicitly references the mathematical objects involved.
 
 ## Detailed Findings
 
-### Proposition 1 (Price-dividend ratios)
-The discussion after the proposition (line 141) explains the hedging channel by directly comparing $\Gamma^{AI}$ and $\Gamma^{N}$, noting that $\Delta\theta > 0$ implies $\Gamma^{AI} > 1+\eta$ while $\Gamma^{N} < 1+\eta$. It connects displacement severity $\phi$ to the household's marginal utility in singularity states via $\phi(1+\eta) < 1$, explaining why AI stocks' payoffs are "especially valuable" when marginal utility is high. The hedging channel is articulated through the covariance between high payoffs ($\Gamma^{AI}$) and high marginal utility ($\phi^{-\gamma}$).
+### Proposition 1 (P/D ratios, line 126)
+The discussion (line 152) explains the hedging channel by comparing $\Gamma^{AI}$ and $\Gamma^{N}$, noting that $\Delta\theta > 0$ makes AI dividends grow upon singularity while non-AI dividends shrink. It connects the household's high marginal utility in singularity states to displacement via $\phi$ and the condition $\phi(1+\eta) < 1$.
 
-### Corollary 1 (Valuation spread)
-The proof directly references the monotonicity of P/D in $\Gamma^j$ and the ordering $\Gamma^{AI} > \Gamma^{N}$ from $\Delta\theta > 0$. Concise and grounded.
+### Remark 1 (Existence condition, line 144)
+Explains the condition $A^j < 1$ in terms of the SDF-weighted expected dividend growth exceeding the discount rate, causing the geometric pricing sum to diverge. Provides economic interpretation: "the hedging value of the asset is so extreme that no finite price can clear the market."
 
-### Proposition 2 (Comparative statics)
-Each part explains the result through the relevant mathematical objects:
-- (i) Uses $\phi^{-\gamma}$ increasing as $\phi$ decreases, amplifying the singularity term more for AI stocks because $\Gamma^{AI} > \Gamma^{N}$.
-- (ii) References the weight $p$ on singularity states and the condition on $\gamma$ for the marginal utility effect to dominate.
-- (iii) Explains that $\xi$ reduces weight on non-extinction states where $\Gamma^{AI} \neq \Gamma^{N}$, compressing both the spread and the ratio.
+### Corollary 1 (Valuation spread, line 154)
+Proof references $\Delta\theta > 0$ implying $\Gamma^{AI} > \Gamma^{N}$, directly tying the mathematical objects to the result.
 
-### Proposition 3 (Veto under incomplete markets)
-The formula for $\Delta U^H$ is explained: extinction utility is normalized to zero (with justification that $u(c) < 0$ for $\gamma > 1$ makes this conservative). The proof connects $\phi < 1$ to consumption drops, concavity of $u$ with large $\gamma$ to asymmetric risk evaluation, and $\lambda > 1/2$ to social efficiency. The post-proof discussion (line 233) connects extinction risk $\xi$ to the formula's state weights.
+### Proposition 2 (Comparative statics, line 162)
+- (i) Explains that decreasing $\phi$ raises $\phi^{-\gamma}$, amplifying the singularity term, and because $\Gamma^{AI} > \Gamma^{N}$ the amplification benefits AI stocks more.
+- (ii) References the weight $p$ on singularity states and the condition on $\gamma$.
+- (iii) Explains that higher $\xi$ reduces the weight on non-extinction states where $\Gamma^{AI}$ and $\Gamma^{N}$ diverge.
 
-### Transfer consumption formula (eq. 9)
-Each term is explained: first term is displaced consumption ($\phi \alpha (1+\eta) C_t (1+g)$), second term is the net transfer ($\tau$ of AI surplus reduced by deadweight cost $\delta_0 \tau$).
+### Proposition 3 (Veto, line 223)
+The proof explains the veto in terms of $\phi < 1$ (consumption drops), $\phi^+ > 1$ (consumption rises), concavity of $u$, $\gamma$ large, $\lambda > 1/2$, and the threshold $\Delta U^H < -\kappa$. The post-proof discussion (line 244) connects extinction risk $\xi$ to the veto incentive through the normalization $u_\text{ext} = 0$.
 
-### Transfer ratio formula (eq. 10)
-The paper explains that the ratio is independent of $\eta$, then clarifies the economic content is in the levels: as $\eta$ grows, both numerator and denominator grow, so even inefficient transfers deliver large absolute gains. The condition $\tau > 0$ for the ratio to exceed one is stated explicitly.
+### Transfer formula (eq. 14, line 253)
+The discussion (lines 258–264) walks through the transfer ratio (eq. 15), explaining that it is independent of $\eta$, that $\tau > 0$ always improves the household's position, and that the levels grow with $\eta$ so even inefficient transfers deliver large gains.
 
-### Quantitative analysis discussion
-The numerical results are consistently connected back to the propositions' mathematical objects (e.g., referencing Proposition 2(iii) for extinction risk compression, $\phi(1+\eta)$ for household consumption changes).
+### Figure 2 discussion (lines 266–268)
+References specific parameter values ($\phi = 0.05$, $\eta = 9$, $\phi(1+\eta) = 0.5$), explains that $\phi^{-\gamma} = 160{,}000$ causes the existence condition to be violated, and connects the restoration of finite P/D ratios to increasing $\tau$.

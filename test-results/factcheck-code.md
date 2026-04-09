@@ -1,67 +1,61 @@
 # tests/factcheck-code.py
-Started: 2026-04-09 19:03:08 EDT
-Runtime: 2m 4s
-[ralph-garage/agent-logs/20260409T190308.206652-0400_factcheck-code_claude_opus.log](../ralph-garage/agent-logs/20260409T190308.206652-0400_factcheck-code_claude_opus.log)
+Started: 2026-04-09 19:33:01 EDT
+Runtime: 2m 47s
+[ralph-garage/agent-logs/20260409T193301.999820-0400_factcheck-code_claude_opus.log](../ralph-garage/agent-logs/20260409T193301.999820-0400_factcheck-code_claude_opus.log)
 
 # factcheck-code
-
 VERDICT: PASS
-REASON: The canonical analysis path runs from scratch, generates all exhibits, and paper claims are consistent with the code.
+REASON: The canonical analysis path runs from scratch, produces all exhibits, and is consistent with the paper's formulas and claims.
 
 ## Canonical local analysis path
 
-- Single entry point: `code/generate-exhibits.R`
-- Run command: `Rscript code/generate-exhibits.R`
-- No external data, no network access, no credentials required
-- All parameters defined inline; illustrative empirical data hardcoded
-- Outputs three exhibits directly to `paper/exhibits/`:
-  1. `table-pd-ratios.tex` (Exhibit 1: P/D ratio table)
-  2. `fig-extension-panels.pdf` (Exhibit 2: government transfers two-panel figure)
-  3. `fig-ai-valuations.pdf` (Exhibit 3: illustrative AI valuations vs market)
-- These are the exact three exhibits referenced in `paper/paper.tex`
+- **Entry point**: `code/generate-exhibits.R` (single canonical script, run via `Rscript code/generate-exhibits.R`)
+- **Outputs**: Three exhibits written to `paper/exhibits/`:
+  1. `table-pd-ratios.tex` — P/D ratio table (Exhibit 1)
+  2. `fig-extension-panels.pdf` — two-panel extension figure (Exhibit 2)
+  3. `fig-ai-valuations.pdf` — empirical AI valuations vs. market (Exhibit 3)
+- **Data sources**: Downloads S&P 500 data from datahub.io (Shiller dataset) and NASDAQ from FRED. No local data files are required; `data/` is empty.
+- **Dependencies**: R packages `ggplot2`, `dplyr`, `tidyr`, `gridExtra`, `scales`.
 
 ## Execution status
 
-- **Executed successfully from scratch.** Runtime: under 5 seconds.
-- R 4.2.2 with packages `ggplot2`, `dplyr`, `tidyr`, `gridExtra`, `scales` -- all available.
-- Regenerated table is byte-identical to the committed version.
-- Regenerated PDFs differ only in minor rendering metadata (expected for plot regeneration).
-- Spec requirement III.3.c (from-scratch, no precomputed caches): satisfied.
-- Spec requirement III.3.d (under 180 seconds): satisfied.
+| Check | Status |
+|-------|--------|
+| Runs from scratch | PASS — no precomputed caches or intermediate files |
+| Completes under 180s | PASS — ~2.5 seconds |
+| All outputs generated | PASS — all 3 exhibits produced |
+| All exhibits used in paper | PASS — all files in `paper/exhibits/` are referenced in `paper.tex` |
+| No hidden auxiliary files | PASS — `data/` is empty; no undocumented inputs |
 
 ## Paper-code consistency
 
-**Table (Exhibit 1):**
-- Paper states p=0.5%, xi=0 yields AI P/D "roughly 18", non-AI "near 11", ratio "about 1.6". Code produces 17.5, 11.1, 1.6. Consistent.
-- Paper states p=1% ratio "nearly 6 to 1". Code produces 5.8. Consistent.
-- Paper states parameters: beta=0.96, g=0.02, gamma=4, phi=0.5, eta=0.5, theta=0.15, dtheta=0.2. Code matches exactly.
+### Table (P/D ratios)
+- Code's `compute_pd` function matches the paper's Proposition 1, equations (4)–(5): $K/(1-K)$ where $K = \beta(1+g)^{1-\gamma}[(1-p) + p(1-\xi)(1+\eta)^{-\gamma}\phi^{-\gamma}\Gamma^j]$.
+- Parameters match paper text: $\beta=0.96$, $g=0.02$, $\gamma=4$, $\phi=0.5$, $\eta=0.5$, $\theta=0.15$, $\Delta\theta=0.2$.
+- Dividend growth factors $\Gamma^{AI}=3.2$ and $\Gamma^{N}=1.2$ match the paper's definitions.
+- Independently verified: P/D values (e.g., 17.5 AI at p=0.5%/xi=0; 76.4 AI at p=1%/xi=0) match the output table to rounding.
+- Paper claim "up to roughly six times higher" corresponds to ratio 5.8 at p=1%, xi=0. Accurate.
 
-**Extension figure (Exhibit 2):**
-- Paper states phi*(1+eta)=0.75 for baseline (25% consumption loss). Code: 0.5*1.5=0.75. Correct.
-- Paper states phi_large=0.05, eta=9 giving phi*(1+eta)=0.5 (consumption halves). Code: 0.05*10=0.5. Correct.
-- Paper states p=0.5%, xi=5% for extension. Code uses p_ext=0.005, xi_ext=0.05. Matches.
-- Transfer consumption formula (eq. 7) correctly independent of eta in both paper and code.
-- P/D computation with transfers uses effective phi_eff consistent with the paper's equation (6).
+### Extension figure (transfers)
+- Code's transfer consumption formula matches paper equation (10).
+- Code's transfer ratio matches paper equation (11): $1 + \tau(1-\delta_0\tau)(1-\phi\alpha)/(\phi\alpha)$, confirmed independent of $\eta$.
+- Effective-phi construction for P/D with transfers is consistent with the paper's SDF logic.
+- Paper claims verified: $\phi(1+\eta)=0.75$ (baseline, 25% loss), $\phi(1+\eta)=0.5$ (large, 50% loss), $\phi^{-\gamma}=160{,}000$ (large singularity).
+- Large-singularity P/D is NA at $\tau=0$ (existence condition violated), consistent with paper discussion.
 
-**Illustrative valuations figure (Exhibit 3):**
-- Paper caption labels it "Illustrative". Text says "approximate values from public sources." Appropriately flagged as non-canonical/illustrative data.
-- Data is hardcoded in the script (no external download), consistent with illustrative intent.
+### Empirical figure (AI valuations)
+- Downloads NASDAQ and S&P 500 index data, normalizes to Jan 2015 = 100. Straightforward index comparison.
+- No per-share data combination issues — uses index-level prices throughout.
+- Paper describes this as "illustrative" empirical content, consistent with spec requirement IV.8.b.
 
-**Model formulas:**
-- P/D formula in code (K/(1-K) structure) matches Proposition 1 equations (4)-(5).
-- Dividend growth factors Gamma^AI and Gamma^N computed correctly from theta/dtheta.
-- SDF term phi^(-gamma)*(1+eta)^(-gamma) matches the Euler equation derivation in Appendix A.
+### Minor note
+- The extension figure caption lists $p=0.5\%$, $\xi=5\%$, $\delta_0=0.5$ but does not document $\alpha_0=0.70$ (household's initial consumption share), which is used in the code. This parameter appears in the paper model as generic $\alpha$ but its numerical value is not stated in the figure caption or surrounding text.
 
 ## Reproducibility classification
 
-| Output | Classification |
+| Object | Classification |
 |--------|---------------|
-| Table 1 (P/D ratios) | Locally reproducible |
-| Figure 2 (extension panels) | Locally reproducible |
-| Figure 1 (AI valuations) | Locally reproducible (illustrative data hardcoded; appropriately labeled) |
-
-**Requirement 5 (per-share data):** Not applicable. The code computes theoretical model quantities only; no per-share market data is combined with share counts.
-
-**Requirement 6 (non-reproducible outputs labeled):** The only empirical content (Figure 1) is clearly labeled "Illustrative" in the caption and described as "approximate values from public sources" in the text.
-
-**Requirement 7 (no hidden auxiliary files):** No external files, caches, or undocumented dependencies. The `data/` directory is empty.
+| Table: P/D ratios | Locally reproducible |
+| Figure: Extension panels | Locally reproducible |
+| Figure: AI valuations | Locally reproducible (requires network for FRED/datahub downloads) |
+| All theoretical propositions | Not code-generated; verified that code implements the stated formulas correctly |

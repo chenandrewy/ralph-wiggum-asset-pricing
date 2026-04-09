@@ -1,32 +1,34 @@
 # tests/theory-intro-payoff.py
-Started: 2026-04-09 19:03:08 EDT
-Runtime: 50s
-[ralph-garage/agent-logs/20260409T190308.206832-0400_theory-intro-payoff_claude_opus.log](../ralph-garage/agent-logs/20260409T190308.206832-0400_theory-intro-payoff_claude_opus.log)
+Started: 2026-04-09 19:33:01 EDT
+Runtime: 46s
+[ralph-garage/agent-logs/20260409T193301.994892-0400_theory-intro-payoff_claude_opus.log](../ralph-garage/agent-logs/20260409T193301.994892-0400_theory-intro-payoff_claude_opus.log)
 
 # theory-intro-payoff
 VERDICT: PASS
-REASON: Every modeling feature in the paper leads to an economic result that is discussed in the introduction.
+REASON: Every modeling feature introduced in the model section has a corresponding economic result discussed in the introduction.
 
 ## Detailed Findings
 
-Each distinctive modeling feature was mapped to its corresponding economic result in the introduction:
+The paper introduces the following modeling features, each of which pays off with an economic result discussed in the introduction:
 
-1. **Displacement (φ)** — Intro discusses the hedging motive: AI stocks hedge against "an AI singularity that displaces their labor income and consumption."
+1. **Market incompleteness (private AI capital)** -- Intro: "much of this capital is private, held by founders and early-stage investors...This market incompleteness...forces investors into publicly traded AI stocks as an imperfect substitute."
 
-2. **Market incompleteness (private AI capital)** — Intro states: "markets are incomplete—investors cannot trade private AI capital—AI stocks command a premium." Also discussed as distorting AI development.
+2. **Displacement severity (phi)** -- Intro: "the risk that an AI singularity...displaces their labor income and consumption"; "closed-form price-dividend ratios that depend on displacement severity."
 
-3. **Singularity probability (p)** — Intro discusses stochastic singularity and quantitative analysis showing P/D ratios "up to roughly six times higher" across plausible singularity probabilities.
+3. **Singularity probability (p)** -- Intro: "closed-form price-dividend ratios that depend on...singularity probability."
 
-4. **Extinction risk (ξ)** — Intro explicitly notes: "Extinction risk attenuates this gap, as Proposition 2(iii) shows, by reducing the probability weight on non-extinction states where the hedging channel operates."
+4. **Extinction risk (xi)** -- Intro: "the singularity may also trigger extinction, wiping out all consumption"; "Extinction risk attenuates this gap, as Proposition 2(iii) shows."
 
-5. **AI vs non-AI stocks (θ, Δθ)** — Intro describes: "Two public assets, AI stocks and non-AI stocks, are available for trading. AI stocks grow as a share of the economy with each singularity, making them a partial hedge."
+5. **Productivity jump (eta)** -- Intro: "singularity-driven growth overwhelms the deadweight costs of government intervention"; drives the quantitative result that transfers become effective.
 
-6. **Productivity boost (η)** — Intro discusses how "singularity-driven growth overwhelms deadweight costs" of redistribution.
+6. **AI vs non-AI dividend shares (Delta-theta)** -- Intro: "AI stocks grow as a share of the economy with each singularity, making them a partial hedge against displacement."
 
-7. **Positive singularity and veto (λ, κ)** — Intro discusses: "a risk-averse household facing incomplete markets may choose to block it, because the disaster risk looms large when it cannot be hedged. Complete markets would eliminate this distortion."
+7. **CRRA preferences (gamma > 1)** -- Intro: "risk-averse household facing incomplete markets may choose to block it, because the disaster risk looms large."
 
-8. **Government transfers with deadweight costs (τ, δ₀)** — Intro discusses: "Government transfers offer an alternative mechanism: normally wasteful due to deadweight costs, they become effective when singularity-driven growth overwhelms the waste."
+8. **Veto mechanism / positive singularity (lambda, kappa)** -- Intro: "market incompleteness distorts the development of AI itself...a risk-averse household facing incomplete markets may choose to block it...Complete markets would eliminate this distortion."
 
-9. **CRRA preferences (γ > 1)** — The role of risk aversion is captured in the intro's discussion of the risk-averse household driving both the hedging premium and the veto result.
+9. **Government transfers (tau, delta_0)** -- Intro: "government transfers that becomes compelling when singularity-driven growth overwhelms deadweight costs"; "Government transfers offer an alternative mechanism: normally wasteful due to deadweight costs, they become effective when singularity-driven growth overwhelms the waste."
 
-No modeling feature was found to lack a corresponding payoff in the introduction.
+10. **Quantitative P/D ratios** -- Intro: "P/D ratios for AI stocks can be up to roughly six times higher than for non-AI stocks across plausible singularity probabilities, consistent with observed valuation spreads."
+
+No modeling feature is orphaned without an intro discussion, and no intro claim lacks a corresponding model feature.

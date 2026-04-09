@@ -1,59 +1,56 @@
 # Improvement Plan
-AUTHOR PLAN — 2026-04-09 18:58:33 EDT
+AUTHOR PLAN — 2026-04-09 19:15:07 EDT
 
-## Current State
+## Status: 19/25 tests pass, 6 fail
 
-17/25 tests pass. 8 failures across visual, writing, factual, and spec-compliance categories. No overhaul needed — the model section is sound. Focus is on fixing failing tests, then polishing.
+## Critical Issue: Extension 2 Calibration Breaks P/D Formula
 
-## Failing Tests and Fixes
+The P/D formula (Proposition 1) has the form $A/(1-A)$ and requires $A < 1$ for a valid price. This condition is **never stated** in the paper. Worse, the Extension 2 large-singularity calibration ($\eta = 9$, $\phi = 0.05$) violates it: $A = 2.37$ for AI stocks, producing undefined P/D ratios. The code silently returns NA, and the figure only plots where defined, but the paper never acknowledges the constraint or explains why P/D is undefined at $\tau = 0$ for the large singularity.
 
-### 1. visual-pages (hyperref link boxes)
-**Problem:** Colored hyperref boxes (red/green rectangles) visible around cross-references.
-**Fix:** Add `\hypersetup{hidelinks}` after `\usepackage{hyperref}` in `paper.tex`.
+This is not an overhaul — the model is structurally sound — but it is the highest-priority fix.
 
-### 2. spec-paper (long proof inline)
-**Problem:** Proposition 1's proof (~28 lines) is inline, violating spec II.9 (long proofs go in appendix).
-**Fix:** Move the Proposition 1 proof to a new appendix. Leave a one-line "See Appendix" note inline. Keep the short proofs (Corollary 1, Proposition 2) inline.
+## Plan (ordered by priority)
 
-### 3. factcheck-freely (factual errors)
-**Problem:** Three issues:
-  - (a) Kogan, Papanikolaou, Stoffman (2020) — actual fourth author is Song, not Stoffman.
-  - (b) Kogan & Papanikolaou (2014) described as introducing "displacement risk factor" — that concept originates in GKP (2012).
-  - (c) Transfer model uses "income" and "surplus" inconsistently for AI owners' share.
-**Fix:**
-  - (a) Correct citation to Kogan, Papanikolaou, Schmidt, and Song (2020) in both `paper.tex` and `references.bib`.
-  - (b) Reword the Kogan & Papanikolaou (2014) sentence to describe what they actually show (technology shocks create cross-sectional return differences), attributing "displacement risk" to GKP.
-  - (c) Standardize on "surplus" throughout the transfer model section.
+### 1. Fix P/D existence condition and Extension 2 calibration
+**Test:** `factcheck-theory`
 
-### 4. element-lit-review (too long)
-**Problem:** Lit review spans ~75% of a page; spec says at most half a page.
-**Fix:** Trim the lit review paragraph. Cut the Garleanu & Panageas (2015) and Acemoglu (2024) sentences — they are least central. Tighten remaining sentences. Target ~60% of current length.
+- Add an explicit existence condition to Proposition 1: the P/D ratio is well-defined iff $A < 1$, where $A$ is the numerator. State this as a remark or assumption.
+- Recalibrate Extension 2's large-singularity parameters so that P/D is defined at $\tau = 0$. Options:
+  - **Option A (preferred):** Reduce $\gamma$ or increase $\phi$ for the large-singularity scenario so that $A < 1$. E.g., $\phi = 0.15$ with $\eta = 9$ gives $\phi(1+\eta) = 1.5$ and $\phi^{-\gamma} = 1975$, which may work.
+  - **Option B:** Keep current parameters but explicitly discuss that P/D diverges (prices go to infinity) as a feature — the hedge value is so extreme that AI stocks are infinitely valuable, making the case for transfers even stronger. The figure then starts from the first $\tau$ where P/D is finite.
+- Regenerate table and figure with `code/generate-exhibits.R`.
+- Update paper text in Section 4.2 to match the new calibration or the new discussion.
 
-### 5. writing-intro (flow and coverage)
-**Problem:** (a) Spec arguments (c) "financial market solutions under-discussed" and (d) "singularity abundance overcomes frictions" are not prominent — buried in non-skimmable positions. (b) Abrupt transitions between paragraphs in second half of intro.
-**Fix:**
-  - Add a dedicated short paragraph after the hedging-motive paragraph that makes arguments (c) and (d) prominent and skimmable.
-  - Smooth transitions: connect the extensions paragraph (P4→P5) with a bridging sentence; reorder quantitative preview before the meta-commentary paragraph; tighten the meta paragraph so it reads as a closing flourish, not a topic shift.
+### 2. Fix citation errors
+**Test:** `factcheck-lit`
 
-### 6. element-transfers-fig (catastrophe not visible at τ=0)
-**Problem:** Panel (b) of the extension figure doesn't clearly show that zero transfers are catastrophic. The large-singularity line at τ=0 starts near the baseline, not visibly below 1.
-**Fix:** In `code/generate-exhibits.R`, verify that consumption_growth at τ=0 for the large singularity is `phi_large*(1+eta_large) = 0.05*10 = 0.5`, i.e., consumption halves. This should already be the case. The visual problem may be the y-axis scale — the large-singularity curve rises so steeply that 0.5 looks close to the baseline. Fix: add a horizontal reference line at y=0.5 with an annotation like "50% consumption loss", or adjust the y-axis to start at 0 so the catastrophe is visually dramatic. Also ensure the "No change" annotation at y=1 is clear.
+- **references.bib:** Change `KoganPapanikolaouSchmidtSong2020` authors to `Kogan, Leonid and Papanikolaou, Dimitris and Stoffman, Noah`. Update the citation key to `KoganPapanikolaouStoffman2020`. Update all `\citet`/`\citep` references in `paper.tex`.
+- **Nordhaus framing:** Change "the kind of explosive output growth discussed by \citet{Jones2024} and \citet{Nordhaus2021}" to something like "the kind of explosive output growth modeled by \citet{Jones2024} and examined critically by \citet{Nordhaus2021}" to accurately reflect Nordhaus's skeptical stance.
 
-### 7. visual-figures-image-only (gridlines + wasted space)
-**Problem:** (a) fig-ai-valuations has low-contrast light gray gridlines. (b) Extension panel (a) has wasted space — both curves flatten by 20% tax rate but x-axis goes to 70%.
-**Fix:**
-  - (a) In fig-ai-valuations: remove minor gridlines or darken them. Use `panel.grid.major = element_line(color = "gray70")`.
-  - (b) In extension panel (a): truncate x-axis at ~40% tax rate (or wherever the curves have essentially flatlined). This concentrates visual information and eliminates dead space. Keep panel (b) x-axis at 70% since the large-singularity curve still has meaningful variation there.
+### 3. Fix opening figure — use real data
+**Test:** `element-opening-fig`
 
-### 8. visual-figures (text too small in Figure 2)
-**Problem:** Axis labels, tick labels, and legend text in extension figure are too small.
-**Fix:** Increase `base_size` in `theme_paper` from 12 to 14. Increase figure dimensions from 10×4.5 to 11×5 to accommodate larger text.
+- Replace hardcoded P/E values in `code/generate-exhibits.R` with actual data. The spec (paper-spec.md IV.8.b) says empirical content should be "very limited, ideally to a single figure." Use a simple, documentable source.
+- Check `ralph/code-templates/` for WRDS access patterns. Download P/E data for an AI-exposed portfolio vs. S&P 500 from WRDS (or use a simple publicly verifiable approach).
+- Remove "(Illustrative)" from the figure caption and the hedge phrase "based on approximate values" from the intro text.
+- Update `code/generate-exhibits.R` so the pipeline runs from scratch as required by spec III.3.c.
 
-## Execution Order
+### 4. Improve Extension 2 figure
+**Tests:** `element-transfers-fig`, `visual-figures-image-only`
 
-1. **LaTeX quick fixes** (tests 1, 2): hyperref hidelinks, move proof to appendix.
-2. **Factual corrections** (test 3): fix citations and terminology.
-3. **Lit review trim** (test 4): cut to half-page.
-4. **Intro rewrite** (test 5): restructure flow, make arguments (c)/(d) prominent.
-5. **Figure fixes** (tests 6, 7, 8): update `generate-exhibits.R` for extension figure x-axis, text size, gridlines, and catastrophe visibility.
-6. **Regenerate exhibits**, rebuild paper, re-run tests.
+- **Catastrophe visibility:** Add an annotation or marker at $\tau = 0$ in Panel (b) highlighting the household's consumption loss (e.g., annotate "Catastrophe: 50% loss" with an arrow at the y-intercept of the large-singularity line).
+- **Grid contrast:** Change `panel.grid.major` from `"gray70"` to `"gray50"` or darker in `theme_paper`.
+- **Panel (a) vertical space:** Set `scale_y_continuous(limits = c(NA, NA))` or adjust y-axis lower bound to reduce whitespace below data.
+- **Caption:** Add a brief note connecting panels (a) and (b) — transfers reduce hedge value (panel a) while improving consumption (panel b).
+
+### 5. Fix intro paragraph structure
+**Test:** `writing-intro`
+
+- Make argument (d) — that singularity abundance can overcome market frictions — visible to a skim-reader. Currently buried mid-paragraph.
+- Option: Split paragraph 3 so that the abundance-overcomes-frictions idea leads its own sentence or short paragraph. E.g., start a new paragraph with something like "And if the singularity actually occurs, the explosive growth in output may itself overcome these frictions."
+
+### 6. Remaining figure polish
+**Test:** `visual-figures-image-only`
+
+- Fix `fig-ai-valuations` caption: add brief description of which firms and what P/E measure.
+- These visual fixes apply to both figures and are partially addressed in steps 3-4 above.

@@ -1,32 +1,27 @@
 # tests/visual-pages.py
-Started: 2026-04-09 19:03:08 EDT
-Runtime: 46s
-[ralph-garage/agent-logs/20260409T190308.202080-0400_visual-pages_claude_opus.log](../ralph-garage/agent-logs/20260409T190308.202080-0400_visual-pages_claude_opus.log)
+Started: 2026-04-09 19:33:01 EDT
+Runtime: 51s
+[ralph-garage/agent-logs/20260409T193302.018369-0400_visual-pages_claude_opus.log](../ralph-garage/agent-logs/20260409T193302.018369-0400_visual-pages_claude_opus.log)
 
 # visual-pages
-VERDICT: PASS
-REASON: All 14 pages are well-formatted with visible page numbers, readable exhibits, and no layout issues; length is within the 20-page limit.
+VERDICT: FAIL
+REASON: Page 8 is mostly blank whitespace due to a float placement issue with Table 1.
 
 ## Page Numbers
-Every page (1--14) displays a visible page number centered at the bottom. No pages are missing numbers.
+All 15 pages have visible page numbers at the bottom center. PASS.
 
 ## Paper Length
-The paper is 14 pages, well within the spec limit of 20 pages.
+The paper is 15 pages (including references and appendix), well within the 20-page limit. PASS.
 
-## Exhibits
+## Figures and Tables
+- **Figure 1 (page 2):** AI valuations chart. Readable but compact; legend is clear. Acceptable.
+- **Table 1 (page 9):** Price-dividend ratios. Nicely formatted with clear column headers, grouped rows, and explanatory notes below. PASS.
+- **Figure 2 (page 13):** Two-panel figure (AI Stock Valuations and Household Consumption). Panels are clearly labeled (a) and (b), legends are readable, axes are labeled. PASS.
 
-| Exhibit | Page | Format | Assessment |
-|---------|------|--------|------------|
-| Figure 1 (AI Valuations) | 2 | Line chart | Readable; clear legend distinguishing AI-exposed firms vs. S&P 500 |
-| Table 1 (Price-Dividend Ratios) | 8 | Table | Clean layout with horizontal rules; columns well-aligned and legible |
-| Figure 2 (Government Transfers) | 12 | Two-panel figure | Both panels readable with clear axis labels and legends |
+Total exhibits: 3 (within the 6-exhibit limit). PASS.
 
-3 exhibits total, well under the 6-exhibit cap.
-
-## Formatting Check
-- **Overflowing text**: None detected on any page.
-- **Broken references**: No "??" or missing cross-references observed.
-- **Missing figures**: All referenced figures and tables render correctly.
-- **Equations**: All display equations are numbered (equations 1--11 observed).
-- **Margins and spacing**: Consistent throughout; no text runs into margins.
-- **References page**: Properly formatted bibliography on page 14.
+## Formatting Issues
+- **Page 8 — large blank space:** Section 3 ("Quantitative Analysis") starts at the top of page 8 with a short introductory paragraph (6 lines), followed by roughly 80% blank whitespace. Table 1 then appears at the top of page 9. This is a LaTeX float placement issue that leaves page 8 looking empty and unprofessional. **FAIL.**
+- No overflowing text, broken references, or missing figures detected on any page.
+- All equations appear numbered and properly rendered.
+- Section headings, proposition environments, and proof boxes render correctly.
