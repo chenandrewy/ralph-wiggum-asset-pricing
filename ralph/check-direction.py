@@ -154,6 +154,13 @@ def main() -> int:
         print("ERROR: --runs must be positive", file=sys.stderr)
         return 2
 
+    print(
+        f"Running {args.runs} isolated direction-check trial(s) in parallel from {args.base_ref}. "
+        "Progress will appear here as each run finishes; outputs are written to "
+        "ralph-garage/check-direction/run-XX/. Expect roughly 30 to 60 minutes per run. Temporary worktrees are under "
+        "/workspace/worktrees/check-direction/ and will be removed unless --keep-worktrees is set."
+    )
+
     validate_inputs()
     resolved_base = run_cmd(
         ["git", "rev-parse", "--verify", args.base_ref],
