@@ -35,12 +35,13 @@ explicitly modeled. Then examine how the modeling is discussed.
 Assess: Is the paper consistently cautious about channels that it does not explicitly capture? Yes or
 No.
 
-## Output:
-  - PASS or FAIL
-  - one-sentence reason
-  - Further details on the results
-
+## Output
 Write your report to: {context.report_path}
+Format:
+- Line 1: # {context.test_id}
+- Next line: VERDICT: PASS or VERDICT: FAIL
+- Next line: REASON: one short sentence
+- Further details on your findings
 """
 
     return run_test(
