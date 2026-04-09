@@ -32,7 +32,7 @@ selected-tests:
   - visual-pages
   - writing-econ-messaging
   - writing-flow
-  - writing-intro-payoff
+  - theory-intro-payoff
   - writing-intuition
 
 # Agent log verbosity
