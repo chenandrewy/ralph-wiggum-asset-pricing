@@ -602,21 +602,21 @@ def build_preface_tex(preface_markdown: str) -> str:
 
 
 def inject_preface(tex_source: str, preface_tex: str) -> str:
-    pattern = re.compile(
-        r"\n\\section\*\{Preface[^}]*\}\s*\n(?:\\vspace\{[^}]*\}\s*\n)?(.*?)(\n\\section\{Introduction\})",
+    intro_matches = list(re.finditer(r"\n\\section\{Introduction\}", tex_source))
+    if len(intro_matches) != 1:
+        raise ValueError("expected exactly one introduction section in paper.tex")
+
+    intro_start = intro_matches[0].start()
+    before_intro = tex_source[:intro_start]
+    after_intro = tex_source[intro_start:]
+
+    placeholder_pattern = re.compile(
+        r"\n\\section\*\{Preface[^}]*\}\s*\n(?:\\vspace\{[^}]*\}\s*\n)?",
         re.DOTALL,
     )
-    match = pattern.search(tex_source)
-    if match is None:
-        raise ValueError("could not locate preface block in paper.tex")
-    return (
-        tex_source[:match.start()]
-        + "\n\\vspace{1.0em}\n"
-        + preface_tex
-        + "\n"
-        + match.group(2)
-        + tex_source[match.end():]
-    )
+    before_intro = placeholder_pattern.sub("\n", before_intro, count=1)
+
+    return before_intro + "\n\\vspace{1.0em}\n" + preface_tex + after_intro
 
 
 def inject_appendix(tex_source: str, appendix_tex: str) -> str:
