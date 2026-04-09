@@ -16,9 +16,8 @@
 4. Main model: singularity with displacement risk.
     - a. Infinite-horizon, discrete-time model.
     - b. Two agents: A representative household, who is the marginal investor, and AI owners who own private AI capital, and are not marginal investors in public stocks. 
-    - c. The AI owners can also be thought of as representing owners and capital that does not yet exist but **importantly, we do not explicitly model their life cycle**. 
     - c. Two publicly traded assets: AI stocks and non-AI stocks. AI stocks grow as a share of the economy with each singularity.
-    - d. The private AI capital and AI owners can also be thought of as unborn capital and future owners that do not yet exist, as in `spec/lit/GKP-2012.md`.
+    - d. The private AI capital and AI owners can also be thought of as future capital and future owners that do not yet exist, as in `spec/lit/GKP-2012.md`. But this is just an analogy. **Importantly, we do not explicitly model this entry dynamic and should not allow the reader to think that we do.**. 
     - e. The singularity may cause extinction, as in `spec/lit/Jones-2024-AERI.md`.
     - f. The relationship between price/dividend ratios and the singularity probability is studied quantitatively in a table with compelling magnitudes. The interaction with extinction risk is examined too.
 5. Extension section: closer look at market incompleteness and the singularity.
@@ -37,7 +36,7 @@
         - iv. A two-panel figure illustrates how price/div of AI stocks and the household's consumption growth in the singularity depend on the tax rate. It illustrates the baseline case where the deadweight costs make transfers ineffective, as well as a case where the singularity growth overcomes the deadweight costs. It must show that the singularity is catastrophic for the household absent transfers.
 6. The paper explains how it contributes relative to `spec/lit/GKP-2012.md`
     - a. It connects GKP's ideas to the AI singularity.
-    - b. It takes a closer look at how government transfers can affect displacement risk. GKP mention this phenomenon briefly.
+    - b. It takes a closer look at how government transfers can affect displacement risk, as discussed in GKP.
     - c. The characterization of the contribution is purposefully modest. The main insights about displacement risk and incomplete markets are already in GKP.
 
 ## II. Style Requirements
