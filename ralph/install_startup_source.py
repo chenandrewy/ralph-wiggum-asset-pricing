@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# How to run: python3 ralph/install-startup-source.py <startup-source>
+# How to run: python3 ralph/install_startup_source.py <startup-source>
 # Inputs: startup-source path from config-ralph.yaml, source directories under ralph/research-template/ or ralph-garage/check-direction/
 # Outputs: clears live paper/ and code/ and installs the selected startup baseline
 
@@ -58,7 +58,7 @@ def copy_live_dir(source_root: pathlib.Path, dirname: str) -> None:
 
 def main(argv: list[str]) -> int:
     if len(argv) != 2:
-        return fail("usage: python3 ralph/install-startup-source.py <startup-source>")
+        return fail("usage: python3 ralph/install_startup_source.py <startup-source>")
 
     raw_value = argv[1]
     try:

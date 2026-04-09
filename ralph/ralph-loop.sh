@@ -124,7 +124,7 @@ else
     log "--- wipe agent logs for fresh Ralph stretch from $CURRENT_BRANCH ---"
     clear_dir ralph-garage/agent-logs
     log "--- install startup baseline from $STARTUP_SOURCE ---"
-    python3 ralph/install-startup-source.py "$STARTUP_SOURCE" || {
+    python3 ralph/install_startup_source.py "$STARTUP_SOURCE" || {
         log "ERROR: could not install startup baseline from $STARTUP_SOURCE"; exit 1
     }
 fi
