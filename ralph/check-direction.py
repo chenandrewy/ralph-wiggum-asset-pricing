@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-# How to run: python3 ralph/check-spec-direction.py [--runs 5] [--base-ref HEAD] [--keep-worktrees]
+# How to run: python3 ralph/check-direction.py [--runs 5] [--base-ref HEAD] [--keep-worktrees]
 # Inputs: current git state, ralph/wipe.sh, ralph/author-plan.py, ralph/author-improve.py
-# Outputs: ralph-garage/check-spec-direction/run-XX/{paper.tex, paper.pdf}
+# Outputs: ralph-garage/check-direction/run-XX/{paper/, code/}
 
 from __future__ import annotations
 
@@ -15,11 +15,8 @@ from dataclasses import dataclass
 
 
 REPO_ROOT = pathlib.Path(__file__).resolve().parents[1]
-OUTPUT_DIR = REPO_ROOT / "ralph-garage" / "check-spec-direction"
-WORKTREES_ROOT = REPO_ROOT / "worktrees" / "check-spec-direction"
-LATEX_TEMPLATE_DIR = REPO_ROOT / "ralph" / "code-templates" / "latex"
-
-
+OUTPUT_DIR = REPO_ROOT / "ralph-garage" / "check-direction"
+WORKTREES_ROOT = REPO_ROOT / "worktrees" / "check-direction"
 @dataclass(frozen=True)
 class RunContext:
     index: int
@@ -50,28 +47,12 @@ def validate_inputs() -> None:
         REPO_ROOT / "ralph" / "author-plan.py",
         REPO_ROOT / "ralph" / "author-improve.py",
         REPO_ROOT / "spec" / "paper-spec.md",
-        LATEX_TEMPLATE_DIR,
     ]
     missing = [path for path in required_paths if not path.exists()]
     if missing:
         missing_str = ", ".join(str(path.relative_to(REPO_ROOT)) for path in missing)
         raise FileNotFoundError(f"missing required path(s): {missing_str}")
     run_cmd(["git", "rev-parse", "--show-toplevel"], cwd=REPO_ROOT, check=True)
-
-
-def reset_main_paper_dir() -> None:
-    paper_dir = REPO_ROOT / "paper"
-    if paper_dir.exists():
-        shutil.rmtree(paper_dir)
-    paper_dir.mkdir(parents=True, exist_ok=True)
-
-    for src_file in LATEX_TEMPLATE_DIR.rglob("*"):
-        if not src_file.is_file():
-            continue
-        rel_path = src_file.relative_to(LATEX_TEMPLATE_DIR)
-        dst_file = paper_dir / rel_path
-        dst_file.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(src_file, dst_file)
 
 
 def prepare_worktrees(base_ref: str, runs: int) -> list[RunContext]:
@@ -112,12 +93,17 @@ def run_single(context: RunContext) -> tuple[int, bool, str]:
             return context.index, False, " ".join(cmd)
 
     paper_src_dir = context.worktree_path / "paper"
+    code_src_dir = context.worktree_path / "code"
     if not (paper_src_dir / "paper.tex").is_file():
         return context.index, False, "paper/paper.tex missing after author-improve"
 
-    # Copy the entire paper/ directory so exhibits and other assets are available for the build
     run_dir = OUTPUT_DIR / f"run-{context.index:02d}"
-    shutil.copytree(paper_src_dir, run_dir)
+    run_dir.mkdir(parents=True, exist_ok=True)
+    shutil.copytree(paper_src_dir, run_dir / "paper")
+    if code_src_dir.exists():
+        shutil.copytree(code_src_dir, run_dir / "code")
+    else:
+        (run_dir / "code").mkdir()
     return context.index, True, ""
 
 
@@ -125,6 +111,7 @@ LATEX_INTERMEDIATE_EXTS = [".aux", ".log", ".out", ".toc", ".lof", ".lot", ".fls
 
 
 def build_pdf(run_dir: pathlib.Path) -> tuple[pathlib.Path, bool, str]:
+    paper_dir = run_dir / "paper"
     # pdflatex → biber → pdflatex × 2  (resolves citations and cross-refs)
     steps = [
         ["pdflatex", "-interaction=nonstopmode", "-halt-on-error", "paper.tex"],
@@ -133,7 +120,7 @@ def build_pdf(run_dir: pathlib.Path) -> tuple[pathlib.Path, bool, str]:
         ["pdflatex", "-interaction=nonstopmode", "-halt-on-error", "paper.tex"],
     ]
     for cmd in steps:
-        result = run_cmd(cmd, cwd=run_dir)
+        result = run_cmd(cmd, cwd=paper_dir)
         if result.returncode != 0:
             label = cmd[0]
             return run_dir, False, result.stdout[-500:] if result.stdout else f"{label} failed"
@@ -141,16 +128,17 @@ def build_pdf(run_dir: pathlib.Path) -> tuple[pathlib.Path, bool, str]:
 
 
 def cleanup_latex_intermediates(run_dir: pathlib.Path) -> None:
+    paper_dir = run_dir / "paper"
     for ext in LATEX_INTERMEDIATE_EXTS:
-        for f in run_dir.glob(f"*{ext}"):
+        for f in paper_dir.glob(f"*{ext}"):
             f.unlink()
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Run several isolated AuthorPlan+AuthorImprove trials and copy back only paper.tex outputs.",
+        description="Run several isolated AuthorPlan+AuthorImprove trials and export candidate paper/ and code/ states.",
     )
-    parser.add_argument("--runs", type=int, default=3, help="number of trials to run (default: 3)")
+    parser.add_argument("--runs", type=int, default=5, help="number of trials to run (default: 5)")
     parser.add_argument("--base-ref", default="HEAD", help="git ref to seed each worktree from (default: HEAD)")
     parser.add_argument(
         "--keep-worktrees",
@@ -172,8 +160,6 @@ def main() -> int:
         cwd=REPO_ROOT,
         check=True,
     ).stdout.strip()
-    reset_main_paper_dir()
-
     if OUTPUT_DIR.exists():
         shutil.rmtree(OUTPUT_DIR)
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -187,7 +173,7 @@ def main() -> int:
             for future in concurrent.futures.as_completed(futures):
                 index, ok, detail = future.result()
                 if ok:
-                    print(f"run-{index:02d}: wrote ralph-garage/check-spec-direction/run-{index:02d}/")
+                    print(f"run-{index:02d}: wrote ralph-garage/check-direction/run-{index:02d}/")
                 else:
                     failures.append((index, detail))
                     print(f"run-{index:02d}: failed ({detail})", file=sys.stderr)
@@ -198,7 +184,7 @@ def main() -> int:
     if failures:
         return 1
 
-    # Build PDFs — each run has its own subdirectory with the full paper/ contents
+    # Build PDFs inside each run's paper/ subdirectory for preview purposes.
     run_dirs = sorted(OUTPUT_DIR.glob("run-*/"))
     if run_dirs:
         print(f"\nbuilding {len(run_dirs)} PDF(s)...")
@@ -206,9 +192,9 @@ def main() -> int:
             run_dir, ok, detail = build_pdf(run_dir)
             label = run_dir.name
             if ok:
-                print(f"  {label}/paper.pdf: ok")
+                print(f"  {label}/paper/paper.pdf: ok")
             else:
-                print(f"  {label}/paper.pdf: build failed", file=sys.stderr)
+                print(f"  {label}/paper/paper.pdf: build failed", file=sys.stderr)
             cleanup_latex_intermediates(run_dir)
 
     return 0

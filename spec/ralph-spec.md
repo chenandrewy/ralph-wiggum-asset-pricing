@@ -4,8 +4,13 @@
 
 Define the Ralph loop contract for improving the paper and recording current test evidence on a dedicated Ralph branch.
 
+This contract also defines an optional manual direction-selection stage that may run before a Ralph stretch begins.
+
 ## Structure
 
+- The human-facing entry points are lightweight shell scripts at the repo root.
+- `go-ralph-go.sh` runs the main Ralph loop by calling `ralph/ralph-loop.sh`.
+- A separate direction-selection entry point may run before `go-ralph-go.sh` and does not itself start the Ralph loop.
 - The main control flow lives in `ralph/ralph-loop.sh`.
 - The bash loop should stay minimal and explicit.
 - Config loading and validation is handled by `ralph/load-config.py`.
@@ -17,6 +22,8 @@ Define the Ralph loop contract for improving the paper and recording current tes
   - `ralph/run-tests.py`
   - `ralph/run-referees.py`
   - `ralph/commit-iteration.py`
+- Direction-selection tooling may also use:
+  - `ralph/check-direction.py`
 
 ## Author Working Directories
 
@@ -46,6 +53,25 @@ The author steps (`author-plan.py`, `author-improve.py`) may modify files in the
 - `config-ralph.yaml` may optionally specify a `run-note` for internal traceability in loop logs and config history.
 - `config-ralph.yaml` may optionally enable a Claude quota preflight with `quota-preflight` and may set its stop threshold with `claude-5h-utilization-limit`.
 
+## Direction Selection Stage
+
+- Ralph may optionally begin with a manual direction-selection stage before `go-ralph-go.sh` is run.
+- The purpose of this stage is to sample several plausible initial drafts from the current spec before the main loop starts improving one chosen draft.
+- This stage is outside the Ralph iteration lifecycle and outside the Ralph commit count.
+- The direction-selection stage may run several isolated preliminary author runs in parallel from the current git state.
+- Each preliminary run executes:
+  1. `ralph/author-plan.py`
+  2. `ralph/author-improve.py`
+- Each preliminary run writes its candidate outputs under `ralph-garage/check-direction/`.
+- The canonical unit of selection is the full author working state produced by a preliminary run:
+  - `paper/`
+  - `code/`
+- After preliminary runs finish, the human chooses one candidate.
+- The chosen candidate's `paper/` and `code/` directories are copied into the main working tree before the Ralph stretch begins.
+- The direction-selection stage does not create `rloop-*` commits.
+- The Ralph startup commit on `ralph/run` records the chosen initial direction after that candidate has been promoted into the main working tree.
+- Preliminary outputs under `ralph-garage/check-direction/` are transient artifacts, not canonical source files.
+
 ## Test Artifact Preparation
 
 - Test artifact preparation consists of:
@@ -61,10 +87,12 @@ The author steps (`author-plan.py`, `author-improve.py`) may modify files in the
 - `ralph/run` is a reusable working branch label, not a one-time unique run identifier.
 - Manual config, spec, or tooling changes may be committed directly on `main` between Ralph stretches.
 - Ralph work should be merged back into `main` with a non-fast-forward merge so each Ralph stretch remains visible in git history.
+- The optional direction-selection stage runs before Ralph branch setup for a new stretch and does not itself require switching to `ralph/run`.
 - When Ralph is started from `main`, it treats that startup as a fresh Ralph stretch and wipes old files from `ralph-garage/agent-logs/` before any pre-loop test or referee phase begins.
 - When Ralph is started from `ralph/run`, it treats that startup as a continuation and does not wipe the full agent log directory at startup.
 - On a fresh Ralph stretch, branch setup may prompt the human to run `ralph/wipe.sh` before any pre-loop test or author step begins.
 - On a fresh Ralph stretch, Ralph creates one startup commit on `ralph/run` before any pre-loop test or author step begins to record the initial contents of `paper/` and `code/`.
+- If the optional direction-selection stage was used, that startup commit records the chosen candidate state.
 
 ## Manual Intervention Model
 
