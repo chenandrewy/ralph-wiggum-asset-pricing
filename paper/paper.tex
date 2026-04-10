@@ -65,7 +65,7 @@ Our paper builds most directly on \citet{GKP2012}, who develop a general-equilib
 
 \citet{Jones2024} studies the trade-off between AI-driven growth and existential risk, showing that bounded utility functions make agents conservative about extinction even when consumption gains are enormous. We incorporate his extinction risk into our pricing framework and show that it interacts with displacement in a countervailing way, attenuating rather than amplifying the valuation premium.
 
-\citet{KoganPapanikolaou2014} and \citet{KoganPapanikolaouSeruStoffman2020} show that technology shocks and creative destruction generate cross-sectional return differences and inequality through firms' heterogeneous exposures. \citet{Knesl2023} provides direct empirical evidence that automation-driven displacement commands a risk premium. The rare disasters literature \citep{Barro2006,Wachter2013} supplies the methodological foundation for pricing discrete catastrophic events, and \citet{PastorVeronesi2009} study how technological revolutions affect stock prices through productivity uncertainty.
+\citet{KoganPapanikolaou2014} and \citet{KoganPapanikolaouStoffman2020} show that technology shocks and creative destruction generate cross-sectional return differences and inequality through firms' heterogeneous exposures. \citet{Knesl2023} provides direct empirical evidence that automation-driven displacement commands a risk premium. On the macroeconomics of AI, \citet{AghionJonesJones2019} study whether AI can sustain exponential growth, while \citet{Acemoglu2024} argues that the aggregate productivity gains from AI may be more modest than commonly supposed---a counterpoint that makes the singularity scenario we model an informative limiting case. The rare disasters literature \citep{Barro2006,Wachter2013} supplies the methodological foundation for pricing discrete catastrophic events, and \citet{PastorVeronesi2009} study how technological revolutions affect stock prices through productivity uncertainty.
 
 %% ============================================================
 %% Section 2: Model
@@ -145,6 +145,8 @@ A^j \;\equiv\; \beta(1+g)^{1-\gamma}\left[(1-p) + p(1-\xi)(1+\eta)^{-\gamma}\phi
 \end{equation}
 When $A^j \geq 1$, the SDF-weighted expected dividend growth exceeds the discount rate and the geometric pricing sum diverges---the asset's price is infinite. Intuitively, the hedging value of the asset is so extreme that no finite price can clear the market. The baseline calibration satisfies $A^j < 1$ for both assets. As we discuss in Section~\ref{sec:ext2}, sufficiently severe displacement can violate this condition, which itself motivates the role of government transfers.
 \end{remark}
+
+The closed-form expressions in Proposition~\ref{prop:pd-ratios} rely on an approximation: the post-singularity P/D ratio is treated as equal to the pre-singularity ratio. This is exact when $\Delta\theta \to 0$ (the AI share does not jump) and accurate for small $\Delta\theta$, since the dividend growth factors shift only at order $O(\Delta\theta)$. For the baseline $\Delta\theta = 0.2$, the approximation error is small. The full derivation is in Appendix~\ref{app:proof-pd}.
 
 The key economic content of Proposition~\ref{prop:pd-ratios} is in the comparison of $\Gamma^{AI}$ and $\Gamma^{N}$. Since $\Delta\theta > 0$, AI stocks' dividends grow faster than aggregate consumption upon a singularity ($\Gamma^{AI} > 1+\eta$), while non-AI stocks' dividends grow more slowly ($\Gamma^{N} < 1+\eta$), shrinking as a share of the economy. Combined with the household's high marginal utility in singularity states (due to displacement, $\phi(1+\eta) < 1$ when $\phi$ is sufficiently small), AI stocks' payoffs are especially valuable, pushing their P/D ratio above that of non-AI stocks. This is the hedging channel: AI stocks pay off precisely when the household's consumption falls, making them a partial hedge against displacement.
 
@@ -227,9 +229,15 @@ We model this as follows. The government imposes a tax rate $\tau \in [0,1)$ on 
 c^H_{post} = \phi \, \alpha \, (1+\eta) \, C_t \, (1+g) + \tau \, (1 - \delta \tau) \, (1 - \phi\alpha) \, (1+\eta) \, C_t \, (1+g). \label{eq:transfer-consumption}
 \end{equation}
 
-The first term is the household's displaced consumption. The second is the net transfer: a fraction $\tau$ of the AI surplus, reduced by the deadweight cost $\delta \tau$.
+The first term is the household's displaced consumption. The second is the net transfer: a fraction $\tau$ of the AI surplus, reduced by the deadweight cost $\delta \tau$. Note that $(1 - \phi\alpha)$ represents the AI owners' share of post-singularity aggregate consumption; this expression uses the household's consumption share $\alpha$ rather than the AI dividend share $\theta$, because the transfer is levied on the consumption allocation, not on publicly traded dividends.
 
-To compute AI stock valuations under transfers, note that post-transfer household consumption can be written as $\phi_\text{eff} \cdot \alpha \cdot (1+\eta)(1+g) C_t$, where $\phi_\text{eff} = \phi + \tau(1-\delta\tau)(1-\phi\alpha)/\alpha$ is the effective displacement parameter. The P/D formula from Proposition~\ref{prop:pd-ratios} applies with $\phi$ replaced by $\phi_\text{eff}$.
+To compute AI stock valuations under transfers, factor equation~\eqref{eq:transfer-consumption} as $c^H_{post} = \phi_\text{eff} \cdot \alpha \cdot (1+\eta)(1+g) C_t$, where
+%
+\begin{equation}
+\phi_\text{eff} \;=\; \phi + \frac{\tau(1-\delta\tau)(1-\phi\alpha)}{\alpha} \label{eq:phi-eff}
+\end{equation}
+%
+is the effective displacement parameter. This follows directly from dividing \eqref{eq:transfer-consumption} by $\alpha(1+\eta)(1+g)C_t$: the first term contributes $\phi$ and the transfer term contributes the remainder. Since $\phi_\text{eff}$ enters the SDF in the same way as $\phi$, the P/D formula from Proposition~\ref{prop:pd-ratios} applies with $\phi$ replaced by $\phi_\text{eff}$.
 
 In standard settings (moderate $\eta$), the deadweight costs eat into the transfer and the household gains little. But in a singularity with large $\eta$, aggregate output grows enormously. The transfer base---AI owners' surplus---grows with $\eta$, while the deadweight cost rate is fixed. The ratio of post-transfer to pre-transfer household consumption in the singularity state is independent of the productivity jump $\eta$:
 %

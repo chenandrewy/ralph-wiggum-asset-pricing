@@ -150,7 +150,7 @@ theme_paper <- theme_bw(base_size = 22) +
     axis.title = element_text(size = 20),
     plot.title = element_text(size = 21),
     panel.grid.minor = element_blank(),
-    panel.grid.major = element_line(color = "gray35")
+    panel.grid.major = element_line(color = "gray20")
   )
 
 scenario_labels <- c(
@@ -168,7 +168,7 @@ scenario_colors <- c("Baseline" = "#B22222", "Large singularity" = "#1B4F99")
 # Compute y-axis bounds for Panel A: tighten to data range
 pd_data_a <- df_ext %>% filter(!is.na(pd_ai) & tau <= 0.40)
 y_min_a <- 7
-y_cap_a <- 20
+y_cap_a <- 19
 
 # Find the tau value where the large-singularity line exits the capped region
 large_sing_data <- pd_data_a %>% filter(scenario == "Large singularity")

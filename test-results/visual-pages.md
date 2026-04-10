@@ -1,31 +1,27 @@
 # tests/visual-pages.py
-Started: 2026-04-09 21:20:47 EDT
-Runtime: 38s
-[ralph-garage/agent-logs/20260409T212047.333018-0400_visual-pages_claude_opus.log](../ralph-garage/agent-logs/20260409T212047.333018-0400_visual-pages_claude_opus.log)
+Started: 2026-04-09 21:34:52 EDT
+Runtime: 48s
+[ralph-garage/agent-logs/20260409T213452.282323-0400_visual-pages_claude_opus.log](../ralph-garage/agent-logs/20260409T213452.282323-0400_visual-pages_claude_opus.log)
 
 # visual-pages
-VERDICT: PASS
-REASON: All pages have visible page numbers, figures and tables are well formatted, no overflow or broken references detected, and the paper is 15 pages (within the 20-page limit).
+VERDICT: FAIL
+REASON: Page 8 is nearly empty with only one short paragraph, wasting most of the page.
 
 ## Page Numbers
-- All 15 pages display a visible, centered page number at the bottom.
-- Page 1 through 15 are numbered consecutively.
-
-## Figures and Tables
-- **Figure 1 (page 2):** AI valuations line chart. Clean axis labels, legible legend distinguishing NASDAQ Composite and S&P 500. Readable at rendered size.
-- **Table 1 (page 8):** Price-dividend ratios table. Cleanly formatted with horizontal rules separating parameter groups. Column headers and values are aligned and readable. Parameter notes below the table are clear.
-- **Figure 2 (page 12):** Two-panel extension figure (AI Stock Valuations and Household Consumption). Both panels have clear axis labels, legible legends distinguishing baseline and large-singularity scenarios. Readable at rendered size.
-
-## Formatting Issues
-- No overflowing text, overfull hboxes, or text running into margins detected on any page.
-- No broken references (no "??" placeholders visible).
-- No missing figures or tables.
-- Equations are properly numbered (equations 1 through 10 visible).
-- Footnotes render correctly.
-- References section (pages 14-15) is properly formatted in standard academic style.
+All 16 pages have visible, centered page numbers at the bottom. PASS.
 
 ## Paper Length
-- The paper is 15 pages, well within the 20-page spec limit.
+16 pages, within the 20-page spec limit. PASS.
 
-## Exhibit Count
-- 3 exhibits total (Figure 1, Table 1, Figure 2), within the 6-exhibit limit.
+## Figures and Tables
+- **Figure 1 (page 2):** AI valuations chart is readable with clear legend distinguishing NASDAQ Composite and S&P 500. Axes are labeled and legible.
+- **Table 1 (page 9):** Price-dividend ratios table is cleanly formatted with clear column headers, horizontal rules separating parameter groups, and a descriptive note below.
+- **Figure 2 (page 13):** Two-panel extension figure. Both panels are readable with labeled axes and a legend. The legend distinguishes baseline and large-singularity cases.
+
+All exhibits are nicely formatted and readable. PASS.
+
+## Formatting Issues
+- **Page 8 (major):** This page contains only a single short paragraph (~7 lines) at the top, with the entire remainder of the page blank. This is a significant layout problem -- the Discussion subsection (2.3) that begins on page 7 ends very early on page 8, leaving a large gap before Section 3 starts on page 9. A `\clearpage` or float placement may be forcing the section break. This wastes nearly a full page and looks unprofessional.
+- **Page 16:** The references page is sparse (only ~40% filled), but this is acceptable for a final page.
+- No overflowing text, broken references, or missing figures were found.
+- No overfull hbox issues are visually apparent.

@@ -1,47 +1,44 @@
 # tests/theory-clarity.py
-Started: 2026-04-09 21:20:47 EDT
-Runtime: 1m 56s
-[ralph-garage/agent-logs/20260409T212047.313026-0400_theory-clarity_claude_opus.log](../ralph-garage/agent-logs/20260409T212047.313026-0400_theory-clarity_claude_opus.log)
+Started: 2026-04-09 21:34:52 EDT
+Runtime: 1m 52s
+[ralph-garage/agent-logs/20260409T213452.252463-0400_theory-clarity_claude_opus.log](../ralph-garage/agent-logs/20260409T213452.252463-0400_theory-clarity_claude_opus.log)
 
 # theory-clarity
 VERDICT: PASS
-REASON: Model assumptions are introduced in clearly labeled setup paragraphs with the most critical expressions in display math; minor presentation improvements are possible but do not impair clarity.
+REASON: All key model assumptions are introduced in clearly labeled setup paragraphs with the most critical expressions in display math; prose assumptions appear at or near paragraph/bullet starts.
 
-## Key items identified
+## Key Items Identified
 
-### Should appear in display math (and do)
-1. Aggregate consumption growth: $C_{t+1} = (1+g)C_t$ — eq (1), Section 2.1
-2. Displacement rule: $\alpha_{t+1} = \phi\,\alpha_t$ — eq (4), Section 2.1
-3. CRRA utility $U_0^H$ — eq (5), Section 2.1
-4. P/D ratios for AI and non-AI stocks — eqs (6)–(7), Proposition 1
-5. Existence condition $A^j < 1$ — eq (7), Remark 1
-6. Post-transfer consumption — eq (8), Section 4.2
-7. Transfer ratio — eq (9), Section 4.2
+### Display math in main text (all present)
+1. Aggregate consumption growth $C_{t+1} = (1+g)C_t$ — Eq. 1
+2. Displacement rule $\alpha_{t+1} = \phi\alpha_t$ — Eq. 2
+3. CRRA utility — Eq. 3
+4. Existence condition $A^j < 1$ — Eq. 5
+5. Post-transfer consumption — Eq. 6
+6. Effective displacement $\phi_\text{eff}$ — Eq. 7
+7. Transfer consumption ratio — Eq. 8
 
-### Could benefit from display math but acceptable in current form
-8. Household consumption share $c_t^H = \alpha_t C_t$ — prose, line 86 (simple definition, immediately follows eq 1)
-9. $\Gamma^{AI}$ and $\Gamma^{N}$ dividend growth factors — inline in Proposition 1's "where" clause (clearly set off)
-10. Effective displacement $\phi_\text{eff}$ — prose, line 232 (used to connect transfers to P/D formula)
+### Prose assumptions (all at paragraph/bullet starts)
+A. Household share $c_t^H = \alpha_t C_t$ — opens sentence after Eq. 1
+B. AI dividend share $D_t^{AI} = \theta_t C_t$ and expansion rule — opens Assets bullet
+C. Singularity probability $p$ and extinction probability $\xi$ — opens Singularity paragraph
+D. Market incompleteness (restricted equity) — opens its own paragraph after asset bullets
+E. Veto cost and extinction normalization — opens Section 4.1 setup
+F. Transfer tax $\tau$ and deadweight cost $\delta\tau$ — opens Section 4.2 setup
 
-### Prose assumptions (correctly placed at/near paragraph starts)
-11. Singularity probability $p$ — opens the Singularity paragraph (line 89)
-12. Extinction probability $\xi$ — introduced in the singularity enumeration (line 91)
-13. AI stock dividends $D_t^{AI} = \theta_t C_t$ — opens AI stocks bullet (line 106)
-14. Market incompleteness — stated in its own sentences at end of Assets paragraph (line 110)
-15. Positive singularity $\alpha_{t+1} = \min(1, \alpha_t/\phi)$ — opens Extension 1 setup (line 201)
-16. Veto mechanism — opens its own paragraph (line 202)
-17. Transfer parameters $\tau$, $\delta$ — open the transfers paragraph (line 224)
+### Derived quantities defined inside propositions
+G. Dividend growth factors $\Gamma^{AI}$, $\Gamma^{N}$ — defined in the "where" clause of Proposition 1
 
-## Section-level findings
+## Section-Level Findings
 
-**Section 2.1 (Setup):** Well-organized with four labeled paragraphs (Consumption, Singularity, Assets, Preferences). All key parameters ($g$, $p$, $\phi$, $\eta$, $\xi$, $\theta$, $\Delta\theta$, $\gamma$, $\beta$) are introduced before any results. The productivity jump $\eta$ and $\theta$-evolution rule appear mid-enumeration/mid-bullet, but within structured list environments where the placement is natural and clear.
+**Section 2.1 (Setup):** Well-organized. Four labeled paragraphs (Consumption, Singularity, Assets, Preferences) each introduce their assumptions clearly. The most critical expressions (Eqs. 1–3) are in display math. Prose assumptions (items A–D) all appear at or near the start of their paragraph or bullet. The productivity boost $(1+\eta)$ and AI share expansion $\Delta\theta$ are introduced inline in structured lists, which is appropriate for their role.
 
-**Section 2.2 (Equilibrium prices):** P/D ratios are in display math. The $\Gamma$ factors are defined in the "where" clause of Proposition 1 rather than as standalone display equations; this is a minor presentation choice that does not impair readability. The existence condition gets its own Remark with display math.
+**Section 2.2 (Equilibrium prices):** The dividend growth factors $\Gamma^{AI}$ and $\Gamma^{N}$ are defined only inside Proposition 1's "where" clause. These are derived quantities (following from $\theta$, $\Delta\theta$, and $\eta$, all previously defined), not new model assumptions, so this is acceptable. The discussion paragraph after Proposition 1 (line 151) effectively explains their economic content.
 
-**Section 2.3 (Discussion):** Recalls earlier assumptions; does not introduce new ones. No issues.
+**Section 2.3 (Discussion):** No new model assumptions introduced; recalls earlier ones appropriately.
 
-**Section 3 (Quantitative Analysis):** Calibration parameters are clearly listed in prose. No new model assumptions.
+**Section 3 (Quantitative Analysis):** Calibration values are stated clearly at the start of the discussion paragraph. No new assumptions.
 
-**Section 4.1 (Extension 1 — Veto):** The positive singularity, veto mechanism, and extinction normalization are introduced in setup paragraphs before Proposition 3. Clear.
+**Section 4.1 (Extension 1 — Veto):** The positive singularity rule ($\alpha_{t+1} = \min(1, \alpha_t/\phi)$) and the extinction utility normalization are introduced in the opening setup prose before Proposition 3, at or near paragraph starts.
 
-**Section 4.2 (Extension 2 — Transfers):** Transfer parameters open the paragraph, post-transfer consumption is in display math. The effective displacement $\phi_\text{eff}$ is defined in prose (line 232) rather than display math; giving it a numbered equation would aid cross-referencing but its current placement is adequate.
+**Section 4.2 (Extension 2 — Transfers):** The transfer mechanism ($\tau$, $\delta\tau$) is introduced in a setup paragraph before the display equations. The post-transfer consumption (Eq. 6), $\phi_\text{eff}$ (Eq. 7), and transfer ratio (Eq. 8) all appear in display math. The progression from setup prose to display equations is clear and well-sequenced.

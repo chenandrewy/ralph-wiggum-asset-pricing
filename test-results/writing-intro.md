@@ -1,52 +1,54 @@
 # tests/writing-intro.py
-Started: 2026-04-09 21:20:47 EDT
-Runtime: 2m 43s
-[ralph-garage/agent-logs/20260409T212047.313649-0400_writing-intro_claude_opus.log](../ralph-garage/agent-logs/20260409T212047.313649-0400_writing-intro_claude_opus.log)
+Started: 2026-04-09 21:34:52 EDT
+Runtime: 3m 15s
+[ralph-garage/agent-logs/20260409T213452.252419-0400_writing-intro_claude_opus.log](../ralph-garage/agent-logs/20260409T213452.252419-0400_writing-intro_claude_opus.log)
 
 # writing-intro
-VERDICT: PASS
-REASON: The introduction clearly conveys all main arguments to skimmers, flows well with smooth paragraph-to-paragraph transitions, and every promised analysis is fulfilled in the body.
+VERDICT: FAIL
+REASON: Main arguments are not all skimmable and several transitions break the introduction's logical arc.
 
-## Detailed Findings
+## Subagent Results
 
-### 1. Clarity of Main Arguments to a Skimming Reader — PASS
+### 1. Clarity of Main Arguments to a Skimming Reader — FAIL
 
-All five main arguments from the paper specification are clearly discernible:
+The introduction handles three of five main arguments well: (b) incomplete markets are key, (c) financial market solutions are under-discussed, and (e) incomplete markets distort AI development. Two arguments have problems:
 
-- **(a) Hedging motive for AI valuations:** Stated directly in paragraph 2 ("Part of this premium, we argue, reflects a hedging motive"). Unmissable even on a fast skim.
-- **(b) Incomplete markets are key:** Same paragraph: "If markets were complete, investors could insure against this risk directly." The counterfactual is plain and proximate to the core claim.
-- **(c) Financial market solutions under-discussed but limited by frictions:** Paragraph 3 opens with "the role of financial markets in hedging displacement risk remains under-explored"; paragraph 2 covers frictions ("illiquidity, restricted ownership, the non-existence of future capital").
-- **(d) Singularity abundance overcomes frictions:** Paragraph 6: "the resource base becomes so enormous that even grossly inefficient redistribution delivers large consumption gains." This is the least conspicuous of the five — framed around transfers rather than frictions directly — but the substance is present.
-- **(e) Incomplete markets distort AI development:** Paragraph 5 is dedicated to this point, stating it explicitly.
+- **Argument (a): Hedging motive.** The hedging claim is stated clearly ("Part of this premium, we argue, reflects a hedging motive"), but the introduction does not distinguish the *negative* singularity from the singularity in general at the point where the claim is first made. A skimming reader may not realize the hedge is specifically against the negative outcome until several paragraphs later.
 
-### 2. Introduction Flow — PASS
+- **Argument (d): Market frictions can be overcome in a singularity due to abundance of resources.** This argument appears in paragraph 5 but is framed entirely as a point about government transfers and redistribution policy, not as a claim about market frictions being overcome. The logical link — that the singularity's resource abundance resolves the incompleteness problem — is not stated directly enough to survive skimming. A reader scanning for this core claim would map it only to the redistribution discussion.
 
-The structure follows a clean arc: **empirical motivation → mechanism → quantitative results → extensions → meta-point → lit review**. Key observations:
+### 2. Introduction Flow — FAIL
 
-- The opening hook (NASDAQ vs. S&P 500 figure) is immediate and effective.
-- Transition from motivation to mechanism ("Part of this premium, we argue") is direct.
-- The pivot from pricing results to broader distortions ("Beyond these pricing effects") flows naturally.
-- The extension paragraphs (veto, then transfers) are well-ordered, connected by "if blocking AI is costly."
-- The AI-authorship paragraph earns its place by following the displacement economics, so the reader understands the connection rather than reading it as a gimmick.
-- The lit review is concise, well-placed at the end, and organized by relevance.
+Two structural problems and one weak transition:
 
-Minor observations (not FAIL-level): (i) extinction risk in paragraph 4 appears somewhat abruptly before the model is introduced; (ii) the "under-explored" claim in paragraph 3 sits next to a close predecessor (GKP 2012), creating mild tension.
+- **Paragraph 3 re-motivates after the mechanism is already introduced.** The opening of P3 ("Although discussions of AI risk focus overwhelmingly on technology policy and labor markets...") reads like a motivation paragraph that should have appeared *before* the hedging mechanism was stated in P2. Re-motivating the gap in the literature after the reader has already accepted the paper's premise stalls momentum. The pivot to GKP is also compressed into a single sentence, making the intellectual genealogy feel rushed.
 
-### 3. Promises Fulfilled — PASS
+- **The AI-authorship paragraph (P7) breaks the arc.** After the economic argument reaches a natural conclusion in P6 (singularity growth makes transfers effective), P7 pivots to the paper's own production as an illustration of displacement. The connective tissue ("The displacement risk we model... extends to the nature of productive work itself") is a thematic parallel, not a logical extension. This disrupts the arc right before the literature review. The material might work better as a footnote or brief acknowledgment rather than a full closing paragraph.
 
-Every substantive promise or implication in the Introduction is delivered in the analysis sections:
+- **P4 → P5 transition is abrupt.** The jump from quantitative pricing results to "beyond these pricing effects" signals a pivot but lacks a bridging sentence explaining why the pricing model also speaks to development decisions.
 
-| Promise | Where Fulfilled |
-|---|---|
-| Hedging channel explains AI valuation premium | Proposition 1, Table 1 |
-| P/D ratios ~6x for AI vs. non-AI stocks | Table 1 (p=1%, no extinction) |
-| Extinction risk attenuates the gap | Proposition 2(iii), Table 1 |
-| Market incompleteness is essential | Proposition 3(ii), Section 2.3 Discussion |
-| Household may rationally block socially efficient AI | Proposition 3(i), Extension 1 |
-| Complete markets eliminate veto distortion | Proposition 3(ii) |
-| Transfers effective when singularity growth is large | Extension 2, Figure 2 |
-| "Same growth that makes displacement catastrophic also makes transfers effective" | Figure 2 panels (a) and (b) |
-| Comparative statics (displacement severity, singularity probability) | Proposition 2(i)–(ii) |
-| AI-authorship as illustration of displacement | Stated as rhetorical device; consistent with spec |
+Other transitions work well, particularly P5 → P6 ("If blocking AI is costly, another policy lever is redistribution").
 
-No promised analysis is missing.
+### 3. Promises Fulfilled in Body — PASS
+
+All 15 identified promises from the Introduction are delivered in the paper body:
+
+| Promise | Status |
+|---------|--------|
+| AI valuation figure (NASDAQ vs. S&P) | PASS |
+| Hedging motive formalized in model | PASS |
+| Complete markets eliminates premium | PASS |
+| Closed-form P/D ratios | PASS |
+| AI P/D up to ~6× non-AI | PASS |
+| Extinction risk attenuates spread | PASS |
+| Comparative statics | PASS |
+| Household vetoes socially efficient AI | PASS |
+| Veto disappears under complete markets | PASS |
+| Transfers effective under singularity growth | PASS |
+| Two-panel figure for transfers | PASS |
+| "Singularity economics" framing | PASS |
+| AI-produced paper as self-illustration | PASS |
+| GKP as foundational framework | PASS |
+| Existence condition / infinite price | PASS |
+
+Minor editorial notes (not failures): Proposition 2(ii) qualifies the singularity-probability result as requiring "γ sufficiently large," which the introduction states without this qualifier. The "6×" ratio appears only at p = 1%, while the introduction says "across plausible singularity probabilities."
