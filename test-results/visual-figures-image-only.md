@@ -1,39 +1,31 @@
 # tests/visual-figures-image-only.py
-Started: 2026-04-09 20:21:48 EDT
-Runtime: 1m 20s
-[ralph-garage/agent-logs/20260409T202148.446435-0400_visual-figures-image-only_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260409T202148.446435-0400_visual-figures-image-only_claude_claude-opus-4-6.log)
+Started: 2026-04-09 20:39:27 EDT
+Runtime: 1m 26s
+[ralph-garage/agent-logs/20260409T203927.603111-0400_visual-figures-image-only_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260409T203927.603111-0400_visual-figures-image-only_claude_claude-opus-4-6.log)
 
 # visual-figures-image-only
 
 VERDICT: FAIL
 
-REASON: Both figures have contrast or readability defects — fig-ai-valuations has a clipped y-axis label and low-contrast grid lines; fig-extension-panels has a truncated legend entry and a low-contrast reference line.
+REASON: fig-extension-panels Panel (b) has a low-contrast reference line and truncated legend text; fig-ai-valuations passes all requirements.
 
 ---
 
 ## fig-ai-valuations
 
-VERDICT: FAIL
+VERDICT: PASS
 
-REASON: The y-axis top tick label ("500") is clipped at the plot boundary, and grid lines have low contrast.
+REASON: Both series are clearly readable, strongly contrasted, easily distinguishable, and the data fills the plot area efficiently.
 
-### Full figure (single panel) — Normalized price indices for NASDAQ Composite vs. S&P 500
+### Single Panel
 
-**Readability: FAIL**
-- The y-axis tick label "500" at the top-left is clipped/cut off by the plot boundary.
-- All other text (axis titles, x-axis tick labels, legend) is readable.
-
-**Distinguishability: PASS**
-- NASDAQ Composite (solid blue) and S&P 500 (dashed dark-red) are clearly differentiated in both color and line style.
-
-**Contrast: FAIL**
-- Grid lines are rendered in light gray with noticeably lower contrast than data lines and axis elements.
-
-**Use of space: PASS**
-- Y-axis runs ~100–500 matching the data range; x-axis runs 2015–2026. No large empty regions.
-
-**Narrative clarity: PASS**
-- The caption and figure together clearly convey that AI/tech-heavy stocks (NASDAQ) have dramatically outpaced the broader market (S&P 500), with the gap widening sharply after ~2023.
+| Requirement | Assessment |
+|---|---|
+| Readability | PASS -- all labels, tick marks, and legend text are legible at adequate font size |
+| Distinguishability | PASS -- solid blue vs. dashed dark red with distinct colors and line types |
+| Contrast | PASS -- both lines are dark and thick against the light background |
+| Use of space | PASS -- y-axis spans 100-500 matching the data range; x-axis spans 2015-2026 matching the data range |
+| Narrative clarity | PASS -- the divergence between AI-exposed and broad-market valuations is immediately apparent |
 
 ---
 
@@ -41,35 +33,29 @@ REASON: The y-axis top tick label ("500") is clipped at the plot boundary, and g
 
 VERDICT: FAIL
 
-REASON: Panel (b) has a truncated legend entry (missing closing parenthesis) and a low-contrast "No change" reference line.
+REASON: The "No change" reference line in Panel (b) is light gray with low contrast, and Panel (b)'s legend text is truncated (missing closing parenthesis).
 
-### Panel (a): AI Stock Valuations
+### Panel (a) -- AI Stock Valuations
 
-**Readability: PASS**
-- Title, axis labels, tick labels, legend, and annotation are all legible.
+| Requirement | Assessment |
+|---|---|
+| Readability | PASS -- title, axis labels, tick labels, and annotation are all legible with adequate font sizes |
+| Distinguishability | PASS -- Baseline (solid red) and Large singularity (dashed blue) are clearly distinct in color and line style |
+| Contrast | PASS -- both lines are dark and high-contrast against the white background |
+| Use of space | PASS -- y-axis runs 5-25 matching data range; x-axis runs 0%-40% well-filled |
+| Narrative clarity | PASS -- clear that higher tax rates compress P/D ratios, with the large-singularity scenario showing a more dramatic initial drop |
 
-**Distinguishability: PASS**
-- Baseline (solid dark red) and Large singularity (dashed blue) are clearly distinguishable in color and line style.
+### Panel (b) -- Household Consumption
 
-**Contrast: PASS**
-- Both data lines are dark and high-contrast against the background.
+| Requirement | Assessment |
+|---|---|
+| Readability | FAIL -- legend text for "Large singularity" series is truncated, missing closing parenthesis |
+| Distinguishability | PASS -- two main curves (solid red, dashed blue) are clearly distinguishable; annotated dots are labeled and color-coded |
+| Contrast | FAIL -- the "No change" horizontal reference line at y=1.0 is light gray and thin, hard to see against the white background |
+| Use of space | PASS -- log-scale y-axis from 0.5 to 5.0 is well-utilized; x-axis runs 0%-60%+ and is well-filled |
+| Narrative clarity | PASS -- caption and figure convey that without transfers the household faces a consumption catastrophe, but even modest transfers produce large gains under a large singularity |
 
-**Use of space: PASS**
-- Y-axis ~5–25 covers the data range; x-axis 0%–40% extends only slightly past where curves flatten. Acceptable.
+### Defects
 
-### Panel (b): Household Consumption
-
-**Readability: FAIL**
-- The legend text for the Large singularity series is truncated: "Large singularity (eta = 9, phi = 0.05" — missing the closing parenthesis.
-
-**Distinguishability: PASS**
-- The two main curves and catastrophe annotations are clearly distinguishable.
-
-**Contrast: FAIL**
-- The "No change" horizontal reference line at y = 1.0 is a thin dashed gray line that does not have strong contrast against the background. Every plotted element must be clearly visible with no exemption for reference lines.
-
-**Use of space: PASS**
-- Y-axis (log scale, 0.5–~7) and x-axis (0%–70%) are well-utilized by the data.
-
-**Narrative clarity: PASS**
-- The caption and both panels together clearly convey that transfers compress AI stock valuations and that without transfers the household faces catastrophic consumption loss, while even modest tax rates produce large gains under the large singularity scenario.
+1. Panel (b): The "No change" reference line at y=1.0 is light gray and low-contrast -- it should be darkened.
+2. Panel (b): The legend text for the "Large singularity" series is missing its closing parenthesis.

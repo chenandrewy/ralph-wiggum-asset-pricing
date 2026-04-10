@@ -18,7 +18,6 @@
 
 % Theorem environments
 \newtheorem{proposition}{Proposition}
-\newtheorem{corollary}{Corollary}
 \newtheorem{remark}{Remark}
 
 \title{Hedging the Singularity}
@@ -51,13 +50,13 @@ Part of this premium, we argue, reflects a hedging motive. AI stocks serve as a 
 
 Discussions of AI risk focus overwhelmingly on technology policy and labor markets; financial market solutions---such as broader trading of AI-linked securities or insurance instruments tied to displacement---remain largely absent from the conversation. This gap is consequential. Market frictions limit what financial markets can do, but understanding \emph{where} those limits bind is itself informative for policymakers weighing complementary interventions.
 
-The idea that technological displacement creates a systematic risk factor under incomplete markets originates with \citet{GKP2012}, who show that rents from new technologies accrue to agents that current investors cannot trade with. We build on their framework by modeling a discrete AI singularity with severe displacement. In our consumption-based model, a representative household---the marginal investor---faces a stochastic singularity that shifts consumption toward AI owners holding private capital. AI stocks grow as a share of the economy with each singularity, making them a partial hedge. The model delivers closed-form price-dividend ratios, and quantitative analysis shows that P/D ratios for AI stocks can reach roughly six times those of non-AI stocks across plausible singularity probabilities, consistent with observed valuation spreads. Extinction risk \citep{Jones2024} attenuates this gap: the states in which AI is powerful enough to produce enormous growth are also those in which existential risk is highest, reducing the probability weight on the non-extinction states where the hedging channel operates.
+To understand this gap, we need a framework that connects displacement risk to asset prices. The idea that technological displacement creates a systematic risk factor under incomplete markets originates with \citet{GKP2012}, who show that rents from new technologies accrue to agents that current investors cannot trade with. We build on their framework by modeling a discrete AI singularity with severe displacement. In our consumption-based model, a representative household---the marginal investor---faces a stochastic singularity that shifts consumption toward AI owners holding private capital. AI stocks grow as a share of the economy with each singularity, making them a partial hedge. The model delivers closed-form price-dividend ratios, and quantitative analysis shows that P/D ratios for AI stocks can reach roughly six times those of non-AI stocks across plausible singularity probabilities, consistent with observed valuation spreads. Extinction risk \citep{Jones2024} attenuates this gap: the states in which AI is powerful enough to produce enormous growth are also those in which existential risk is highest, reducing the probability weight on the non-extinction states where the hedging channel operates.
 
 Market incompleteness distorts not only asset prices but also the development of AI itself. When the positive singularity is more likely than the negative one, AI development is socially efficient. Yet a risk-averse household that cannot hedge displacement may rationally choose to block it---the uninsurable downside looms larger than the expected upside. Complete markets would eliminate this distortion, connecting the model to debates about AI regulation: calls to slow or halt AI development may partly reflect investors' inability to share in its upside.
 
-If the singularity occurs, the sheer abundance of resources can overcome the frictions that normally make government transfers ineffective. The ideal resolution of incomplete markets is to allow broader trading of AI capital, but as \citet{GKP2012} emphasize, much of this capital belongs to future innovators and cannot yet be traded. Transfers ordinarily incur deadweight costs that consume much of their value. But in a singularity with explosive output growth \citep{Jones2024}, even highly inefficient redistribution delivers large consumption gains---the resource base is so enormous that waste becomes tolerable. This possibility only arises when the displacement event is large enough, making it a distinctive feature of singularity economics.
+If blocking AI is costly, another policy lever is redistribution. If the singularity occurs, the sheer abundance of resources can overcome the frictions that normally make government transfers ineffective. The ideal resolution of incomplete markets is to allow broader trading of AI capital, but as \citet{GKP2012} emphasize, much of this capital belongs to future innovators and cannot yet be traded. Transfers ordinarily incur deadweight costs that consume much of their value. But in a singularity with explosive output growth \citep{Jones2024}, even highly inefficient redistribution delivers large consumption gains---the resource base is so enormous that waste becomes tolerable. This possibility only arises when the displacement event is large enough, making it a distinctive feature of singularity economics.
 
-The production of this paper offers a small-scale illustration of the displacement channel at work. All analysis, code, and prose were produced by AI agents; the human author contributed only the economic specification and the test scripts that evaluate the output.\footnote{The division of labor was as follows. The human author wrote a detailed specification of the paper's economic arguments, model structure, and quality requirements, along with automated test scripts that evaluate the output against those requirements. AI agents then produced all other content: the mathematical derivations, quantitative code, figures, tables, and every sentence of prose. No human editing was applied to the agents' output. This workflow required zero traditional research labor beyond the specification itself, illustrating---on a modest scale---how AI can displace the labor content of knowledge production.} That this workflow required no traditional research labor beyond the specification itself is a concrete, if modest, instance of AI displacing the labor content of knowledge production.
+The displacement risk we model is not merely hypothetical---it is already visible in knowledge production itself. The production of this paper offers a small-scale illustration. All analysis, code, and prose were produced by AI agents; the human author contributed only the economic specification and the test scripts that evaluate the output.\footnote{The human author wrote the economic specification and automated test scripts. AI agents produced all other content---derivations, code, figures, and prose---with no human editing applied.} That this workflow required no traditional research labor beyond the specification itself is a concrete, if modest, instance of AI displacing the labor content of knowledge production.
 
 %% Lit review (end of introduction)
 \medskip
@@ -66,7 +65,7 @@ Our paper builds most directly on \citet{GKP2012}, who develop a general-equilib
 
 \citet{Jones2024} studies the trade-off between AI-driven growth and existential risk, showing that bounded utility functions make agents conservative about extinction even when consumption gains are enormous. We incorporate his extinction risk into our pricing framework and show that it interacts with displacement in a countervailing way, attenuating rather than amplifying the valuation premium.
 
-\citet{KoganPapanikolaou2014} show that technology shocks generate cross-sectional differences in stock returns through firms' heterogeneous exposures to growth opportunities, and \citet{KoganPapanikolaouStoffman2020} extend this to study how creative destruction generates inequality and valuations. \citet{Knesl2023} models and tests automation-driven displacement risk in asset prices, providing direct empirical evidence that labor displacement commands a risk premium. The rare disasters literature \citep{Barro2006,Wachter2013} provides the methodological foundation for pricing discrete catastrophic events. \citet{PastorVeronesi2009} study how technological revolutions affect stock prices through uncertainty about long-run productivity. \citet{KorinekSuh2024} analyze scenarios for the transition to AGI and their implications for wages, output, and welfare.
+\citet{KoganPapanikolaou2014} and \citet{KoganPapanikolaouStoffman2020} show that technology shocks and creative destruction generate cross-sectional return differences and inequality through firms' heterogeneous exposures. \citet{Knesl2023} provides direct empirical evidence that automation-driven displacement commands a risk premium. The rare disasters literature \citep{Barro2006,Wachter2013} supplies the methodological foundation for pricing discrete catastrophic events, and \citet{PastorVeronesi2009} study how technological revolutions affect stock prices through productivity uncertainty.
 
 %% ============================================================
 %% Section 2: Model
@@ -84,7 +83,7 @@ Aggregate consumption at date $t$ is $C_t$. In the absence of a singularity, agg
 C_{t+1} = (1 + g) \, C_t. \label{eq:agg-consumption-growth}
 \end{equation}
 
-The household receives a share $\alpha_t \in (0, 1 - \theta_t]$ of aggregate consumption, so its consumption is $c_t^H = \alpha_t \, C_t$. AI owners receive the remainder, $(1 - \alpha_t) \, C_t$.
+The household receives a share $\alpha_t \in (0, 1)$ of aggregate consumption, so its consumption is $c_t^H = \alpha_t \, C_t$. AI owners receive the remainder, $(1 - \alpha_t) \, C_t$.
 
 \paragraph{Singularity.}
 Each period, with probability $p$, an AI singularity occurs. With probability $1 - p$, no singularity occurs and $\alpha_t$ is unchanged. Conditional on a singularity:
@@ -108,7 +107,7 @@ Two public assets are available for trading:
 \item \textbf{Non-AI stocks} pay dividends $D_t^{N} = (1 - \theta_t) \, C_t$.
 \end{itemize}
 
-\noindent There is also private AI capital, held by AI owners, with dividends $(1 - \alpha_t) \, C_t - D_t^{AI}$ (the residual accruing to AI owners beyond the public AI dividend). The household \emph{cannot} trade this private capital. This is the source of market incompleteness: the household cannot directly hedge displacement by buying claims on the full AI surplus.
+\noindent There is also private AI capital, held by AI owners, whose dividends are the residual accruing to AI owners beyond the public AI dividend. The household \emph{cannot} trade this private capital. This is the source of market incompleteness: the household cannot directly hedge displacement by buying claims on the full AI surplus.
 
 \paragraph{Preferences.}
 The household has CRRA preferences with risk aversion $\gamma > 1$ and discount factor $\beta \in (0,1)$:
@@ -148,14 +147,6 @@ When $A^j \geq 1$, the SDF-weighted expected dividend growth exceeds the discoun
 \end{remark}
 
 The key economic content of Proposition~\ref{prop:pd-ratios} is in the comparison of $\Gamma^{AI}$ and $\Gamma^{N}$. Since $\Delta\theta > 0$, AI stocks' dividends grow faster than aggregate consumption upon a singularity ($\Gamma^{AI} > 1+\eta$), while non-AI stocks' dividends grow more slowly ($\Gamma^{N} < 1+\eta$), shrinking as a share of the economy. Combined with the household's high marginal utility in singularity states (due to displacement, $\phi(1+\eta) < 1$ when $\phi$ is sufficiently small), AI stocks' payoffs are especially valuable, pushing their P/D ratio above that of non-AI stocks. This is the hedging channel: AI stocks pay off precisely when the household's consumption falls, making them a partial hedge against displacement.
-
-\begin{corollary}[Valuation spread] \label{cor:spread} % Corollary 1
-$P^{AI}/D^{AI} > P^N/D^N$ whenever $\Delta\theta > 0$.
-\end{corollary}
-
-\begin{proof}
-From Proposition~\ref{prop:pd-ratios}, the P/D ratio is increasing in $\Gamma^j$. Since $\Delta\theta > 0$ implies $\Gamma^{AI} > \Gamma^N$, the result follows.
-\end{proof}
 
 \begin{proposition}[Comparative statics] \label{prop:comp-statics} % Proposition 2
 The valuation spread $P^{AI}/D^{AI} - P^N/D^N$ is:
@@ -207,14 +198,7 @@ The baseline model takes market incompleteness as given and studies its pricing 
 
 \subsection{Extension 1: Veto and efficient development} % Section 4.1
 
-We augment the baseline model to allow a positive singularity. With probability $p$, a singularity occurs. Conditional on a non-extinction singularity (probability $1 - \xi$):
-%
-\begin{itemize}
-\item With probability $\lambda$, the singularity is \emph{positive}: the household's share \emph{increases} (i.e., $\alpha_{t+1} > \alpha_t$), and aggregate consumption jumps by $1 + \eta$.
-\item With probability $1 - \lambda$, the singularity is \emph{negative} (as in the baseline): the household's share falls, $\alpha_{t+1} = \phi \, \alpha_t$ with $\phi < 1$.
-\end{itemize}
-
-\noindent We assume $\lambda > 1/2$: the positive singularity is the most likely outcome. AI development is \emph{socially efficient} in the sense that the expected welfare gain (aggregated across household and AI owners) is positive.
+We augment the baseline model to allow a positive singularity. With probability $p$, a singularity occurs. Conditional on a non-extinction singularity (probability $1 - \xi$), the singularity is either \emph{positive}---the household's share increases to $\alpha_{t+1} = \min(1,\, \alpha_t / \phi)$ and aggregate consumption jumps by $1 + \eta$---or \emph{negative} (as in the baseline), with the household's share falling to $\alpha_{t+1} = \phi \, \alpha_t$. The positive singularity is the more likely outcome. AI development is \emph{socially efficient} in the sense that the expected welfare gain (aggregated across household and AI owners) is positive.
 
 The household can \emph{veto} AI development at a significant cost---representing the deadweight loss from intense government intervention needed to halt AI progress. If the household vetoes, no singularity occurs. Following \citet{Jones2024}, we normalize extinction utility to zero; since CRRA utility is negative for all $c > 0$ when $\gamma > 1$, this normalization makes the veto result conservative.
 
@@ -226,7 +210,7 @@ The household can \emph{veto} AI development at a significant cost---representin
 \end{proposition}
 
 \begin{proof}
-(i) Under incomplete markets, the household evaluates the singularity using only its own consumption. With $\gamma$ large, the utility cost of the negative singularity ($\phi < 1$, so consumption drops) dominates the utility gain from the positive singularity (the household's share rises, but $u$ is concave with sharply declining marginal utility). Even though $\lambda > 1/2$ ensures social efficiency, the household's risk aversion makes the downside loom large, overwhelming even a substantial veto cost.
+(i) Under incomplete markets, the household evaluates the singularity using only its own consumption. With $\gamma$ large, the utility cost of the negative singularity ($\phi < 1$, so consumption drops) dominates the utility gain from the positive singularity (the household's share rises, but $u$ is concave with sharply declining marginal utility). Even though the positive singularity is more likely, ensuring social efficiency, the household's risk aversion makes the downside loom large, overwhelming even a substantial veto cost.
 
 (ii) Under complete markets, the household can trade claims on private AI capital before the singularity. In the positive singularity, the household participates in the full surplus. In the negative singularity, the household has hedged its displacement. The household's expected utility gain under complete markets reflects the social surplus, which is positive by assumption. Therefore the household does not veto.
 \end{proof}
@@ -235,7 +219,7 @@ The veto result illustrates how market incompleteness can distort real decisions
 
 \subsection{Extension 2: Government transfers} \label{sec:ext2} % Section 4.2
 
-\citet{GKP2012} show that intergenerational transfers can affect the magnitude of displacement risk, while observing that such transfers do not alter the functional form of the stochastic discount factor in their framework. We study transfers in a different setting---an AI singularity---where the key question is whether explosive output growth can overcome the deadweight costs that normally make transfers ineffective. Because the displacing capital may not yet exist---it belongs to future cohorts of innovators---direct trading is infeasible, and government transfers offer an alternative. But transfers ordinarily incur deadweight costs (waste, fraud, administrative burden) that scale with transfer size, making them unattractive.
+\citet{GKP2012} note that intergenerational transfers could in principle affect the magnitude of displacement risk, while observing that such transfers do not alter the functional form of the stochastic discount factor in their framework. Building on this suggestion, we study transfers in the specific setting of an AI singularity, where the key question is whether explosive output growth can overcome the deadweight costs that normally make transfers ineffective. Because the displacing capital may not yet exist---it belongs to future cohorts of innovators---direct trading is infeasible, and government transfers offer an alternative. But transfers ordinarily incur deadweight costs (waste, fraud, administrative burden) that scale with transfer size, making them unattractive.
 
 We model this as follows. The government imposes a tax rate $\tau \in [0,1)$ on AI owners' surplus and transfers the proceeds to the household. Deadweight costs consume a fraction $\delta \tau$ of the transferred amount, where $\delta > 0$ governs the severity of waste. The household's post-transfer consumption in a non-extinction singularity state is:
 %

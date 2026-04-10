@@ -1,52 +1,41 @@
 # Improvement Plan
-AUTHOR PLAN — 2026-04-09 20:18:06 EDT
+AUTHOR PLAN — 2026-04-09 20:32:33 EDT
 
-## Current State
+## Status: 18/25 tests pass. No overhaul needed.
 
-22/25 tests pass. No overhaul needed — the model section is solid and passes all theory tests. The three failures are in presentation and writing.
+## Failing Tests — Fixes
 
-## Failing Tests
+### 1. theory-deadweight (formalism bloat)
+Five pieces of ceremonial or unused formalism to cut:
+- **Remove Corollary 1** — its content is already stated in the preceding prose paragraph; the proof adds nothing.
+- **Remove parameter λ** — introduced for a single qualitative inequality, never appears in any equation, proposition, proof, calibration, or figure. Replace its role with plain English ("the positive singularity is more likely than the negative one").
+- **Remove private AI capital dividend formula** `(1-α_t)C_t - D_t^{AI}` from the Setup — it is defined and never referenced again. Describe the residual in words only.
+- **Specify positive-singularity displacement** — the negative case has `α_{t+1} = φα_t` but the positive case says "the household's share increases" with no formula. Either give a symmetric formula (e.g., `α_{t+1} = min(1, α_t/φ)`) or explicitly state that the precise law of motion is not needed for the qualitative result.
+- **Simplify constraint** `α_t ∈ (0, 1-θ_t]` → `α_t ∈ (0,1)` — the tighter bound never binds and is never checked.
 
-### 1. `element-rhetoric-meta` — AI authorship device is too blunt
+### 2. element-gkp-cites (misattribution)
+- Extension 2 opening says GKP "show that intergenerational transfers can affect the magnitude of displacement risk." GKP merely noted transfers as a possible extension in passing. Change verb from "show" to "note" or "suggest," and make clear that the transfers analysis is *our* contribution building on their remark.
 
-The meta-rhetorical device (paper about AI displacement is itself AI-written) appears in the abstract and introduction as a direct confession: "This paper was written entirely by AI agents." The test says this is too blunt and risks triggering hostile evaluation. It should be reframed as an economic observation woven into the argument, not a standalone disclosure.
+### 3. element-lit-review (length)
+- Lit review is ~245 words; spec requires ≤ half a page (~175–200 words at current formatting). Cut the third paragraph (six rapid-fire citations) by ~50 words. Consolidate Kogan–Papanikolaou and Kogan–Papanikolaou–Stoffman into one sentence; drop or shorten the Korinek–Suh mention.
 
-**Fix:** Rewrite both occurrences (abstract final sentence, intro paragraph before lit review) to frame AI authorship as an economic data point — e.g., the production of this analysis itself required zero labor income, illustrating displacement in the production of economic research. Keep it subtle: one sentence each, same locations, but framed as evidence rather than confession.
+### 4. element-rhetoric-meta (footnote tone)
+- The AI-authorship footnote is ~80 words of overbearing detail ("mathematical derivations, quantitative code, figures, tables, and every sentence of prose… no human editing"). Trim to ~30–40 words: state the division of labor concisely without the itemized list that triggers skepticism.
 
-### 2. `visual-figures` — Figure 2 legend and tick labels too small
+### 5. writing-intro (paragraph transitions)
+Three abrupt transitions to fix:
+- **P3→P4**: P3 ends on policy; P4 opens cold with GKP citation and model mechanics. Add a bridge sentence connecting the policy gap to GKP's framework.
+- **P5→P6**: P5 ends on AI regulation; P6 opens on singularity transfers. Bridge: "If blocking AI is costly, another policy lever is redistribution."
+- **P6→P7**: P6 ends on "distinctive feature of singularity economics"; P7 pivots to the meta-observation about AI production. Bridge: connect the displacement theme to the paper's own production process.
 
-The extension figure (fig-extension-panels) has: (a) legend text too small across both panels, (b) y-axis tick labels in Panel (a) too small, (c) cramped legend placement.
+### 6. visual-figures + visual-figures-image-only (figure formatting)
+Changes in `code/generate-exhibits.R`:
+- **fig-ai-valuations**: Expand y-axis limits so the "500" tick label is not clipped. Add `expand = expansion(mult = c(0.02, 0.05))` or increase top margin.
+- **fig-extension-panels Panel (b)**: Fix truncated legend label — add closing parenthesis to `"Large singularity (eta = 9, phi = 0.05)"`. Make "No change" reference line thicker and darker (e.g., `color = "gray40", linewidth = 0.8`).
+- **fig-extension-panels both panels**: Increase axis tick label size (`axis.text` to 13–14pt) and legend text size. Differentiate Panel (a) line styles more clearly (e.g., solid vs. longdash with different widths).
 
-**Fix in `code/generate-exhibits.R`:**
-- Increase `base_size` in `theme_paper` from 14 to 16.
-- Set explicit `legend.text` size in `theme_paper` (e.g., `element_text(size = 12)`).
-- Increase figure dimensions in `ggsave` for the extension figure (e.g., width 12, height 5.5) to give more room.
-- Consider moving the legend inside one of the panels or adjusting `legend.position` for better spacing.
-
-### 3. `writing-intro` — Three sub-failures in the introduction
-
-**(a) Skimmer clarity:** Arguments (c) "financial market solutions under-discussed" and (d) "singularity abundance overcomes frictions" are buried mid-paragraph. Each needs a topic-sentence home.
-
-**(b) Flow problems:**
-- Bullet list breaks narrative momentum → convert to flowing prose.
-- Paragraphs 5–6 are redundant with the bullet list → eliminate duplication by merging.
-- Transition from paragraph 2 → 3 is abrupt → add a bridge.
-- "Both extensions branch directly off the baseline" appears before the reader knows what they are → move or remove.
-- P/D ~6× result appears too late → move earlier to anchor the hedging claim.
-- Meta-sentence is a non-sequitur before lit review → integrate with surrounding text.
-
-**(c) Unfulfilled promise:** The AI authorship claim ("all analysis and writing were produced by AI agents") has no supporting documentation. Add a brief methodological note — either a footnote or a short paragraph at the end of the conclusion — describing the division of labor (human wrote spec and tests; AI agents produced all code, analysis, and prose).
-
-## Execution Order
-
-1. **Introduction rewrite** (`paper/paper.tex` Section 1): Address all three `writing-intro` sub-failures and the `element-rhetoric-meta` failure simultaneously, since both involve the introduction text. Key changes:
-   - Replace bullet list with flowing prose that naturally sequences the contributions.
-   - Give arguments (c) and (d) from the spec their own topic sentences.
-   - Move the quantitative headline result (P/D ~6×) earlier.
-   - Reframe the meta-rhetorical device as economic observation in both abstract and intro.
-   - Add a methodological footnote documenting the AI authorship process.
-   - Smooth transitions throughout.
-
-2. **Figure 2 formatting** (`code/generate-exhibits.R`): Fix legend size, tick label size, and figure dimensions. Regenerate exhibits.
-
-3. **Rebuild paper and verify** — Recompile LaTeX, regenerate page images, re-run tests.
+## Order of Operations
+1. Fix `code/generate-exhibits.R` (tests 6) → regenerate exhibits
+2. Fix `paper/paper.tex`: theory-deadweight, element-gkp-cites, element-lit-review, element-rhetoric-meta, writing-intro (tests 1–5)
+3. Rebuild paper PDF and page images
+4. Re-run tests

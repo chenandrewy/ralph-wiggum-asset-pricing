@@ -1,77 +1,67 @@
 # tests/factcheck-lit.py
-Started: 2026-04-09 20:21:48 EDT
-Runtime: 4m 22s
-[ralph-garage/agent-logs/20260409T202148.441921-0400_factcheck-lit_claude_opus.log](../ralph-garage/agent-logs/20260409T202148.441921-0400_factcheck-lit_claude_opus.log)
+Started: 2026-04-09 20:39:27 EDT
+Runtime: 4m 27s
+[ralph-garage/agent-logs/20260409T203927.640191-0400_factcheck-lit_claude_opus.log](../ralph-garage/agent-logs/20260409T203927.640191-0400_factcheck-lit_claude_opus.log)
 
 # factcheck-lit
 VERDICT: PASS
-REASON: All 10 cited works are externally verified with materially accurate metadata and well-supported in-text claims; only minor issues found.
+REASON: All 9 cited works are externally verified with materially accurate metadata and well-supported in-text claims; only one MINOR issue found.
 
 ## 1. Citation inventory audited
 
-The following 10 citation keys are used in the paper text (including footnotes) and were audited:
-
-1. GKP2012
-2. Jones2024
-3. KoganPapanikolaou2014
-4. KoganPapanikolaouStoffman2020
-5. Knesl2023
-6. Barro2006
-7. Wachter2013
-8. PastorVeronesi2009
-9. KorinekSuh2024
-10. Nordhaus2021
-
-The following bibliography entries are never cited in the paper text and were not audited: MehraPrescott1985, CampbellCochrane1999, GarleanuPanageas2015, Acemoglu2024, BabinaMotta2024, FamaFrench1993, AghionJonesJones2019.
+| # | Citation key | Cited in paper? |
+|---|---|---|
+| 1 | GKP2012 | Yes |
+| 2 | Jones2024 | Yes |
+| 3 | KoganPapanikolaou2014 | Yes |
+| 4 | KoganPapanikolaouStoffman2020 | Yes |
+| 5 | Knesl2023 | Yes |
+| 6 | Barro2006 | Yes |
+| 7 | Wachter2013 | Yes |
+| 8 | PastorVeronesi2009 | Yes |
+| 9 | Nordhaus2021 | Yes |
 
 ## 2. External verification coverage
 
-| Key | Status | External sources |
-|-----|--------|-----------------|
-| GKP2012 | VERIFIED | EconPapers/RePEc, ScienceDirect, SSRN, Semantic Scholar |
-| Jones2024 | VERIFIED | AEA journal page, IDEAS/RePEc, AEI summary, LessWrong discussion, Stanford GSB |
-| KoganPapanikolaou2014 | VERIFIED | Wiley/Journal of Finance, IDEAS/RePEc, NBER, EconPapers |
-| KoganPapanikolaouStoffman2020 | VERIFIED | Journal of Political Economy, IDEAS/RePEc, MIT DSpace, Semantic Scholar |
-| Knesl2023 | VERIFIED | ScienceDirect, IDEAS/RePEc, SSRN, EconPapers |
-| Barro2006 | VERIFIED | Oxford Academic/QJE, EconPapers, Harvard DASH |
-| Wachter2013 | VERIFIED | EconPapers/RePEc, Wharton author page, UPenn repository, NBER |
-| PastorVeronesi2009 | VERIFIED | AEA journal page, EconPapers, NBER, SSRN |
-| KorinekSuh2024 | VERIFIED | NBER working paper page, IDEAS/RePEc, SSRN |
-| Nordhaus2021 | VERIFIED | AEA journal page, IDEAS/RePEc, author page |
+| Citation key | Status | External sources |
+|---|---|---|
+| GKP2012 | VERIFIED | EconPapers, ScienceDirect, SSRN |
+| Jones2024 | VERIFIED | AEA, IDEAS/RePEc, Stanford GSB, Stanford Report |
+| KoganPapanikolaou2014 | VERIFIED | Wiley/Journal of Finance, IDEAS/RePEc, NBER |
+| KoganPapanikolaouStoffman2020 | VERIFIED | Journal of Political Economy, IDEAS/RePEc, MIT DSpace |
+| Knesl2023 | VERIFIED | ScienceDirect/JFE, IDEAS/RePEc, SSRN |
+| Barro2006 | VERIFIED | Oxford Academic/QJE, EconPapers, Harvard |
+| Wachter2013 | VERIFIED | Wharton/UPenn, EconPapers, NBER |
+| PastorVeronesi2009 | VERIFIED | AEA, EconPapers, NBER |
+| Nordhaus2021 | VERIFIED | AEA, IDEAS/RePEc |
 
-**Coverage: 10/10 cited works externally verified (100%).**
+**Coverage: 9/9 (100%)**
 
 ## 3. Metadata accuracy findings
 
-All 10 citations have materially accurate bibliographic metadata: author names, titles, journals/outlets, volumes, numbers, pages, and years all match external sources.
-
-**Minor formatting note:** KorinekSuh2024 uses `@article` BibTeX entry type for what is an NBER working paper, with the `journal` field holding "NBER Working Paper No. 32255". This is a common workaround and functionally harmless.
+All 9 citation keys have materially accurate bibliographic metadata (author names, publication year, title, journal/outlet, volume, number, pages). No errors found.
 
 ## 4. In-text description accuracy findings
 
-All 10 citations are used in ways that are materially accurate and supported by the cited works:
-
-- **GKP2012:** Correctly described as developing a general-equilibrium model where innovation displaces existing agents, creating systematic risk under incomplete markets; growth stocks hedge displacement risk; future innovators' rents are untradeable. All supported.
-- **Jones2024:** Correctly described as studying the AI growth-vs-extinction-risk tradeoff. The claim about "bounded utility functions make agents conservative about extinction" is a slight simplification of Jones's more nuanced argument (see Minor issue below), but directionally reasonable.
-- **KoganPapanikolaou2014:** Correctly described as showing technology shocks generate cross-sectional return differences through heterogeneous growth-opportunity exposures. Supported.
-- **KoganPapanikolaouStoffman2020:** Correctly described as extending the creative-destruction framework to study inequality and valuations. Supported.
-- **Knesl2023:** Correctly described as modeling and testing automation-driven displacement risk in asset prices with empirical evidence of a labor displacement risk premium. Supported.
-- **Barro2006:** Correctly cited as part of the rare disasters literature providing methodology for pricing discrete catastrophic events. Supported.
-- **Wachter2013:** Correctly cited alongside Barro2006 for rare disasters methodology. Supported.
-- **PastorVeronesi2009:** Correctly described as studying how technological revolutions affect stock prices through productivity uncertainty. Supported.
-- **KorinekSuh2024:** Correctly described as analyzing AGI transition scenarios and implications for wages, output, and welfare. Supported.
-- **Nordhaus2021:** Correctly described as critically examining explosive output growth from an economic singularity. Nordhaus models the singularity and then empirically tests (and largely rejects) it; "examined critically" is accurate. Supported.
+| Citation key | In-text claim-support verdict |
+|---|---|
+| GKP2012 | Supported. Claims about displacement risk, incomplete markets, growth-stock hedging, and OLG structure are all consistent with the cited work. |
+| Jones2024 | Supported. Claims about AI growth vs. existential risk trade-off, bounded utility, and correlation of growth with extinction risk are accurate. |
+| KoganPapanikolaou2014 | Supported with minor imprecision. The joint citation with KPS2020 attributes "creative destruction" to both; this term is more precisely the focus of KPS2020 while KP2014 concerns investment-specific technology shocks. The grouping is reasonable. |
+| KoganPapanikolaouStoffman2020 | Supported. Claims about creative destruction, inequality, and cross-sectional return differences match the paper's title and content. |
+| Knesl2023 | Supported. Claim that automation-driven displacement commands a risk premium matches Knesl's finding of a 4% annual return premium for firms with high displaceable labor share. |
+| Barro2006 | Supported. Characterization as rare-disasters literature providing methodology for pricing discrete catastrophic events is accurate. |
+| Wachter2013 | Supported. Characterization alongside Barro2006 as rare-disasters methodology is accurate; Wachter extends the framework with time-varying disaster probability. |
+| PastorVeronesi2009 | Supported. Characterization as studying how technological revolutions affect stock prices through productivity uncertainty is an accurate summary of the paper's learning framework. |
+| Nordhaus2021 | Supported. Characterization as having "examined critically" explosive output growth / economic singularity is accurate; Nordhaus concludes "the Singularity is not near." |
 
 ## 5. Flagged issues by citation key and severity
 
-### Jones2024 -- MINOR
-The paper states Jones2024 shows "bounded utility functions make agents conservative about extinction even when consumption gains are enormous." Jones's actual argument is more nuanced: bounded utility (CRRA with gamma > 1) limits the value of consumption gains from AI, which changes the growth-vs-risk tradeoff in parameter-dependent ways. The paper's characterization is directionally reasonable but slightly simplified. This does not materially misrepresent Jones's work.
+### KoganPapanikolaou2014 — MINOR
+The paper cites KP2014 and KPS2020 together with the characterization that they "show that technology shocks and creative destruction generate cross-sectional return differences and inequality through firms' heterogeneous exposures." The term "creative destruction" is specifically the focus of KPS2020 (appears in its title), while KP2014 is about investment-specific technology shocks and growth opportunities. The joint grouping is reasonable but slightly imprecise for KP2014 individually.
 
-### KorinekSuh2024 -- MINOR
-The BibTeX entry uses `@article` type for an NBER working paper (No. 32255), with the `journal` field holding the working paper series identifier. This is a common workaround and cosmetically imprecise but functionally harmless for bibliography rendering.
-
-**No CRITICAL or IMPORTANT issues found.**
+No CRITICAL or IMPORTANT issues found.
 
 ## 6. Overall reliability of the paper's citations
 
-The paper's citations are highly reliable. All 10 cited works were externally verified with multiple independent sources. Bibliographic metadata is materially accurate across the board. In-text descriptions faithfully characterize the cited works' contributions and mechanisms. The two minor issues identified (a slight simplification of Jones 2024's bounded-utility argument, and a BibTeX entry-type convention for a working paper) do not affect the substantive accuracy of the paper's literature engagement.
+The paper's citations are highly reliable. All 9 cited works were externally verified with multiple independent sources. Bibliographic metadata is accurate across all entries. In-text descriptions faithfully represent the cited works' contributions and findings. The single MINOR issue (joint characterization of KP2014 and KPS2020) reflects a common and acceptable practice of grouping related papers under a shared description. No corrections are required.

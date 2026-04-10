@@ -1,78 +1,50 @@
 # tests/visual-figures.py
-Started: 2026-04-09 20:21:48 EDT
-Runtime: 1m 19s
-[ralph-garage/agent-logs/20260409T202148.461716-0400_visual-figures_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260409T202148.461716-0400_visual-figures_claude_claude-opus-4-6.log)
+Started: 2026-04-09 20:39:27 EDT
+Runtime: 1m 12s
+[ralph-garage/agent-logs/20260409T203927.608147-0400_visual-figures_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260409T203927.608147-0400_visual-figures_claude_claude-opus-4-6.log)
 
 # visual-figures
 
-VERDICT: FAIL
-REASON: Figure 2 has readability problems (small tick labels, small/dense legend text) and marginal line-style distinguishability in Panel (a).
+**VERDICT: FAIL**
+
+**REASON:** Figure 1 passes all checks, but Figure 2 fails readability due to small tick labels and legend text, and its legend uses raw parameter values instead of verbal scenario labels, creating an unnecessary mapping burden.
 
 ---
 
-## Figure 1 — Valuations of AI-Exposed Stocks vs. the Broader Market
+## Figure 1: Valuations of AI-Exposed Stocks vs. the Broader Market
 
 **VERDICT: PASS**
-**REASON:** The single-panel figure is readable, its two series are clearly distinguishable, and the caption conveys the main message without ambiguity.
 
-### Full Figure (single panel, no sub-panels)
+**REASON:** The figure is readable, the two series are clearly distinguishable via solid vs. dashed line styles, and the main message is immediately apparent from the figure and caption alone.
 
-**Readability: PASS**
-- The caption/title is fully legible.
-- The y-axis label ("Normalized Price (Jan 2015 = 100)") is readable and clearly describes the units.
-- The x-axis tick labels (2016, 2018, 2020, 2022, 2024, 2026) are readable and well-spaced.
-- The y-axis tick labels (100, 200, 300, 400, 500) are readable.
-- The legend in the upper-left corner is readable, with clear labels: "NASDAQ Composite (AI/Tech-Heavy)" and "S&P 500."
-- Font sizes are appropriate throughout; nothing is too small, overlapping, or cut off.
+### Single Panel: Normalized Price Index (2015 = 100)
 
-**Distinguishability: PASS**
-- The two series use distinct line styles: the NASDAQ is a solid line and the S&P 500 is a dashed line. This difference is immediately apparent.
-- The two lines are spatially separated for most of the plot, with the NASDAQ rising sharply above the S&P 500.
-- The legend does not cover any meaningful portion of the plotted data.
-- The "instant read" test is satisfied.
+- **Readability: PASS** -- Axis labels ("Date", "Closing Price (Jan 2015 = 100)"), tick labels, and legend text are all legible. Font sizes are adequate throughout. No text is cut off or overlapping.
 
-**Narrative Clarity: PASS**
-- From figure and caption alone: The figure clearly shows that AI/tech-heavy stocks (NASDAQ) have dramatically outperformed the broader market (S&P 500) since roughly 2020, with an especially sharp divergence from around 2023 onward.
-- From figure and paper text: The paper uses this figure to motivate the central question — why are AI stock valuations so elevated? The dramatic divergence sets up the puzzle that the theoretical model addresses.
+- **Distinguishability: PASS** -- The two series (NASDAQ Composite and S&P 500) use solid vs. dashed line styles in distinct colors. They are well-separated for most of the plot, especially from 2020 onward. The legend does not occlude data.
+
+- **Narrative clarity: PASS** -- The caption explains both series are monthly closing prices normalized to January 2015 = 100, and that the NASDAQ is heavily weighted toward AI/tech firms. The visual clearly shows the NASDAQ dramatically outpacing the S&P 500, with the gap widening sharply in recent years. A reader immediately grasps the message: AI/tech-heavy stocks have appreciated far more than the broad market. The paper text reinforces this, noting the NASDAQ has appreciated roughly 50% more than the S&P 500 since 2015.
 
 ---
 
-## Figure 2 — Extension Panels (AI Stock Valuations & Household Consumption)
+## Figure 2: Extension Panels (AI Stock Valuations and Household Consumption)
 
 **VERDICT: FAIL**
-**REASON:** Axis labels on both panels are too small to read comfortably, and the legend entries are difficult to parse at the rendered size.
+
+**REASON:** Tick labels and legend text are too small in both panels, and legend labels use raw parameter values instead of the verbal scenario names used in the caption.
 
 ### Panel (a): AI Stock Valuations
 
-**Readability: FAIL**
-- The y-axis label ("P/D Ratio in Singularity State") is legible but small. The tick labels on both axes are very small and hard to read.
-- The x-axis label ("Tax rate tau") is small but discernible.
-- The panel title "(a) AI Stock Valuations" is readable.
-- The legend text is quite small. The two legend entries are long strings with parameter values that are difficult to parse quickly (e.g., "Baseline (eta=0.5, phi=0.5)" vs "Large singularity (eta=9, phi=0.05)").
+- **Readability: FAIL** -- The panel title is legible, but tick labels on both axes are very small and hard to read. The legend uses cramped parameter strings (e.g., "Iota=0.5, phi=0.5, delta=0.5" vs "Iota=9, phi=0.05, delta=0.5") rather than verbal labels like "Baseline" and "Large singularity" used in the caption. This creates an unnecessary translation burden.
 
-**Distinguishability: MARGINAL**
-- Two lines are plotted. They appear to use different dash patterns or colors, but at the rendered size the distinction is not immediately obvious. The two series do separate spatially (different y-ranges), which helps.
-- The baseline series starts from the left edge while the large-singularity series begins partway through the x-axis, providing a meaningful visual distinction.
-
-**Narrative Clarity: PASS**
-- From figure and caption alone: A reader can understand that government transfers (tax rate tau) compress AI stock P/D ratios, and the discontinuity where the large-singularity P/D is undefined at low tau is explained in the caption.
-- From figure and paper text: The surrounding text explains why the P/D ratio is undefined (marginal utility explosion) and the policy implications.
+- **Distinguishability: PASS** -- Two lines are plotted in different colors and are spatially separated for most of the x-axis range. The large-singularity line starts partway through the x-axis (existence condition), which is a meaningful feature.
 
 ### Panel (b): Household Consumption
 
-**Readability: FAIL**
-- The y-axis label ("Pct Change in Household Consumption") is small but discernible. Tick labels on both axes are very small.
-- The x-axis label ("Tax rate tau") is small but readable.
-- The panel title "(b) Household Consumption" is readable.
-- The shared legend at the bottom has the same small-font problem.
+- **Readability: FAIL** -- Same issues as Panel (a): tick labels are very small and difficult to read, and the legend text is cramped with the same parameter-heavy labeling.
 
-**Distinguishability: PASS**
-- Two lines are plotted with clearly different trajectories: one rises steeply (large singularity), the other is relatively flat (baseline). The spatial separation makes them easy to distinguish.
+- **Distinguishability: PASS** -- Two lines in different colors with clearly different trajectories (one rises steeply, one is relatively flat), making them easy to distinguish.
 
-**Narrative Clarity: PASS**
-- Panel (b) shows that transfers produce large consumption gains under a large singularity scenario but only modest gains under a baseline. The main message is clear.
+### Narrative Clarity: MARGINAL
 
-### Summary of Problems
-1. Tick labels on both axes in both panels are too small for comfortable reading.
-2. Legend text is small and dense with long parameter-value strings that are hard to parse at a glance.
-3. Line styling in Panel (a) could benefit from stronger differentiation (e.g., solid vs. clearly dashed, or distinct colors).
+The core message comes through -- transfers are transformative under a large singularity but only modestly helpful under baseline parameters. However, the legend's parameter-heavy labeling requires readers to decode which scenario is "baseline" vs. "large singularity," as the caption uses verbal labels but the legend does not. Using "Baseline" and "Large singularity" as legend labels would significantly improve clarity.

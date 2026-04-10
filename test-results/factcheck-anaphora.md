@@ -1,28 +1,30 @@
 # tests/factcheck-anaphora.py
-Started: 2026-04-09 20:21:48 EDT
-Runtime: 5m 48s
-[ralph-garage/agent-logs/20260409T202148.436207-0400_factcheck-anaphora_claude_opus.log](../ralph-garage/agent-logs/20260409T202148.436207-0400_factcheck-anaphora_claude_opus.log)
+Started: 2026-04-09 20:39:27 EDT
+Runtime: 4m 30s
+[ralph-garage/agent-logs/20260409T203927.591985-0400_factcheck-anaphora_claude_opus.log](../ralph-garage/agent-logs/20260409T203927.591985-0400_factcheck-anaphora_claude_opus.log)
 
 # factcheck-anaphora
 VERDICT: PASS
-REASON: All demonstratives near cross-references resolve correctly to their intended targets.
+REASON: No demonstratives near cross-references resolve to a meaning that conflicts with the referenced target.
 
 ## Findings by section
 
-### Introduction (lines 39–73)
-One marginal observation: on line 41, "such gains" appears in the same sentence as `Figure~\ref{fig:ai-valuations}`. The demonstrative "such" resolves to "transformative productivity gains" in the same clause, which is future-oriented, while the figure shows historical valuation data. However, "such" is not pointing at the figure — it refers to the noun phrase in the same clause — so this is not a true anaphora-reference mismatch.
+### Introduction (lines 38--72)
+No anaphora resolution errors. The single cross-reference `Figure~\ref{fig:ai-valuations}` uses "illustrates" without a demonstrative. All other references use citations (`\citet`) rather than `\ref`/`\eqref`.
 
-### Model (lines 74–185)
-No issues found. All demonstratives near `Proposition~\ref{prop:pd-ratios}`, `Remark~\ref{rem:existence}`, `Section~\ref{sec:ext2}`, and `Appendix~\ref{app:proof-pd}` resolve correctly.
+### Model (lines 73--176)
+No anaphora resolution errors. Demonstratives near cross-references resolve correctly:
+- "this condition" (line 146) correctly refers to the existence condition $A^j < 1$ defined immediately above, matching `Remark~\ref{rem:existence}`.
+- "Proposition~\ref{prop:pd-ratios}" references use direct noun phrases, not demonstratives.
 
-### Quantitative Analysis (lines 186–203)
-No issues found. References to `Table~\ref{tab:pd-ratios}`, `Proposition~\ref{prop:comp-statics}(iii)`, and `Figure~\ref{fig:ai-valuations}` all match their targets.
+### Quantitative Analysis (lines 177--194)
+No anaphora resolution errors. Cross-references to `Table~\ref{tab:pd-ratios}`, `Proposition~\ref{prop:comp-statics}(iii)`, and `Figure~\ref{fig:ai-valuations}` use structural connectors ("reports," "predicts," "shows") rather than demonstratives.
 
-### Extensions (lines 204–273)
-No issues found. References to `Proposition~\ref{prop:pd-ratios}`, `Remark~\ref{rem:existence}`, and `Figure~\ref{fig:extension-panels}` all resolve correctly.
+### Extensions (lines 195--257)
+No anaphora resolution errors. Cross-references to `Proposition~\ref{prop:pd-ratios}`, `Remark~\ref{rem:existence}`, and `Figure~\ref{fig:extension-panels}` use clear noun phrases. "This normalization" correctly resolves to the extinction-utility normalization stated in the same sentence.
 
-### Conclusion (lines 274–284)
-No issues found. No cross-references appear in this section.
+### Conclusion (lines 258--268)
+No cross-references appear in this section; no anaphora to check.
 
-### Proof of Proposition 1 (lines 285–314)
-No issues found. References to `\eqref{eq:pd-ai}` and `\ref{prop:pd-ratios}` resolve correctly.
+### Proof of Proposition 1 (lines 269--298)
+No anaphora resolution errors. "This" on line 297 ("This can be rewritten as equation~\eqref{eq:pd-ai}") correctly refers to the derived equation on line 294, which is indeed equivalent to eq:pd-ai.
