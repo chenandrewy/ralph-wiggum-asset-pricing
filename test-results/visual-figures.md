@@ -1,75 +1,84 @@
 # tests/visual-figures.py
-Started: 2026-04-09 19:48:38 EDT
-Runtime: 1m 6s
-[ralph-garage/agent-logs/20260409T194838.518416-0400_visual-figures_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260409T194838.518416-0400_visual-figures_claude_claude-opus-4-6.log)
+Started: 2026-04-09 20:07:38 EDT
+Runtime: 1m 10s
+[ralph-garage/agent-logs/20260409T200738.675378-0400_visual-figures_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260409T200738.675378-0400_visual-figures_claude_claude-opus-4-6.log)
 
 # visual-figures
 
-VERDICT: PASS
+VERDICT: FAIL
 
-REASON: Both figures are readable, distinguishable, and narratively clear.
+REASON: Figure 1 passes all checks, but Figure 2 fails due to small legend text, small y-axis tick labels in Panel (a), and cramped legend placement.
 
 ---
 
-## Figure 1 — Valuations of AI-Exposed Stocks vs. the Broader Market
+## Figure 1 (page 2): AI vs. Broad-Market Valuations
 
 VERDICT: PASS
 
-REASON: The single-panel figure is readable, the two series are clearly distinguishable, and the caption conveys the main message without ambiguity.
+REASON: The single-panel figure clearly distinguishes the two series and all text is readable at the rendered size.
 
-### Panel: Full figure (single panel)
+### Panel findings (single panel)
 
-**Readability: PASS**
-- The title/caption is fully legible and informative.
+**Readability:**
 - The y-axis label ("Normalized Price (Jan 2015 = 100)") is readable.
-- The x-axis shows year tick labels (2016, 2018, 2020, 2022, 2024, 2026) which are clearly readable.
-- The legend in the upper-left is readable with adequate font size.
-- Tick labels on both axes are legible.
-- No text is overlapping, cut off, or too small.
+- The x-axis tick labels (2016, 2018, 2020, 2022, 2024, 2026) are readable.
+- The y-axis tick labels (100, 200, 300, 400, 500) are readable.
+- The legend text ("NASDAQ Composite (AI/Tech-heavy)" and "S&P 500") is readable and placed in the upper-left area without obscuring data.
+- Font sizes are adequate throughout. No text is overlapping, cut off, or too small.
+- **Assessment: No problems.**
 
-**Distinguishability: PASS**
-- The two series use distinct visual encodings: the NASDAQ Composite is a solid line and the S&P 500 is a dashed line.
-- The lines are well separated for the majority of the plot, especially in the later years where the NASDAQ pulls sharply above the S&P 500.
-- The legend is positioned in the upper-left corner and does not obscure any meaningful part of the data.
+**Distinguishability:**
+- The two series use distinct line styles: the NASDAQ is a solid line and the S&P 500 is a dashed line.
+- The lines are well separated in the post-2020 period where the narrative point matters most. In the pre-2020 period the lines are closer together but still clearly distinguishable via linetype.
+- The legend is positioned in the upper-left corner, which is an empty region of the plot, so it does not cover any data.
+- **Assessment: No problems.**
 
-**Narrative clarity: PASS**
-- From figure and caption alone: AI-exposed stocks (proxied by the NASDAQ Composite) have dramatically outpaced the broader market (S&P 500) in recent years, particularly from around 2023 onward. The normalization to January 2015 = 100 makes the comparison straightforward.
-- From figure and paper text: The elevated valuations partly reflect a hedging motive — AI stocks serve as a partial hedge against AI singularity risk for investors who cannot diversify away displacement risk due to market incompleteness.
+**Narrative clarity:**
+- From figure and caption alone: The caption states it shows monthly closing prices for the NASDAQ Composite and S&P 500, normalized to January 2015 = 100. A reader can immediately see that the NASDAQ (AI/tech-heavy) has dramatically outpaced the S&P 500, especially from roughly 2023 onward.
+- From figure and paper text: The paper's introduction uses the figure to motivate the core question about AI-exposed stock valuations.
 
 ---
 
-## Figure 2 — Extension Panels (AI Stock Valuations and Household Consumption)
+## Figure 2 (page 12): Extension Panels
 
-VERDICT: PASS
+VERDICT: FAIL
 
-REASON: Both panels are readable with clearly distinguishable series, and the caption provides sufficient context to understand the figure's message.
+REASON: Panel (a) y-axis tick labels and the legend text are too small to read comfortably, and the legend is cramped.
 
 ### Panel (a): AI Stock Valuations
 
-**Readability: PASS**
-- The panel title "AI Stock Valuations" is clearly readable.
-- The y-axis label ("P/D Ratio (AI Stock)") and x-axis label ("Tax rate τ") are legible.
-- Tick labels on both axes are readable.
-- The legend is legible, showing two series: "Baseline (η=0.5, φ=0.5)" and "Large singularity (η=9, φ=0.05)."
+**Readability:**
+- The y-axis label ("P/D Ratio (AI Stock)") and x-axis label ("Tax rate t") are legible but on the small side.
+- The y-axis tick labels are very small and hard to read — the numbers are compressed and difficult to parse at this resolution.
+- The legend text at the bottom of the figure is extremely small; the three legend entries are barely legible.
+- The panel title "(a) AI Stock Valuations" is readable.
+- **Assessment: FAIL** — y-axis tick labels and legend text are too small; legend placement risks obscuring data.
 
-**Distinguishability: PASS**
-- The two series use different line styles (solid vs. dashed) and different colors, making them easy to distinguish.
-- The baseline series is a gently declining curve across the full range of τ, while the large-singularity series appears only for higher τ values, creating clear visual separation.
-- The legend does not obscure any plotted data.
+**Distinguishability:**
+- Two line series are plotted (solid and dashed). They are reasonably distinguishable by line style.
+- The legend box at the bottom of the panel is cramped and the three legend entries are difficult to parse.
+- One series appears to start partway through the x-axis range (consistent with the existence condition), which is meaningful but could be confusing without careful caption reading.
+- **Assessment: FAIL** — legend is cramped and partially overlaps the lower portion of the plot area.
 
 ### Panel (b): Household Consumption
 
-**Readability: PASS**
-- The panel title "Household Consumption" is clearly readable.
-- The y-axis label ("Consumption Change (Singularity State)") and x-axis label ("Tax rate τ") are legible.
-- Tick labels are readable. The y-axis uses percentage formatting.
-- The legend is legible with the same two-series encoding.
+**Readability:**
+- The panel title "(b) Household Consumption" is readable.
+- The y-axis uses a log scale with labels that are small but more legible than Panel (a).
+- The x-axis label ("Tax rate t") is readable.
+- The shared legend font size issue from Panel (a) applies here.
+- **Assessment: MARGINAL PASS** — series are clear but legend text is too small.
 
-**Distinguishability: PASS**
-- The two series are clearly distinguishable via different line styles and colors, consistent with Panel (a).
-- The dramatic upward sweep of the large-singularity line versus the modest rise of the baseline line makes the contrast visually immediate.
-- No overlap or occlusion issues.
+**Distinguishability:**
+- The two series (baseline and large singularity) are clearly separated in magnitude and use distinct line styles.
+- The series are well-separated and easy to distinguish.
+- **Assessment: PASS.**
 
-**Narrative clarity: PASS**
-- From figure and caption alone: Government transfers (taxing output and redistributing) compress AI stock P/D ratios by reducing hedging demand, and dramatically improve household consumption in the singularity state when the singularity is large.
-- From figure and paper text: The P/D ratio is undefined at τ = 0 under the large-singularity calibration because marginal utility becomes extreme enough that the pricing sum diverges, illustrating the severity of the incomplete-markets problem.
+**Narrative clarity:**
+- From figure and caption alone: The caption explains that Panel (a) shows transfers compressing P/D ratios and Panel (b) shows consumption gains. The key message — that large singularities make transfers dramatically effective — is conveyed by the divergent behavior. However, the small legend makes it hard to immediately identify which line is which.
+- From figure and paper text: With context about why the large-singularity P/D ratio is undefined at τ=0 and why consumption halves, the figure's message is clear.
+
+### Summary of problems
+1. Legend text across both panels is too small to read without significant effort.
+2. Y-axis tick labels in Panel (a) are too small.
+3. The shared legend at the bottom is cramped and its entries are hard to parse quickly.

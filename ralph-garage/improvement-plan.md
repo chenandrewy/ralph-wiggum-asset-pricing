@@ -1,90 +1,74 @@
 # Improvement Plan
-AUTHOR PLAN — 2026-04-09 19:43:43 EDT
+AUTHOR PLAN — 2026-04-09 20:02:59 EDT
 
-## Status: 17/25 tests passing, 8 failing. No overhaul needed.
+## Status: 19/25 tests pass, 6 failing
 
-The model section is sound (factcheck-theory, theory-clarity, factcheck-code all pass). Issues are in exposition, citations, figure quality, and formatting. Plan prioritizes failing tests, then addresses remaining quality.
-
----
-
-## 1. Fix bib: wrong authors on Kogan et al. (2020) [factcheck-freely]
-
-**File:** `paper/references.bib` lines 134-142
-
-The entry `KoganPapanikolaouStoffman2020` lists Kogan, Papanikolaou, and Stoffman. The correct authors are Kogan, Papanikolaou, **Schmidt**, and **Song**. Rename the bib key to `KoganPapanikolaouSchmidtSong2020` and fix the author field. Update the cite key in `paper/paper.tex` line 71 accordingly.
+No section overhaul needed. The baseline model is clean and load-bearing. Issues are localized: bibliography errors, notational loose ends, ceremonial formalism in Extension 1, a figure use-of-space problem, a missing spec argument, and introduction flow.
 
 ---
 
-## 2. Fix "shrink" language for non-AI dividends [factcheck-bysection]
+## Failing Tests (priority order)
 
-**File:** `paper/paper.tex` ~line 152
+### 1. factcheck-lit — Bibliography errors
+**Issues:**
+- `KoganPapanikolaouSchmidtSong2020`: Wrong authors. The JPE 2020 paper is Kogan, Papanikolaou, and **Stoffman**, not Schmidt and Song. Fix bib key to `KoganPapanikolaouStoffman2020`, correct authors.
+- `Knesl2023`: First name is **Jiri**, not Peter.
 
-The text says non-AI stocks' dividends "shrink" upon singularity. With baseline parameters, $\Gamma^N = 1.2 > 1$ so non-AI dividends grow in absolute terms; they only shrink as a share of the economy. Change "shrink" to "shrink as a share of the economy" or "grow less than aggregate consumption."
+**Fix:** Edit `paper/references.bib` to correct both entries. Update all `\citet`/`\citep` calls in `paper.tex` to use the corrected key.
 
----
+### 2. factcheck-theory — Notation and traceability
+**Issues (medium severity):**
+- `$U_0$` lacks the `$H$` superscript used elsewhere (`$\Delta U^H$`). Change to `$U_0^H$`.
+- `$u_\text{ext}$` should be `$U_\text{ext}$` (lifetime utility, not period).
+- `$\delta_0$` subscript is unexplained — simplify to `$\delta$`.
+- `$\alpha_0 = 0.70$` used in R code for Figure 2 but never stated in the paper. Add it to the figure caption or the Extension 2 parameterization text.
+- Effective-$\phi$ formula for P/D with transfers is used in code but not derived in paper. Add a one-line derivation or state it explicitly.
 
-## 3. Fix GKP characterization in Extension 2 opening [element-gkp-cites]
+**Fix:** Make targeted edits to `paper.tex` notation and add the missing parameter disclosure. Update code variable name from `delta0` to `delta` if the paper notation changes.
 
-**File:** `paper/paper.tex` ~line 248
+### 3. spec-paper — Missing argument I.3c
+**Issue:** The paper never argues that "financial market solutions to AI disaster risk are under-discussed, though frictions can limit their effectiveness."
 
-Three issues in the sentence "\citet{GKP2012} note that intergenerational transfers affect the magnitude of displacement risk but treat such mechanisms as inessential extensions to their framework. We take a closer look."
+**Fix:** Add 1–2 sentences to the introduction (around the incomplete-markets discussion) noting that financial market solutions — such as broader trading of AI-linked securities — are under-explored in the AI risk discourse, though market frictions limit their reach. This naturally bridges from the hedging argument (3a) to the model setup.
 
-- "note" minimizes a substantive GKP passage (their Section 3.2 paragraph).
-- "inessential extensions" misrepresents GKP's technical usage — they mean the SDF functional form is unchanged, not that transfers are unimportant.
-- "We take a closer look" implies examining the same mechanism, when Extension 2 operates in a different model.
+### 4. theory-deadweight — Ceremonial formalism in Extension 1
+**Issue:** Extension 1 introduces $\kappa$, $\phi^+$, and Eq. (6) but the proof of Proposition 3 never manipulates them analytically. The entire argument is qualitative, making the formal apparatus deadweight.
 
-Rewrite to: accurately convey GKP's point (transfers don't change the SDF form but affect displacement magnitude), and frame Extension 2 as studying transfers in a different setting (AI singularity) rather than as a deeper look at GKP's mechanism.
+**Fix:** Streamline Extension 1:
+- Remove Eq. (6) ($\Delta U^H$). State Proposition 3 in plain economic terms.
+- Drop $\kappa$ as a named parameter; describe the veto cost verbally ("a per-period utility cost of blocking").
+- Keep $\phi^+$ only in the itemized setup for clarity but do not name it as a formal parameter.
+- Keep $\lambda$ and the condition $\lambda > 1/2$ since they are economically meaningful.
+- The proof becomes a self-contained qualitative argument (which it already is).
 
----
+### 5. visual-figures-image-only — Panel (a) asymptotic spike
+**Issue:** The large-singularity P/D line shoots up near $\tau \approx 5\%$, compressing meaningful variation into the bottom third.
 
-## 4. Add Knesl (2023, JFE) to lit review [element-lit-review]
+**Fix:** In `code/generate-exhibits.R`, cap the y-axis on Panel (a) at a reasonable ceiling (e.g., 25–30) or use a log scale. A y-axis cap with a clear annotation ("P/D → ∞ as τ → 0") is the simplest fix and preserves the economic message. Also check that `y_min_a` logic still works.
 
-**File:** `paper/references.bib`, `paper/paper.tex` (lit review paragraph)
+### 6. writing-intro — Flow and clarity
+**Issues:**
+- Missing argument 3c (addressed in #3 above).
+- P2→P3 transition is abrupt (citation-first sentence).
+- P3 (contribution list) tells *what* but not *why it matters*.
+- P5 is overloaded (two extensions + policy in one paragraph).
+- "Proposition 2(iii)" reference is jarring for intro readers.
+- AI-authorship disclosure is buried.
 
-Add: Knesl, Peter (2023). "Automation and the Displacement of Labor by Capital: Asset Pricing Theory and Empirical Evidence." *JFE* 147(2), 271-296. This paper directly models and tests automation-driven displacement risk in asset prices — squarely on topic and in a target journal. Integrate a brief mention in the lit review paragraph alongside the Kogan-Papanikolaou citations.
-
----
-
-## 5. Add appendix section-number comment [spec-paper]
-
-**File:** `paper/paper.tex` ~line 293
-
-The appendix section `\section{Proof of Proposition~\ref{prop:pd-ratios}}` lacks a section-number comment. Add `% Appendix A` after it, consistent with the comment style used for all other sections.
-
----
-
-## 6. Fix extension figure contrast and scale compression [visual-figures-image-only]
-
-**File:** `code/generate-exhibits.R` (Panel b of extension figure)
-
-Two issues:
-- **Contrast:** The baseline (salmon) line is too light, especially in Panel (b). Use darker, more saturated colors (e.g., dark red/orange for baseline, dark blue for large singularity).
-- **Scale compression in Panel (b):** Baseline peaks at ~1.0 while large singularity reaches ~6.5, crushing baseline into bottom 15%. Use a log scale on the y-axis, or use `facet_wrap` with free y-scales to give each scenario adequate visual weight.
-
-Also apply the same color improvements to Panel (a) for consistency.
-
----
-
-## 7. Fix page 8 blank space (table float placement) [visual-pages]
-
-**File:** `paper/paper.tex` ~lines 192-197
-
-Page 8 has Section 3 header + short paragraph followed by ~80% whitespace, with Table 1 on page 9. Fix by either:
-- Adding `[!htbp]` or `[H]` to the table float (already uses `[H]` — check if the `float` package is loaded).
-- Restructuring to place the table immediately after the parameter description, or moving the parameter discussion below the table reference.
-
-Likely the issue is that the table is too large to fit on the same page as the preceding Section 2 content. Rearrange so Section 3's text and table appear together without a nearly empty page.
+**Fix:** Rewrite the introduction with these changes:
+- Add a bridge sentence before the GKP contribution paragraph.
+- Expand the contribution list to briefly explain *why* each point matters.
+- Split P5 into two paragraphs: one on the veto/development distortion, one on transfers.
+- Replace "Proposition 2(iii)" with plain English ("extinction risk attenuates this gap by reducing the weight on...").
+- Give the AI-authorship disclosure its own closing sentence or brief paragraph.
+- Integrate the "under-discussed" argument (from #3) naturally into the flow.
 
 ---
 
-## 8. Improve introduction flow [writing-intro]
+## Execution Order
 
-**File:** `paper/paper.tex` introduction (lines 39-72)
-
-Four structural issues identified:
-- **Paragraph 3** ("Despite a growing literature...") stalls momentum. It says "not much work has been done" without advancing the argument. Fold the under-discussed point into the motivation or delete.
-- **Paragraph 4** (singularity overcomes frictions) introduces extension logic too early and too cryptically. Move this preview to after the model description paragraph, or make it more concrete.
-- **Paragraph 6** (GKP positioning) comes after the model description rather than before. Move GKP positioning to immediately after the motivation, before the model machinery paragraph.
-- **Paragraph 8** (AI-authorship disclosure) creates a tonal rupture after quantitative results. Integrate the disclosure more smoothly — perhaps as a brief final sentence of the preceding paragraph rather than a standalone shift.
-
-Restructure introduction paragraph order: (1) opening/figure, (2) hedging motive + incompleteness, (3) GKP positioning, (4) model description, (5) extensions preview, (6) quantitative results + AI disclosure, (7) lit review.
+1. **Bib fixes** (#1) — quick, no dependencies.
+2. **Notation/traceability** (#2) — quick edits to paper.tex and code.
+3. **Extension 1 streamlining** (#4) — reduces formalism, may shorten paper.
+4. **Figure fix** (#5) — code change + regenerate exhibits.
+5. **Intro rewrite** (#6 + #3) — depends on all above being settled first, since intro references model content.

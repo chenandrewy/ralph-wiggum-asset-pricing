@@ -1,7 +1,7 @@
 # tests/factcheck-anaphora.py
-Started: 2026-04-09 19:48:38 EDT
-Runtime: 3m 25s
-[ralph-garage/agent-logs/20260409T194838.519111-0400_factcheck-anaphora_claude_opus.log](../ralph-garage/agent-logs/20260409T194838.519111-0400_factcheck-anaphora_claude_opus.log)
+Started: 2026-04-09 20:07:38 EDT
+Runtime: 4m 56s
+[ralph-garage/agent-logs/20260409T200738.680342-0400_factcheck-anaphora_claude_opus.log](../ralph-garage/agent-logs/20260409T200738.680342-0400_factcheck-anaphora_claude_opus.log)
 
 # factcheck-anaphora
 VERDICT: PASS
@@ -9,20 +9,20 @@ REASON: All demonstratives near cross-references resolve correctly to their inte
 
 ## Findings by section
 
-### Introduction (lines 39–71)
-No issues. `Figure~\ref{fig:ai-valuations}` and `Proposition~\ref{prop:comp-statics}(iii)` both have prose that accurately describes their targets.
+### Introduction (lines 39–81)
+No anaphora issues. Demonstratives like "such gains" (line 41, near Figure~\ref{fig:ai-valuations}) resolve to "transformative productivity gains" in the same clause, not to the figure content. No mismatch.
 
-### Model (lines 72–183)
-No issues. Demonstratives near `Proposition~\ref{prop:pd-ratios}`, `Section~\ref{sec:ext2}`, and `Appendix~\ref{app:proof-pd}` all resolve correctly. "This condition" (line 145) correctly refers to the $A^j < 1$ existence condition just defined.
+### Model (lines 82–193)
+No anaphora issues. References to Proposition~\ref{prop:pd-ratios}, Section~\ref{sec:ext2}, and Appendix~\ref{app:proof-pd} are not preceded by ambiguous demonstratives. Nearby demonstratives ("This is the hedging channel," "This makes the interaction...") resolve to mechanisms described in the immediately preceding text, not to cross-referenced targets.
 
-### Quantitative Analysis (lines 184–201)
-No issues. `Table~\ref{tab:pd-ratios}`, `Proposition~\ref{prop:comp-statics}(iii)`, and `Figure~\ref{fig:ai-valuations}` all match their targets.
+### Quantitative Analysis (lines 194–211)
+No anaphora issues. No demonstratives appear near the cross-references to Table~\ref{tab:pd-ratios}, Proposition~\ref{prop:comp-statics}(iii), or Figure~\ref{fig:ai-valuations}.
 
-### Extensions (lines 202–277)
-No issues. `Remark~\ref{rem:existence}` correctly describes the existence condition being violated. `Figure~\ref{fig:extension-panels}` accurately describes the two-panel figure content. "This discontinuity" refers to the just-described P/D ratio discontinuity, not to the cross-reference target itself.
+### Extensions (lines 212–281)
+No anaphora issues. "This ratio" (line 264) correctly resolves to equation~\eqref{eq:transfer-ratio} defined immediately above. "This discontinuity" (line 268) refers to the P/D ratio behavior described in the preceding sentences, consistent with the existence condition in Remark~\ref{rem:existence}. The reference to "The P/D formula from Proposition~\ref{prop:pd-ratios}" (line 256) uses a definite description, not a demonstrative.
 
-### Conclusion (lines 278–288)
-No issues. No cross-references appear in this section.
+### Conclusion (lines 282–292)
+No cross-references appear in this section. Demonstratives ("this premium," "This mechanism") resolve to antecedents within the paragraph.
 
-### Appendix: Proof (lines 289–318)
-No issues. `\ref{prop:pd-ratios}` and `\eqref{eq:pd-ai}` both resolve correctly. "This" on line 317 correctly refers to the just-derived equation being rewritten as the earlier formula.
+### Proof of Proposition 1 (lines 293–322)
+No anaphora issues. "This can be rewritten as equation~\eqref{eq:pd-ai}" (line 321) correctly refers to the solved formula on the preceding line. "this is exact when..." (line 315) refers to the approximation described in the same sentence.

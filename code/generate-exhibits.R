@@ -106,17 +106,17 @@ cat("Wrote", file.path(outdir, "table-pd-ratios.tex"), "\n")
 tau_grid <- seq(0, 0.70, by = 0.01)
 
 alpha0 <- 0.70   # household's initial consumption share
-delta0 <- 0.50   # deadweight cost parameter
+delta <- 0.50   # deadweight cost parameter
 
 # Household consumption growth in singularity state with transfers
-# c_H_post / c_H_pre = phi_val*(1+eta) + tau*(1-delta0*tau)*(1-phi_val*alpha0)/alpha0 * (1+eta)
+# c_H_post / c_H_pre = phi_val*(1+eta) + tau*(1-delta*tau)*(1-phi_val*alpha0)/alpha0 * (1+eta)
 consumption_growth <- function(tau, eta_val, phi_val) {
-  phi_val * (1 + eta_val) + tau * pmax(0, 1 - delta0 * tau) * (1 - phi_val * alpha0) / alpha0 * (1 + eta_val)
+  phi_val * (1 + eta_val) + tau * pmax(0, 1 - delta * tau) * (1 - phi_val * alpha0) / alpha0 * (1 + eta_val)
 }
 
 # P/D with transfers: effective phi changes
 compute_pd_with_transfer <- function(p_val, xi_val, tau_val, eta_val, gamma_j, phi_val) {
-  phi_eff <- phi_val + tau_val * pmax(0, 1 - delta0 * tau_val) * (1 - phi_val * alpha0) / alpha0
+  phi_eff <- phi_val + tau_val * pmax(0, 1 - delta * tau_val) * (1 - phi_val * alpha0) / alpha0
   sdf_sing <- phi_eff^(-gamma) * (1 + eta_val)^(-gamma) * gamma_j
   base <- beta * (1 + g)^(1 - gamma)
   K <- base * ((1 - p_val) + p_val * (1 - xi_val) * sdf_sing)
@@ -157,9 +157,14 @@ scenario_labels <- c(
 # Darker, more saturated colors for better contrast
 scenario_colors <- c("Baseline" = "#B22222", "Large singularity" = "#1B4F99")
 
-# Compute y-axis lower bound for Panel A to reduce whitespace
+# Compute y-axis bounds for Panel A: cap at 25 to avoid asymptotic spike
 pd_data_a <- df_ext %>% filter(!is.na(pd_ai) & tau <= 0.40)
 y_min_a <- floor(min(pd_data_a$pd_ai, na.rm = TRUE) / 5) * 5  # round down to nearest 5
+y_cap_a <- 25
+
+# Find the tau value where the large-singularity line exits the capped region
+large_sing_data <- pd_data_a %>% filter(scenario == "Large singularity")
+exit_tau <- large_sing_data %>% filter(pd_ai <= y_cap_a) %>% pull(tau) %>% min()
 
 panel_a <- ggplot(pd_data_a,
                   aes(x = tau, y = pd_ai, color = scenario, linetype = scenario)) +
@@ -168,7 +173,10 @@ panel_a <- ggplot(pd_data_a,
        y = "P/D Ratio (AI Stocks)",
        title = "(a) AI Stock Valuations") +
   scale_x_continuous(labels = scales::percent_format(), limits = c(0, 0.40)) +
-  scale_y_continuous(limits = c(y_min_a, NA)) +
+  scale_y_continuous(limits = c(y_min_a, y_cap_a)) +
+  annotate("text", x = exit_tau + 0.01, y = y_cap_a * 0.95,
+           label = expression(P/D %->% infinity ~ "as" ~ tau %->% 0),
+           color = "#1B4F99", size = 3.5, hjust = 0, fontface = "italic") +
   scale_color_manual(values = scenario_colors, labels = scenario_labels) +
   scale_linetype_discrete(labels = scenario_labels) +
   theme_paper

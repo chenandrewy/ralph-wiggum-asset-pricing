@@ -1,76 +1,49 @@
 # tests/factcheck-theory.py
-Started: 2026-04-09 19:48:38 EDT
-Runtime: 9m 9s
-[ralph-garage/agent-logs/20260409T194838.528159-0400_factcheck-theory_claude_opus.log](../ralph-garage/agent-logs/20260409T194838.528159-0400_factcheck-theory_claude_opus.log)
+Started: 2026-04-09 20:07:38 EDT
+Runtime: 9m 1s
+[ralph-garage/agent-logs/20260409T200738.674238-0400_factcheck-theory_claude_opus.log](../ralph-garage/agent-logs/20260409T200738.674238-0400_factcheck-theory_claude_opus.log)
 
 # factcheck-theory
-VERDICT: FAIL
-REASON: Notational inconsistencies in the utility family ($U_0$ vs. $\Delta U^H$ superscript; $u_\text{ext}$ case ambiguity) and an undisclosed parameter ($\alpha_0 = 0.70$) used in the Extension 2 figure violate the consistency and traceability requirements.
 
----
+VERDICT: PASS
+REASON: All notation is consistent, all assumptions are mutually consistent, and all mathematical objects trace back to the assumptions.
 
-## Requirement 1: Notational Consistency — FAIL (minor)
+## Requirement 1: Notational Consistency — PASS
 
-**No symbol collisions found.** No symbol is reused for a genuinely different formal object. The paper is clean in this regard.
+Every mathematical symbol maps to a unique formal object. No collisions, reuse for different concepts, or meaningful ambiguities were found across 25 symbol families (10 Greek letters, 15 Roman/compound symbols).
 
-**Ambiguities found:**
+**Minor observations** (not failures):
+1. **Undefined period utility symbol $u$** (line 237, proof of Proposition 3): The symbol $u$ appears once ("but $u$ is concave") without formal definition. The period felicity $u(c) = c^{1-\gamma}/(1-\gamma)$ is implicit in $U_0^H$ (eq 3) but never introduced as $u$. Meaning is clear from context; standard practice in the field.
+2. **Implicit time-subscript dropping**: The setup uses $\alpha_t$, $\theta_t$ with time subscripts, but the equilibrium formulas (Proposition 1, Extension 2) write $\alpha$, $\theta$ without subscripts. The appendix proof explains the stationarity assumption that justifies this, but the convention is never stated as a global rule.
 
-1. **$U_0$ vs. $\Delta U^H$ superscript inconsistency (MEDIUM).** $U_0$ (Eq. 3) denotes the household's lifetime utility but lacks the $H$ superscript. $\Delta U^H$ (Eq. 5) denotes the household's one-period utility gain and carries the $H$ superscript. Both refer to the same household. The inconsistency does not create genuine confusion (there is only one household), but it is a notational inconsistency.
+## Requirement 2: Assumption Consistency — PASS
 
-2. **$u_\text{ext}$ case ambiguity (MEDIUM).** The prose refers to "normalizing extinction utility to zero" using $u_\text{ext}$. Lowercase $u$ denotes period utility throughout the paper, but extinction utility is a continuation (lifetime) value, which should be $U_\text{ext}$ by the paper's own uppercase/lowercase convention.
+24 formal assumptions were identified across the baseline model (A1–A13), Extension 1 (A14–A18), Extension 2 (A19–A22), and proposition-level conditions (A23–A24). No pair of assumptions imposes contradictory constraints.
 
-3. **$\delta_0$ subscript unexplained (LOW-MEDIUM).** The subscript "0" has no companion ($\delta_1$, etc.) and clashes with the paper's convention where subscript 0 means "at date 0" ($U_0$, $\mathbb{E}_0$). Should be $\delta$ or the subscript should be explained.
+**Checks performed:**
+- **Contradictory constraints**: None found. Extension 1 explicitly augments the baseline singularity by splitting it into positive/negative sub-types; the negative sub-case reduces to the baseline.
+- **Parameter domains**: Compatible across all uses. Two implicit constraints noted:
+  - $\phi \leq 1 - \Delta\theta$ (needed for $\alpha_t \leq 1 - \theta_t$ to survive repeated singularities). Not stated; satisfied by all calibrated values ($0.5 \leq 0.8$; $0.05 \leq 0.8$).
+  - $\delta\tau < 1$ (needed for net transfers to be positive). Not stated; always satisfied when $\delta < 1$ since $\tau < 1$.
+- **Structural equations**: Consistent across baseline and both extensions. Consumption dynamics, dividend dynamics, and the Euler equation pricing framework are coherent.
+- **Budget constraint / accounting**: Aggregate consumption $C_t$ is exhausted between household ($\alpha_t C_t$) and AI owners ($(1-\alpha_t)C_t$). Private AI capital dividends $(1-\alpha_t - \theta_t)C_t \geq 0$ by the domain constraint $\alpha_t \leq 1-\theta_t$. The model is reduced-form (consumption-based pricing), so full GE budget balance is outside scope and not claimed.
+- **Transfer base**: Tax base $(1-\phi\alpha)(1+\eta)(1+g)C_t$ equals AI owners' post-singularity share. The $\phi_\text{eff}$ derivation and transfer ratio (eq 9) are algebraically verified.
+- **Proof algebra** (Appendix A): Euler equation expansion (eq 11) and solved P/D (eq 12) match Proposition 1. Verified step by step.
 
-4. **Time-subscript dropping convention unstated (MINOR).** Both $\alpha_t$ and $\theta_t$ are introduced as time-varying, but appear without subscripts in Propositions 1 and 3 and Extension 2. The convention (bare = current/pre-singularity) is standard but never declared.
+## Requirement 3: Traceability — PASS
 
-5. **$\Gamma^j$ naming ambiguity (MINOR).** Called "dividend growth factor" but actual dividend growth in a singularity is $\Gamma^j(1+g)$, not $\Gamma^j$ alone.
+All mathematical objects not appearing directly in the assumptions were traced back:
 
-6. **$\Delta\theta$ naming (MINOR).** The $\Delta$ prefix conventionally suggests a first difference, but $\Delta\theta$ is a rate parameter; the actual change in $\theta$ is $\Delta\theta(1-\theta_t)$.
+| Object | Traced to |
+|--------|-----------|
+| $\Gamma^{AI}$, $\Gamma^{N}$ | A6 (singularity jump), A8–A9 (dividend dynamics) |
+| $A^j$ (existence condition) | A2, A5–A7, A12 |
+| P/D ratios (eqs 4–5) | Euler equation from A12, A24, A2–A3, A5–A10 |
+| $v^{AI}$ (appendix) | Notation for P/D ratio |
+| $\phi_\text{eff}$ | Algebraic rearrangement of A21 |
+| Transfer ratio (eq 9) | Algebraic manipulation of A21 |
+| $c^H_{post}$, $c^H_{no\text{-}transfer}$ | A21, A3, A6 |
+| $(\alpha', \theta')$ | Post-singularity values per A6, A9 |
+| $u$ (line 237) | Period utility implicit in A12 (symbol not formally introduced) |
 
-7. **$\phi(1+\eta) < 1$ is an implicit assumption (MINOR).** Used in the economic narrative but never formally stated as a maintained assumption. Both calibrations satisfy it.
-
-8. **$\alpha_t \leq 1-\theta_t$ not verified under dynamics (MINOR).** Stated once in Setup but the implicit requirement $\phi \leq 1-\Delta\theta$ for preservation under singularity transitions is never stated (naturally satisfied by all calibrations).
-
----
-
-## Requirement 2: Mutual Consistency of Assumptions — PASS
-
-All formally stated assumptions are mutually consistent. Detailed checks confirmed:
-
-- **Parameter domains compatible** across all sections and calibrations, including after repeated singularities.
-- **Probability weights sum to 1** in both the baseline and Extension 1 probability trees.
-- **CRRA functional form and SDF specification consistent** across all sections.
-- **Budget/resource constraints hold exactly**, including with government transfers (household + AI owners + deadweight loss = aggregate output).
-- **Existence condition** $A^j < 1$ satisfied for baseline calibration ($A^{AI} = 0.987$ at $p = 1\%$, $\xi = 0$) and correctly identified as violated for large-singularity case ($A^{AI} = 2.37$ at $\tau = 0$), matching the paper's narrative.
-- **Extensions branch independently** off the baseline with no cross-contamination.
-- **Code parameters match paper parameters** exactly for all 12 disclosed values.
-
-No pair of assumptions contradicts another.
-
----
-
-## Requirement 3: Traceability — FAIL (minor)
-
-**One undisclosed parameter:**
-
-- **$\alpha_0 = 0.70$**: Used in the R code (`alpha0 <- 0.70`) for the Extension 2 figure (Panel (a): P/D ratios as a function of $\tau$; Panel (b): consumption change). The paper never states this value. The transfer ratio (Eq. 7) and post-transfer consumption (Eq. 6) depend on $\alpha$, so the figure implicitly assumes $\alpha = 0.70$ without disclosing this to the reader. This parameter is not traceable to any stated assumption in the paper.
-
-**One unstated derivation:**
-
-- **Effective $\phi$ for P/D with transfers.** The code computes $\phi_\text{eff} = \phi + \tau(1-\delta_0\tau)(1-\phi\alpha)/\alpha$ to generate Panel (a) of Figure 2. This formula is not derived or stated in the paper. It follows directly from Eq. 6 by expressing post-transfer consumption as $\phi_\text{eff} \cdot \alpha \cdot (1+\eta)(1+g)C_t$ and substituting into the P/D formula from Proposition 1. The derivation is correct but unstated.
-
-**All other objects are traceable.** Every parameter, state variable, dividend, price, and derived quantity can be traced back through explicit definitions to the stated assumptions.
-
----
-
-## Summary of Issues Requiring Fixes
-
-| # | Issue | Requirement | Severity |
-|---|-------|-------------|----------|
-| 1 | $U_0$ should be $U_0^H$ for consistency with $\Delta U^H$ | Req. 1 | Medium |
-| 2 | $u_\text{ext}$ should be $U_\text{ext}$ (lifetime, not period utility) | Req. 1 | Medium |
-| 3 | $\delta_0$ subscript unexplained or should be plain $\delta$ | Req. 1 | Low-Medium |
-| 4 | $\alpha_0 = 0.70$ used in figure code but not stated in paper | Req. 3 | Low-Medium |
-| 5 | Effective-$\phi$ formula for P/D with transfers not derived in paper | Req. 3 | Low-Medium |
-| 6 | Time-subscript dropping convention should be stated | Req. 1 | Minor |
-| 7 | $\phi(1+\eta) < 1$ should be stated as maintained assumption | Req. 1 | Minor |
+No expression was found that cannot be logically derived from the stated assumptions.

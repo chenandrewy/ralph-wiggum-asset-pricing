@@ -1,40 +1,38 @@
 # tests/factcheck-freely.py
-Started: 2026-04-09 19:48:38 EDT
-Runtime: 4m 31s
-[ralph-garage/agent-logs/20260409T194838.518416-0400_factcheck-freely_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260409T194838.518416-0400_factcheck-freely_claude_claude-opus-4-6.log)
+Started: 2026-04-09 20:07:38 EDT
+Runtime: 5m 58s
+[ralph-garage/agent-logs/20260409T200738.676750-0400_factcheck-freely_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260409T200738.676750-0400_factcheck-freely_claude_claude-opus-4-6.log)
 
 # factcheck-freely
 VERDICT: PASS
-REASON: All mathematical derivations, comparative statics, numerical claims, and economic arguments are correct; no factual errors or logical inconsistencies found.
+REASON: No factual errors or logical inconsistencies found; all formulas, proofs, numerical claims, and literature characterizations are correct.
 
 ## Review Details
 
-An Opus-level subagent independently reviewed the full paper (paper.tex), references (references.bib), and code (generate-exhibits.R) for factual errors and logical inconsistencies. The review verified:
+An Opus-level subagent reviewed the full paper (paper.tex), code (generate-exhibits.R), and specifications for mathematical errors, logical inconsistencies, factual claims about cited literature, internal consistency, and economic logic errors.
 
-### Mathematics and Derivations
-- **P/D formulas (Eqs. 4-5)**: Euler equation derivation in Appendix A is correct. The three states (no singularity, non-extinction singularity, extinction) are properly enumerated, SDF and dividend growth correctly specified, and the algebra solving for v^{AI} is correct.
-- **Transfer consumption formula (Eq. 7)**: Correctly computes post-transfer household consumption.
-- **Transfer ratio (Eq. 8)**: Correctly simplifies; the (1+eta)(1+g)C_t terms cancel, confirming independence from eta.
-- **Comparative statics (Prop. 2)**: All three parts are directionally correct. Part (i): decreasing phi raises phi^{-gamma}, amplifying AI stocks more due to higher Gamma^{AI}. Part (ii): increasing p puts more weight on singularity states. Part (iii): higher xi shrinks weight on non-extinction states where divergence occurs.
-- **Veto equation (Eq. 6)**: Correctly derived from the difference between development and no-development expected utilities, with proper treatment of extinction normalization.
+### Mathematics and Proofs
+- The P/D ratio formula (Proposition 1) and its appendix proof are correct. The Euler equation derivation, SDF terms, dividend growth factors, and geometric sum all check out.
+- Dividend growth factors Gamma^AI and Gamma^N are correctly defined and computed.
+- The transfer consumption formula (eq. 6), transfer ratio (eq. 7), and phi_eff formula are algebraically correct.
+- Corollary 1 proof is valid. Comparative statics (Proposition 2) are correct.
+- The existence condition (Remark 1) is correct: large-singularity parameters violate it as claimed.
 
-### Numerical Claims vs. Computed Values
-- p=0.5%, xi=0: AI P/D ~ 17.5 (text says "roughly 18"), Non-AI P/D ~ 11.1 (text says "near 11"), ratio ~ 1.57 (text says "about 1.6"). **All correct.**
-- p=1%, xi=0: ratio ~ 5.77 (text says "nearly 6 to 1"). **Correct.**
-- phi(1+eta) = 0.05 x 10 = 0.5 (text says "consumption halves"). **Correct.**
-- phi^{-gamma} = 0.05^{-4} = 160,000. **Correct.**
+### Numerical Claims
+- P/D ratio of ~18 vs ~11 at p=0.5%, xi=0 (ratio 1.58, paper says "about 1.6") -- accurate.
+- Ratio of ~5.8 at p=1% (paper says "nearly 6 to 1") -- accurate.
+- "1.5 to 6 times" claim matches computed range of 1.58 to 5.76.
+- Parameter values in text match the code exactly.
 
-### Parameter Consistency (Text vs. Code)
-All baseline and extension parameters match between paper text and code: beta=0.96, g=0.02, gamma=4, phi=0.5, eta=0.5, theta=0.15, dtheta=0.20, phi_large=0.05, eta_large=9, p_ext=0.005, xi_ext=0.05, delta0=0.50.
+### Literature
+- GKP (2012) characterization is accurate regarding displacement risk and incomplete markets.
+- Jones (2024) characterization regarding extinction risk and bounded utility is accurate.
+- Other citations (Kogan-Papanikolaou, Knesl, Barro, Wachter, Pastor-Veronesi, Korinek-Suh) are appropriately described.
 
-### Citation Accuracy
-- GKP (2012): Accurately characterized as showing innovation creates displacement risk under incomplete markets.
-- Jones (2024): Accurately described as studying AI growth vs. extinction risk trade-off.
-- Nordhaus (2021): Correctly described with "examined critically" (Nordhaus is skeptical of singularity).
-- Knesl (2023), Pastor & Veronesi (2009), Kogan & Papanikolaou (2014): All accurately characterized.
-
-### Minor Presentation Notes (not errors)
-- Post-singularity stationarity approximation (Appendix A, line 310-311): acknowledged as an approximation; the parenthetical about exactness is slightly imprecise but the derivation is correct.
-- Prop 2(ii) uses "gamma sufficiently large" without a precise threshold — standard in theory papers, not a logical error.
-- alpha_0 = 0.70 is used in the code but not disclosed in the paper text — a parameter omission for reproducibility, not a factual error.
-- The word "surplus" describing the tax base is slightly ambiguous but the formula is internally consistent.
+### Minor Observations (not errors)
+1. Gamma^j labels are slightly imprecise (full dividend growth includes a (1+g) factor handled separately in the proof) -- labeling issue only.
+2. Post-singularity stationarity approximation is acknowledged in the proof text and is standard for tractability.
+3. Comparative static (ii) qualifier ("gamma sufficiently large") may be overly conservative but is not wrong.
+4. CRRA with gamma > 1 yields negative utility, making extinction (utility 0) preferred -- explicitly acknowledged as making the veto result conservative.
+5. Veto proposition proof is informal but acceptable for a theory paper of this style.
+6. Positive singularity magnitude left unspecified in Extension 1 -- does not affect any stated claim.

@@ -1,46 +1,53 @@
 # tests/writing-intro.py
-Started: 2026-04-09 19:48:38 EDT
-Runtime: 2m 16s
-[ralph-garage/agent-logs/20260409T194838.520006-0400_writing-intro_claude_opus.log](../ralph-garage/agent-logs/20260409T194838.520006-0400_writing-intro_claude_opus.log)
+Started: 2026-04-09 20:07:38 EDT
+Runtime: 2m 10s
+[ralph-garage/agent-logs/20260409T200738.675230-0400_writing-intro_claude_opus.log](../ralph-garage/agent-logs/20260409T200738.675230-0400_writing-intro_claude_opus.log)
 
 # writing-intro
 VERDICT: FAIL
-REASON: The introduction fails on clarity-for-skimmers (missing argument c) and on flow (abrupt transitions, overloaded paragraphs, misplaced technical references).
+REASON: All three evaluation dimensions (clarity for skimmers, flow, and promise fulfillment) returned FAIL.
 
-## Subagent Results
+## Evaluation Details
 
-### 1. Clarity of Main Arguments for Skimming Readers — FAIL
+### 1. Clarity of Main Arguments to a Skimmer — FAIL
 
-Each spec argument evaluated:
+Arguments (a), (b), and (e) from the paper spec are clearly communicated via topic sentences that a skimmer would catch:
 
-- **(a) AI stocks hedge against negative singularity** — PASS. Paragraph 2 opens directly with the hedging motive.
-- **(b) Incomplete markets are key** — PASS (marginal). "If markets were complete" appears in P2; "Complete markets would eliminate this distortion" in P5.
-- **(c) Financial market solutions to AI disaster risk are under-discussed, though frictions limit effectiveness** — FAIL. This argument does not appear as a paragraph opener or standalone claim anywhere a skimmer would notice. The "under-discussed" positioning is entirely absent.
-- **(d) Singularity abundance overcomes market frictions** — PASS (barely). Present in P5 mid-paragraph but not prominently signaled.
-- **(e) Incomplete markets distort AI development, not just valuations** — PASS. P5 opener: "Beyond pricing, market incompleteness distorts the development of AI itself."
-- **Self-as-demonstration device** — PASS. Final substantive paragraph.
+- **(a) Hedging motive for AI valuations** — Clear. "Part of this premium, we argue, reflects a hedging motive" opens the second paragraph.
+- **(b) Incomplete markets are key** — Clear. "If markets were complete, investors could insure against this risk directly" is in the same paragraph.
+- **(e) Incomplete markets distort AI development** — Clear. "Beyond pricing, market incompleteness distorts the development of AI itself" is a topic sentence.
+
+Two arguments are weaker:
+
+- **(c) Financial market solutions are under-discussed** — Present but buried mid-paragraph ("financial market solutions to AI disaster risk...remain under-explored"), not anchored as a topic sentence. A fast skimmer could miss it.
+- **(d) Singularity abundance overcomes market frictions** — The weakest. It appears only within the government-transfers paragraph ("they become effective when singularity-driven growth is large enough to overwhelm the waste"). A skimmer would register this as a point about transfers, not as the broader claim that the singularity enables overcoming frictions. It needs its own structural home or a clearer headline framing.
 
 ### 2. Introduction Flow — FAIL
 
-Specific issues identified:
+**Strengths:** The opening hook is crisp, the hedging motive is cleanly stated, and the closing meta-sentence is memorable.
 
-- **P2 → P3 transition is abrupt.** Reader moves from intuition directly into a citation-first sentence ("The core mechanism builds on GKP 2012...") without a bridge. Reads as formal throat-clearing.
-- **P3 is turgid.** The three-item contribution list (discrete singularity, extinction risk, policy implications) is unexplained — it tells the reader *what* the contribution is but not *why it matters*.
-- **P5 is overloaded.** Two extensions, welfare implications, and policy logic crammed into one paragraph. This produces the compressed, turgid writing the spec prohibits.
-- **"Proposition 2(iii)" in the introduction** is jarring — readers don't yet know what Proposition 2 is. The finding should be stated in plain English.
-- **AI-authorship disclosure is buried** as the last sentence of a results paragraph. It deserves its own sentence or brief paragraph to land with impact.
-- **"As most observers believe" (P5)** is editorially casual and out of place in a formal introduction.
-- **P4 reads like a model description** imported into the introduction — closed-form machinery dominates over economic insight.
+**Flow problems:**
 
-### 3. Promises Fulfilled in Body — PASS
+- **Paragraph 2 → 3 transition is abrupt.** Paragraph 2 ends on a policy observation about "AI risk discourse"; paragraph 3 pivots to literature attribution without a bridge.
+- **Bullet list breaks narrative momentum.** The three contributions (singularity, extinction risk, transfers) are the paper's core; presenting them as bullets reads like a table of contents rather than an argument. Prose would better convey *why* each matters.
+- **Paragraphs 5–6 are redundant with the bullet list.** The reader encounters each idea twice before the lit review — once as a bullet, once as a paragraph. Pick one structure and commit.
+- **"Both extensions branch directly off the baseline model"** appears before the reader knows what the two extensions are. The referent is unclear at that point.
+- **Quantitative result (P/D up to 6×) appears late.** This strong empirical grounding would be more effective earlier, anchoring the hedging claim before describing the model.
+- **The meta-sentence ("This paper is itself an illustration...")** is placed immediately before the lit review with no transition, reading as a non-sequitur.
 
-All 17 substantive analytical promises made in the Introduction are delivered:
-- Closed-form P/D ratios (Proposition 1) ✓
-- Comparative statics on displacement, singularity probability, extinction (Proposition 2) ✓
-- Veto result under incomplete vs. complete markets (Proposition 3) ✓
-- Government transfers overcoming deadweight costs (Extension 2, Figure 2) ✓
-- Quantitative magnitudes (~6x P/D spread) ✓
-- NASDAQ vs S&P 500 figure ✓
-- Extensions branching off baseline model ✓
+### 3. Promises Fulfilled in Analysis Sections — FAIL
 
-No significant unfulfilled promise identified.
+All six analytical promises are delivered:
+
+| Promise | Delivered? |
+|---------|-----------|
+| Closed-form solutions | Yes — Proposition 1 |
+| Discrete singularity with large valuation spreads | Yes — Corollary 1, Proposition 2, Table 1 |
+| Extinction risk attenuating the premium | Yes — Proposition 2(iii), Table 1 |
+| Government transfers effective under large growth | Yes — Extension 2, Figure 2 |
+| P/D ratios up to ~6× higher | Yes — Table 1 |
+| Veto / distortion of AI development | Yes — Proposition 3 |
+
+One non-analytical promise is unfulfilled:
+
+- **"All analysis and writing were produced by AI agents"** — This claim appears in both the abstract and introduction but is never substantiated. No methodological disclosure, appendix, or supplementary material documents the AI authorship process. For a journal paper, an unverifiable production claim needs supporting documentation.
