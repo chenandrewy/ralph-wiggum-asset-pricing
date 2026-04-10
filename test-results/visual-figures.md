@@ -1,85 +1,75 @@
 # tests/visual-figures.py
-Started: 2026-04-09 19:33:01 EDT
-Runtime: 1m 18s
-[ralph-garage/agent-logs/20260409T193302.019749-0400_visual-figures_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260409T193302.019749-0400_visual-figures_claude_claude-opus-4-6.log)
+Started: 2026-04-09 19:48:38 EDT
+Runtime: 1m 6s
+[ralph-garage/agent-logs/20260409T194838.518416-0400_visual-figures_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260409T194838.518416-0400_visual-figures_claude_claude-opus-4-6.log)
 
 # visual-figures
 
 VERDICT: PASS
 
-REASON: Both figures are readable with clearly distinguishable series and self-explanatory captions.
+REASON: Both figures are readable, distinguishable, and narratively clear.
 
 ---
 
-## Figure 1 (page 2)
+## Figure 1 — Valuations of AI-Exposed Stocks vs. the Broader Market
 
 VERDICT: PASS
 
-REASON: The single-panel figure is clearly readable, with well-distinguished series and a self-explanatory caption.
+REASON: The single-panel figure is readable, the two series are clearly distinguishable, and the caption conveys the main message without ambiguity.
 
-### Panel identification
-Single panel (no sub-panels). Time-series plot showing two normalized price indices (NASDAQ Composite and S&P 500) from roughly 2016 to 2026, with January 2015 = 100.
+### Panel: Full figure (single panel)
 
-### Readability
-- Figure title/caption is fully legible and descriptive.
-- Y-axis label ("Normalized Price (Jan 2015 = 100)") is readable.
-- X-axis tick labels (2016, 2018, 2020, 2022, 2024, 2026) are readable.
-- Y-axis tick labels (100, 200, 300, 400, 500) are readable.
-- Legend text ("NASDAQ Composite (AI/Tech-Heavy)" and "S&P 500") is readable and placed without obscuring data.
-- Font sizes are adequate throughout. No text is cut off or overlapping.
+**Readability: PASS**
+- The title/caption is fully legible and informative.
+- The y-axis label ("Normalized Price (Jan 2015 = 100)") is readable.
+- The x-axis shows year tick labels (2016, 2018, 2020, 2022, 2024, 2026) which are clearly readable.
+- The legend in the upper-left is readable with adequate font size.
+- Tick labels on both axes are legible.
+- No text is overlapping, cut off, or too small.
 
-### Distinguishability
-- Two series use clearly different visual encodings: solid line (NASDAQ) and dashed line (S&P 500). Easily separable at a glance.
-- Legend is positioned in upper-left area with empty space; does not cover meaningful data.
-- The divergence between series (especially from ~2023 onward) is immediately apparent.
+**Distinguishability: PASS**
+- The two series use distinct visual encodings: the NASDAQ Composite is a solid line and the S&P 500 is a dashed line.
+- The lines are well separated for the majority of the plot, especially in the later years where the NASDAQ pulls sharply above the S&P 500.
+- The legend is positioned in the upper-left corner and does not obscure any meaningful part of the data.
 
-### Narrative clarity
-- **From figure + caption alone:** A reader can immediately see that AI-exposed stocks have dramatically outperformed the broader market, with a sharp divergence beginning around 2023.
-- **From figure + paper text:** The valuation premium motivates the theoretical model — AI stocks serve as a hedge against displacement risk from a potential AI singularity.
+**Narrative clarity: PASS**
+- From figure and caption alone: AI-exposed stocks (proxied by the NASDAQ Composite) have dramatically outpaced the broader market (S&P 500) in recent years, particularly from around 2023 onward. The normalization to January 2015 = 100 makes the comparison straightforward.
+- From figure and paper text: The elevated valuations partly reflect a hedging motive — AI stocks serve as a partial hedge against AI singularity risk for investors who cannot diversify away displacement risk due to market incompleteness.
 
 ---
 
-## Figure 2 (page 13)
+## Figure 2 — Extension Panels (AI Stock Valuations and Household Consumption)
 
 VERDICT: PASS
 
-REASON: Both panels are readable with clearly distinguishable series, and the caption conveys the main message without ambiguity.
-
-### Panel identification
-Two panels:
-- Panel (a): "AI Stock Valuations" (left)
-- Panel (b): "Household Consumption" (right)
+REASON: Both panels are readable with clearly distinguishable series, and the caption provides sufficient context to understand the figure's message.
 
 ### Panel (a): AI Stock Valuations
 
-**Readability:**
-- Panel title "AI Stock Valuations" is legible.
-- Y-axis label ("P/D ratio") and x-axis label ("Tax rate τ") are readable.
-- Tick labels on both axes are legible.
-- Legend (upper-right, two entries: "Baseline" and "Large singularity") is readable.
-- Font sizes are adequate.
+**Readability: PASS**
+- The panel title "AI Stock Valuations" is clearly readable.
+- The y-axis label ("P/D Ratio (AI Stock)") and x-axis label ("Tax rate τ") are legible.
+- Tick labels on both axes are readable.
+- The legend is legible, showing two series: "Baseline (η=0.5, φ=0.5)" and "Large singularity (η=9, φ=0.05)."
 
-**Distinguishability:**
-- Two line series: dashed (baseline) and solid (large singularity). Clearly separated by line style and position.
-- Legend does not obscure meaningful data. Both series easily distinguishable at a glance.
-
-**Assessment:** PASS. No issues.
+**Distinguishability: PASS**
+- The two series use different line styles (solid vs. dashed) and different colors, making them easy to distinguish.
+- The baseline series is a gently declining curve across the full range of τ, while the large-singularity series appears only for higher τ values, creating clear visual separation.
+- The legend does not obscure any plotted data.
 
 ### Panel (b): Household Consumption
 
-**Readability:**
-- Panel title "Household Consumption" is legible.
-- Y-axis label ("Consumption change (%)") and x-axis label ("Tax rate τ") are readable.
-- Tick labels are legible.
-- Legend lists two series plus annotations for "Catastrophe" and "Effective displacement." Font sizes are adequate.
+**Readability: PASS**
+- The panel title "Household Consumption" is clearly readable.
+- The y-axis label ("Consumption Change (Singularity State)") and x-axis label ("Tax rate τ") are legible.
+- Tick labels are readable. The y-axis uses percentage formatting.
+- The legend is legible with the same two-series encoding.
 
-**Distinguishability:**
-- Same dashed/solid encoding as Panel (a), maintaining consistency. Well separated spatially.
-- Catastrophe markers at τ = 0 are distinct shapes.
-- Legend is somewhat large but does not cover plotted data of consequence. All series pass the "instant read" test.
+**Distinguishability: PASS**
+- The two series are clearly distinguishable via different line styles and colors, consistent with Panel (a).
+- The dramatic upward sweep of the large-singularity line versus the modest rise of the baseline line makes the contrast visually immediate.
+- No overlap or occlusion issues.
 
-**Assessment:** PASS. No issues.
-
-### Narrative clarity
-- **From figure + caption alone:** Government transfers (tax rate τ) compress AI stock valuations by reducing hedging demand (Panel a), and dramatically improve household consumption in the singularity state (Panel b). Without transfers (τ = 0), the household faces a consumption catastrophe.
-- **From figure + paper text:** Under large-singularity parameters, the P/D ratio is undefined at τ = 0 because the pricing sum diverges — the hedge value is effectively infinite. As transfers increase, finite P/D ratios emerge. Panel (b) shows that even modest tax rates generate enormous consumption gains because explosive growth swamps deadweight costs.
+**Narrative clarity: PASS**
+- From figure and caption alone: Government transfers (taxing output and redistributing) compress AI stock P/D ratios by reducing hedging demand, and dramatically improve household consumption in the singularity state when the singularity is large.
+- From figure and paper text: The P/D ratio is undefined at τ = 0 under the large-singularity calibration because marginal utility becomes extreme enough that the pricing sum diverges, illustrating the severity of the incomplete-markets problem.

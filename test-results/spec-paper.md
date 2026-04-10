@@ -1,178 +1,181 @@
 # tests/spec-paper.py
-Started: 2026-04-09 19:33:01 EDT
-Runtime: 2m 57s
-[ralph-garage/agent-logs/20260409T193301.995004-0400_spec-paper_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260409T193301.995004-0400_spec-paper_claude_claude-opus-4-6.log)
+Started: 2026-04-09 19:48:38 EDT
+Runtime: 3m 36s
+[ralph-garage/agent-logs/20260409T194838.520852-0400_spec-paper_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260409T194838.520852-0400_spec-paper_claude_claude-opus-4-6.log)
 
 # spec-paper
 VERDICT: FAIL
-REASON: Appendix section missing a section-number comment (Technical Requirement 2a).
+REASON: Requirement I.3c is not satisfied — the paper does not argue that financial market solutions to AI disaster risk are under-discussed.
 
 ---
 
-## I. Economic Requirements — PASS
+## Section I: Economic Requirements
+**Verdict: FAIL**
+**Reason:** 27 of 28 sub-requirements pass; requirement 3c fails.
 
-All 29 sub-requirements are satisfied.
+### Requirement 1: Unconventional academic asset pricing theory paper
+**PASS.** The paper models AI singularity displacement risk in an asset pricing framework and was "written entirely by AI agents; the human author contributed only the economic specification and test scripts, illustrating the displacement risk it models."
 
-### 1. Unconventional academic asset pricing paper — SATISFIED
-> "This paper was written entirely by AI agents; the human author contributed only the economic specification and test scripts, illustrating the displacement risk it models."
+### Requirement 2: Economic ideas consistently used throughout
 
-### 2a. Singularity definition used consistently — SATISFIED
-> "a sudden, dramatic improvement in AI productivity" (Introduction); formalized as $1+\eta$ aggregate consumption jump in the model.
+**2a: AI singularity defined as sudden productivity improvement.** PASS.
+> "Each period, with probability $p$, an AI singularity occurs... Aggregate consumption jumps by a factor $1 + \eta$"
 
-### 2b. Negative singularity devastating for typical investor — SATISFIED
-> "household consumption falls by 25%" (baseline); "the household faces a catastrophe: consumption halves" (large singularity).
+**2b: Negative singularity devastating for the typical investor.** PASS.
+> "the household's share drops: $\alpha_{t+1} = \phi \, \alpha_t$, $\phi \in (0,1)$"
+> "absent transfers ($\tau = 0$), the household faces a catastrophe: consumption halves under the large singularity"
 
-### 2c. Incomplete markets = some assets cannot be bought — SATISFIED
-> "The household cannot trade this private capital. This is the source of market incompleteness: the household cannot directly hedge displacement by buying claims on the full AI surplus." (Section 2.1). No Arrow-Debreu reference.
+**2c: Incomplete markets = some assets cannot be bought by representative investor.** PASS.
+> "The household \emph{cannot} trade this private capital. This is the source of market incompleteness"
 
-### 3a. Main argument: high valuations "in part" from hedging — SATISFIED
-> "Part of this premium, we argue, reflects a hedging motive." (Introduction)
+### Requirement 3: Paper makes the following arguments
 
-### 3b. Complete markets eliminate hedging need — SATISFIED
-> "If the household could buy claims on the full AI surplus, it could perfectly hedge displacement risk, and the valuation spread would collapse." (Section 2.3)
+**3a: AI stocks may have high valuations, in part, because they hedge against negative singularity.** PASS.
+> "Part of this premium, we argue, reflects a hedging motive. AI stocks serve as a \emph{hedge} against a risk that most investors cannot diversify away"
 
-### 3c. Financial market solutions under-discussed, frictions limit effectiveness — SATISFIED
-> "the financial market implications of displacement risk from AI remain under-discussed. Financial markets offer a natural channel for sharing AI-related risks, yet frictions---private ownership of AI capital, the absence of tradable claims on future technologies---limit their effectiveness." (Introduction)
+**3b: Incomplete markets are key; complete markets eliminate hedging need.** PASS.
+> "If the household could buy claims on the full AI surplus, it could perfectly hedge displacement risk, and the valuation spread would collapse"
 
-### 3d. Singularity abundance overcomes frictions — SATISFIED
-> "If the singularity actually occurs, however, the explosive growth in output may itself overcome these frictions: even inefficient government transfers become effective when the resource base is enormous." (Introduction)
+**3c: Financial market solutions to AI disaster risk are under-discussed, though frictions can limit their effectiveness.** FAIL.
+The paper discusses market incompleteness and the inability to trade private AI capital, but never explicitly argues that financial market solutions to AI disaster risk are "under-discussed" in academic or policy discourse. The paper frames the issue as a modeling feature (private capital is untradeable) rather than making a meta-argument about the literature's or policy community's neglect of financial market mechanisms. A grep for "under-discuss," "financial market," and "market solution" yields no matches.
 
-### 3e. Incomplete markets distort AI development — SATISFIED
-> "Beyond pricing, market incompleteness distorts the development of AI itself." (Introduction); formalized in Proposition 3 (veto mechanism).
+**3d: If singularity occurs, market frictions can be overcome due to abundance of resources.** PASS.
+> "as $\eta$ grows, both $c^H_{post}$ and $c^H_{no-transfer}$ grow without bound, so even inefficient transfers deliver arbitrarily large consumption gains"
 
-### 4a. Infinite-horizon, discrete-time model — SATISFIED
-> "Time is discrete and infinite, $t = 0, 1, 2, \ldots$" (Section 2.1)
+**3e: Incomplete markets may distort not only valuations, but also AI development.** PASS.
+> "Market incompleteness distorts both valuations and the efficient development of AI."
 
-### 4b. Two agents — SATISFIED
-> "A representative household is the marginal investor in public stock markets. There is also a group of AI owners who hold private AI capital and are not marginal investors in public stocks." (Section 2.1)
+### Requirement 4: Main model specifications
 
-### 4c. Two publicly traded assets, AI share grows — SATISFIED
-> AI stocks: $D_t^{AI} = \theta_t C_t$ with $\theta_{t+1} = \theta_t + \Delta\theta(1-\theta_t)$ upon singularity. Non-AI stocks: $D_t^N = (1-\theta_t)C_t$.
+**4a: Infinite-horizon, discrete-time model.** PASS.
+> "Time is discrete and infinite, $t = 0, 1, 2, \ldots$"
 
-### 4d. GKP analogy without modeling entry dynamics — SATISFIED
-> "The AI owners can also be thought of as future capital owners who do not yet participate in markets, as in \citet{GKP2012}. Importantly, we do not explicitly model the entry of new cohorts of firms or workers; AI owners are a static group whose share changes only through the singularity mechanism."
+**4b: Two agents correctly specified.** PASS.
+> "A representative household is the marginal investor in public stock markets. There is also a group of AI owners who hold private AI capital and are not marginal investors in public stocks."
 
-### 4e. Extinction risk per Jones (2024) — SATISFIED
-> "With probability $\xi$, the singularity triggers extinction: $C_{t+1} = 0$ for all subsequent dates. This follows \citet{Jones2024}."
+**4c: Two publicly traded assets; AI stocks grow as share of economy.** PASS.
+> "$\theta_{t+1} = \theta_t + \Delta\theta \, (1 - \theta_t)$" upon singularity.
 
-### 4f. Quantitative P/D table with compelling magnitudes and extinction interaction — SATISFIED
-> Table 1 reports P/D ratios across singularity probabilities and extinction risks. "AI stocks trade at a P/D of roughly 18, while non-AI stocks trade near 11---a ratio of about 1.6." Extinction interaction: "extinction risk reduces both valuations and compresses the AI premium, as Proposition 2(iii) predicts."
+**4d: GKP analogy stated; entry dynamics explicitly disclaimed.** PASS.
+> "The AI owners can also be thought of as future capital owners who do not yet participate in markets, as in \citet{GKP2012}. Importantly, we do not explicitly model the entry of new cohorts of firms or workers"
 
-### 5a. Extension section addresses referee concerns — SATISFIED
-Extensions cover incompleteness distortions and transfers, consistent with referee report themes.
+**4e: Singularity may cause extinction, per Jones (2024).** PASS.
+> "With probability $\xi$, the singularity triggers \emph{extinction}: $C_{t+1} = 0$ for all subsequent dates. This follows \citet{Jones2024}."
 
-### 5b. Extensions branch off baseline — SATISFIED
+**4f: P/D ratios studied quantitatively in table across singularity probabilities and extinction risk.** PASS.
+Table 1 reports P/D ratios "across a grid of singularity probabilities and extinction risks." AI stocks trade at P/D ~18 vs non-AI ~11 at baseline; ratio rises to ~6:1 at higher p. Extinction risk compresses the premium.
+
+### Requirement 5: Extension section
+
+**5a: Addresses referee report.** PASS. Extensions address deeper incomplete-markets issues consistent with referee concerns.
+
+**5b: Each extension branches off baseline independently.** PASS.
 > "Both extensions branch directly off the baseline model to keep the analysis simple."
 
-### 5c-i. Positive singularity, most likely outcome — SATISFIED
-> "With probability $\lambda$, the singularity is positive... We assume $\lambda > 1/2$: the positive singularity is the most likely outcome."
+**5c-i: Positive singularity exists; it is the most likely outcome.** PASS.
+> "With probability $\lambda$, the singularity is \emph{positive}" and "We assume $\lambda > 1/2$"
 
-### 5c-ii. Socially efficient AI development — SATISFIED
-> "AI development is socially efficient in the sense that the expected welfare gain (aggregated across household and AI owners) is positive."
+**5c-ii: AI development is socially efficient.** PASS.
+> "AI development is \emph{socially efficient} in the sense that the expected welfare gain (aggregated across household and AI owners) is positive."
 
-### 5c-iii. Veto at significant cost (government intervention, deadweight) — SATISFIED
-> "The household can veto AI development by paying a per-period cost $\kappa > 0$ in utility terms, representing the deadweight loss from intense government intervention needed to halt AI progress."
+**5c-iii: Household can veto at significant cost from government intervention.** PASS.
+> "The household can \emph{veto} AI development by paying a per-period cost $\kappa > 0$ in utility terms, representing the deadweight loss from intense government intervention needed to halt AI progress."
 
-### 5c-iv. Base case: household vetoes — SATISFIED
+**5c-iv: Base case: household vetoes under incomplete markets.** PASS.
 > Proposition 3(i): "Under incomplete markets and for $\gamma$ sufficiently large, the household vetoes AI development even when development is socially efficient."
 
-### 5c-v. Complete markets: no veto — SATISFIED
+**5c-v: Complete markets eliminate the veto.** PASS.
 > Proposition 3(ii): "Under complete markets, the household never vetoes socially efficient AI development."
 
-### 5d-i. Ideal is broader trading; capital may not exist (GKP) — SATISFIED
-> "Because the displacing capital may not yet exist---it belongs to future cohorts of innovators---direct trading is infeasible, and government transfers offer an alternative."
+**5d-i: Ideal solution is trading AI capital, but it may not yet exist (GKP).** PASS.
+> "Because the displacing capital may not yet exist---it belongs to future cohorts of innovators---direct trading is infeasible"
 
-### 5d-ii. Deadweight costs scale with transfers, ineffective normally — SATISFIED
-> "transfers ordinarily incur deadweight costs (waste, fraud, administrative burden) that scale with transfer size, making them unattractive."
+**5d-ii: Transfers incur deadweight costs scaling with size, unattractive normally.** PASS.
+> "transfers ordinarily incur deadweight costs (waste, fraud, administrative burden) that scale with transfer size, making them unattractive"
 
-### 5d-iii. Singularity growth overwhelms deadweight costs; quantitative analysis — SATISFIED
-> "in a singularity with large $\eta$, aggregate output grows enormously. The transfer base---AI owners' surplus---grows with $\eta$, while the deadweight cost rate is fixed." Quantitative analysis in Figure 2 with $\eta=9$, $\phi=0.05$.
+**5d-iii: Singularity growth overwhelms deadweight costs; analyzed quantitatively.** PASS.
+> "even inefficient transfers deliver arbitrarily large consumption gains relative to the pre-singularity baseline"
 
-### 5d-iv. Two-panel figure with required features — SATISFIED
-> Figure 2: "Panel (a) shows how transfers compress AI stock P/D ratios... Panel (b) shows the household's consumption change in the singularity state." Shows baseline and large-singularity cases. Catastrophe absent transfers: "absent transfers ($\tau = 0$), the household faces a catastrophe: consumption halves under the large singularity."
+**5d-iv: Two-panel figure with P/D and consumption growth vs tax rate; catastrophe at τ=0.** PASS.
+> Figure 2 caption: "Panel~(a) shows how transfers compress AI stock P/D ratios... Panel~(b) shows the household's consumption change in the singularity state: absent transfers, the household faces a catastrophe (marked at $\tau = 0$)"
 
-### 6a. Connects GKP to AI singularity — SATISFIED
+### Requirement 6: Contribution relative to GKP
+
+**6a: Connects GKP's ideas to AI singularity.** PASS.
 > "Our contribution connects their framework to the specific features of AI: the possibility of a discrete singularity with severe displacement."
 
-### 6b. Closer look at transfers per GKP — SATISFIED
-> "\citet{GKP2012} note that intergenerational transfers affect the magnitude of displacement risk but treat such mechanisms as inessential extensions to their framework. We take a closer look."
+**6b: Closer look at government transfers in singularity setting.** PASS.
+> "\citet{GKP2012} show that intergenerational transfers can affect the magnitude of displacement risk... We study transfers in a different setting---an AI singularity"
 
-### 6c. Modest characterization of contribution — SATISFIED
-> "The goal is not to provide a definitive account of AI stock valuations but to highlight a specific channel." GKP consistently credited for core insights.
-
----
-
-## II. Style Requirements — PASS
-
-All 9 requirements are satisfied.
-
-### 1. Author is anonymous — SATISFIED
-> `\author{}` — author field is empty. No names appear in the document.
-
-### 2. Abstract is 100 words or less — SATISFIED
-Abstract is approximately 94 words, under the 100-word limit.
-
-### 3. Title is short, evocative, eye-catching, not cringey — SATISFIED
-> "Hedging the Singularity" — three words, evocative, appropriate for a top finance journal.
-
-### 4. Paper length at most 20 pages — SATISFIED
-Estimated 14–16 pages (12pt, 1.5 spacing, 1-inch margins, 5 body sections, 1 appendix, 3 exhibits, bibliography).
-
-### 5. Every page has a visible page number — SATISFIED
-> `\pagestyle{plain}` (line 17) and `\thispagestyle{plain}` (line 30) ensure page numbers on all pages including the title page.
-
-### 6. At most 6 exhibits — SATISFIED
-Exactly 3 exhibits: Table 1, Figure 1 (extension panels), Figure 2 (AI valuations).
-
-### 7. Lit review at most half a page, at end of introduction — SATISFIED
-Lit review begins with `\noindent\textbf{Related literature.}` near end of Introduction, before Section 2. Approximately half a page at 1.5 spacing.
-
-### 8. All display equations numbered — SATISFIED
-All display math uses `\begin{equation}` or `\begin{align}` (no starred variants). One `\nonumber` on a continuation line in a multi-line equation is standard practice.
-
-### 9. All propositions explicitly proved, long proofs in appendix — SATISFIED
-- Proposition 1: proof in Appendix A (the longest proof, correctly placed in appendix).
-- Corollary 1: short inline proof.
-- Proposition 2: moderate inline proof.
-- Proposition 3: moderate inline proof.
+**6c: Purposefully modest characterization.** PASS.
+> "The core mechanism builds on \citet{GKP2012}" and "inherits their central economic logic."
 
 ---
 
-## III. Technical Requirements — FAIL
+## Section II: Style Requirements
+**Verdict: PASS**
+**Reason:** All 9 requirements satisfied.
 
-One deficiency found in requirement 2a.
+### Requirement 1: Author is anonymous
+**PASS.** `\author{}` — empty author field, no identifying information anywhere.
 
-### 1a. paper.tex is main file — SATISFIED
-File exists at `paper/paper.tex` as a complete LaTeX document.
+### Requirement 2: Abstract ≤ 100 words
+**PASS.** Abstract is approximately 95 words.
 
-### 1b. All figures/tables sourced from paper/exhibits/ — SATISFIED
-- `\input{exhibits/table-pd-ratios.tex}` (line 196)
-- `\includegraphics{exhibits/fig-ai-valuations.pdf}` (line 47)
-- `\includegraphics{exhibits/fig-extension-panels.pdf}` (line 274)
+### Requirement 3: Title is short, evocative, eye-catching, not cringey
+**PASS.** "Hedging the Singularity" — three words, evocative, serious.
 
-### 1d. All files in paper/exhibits/ are used — SATISFIED
-Directory contains exactly 3 files (`table-pd-ratios.tex`, `fig-extension-panels.pdf`, `fig-ai-valuations.pdf`), all referenced in paper.tex.
+### Requirement 4: Paper length ≤ 20 pages
+**PASS.** Paper compiles to 15 pages.
 
-### 2a. Section number comments — NOT SATISFIED
-All body sections and subsections have number comments (Sections 1–5, 2.1–2.3, 4.1–4.2). However, the appendix section at line 293 (`\section{Proof of Proposition~\ref{prop:pd-ratios}}`) lacks a section-number comment (e.g., `% Appendix A`).
+### Requirement 5: Every page has a visible page number
+**PASS.** `\pagestyle{plain}` on line 17; `\thispagestyle{plain}` on line 30 overrides maketitle's default empty style.
 
-### 2b. Exhibit number comments — SATISFIED
-All 3 exhibits have comments: `% Exhibit 1`, `% Exhibit 2`, `% Exhibit 3`.
+### Requirement 6: At most 6 exhibits
+**PASS.** 3 exhibits: Figure 1 (ai-valuations), Table 1 (pd-ratios), Figure 2 (extension-panels).
 
-### 2c. Theorem environment number comments — SATISFIED
-All 5 theorem environments have comments: Proposition 1, Remark 1, Corollary 1, Proposition 2, Proposition 3.
+### Requirement 7: Lit review ≤ half page, at end of introduction
+**PASS.** Lit review begins at "Related literature." (line 62), ends before Section 2 (line 72). Approximately 211 words, ~0.5 page. Correctly placed at end of introduction.
 
-### 3a. Code in R — SATISFIED
-Single code file: `code/generate-exhibits.R`.
+### Requirement 8: All display equations numbered
+**PASS.** All display math uses numbered `equation` or `align` environments. No `equation*`, `align*`, `gather*`, or `$$` found.
 
-### 3b. One canonical entry point — SATISFIED
-> Header: "Run: `Rscript code/generate-exhibits.R`". Generates all three exhibits.
+### Requirement 9: All propositions proved, long proofs in appendix
+**PASS.** Propositions 1–3 and Corollary 1 all have explicit proofs. Proposition 1's long proof is in Appendix A; others are short inline proofs.
 
-### 3c. Pipeline runs from scratch — SATISFIED
-Computes from inline parameters and downloads external data live from FRED/datahub. No cached or intermediate files.
+---
 
-### 3d. Pipeline under 180 seconds — SATISFIED (structural)
-Simple grid computations and two small CSV downloads. No simulation or large data processing.
+## Section III: Technical Requirements
+**Verdict: PASS**
+**Reason:** All requirements satisfied.
 
-### 3e. Code outputs to paper/exhibits/ — SATISFIED
-> `outdir <- "paper/exhibits"` (line 13); all outputs written via `file.path(outdir, ...)`.
+### Requirement 1: paper/ structure
+
+**1a: paper.tex is main file.** PASS. `/workspace/paper/paper.tex` exists and is the sole `.tex` document.
+
+**1b: All exhibits sourced from paper/exhibits/.** PASS.
+- `\includegraphics{exhibits/fig-ai-valuations.pdf}`
+- `\input{exhibits/table-pd-ratios.tex}`
+- `\includegraphics{exhibits/fig-extension-panels.pdf}`
+
+**1d: All files in paper/exhibits/ are used.** PASS. Three files in `paper/exhibits/` (`fig-ai-valuations.pdf`, `fig-extension-panels.pdf`, `table-pd-ratios.tex`), all referenced in the paper.
+
+### Requirement 2: Comments with object numbers
+
+**2a: Section number comments.** PASS. Every `\section` and `\subsection` has a comment like `% Section 2.1`.
+
+**2b: Exhibit number comments.** PASS. Every exhibit label has a comment like `% Exhibit 1`.
+
+**2c: Theorem environment number comments.** PASS. Every proposition, corollary, and remark has a comment like `% Proposition 1`.
+
+### Requirement 3: Analysis code
+
+**3a: Code in R.** PASS. `code/generate-exhibits.R` is the sole code file.
+
+**3b: Single canonical entry point.** PASS. Header: `Run: Rscript code/generate-exhibits.R`. Generates all three exhibits.
+
+**3c: Runs from scratch, no caches.** PASS. Script computes from inline parameters and downloads data live; no cached/intermediate files.
+
+**3d: Executes under 180 seconds.** PASS (by inspection). Small grid computations and two CSV downloads; no heavy computation.
+
+**3e: Outputs to paper/exhibits/.** PASS. `outdir <- "paper/exhibits"` on line 12; all outputs written there.

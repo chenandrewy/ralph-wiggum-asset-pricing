@@ -1,24 +1,20 @@
 # tests/spec-scope.py
-Started: 2026-04-09 19:33:01 EDT
-Runtime: 32s
-[ralph-garage/agent-logs/20260409T193302.032576-0400_spec-scope_claude_opus.log](../ralph-garage/agent-logs/20260409T193302.032576-0400_spec-scope_claude_opus.log)
+Started: 2026-04-09 19:48:38 EDT
+Runtime: 27s
+[ralph-garage/agent-logs/20260409T194838.517948-0400_spec-scope_claude_opus.log](../ralph-garage/agent-logs/20260409T194838.517948-0400_spec-scope_claude_opus.log)
 
 # spec-scope
 VERDICT: PASS
-REASON: The paper maintains a compact theoretical scope with illustrative quantitative analysis and no broad empirical agenda.
+REASON: The paper maintains a compact theoretical scope with illustrative (not calibrated) quantitative material, no empirical estimation, and no broad prediction menu.
 
 ## Findings
 
-**Theoretical core.** The paper develops a single consumption-based asset pricing model with closed-form solutions (Propositions 1–3, one corollary). All results flow from one mechanism: hedging displacement risk under incomplete markets. The two extensions (veto/efficient development, government transfers) branch directly off the baseline rather than introducing separate models.
+**Theoretical core.** The paper develops a single consumption-based asset pricing model with closed-form solutions (Propositions 1-3, one Corollary, one Remark). The model setup is deliberately stylized: representative household, two public assets, discrete singularity shocks, CRRA preferences. The conclusion explicitly acknowledges the model "abstracts from continuous-time dynamics, heterogeneous beliefs, production-side details, and many other features."
 
-**Empirical content is minimal and illustrative.**
-- One descriptive figure (Figure 1: NASDAQ vs. S&P 500 since 2015) used only to motivate the paper.
-- One table of model-implied P/D ratios across a parameter grid — illustrative, not calibrated to match moments.
-- One two-panel figure for the transfer extension — again parameter illustrations, not estimation.
-- No regressions, no GMM, no formal calibration exercise, no moment-matching, no empirical tests.
+**Extensions are tightly scoped.** Both extensions (veto/efficient development in Section 4.1; government transfers in Section 4.2) branch directly from the baseline model and address specific consequences of market incompleteness. They do not constitute a broad menu of predictions — each addresses one pointed question (Can incompleteness distort real decisions? Can transfers overcome deadweight costs under explosive growth?).
 
-**No broad prediction menu.** The comparative statics (Proposition 2) are limited to three directional results (displacement severity, singularity probability, extinction risk). The paper does not attempt to generate a menu of cross-sectional return predictions or testable asset pricing anomalies.
+**Quantitative material is illustrative, not calibrated.** Section 3 ("Quantitative Analysis") reports P/D ratios across a parameter grid using round, representative numbers ($\phi = 0.5$, $\eta = 0.5$, $\gamma = 4$, etc.). There is no formal calibration exercise, no moment-matching, no GMM/SMM estimation, and no statistical tests. The paper uses phrases like "broadly consistent with" and "across plausible singularity probabilities" — language of illustration, not estimation.
 
-**Quantitative material is illustrative, not calibrated.** The paper explicitly states: "The goal is not to provide a definitive account of AI stock valuations but to highlight a specific channel" (Conclusion). Parameter choices are round numbers chosen for transparency, not estimated from data.
+**Empirical content is minimal.** The only empirical object is Figure 1 (NASDAQ vs. S&P 500 since 2015), which serves as motivation rather than a test. There is no regression analysis, no panel data, no cross-sectional asset pricing tests, and no time-series forecasting.
 
-**Deliberately constrained scope.** The conclusion acknowledges abstractions from continuous-time dynamics, heterogeneous beliefs, and production-side details, confirming the paper stays within its intended narrow theoretical lane.
+**No broad prediction menu.** The paper's comparative statics (Proposition 2) are limited to three directional results about the valuation spread with respect to $\phi$, $p$, and $\xi$. These are structural implications of the model, not a laundry list of testable predictions.

@@ -1,81 +1,97 @@
 # tests/factcheck-lit.py
-Started: 2026-04-09 19:33:01 EDT
-Runtime: 3m 10s
-[ralph-garage/agent-logs/20260409T193302.040715-0400_factcheck-lit_claude_opus.log](../ralph-garage/agent-logs/20260409T193302.040715-0400_factcheck-lit_claude_opus.log)
+Started: 2026-04-09 19:48:38 EDT
+Runtime: 3m 56s
+[ralph-garage/agent-logs/20260409T194838.519103-0400_factcheck-lit_claude_opus.log](../ralph-garage/agent-logs/20260409T194838.519103-0400_factcheck-lit_claude_opus.log)
 
 # factcheck-lit
-VERDICT: PASS
-REASON: All 9 cited works are externally verified with accurate metadata and supported in-text claims.
+VERDICT: FAIL
+REASON: Critical author-list error on KoganPapanikolaouSchmidtSong2020 and important first-name error on Knesl2023.
 
 ## 1. Citation inventory audited
 
-The following 9 citation keys appear in the paper text (including footnotes) and were audited:
+All 10 cited works in the paper were audited across two batches:
 
-1. GKP2012
-2. Jones2024
-3. KoganPapanikolaou2014
-4. KoganPapanikolaouStoffman2020
-5. Barro2006
-6. Wachter2013
-7. PastorVeronesi2009
-8. KorinekSuh2024
-9. Nordhaus2021
-
-The following 6 bibliography entries are never cited in the paper text and were excluded per procedure:
-MehraPrescott1985, CampbellCochrane1999, GarleanuPanageas2015, Acemoglu2024, BabinaMotta2024, FamaFrench1993, AghionJonesJones2019.
+| # | Citation key |
+|---|-------------|
+| 1 | GKP2012 |
+| 2 | Jones2024 |
+| 3 | KoganPapanikolaou2014 |
+| 4 | KoganPapanikolaouSchmidtSong2020 |
+| 5 | Knesl2023 |
+| 6 | Barro2006 |
+| 7 | Wachter2013 |
+| 8 | PastorVeronesi2009 |
+| 9 | KorinekSuh2024 |
+| 10 | Nordhaus2021 |
 
 ## 2. External verification coverage
 
-| Key | Status | External sources |
-|-----|--------|-----------------|
-| GKP2012 | VERIFIED | EconPapers, ScienceDirect, IDEAS/RePEc |
-| Jones2024 | VERIFIED | AEA, IDEAS/RePEc, Stanford GSB |
-| KoganPapanikolaou2014 | VERIFIED | Wiley/Journal of Finance, IDEAS/RePEc, NBER |
-| KoganPapanikolaouStoffman2020 | VERIFIED | UChicago/JPE, IDEAS/RePEc, MIT DSpace |
-| Barro2006 | VERIFIED | Oxford Academic/QJE, Harvard DASH, EconPapers |
-| Wachter2013 | VERIFIED | Wharton PDF, EconPapers, UPenn Repository |
-| PastorVeronesi2009 | VERIFIED | AEA, EconPapers, NBER |
-| KorinekSuh2024 | VERIFIED | NBER, SSRN, arXiv |
-| Nordhaus2021 | VERIFIED | AEA, IDEAS/RePEc, NBER, Yale EliScholar |
+| Citation key | Status | External sources |
+|-------------|--------|-----------------|
+| GKP2012 | VERIFIED | EconPapers/RePEc, ScienceDirect, SSRN, MIT DSpace |
+| Jones2024 | VERIFIED | AEA publisher page, RePEc/IDEAS, Stanford GSB |
+| KoganPapanikolaou2014 | VERIFIED | Wiley/Journal of Finance, EconPapers/RePEc, NBER |
+| KoganPapanikolaouSchmidtSong2020 | VERIFIED | Journal of Political Economy (publisher), RePEc/IDEAS, MIT DSpace, Northwestern Scholars |
+| Knesl2023 | VERIFIED | ScienceDirect, EconPapers/RePEc, SSRN, author page |
+| Barro2006 | VERIFIED | Oxford Academic/QJE, EconPapers/RePEc, Harvard DASH |
+| Wachter2013 | VERIFIED | EconPapers/RePEc, Wharton/UPenn, NBER |
+| PastorVeronesi2009 | VERIFIED | AEA publisher page, EconPapers/RePEc, SSRN |
+| KorinekSuh2024 | VERIFIED | NBER Working Paper page, IDEAS/RePEc |
+| Nordhaus2021 | VERIFIED | AEA journal page, NBER Working Paper version |
 
-**Coverage: 9/9 cited works externally verified (100%).**
+**Coverage: 10/10 cited works externally verified (100%).**
 
 ## 3. Metadata accuracy findings
 
-All 9 cited works have materially accurate bibliographic metadata (author names, year, title, journal/outlet, volume, number, pages). No CRITICAL or IMPORTANT metadata errors found.
-
-One MINOR formatting note: KorinekSuh2024 uses `@article` with the working paper number in the `journal` field rather than `@techreport` with a `number` field. This is non-standard BibTeX but produces materially correct rendered output.
+- **GKP2012:** Accurate. Authors, title, journal (JFE), volume/number/pages/year all confirmed.
+- **Jones2024:** Accurate. Author, title, journal (AER: Insights), volume/number/pages/year all confirmed.
+- **KoganPapanikolaou2014:** Accurate. Authors, title, journal (JF), volume/number/pages/year all confirmed.
+- **KoganPapanikolaouSchmidtSong2020:** **INCORRECT AUTHOR LIST.** The published JPE paper "Left Behind: Creative Destruction, Inequality, and the Stock Market" (2020, vol. 128, no. 3, pp. 855--906) has three authors: Kogan, Papanikolaou, and **Stoffman**. The bib entry lists four authors: Kogan, Papanikolaou, **Schmidt**, and **Song** -- these are the authors of a different, unpublished paper ("Technological Innovation and Labor Income Risk," NBER WP 26964). Title, journal, volume, pages, and year match the Kogan-Papanikolaou-Stoffman paper correctly.
+- **Knesl2023:** **INCORRECT AUTHOR FIRST NAME.** The author is **Jiri Knesl** (Jiří Knesl), not "Peter Knesl." Title, journal (JFE), volume/number/pages/year are all correct.
+- **Barro2006:** Accurate. Author, title, journal (QJE), volume/number/pages/year all confirmed.
+- **Wachter2013:** Accurate. Author, title, journal (JF), volume/number/pages/year all confirmed.
+- **PastorVeronesi2009:** Accurate. Authors, title, journal (AER), volume/number/pages/year all confirmed.
+- **KorinekSuh2024:** Accurate. Authors, title, working paper series (NBER WP 32255), year all confirmed.
+- **Nordhaus2021:** Accurate. Author, title, journal (AEJ: Macro), volume/number/pages/year all confirmed.
 
 ## 4. In-text description accuracy findings
 
-All in-text characterizations of cited works are materially accurate and supported by the cited work:
-
-- **GKP2012:** Correctly described as developing a general-equilibrium model with displacement risk from innovation as a systematic factor under incomplete markets, with growth stocks providing a partial hedge, and an overlapping-generations structure.
-- **Jones2024:** Correctly described as studying the trade-off between AI-driven growth and existential risk, with bounded utility making agents conservative about extinction.
-- **KoganPapanikolaou2014:** Correctly described as showing technology shocks generate cross-sectional return differences through heterogeneous exposures to growth opportunities.
-- **KoganPapanikolaouStoffman2020:** Correctly described as extending to study how creative destruction generates inequality and valuations.
-- **Barro2006:** Correctly cited as part of the rare disasters literature providing methodological foundation for pricing discrete catastrophic events.
-- **Wachter2013:** Correctly cited alongside Barro2006 as rare disasters literature.
-- **PastorVeronesi2009:** Correctly described as studying how technological revolutions affect stock prices through uncertainty about long-run productivity.
-- **KorinekSuh2024:** Correctly described as analyzing scenarios for the transition to AGI and implications for wages, output, and welfare.
-- **Nordhaus2021:** Correctly described as critically examining the possibility of explosive output growth (the economic singularity hypothesis).
+- **GKP2012:** Accurate. The paper correctly describes GKP2012 as showing that innovation creates displacement risk via new cohorts, with growth stocks hedging that risk.
+- **Jones2024:** Accurate. The characterization of a growth-vs-extinction-risk trade-off with bounded utility driving conservatism is supported.
+- **KoganPapanikolaou2014:** Accurate. The description of technology shocks generating cross-sectional return differences through heterogeneous exposure to growth opportunities is supported.
+- **KoganPapanikolaouSchmidtSong2020:** The characterization that this work studies how creative destruction generates inequality and valuations is a reasonable description of the Kogan-Papanikolaou-Stoffman (2020) paper -- but the citation points to the wrong author set.
+- **Knesl2023:** Accurate. The description of modeling and testing automation-driven displacement risk with empirical evidence of a risk premium is supported.
+- **Barro2006:** Accurate. Cited as foundational to the rare disasters literature for pricing discrete catastrophic events.
+- **Wachter2013:** Accurate. Cited alongside Barro2006 for the rare disasters methodology; Wachter2013 models time-varying disaster probability.
+- **PastorVeronesi2009:** Accurate. The description of studying how technological revolutions affect stock prices through uncertainty about long-run productivity is supported.
+- **KorinekSuh2024:** Mostly accurate. The paper adds "welfare" to the scope description, but the cited paper's abstract focuses on wages and output. Minor overstatement.
+- **Nordhaus2021:** Accurate. "Examined critically" is a fair characterization of Nordhaus's skeptical assessment of the economic singularity hypothesis.
 
 ## 5. Flagged issues by citation key and severity
 
-| Key | Severity | Issue |
-|-----|----------|-------|
-| GKP2012 | NONE | — |
-| Jones2024 | NONE | — |
-| KoganPapanikolaou2014 | NONE | — |
-| KoganPapanikolaouStoffman2020 | NONE | — |
-| Barro2006 | NONE | — |
-| Wachter2013 | NONE | — |
-| PastorVeronesi2009 | NONE | — |
-| KorinekSuh2024 | MINOR | BibTeX entry type is `@article` rather than `@techreport` for a working paper; rendered output is materially correct |
-| Nordhaus2021 | NONE | — |
+### CRITICAL
 
-**No CRITICAL or IMPORTANT issues found.**
+**KoganPapanikolaouSchmidtSong2020 -- Wrong author list**
+The bib entry lists authors Kogan, Papanikolaou, Schmidt, and Song. The published JPE paper (vol. 128, no. 3, pp. 855--906, 2020) is authored by Kogan, Papanikolaou, and **Stoffman**. Schmidt and Song are authors of a different, unpublished NBER working paper. The citation key should be corrected to KoganPapanikolaouStoffman2020, and the author field must be updated.
+- External sources: Journal of Political Economy publisher page, RePEc/IDEAS, MIT DSpace, Northwestern Scholars.
+
+### IMPORTANT
+
+**Knesl2023 -- Wrong author first name**
+The bib entry lists "Peter Knesl." The correct name is **Jiri Knesl** (Jiří Knesl). All other metadata is correct.
+- External sources: ScienceDirect, EconPapers/RePEc, SSRN, author homepage.
+
+### MINOR
+
+**KorinekSuh2024 -- Slight scope overstatement**
+The in-text description says Korinek and Suh analyze "implications for wages, output, and welfare." The paper's abstract focuses on wages and output; "welfare" is not prominently featured, though it may be discussed in the body.
+- External sources: NBER Working Paper page, IDEAS/RePEc.
 
 ## 6. Overall reliability of the paper's citations
 
-The paper's citations are reliable. All 9 cited works are externally verified with accurate metadata and faithful in-text characterizations. The only issue is a minor BibTeX convention for one working paper entry. The paper appropriately cites foundational works (GKP2012 for displacement risk, Jones2024 for extinction risk, Barro2006/Wachter2013 for rare disasters methodology) and correctly characterizes each cited work's contribution relative to its own model.
+Of 10 cited works, 8 have fully accurate metadata and in-text descriptions. The two metadata errors are serious enough to require correction before publication:
+
+1. The CRITICAL error on KoganPapanikolaouSchmidtSong2020 attributes the published JPE paper to the wrong set of authors (Schmidt and Song instead of Stoffman). This must be fixed.
+2. The IMPORTANT error on Knesl2023 gives the author the wrong first name (Peter instead of Jiri). This must be fixed.
+
+The remaining citations are accurate in both metadata and in-text usage. In-text characterizations of cited works are generally fair and well-supported. The one minor scope overstatement (KorinekSuh2024) is not material.

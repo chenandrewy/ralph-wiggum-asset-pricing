@@ -1,13 +1,13 @@
 # tests/visual-figures-image-only.py
-Started: 2026-04-09 19:33:02 EDT
-Runtime: 1m 46s
-[ralph-garage/agent-logs/20260409T193302.049570-0400_visual-figures-image-only_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260409T193302.049570-0400_visual-figures-image-only_claude_claude-opus-4-6.log)
+Started: 2026-04-09 19:48:38 EDT
+Runtime: 1m 27s
+[ralph-garage/agent-logs/20260409T194838.544602-0400_visual-figures-image-only_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260409T194838.544602-0400_visual-figures-image-only_claude_claude-opus-4-6.log)
 
 # visual-figures-image-only
 
 VERDICT: FAIL
 
-REASON: fig-extension-panels fails on contrast (light salmon baseline line nearly invisible in Panel b) and use-of-space (baseline crushed into bottom 15% of Panel b due to scale compression).
+REASON: fig-extension-panels Panel (a) fails use-of-space due to asymptotic spike compressing meaningful data into the bottom third of the panel.
 
 ---
 
@@ -15,19 +15,15 @@ REASON: fig-extension-panels fails on contrast (light salmon baseline line nearl
 
 VERDICT: PASS
 
-REASON: Two clearly distinguishable, high-contrast series with readable labels, good use of space, and a clear narrative message.
+REASON: Clean two-series time-series plot with readable labels, clearly distinguishable series, good contrast, and efficient use of space.
 
-### Full Figure (single panel, no sub-panels)
+### Full figure — Normalized NASDAQ vs. S&P 500 (Jan 2015 = 100)
 
-**Readability: PASS.** The y-axis label ("Normalized Price (Jan 2015 = 100)"), x-axis tick labels (2016–2026), y-axis tick labels (100–500), and legend are all clearly readable at appropriate font sizes. Nothing is cut off or overlapping.
-
-**Distinguishability: PASS.** The NASDAQ Composite is rendered as a solid blue line and the S&P 500 as a dashed dark red/maroon line. The two series are immediately distinguishable by both color and line style. The legend does not obscure any meaningful data.
-
-**Contrast: PASS.** Both lines are thick and rendered in dark, saturated colors (blue, dark red) against a white background. No reference lines or markers suffer from low contrast.
-
-**Use of space: PASS.** X-axis runs from roughly Jan 2015 to early 2026; data fills the range. Y-axis spans 100 to 500, matching the data range tightly. No wasted space on any edge.
-
-**Narrative clarity: PASS.** AI/tech-heavy stocks (NASDAQ Composite) have dramatically outpaced the broader market (S&P 500) since 2015, with the gap widening sharply after roughly 2023, motivating the paper's focus on AI-driven displacement risk.
+- **Readability: PASS.** The y-axis label ("Normalized Price (Jan 2015 = 100)") is clear and legible. Tick labels on both axes are appropriately sized. The x-axis shows 2-year date breaks ("2016", "2018", ..., "2026") which are easy to read. The legend text is legible and positioned in the upper-left area without overlapping data.
+- **Distinguishability: PASS.** The two series are encoded with both color (blue for NASDAQ, dark red for S&P 500) and linetype (solid vs. dashed). The legend clearly maps both channels to each series. The series are spatially separated for most of the plot.
+- **Contrast: PASS.** Both line colors are dark and saturated (navy blue and dark crimson) providing strong contrast against the white background. No light-gray or low-opacity reference lines.
+- **Use of space: PASS.** Data ranges from ~100 to ~500; y-axis fits tightly. X-axis spans 2015 to early 2026 with data filling the full horizontal extent. No excessive empty margins.
+- **Narrative clarity: PASS.** The caption and visual together clearly convey that NASDAQ has dramatically outpaced the S&P 500, with the gap widening sharply from ~2023 onward.
 
 ---
 
@@ -35,32 +31,20 @@ REASON: Two clearly distinguishable, high-contrast series with readable labels, 
 
 VERDICT: FAIL
 
-REASON: The baseline (salmon) line in Panel (b) has critically poor contrast and is visually crushed by scale compression into the bottom 15% of the plot.
+REASON: Panel (a) fails use-of-space because the near-vertical asymptote compresses the economically meaningful P/D variation into the bottom third of the panel.
 
-### Panel (a): AI Stock Valuations
+### Panel (a) — AI Stock Valuations
 
-**Readability: PASS.** Title, axis labels ("Tax rate tau", "P/D Ratio (AI Stocks)"), tick labels, and legend are all clearly readable. Nothing is cut off or overlapping.
+- **Readability: PASS.** Title, axis labels ("Tax rate tau", "P/D Ratio (AI Stocks)"), tick labels, and legend text are all legible. Nothing overlapping or cut off.
+- **Distinguishability: PASS.** Two series clearly separated by both color (dark red solid vs. dark blue dashed) and linetype. Legend is unambiguous and does not overlap data.
+- **Contrast: PASS.** Both lines use dark, saturated colors at adequate linewidth. Grid lines are medium gray and do not compete with data.
+- **Use of space: FAIL.** The "Large singularity" (blue dashed) line shoots up as an asymptote near tau ~5%, reaching y ~45. The meaningful, interpretable variation for both curves lies in the range of roughly 9–15 across most of the x-axis (tau from ~8% to 40%). The asymptotic spike forces the y-axis to extend far above where the economically interesting variation occurs, leaving more than half the vertical plot area as empty space. A y-axis cap (e.g., at 25–30) or a log scale would preserve the economic message while making the curve separation readable.
+- **Narrative clarity: PASS.** The message — that large-singularity displacement dramatically inflates AI stock valuations at low tax rates — is clear.
 
-**Distinguishability: PASS.** The two series are encoded with both color (salmon vs. cyan) and linetype (solid vs. dashed), making them easy to tell apart.
+### Panel (b) — Household Consumption
 
-**Contrast: FAIL.** The baseline (salmon/coral) solid line is rendered in a light, low-saturation red-pink. In the right half of the panel (tau > 20%), the salmon line becomes quite faint against the white background.
-
-**Use of space: PASS.** The y-axis spans roughly 5 to 45, and the data spans approximately 8 to 45. The x-axis runs 0%–40% and data fills this range. No excessive whitespace.
-
-### Panel (b): Household Consumption
-
-**Readability: PASS.** Title, axis labels, tick labels, legend, and annotations ("Catastrophe: 50% loss", "25% loss", "No change") are all legible.
-
-**Distinguishability: FAIL.** The baseline (salmon) line is extremely difficult to see. It is a light, low-saturation pink that barely rises from about 0.75 to about 1.0 across the full x-range. Against the white plot background it is nearly invisible and fails the "instant read" test.
-
-**Contrast: FAIL.** The baseline salmon line is far too light and low-contrast. In the region where it conveys its most important information (modest gains from transfers), it hovers near the "No change" reference line and is barely distinguishable from the background. The "25% loss" annotation text is also rendered in gray at small size, which is marginal.
-
-**Use of space: FAIL.** The y-axis runs from 0 to approximately 7. The baseline series maxes out at roughly 1.0, occupying only the bottom ~15% of the plot. The large-singularity line drives the y-axis up to ~6.5, compressing the baseline into a nearly flat line at the bottom. The baseline's behavior — the key point that transfers help only modestly without a singularity — is visually lost.
-
-**Narrative clarity: MARGINAL.** The caption's main message (that the large singularity makes transfers dramatically effective while the baseline gains only modestly) is conveyed by the cyan line, but the baseline comparison is visually crushed. A reader cannot easily appreciate the contrast without squinting.
-
-### Summary of Problems
-
-1. **Panel (b) baseline contrast:** The salmon/pink line is too light and thin. It should be a darker, more saturated color (e.g., true red or dark orange).
-2. **Panel (b) scale compression:** The two series differ by an order of magnitude (baseline peaks at ~1.0, large singularity at ~6.5), which crushes the baseline into a barely-visible flat line. Consider a log scale, a broken axis, or separate panels to give the baseline adequate visual weight.
-3. **Panel (a) baseline contrast (minor):** The salmon line could be darker for improved contrast, though this is less severe than in Panel (b).
+- **Readability: PASS.** Title, axis labels, tick labels, annotations ("Catastrophe: 50% loss", "25% loss", "No change"), and legend are all legible. Log-scale tick labels (0.5, 1.0, 2.0, 5.0) are well-chosen.
+- **Distinguishability: PASS.** Two lines clearly distinguishable by color and linetype. Catastrophe point annotations use matching colors with solid dots.
+- **Contrast: PASS.** Both series lines are dark and thick. The "No change" reference line is dashed gray20 (nearly black), fully visible.
+- **Use of space: PASS.** Log-scaled y-axis runs from ~0.3 to ~7, tightly bracketing the data range. X-axis spans 0%–70% matching the tau grid. Data fills the space well on all four edges.
+- **Narrative clarity: PASS.** Clearly shows that without transfers both scenarios start in catastrophe territory, and increasing the tax rate lifts consumption, with the large-singularity scenario benefiting dramatically more.

@@ -1,56 +1,90 @@
 # Improvement Plan
-AUTHOR PLAN — 2026-04-09 19:15:07 EDT
+AUTHOR PLAN — 2026-04-09 19:43:43 EDT
 
-## Status: 19/25 tests pass, 6 fail
+## Status: 17/25 tests passing, 8 failing. No overhaul needed.
 
-## Critical Issue: Extension 2 Calibration Breaks P/D Formula
+The model section is sound (factcheck-theory, theory-clarity, factcheck-code all pass). Issues are in exposition, citations, figure quality, and formatting. Plan prioritizes failing tests, then addresses remaining quality.
 
-The P/D formula (Proposition 1) has the form $A/(1-A)$ and requires $A < 1$ for a valid price. This condition is **never stated** in the paper. Worse, the Extension 2 large-singularity calibration ($\eta = 9$, $\phi = 0.05$) violates it: $A = 2.37$ for AI stocks, producing undefined P/D ratios. The code silently returns NA, and the figure only plots where defined, but the paper never acknowledges the constraint or explains why P/D is undefined at $\tau = 0$ for the large singularity.
+---
 
-This is not an overhaul — the model is structurally sound — but it is the highest-priority fix.
+## 1. Fix bib: wrong authors on Kogan et al. (2020) [factcheck-freely]
 
-## Plan (ordered by priority)
+**File:** `paper/references.bib` lines 134-142
 
-### 1. Fix P/D existence condition and Extension 2 calibration
-**Test:** `factcheck-theory`
+The entry `KoganPapanikolaouStoffman2020` lists Kogan, Papanikolaou, and Stoffman. The correct authors are Kogan, Papanikolaou, **Schmidt**, and **Song**. Rename the bib key to `KoganPapanikolaouSchmidtSong2020` and fix the author field. Update the cite key in `paper/paper.tex` line 71 accordingly.
 
-- Add an explicit existence condition to Proposition 1: the P/D ratio is well-defined iff $A < 1$, where $A$ is the numerator. State this as a remark or assumption.
-- Recalibrate Extension 2's large-singularity parameters so that P/D is defined at $\tau = 0$. Options:
-  - **Option A (preferred):** Reduce $\gamma$ or increase $\phi$ for the large-singularity scenario so that $A < 1$. E.g., $\phi = 0.15$ with $\eta = 9$ gives $\phi(1+\eta) = 1.5$ and $\phi^{-\gamma} = 1975$, which may work.
-  - **Option B:** Keep current parameters but explicitly discuss that P/D diverges (prices go to infinity) as a feature — the hedge value is so extreme that AI stocks are infinitely valuable, making the case for transfers even stronger. The figure then starts from the first $\tau$ where P/D is finite.
-- Regenerate table and figure with `code/generate-exhibits.R`.
-- Update paper text in Section 4.2 to match the new calibration or the new discussion.
+---
 
-### 2. Fix citation errors
-**Test:** `factcheck-lit`
+## 2. Fix "shrink" language for non-AI dividends [factcheck-bysection]
 
-- **references.bib:** Change `KoganPapanikolaouSchmidtSong2020` authors to `Kogan, Leonid and Papanikolaou, Dimitris and Stoffman, Noah`. Update the citation key to `KoganPapanikolaouStoffman2020`. Update all `\citet`/`\citep` references in `paper.tex`.
-- **Nordhaus framing:** Change "the kind of explosive output growth discussed by \citet{Jones2024} and \citet{Nordhaus2021}" to something like "the kind of explosive output growth modeled by \citet{Jones2024} and examined critically by \citet{Nordhaus2021}" to accurately reflect Nordhaus's skeptical stance.
+**File:** `paper/paper.tex` ~line 152
 
-### 3. Fix opening figure — use real data
-**Test:** `element-opening-fig`
+The text says non-AI stocks' dividends "shrink" upon singularity. With baseline parameters, $\Gamma^N = 1.2 > 1$ so non-AI dividends grow in absolute terms; they only shrink as a share of the economy. Change "shrink" to "shrink as a share of the economy" or "grow less than aggregate consumption."
 
-- Replace hardcoded P/E values in `code/generate-exhibits.R` with actual data. The spec (paper-spec.md IV.8.b) says empirical content should be "very limited, ideally to a single figure." Use a simple, documentable source.
-- Check `ralph/code-templates/` for WRDS access patterns. Download P/E data for an AI-exposed portfolio vs. S&P 500 from WRDS (or use a simple publicly verifiable approach).
-- Remove "(Illustrative)" from the figure caption and the hedge phrase "based on approximate values" from the intro text.
-- Update `code/generate-exhibits.R` so the pipeline runs from scratch as required by spec III.3.c.
+---
 
-### 4. Improve Extension 2 figure
-**Tests:** `element-transfers-fig`, `visual-figures-image-only`
+## 3. Fix GKP characterization in Extension 2 opening [element-gkp-cites]
 
-- **Catastrophe visibility:** Add an annotation or marker at $\tau = 0$ in Panel (b) highlighting the household's consumption loss (e.g., annotate "Catastrophe: 50% loss" with an arrow at the y-intercept of the large-singularity line).
-- **Grid contrast:** Change `panel.grid.major` from `"gray70"` to `"gray50"` or darker in `theme_paper`.
-- **Panel (a) vertical space:** Set `scale_y_continuous(limits = c(NA, NA))` or adjust y-axis lower bound to reduce whitespace below data.
-- **Caption:** Add a brief note connecting panels (a) and (b) — transfers reduce hedge value (panel a) while improving consumption (panel b).
+**File:** `paper/paper.tex` ~line 248
 
-### 5. Fix intro paragraph structure
-**Test:** `writing-intro`
+Three issues in the sentence "\citet{GKP2012} note that intergenerational transfers affect the magnitude of displacement risk but treat such mechanisms as inessential extensions to their framework. We take a closer look."
 
-- Make argument (d) — that singularity abundance can overcome market frictions — visible to a skim-reader. Currently buried mid-paragraph.
-- Option: Split paragraph 3 so that the abundance-overcomes-frictions idea leads its own sentence or short paragraph. E.g., start a new paragraph with something like "And if the singularity actually occurs, the explosive growth in output may itself overcome these frictions."
+- "note" minimizes a substantive GKP passage (their Section 3.2 paragraph).
+- "inessential extensions" misrepresents GKP's technical usage — they mean the SDF functional form is unchanged, not that transfers are unimportant.
+- "We take a closer look" implies examining the same mechanism, when Extension 2 operates in a different model.
 
-### 6. Remaining figure polish
-**Test:** `visual-figures-image-only`
+Rewrite to: accurately convey GKP's point (transfers don't change the SDF form but affect displacement magnitude), and frame Extension 2 as studying transfers in a different setting (AI singularity) rather than as a deeper look at GKP's mechanism.
 
-- Fix `fig-ai-valuations` caption: add brief description of which firms and what P/E measure.
-- These visual fixes apply to both figures and are partially addressed in steps 3-4 above.
+---
+
+## 4. Add Knesl (2023, JFE) to lit review [element-lit-review]
+
+**File:** `paper/references.bib`, `paper/paper.tex` (lit review paragraph)
+
+Add: Knesl, Peter (2023). "Automation and the Displacement of Labor by Capital: Asset Pricing Theory and Empirical Evidence." *JFE* 147(2), 271-296. This paper directly models and tests automation-driven displacement risk in asset prices — squarely on topic and in a target journal. Integrate a brief mention in the lit review paragraph alongside the Kogan-Papanikolaou citations.
+
+---
+
+## 5. Add appendix section-number comment [spec-paper]
+
+**File:** `paper/paper.tex` ~line 293
+
+The appendix section `\section{Proof of Proposition~\ref{prop:pd-ratios}}` lacks a section-number comment. Add `% Appendix A` after it, consistent with the comment style used for all other sections.
+
+---
+
+## 6. Fix extension figure contrast and scale compression [visual-figures-image-only]
+
+**File:** `code/generate-exhibits.R` (Panel b of extension figure)
+
+Two issues:
+- **Contrast:** The baseline (salmon) line is too light, especially in Panel (b). Use darker, more saturated colors (e.g., dark red/orange for baseline, dark blue for large singularity).
+- **Scale compression in Panel (b):** Baseline peaks at ~1.0 while large singularity reaches ~6.5, crushing baseline into bottom 15%. Use a log scale on the y-axis, or use `facet_wrap` with free y-scales to give each scenario adequate visual weight.
+
+Also apply the same color improvements to Panel (a) for consistency.
+
+---
+
+## 7. Fix page 8 blank space (table float placement) [visual-pages]
+
+**File:** `paper/paper.tex` ~lines 192-197
+
+Page 8 has Section 3 header + short paragraph followed by ~80% whitespace, with Table 1 on page 9. Fix by either:
+- Adding `[!htbp]` or `[H]` to the table float (already uses `[H]` — check if the `float` package is loaded).
+- Restructuring to place the table immediately after the parameter description, or moving the parameter discussion below the table reference.
+
+Likely the issue is that the table is too large to fit on the same page as the preceding Section 2 content. Rearrange so Section 3's text and table appear together without a nearly empty page.
+
+---
+
+## 8. Improve introduction flow [writing-intro]
+
+**File:** `paper/paper.tex` introduction (lines 39-72)
+
+Four structural issues identified:
+- **Paragraph 3** ("Despite a growing literature...") stalls momentum. It says "not much work has been done" without advancing the argument. Fold the under-discussed point into the motivation or delete.
+- **Paragraph 4** (singularity overcomes frictions) introduces extension logic too early and too cryptically. Move this preview to after the model description paragraph, or make it more concrete.
+- **Paragraph 6** (GKP positioning) comes after the model description rather than before. Move GKP positioning to immediately after the motivation, before the model machinery paragraph.
+- **Paragraph 8** (AI-authorship disclosure) creates a tonal rupture after quantitative results. Integrate the disclosure more smoothly — perhaps as a brief final sentence of the preceding paragraph rather than a standalone shift.
+
+Restructure introduction paragraph order: (1) opening/figure, (2) hedging motive + incompleteness, (3) GKP positioning, (4) model description, (5) extensions preview, (6) quantitative results + AI disclosure, (7) lit review.

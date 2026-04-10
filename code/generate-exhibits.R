@@ -154,19 +154,22 @@ scenario_labels <- c(
   "Large singularity" = expression(Large ~ singularity ~ (list(eta == 9, phi == 0.05)))
 )
 
+# Darker, more saturated colors for better contrast
+scenario_colors <- c("Baseline" = "#B22222", "Large singularity" = "#1B4F99")
+
 # Compute y-axis lower bound for Panel A to reduce whitespace
 pd_data_a <- df_ext %>% filter(!is.na(pd_ai) & tau <= 0.40)
 y_min_a <- floor(min(pd_data_a$pd_ai, na.rm = TRUE) / 5) * 5  # round down to nearest 5
 
 panel_a <- ggplot(pd_data_a,
                   aes(x = tau, y = pd_ai, color = scenario, linetype = scenario)) +
-  geom_line(linewidth = 1) +
+  geom_line(linewidth = 1.2) +
   labs(x = expression("Tax rate " * tau),
        y = "P/D Ratio (AI Stocks)",
        title = "(a) AI Stock Valuations") +
   scale_x_continuous(labels = scales::percent_format(), limits = c(0, 0.40)) +
   scale_y_continuous(limits = c(y_min_a, NA)) +
-  scale_color_discrete(labels = scenario_labels) +
+  scale_color_manual(values = scenario_colors, labels = scenario_labels) +
   scale_linetype_discrete(labels = scenario_labels) +
   theme_paper
 
@@ -175,24 +178,24 @@ cons_base_0 <- consumption_growth(0, 0.5, phi)
 cons_large_0 <- consumption_growth(0, 9.0, phi_large)
 
 panel_b <- ggplot(df_ext, aes(x = tau, y = cons_growth, color = scenario, linetype = scenario)) +
-  geom_line(linewidth = 1) +
+  geom_line(linewidth = 1.2) +
   geom_hline(yintercept = 1, linetype = "dashed", color = "gray20") +
   # Catastrophe markers at tau=0
-  annotate("point", x = 0, y = cons_large_0, shape = 16, size = 3, color = "firebrick") +
-  annotate("text", x = 0.06, y = cons_large_0 - 0.15,
+  annotate("point", x = 0, y = cons_large_0, shape = 16, size = 3, color = "#1B4F99") +
+  annotate("text", x = 0.06, y = cons_large_0 * 0.65,
            label = paste0("Catastrophe:\n", round((1 - cons_large_0) * 100), "% loss"),
-           color = "firebrick", size = 3.5, hjust = 0, fontface = "bold") +
-  annotate("point", x = 0, y = cons_base_0, shape = 16, size = 3, color = "gray40") +
-  annotate("text", x = 0.06, y = cons_base_0 - 0.08,
+           color = "#1B4F99", size = 3.5, hjust = 0, fontface = "bold") +
+  annotate("point", x = 0, y = cons_base_0, shape = 16, size = 3, color = "#B22222") +
+  annotate("text", x = 0.06, y = cons_base_0 * 0.75,
            label = paste0(round((1 - cons_base_0) * 100), "% loss"),
-           color = "gray40", size = 3.2, hjust = 0) +
+           color = "#B22222", size = 3.2, hjust = 0) +
   annotate("text", x = 0.55, y = 1.15, label = "No change", color = "gray20", size = 4) +
   labs(x = expression("Tax rate " * tau),
        y = "Household Consumption Growth\nin Singularity",
        title = "(b) Household Consumption") +
   scale_x_continuous(labels = scales::percent_format()) +
-  scale_y_continuous(limits = c(0, NA)) +
-  scale_color_discrete(labels = scenario_labels) +
+  scale_y_log10(breaks = c(0.1, 0.25, 0.5, 1, 2, 5)) +
+  scale_color_manual(values = scenario_colors, labels = scenario_labels) +
   scale_linetype_discrete(labels = scenario_labels) +
   theme_paper
 
