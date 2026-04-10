@@ -1,82 +1,70 @@
 # tests/factcheck-lit.py
-Started: 2026-04-09 20:52:35 EDT
-Runtime: 3m 41s
-[ralph-garage/agent-logs/20260409T205235.732033-0400_factcheck-lit_claude_opus.log](../ralph-garage/agent-logs/20260409T205235.732033-0400_factcheck-lit_claude_opus.log)
+Started: 2026-04-09 21:06:08 EDT
+Runtime: 4m 18s
+[ralph-garage/agent-logs/20260409T210609.014877-0400_factcheck-lit_claude_opus.log](../ralph-garage/agent-logs/20260409T210609.014877-0400_factcheck-lit_claude_opus.log)
 
 # factcheck-lit
-VERDICT: FAIL
-REASON: Critical metadata error — phantom fourth author (Seru) on KoganPapanikolaouSeruStoffman2020.
+VERDICT: PASS
+REASON: All nine cited works are externally verified with accurate metadata and materially supported in-text claims; no CRITICAL or IMPORTANT issues found.
 
 ## 1. Citation inventory audited
 
-Nine citation keys appear in the paper text (including footnotes):
+The following nine citation keys appear in the paper text (including footnotes) and were audited:
 
 1. GKP2012
 2. Jones2024
 3. KoganPapanikolaou2014
-4. KoganPapanikolaouSeruStoffman2020
+4. KoganPapanikolaouStoffman2020
 5. Knesl2023
 6. Barro2006
 7. Wachter2013
 8. PastorVeronesi2009
 9. Nordhaus2021
 
-Bibliography entries never cited in the paper text (excluded from audit): KorinekSuh2024, MehraPrescott1985, CampbellCochrane1999, GarleanuPanageas2015, Acemoglu2024, BabinaMotta2024, FamaFrench1993, AghionJonesJones2019.
+Bibliography entries that are never cited in the paper text (KorinekSuh2024, MehraPrescott1985, CampbellCochrane1999, GarleanuPanageas2015, Acemoglu2024, BabinaMotta2024, FamaFrench1993, AghionJonesJones2019) were excluded per instructions.
 
 ## 2. External verification coverage
 
 | Key | Status | External sources |
 |-----|--------|-----------------|
-| GKP2012 | VERIFIED | EconPapers/RePEc, ScienceDirect, MIT DSpace |
-| Jones2024 | VERIFIED | AEA publisher page, IDEAS/RePEc, Stanford GSB |
-| KoganPapanikolaou2014 | VERIFIED | Wiley/Journal of Finance, IDEAS/RePEc, NBER |
-| KoganPapanikolaouSeruStoffman2020 | VERIFIED | JPE/UChicago Press, IDEAS/RePEc, MIT DSpace, Kellogg/Northwestern |
-| Knesl2023 | VERIFIED | IDEAS/RePEc, ScienceDirect, EconPapers |
-| Barro2006 | VERIFIED | QJE/Oxford Academic, Harvard DASH, EconPapers |
-| Wachter2013 | VERIFIED | Wiley/Journal of Finance, EconPapers, Wharton faculty page |
-| PastorVeronesi2009 | VERIFIED | AEA publisher page, EconPapers, NBER |
-| Nordhaus2021 | VERIFIED | AEA publisher page, IDEAS/RePEc, NBER |
+| GKP2012 | VERIFIED | EconPapers/RePEc, MIT DSpace, ScienceDirect |
+| Jones2024 | VERIFIED | AEA (doi:10.1257/aeri.20230570), IDEAS/RePEc, EA Forum summary |
+| KoganPapanikolaou2014 | VERIFIED | Wiley Online Library, EconPapers/RePEc, IDEAS |
+| KoganPapanikolaouStoffman2020 | VERIFIED | U Chicago Press/JPE (doi:10.1086/704619), IDEAS/RePEc |
+| Knesl2023 | VERIFIED | ScienceDirect, EconPapers/RePEc, Semantic Scholar, Oxford archive |
+| Barro2006 | VERIFIED | Oxford Academic/QJE, Harvard DASH, EconPapers |
+| Wachter2013 | VERIFIED | EconPapers/RePEc, Wharton/UPenn repository, NBER |
+| PastorVeronesi2009 | VERIFIED | AEA (doi:10.1257/aer.99.4.1451), EconPapers |
+| Nordhaus2021 | VERIFIED | AEA (doi:10.1257/mac.20170105), IDEAS/RePEc, NBER WP 21547 |
 
 Coverage: 9/9 cited works externally verified (100%).
 
 ## 3. Metadata accuracy findings
 
-| Key | Authors | Year | Title | Journal/Outlet | Pages/Volume | Verdict |
-|-----|---------|------|-------|----------------|-------------|---------|
-| GKP2012 | Correct | Correct | Correct | Correct (JFE) | Correct | OK |
-| Jones2024 | Correct | Correct | Correct | Correct (AER: Insights) | Correct | OK |
-| KoganPapanikolaou2014 | Correct | Correct | Correct | Correct (JF) | Correct | OK |
-| KoganPapanikolaouSeruStoffman2020 | **ERROR** | Correct | Correct | Correct (JPE) | Correct | **CRITICAL** |
-| Knesl2023 | Correct | Correct | Correct | Correct (JFE) | Correct | OK |
-| Barro2006 | Correct | Correct | Correct | Correct (QJE) | Correct | OK |
-| Wachter2013 | Correct | Correct | Correct | Correct (JF) | Correct | OK |
-| PastorVeronesi2009 | Correct | Correct | Correct | Correct (AER) | Correct | OK |
-| Nordhaus2021 | Correct | Correct | Correct | Correct (AEJ: Macro) | Correct | OK |
+All nine bib entries have accurate metadata (authors, year, title, journal, volume, number, pages) matching publisher records. No errors found.
 
 ## 4. In-text description accuracy findings
 
-| Key | Claim-support verdict | Notes |
-|-----|----------------------|-------|
-| GKP2012 | Accurate | Correctly described as modeling innovation displacement creating systematic risk under incomplete markets; growth stocks as partial hedge. |
-| Jones2024 | Accurate | Correctly described as studying AI growth vs. existential risk trade-off; bounded utility making agents conservative about extinction. |
-| KoganPapanikolaou2014 | Accurate | Correctly described as showing technology shocks generate cross-sectional return differences. |
-| KoganPapanikolaouSeruStoffman2020 | Accurate | Correctly described as showing creative destruction generates return differences and inequality. |
-| Knesl2023 | Accurate | Correctly described as providing empirical evidence that automation displacement commands a risk premium. |
-| Barro2006 | Accurate | Correctly cited as rare disasters literature foundation. |
-| Wachter2013 | Accurate | Correctly cited as rare disasters literature foundation. |
-| PastorVeronesi2009 | Accurate | Correctly described as studying how technological revolutions affect stock prices through productivity uncertainty. |
-| Nordhaus2021 | Accurate | Described as critically examining the economic singularity; Nordhaus's skeptical conclusion is implied by "examined critically." |
+| Key | In-text claim(s) | Verdict |
+|-----|-------------------|---------|
+| GKP2012 | Innovation displaces existing agents creating systematic risk under incomplete markets; rents accrue to agents investors cannot trade with; growth stocks hedge displacement; future innovators' rents untradeable | SUPPORTED (4/5 claims verified; 1 claim about transfers plausible but requires full-text access) |
+| Jones2024 | Studies AI growth vs. existential risk trade-off; bounded utility makes agents conservative about extinction; states with enormous growth are those with highest existential risk; normalizes extinction utility to zero | SUPPORTED |
+| KoganPapanikolaou2014 | Technology shocks generate cross-sectional return differences through heterogeneous exposures | SUPPORTED |
+| KoganPapanikolaouStoffman2020 | Creative destruction generates return differences and inequality through heterogeneous exposures | SUPPORTED |
+| Knesl2023 | Direct empirical evidence that automation-driven displacement commands a risk premium | SUPPORTED |
+| Barro2006 | Foundational rare disasters methodology for pricing discrete catastrophic events | SUPPORTED |
+| Wachter2013 | Rare disasters methodology with time-varying disaster probabilities | SUPPORTED |
+| PastorVeronesi2009 | Technological revolutions affect stock prices through productivity uncertainty | SUPPORTED |
+| Nordhaus2021 | Critically examines explosive output growth / economic singularity hypothesis | SUPPORTED |
 
 ## 5. Flagged issues by citation key and severity
 
-### KoganPapanikolaouSeruStoffman2020 — CRITICAL
+### GKP2012
+- **MINOR**: The paper states GKP2012 "note that intergenerational transfers could in principle affect the magnitude of displacement risk" (Section 4.2). This claim is plausible given their OLG incomplete-markets framework but could not be confirmed from abstracts and external sources alone; full-text access would be needed. Left as UNVERIFIED for this specific sub-claim. Not treated as an error per the audit guidelines.
 
-**Phantom author.** The bib entry (references.bib, line 136) lists four authors: Kogan, Papanikolaou, **Seru**, and Stoffman. All external sources (JPE publisher page, IDEAS/RePEc, MIT DSpace, Kellogg/Northwestern) consistently list only three authors: **Kogan, Papanikolaou, and Stoffman**. Amit Seru is not an author of "Left Behind: Creative Destruction, Inequality, and the Stock Market" (JPE 2020). The confusion likely stems from the same group's other paper, "Technological Innovation, Resource Allocation, and Growth" (QJE 2017), which does include Seru. The bib key and author field both need correction.
-
-### Nordhaus2021 — MINOR
-
-**Nuance in phrasing.** The paper says "explosive output growth modeled by Jones (2024) and examined critically by Nordhaus (2021)." Nordhaus's main empirical conclusion is that the singularity is *not* near. The phrase "examined critically" does convey skepticism, so this is defensible, but a reader might benefit from knowing Nordhaus's verdict is negative. Not an error.
+### All other keys
+- **NONE**: No issues found for Jones2024, KoganPapanikolaou2014, KoganPapanikolaouStoffman2020, Knesl2023, Barro2006, Wachter2013, PastorVeronesi2009, or Nordhaus2021.
 
 ## 6. Overall reliability of the paper's citations
 
-Eight of nine cited works have fully accurate metadata and defensible in-text usage. The one critical issue — a phantom fourth author (Seru) on the KPSS2020 entry — is a clear bibliographic error that would render incorrectly in the published bibliography. All nine cited works were externally verified with multiple authoritative sources. In-text claim-support is accurate across the board. The citation practices are otherwise reliable and well-sourced.
+The paper's citation practices are strong. All nine cited works are real, correctly attributed, and published in the journals listed. Bibliographic metadata (authors, titles, years, journals, volumes, pages) is accurate across the board. In-text characterizations of each cited work are materially faithful to the source content as confirmed by publisher pages, abstracts, and independent summaries. The single MINOR item (the transfers sub-claim about GKP2012) is plausible and does not rise to an error given insufficient external evidence to contradict it. No CRITICAL or IMPORTANT issues were identified.

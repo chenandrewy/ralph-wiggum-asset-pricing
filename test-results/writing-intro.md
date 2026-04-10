@@ -1,71 +1,55 @@
 # tests/writing-intro.py
-Started: 2026-04-09 20:52:35 EDT
-Runtime: 2m 13s
-[ralph-garage/agent-logs/20260409T205235.723635-0400_writing-intro_claude_opus.log](../ralph-garage/agent-logs/20260409T205235.723635-0400_writing-intro_claude_opus.log)
+Started: 2026-04-09 21:06:08 EDT
+Runtime: 2m 39s
+[ralph-garage/agent-logs/20260409T210608.983512-0400_writing-intro_claude_opus.log](../ralph-garage/agent-logs/20260409T210608.983512-0400_writing-intro_claude_opus.log)
 
 # writing-intro
 VERDICT: FAIL
-REASON: The introduction fails on argument clarity (one key argument missing) and flow (paragraph 3 overloaded, two broken transitions), though all promised analyses are delivered in the body.
+REASON: Introduction has argument-clarity gaps for a skimming reader and two broken paragraph transitions, though all promised analyses are fulfilled in the body.
 
-## Sub-test Results
+## Subagent 1: Argument Clarity for Skimming Readers — FAIL
 
-| Sub-test | Verdict |
+Evaluates whether each spec argument is clear to a reader who reads only first/last sentences of paragraphs, bolded text, and figure captions.
+
+| Argument | Result |
 |---|---|
-| 1. Main arguments clear to skimming reader | FAIL |
-| 2. Introduction flow | FAIL |
-| 3. Promises fulfilled in body | PASS |
+| (a) AI valuations partly reflect hedging motive | PASS |
+| (b) Incomplete markets are key | PASS |
+| (c) Financial market solutions under-discussed; frictions limit effectiveness | **FAIL** |
+| (d) Singularity abundance makes frictions surmountable | PASS |
+| (e) Incomplete markets distort AI development | PASS |
+| Self-demonstration of AI displacement | PASS |
+| GKP-2012 contribution characterized modestly | PASS |
 
----
+**Key finding on (c):** The claim that financial market solutions to AI disaster risk are under-discussed does not appear on the skimmable surface. Paragraph 3's opening sentence frames it as a need for a framework rather than stating that financial-market hedging solutions are neglected. The frictions point ("illiquidity, private ownership, the non-existence of future capital") is buried mid-paragraph in P2, invisible to a skimmer. A sentence — ideally opening a paragraph — should explicitly flag that financial market solutions are under-studied, with frictions visible on the skimming surface.
 
-## 1. Argument Clarity (FAIL)
+## Subagent 2: Introduction Flow — FAIL
 
-Evaluated whether all five main arguments from the paper spec are identifiable by a skimming reader.
+Evaluates whether each paragraph moves the reader to the next.
 
-- **(a) AI stocks hedge against a negative singularity**: Marginal pass. The hedging claim is present ("Part of this premium, we argue, reflects a hedging motive"), but the *negative* singularity framing is blurred. The introduction describes the singularity ambiguously as both "transformative productivity gains" and displacement. A skimming reader may not register that the hedge is specifically against a bad outcome rather than general AI exposure.
+| Transition | Result | Notes |
+|---|---|---|
+| P1 → P2 (Hook → Main argument) | PASS | Clean pickup: "Part of this premium, we argue" |
+| P2 → P3 (Main argument → Framework) | WEAK | P3 opens with throat-clearing about what the literature discusses; breaks momentum |
+| P3 → P4 (Framework → Quantitative results) | PASS | Logical but implicit transition |
+| P4 → P5 (Quantitative results → Veto distortion) | **FAIL** | P4 ends on extinction risk, P5 pivots to real distortions with no bridge. Reader is disoriented. |
+| P5 → P6 (Veto → Transfers) | PASS | "If blocking AI is costly, another policy lever is redistribution" — clean conditional bridge |
+| P6 → P7 (Transfers → Self-demonstration) | **FAIL** | Jarring conceptual leap from transfer policy to meta-commentary on the paper's production. No bridging language. |
+| P7 → Lit review | WEAK | P7 leaves reader in unusual conceptual space; awkward launching pad for lit survey |
 
-- **(b) Incomplete markets are key**: Pass. Stated explicitly: "If markets were complete, investors could insure against this risk directly..."
+The narrative arc (empirical fact → explanation → model → results → extensions → broader point) is sound in logic, but fractures at P4→P5 and P6→P7 break the reader's forward momentum.
 
-- **(c) Financial market solutions are under-discussed; frictions limit effectiveness**: **Fail.** The under-discussion motivation appears ("discussions of AI risk focus overwhelmingly on technology policy and labor markets") but is thin and reads as scene-setting rather than a distinct argument. The word "frictions" never appears. The idea that financial markets *could* provide solutions but are hampered by frictions is not articulated as a crisp, skimmable claim.
+## Subagent 3: Promises Fulfilled in Body — PASS
 
-- **(d) Singularity abundance overcomes frictions**: Pass. Clearly stated: "the resource base becomes so enormous that even grossly inefficient redistribution delivers large consumption gains."
+All eight promises identified in the introduction are substantively delivered:
 
-- **(e) Incomplete markets distort AI development**: Pass. "Market incompleteness distorts not only asset prices but also the development of AI itself."
+1. **Consumption-based model** — Section 2.1 ✓
+2. **Closed-form P/D ratios** — Proposition 1 ✓
+3. **~6x AI-to-non-AI P/D** — Table 1, Section 3 (ratio is 1.6–6x across p = 0.5–1%) ✓
+4. **Extinction risk attenuates gap** — Proposition 2(iii) and Table 1 ✓
+5. **Veto under incomplete markets** — Proposition 3(i) ✓
+6. **Complete markets eliminate veto** — Proposition 3(ii) ✓
+7. **Transfers with deadweight costs** — Section 4.2, eq. (6)–(7) ✓
+8. **Quantitative analysis of transfers** — Figure 2, two-panel illustration ✓
 
----
-
-## 2. Introduction Flow (FAIL)
-
-### Strengths
-- **Opening hook**: Strong. "Remarkable valuations" grounded immediately in Figure 1 data.
-- **P1 → P2 transition**: Clean. "Part of this premium" picks up "remarkable valuations" directly.
-- **P4 → P5 transition**: Good. "If blocking AI is costly, another policy lever is redistribution" is an explicit logical connector.
-- **Writing style**: Generally direct and engaging. "The uninsurable downside looms larger than the expected upside" is vivid.
-
-### Problems
-- **Paragraph 3 is overloaded.** It asks the reader to absorb five distinct items in one paragraph: intellectual lineage (GKP), model setup (representative household, stochastic singularity, private capital), solution method (closed-form P/D ratios), a quantitative result (6x P/D spread), and an attenuation mechanism (Jones 2024 extinction risk). The extinction-risk sentence arrives last in a long paragraph, introducing a named paper and a qualitatively new force without preparation.
-
-- **P3 → P4 transition is abrupt.** P3 ends on quantitative results (P/D ratios, extinction risk); P4 pivots to the blocking/distortion channel with no bridge sentence. The reader is dropped into a fresh mechanism after absorbing a dense paragraph.
-
-- **P5 → P6 transition is jarring.** The singularity-transfers paragraph ends on an economic insight; the next paragraph pivots to meta-commentary on the paper's own AI-authored production with no transitional signal. The tonal shift — from formal economic argument to quasi-confession about AI authorship — is the sharpest discontinuity.
-
-- **P6 closing hedge undercuts itself.** "A concrete, if modest, instance" — the hedge weakens the rhetorical punch the paragraph is reaching for.
-
----
-
-## 3. Promises Fulfilled (PASS)
-
-Every analysis promised or implied in the Introduction is delivered in the body:
-
-| Introduction promise | Delivered by |
-|---|---|
-| Closed-form P/D ratios | Proposition 1 |
-| P/D ratio ~6x for AI vs non-AI | Table 1 (p=1% row) |
-| Extinction risk attenuates gap | Proposition 2(iii) + Table 1 |
-| Household may block AI development | Proposition 3(i) |
-| Complete markets eliminate distortion | Proposition 3(ii) |
-| Inefficient redistribution effective under singularity | Extension 2 quantitative analysis |
-| Two-panel transfer figure | Figure 2 |
-| GKP (2012) as intellectual origin | Section 2 Discussion |
-| Paper as self-illustration of displacement | Introduction footnote |
-
-No analytical IOUs are left unpaid.
+Minor note: the existence condition / infinite-P/D result (Remark 1) is not foreshadowed in the intro but strengthens rather than departs from the narrative. The "roughly six times" language slightly overstates the central tendency (6:1 is the upper bound at p = 1%) but is defensible.

@@ -1,37 +1,28 @@
 # tests/factcheck-anaphora.py
-Started: 2026-04-09 20:52:35 EDT
-Runtime: 58s
-[ralph-garage/agent-logs/20260409T205235.759010-0400_factcheck-anaphora_claude_opus.log](../ralph-garage/agent-logs/20260409T205235.759010-0400_factcheck-anaphora_claude_opus.log)
+Started: 2026-04-09 21:06:08 EDT
+Runtime: 53s
+[ralph-garage/agent-logs/20260409T210608.985609-0400_factcheck-anaphora_claude_opus.log](../ralph-garage/agent-logs/20260409T210608.985609-0400_factcheck-anaphora_claude_opus.log)
 
 # factcheck-anaphora
 VERDICT: PASS
-REASON: No demonstrative near a cross-reference resolves to a meaning that conflicts with the referenced target.
+REASON: All demonstratives near cross-references resolve correctly to the meaning their targets contain.
 
 ## Findings by section
 
-### Introduction (lines 38–70)
-No demonstratives appear near \ref or \eqref commands. Demonstratives like "this premium" and "this market incompleteness" resolve to clear nearby antecedents without cross-reference ambiguity.
+### Introduction (lines 38–72)
+No demonstrative+cross-reference pairings found. The single `\ref` (Figure 1) is introduced by name with no ambiguous pronoun.
 
-### Model (lines 71–174)
-- Line 144: "this condition" near Section~\ref{sec:ext2} correctly refers to the existence condition ($A^j < 1$) just defined in Equation (5).
-- Line 147: "This is the hedging channel" near Proposition~\ref{prop:pd-ratios} correctly refers to the mechanism just described (AI stocks paying off when household consumption falls).
+### Model (lines 73–176)
+No issues. "The P/D ratios in Proposition 1" and "this condition" near `\ref{sec:ext2}` both resolve to the correct targets.
 
-No issues found.
+### Quantitative Analysis (lines 177–194)
+No issues. References to Proposition 2(iii) and Figure 1 are introduced without demonstratives and match their targets.
 
-### Quantitative Analysis (lines 175–192)
-Three cross-references (Table~\ref{tab:pd-ratios}, Figure~\ref{fig:ai-valuations}, Proposition~\ref{prop:comp-statics}) appear without nearby demonstratives. No issues found.
+### Extensions (lines 195–257)
+No issues. References to Proposition 1, Remark 1, and Figure 2 are all introduced by name. "This ratio" (line 240) correctly resolves to equation (7) immediately above.
 
-### Extensions (lines 193–255)
-- Line 230: "The P/D formula from Proposition~\ref{prop:pd-ratios}" correctly refers to the price-dividend ratio formulas in Proposition 1.
-- Line 242: "the existence condition in Remark~\ref{rem:existence}" correctly refers to the $A^j < 1$ condition defined in Remark 1.
+### Conclusion (lines 258–268)
+No cross-references in this section; demonstratives resolve to local prose antecedents only.
 
-No issues found.
-
-### Conclusion (lines 256–266)
-No cross-references appear in this section. Demonstratives resolve to clear nearby antecedents. No issues found.
-
-### Proof of Proposition 1 (lines 267–296)
-- Line 289: "this is exact" correctly refers to the immediately preceding approximation.
-- Line 295: "This can be rewritten as equation~\eqref{eq:pd-ai}" correctly refers to the equation just derived (eq:pd-ai-solve).
-
-No issues found.
+### Proof of Proposition 1 (lines 269–298)
+No issues. "This" on line 297 correctly resolves to the derived expression in equation (9), and the `\eqref{eq:pd-ai}` target is the matching formula from the proposition.

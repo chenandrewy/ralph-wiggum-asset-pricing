@@ -1,26 +1,45 @@
 # tests/factcheck-freely.py
-Started: 2026-04-09 20:52:35 EDT
-Runtime: 6m 38s
-[ralph-garage/agent-logs/20260409T205235.719819-0400_factcheck-freely_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260409T205235.719819-0400_factcheck-freely_claude_claude-opus-4-6.log)
+Started: 2026-04-09 21:06:08 EDT
+Runtime: 7m 50s
+[ralph-garage/agent-logs/20260409T210608.981679-0400_factcheck-freely_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260409T210608.981679-0400_factcheck-freely_claude_claude-opus-4-6.log)
 
 # factcheck-freely
 VERDICT: FAIL
-REASON: The proof of Proposition 1 contains a self-contradictory stationarity claim, and Proposition 2(iii) lacks a rigorous proof for the ratio result.
+REASON: The bibliography omits Amit Seru as a co-author of Kogan, Papanikolaou, Seru, and Stoffman (2020, JPE), a factual error in a citation.
 
 ## Detailed Findings
 
-### Logical Inconsistency 1: Self-contradictory stationarity claim (Appendix A, line 289)
+### Factual Error: Missing Author on Citation
 
-The proof of Proposition 1 states: "we focus on the pre-singularity valuation, treating the post-singularity P/D ratio as approximately $v^{AI}$ (this is exact when the economy is stationary conditional on the new share)."
+The bib entry `KoganPapanikolaouStoffman2020` in `paper/references.bib` lists only Kogan, Papanikolaou, and Stoffman as authors of "Left Behind: Creative Destruction, Inequality, and the Stock Market" (JPE 2020). The actual paper has four authors: Kogan, Papanikolaou, **Seru**, and Stoffman. This is a factual error — omitting a co-author misattributes the work. The paper text (`paper.tex`, line 68) also cites it without Seru via `\citet{KoganPapanikolaouStoffman2020}`.
 
-This parenthetical exactness claim contradicts the model's own structure. After a non-extinction singularity, $\theta$ changes to $\theta + \Delta\theta(1-\theta)$, which changes $\Gamma^{AI}$ and $\Gamma^N$. A subsequent singularity from the new state would therefore have different dividend growth factors, so the post-singularity P/D ratio differs from the pre-singularity one. The economy is never truly stationary conditional on the new share (unless $\Delta\theta = 0$, which would eliminate the model's mechanism). The claim that the approximation is "exact" under a condition that never holds within the model is a logical inconsistency.
+### Items Verified as Correct
 
-### Logical Inconsistency 2: Incomplete proof for Proposition 2(iii) ratio claim
+1. **Mathematical derivations (Proposition 1, Appendix A):** The Euler equation derivation is algebraically sound. The three-state enumeration (no singularity, non-extinction singularity, extinction) correctly produces the P/D formulas in equations (4)–(5).
 
-Proposition 2(iii) states without qualification: "The *ratio* $(P^{AI}/D^{AI}) / (P^N/D^N)$ also decreases in $\xi$."
+2. **Comparative statics (Proposition 2):** All three claims — (i) increasing in displacement severity, (ii) increasing in $p$ for large $\gamma$, (iii) decreasing in $\xi$ for the parameterizations considered — are logically consistent with the formulas. The proof of (iii) uses a convexity argument qualified to specific parameterizations, which is appropriate.
 
-The proof argues by intuition that "higher $\xi$ uniformly shrinks the weight on non-extinction singularity states, which are the only states where AI and non-AI dividends diverge. Both the spread and the ratio narrow." However, the P/D ratio has the form $A/(1-A)$, which is convex in $A$. The ratio of two such convex functions is not guaranteed to be monotonic in $\xi$ for all parameter values. Unlike part (ii), which includes the qualifier "when $\gamma$ is sufficiently large," part (iii) is stated as holding universally. The proof does not establish this.
+3. **Quantitative claims:** At $p = 1\%$, $\xi = 0$ with stated parameters, the AI-to-non-AI P/D ratio reaches roughly 6x. The "roughly six times" claim is accurate.
 
-### Borderline Issue: "Surplus" terminology mismatch (Section 4.2, line 222)
+4. **Hedging argument:** Internally consistent. AI stocks have $\Gamma^{AI} > \Gamma^{N}$, so they pay more in singularity states where household marginal utility ($\phi^{-\gamma}$) is high. This correctly implements the hedging channel.
 
-The text says the government taxes "AI owners' surplus," but the formula (equation 5) taxes $(1-\phi\alpha)(1+\eta)(1+g)C_t$, which is AI owners' total post-singularity consumption, not their surplus (gain relative to pre-singularity level). This is a text-math mismatch, though "surplus" could be charitably interpreted as "their share of output."
+5. **Extension 1 (Veto, Proposition 3):** Logic is sound. Under incomplete markets with high $\gamma$, the concavity of CRRA utility makes the downside of negative singularity dominate the upside of positive singularity, producing the veto even when development is socially efficient. The extinction utility normalization ($U_{ext} = 0$) is correctly described as conservative.
+
+6. **Extension 2 (Transfers):** 
+   - Equation (7) transfer ratio: correctly independent of $\eta$ (it cancels in numerator and denominator).
+   - $\phi(1+\eta) = 0.5 \times 1.5 = 0.75$ for baseline: correct.
+   - $\phi(1+\eta) = 0.05 \times 10 = 0.5$ for large singularity: correct.
+   - $\phi^{-\gamma} = 0.05^{-4} = 20^4 = 160{,}000$: correct.
+
+7. **"Consumption falls by 25%":** Correct. The ratio of singularity to counterfactual consumption is $\phi(1+\eta) = 0.75$; the growth factor $(1+g)$ appears in both and cancels.
+
+8. **Literature characterizations:**
+   - GKP 2012: Accurately described as showing displacement risk from innovation under incomplete markets creates a systematic risk factor, with growth stocks providing a partial hedge.
+   - Jones 2024: The claim about bounded utility making agents conservative about extinction is accurate.
+
+9. **"Zero traditional research labor":** The abstract claim is qualified by "traditional" and the footnote clarifies the human authored the specification and test scripts. This is a rhetorical choice rather than a factual error, though it is aggressive.
+
+### Minor Notes (Not Rising to Factual Error)
+
+- The stationarity approximation (post-singularity P/D ≈ pre-singularity P/D) introduces non-trivial error when $\Delta\theta = 0.2$, since $\theta$ jumps from 0.15 to 0.32 after one singularity, changing $\Gamma^{AI}$ by ~33%. The paper acknowledges this is an approximation.
+- The characterization of GKP's discussion of transfers is slightly generous — GKP mention transfers as a robustness observation rather than a policy recommendation — but is not factually incorrect.

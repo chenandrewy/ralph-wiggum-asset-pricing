@@ -141,21 +141,21 @@ df_ext <- expand.grid(tau = tau_grid,
   ) %>%
   ungroup()
 
-theme_paper <- theme_bw(base_size = 18) +
+theme_paper <- theme_bw(base_size = 22) +
   theme(
     legend.position = "bottom",
     legend.title = element_blank(),
-    legend.text = element_text(size = 15),
-    axis.text = element_text(size = 15),
-    axis.title = element_text(size = 16),
-    plot.title = element_text(size = 17),
+    legend.text = element_text(size = 18),
+    axis.text = element_text(size = 18),
+    axis.title = element_text(size = 20),
+    plot.title = element_text(size = 21),
     panel.grid.minor = element_blank(),
     panel.grid.major = element_line(color = "gray50")
   )
 
 scenario_labels <- c(
-  "Baseline" = "Baseline (\u03b7 = 0.5, \u03c6 = 0.5)",
-  "Large singularity" = "Large singularity (\u03b7 = 9, \u03c6 = 0.05)"
+  "Baseline" = expression("Baseline (" * eta * " = 0.5, " * phi * " = 0.5)"),
+  "Large singularity" = expression("Large singularity (" * eta * " = 9, " * phi * " = 0.05)")
 )
 
 # Line styles: solid vs longdash with different widths for Panel (a) differentiation
@@ -219,8 +219,22 @@ panel_b <- ggplot(df_ext, aes(x = tau, y = cons_growth, color = scenario, linety
   guides(linewidth = "none") +
   theme_paper
 
-fig <- arrangeGrob(panel_a, panel_b, ncol = 2)
-ggsave(file.path(outdir, "fig-extension-panels.pdf"), fig, width = 14, height = 6)
+# Extract shared legend from panel_a, then remove legends from both panels
+get_legend <- function(p) {
+  tmp <- ggplotGrob(p)
+  leg <- which(sapply(tmp$grobs, function(x) x$name) == "guide-box")
+  tmp$grobs[[leg]]
+}
+shared_legend <- get_legend(panel_a)
+panel_a <- panel_a + theme(legend.position = "none")
+panel_b <- panel_b + theme(legend.position = "none")
+
+fig <- arrangeGrob(
+  arrangeGrob(panel_a, panel_b, ncol = 2),
+  shared_legend,
+  nrow = 2, heights = c(10, 1)
+)
+ggsave(file.path(outdir, "fig-extension-panels.pdf"), fig, width = 12, height = 7)
 cat("Wrote", file.path(outdir, "fig-extension-panels.pdf"), "\n")
 
 # =============================================================================

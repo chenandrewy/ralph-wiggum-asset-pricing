@@ -1,26 +1,31 @@
 # tests/visual-pages.py
-Started: 2026-04-09 20:52:35 EDT
-Runtime: 52s
-[ralph-garage/agent-logs/20260409T205235.720939-0400_visual-pages_claude_opus.log](../ralph-garage/agent-logs/20260409T205235.720939-0400_visual-pages_claude_opus.log)
+Started: 2026-04-09 21:06:08 EDT
+Runtime: 49s
+[ralph-garage/agent-logs/20260409T210608.982526-0400_visual-pages_claude_opus.log](../ralph-garage/agent-logs/20260409T210608.982526-0400_visual-pages_claude_opus.log)
 
 # visual-pages
 VERDICT: PASS
-REASON: All 14 pages have visible page numbers, figures and tables are well-formatted, no formatting defects detected, and the paper is within the 20-page limit.
+REASON: All pages have visible page numbers, exhibits are well-formatted, no formatting defects detected, and the paper is 15 pages (within the 20-page limit).
 
 ## Page Numbers
-All 14 pages display a centered page number at the bottom. No page is missing a number.
+Every page (1--15) displays a centered page number at the bottom. No page is missing a number.
 
 ## Figures and Tables
-- **Figure 1 (p.2):** AI valuations chart (NASDAQ Composite vs. S&P 500). Axes are labeled, legend is clear, lines are distinguishable (solid vs. dashed). Readable.
-- **Table 1 (p.8):** Price-dividend ratios across singularity and extinction probabilities. Clean horizontal rules, well-aligned columns, parameter note at bottom. Readable.
-- **Figure 2 (p.12):** Two-panel figure (AI stock valuations and household consumption). Axes labeled, legends present with multiple series distinguished by line style. Panels are appropriately sized and readable.
+- **Figure 1** (page 2): AI valuations chart is clear and readable. Axis labels, legend, and source note are all legible. The normalized price series are easy to distinguish.
+- **Table 1** (page 8): Price-dividend ratios table is cleanly formatted with clear column headers, horizontal rules separating parameter groups, and a descriptive note below. All numbers are aligned and readable.
+- **Figure 2** (page 12): Two-panel extension figure (AI Stock Valuations and Household Consumption). Both panels have labeled axes, readable legends with Greek letters, and distinguishable line styles. Panels are side-by-side and well-proportioned.
 
 ## Formatting Issues
-- No overflowing text or margin violations detected on any page.
-- No broken references (e.g., "??" placeholders) observed.
+- No overflowing text, overfull hboxes, or margin violations observed on any page.
+- No broken references (e.g., "??" placeholders) detected.
 - No missing figures or tables.
-- All display equations appear numbered.
-- Footnotes are properly formatted.
+- All equations appear properly typeset and numbered.
+- Citations render correctly throughout.
 
 ## Paper Length
-The paper is 14 pages (including references and appendix), well within the 20-page maximum specified in the spec.
+- The paper is 15 pages total (including title page, references, and appendix).
+- The spec requires at most 20 pages. **Compliant.**
+
+## Minor Observations
+- Page 15 contains only a single continuing reference entry and is otherwise blank. This is not a defect but could be tightened if page economy is desired.
+- 3 exhibits total (2 figures, 1 table), well within the 6-exhibit limit.

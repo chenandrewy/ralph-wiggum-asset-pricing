@@ -1,44 +1,61 @@
 # Improvement Plan
-AUTHOR PLAN — 2026-04-09 20:49:40 EDT
+AUTHOR PLAN — 2026-04-09 21:01:44 EDT
 
-## Current State
+## Current Status
 
-- **Tests:** 21/25 pass, 4 fail
-- **Model/theory:** No overhaul needed. Derivations are correct, comparative statics are sound, and the economic logic is consistent with the spec.
-- **Referee report:** Already addressed via Extension 1 (veto) and Extension 2 (transfers).
+**20 pass / 5 fail** out of 25 tests. No section needs an overhaul — the model is structurally sound (factcheck-theory, theory-clarity both pass). All issues are fixable incrementally.
 
-## Failing Tests (Priority 1)
+## Failing Tests and Fixes
 
-### 1. `factcheck-freely` — Missing author in bib entry
-**Issue:** `references.bib` entry `KoganPapanikolaouStoffman2020` is missing coauthor **Amit Seru**. The published JPE paper has four authors: Kogan, Papanikolaou, Seru, Stoffman.
+### 1. factcheck-lit (CRITICAL) — Phantom author in bibliography
+
+**Issue:** `references.bib` lists four authors for `KoganPapanikolaouSeruStoffman2020`: Kogan, Papanikolaou, **Seru**, Stoffman. The actual JPE 2020 paper has only three authors: Kogan, Papanikolaou, Stoffman. Seru is from a different paper by overlapping authors (QJE 2017).
+
 **Fix:**
-- Update bib key to `KoganPapanikolaouSeruStoffman2020`.
-- Add `Seru, Amit` to the author field.
-- Update all `\citet` references in `paper.tex` (currently line 68).
+- Remove `Seru, Amit` from the author field in `references.bib`.
+- Rename the bib key to `KoganPapanikolaouStoffman2020` throughout `references.bib` and `paper.tex`.
 
-### 2. `visual-figures` — Extension panels readability
-**Issue:** Figure 2 tick labels and legend text are too small; legend uses raw parameter strings instead of verbal labels ("Baseline", "Large singularity").
-**Fix in `code/generate-exhibits.R`:**
-- The code already uses verbal scenario labels (`scenario_labels`). The test sees raw parameter strings, suggesting the legend labels are not rendering correctly or the `expression()` labels are being truncated. Investigate and fix the legend label rendering—likely need to simplify from `expression()` to plain strings with Unicode or paste, or increase the plot `width` to prevent truncation.
-- Increase `base_size` in `theme_paper` (e.g., from 16 to 18) or explicitly set larger tick label sizes.
+### 2. factcheck-freely — Proof issues in Propositions 1 and 2
 
-### 3. `visual-figures-image-only` — Panel (b) contrast and legend truncation
-**Issue:** (a) "No change" reference line in Panel (b) is light gray, low contrast. (b) Legend text for "Large singularity" is truncated (missing closing parenthesis).
-**Fix in `code/generate-exhibits.R`:**
-- Darken the reference line: change `color = "gray40"` to `"gray20"` or `"black"` and increase `linewidth`.
-- Fix legend truncation: same root cause as test 2 above—simplify `expression()` labels or widen the figure.
+**Issue A:** Appendix A (line 289) claims the post-singularity P/D ratio equals the pre-singularity one and calls this "exact when the economy is stationary conditional on the new share." This is self-contradictory — after a singularity, θ changes, so Γ^AI and Γ^N change, and the P/D ratio differs.
 
-### 4. `writing-intro` — Introduction flow breaks
-**Issue:** Three flow problems:
-1. Paragraph 3 (policy meta-commentary) is a non sequitur after the hedging mechanism in paragraph 2.
-2. Paragraph 6→7 transition (redistribution → self-referential anecdote) is abrupt.
-3. Paragraph 6 trails off without crisp resolution.
+**Fix A:** Rewrite the parenthetical to be honest about the approximation. State that treating the post-singularity P/D ratio as approximately equal to the pre-singularity one is an approximation that becomes exact only when Δθ → 0, and that the approximation is good for small Δθ. Remove the false stationarity claim.
 
-**Fix in `paper.tex`:**
-- Merge paragraph 3's policy-gap observation into paragraph 4 as a setup sentence (e.g., "Although financial market solutions remain largely absent from AI risk discussions, understanding where market limits bind requires a framework..."). This restores the motivation→mechanism→model flow.
-- Add a bridging sentence before the self-referential paragraph 7 connecting the theoretical displacement to observable displacement in knowledge production.
-- Tighten paragraph 6's ending with a crisper concluding sentence.
+**Issue B:** Proposition 2(iii) states the *ratio* (P^AI/D^AI)/(P^N/D^N) decreases in ξ without qualification, but the proof only gives intuition. The ratio involves convex functions and monotonicity isn't guaranteed for all parameters.
 
-## Post-Fix Improvements (Priority 2)
+**Fix B:** Add a qualifier "for the parameterizations considered" or prove it more carefully. The simplest fix: note that both P/D ratios have the form A/(1−A), which is increasing and convex in A. Since ξ enters only through the singularity term and reduces the weight on that term proportionally, the ratio narrows. Add a brief analytical argument or restrict the claim.
 
-No further changes needed. All other tests pass, including spec compliance, theory checks, lit review, and referee-related elements. The model section does not need an overhaul.
+**Issue C (borderline):** Section 4.2 says "AI owners' surplus" but the formula taxes total post-singularity consumption.
+
+**Fix C:** Change "surplus" to "post-singularity consumption" or "post-singularity income" in line 222.
+
+### 3. visual-figures and visual-figures-image-only — Figure 2 readability
+
+**Issue A:** Greek letters η and φ in legend labels render as ".." placeholders in PDF. The code uses Unicode characters (`\u03b7`, `\u03c6`) which don't embed in the default R PDF device.
+
+**Fix A:** In `generate-exhibits.R`, replace Unicode strings in `scenario_labels` with R `expression()` or `bquote()` calls so Greek letters render properly in PDF.
+
+**Issue B:** Axis labels, tick labels, panel titles, and legend text are too small in both panels of Figure 2.
+
+**Fix B:** The code already uses `base_size = 18` and explicit sizes (15–17pt). The issue is likely the wide output dimensions (`width = 14, height = 6`) diluting the font sizes. Either increase `base_size` further (e.g., 20–22) or reduce figure width. Also ensure `ggsave` dimensions match the `\includegraphics[width=\textwidth]` scaling in the paper.
+
+### 4. writing-intro — Argument clarity and flow
+
+**Issue A:** The argument that financial market solutions are under-discussed and frictions limit their effectiveness (spec argument c) is not articulated as a crisp, skimmable claim. It's buried in scene-setting.
+
+**Fix A:** Add a sentence to paragraph 2 or create a short bridging sentence that explicitly states: financial markets could in principle provide hedging, but frictions — illiquidity, private ownership, the non-existence of future capital — limit their effectiveness. Make this a distinct claim, not scene-setting.
+
+**Issue B:** Paragraph 3 is overloaded (5 ideas: GKP lineage, model setup, closed-form solutions, quantitative result, extinction attenuation).
+
+**Fix B:** Split paragraph 3. Move the GKP intellectual-lineage sentence into a new short paragraph or integrate it earlier. Keep the model description, results, and extinction mechanism in separate logical units.
+
+**Issue C:** P3→P4 transition is abrupt; P5→P6 transition is jarring (economic argument to meta-commentary).
+
+**Fix C:** Add a bridge sentence at P4 opening connecting pricing distortion to real distortion. For P5→P6, add a transitional sentence that connects the transfer result to the broader theme before pivoting to the meta-commentary.
+
+## Execution Order
+
+1. **factcheck-lit fix** — bib key correction (quick, high-confidence)
+2. **visual-figures fixes** — Greek letter rendering + font sizes in R code, then regenerate exhibits
+3. **factcheck-freely fixes** — proof corrections in paper.tex
+4. **writing-intro fixes** — introduction restructuring
