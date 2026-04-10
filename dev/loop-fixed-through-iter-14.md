@@ -1,0 +1,245 @@
+# Loop History Through Iteration 14
+
+Based on `ralph-garage/loop.log`, with clarifications from `ralph-garage/history/improvement-plan-history.md`, `ralph-garage/history/test-result-history.md`, and `rloop` commit subjects
+
+This outline distinguishes between:
+
+- what each iteration appears to have attempted
+- what actually flipped from fail to pass in that iteration
+- what still remained failing after that iteration
+
+Important caveat: some issues, especially bibliography items around the 2020 JPE paper by Kogan, Papanikolaou, and Stoffman and confusion with a different 2017 QJE paper that includes Amit Seru, were fixed, then reintroduced, then fixed again. So this is a history of the loop’s path, not a monotone checklist of permanent progress
+
+- `iter 1`
+  - Attempted
+    - Repair core pricing formulas and code-paper consistency
+    - Rework opening figure and empirical motivation
+    - Fill major literature gaps
+    - Tighten abstract and model exposition
+  - Fixed
+    - Missing core literature on displacement risk and asset pricing, especially Kogan-Papanikolaou line of work
+    - Opening figure being treated as fabricated / illustrative rather than empirical
+    - Inconsistencies between paper’s displayed P/D formulas and code
+    - Figure 1 being presented as empirical without a reproducible local data basis
+    - Abstract/body mismatch on extinction risk distorting AI development
+    - Model inconsistency in treatment of private AI capital dividends and unused risk-free-rate notation
+    - Abstract exceeding 100-word limit
+    - Missing clarification that paper borrows intuition from GKP but does not model GKP-style entry of future innovators
+  - Still failing after iteration
+    - `element-gkp-cites` GKP citation framing
+    - `element-rhetoric-meta` AI-authorship rhetoric / meta device
+    - `element-transfers-fig` Transfer figure not showing household catastrophe clearly enough
+    - `factcheck-bysection` Remaining by-section factual issues
+    - `factcheck-freely` Remaining math / proof issues
+    - `theory-deadweight` Ceremonial proof material
+    - `visual-figures-image-only` Figure-formatting issues in extension panels
+    - `writing-intro` Introduction clarity / flow
+
+- `iter 2`
+  - Attempted
+    - Recalibrate transfer figure for a more severe singularity
+    - Revise introduction narrative
+    - Clean up remaining GKP and proof-presentation issues
+  - Fixed
+    - Overstatement of what GKP say about broader trading solving displacement risk
+    - Introduction overusing AI-authorship device in a repetitive, awkward way
+    - Verbal claims around valuation spread and Proposition 3 proof not matching paper’s own results
+    - Appendix/proof material being mostly ceremonial rather than doing real argumentative work
+  - Still failing after iteration
+    - `element-lit-review` Lit review length
+    - `element-transfers-fig` Transfer figure economics / presentation
+    - `factcheck-freely` Remaining factual / citation issues
+    - `spec-paper` Proposition 1 proof still violating style requirements
+    - `visual-figures` Figure readability and page-formatting issues
+    - `writing-intro` Introduction clarity / flow
+
+- `iter 3`
+  - Attempted
+    - Fix bibliography metadata
+    - Move Proposition 1 proof to appendix
+    - Improve extension-panels figure readability
+    - Trim lit review
+  - Fixed
+    - Lit review exceeding half-page spec limit
+    - Wrong attribution of the 2020 JPE “Left Behind” paper by Kogan, Papanikolaou, and Stoffman, plus inconsistent terminology in transfer section
+    - Long proof of Proposition 1 appearing inline instead of being moved to appendix
+    - Figure 2 text being too small to read
+    - Colored hyperlink boxes showing up in compiled PDF
+  - Still failing after iteration
+    - `element-opening-fig` Opening figure still based on hardcoded approximate market data
+    - `element-transfers-fig` Transfer figure still not making household harm vivid enough
+    - `factcheck-lit` and `factcheck-theory` Remaining citation and theory issues
+    - `visual-figures-image-only` Remaining figure-formatting issues
+    - `writing-intro` Introduction still not skimmable enough
+
+- `iter 4`
+  - Attempted
+    - Replace approximate opening-figure data with real market data
+    - Add existence-condition discussion
+    - Clean up bibliography and framing around related literature
+    - Improve transfer-figure interpretation
+  - Fixed
+    - Opening figure still relying on hardcoded approximate valuation data rather than real market data
+    - Transfer figure not clearly showing that households are badly harmed with zero transfers
+    - Citation errors around Kogan-Papanikolaou-related authorship and overly favorable framing of Nordhaus
+    - Missing existence condition for Proposition 1, which made some Extension 2 valuations mathematically undefined
+  - Still failing after iteration
+    - `element-gkp-cites` Paper still mischaracterized GKP by minimizing their discussion of intergenerational transfers as an “inessential extension” and by describing GKP’s mechanism too much as inability to trade private capital rather than failure of intergenerational risk sharing
+    - `element-lit-review` Missing Knesl from lit review
+    - `factcheck-bysection` Paper still said non-AI dividends “shrink” after the singularity, when they actually still grow in absolute terms and only shrink relative to the overall economy
+    - `factcheck-freely` Remaining bibliography problem around the 2020 JPE “Left Behind” paper by Kogan, Papanikolaou, and Stoffman
+    - `visual-figures-image-only` Figure-formatting issues
+    - `visual-pages` Float / page-layout issue
+    - `writing-intro` Introduction still had filler paragraphs, misplaced key material, and a tonal break caused by the AI-authorship disclosure, so the main argument was harder to follow for a skimming reader
+
+- `iter 5`
+  - Attempted
+    - Rewrite introduction flow
+    - Add Knesl (2023)
+    - Fix GKP treatment of transfers
+    - Improve extension-figure scaling
+    - Clean up citation metadata
+  - Fixed
+    - Misdescription of GKP’s mechanism in Extension 2
+      - More specifically: paper had framed GKP’s transfer discussion as if GKP were highlighting transfers as a promising solution, when GKP’s actual point was narrower and technical
+    - Missing Knesl (2023 JFE), which is directly on topic
+    - Incorrect statement that non-AI dividends shrink in absolute terms after singularity
+    - Wrong author list for the 2020 JPE “Left Behind” paper by Kogan, Papanikolaou, and Stoffman
+    - Large blank page caused by float placement
+  - Still failing after iteration
+    - `factcheck-lit` Remaining bibliography metadata issues
+    - `factcheck-theory` Notation / traceability issues in Extension 2
+    - `spec-paper` Missing “financial-market solutions are under-discussed” point
+    - `theory-deadweight` Ceremonial formalism in Extension 1
+    - `visual-figures-image-only` Extension-figure use-of-space problem
+    - `writing-intro` Introduction still failing
+
+- `iter 6`
+  - Attempted
+    - Rewrite introduction flow with itemized contribution list
+    - Fix notation and traceability issues
+    - Improve extension-panel scaling and presentation
+  - Fixed
+    - Remaining bibliography metadata issues, including wrong author details for Knesl and related citation cleanup
+    - Inconsistent utility notation and undisclosed parameter choice in Extension 2 figure
+    - Missing paper-level point that financial-market responses to AI disaster risk are under-discussed
+    - Unused formal apparatus in Extension 1 that made the section look more formal than it really was
+    - Figure 2 Panel (a) compressing economically relevant variation because of poor vertical scaling
+  - Still failing after iteration
+    - `element-rhetoric-meta` AI-authorship rhetoric / meta device
+    - `visual-figures` Figure 2 readability problems
+    - `writing-intro` Introduction clarity / flow
+
+- `iter 7`
+  - Attempted
+    - Rewrite introduction flow again
+    - Expand AI-authorship footnote / framing
+    - Increase figure font sizes and widen figure canvas
+  - Fixed
+    - No fail-to-pass transitions in this iteration
+  - Still failing after iteration
+    - `element-gkp-cites` GKP citation framing had regressed
+    - `element-lit-review` Lit-review length had regressed
+    - `element-rhetoric-meta` AI-authorship rhetoric still failing
+    - `theory-deadweight` Ceremonial formalism issue had regressed
+    - `visual-figures-image-only` Figure-formatting issues persisted
+    - `visual-figures` Figure 2 readability still failing
+    - `writing-intro` Introduction still failing
+
+- `iter 8`
+  - Attempted
+    - Fix bibliography entry for the 2020 JPE paper, while the loop was confusing it with a different 2017 QJE paper that includes Amit Seru
+    - Improve introduction flow
+    - Improve extension-panels figure
+  - Fixed
+    - Reintroduced GKP citation problem in Extension 2
+      - Paper’s wording about intergenerational transfers and GKP was revised again so it no longer blurred the line between GKP’s robustness remark and this paper’s own transfer analysis
+    - Reintroduced lit-review length problem
+    - Reintroduced AI-authorship / meta-rhetoric problem, especially in footnote-style presentation
+    - Corollary 1 and related formal subparts that were not doing substantive work
+  - Still failing after iteration
+    - `factcheck-freely` Bibliography issue around 2020 Kogan-Papanikolaou paper
+    - `visual-figures-image-only` Remaining extension-figure formatting issues
+    - `visual-figures` Figure 2 readability
+    - `writing-intro` Introduction still failing
+
+- `iter 9`
+  - Attempted
+    - Fix legend rendering for Greek symbols
+    - Rename / revise bibliography entry for the 2020 JPE paper, again amid confusion with the separate 2017 QJE Seru paper
+    - Tighten introduction flow
+  - Fixed
+    - No fail-to-pass transitions in this iteration
+  - Still failing after iteration
+    - `factcheck-freely` and `factcheck-lit` Proof issues and bibliography issue remained
+    - `visual-figures-image-only` Figure-formatting issue remained
+    - `visual-figures` Figure 2 readability remained
+    - `writing-intro` Introduction still failing
+
+- `iter 10`
+  - Attempted
+    - Fix figure font sizes and legend rendering
+    - Tighten introduction flow again
+    - Tighten proof of Proposition 2(iii)
+  - Fixed
+    - Proof problem in Proposition 2(iii) and the surrounding stationarity discussion
+    - Figure 2 readability problems in labels, panel titles, and legend
+  - Still failing after iteration
+    - `factcheck-freely` Remaining bibliography issue
+    - `factcheck-theory` Dividend-accounting problem for private AI capital
+    - `visual-figures-image-only` Remaining figure-formatting issue
+    - `writing-intro` Introduction still failing
+
+- `iter 11`
+  - Attempted
+    - Fix extension-panel contrast and headroom
+    - Reframe market incompleteness as restricted equity rather than broader conceptual confusion
+    - Continue tightening introduction and model presentation
+  - Fixed
+    - Bibliography-author confusion around the 2020 JPE citation for "Left Behind"
+      - This was the same underlying mix-up between the 2020 JPE paper without Seru and the separate 2017 QJE paper with Seru
+    - Dividend accounting problem where public-stock payouts left no room for positive private AI-capital dividends
+    - Introduction flow and skimmability problems that had caused `writing-intro` to fail
+  - Still failing after iteration
+    - `factcheck-lit` Remaining bibliography issue
+    - `visual-figures-image-only` Remaining figure-formatting / contrast issue
+
+- `iter 12`
+  - Attempted
+    - Fix approximation-error disclosure
+    - Tighten transfer derivation and lit review
+    - Tighten extension-panels figure
+  - Fixed
+    - Another version of the ghost-author bibliography problem for the 2020 JPE paper by Kogan, Papanikolaou, and Stoffman, again reflecting confusion with the separate 2017 QJE paper with Seru
+  - Still failing after iteration
+    - `factcheck-bysection` Approximation-error overstatement in main text
+    - `visual-figures-image-only` Figure-formatting issues
+    - `visual-pages` Near-empty page-layout problem
+    - `writing-intro` Introduction had regressed and was failing again
+
+- `iter 13`
+  - Attempted
+    - Fix exact AI-stock P/D backward recursion
+    - Tighten introduction flow and paragraph structure
+  - Fixed
+    - False claim that stationary P/D approximation error was “small” at $\Delta \theta = 0.2$
+      - Ralph history clarifies the substance: approximation overstated AI P/D by about 12% and valuation spread by about 41%
+    - Near-empty page caused by layout / float imbalance
+  - Still failing after iteration
+    - `factcheck-exhibits` Transfer figure still inconsistent with exact P/D computation
+    - `factcheck-lit` Remaining bibliography metadata issue
+    - `visual-figures-image-only` Figure 1 gridline contrast issue
+    - `writing-intro` Introduction still failing
+
+- `iter 14`
+  - Attempted
+    - Fix introduction flow and abstract framing
+    - Use exact P/D backward recursion for transfer figure
+  - Fixed
+    - Figure 2 Panel (a) using approximate AI-stock P/D values while Table 1 used an exact backward-recursion method
+    - Bibliography metadata for Aghion, Jones, and Jones chapter
+      - More specifically: wrong page range and wrong BibTeX entry type for a book chapter
+    - Low-contrast grid lines in opening valuations figure
+  - Still failing after iteration
+    - `element-rhetoric-meta` Abstract still stated AI-authorship device too bluntly
+    - `writing-intro` Introduction still buried the “resource abundance can overcome frictions” argument and overloaded a key paragraph
