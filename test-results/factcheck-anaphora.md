@@ -1,7 +1,7 @@
 # tests/factcheck-anaphora.py
-Started: 2026-04-09 20:07:38 EDT
-Runtime: 4m 56s
-[ralph-garage/agent-logs/20260409T200738.680342-0400_factcheck-anaphora_claude_opus.log](../ralph-garage/agent-logs/20260409T200738.680342-0400_factcheck-anaphora_claude_opus.log)
+Started: 2026-04-09 20:21:48 EDT
+Runtime: 5m 48s
+[ralph-garage/agent-logs/20260409T202148.436207-0400_factcheck-anaphora_claude_opus.log](../ralph-garage/agent-logs/20260409T202148.436207-0400_factcheck-anaphora_claude_opus.log)
 
 # factcheck-anaphora
 VERDICT: PASS
@@ -9,20 +9,20 @@ REASON: All demonstratives near cross-references resolve correctly to their inte
 
 ## Findings by section
 
-### Introduction (lines 39–81)
-No anaphora issues. Demonstratives like "such gains" (line 41, near Figure~\ref{fig:ai-valuations}) resolve to "transformative productivity gains" in the same clause, not to the figure content. No mismatch.
+### Introduction (lines 39–73)
+One marginal observation: on line 41, "such gains" appears in the same sentence as `Figure~\ref{fig:ai-valuations}`. The demonstrative "such" resolves to "transformative productivity gains" in the same clause, which is future-oriented, while the figure shows historical valuation data. However, "such" is not pointing at the figure — it refers to the noun phrase in the same clause — so this is not a true anaphora-reference mismatch.
 
-### Model (lines 82–193)
-No anaphora issues. References to Proposition~\ref{prop:pd-ratios}, Section~\ref{sec:ext2}, and Appendix~\ref{app:proof-pd} are not preceded by ambiguous demonstratives. Nearby demonstratives ("This is the hedging channel," "This makes the interaction...") resolve to mechanisms described in the immediately preceding text, not to cross-referenced targets.
+### Model (lines 74–185)
+No issues found. All demonstratives near `Proposition~\ref{prop:pd-ratios}`, `Remark~\ref{rem:existence}`, `Section~\ref{sec:ext2}`, and `Appendix~\ref{app:proof-pd}` resolve correctly.
 
-### Quantitative Analysis (lines 194–211)
-No anaphora issues. No demonstratives appear near the cross-references to Table~\ref{tab:pd-ratios}, Proposition~\ref{prop:comp-statics}(iii), or Figure~\ref{fig:ai-valuations}.
+### Quantitative Analysis (lines 186–203)
+No issues found. References to `Table~\ref{tab:pd-ratios}`, `Proposition~\ref{prop:comp-statics}(iii)`, and `Figure~\ref{fig:ai-valuations}` all match their targets.
 
-### Extensions (lines 212–281)
-No anaphora issues. "This ratio" (line 264) correctly resolves to equation~\eqref{eq:transfer-ratio} defined immediately above. "This discontinuity" (line 268) refers to the P/D ratio behavior described in the preceding sentences, consistent with the existence condition in Remark~\ref{rem:existence}. The reference to "The P/D formula from Proposition~\ref{prop:pd-ratios}" (line 256) uses a definite description, not a demonstrative.
+### Extensions (lines 204–273)
+No issues found. References to `Proposition~\ref{prop:pd-ratios}`, `Remark~\ref{rem:existence}`, and `Figure~\ref{fig:extension-panels}` all resolve correctly.
 
-### Conclusion (lines 282–292)
-No cross-references appear in this section. Demonstratives ("this premium," "This mechanism") resolve to antecedents within the paragraph.
+### Conclusion (lines 274–284)
+No issues found. No cross-references appear in this section.
 
-### Proof of Proposition 1 (lines 293–322)
-No anaphora issues. "This can be rewritten as equation~\eqref{eq:pd-ai}" (line 321) correctly refers to the solved formula on the preceding line. "this is exact when..." (line 315) refers to the approximation described in the same sentence.
+### Proof of Proposition 1 (lines 285–314)
+No issues found. References to `\eqref{eq:pd-ai}` and `\ref{prop:pd-ratios}` resolve correctly.

@@ -1,62 +1,34 @@
 # tests/theory-deadweight.py
-Started: 2026-04-09 20:07:38 EDT
-Runtime: 2m 20s
-[ralph-garage/agent-logs/20260409T200738.675415-0400_theory-deadweight_claude_opus.log](../ralph-garage/agent-logs/20260409T200738.675415-0400_theory-deadweight_claude_opus.log)
+Started: 2026-04-09 20:21:48 EDT
+Runtime: 2m 9s
+[ralph-garage/agent-logs/20260409T202148.435035-0400_theory-deadweight_claude_opus.log](../ralph-garage/agent-logs/20260409T202148.435035-0400_theory-deadweight_claude_opus.log)
 
 # theory-deadweight
-VERDICT: PASS
-REASON: Every formal object, parameter, and equation performs economic or narrative work; no deadweight formalism found.
-
-## Audit Method
-
-Checked every formal object (3 propositions, 1 corollary, 1 remark, 8 numbered equations), every parameter, and every prose mechanism for: (a) introduced-then-abandoned formalism, (b) results statable in plain English without loss, (c) unused variables/parameters, (d) pompous or ceremonial formalism, and (e) auxiliary formal detours.
+VERDICT: FAIL
+REASON: Corollary 1 is ceremonial, and several formal subparts are introduced but do no work.
 
 ## Detailed Findings
 
-### Parameters — All Used
+### 1. Corollary 1 (Valuation spread) is ceremonial formalism
 
-| Parameter | Introduced | Used in |
-|-----------|-----------|---------|
-| $g$ | Eq (1) | P/D formulas, calibration |
-| $\alpha_t$ | Setup | Displacement eq (2), Extension 2 eqs (7)–(8), calibration |
-| $\phi$ | Eq (2) | P/D formulas, comparative statics, calibration, Extension 2 |
-| $p, \xi$ | Setup | P/D formulas, comparative statics, calibration |
-| $\eta$ | Setup | P/D formulas, calibration, Extension 2 |
-| $\theta, \Delta\theta$ | Setup | $\Gamma^{AI}, \Gamma^{N}$, P/D formulas, calibration |
-| $\gamma, \beta$ | Eq (3) | P/D formulas, comparative statics, calibration |
-| $\lambda$ | Extension 1 | Proposition 3 (qualitative, as appropriate for the claim) |
-| $\tau, \delta$ | Extension 2 | Eqs (7)–(8), figure, policy discussion |
-| $\phi_{\text{eff}}$ | Extension 2 | Connects transfers back to Proposition 1 |
+The prose paragraph immediately after Proposition 1 (line 150) already states the corollary's content in plain English: "AI stocks' payoffs are especially valuable, pushing their P/D ratio above that of non-AI stocks. This is the hedging channel." Corollary 1 then restates this as a formal theorem environment with a two-sentence proof. The proof says nothing beyond "P/D is increasing in $\Gamma^j$ and $\Gamma^{AI} > \Gamma^N$," which is already evident from the proposition's formulas. Packaging this as a corollary-with-proof is ceremonial: the qualitative takeaway is already delivered in the preceding paragraph and the formal statement adds no economic or mathematical content. Demoting it to a sentence of prose ("It follows immediately that AI stocks trade at a higher P/D ratio whenever $\Delta\theta > 0$") would tighten the paper without weakening any claim.
 
-Note: $\alpha_t$ cancels out of the baseline P/D formulas (since the SDF depends on consumption *growth*), but this is a natural consequence of the model, not deadweight. It re-enters substantively in Extension 2 where the *level* of household consumption matters for transfers.
+### 2. $\lambda$ is a parameter that appears in no equation or result
 
-### Formal Environments — All Earn Their Keep
+In Extension 1 (Section 4.1), $\lambda$ is introduced as the probability that the singularity is positive. Its only use is the qualitative assumption "$\lambda > 1/2$: the positive singularity is the most likely outcome." The parameter never appears in any numbered equation, any proposition's statement, any proof's algebra, any calibration, or any figure. Its role could be fully replaced by plain English: "We assume the positive singularity is more likely than the negative one." Introducing a named parameter for a single qualitative inequality that is never used formally is exactly the kind of deadweight the paper's own style guidelines warn against.
 
-- **Proposition 1 (P/D ratios):** Central result. Closed-form pricing formulas used in calibration, comparative statics, and Extension 2.
-- **Remark 1 (existence condition):** Defines when P/D ratios are well-defined. Directly motivates Extension 2's discussion of infinite P/D under severe displacement and the role of transfers in restoring finite prices.
-- **Corollary 1 (valuation spread):** States the paper's main economic claim: AI stocks trade at higher P/D than non-AI stocks. While the result follows quickly from Proposition 1, formalizing the paper's central qualitative prediction as a numbered result is standard practice in asset pricing theory and serves a clear signposting function. Not ceremonial.
-- **Proposition 2 (comparative statics):** All three parts do work. Part (i) connects to calibration (displacement severity). Part (ii) has a non-trivial qualification ("$\gamma$ sufficiently large"). Part (iii) is the extinction-attenuation result, highlighted as a contribution distinct from standard displacement models.
-- **Proposition 3 (veto):** Extension 1's main result. The qualitative proof style matches the qualitative claim. Both parts (incomplete vs. complete markets) are needed to make the argument.
+### 3. Private AI capital dividend formula is introduced and abandoned
 
-### Equations — All Perform Work
+Line 111 defines the private AI capital's dividends as $(1-\alpha_t)C_t - D_t^{AI}$. This expression never appears in any subsequent equation, proposition, proof, calibration, or figure. It is not used to derive any result. Its only purpose is to name the residual accruing to AI owners, but the conceptual point (the household cannot trade AI owners' surplus) is already made without this formula. Removing it would lose nothing.
 
-- **Eq (1):** Consumption growth. Standard one-line setup equation. Establishes notation for the P/D derivation.
-- **Eq (2):** Displacement. Key mechanism equation.
-- **Eq (3):** CRRA utility. Defines preferences and the SDF.
-- **Eqs (4)–(5):** P/D ratio formulas. Central results.
-- **Eq (6):** Existence condition. Used substantively in Extension 2 (infinite P/D discussion).
-- **Eq (7):** Post-transfer consumption. Extension 2 mechanism.
-- **Eq (8):** Transfer ratio. Reveals a non-obvious property ($\eta$-independence of the ratio) that supports the argument about singularity-driven growth overwhelming deadweight costs.
+### 4. Positive singularity displacement is formally invoked but never specified
 
-### Prose Mechanisms — No Detours
+Extension 1 states that in a positive singularity, "the household's share *increases* ($\alpha_{t+1} > \alpha_t$)," but never specifies the actual law of motion for $\alpha$ in the positive case (contrast with the negative case, which has the precise formula $\alpha_{t+1} = \phi\alpha_t$). Proposition 3's proof then argues qualitatively about the household's utility gain from the positive singularity without any formula. This is a formal mechanism that is introduced at just enough specificity to look like a model extension but not enough to produce any concrete result. Either the positive displacement should have a specified formula (even a simple one like $\alpha_{t+1} = \alpha_t / \phi$), or the discussion should be purely verbal rather than using formal notation.
 
-- The discussion section (2.3) contextualizes relative to GKP and Jones without introducing new formalism.
-- The quantitative section (3) interprets the calibration without introducing new formal objects.
-- Extension discussions stay within the formal apparatus already established.
+### 5. The constraint $\alpha_t \in (0, 1-\theta_t]$ introduces a relationship that does no work
 
-### Minor Observations (Not Failures)
+Line 87 bounds the household's share above by $1-\theta_t$. This implies that $\alpha_t + \theta_t \leq 1$, linking the household's consumption share to the AI dividend share. This constraint is never checked in any proof, never binds in any calibration (baseline: $0.70 + 0.15 = 0.85 < 1$; post-singularity: $0.35 + 0.32 = 0.67 < 1$), and is never referenced again. It is a piece of formalism that creates the appearance of rigor without doing any work. The simple bound $\alpha_t \in (0,1)$ would suffice, or the upper bound could be stated verbally as a side condition.
 
-- The upper bound $\alpha_t \in (0, 1-\theta_t]$ is an inline consistency constraint that is never referenced again. This is a standard modeling annotation, not deadweight formalism.
-- Private AI capital dividends $(1-\alpha_t)C_t - D_t^{AI}$ appear inline to explain the source of market incompleteness; the expression is never used in any derivation. This is explanatory prose rather than formalism.
+## Summary
 
-Neither rises to the level of "abandoned" or "ceremonial" formalism.
+The paper's core formalism (Propositions 1-3, the transfer equations, the existence condition) all earn their keep. But it carries several pieces of deadweight: a ceremonial corollary, a named parameter used only in one qualitative inequality, an abandoned formula, an underspecified formal mechanism, and a non-binding constraint. Individually these are minor; collectively they represent exactly the kind of "pompous or ceremonial formalism" and "auxiliary formal detours" that the paper's own quality standard (Spec IV.8.a) warns against.

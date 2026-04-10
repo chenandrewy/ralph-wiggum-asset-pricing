@@ -141,10 +141,12 @@ df_ext <- expand.grid(tau = tau_grid,
   ) %>%
   ungroup()
 
-theme_paper <- theme_bw(base_size = 14) +
+theme_paper <- theme_bw(base_size = 16) +
   theme(
     legend.position = "bottom",
     legend.title = element_blank(),
+    legend.text = element_text(size = 13),
+    axis.text = element_text(size = 12),
     panel.grid.minor = element_blank(),
     panel.grid.major = element_line(color = "gray50")
   )
@@ -208,7 +210,7 @@ panel_b <- ggplot(df_ext, aes(x = tau, y = cons_growth, color = scenario, linety
   theme_paper
 
 fig <- arrangeGrob(panel_a, panel_b, ncol = 2)
-ggsave(file.path(outdir, "fig-extension-panels.pdf"), fig, width = 11, height = 5)
+ggsave(file.path(outdir, "fig-extension-panels.pdf"), fig, width = 12, height = 5.5)
 cat("Wrote", file.path(outdir, "fig-extension-panels.pdf"), "\n")
 
 # =============================================================================

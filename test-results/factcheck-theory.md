@@ -1,49 +1,72 @@
 # tests/factcheck-theory.py
-Started: 2026-04-09 20:07:38 EDT
-Runtime: 9m 1s
-[ralph-garage/agent-logs/20260409T200738.674238-0400_factcheck-theory_claude_opus.log](../ralph-garage/agent-logs/20260409T200738.674238-0400_factcheck-theory_claude_opus.log)
+Started: 2026-04-09 20:21:48 EDT
+Runtime: 7m 32s
+[ralph-garage/agent-logs/20260409T202148.475370-0400_factcheck-theory_claude_opus.log](../ralph-garage/agent-logs/20260409T202148.475370-0400_factcheck-theory_claude_opus.log)
 
 # factcheck-theory
 
 VERDICT: PASS
-REASON: All notation is consistent, all assumptions are mutually consistent, and all mathematical objects trace back to the assumptions.
+
+REASON: All notation is consistent with no symbol collisions, all assumptions are mutually consistent, and all mathematical objects trace to the assumptions; moderate prose-formula mismatch in transfer base description and minor implicit conditions are noted but do not constitute mathematical errors.
 
 ## Requirement 1: Notational Consistency — PASS
 
-Every mathematical symbol maps to a unique formal object. No collisions, reuse for different concepts, or meaningful ambiguities were found across 25 symbol families (10 Greek letters, 15 Roman/compound symbols).
+The paper uses approximately 20 distinct base symbols, each with a single economic meaning throughout. No symbol is reused for a different formal object, and no two different symbols denote the same object without explicit equivalence.
 
-**Minor observations** (not failures):
-1. **Undefined period utility symbol $u$** (line 237, proof of Proposition 3): The symbol $u$ appears once ("but $u$ is concave") without formal definition. The period felicity $u(c) = c^{1-\gamma}/(1-\gamma)$ is implicit in $U_0^H$ (eq 3) but never introduced as $u$. Meaning is clear from context; standard practice in the field.
-2. **Implicit time-subscript dropping**: The setup uses $\alpha_t$, $\theta_t$ with time subscripts, but the equilibrium formulas (Proposition 1, Extension 2) write $\alpha$, $\theta$ without subscripts. The appendix proof explains the stationarity assumption that justifies this, but the convention is never stated as a global rule.
+**Findings:**
+
+1. **MODERATE — Transfer base prose/formula mismatch (lines 240 vs. 243).** The prose describes the tax as levied on "AI owners' surplus," but eq. (6) taxes $(1 - \phi\alpha)$ of post-singularity output — all non-household consumption, including public AI stock dividends. In the model setup (line 111), AI owners specifically hold private capital with dividends $(1-\alpha_t - \theta_t)C_t$, a proper subset. The formula is broader than the prose description.
+
+2. **MINOR — Implicit stationarity convention.** The stochastic processes $\alpha_t$ and $\theta_t$ silently become fixed parameters $\alpha$ and $\theta$ (dropping time subscripts) when moving from the general setup to equilibrium pricing and extensions. Standard practice but never stated.
+
+3. **NEGLIGIBLE — Dual P/D notation.** The P/D ratio is $P^{AI}/D^{AI}$ in propositions and $v^{AI}$ in the proof. Explicitly equated at line 293. No real confusion.
 
 ## Requirement 2: Assumption Consistency — PASS
 
-24 formal assumptions were identified across the baseline model (A1–A13), Extension 1 (A14–A18), Extension 2 (A19–A22), and proposition-level conditions (A23–A24). No pair of assumptions imposes contradictory constraints.
+All mathematical assumptions are mutually consistent. Detailed checks performed:
 
-**Checks performed:**
-- **Contradictory constraints**: None found. Extension 1 explicitly augments the baseline singularity by splitting it into positive/negative sub-types; the negative sub-case reduces to the baseline.
-- **Parameter domains**: Compatible across all uses. Two implicit constraints noted:
-  - $\phi \leq 1 - \Delta\theta$ (needed for $\alpha_t \leq 1 - \theta_t$ to survive repeated singularities). Not stated; satisfied by all calibrated values ($0.5 \leq 0.8$; $0.05 \leq 0.8$).
-  - $\delta\tau < 1$ (needed for net transfers to be positive). Not stated; always satisfied when $\delta < 1$ since $\tau < 1$.
-- **Structural equations**: Consistent across baseline and both extensions. Consumption dynamics, dividend dynamics, and the Euler equation pricing framework are coherent.
-- **Budget constraint / accounting**: Aggregate consumption $C_t$ is exhausted between household ($\alpha_t C_t$) and AI owners ($(1-\alpha_t)C_t$). Private AI capital dividends $(1-\alpha_t - \theta_t)C_t \geq 0$ by the domain constraint $\alpha_t \leq 1-\theta_t$. The model is reduced-form (consumption-based pricing), so full GE budget balance is outside scope and not claimed.
-- **Transfer base**: Tax base $(1-\phi\alpha)(1+\eta)(1+g)C_t$ equals AI owners' post-singularity share. The $\phi_\text{eff}$ derivation and transfer ratio (eq 9) are algebraically verified.
-- **Proof algebra** (Appendix A): Euler equation expansion (eq 11) and solved P/D (eq 12) match Proposition 1. Verified step by step.
+- **Parameter restrictions**: No contradictions among interval restrictions on distinct parameters.
+- **Probability structure**: Well-defined and sums to 1 in all branches (baseline and extensions).
+- **Budget constraints**: Satisfied. Post-transfer budget accounts for household consumption, AI owner consumption, and deadweight loss as resource destruction.
+- **Domain restrictions**: $\alpha_t \in (0, 1-\theta_t]$ preserved across singularities under implicit condition $\phi \leq 1 - \Delta\theta$ (satisfied by all calibrations).
+- **Baseline/extension compatibility**: Extension 1 reduces to baseline at $\lambda = 0$; Extension 2 reduces to baseline at $\tau = 0$.
+- **Euler equation algebra**: Verified correct (Appendix A).
+- **Existence condition**: Numerically verified for large-singularity calibration ($A^{AI} = 2.37 > 1$, consistent with paper's claim).
+- **Consumption ratio independence of $\eta$**: Verified algebraically.
+- **$\phi_\text{eff}$ formula**: Consistent with eq. (6).
+
+**Findings:**
+
+1. **MODERATE — Transfer base mismatch (same as notation finding).** Eq. (6) taxes $(1 - \phi\alpha)$ of post-singularity output (all non-household consumption), but the prose says "AI owners' surplus." The equations are self-consistent; the verbal description is narrower than the formula. Fix: change prose to "non-household consumption."
+
+2. **MINOR — Implicit domain-preservation condition.** The constraint $\alpha_t \in (0, 1-\theta_t]$ is preserved across repeated singularities only if $\phi \leq 1 - \Delta\theta$. Satisfied by all calibrations (baseline: $0.5 \leq 0.8$; large singularity: $0.05 \leq 0.8$) but never stated.
+
+3. **MINOR — Implicit feasibility condition $\delta\tau < 1$.** Required for positive net transfers. Satisfied by calibration ($\delta = 0.5$, $\tau < 1$) but not formally assumed.
+
+4. **MINOR — Positive singularity lacks functional form.** Extension 1 assumes $\alpha_{t+1} > \alpha_t$ (line 213) without specifying a formula, unlike the negative case ($\alpha_{t+1} = \phi\alpha_t$). Sufficient for the qualitative Proposition 3 but prevents quantitative analysis.
+
+5. **NEGLIGIBLE — Stationarity approximation acknowledged.** The proof (line 307) treats the post-singularity P/D ratio as approximately equal to the pre-singularity ratio. The paper acknowledges this is an approximation.
 
 ## Requirement 3: Traceability — PASS
 
-All mathematical objects not appearing directly in the assumptions were traced back:
+All mathematical objects in the paper's results trace back to explicitly stated assumptions:
 
-| Object | Traced to |
-|--------|-----------|
-| $\Gamma^{AI}$, $\Gamma^{N}$ | A6 (singularity jump), A8–A9 (dividend dynamics) |
-| $A^j$ (existence condition) | A2, A5–A7, A12 |
-| P/D ratios (eqs 4–5) | Euler equation from A12, A24, A2–A3, A5–A10 |
-| $v^{AI}$ (appendix) | Notation for P/D ratio |
-| $\phi_\text{eff}$ | Algebraic rearrangement of A21 |
-| Transfer ratio (eq 9) | Algebraic manipulation of A21 |
-| $c^H_{post}$, $c^H_{no\text{-}transfer}$ | A21, A3, A6 |
-| $(\alpha', \theta')$ | Post-singularity values per A6, A9 |
-| $u$ (line 237) | Period utility implicit in A12 (symbol not formally introduced) |
+| Object | Source |
+|--------|--------|
+| $\beta, \gamma$ | Preference assumptions (C1, line 114) |
+| $g$ | Consumption growth (A2, line 81) |
+| $p$ | Singularity probability (A5, line 90) |
+| $\xi$ | Extinction probability (A6, line 93) |
+| $\eta$ | Productivity boost (A7, line 93) |
+| $\phi$ | Displacement parameter (A8, line 95) |
+| $\alpha_t$ | Household share (A3, line 87) |
+| $\theta_t, \Delta\theta$ | AI dividend share (B1, line 107) |
+| $\Gamma^{AI}, \Gamma^N$ | Derived from $\theta, \Delta\theta, \eta$ (line 135) |
+| $A^j$ | Derived from $\beta, g, \gamma, p, \xi, \eta, \phi, \Gamma^j$ (line 145) |
+| $v^{AI}$ | Defined as $P^{AI}/D^{AI}$ (line 293) |
+| $\lambda$ | Extension 1 assumption (E1, line 212) |
+| $\tau, \delta$ | Extension 2 assumptions (F1-F2, line 240) |
+| $\phi_\text{eff}$ | Derived from $\phi, \tau, \delta, \alpha$ (line 248) |
+| $U_\text{ext}$ | Normalization assumption (C2, line 219) |
 
-No expression was found that cannot be logically derived from the stated assumptions.
+No expression in the paper's propositions, corollaries, remarks, or extension formulas references an object that is not traceable to an explicitly stated assumption.

@@ -1,71 +1,80 @@
 # tests/factcheck-code.py
-Started: 2026-04-09 20:07:38 EDT
-Runtime: 2m 51s
-[ralph-garage/agent-logs/20260409T200738.676578-0400_factcheck-code_claude_opus.log](../ralph-garage/agent-logs/20260409T200738.676578-0400_factcheck-code_claude_opus.log)
+Started: 2026-04-09 20:21:48 EDT
+Runtime: 1m 38s
+[ralph-garage/agent-logs/20260409T202148.445952-0400_factcheck-code_claude_opus.log](../ralph-garage/agent-logs/20260409T202148.445952-0400_factcheck-code_claude_opus.log)
 
 # factcheck-code
+
 VERDICT: PASS
-REASON: The canonical analysis path runs from scratch, produces all exhibits, and all quantitative claims in the paper are consistent with the code.
+REASON: The canonical analysis path runs from scratch, produces all three exhibits, and its logic and outputs are consistent with the paper's formulas, parameters, and quantitative claims.
 
 ## Canonical local analysis path
 
-- **Entry point:** `code/generate-exhibits.R` (single file, run via `Rscript code/generate-exhibits.R`)
-- **Outputs:** Three exhibits written directly to `paper/exhibits/`:
-  1. `table-pd-ratios.tex` — P/D ratio table (Exhibit 1 / Table 1)
-  2. `fig-extension-panels.pdf` — Two-panel extension figure (Exhibit 2 / Figure 2)
-  3. `fig-ai-valuations.pdf` — NASDAQ vs S&P 500 valuation figure (Exhibit 3 / Figure 1)
-- **Dependencies:** R with packages `ggplot2`, `dplyr`, `tidyr`, `gridExtra`
-- **External data:** Downloads S&P 500 data from datahub.io (Shiller dataset) and NASDAQ data from FRED. No credentials required.
-- **No intermediate files or local caches:** The script computes everything from parameters and downloads. Consistent with spec requirement III.3.c.
+Single entry point: `code/generate-exhibits.R` (run via `Rscript code/generate-exhibits.R`). Generates all three exhibits used in `paper/paper.tex`:
+
+1. `paper/exhibits/table-pd-ratios.tex` — Exhibit 1 (P/D ratio table)
+2. `paper/exhibits/fig-extension-panels.pdf` — Exhibit 2 (government transfers two-panel figure)
+3. `paper/exhibits/fig-ai-valuations.pdf` — Exhibit 3 (NASDAQ vs S&P 500 time series)
+
+No other code files exist under `code/`. The `data/` directory is empty; all data is downloaded at runtime. No precomputed caches or intermediate files are used.
 
 ## Execution status
 
-| Step | Status |
-|------|--------|
-| Script runs from scratch | Executed successfully |
-| Table generation | Produced, matches paper |
-| Extension figure generation | Produced (1 geom_line warning for NA at asymptote, expected) |
-| Data download (FRED, datahub) | Completed successfully |
-| AI valuations figure generation | Produced |
-| Total runtime | Well under 180 seconds |
-
-**Execution blockers:** None. R 4.2.2 and all required packages are available. Network access for FRED/datahub downloads succeeded.
+- **Execution result**: All three exhibits generated successfully with no errors.
+- **Runtime**: Well under 180 seconds.
+- **Network access**: Required for Exhibit 3 (downloads NASDAQ from FRED, S&P 500 from Shiller/datahub). This is compatible with the spec, which explicitly allows external data downloads within the canonical pipeline.
+- **R packages used**: ggplot2, dplyr, tidyr, gridExtra, scales. All available in this environment. No undocumented dependencies.
 
 ## Paper-code consistency
 
-### Parameters
-All code parameters match paper text exactly:
-- $\beta=0.96$, $g=0.02$, $\gamma=4$, $\phi=0.5$, $\eta=0.5$, $\theta=0.15$, $\Delta\theta=0.2$ (baseline)
-- $\phi=0.05$, $\eta=9$ (large singularity extension)
-- $\alpha=0.70$, $\delta=0.5$, $p=0.5\%$, $\xi=5\%$ (extension figure)
+### Parameters (all match)
+| Parameter | Code | Paper (Section 3) |
+|-----------|------|--------------------|
+| beta | 0.96 | 0.96 |
+| g | 0.02 | 0.02 |
+| gamma | 4 | 4 |
+| phi | 0.50 | 0.5 |
+| eta | 0.50 | 0.5 |
+| theta | 0.15 | 0.15 |
+| dtheta | 0.20 | 0.2 |
+| phi_large | 0.05 | 0.05 |
+| eta_large | 9 | 9 |
+| alpha | 0.70 | 0.70 |
+| delta | 0.50 | 0.5 |
+| p_ext | 0.005 | 0.5% |
+| xi_ext | 0.05 | 5% |
 
-### Formulas
-- **P/D formula (Proposition 1):** Code's `compute_pd` implements $K/( 1-K)$ where $K = \beta(1+g)^{1-\gamma}[(1-p) + p(1-\xi)\phi^{-\gamma}(1+\eta)^{-\gamma}\Gamma^j]$. Matches paper equations (2)-(3) exactly.
-- **Dividend growth factors:** $\Gamma^{AI} = [\theta + \Delta\theta(1-\theta)]/\theta \cdot (1+\eta)$ and $\Gamma^N = [1 - \theta - \Delta\theta(1-\theta)]/(1-\theta) \cdot (1+\eta)$. Code and paper match.
-- **Effective displacement with transfers:** $\phi_\text{eff} = \phi + \tau(1-\delta\tau)(1-\phi\alpha)/\alpha$. Code line 119 matches paper equation at line 256.
-- **Consumption growth:** Code's `consumption_growth` function equals $\phi_\text{eff} \cdot (1+\eta)$, verified numerically.
+### Formulas (all match)
 
-### Numerical claims
-| Claim (paper) | Code output | Match? |
-|---------------|-------------|--------|
-| P/D AI = 17.5 at $p=0.5\%$, $\xi=0\%$ | 17.5 | Yes |
-| P/D Non-AI = 11.1 at $p=0.5\%$, $\xi=0\%$ | 11.1 | Yes |
-| Ratio ~1.6 at $p=0.5\%$ | 1.6 | Yes |
-| Ratio ~6 at $p=1\%$ | 5.8 | Yes |
-| $\phi(1+\eta) = 0.75$ (25% loss, baseline) | 0.75 | Yes |
-| $\phi(1+\eta) = 0.5$ (50% loss, large singularity) | 0.5 | Yes |
-| $\phi^{-\gamma} = 160{,}000$ (large singularity) | 160,000 | Yes |
-| "1.5 to 6 times higher" P/D range for $p \in [0.5\%, 1\%]$ | 1.6 to 5.8 | Yes |
+- **Gamma^AI**: Code computes `(theta + dtheta*(1-theta))/theta * (1+eta)`, matching Proposition 1's definition.
+- **P/D ratio**: Code computes `K/(1-K)` where `K = beta*(1+g)^(1-gamma)*[(1-p) + p*(1-xi)*phi^(-gamma)*(1+eta)^(-gamma)*Gamma_j]`, matching equations (4)-(5).
+- **Existence condition**: Code returns NA when K >= 1, consistent with Remark 1.
+- **Effective phi**: Code computes `phi + tau*(1-delta*tau)*(1-phi*alpha)/alpha`, matching the paper's phi_eff definition.
+- **Consumption growth**: Code computes `phi*(1+eta) + tau*(1-delta*tau)*(1-phi*alpha)/alpha*(1+eta)`, consistent with equation (7) normalized by the pre-singularity household consumption.
 
-### Per-share data handling (Requirement 5)
-Not applicable. The code does not combine per-share quantities with share counts from different sources. The model is purely theoretical (closed-form P/D ratios from parameters). The empirical figure (Exhibit 3) uses only index-level price series (S&P 500 and NASDAQ Composite), normalized to a common base date. No per-share or share-count data is involved.
+### Quantitative claims (all match)
+
+- Paper: "AI stocks trade at a P/D of roughly 18" at p=0.5%, xi=0%. Table: 17.5. Consistent.
+- Paper: "non-AI stocks trade near 11". Table: 11.1. Consistent.
+- Paper: "a ratio of about 1.6". Table: 1.6. Exact match.
+- Paper: "At p=1%, the ratio rises to nearly 6 to 1". Table: 5.8. Consistent.
+- Paper: "consumption halves under the large singularity (phi(1+eta) = 0.5)". Code: 0.05*10 = 0.5. Exact match.
+- Paper: "falls by 25% under the baseline (phi(1+eta) = 0.75)". Code: 0.5*1.5 = 0.75. Exact match.
+- Paper: "phi^{-gamma} = 160,000". Code: 0.05^(-4) = 160,000. Exact match.
+
+### Exhibit 3 data sources
+- Paper caption: "NASDAQ from FRED; S&P 500 from the Shiller dataset." Code downloads NASDAQCOM from FRED and S&P 500 from datahub's Shiller dataset. Consistent.
 
 ## Reproducibility classification
 
 | Output | Classification |
 |--------|---------------|
-| `table-pd-ratios.tex` (Table 1) | **Locally reproducible** — computed from parameters, no external data |
-| `fig-extension-panels.pdf` (Figure 2) | **Locally reproducible** — computed from parameters, no external data |
-| `fig-ai-valuations.pdf` (Figure 1) | **Reproducible with network access** — requires downloading S&P 500 and NASDAQ data from public APIs (FRED, datahub.io). No credentials needed. Successfully executed in this environment. |
+| Exhibit 1 (table-pd-ratios.tex) | Locally reproducible |
+| Exhibit 2 (fig-extension-panels.pdf) | Locally reproducible |
+| Exhibit 3 (fig-ai-valuations.pdf) | Locally reproducible (requires network for data download, which is part of the canonical path per spec) |
+| All theoretical propositions and proofs | Not code-dependent; analytic derivations in paper |
+| All parameter claims in Section 3 | Locally reproducible; match code parameters exactly |
 
-All three exhibits used in the paper are generated by the single canonical script. No exhibits are sourced from outside the canonical path. No hidden or auxiliary files are required.
+No per-share data issues: the code uses only index-level price series (NASDAQ Composite, S&P 500), normalized to a common base date. No share counts or per-share adjustments are involved.
+
+No violations found.
