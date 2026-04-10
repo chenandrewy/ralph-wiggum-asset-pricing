@@ -1,41 +1,44 @@
 # Improvement Plan
-AUTHOR PLAN — 2026-04-09 20:32:33 EDT
+AUTHOR PLAN — 2026-04-09 20:49:40 EDT
 
-## Status: 18/25 tests pass. No overhaul needed.
+## Current State
 
-## Failing Tests — Fixes
+- **Tests:** 21/25 pass, 4 fail
+- **Model/theory:** No overhaul needed. Derivations are correct, comparative statics are sound, and the economic logic is consistent with the spec.
+- **Referee report:** Already addressed via Extension 1 (veto) and Extension 2 (transfers).
 
-### 1. theory-deadweight (formalism bloat)
-Five pieces of ceremonial or unused formalism to cut:
-- **Remove Corollary 1** — its content is already stated in the preceding prose paragraph; the proof adds nothing.
-- **Remove parameter λ** — introduced for a single qualitative inequality, never appears in any equation, proposition, proof, calibration, or figure. Replace its role with plain English ("the positive singularity is more likely than the negative one").
-- **Remove private AI capital dividend formula** `(1-α_t)C_t - D_t^{AI}` from the Setup — it is defined and never referenced again. Describe the residual in words only.
-- **Specify positive-singularity displacement** — the negative case has `α_{t+1} = φα_t` but the positive case says "the household's share increases" with no formula. Either give a symmetric formula (e.g., `α_{t+1} = min(1, α_t/φ)`) or explicitly state that the precise law of motion is not needed for the qualitative result.
-- **Simplify constraint** `α_t ∈ (0, 1-θ_t]` → `α_t ∈ (0,1)` — the tighter bound never binds and is never checked.
+## Failing Tests (Priority 1)
 
-### 2. element-gkp-cites (misattribution)
-- Extension 2 opening says GKP "show that intergenerational transfers can affect the magnitude of displacement risk." GKP merely noted transfers as a possible extension in passing. Change verb from "show" to "note" or "suggest," and make clear that the transfers analysis is *our* contribution building on their remark.
+### 1. `factcheck-freely` — Missing author in bib entry
+**Issue:** `references.bib` entry `KoganPapanikolaouStoffman2020` is missing coauthor **Amit Seru**. The published JPE paper has four authors: Kogan, Papanikolaou, Seru, Stoffman.
+**Fix:**
+- Update bib key to `KoganPapanikolaouSeruStoffman2020`.
+- Add `Seru, Amit` to the author field.
+- Update all `\citet` references in `paper.tex` (currently line 68).
 
-### 3. element-lit-review (length)
-- Lit review is ~245 words; spec requires ≤ half a page (~175–200 words at current formatting). Cut the third paragraph (six rapid-fire citations) by ~50 words. Consolidate Kogan–Papanikolaou and Kogan–Papanikolaou–Stoffman into one sentence; drop or shorten the Korinek–Suh mention.
+### 2. `visual-figures` — Extension panels readability
+**Issue:** Figure 2 tick labels and legend text are too small; legend uses raw parameter strings instead of verbal labels ("Baseline", "Large singularity").
+**Fix in `code/generate-exhibits.R`:**
+- The code already uses verbal scenario labels (`scenario_labels`). The test sees raw parameter strings, suggesting the legend labels are not rendering correctly or the `expression()` labels are being truncated. Investigate and fix the legend label rendering—likely need to simplify from `expression()` to plain strings with Unicode or paste, or increase the plot `width` to prevent truncation.
+- Increase `base_size` in `theme_paper` (e.g., from 16 to 18) or explicitly set larger tick label sizes.
 
-### 4. element-rhetoric-meta (footnote tone)
-- The AI-authorship footnote is ~80 words of overbearing detail ("mathematical derivations, quantitative code, figures, tables, and every sentence of prose… no human editing"). Trim to ~30–40 words: state the division of labor concisely without the itemized list that triggers skepticism.
+### 3. `visual-figures-image-only` — Panel (b) contrast and legend truncation
+**Issue:** (a) "No change" reference line in Panel (b) is light gray, low contrast. (b) Legend text for "Large singularity" is truncated (missing closing parenthesis).
+**Fix in `code/generate-exhibits.R`:**
+- Darken the reference line: change `color = "gray40"` to `"gray20"` or `"black"` and increase `linewidth`.
+- Fix legend truncation: same root cause as test 2 above—simplify `expression()` labels or widen the figure.
 
-### 5. writing-intro (paragraph transitions)
-Three abrupt transitions to fix:
-- **P3→P4**: P3 ends on policy; P4 opens cold with GKP citation and model mechanics. Add a bridge sentence connecting the policy gap to GKP's framework.
-- **P5→P6**: P5 ends on AI regulation; P6 opens on singularity transfers. Bridge: "If blocking AI is costly, another policy lever is redistribution."
-- **P6→P7**: P6 ends on "distinctive feature of singularity economics"; P7 pivots to the meta-observation about AI production. Bridge: connect the displacement theme to the paper's own production process.
+### 4. `writing-intro` — Introduction flow breaks
+**Issue:** Three flow problems:
+1. Paragraph 3 (policy meta-commentary) is a non sequitur after the hedging mechanism in paragraph 2.
+2. Paragraph 6→7 transition (redistribution → self-referential anecdote) is abrupt.
+3. Paragraph 6 trails off without crisp resolution.
 
-### 6. visual-figures + visual-figures-image-only (figure formatting)
-Changes in `code/generate-exhibits.R`:
-- **fig-ai-valuations**: Expand y-axis limits so the "500" tick label is not clipped. Add `expand = expansion(mult = c(0.02, 0.05))` or increase top margin.
-- **fig-extension-panels Panel (b)**: Fix truncated legend label — add closing parenthesis to `"Large singularity (eta = 9, phi = 0.05)"`. Make "No change" reference line thicker and darker (e.g., `color = "gray40", linewidth = 0.8`).
-- **fig-extension-panels both panels**: Increase axis tick label size (`axis.text` to 13–14pt) and legend text size. Differentiate Panel (a) line styles more clearly (e.g., solid vs. longdash with different widths).
+**Fix in `paper.tex`:**
+- Merge paragraph 3's policy-gap observation into paragraph 4 as a setup sentence (e.g., "Although financial market solutions remain largely absent from AI risk discussions, understanding where market limits bind requires a framework..."). This restores the motivation→mechanism→model flow.
+- Add a bridging sentence before the self-referential paragraph 7 connecting the theoretical displacement to observable displacement in knowledge production.
+- Tighten paragraph 6's ending with a crisper concluding sentence.
 
-## Order of Operations
-1. Fix `code/generate-exhibits.R` (tests 6) → regenerate exhibits
-2. Fix `paper/paper.tex`: theory-deadweight, element-gkp-cites, element-lit-review, element-rhetoric-meta, writing-intro (tests 1–5)
-3. Rebuild paper PDF and page images
-4. Re-run tests
+## Post-Fix Improvements (Priority 2)
+
+No further changes needed. All other tests pass, including spec compliance, theory checks, lit review, and referee-related elements. The model section does not need an overhaul.

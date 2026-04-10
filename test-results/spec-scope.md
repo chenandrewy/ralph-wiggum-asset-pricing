@@ -1,24 +1,22 @@
 # tests/spec-scope.py
-Started: 2026-04-09 20:39:27 EDT
-Runtime: 26s
-[ralph-garage/agent-logs/20260409T203927.596524-0400_spec-scope_claude_opus.log](../ralph-garage/agent-logs/20260409T203927.596524-0400_spec-scope_claude_opus.log)
+Started: 2026-04-09 20:52:35 EDT
+Runtime: 28s
+[ralph-garage/agent-logs/20260409T205235.725289-0400_spec-scope_claude_opus.log](../ralph-garage/agent-logs/20260409T205235.725289-0400_spec-scope_claude_opus.log)
 
 # spec-scope
 VERDICT: PASS
-REASON: The paper maintains a compact theoretical scope with illustrative (not calibrated) quantitative material, no empirical estimation, and no broad prediction menu.
+REASON: The paper maintains a compact theoretical scope with illustrative (not calibrated) quantitative material, no empirical tests, and no broad prediction menu.
 
 ## Findings
 
-**Theoretical core.** The paper develops a single consumption-based asset pricing model with CRRA preferences, a discrete singularity shock, and market incompleteness. It delivers two propositions (closed-form P/D ratios and comparative statics) plus two focused extensions (veto under incomplete markets, government transfers). This is a tight, self-contained theoretical contribution.
+**Theoretical core.** The paper develops a single consumption-based asset pricing model (Section 2) with two propositions (closed-form P/D ratios and comparative statics) plus one extension proposition (veto under incomplete markets). All results are analytical/closed-form. This is a tight, focused theoretical contribution.
 
-**Empirical content is minimal and illustrative.**
-- Figure 1 plots NASDAQ vs. S&P 500 indices — a purely descriptive motivating figure, not an empirical test.
-- Table 1 reports model-implied P/D ratios on a parameter grid. These are illustrative calculations from closed-form expressions, not calibrated to match moments or estimated from data.
-- Figure 2 shows how transfers affect P/D ratios and consumption — again, model output, not empirical.
-- The paper explicitly states: "The goal is not to provide a definitive account of AI stock valuations but to highlight a specific channel" (Conclusion, line 262).
+**Quantitative material is illustrative, not calibrated.** Section 3 ("Quantitative Analysis") reports P/D ratios across a parameter grid using round-number parameters (β=0.96, γ=4, φ=0.5, η=0.5, etc.). The paper explicitly states it aims to show magnitudes are "broadly consistent with observed valuation spreads" rather than to match moments or estimate parameters. There is no GMM, no calibration exercise, no structural estimation.
 
-**No broad prediction menu.** The model generates exactly one cross-sectional prediction (AI stocks trade at higher P/D ratios than non-AI stocks due to hedging demand) plus comparative statics in three parameters (displacement severity, singularity probability, extinction risk). There is no menu of testable predictions, no moment-matching exercise, and no empirical horse race.
+**Empirical content is minimal.** The only empirical element is Figure 1, which plots NASDAQ vs. S&P 500 indices — a purely descriptive, motivational exhibit. There is no regression, no test of model predictions, no empirical methodology section.
 
-**No calibration.** Parameters are chosen to be "plausible" and round, not estimated or calibrated to data moments. The quantitative section explicitly uses a grid to show qualitative patterns rather than to pin down magnitudes.
+**No broad prediction menu.** The paper makes three focused comparative-statics predictions (Proposition 2: displacement severity, singularity probability, extinction probability) and two policy-relevant qualitative results (veto distortion, transfer effectiveness). It does not attempt to generate a laundry list of testable predictions.
 
-**Extensions stay within scope.** Both extensions (veto, transfers) are direct implications of the same model with minimal additional structure. They do not introduce new empirical content or broaden the prediction set.
+**Extensions are narrow.** The two extensions (veto/efficiency distortion and government transfers) are tightly connected to the core incomplete-markets mechanism rather than branching into unrelated directions.
+
+**Self-aware scope limitation.** The conclusion explicitly states: "Our model is deliberately simple. It abstracts from continuous-time dynamics, heterogeneous beliefs, production-side details, and many other features that would enrich the analysis."

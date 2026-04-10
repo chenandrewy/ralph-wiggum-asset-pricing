@@ -1,63 +1,62 @@
 # tests/theory-deadweight.py
-Started: 2026-04-09 20:39:27 EDT
-Runtime: 1m 54s
-[ralph-garage/agent-logs/20260409T203927.589380-0400_theory-deadweight_claude_opus.log](../ralph-garage/agent-logs/20260409T203927.589380-0400_theory-deadweight_claude_opus.log)
+Started: 2026-04-09 20:52:35 EDT
+Runtime: 1m 58s
+[ralph-garage/agent-logs/20260409T205235.728870-0400_theory-deadweight_claude_opus.log](../ralph-garage/agent-logs/20260409T205235.728870-0400_theory-deadweight_claude_opus.log)
 
 # theory-deadweight
 VERDICT: PASS
-REASON: Every formal object, parameter, and equation contributes to a result, calibration, or economic interpretation that matters for the paper's conclusions.
+REASON: Every formal object in the paper does meaningful economic, quantitative, or narrative work; no formalism is introduced and abandoned, ceremonial, or replaceable by plain English without weakening the paper's claims.
 
-## Audit Details
-
-### Methodology
-Cataloged every formal object (equations, propositions, remarks), every parameter/variable, and every prose mechanism. For each, checked whether it (a) appears in a downstream result, calibration, or figure, (b) could be replaced by plain English without weakening the economic claims, and (c) is ceremonial or abandoned.
+## Audit of Formal Objects
 
 ### Parameters and Variables
+| Object | Where introduced | Where used | Verdict |
+|--------|-----------------|------------|---------|
+| $C_t$, $g$ | Eq (1), Setup | P/D formulas (4–5), calibration (Sec 3), extensions | Active |
+| $\alpha_t$ | Setup | Displacement (Eq 2), Extension 1 (veto, positive singularity), Extension 2 (Eq 7–8), calibration | Active |
+| $c_t^H = \alpha_t C_t$ | Setup | Utility (Eq 3), Euler equation (Appendix), Extension 2 | Active |
+| $\phi$ | Eq (2) | P/D formulas, Prop 2, calibration, $\phi_\text{eff}$ in Ext 2 | Active |
+| $p$, $\xi$ | Singularity setup | P/D formulas, Prop 2, calibration, extensions | Active |
+| $\eta$ | Singularity setup | P/D formulas, calibration, Ext 2 (transfer ratio independence) | Active |
+| $\theta_t$, $\Delta\theta$ | Asset setup | $\Gamma^{AI}$, $\Gamma^{N}$ definitions, calibration | Active |
+| $\gamma$, $\beta$ | Eq (3) | P/D formulas, Prop 2(ii) condition, calibration | Active |
+| $\Gamma^{AI}$, $\Gamma^{N}$ | Prop 1 | Prop 2, Remark 1, economic discussion after Prop 1 | Active |
+| $\tau$, $\delta$ | Ext 2 | Transfer consumption (Eq 7), transfer ratio (Eq 8), Figure 2 | Active |
+| $\phi_\text{eff}$ | Ext 2 | Connects transfers back to Prop 1's P/D formula | Active |
+| $A^j$ | Remark 1 (Eq 6) | Ext 2: explains P/D blow-up at $\tau = 0$ under large singularity | Active |
 
-| Symbol | Introduced | Used in |
-|--------|-----------|---------|
-| $C_t$, $g$ | Eq (1) | P/D formulas, calibration, transfer equations |
-| $\alpha_t$, $\phi$ | Eq (2), setup | P/D formulas (via $\phi^{-\gamma}$), calibration, $\phi_\text{eff}$, veto argument |
-| $\gamma$, $\beta$ | Eq (3) | P/D formulas, comparative statics, calibration |
-| $p$, $\xi$ | Singularity setup | P/D formulas, comparative statics, calibration |
-| $\eta$ | Singularity setup | P/D formulas ($\Gamma$ factors), calibration, transfer analysis |
-| $\theta_t$, $\Delta\theta$ | Asset setup | $\Gamma^{AI}$, $\Gamma^{N}$, calibration |
-| $\Gamma^{AI}$, $\Gamma^{N}$ | Prop 1 | P/D formulas, comparative statics discussion |
-| $\tau$, $\delta$ | Extension 2 | Transfer equation, $\phi_\text{eff}$, figure panels |
-| $\phi_\text{eff}$ | Extension 2 | Connects transfers to P/D formula |
-| $A^j$ | Remark 1 | Referenced in Extension 2 discussion (infinite P/D at $\tau=0$) |
+No parameter, variable, or function is introduced without appearing in a result, calibration, or interpretation that matters for the paper's conclusions.
 
-No parameter or variable is introduced and then unused.
+### Equations
+1. **Eq (1)**: $C_{t+1} = (1+g) C_t$. Trivially simple, but anchors the growth baseline that the singularity disrupts. One line; sets up the contrast with the singularity jump. Not deadweight.
+2. **Eq (2)**: Displacement $\alpha_{t+1} = \phi \alpha_t$. Core mechanism. Used in pricing, comparative statics, extensions, calibration.
+3. **Eq (3)**: CRRA utility. Needed for Euler equation and veto analysis. Standard but necessary.
+4. **Eqs (4–5)**: P/D ratios. Central results. Calibrated in Table 1. Compared across assets.
+5. **Eq (6)**: Existence condition $A^j < 1$. Directly used in Extension 2 to explain infinite P/D at extreme displacement.
+6. **Eq (7)**: Transfer consumption. Needed for the transfers analysis and Figure 2.
+7. **Eq (8)**: Transfer ratio independence of $\eta$. This is the key economic insight of Extension 2—that singularity growth makes transfers effective regardless of scale. Cannot be stated as compellingly without the formula.
 
-### Formal Objects
+### Propositions and Proofs
+- **Proposition 1** (P/D ratios): Central result. Calibrated in Section 3.
+- **Remark 1** (existence condition): Not ceremonial—it sets up the P/D blow-up in Extension 2. Without it, the infinite-price discontinuity in Figure 2 would appear unmotivated.
+- **Proposition 2** (comparative statics): Each part (i–iii) provides testable qualitative predictions discussed in Section 3. Part (ii)'s "$\gamma$ sufficiently large" condition is an honest qualification, not unnecessary formalism.
+- **Proposition 3** (veto): Delivers the economic punchline of Extension 1—incomplete markets distort real decisions, not just prices.
 
-1. **Eq (1): Aggregate consumption growth.** One-line equation establishing baseline growth. Anchors $g$ which enters every P/D formula. Could be stated in English, but it is compact and sets notation used throughout.
+### Could any formal takeaway be stated in plain English?
+- The P/D formulas could not: they are needed for calibration and Figure 2.
+- The comparative statics (Prop 2) could be stated verbally, but the proposition format organizes three distinct predictions precisely. The conditions (e.g., "$\gamma$ sufficiently large") would be lost.
+- The transfer ratio (Eq 8) could be stated as "the ratio is independent of $\eta$," but showing the formula makes the claim verifiable and reveals the dependence on $\tau$, $\delta$, $\phi$, $\alpha$.
+- The veto result (Prop 3) could be verbalized, but the incomplete-vs-complete contrast is sharpened by the formal statement.
 
-2. **Eq (2): Displacement rule.** Central mechanism of the paper. Required.
+### Checks for Ceremonial or Pompous Formalism
+- No lemmas, corollaries, or definitions are used. The paper uses only propositions and one remark.
+- No auxiliary formal detours (no side models, no "consider the following alternative economy" digressions).
+- No notation is introduced for its own sake—every symbol appears in at least one result or calibration.
+- The appendix proof is required by the spec and is concise (one page).
 
-3. **Eq (3): CRRA utility.** Establishes $\gamma$ and $\beta$. Standard in consumption-based asset pricing; the target audience expects it. The Euler equation in the appendix derives from this. One line, not a detour.
+### Potential Marginal Items (not deadweight)
+- **Eq (1)** is the simplest equation in the paper and could be stated in prose ("aggregate consumption grows at rate $g$"). However, it occupies one line and sets up the contrast with the singularity jump. Given that the spec requires all display equations to be numbered, this is a formatting requirement rather than unnecessary formalism.
+- **The positive singularity formula** $\alpha_{t+1} = \min(1, \alpha_t/\phi)$ in Extension 1 is not in a numbered equation and mirrors Eq (2). It is used in the proof of Proposition 3. Lean and appropriate.
 
-4. **Proposition 1 (P/D ratios) + Eqs (4)–(5).** Core quantitative result. Feeds the calibration table (Table 1) and the transfer analysis. Cannot be replaced by plain English—the whole quantitative analysis depends on these formulas.
-
-5. **Remark 1 (Existence condition) + Eq (6).** Directly referenced in Extension 2: the large-singularity case violates the existence condition at $\tau = 0$, which is a key feature of Figure 2 and the economic argument for transfers. Not abandoned.
-
-6. **Proposition 2 (Comparative statics).** All three parts—(i) displacement severity, (ii) singularity probability, (iii) extinction probability—are discussed in Section 3's interpretation of Table 1. The comparative statics are brief (in-line proofs, no appendix), and each maps to a pattern in the calibration. Not ceremonial.
-
-7. **Proposition 3 (Veto).** Qualitative result with qualitative proof. The positive singularity specification ($\alpha_{t+1} = \min(1, \alpha_t/\phi)$) is minimal—one line—and makes the symmetry with displacement precise without introducing extra machinery. No unused apparatus.
-
-8. **Eqs (7)–(8): Transfer consumption and transfer ratio.** Both feed the figure panels and the economic discussion. Eq (8) delivers the key insight that the ratio is independent of $\eta$, which is the paper's main policy point about singularity-scale growth overwhelming deadweight costs.
-
-9. **Appendix proof.** Required by the spec and referenced by Proposition 1. The Euler equation derivation is the standard pricing argument; no extraneous steps.
-
-### Could any result be stated in plain English instead?
-
-- **Proposition 1:** No. The formulas are the input to the calibration table and the transfer analysis.
-- **Proposition 2:** Borderline, but the brief in-line proofs add precision (e.g., the $\gamma$ qualifier in part (ii)) at minimal cost. Removing them would lose the mechanism.
-- **Proposition 3:** Already largely qualitative. The formal statement adds the role of $\gamma$ and the complete-markets contrast. Appropriate for the audience.
-- **Remark 1:** The existence condition is quantitative and referenced numerically ($\phi^{-\gamma} = 160{,}000$). Cannot be replaced by English.
-
-### Abandoned or detour formalism?
-None found. The paper does not introduce auxiliary lemmas, intermediate results, or notational machinery that is not used downstream. The formal arc is: setup → P/D ratios → comparative statics → calibration → extensions (veto, transfers) → figure. Every formal object sits on this arc.
-
-### AI owners' consumption
-The paper mentions AI owners receive $(1-\alpha_t)C_t$ (one sentence in setup). This is not formalized further—no utility function for AI owners, no pricing from their perspective. It reappears implicitly in the transfer base $(1-\phi\alpha)$ in Eq (7). This is appropriate: it provides context without creating unused machinery.
+## Conclusion
+The paper is disciplined: 8 numbered equations, 3 propositions, 1 remark, and zero unused formal objects. Every piece of formalism either feeds into the calibration, drives a proposition, or delivers an economic insight that would be weaker in plain English. No auxiliary detours, no ceremonial definitions, no abandoned notation.

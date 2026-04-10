@@ -1,18 +1,20 @@
 # tests/element-opening-fig.py
-Started: 2026-04-09 20:39:27 EDT
-Runtime: 48s
-[ralph-garage/agent-logs/20260409T203927.618501-0400_element-opening-fig_claude_opus.log](../ralph-garage/agent-logs/20260409T203927.618501-0400_element-opening-fig_claude_opus.log)
+Started: 2026-04-09 20:52:35 EDT
+Runtime: 40s
+[ralph-garage/agent-logs/20260409T205235.731065-0400_element-opening-fig_claude_opus.log](../ralph-garage/agent-logs/20260409T205235.731065-0400_element-opening-fig_claude_opus.log)
 
 # element-opening-fig
 VERDICT: PASS
-REASON: The introduction features a clear, empirical figure comparing AI-exposed (NASDAQ) and broader-market (S&P 500) stock performance that directly supports the paper's motivating claim.
+REASON: The opening figure is empirical, compares AI-exposed vs. broader-market valuations using real data, directly supports the intro's motivating claim, and is publication-quality.
 
 ## Findings
 
-**Requirement 1 — Empirical, not theoretical:** PASS. The figure plots real data: monthly closing prices for the NASDAQ Composite and S&P 500, sourced from FRED and the Shiller dataset. The code downloads live data and normalizes to January 2015 = 100.
+**Requirement 1 (Empirical, not theoretical):** PASS. The figure plots real monthly closing prices for the NASDAQ Composite and S&P 500, downloaded from FRED and the Shiller dataset. No model output is involved.
 
-**Requirement 2 — Compares AI and non-AI public-stock valuations:** PASS (with caveat). The figure uses the NASDAQ Composite as a proxy for AI-exposed stocks and the S&P 500 for the broader market. This is imperfect — NASDAQ includes many non-AI firms and the S&P 500 itself contains major AI stocks (NVIDIA, Microsoft, etc.) — but it is a reasonable proxy for a theory paper with intentionally limited empirical content. The caption correctly labels NASDAQ as "AI/Tech-Heavy" rather than claiming it is a pure AI index. Note: the figure shows normalized price levels, not valuation ratios (P/D or P/E), which is a slight mismatch with the caption's use of "Valuations." This is a minor imprecision but does not undermine the economic message.
+**Requirement 2 (Compares AI and non-AI public-stock valuations):** PASS. The NASDAQ Composite (labeled "AI/Tech-Heavy") serves as the AI-exposed proxy; the S&P 500 serves as the broader market. Both are normalized to January 2015 = 100, making the valuation divergence visually immediate. The gap widens sharply post-2023, reaching roughly 500 vs. 340 by early 2026.
 
-**Requirement 3 — Supports the intro's motivating claim:** PASS. The intro opens by stating that "publicly traded stocks most exposed to artificial intelligence have reached remarkable valuations," and the figure directly illustrates this by showing the NASDAQ dramatically outpacing the S&P 500, with the gap widening sharply after 2023 — consistent with the generative-AI narrative. The text references the figure explicitly and connects it to the model's predictions in Section 3.
+**Requirement 3 (Supports the intro's motivating claim):** PASS. The intro's opening sentence states that "publicly traded stocks most exposed to artificial intelligence have reached remarkable valuations." The figure directly substantiates this by showing the NASDAQ pulling away from the S&P 500, with the divergence accelerating in the generative-AI era. The text references the figure in the first paragraph and again in the quantitative analysis section to anchor model magnitudes.
 
-**Requirement 4 — Clear and publication-quality:** PASS. The rendered figure (page 2) uses clean formatting: distinct colors (blue solid for NASDAQ, red dashed for S&P 500), legible axis labels with base font size 16, a well-positioned legend, and appropriate y-axis scaling. The caption is informative and cites sources. The figure width (0.75\textwidth) fits well on the page.
+**Requirement 4 (Clear and publication-quality):** PASS. The figure uses clean dual-color styling (blue solid for NASDAQ, dark red dashed for S&P 500), a clear y-axis label ("Normalized Price (Jan 2015 = 100)"), legible legend, and appropriate canvas dimensions (7 x 4.5 inches). Line weights are thick enough to read at journal scale. Sources are cited in the caption (FRED for NASDAQ, Shiller dataset for S&P 500).
+
+**Minor note:** Using NASDAQ Composite as the AI proxy is a reasonable choice given data accessibility, though it captures broad tech exposure rather than pure AI exposure. The paper's text acknowledges this by labeling it "AI- and technology-heavy." This is an acceptable proxy for a theory paper with deliberately limited empirical content (per spec requirement IV.8.b).

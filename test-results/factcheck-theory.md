@@ -1,50 +1,55 @@
 # tests/factcheck-theory.py
-Started: 2026-04-09 20:39:27 EDT
-Runtime: 8m 56s
-[ralph-garage/agent-logs/20260409T203927.593701-0400_factcheck-theory_claude_opus.log](../ralph-garage/agent-logs/20260409T203927.593701-0400_factcheck-theory_claude_opus.log)
+Started: 2026-04-09 20:52:35 EDT
+Runtime: 6m 58s
+[ralph-garage/agent-logs/20260409T205235.751397-0400_factcheck-theory_claude_opus.log](../ralph-garage/agent-logs/20260409T205235.751397-0400_factcheck-theory_claude_opus.log)
 
 # factcheck-theory
-
 VERDICT: PASS
-REASON: All notation is consistent, all assumptions are mutually consistent, and all mathematical objects trace back to the assumptions with correct derivations.
+REASON: All notation is consistent, all assumptions are mutually consistent, and all mathematical objects trace back to the assumptions.
 
 ## Requirement 1: Notational Consistency — PASS
 
-22 symbol families were cataloged. No semantic collisions (same symbol used for different formal objects) were found. Four minor issues were identified, none creating genuine ambiguity:
+Every mathematical symbol in the paper was catalogued into 22 symbol families. No symbol is reused for a different formal object anywhere in the paper. Five minor infelicities were identified, none rising to the level of genuine ambiguity:
 
-1. **Undefined `u` (line 213):** The period utility function is referenced as `u` in the proof of Proposition 3 but never formally assigned that symbol. The paper defines utility only inside the lifetime utility formula (line 116). Any asset pricing reader would resolve this unambiguously, but it is technically an omission.
-2. **`\alpha` time subscript dropped (Section 4.2):** `\alpha_t` is used consistently in Section 2, but bare `\alpha` appears without comment in Section 4.2 (lines 227+). The context (single-period transfer analysis) makes the meaning clear.
-3. **`\theta` time subscript dropped (line 134):** `\theta_t` is used in asset definitions (lines 106-107), but bare `\theta` appears in the $\Gamma$ definitions. The stationary-equilibrium context resolves this.
-4. **Prime notation `(\alpha', \theta')` at line 291:** Introduced without definition in the appendix proof, constituting a third convention alongside time-subscripted and bare forms. Meaning is clear from context.
+1. **$c^H$ subscripts**: The subscript convention shifts from time index ($c_t^H$) to semantic label ($c^H_{post}$, $c^H_{no\text{-}transfer}$) in Extension 2 without explicit announcement.
+2. **$\alpha$ subscripts**: Time subscript dropped in Extension 2 without explicit note; $\alpha'$ appears once in the appendix without definition.
+3. **$\Delta\theta$ naming**: Uses the $\Delta$ prefix (conventionally "change in $\theta$") for a parameter that is not the actual change $\theta_{t+1} - \theta_t = \Delta\theta(1-\theta_t)$.
+4. **$u$ (lowercase)**: Period utility function referenced in Proposition 3 proof ("$u$ is concave") but never formally defined as a symbol.
+5. **$\theta$ subscripts**: Time subscript dropped in Proposition 1 and Section 3, standard in stationary analysis but inconsistent with $\theta_t$ in the setup.
+
+No symbol collisions, no conflicting definitions across sections, no reuse of symbols for different economic concepts.
 
 ## Requirement 2: Assumption Consistency — PASS
 
-30 mathematical assumptions were identified across Setup, Propositions, Calibration, and Extensions. All are mutually consistent:
+17 distinct mathematical assumptions were identified across the setup (A1–A11), existence condition (A12), extensions (A13–A15), and calibrations (A16–A17). Detailed consistency checks found:
 
-- **Parameter restrictions:** All independent interval restrictions on distinct parameters; no conflicts. Calibration values satisfy all restrictions.
-- **Probability tree:** $(1-p) + p\xi + p(1-\xi) = 1$. Well-defined.
-- **Budget constraints:** Consumption shares sum to $C_t$; total dividends equal aggregate consumption; post-transfer resource accounting balances exactly (household + AI owners + deadweight loss = total output).
-- **Extensions vs. baseline:** Extension 1 augments the singularity structure compatibly. Extension 2 reduces to baseline at $\tau = 0$.
-- **Existence condition:** Correctly stated; satisfied for the baseline calibration grid. The large-singularity violation ($\eta = 9$, $\phi = 0.05$, $\tau = 0$) is correctly identified in the paper.
-- **Share dynamics:** $\alpha_t \in (0,1)$ and $\theta_t \in (0,1)$ are preserved under repeated singularities.
-- **Numerical claims verified:** $\phi(1+\eta) = 0.75$ (baseline), $\phi(1+\eta) = 0.5$ (large singularity), $\phi^{-\gamma} = 160{,}000$ — all correct.
+- **Parameter domains**: All compatible. No parameter restriction contradicts another.
+- **Probability structure**: Event probabilities sum to 1 in every branch of the event tree.
+- **Functional forms**: Consumption growth, dividend growth, and SDF expressions are mutually consistent. The full Euler equation derivation was verified algebraically from the SDF through to the closed-form P/D formula (Proposition 1).
+- **Extension 2 algebra**: Transfer consumption (Eq. 9), effective displacement $\phi_\text{eff}$, and transfer ratio (Eq. 10) are all algebraically consistent with the baseline.
+- **Existence condition**: Correctly satisfied by baseline calibration ($A^{AI} = 0.987 < 1$ at $p = 1\%$, $\xi = 0$) and correctly violated by large-singularity parameters ($A^{AI} = 2.37$), as the paper states.
+- **Numerical claims verified**: P/D of ~18 vs ~11 at $p = 0.5\%$ (actual: 17.5 vs 11.1); ratio of ~6 at $p = 1\%$ (actual: 5.7); $\phi^{-\gamma} = 160{,}000$; consumption changes of 25% and 50%.
+- **Extension 1 vs. baseline**: No contradiction. The positive singularity $\alpha_{t+1} = \min(1, \alpha_t/\phi)$ correctly caps at 1. The negative singularity matches the baseline.
+- **Extinction utility**: $U_\text{ext} = 0 > u(c)$ for $\gamma > 1$ is correctly described as conservative for the veto result.
 
-**Minor observation:** At the large-singularity parameters ($\eta = 9$, $\phi = 0.05$, $\tau = 0$), both AI and non-AI P/D ratios are undefined ($A^{AI} \approx 2.37$, $A^{N} \approx 1.45$), but the paper (line 244) discusses only the AI stock P/D being undefined. This is an incomplete description, not a mathematical inconsistency.
+Three low-severity observations (not inconsistencies):
+1. The stationarity approximation (post-singularity P/D $\approx$ pre-singularity P/D) is acknowledged but error magnitude is unanalyzed.
+2. Household consumption share $\alpha_t$ is exogenous rather than micro-founded through budget constraints — a standard modeling simplification.
+3. Extension 1 omits explicit probabilities for positive vs. negative singularity (qualitative by design).
 
 ## Requirement 3: Traceability — PASS
 
-All mathematical objects in the paper trace back to the assumptions:
+All mathematical objects in the paper trace back to the 17 assumptions:
 
-| Object | Traced to |
-|--------|-----------|
-| $\Gamma^{AI}, \Gamma^{N}$ | Defined from $\theta, \Delta\theta, \eta$ (Assumptions 9, 10, 7) |
-| $A^j$ | Defined from $\beta, g, \gamma, p, \xi, \eta, \phi, \Gamma^j$ (Assumptions 2, 5-8, 13, 16) |
-| P/D ratios (Prop. 1) | Derived from Euler equation via CRRA preferences + marginal investor (Assumptions 12, 13); derivation verified step-by-step |
-| Comparative statics (Prop. 2) | Follow from P/D formulas by differentiation |
-| Veto result (Prop. 3) | Follows from concavity of CRRA utility + incomplete markets (Assumptions 12, 13, 19-23) |
-| $c^H_{post}$ (eq. 7) | Derived from $\phi, \alpha, \eta, g, C_t, \tau, \delta$ (Assumptions 2, 3, 7, 8, 24, 25) |
-| Transfer ratio (eq. 8) | Derived from eq. 7; verified algebraically; correctly independent of $\eta$ |
-| $\phi_\text{eff}$ | Derived from transfer consumption formula (Assumption 27) |
-| $v^{AI}$ | Notation for P/D ratio in appendix proof |
+| Derived Object | Traces to |
+|---|---|
+| $\Gamma^{AI}, \Gamma^{N}$ (dividend growth factors) | A5 ($\eta$), A7 ($\theta, \Delta\theta$) |
+| $A^j$ (existence condition) | A2 ($g$), A4 ($p$), A5 ($\eta, \phi$), A6 ($\xi$), A10 ($\beta, \gamma$), A7/A8 (via $\Gamma^j$) |
+| $v^{AI}, v^{N}$ (P/D ratios) | Euler equation from A10 preferences + all model primitives |
+| SDF $\beta(c_{t+1}^H/c_t^H)^{-\gamma}$ | A10 ($\beta, \gamma$), A3 ($c_t^H$) |
+| $\phi_\text{eff}$ (effective displacement) | A5 ($\phi$), A15 ($\tau, \delta$), A3 ($\alpha$) |
+| $c^H_{post}, c^H_{no\text{-}transfer}$ | A3, A5, A15 |
+| Comparative statics (Proposition 2) | Differentiation of P/D formulas |
+| Veto result (Proposition 3) | A10 (CRRA with $\gamma > 1$), A9 (incomplete markets), A13–A14 |
 
-No expression in the paper fails to derive from the stated assumptions. The one approximation (post-singularity P/D ratio treated as equal to pre-singularity P/D ratio, line 291) is explicitly acknowledged.
+No expression in the paper was found that cannot be logically derived from the stated assumptions.

@@ -141,19 +141,21 @@ df_ext <- expand.grid(tau = tau_grid,
   ) %>%
   ungroup()
 
-theme_paper <- theme_bw(base_size = 16) +
+theme_paper <- theme_bw(base_size = 18) +
   theme(
     legend.position = "bottom",
     legend.title = element_blank(),
-    legend.text = element_text(size = 14),
-    axis.text = element_text(size = 14),
+    legend.text = element_text(size = 15),
+    axis.text = element_text(size = 15),
+    axis.title = element_text(size = 16),
+    plot.title = element_text(size = 17),
     panel.grid.minor = element_blank(),
     panel.grid.major = element_line(color = "gray50")
   )
 
 scenario_labels <- c(
-  "Baseline" = expression(Baseline ~ (list(eta == 0.5, phi == 0.5))),
-  "Large singularity" = expression(Large ~ singularity ~ (list(eta == 9, phi == 0.05)))
+  "Baseline" = "Baseline (\u03b7 = 0.5, \u03c6 = 0.5)",
+  "Large singularity" = "Large singularity (\u03b7 = 9, \u03c6 = 0.05)"
 )
 
 # Line styles: solid vs longdash with different widths for Panel (a) differentiation
@@ -195,7 +197,7 @@ cons_large_0 <- consumption_growth(0, 9.0, phi_large)
 
 panel_b <- ggplot(df_ext, aes(x = tau, y = cons_growth, color = scenario, linetype = scenario)) +
   geom_line(aes(linewidth = scenario)) +
-  geom_hline(yintercept = 1, linetype = "dashed", color = "gray40", linewidth = 0.8) +
+  geom_hline(yintercept = 1, linetype = "dashed", color = "gray20", linewidth = 1.0) +
   # Catastrophe markers at tau=0
   annotate("point", x = 0, y = cons_large_0, shape = 16, size = 3, color = "#1B4F99") +
   annotate("text", x = 0.06, y = cons_large_0 * 0.65,
@@ -205,7 +207,7 @@ panel_b <- ggplot(df_ext, aes(x = tau, y = cons_growth, color = scenario, linety
   annotate("text", x = 0.06, y = cons_base_0 * 0.75,
            label = paste0(round((1 - cons_base_0) * 100), "% loss"),
            color = "#B22222", size = 3.2, hjust = 0) +
-  annotate("text", x = 0.55, y = 1.15, label = "No change", color = "gray40", size = 4) +
+  annotate("text", x = 0.55, y = 1.15, label = "No change", color = "gray20", size = 4.5) +
   labs(x = expression("Tax rate " * tau),
        y = "Household Consumption Growth\nin Singularity",
        title = "(b) Household Consumption") +
@@ -218,7 +220,7 @@ panel_b <- ggplot(df_ext, aes(x = tau, y = cons_growth, color = scenario, linety
   theme_paper
 
 fig <- arrangeGrob(panel_a, panel_b, ncol = 2)
-ggsave(file.path(outdir, "fig-extension-panels.pdf"), fig, width = 13, height = 5.5)
+ggsave(file.path(outdir, "fig-extension-panels.pdf"), fig, width = 14, height = 6)
 cat("Wrote", file.path(outdir, "fig-extension-panels.pdf"), "\n")
 
 # =============================================================================

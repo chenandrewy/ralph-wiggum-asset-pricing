@@ -1,50 +1,78 @@
 # tests/visual-figures.py
-Started: 2026-04-09 20:39:27 EDT
-Runtime: 1m 12s
-[ralph-garage/agent-logs/20260409T203927.608147-0400_visual-figures_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260409T203927.608147-0400_visual-figures_claude_claude-opus-4-6.log)
+Started: 2026-04-09 20:52:35 EDT
+Runtime: 1m 31s
+[ralph-garage/agent-logs/20260409T205235.755381-0400_visual-figures_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260409T205235.755381-0400_visual-figures_claude_claude-opus-4-6.log)
 
 # visual-figures
 
 **VERDICT: FAIL**
 
-**REASON:** Figure 1 passes all checks, but Figure 2 fails readability due to small tick labels and legend text, and its legend uses raw parameter values instead of verbal scenario labels, creating an unnecessary mapping burden.
+**REASON:** Figure 1 passes all checks, but Figure 2 fails on readability — axis labels, tick labels, panel titles, and legend text are too small in both panels.
 
 ---
 
-## Figure 1: Valuations of AI-Exposed Stocks vs. the Broader Market
+## Figure 1 (page-02.png)
 
 **VERDICT: PASS**
 
-**REASON:** The figure is readable, the two series are clearly distinguishable via solid vs. dashed line styles, and the main message is immediately apparent from the figure and caption alone.
+**REASON:** The single-panel figure is readable, the two series are clearly distinguishable, and the caption conveys the main message without ambiguity.
 
-### Single Panel: Normalized Price Index (2015 = 100)
+### Full figure (single panel)
 
-- **Readability: PASS** -- Axis labels ("Date", "Closing Price (Jan 2015 = 100)"), tick labels, and legend text are all legible. Font sizes are adequate throughout. No text is cut off or overlapping.
+**Readability**
+- The caption is rendered in standard LaTeX style and is fully legible.
+- The y-axis label ("Normalized Price (Jan 2015 = 100)") is readable, with clear tick labels at 100, 200, 300, 400, 500.
+- The x-axis tick labels (2016, 2018, 2020, 2022, 2024, 2026) are readable.
+- The legend is placed inside the upper-left region with adequate font size; both entries ("NASDAQ Composite (AI/Tech-Heavy)" and "S&P 500") are legible.
+- All font sizes are appropriate — nothing is too small, overlapping, or cut off.
 
-- **Distinguishability: PASS** -- The two series (NASDAQ Composite and S&P 500) use solid vs. dashed line styles in distinct colors. They are well-separated for most of the plot, especially from 2020 onward. The legend does not occlude data.
+**Distinguishability**
+- The two series use distinct line styles: a solid line for NASDAQ and a dashed line for the S&P 500. They are immediately separable.
+- The legend does not obscure any meaningful portion of the data.
+- The series diverge substantially after roughly 2023, making the visual contrast even stronger in the most important part of the figure.
+- Passes the "instant read" test.
 
-- **Narrative clarity: PASS** -- The caption explains both series are monthly closing prices normalized to January 2015 = 100, and that the NASDAQ is heavily weighted toward AI/tech firms. The visual clearly shows the NASDAQ dramatically outpacing the S&P 500, with the gap widening sharply in recent years. A reader immediately grasps the message: AI/tech-heavy stocks have appreciated far more than the broad market. The paper text reinforces this, noting the NASDAQ has appreciated roughly 50% more than the S&P 500 since 2015.
+**Narrative clarity**
+- From figure and caption alone: the caption states what is plotted (monthly closing prices for NASDAQ Composite vs. S&P 500, normalized to Jan 2015 = 100). A reader can immediately see that the AI/tech-heavy NASDAQ has dramatically outpaced the broader market, especially from ~2023 onward.
+- From figure and paper text: the introductory paragraph frames the figure as evidence that the AI/tech-heavy NASDAQ has dramatically outpaced the S&P 500 with the gap widening sharply since 2023. The figure directly supports this claim.
 
 ---
 
-## Figure 2: Extension Panels (AI Stock Valuations and Household Consumption)
+## Figure 2 (page-12.png)
 
 **VERDICT: FAIL**
 
-**REASON:** Tick labels and legend text are too small in both panels, and legend labels use raw parameter values instead of the verbal scenario names used in the caption.
+**REASON:** Axis labels, tick labels, and legend text in both panels are too small to read comfortably, and the panel titles are barely legible.
 
 ### Panel (a): AI Stock Valuations
 
-- **Readability: FAIL** -- The panel title is legible, but tick labels on both axes are very small and hard to read. The legend uses cramped parameter strings (e.g., "Iota=0.5, phi=0.5, delta=0.5" vs "Iota=9, phi=0.05, delta=0.5") rather than verbal labels like "Baseline" and "Large singularity" used in the caption. This creates an unnecessary translation burden.
+**Readability: FAIL**
+- The panel title "(a) AI Stock Valuations" is very small and hard to read.
+- The y-axis label ("P/D Ratio" or similar) is extremely small and nearly illegible at this rendering size.
+- The x-axis label ("Tax rate τ") is similarly tiny.
+- Tick labels on both axes are very small and difficult to parse.
+- The legend at the bottom is rendered in a very small font; entries are hard to read without zooming in significantly.
 
-- **Distinguishability: PASS** -- Two lines are plotted in different colors and are spatially separated for most of the x-axis range. The large-singularity line starts partway through the x-axis (existence condition), which is a meaningful feature.
+**Distinguishability: BORDERLINE**
+- Three line series use different line types (solid, dashed, long-dashed) and possibly different colors, but at the small font/line size the distinction requires effort.
+- The series are spatially separated, which helps, but the encoding in the legend is hard to match to the lines.
 
 ### Panel (b): Household Consumption
 
-- **Readability: FAIL** -- Same issues as Panel (a): tick labels are very small and difficult to read, and the legend text is cramped with the same parameter-heavy labeling.
+**Readability: FAIL**
+- The panel title "(b) Household Consumption" is very small.
+- The y-axis label is tiny and hard to read.
+- The x-axis label ("Tax rate τ") is similarly tiny.
+- Tick labels are very small.
+- The legend text shares the same small-font problem as Panel (a).
 
-- **Distinguishability: PASS** -- Two lines in different colors with clearly different trajectories (one rises steeply, one is relatively flat), making them easy to distinguish.
+**Distinguishability: BORDERLINE**
+- Three line series use the same encoding as Panel (a). Lines are reasonably well separated in space, but matching lines to legend entries requires effort because the legend text is so small.
 
-### Narrative Clarity: MARGINAL
+### Narrative clarity
+- From figure and caption alone: the caption explains that Panel (a) shows how government transfers compress AI stock P/D ratios by reducing hedging demand, and Panel (b) shows how consumption changes in the singularity state as transfers increase. The message is conceptually clear but hard to verify visually due to readability issues.
+- From figure and paper text: the paper explains that at τ = 0 the large-singularity P/D ratio is undefined (existence condition violated), and that as τ increases, finite P/D ratios emerge. Panel (b) shows that absent transfers the household faces a consumption catastrophe. The narrative logic is sound when supplemented by the text.
 
-The core message comes through -- transfers are transformative under a large singularity but only modestly helpful under baseline parameters. However, the legend's parameter-heavy labeling requires readers to decode which scenario is "baseline" vs. "large singularity," as the caption uses verbal labels but the legend does not. Using "Baseline" and "Large singularity" as legend labels would significantly improve clarity.
+### Summary of problems
+1. **Readability (both panels):** All text elements — panel titles, axis labels, tick labels, and legend entries — are too small for comfortable reading. This is the primary and most serious issue.
+2. **Distinguishability (both panels):** The legend is difficult to parse at its current size, making it hard to match series to their descriptions without effort.
