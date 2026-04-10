@@ -1,54 +1,60 @@
 # tests/writing-intro.py
-Started: 2026-04-09 21:34:52 EDT
-Runtime: 3m 15s
-[ralph-garage/agent-logs/20260409T213452.252419-0400_writing-intro_claude_opus.log](../ralph-garage/agent-logs/20260409T213452.252419-0400_writing-intro_claude_opus.log)
+Started: 2026-04-09 21:50:56 EDT
+Runtime: 2m 53s
+[ralph-garage/agent-logs/20260409T215056.130448-0400_writing-intro_claude_opus.log](../ralph-garage/agent-logs/20260409T215056.130448-0400_writing-intro_claude_opus.log)
 
 # writing-intro
 VERDICT: FAIL
-REASON: Main arguments are not all skimmable and several transitions break the introduction's logical arc.
+REASON: Introduction arguments are not all clear to skimmers, and paragraph 2 is overloaded, breaking flow.
 
 ## Subagent Results
 
-### 1. Clarity of Main Arguments to a Skimming Reader — FAIL
+### 1. Clarity of main arguments to a skimming reader: FAIL
 
-The introduction handles three of five main arguments well: (b) incomplete markets are key, (c) financial market solutions are under-discussed, and (e) incomplete markets distort AI development. Two arguments have problems:
+Evaluated the five spec arguments (a–e) against what a skimmer sees (first/last sentences of each paragraph):
 
-- **Argument (a): Hedging motive.** The hedging claim is stated clearly ("Part of this premium, we argue, reflects a hedging motive"), but the introduction does not distinguish the *negative* singularity from the singularity in general at the point where the claim is first made. A skimming reader may not realize the hedge is specifically against the negative outcome until several paragraphs later.
+| Argument | Verdict | Notes |
+|----------|---------|-------|
+| (a) AI stocks hedge against negative singularity | PASS | Para 2 opens with "Part of this premium…reflects a hedging motive." |
+| (b) Incomplete markets are key | PASS (borderline) | Last sentence of Para 2 and last sentence of Para 4 together convey this, but require connecting non-adjacent sentences. |
+| (c) Financial market solutions are under-discussed | FAIL | "The role of financial markets remains under-explored" is buried in the interior of Para 2. It never appears in any first or last sentence. |
+| (d) Abundance of resources overcomes frictions | PASS | Last sentence of Para 5 states it directly. |
+| (e) Incomplete markets distort AI development | PASS | Last sentence of Para 4 is explicit. |
 
-- **Argument (d): Market frictions can be overcome in a singularity due to abundance of resources.** This argument appears in paragraph 5 but is framed entirely as a point about government transfers and redistribution policy, not as a claim about market frictions being overcome. The logical link — that the singularity's resource abundance resolves the incompleteness problem — is not stated directly enough to survive skimming. A reader scanning for this core claim would map it only to the redistribution discussion.
+**Recommendation:** Move the "under-discussed" framing into the first or last sentence of a paragraph—either as a standalone topic sentence opening Para 2, or as the closing sentence of Para 1.
 
-### 2. Introduction Flow — FAIL
+### 2. Introduction flow: FAIL
 
-Two structural problems and one weak transition:
+- **Hook (Para 1):** Strong. Opens with a concrete fact and plants the central tension.
+- **P1 → P2:** Clean transition ("Part of this premium…").
+- **P2 → P3:** Transition itself works, but **Para 2 is overloaded**—it introduces the thesis, defines "negative AI singularity" cold, explains market incompleteness, distinguishes private/public equity, and motivates the hedging mechanism. Five new concepts in one paragraph. This is the main flow-breaker.
+- **P3 → P4:** Textbook motivation-to-results transition. Works well.
+- **P4 internal seam:** Contains two distinct ideas (quantitative results + welfare/veto distortion) stapled together. The transition between them—"The same incomplete markets that inflate AI valuations also distort real decisions. Market incompleteness distorts the development of AI itself."—is redundant (two sentences saying the same thing). One should be cut.
+- **P4 → P5:** Strong thematic link (regulation angle sets up redistribution).
 
-- **Paragraph 3 re-motivates after the mechanism is already introduced.** The opening of P3 ("Although discussions of AI risk focus overwhelmingly on technology policy and labor markets...") reads like a motivation paragraph that should have appeared *before* the hedging mechanism was stated in P2. Re-motivating the gap in the literature after the reader has already accepted the paper's premise stalls momentum. The pivot to GKP is also compressed into a single sentence, making the intellectual genealogy feel rushed.
+**Recommendations:**
+1. Distribute Para 2's conceptual density across Para 2 and Para 3 (e.g., move singularity definition or market-incompleteness details into a separate paragraph).
+2. Cut one of the two redundant pivot sentences in Para 4.
 
-- **The AI-authorship paragraph (P7) breaks the arc.** After the economic argument reaches a natural conclusion in P6 (singularity growth makes transfers effective), P7 pivots to the paper's own production as an illustration of displacement. The connective tissue ("The displacement risk we model... extends to the nature of productive work itself") is a thematic parallel, not a logical extension. This disrupts the arc right before the literature review. The material might work better as a footnote or brief acknowledgment rather than a full closing paragraph.
+### 3. Promises fulfilled in the body: PASS
 
-- **P4 → P5 transition is abrupt.** The jump from quantitative pricing results to "beyond these pricing effects" signals a pivot but lacks a bridging sentence explaining why the pricing model also speaks to development decisions.
+All promises and implications from the Introduction are fulfilled:
 
-Other transitions work well, particularly P5 → P6 ("If blocking AI is costly, another policy lever is redistribution").
+| Promise | Fulfilled? | Where |
+|---------|-----------|-------|
+| Closed-form P/D ratios | Yes | Proposition 1 (Section 2.2) |
+| AI P/D ~2× non-AI quantitatively | Yes | Table 1 (Section 3) |
+| Extinction risk attenuates gap | Yes | Proposition 2(iii) + Section 3 |
+| Incompleteness distorts AI development (veto) | Yes | Proposition 3 (Section 4.1) |
+| Complete markets eliminate distortion | Yes | Proposition 3(ii) |
+| Transfers effective under explosive growth | Yes | Section 4.2 + Figure 2 |
+| Abundance of resources overcomes frictions | Yes | Equation (7) + Figure 2 |
+| Consistent with observed NASDAQ vs. S&P 500 | Yes | Section 3 |
 
-### 3. Promises Fulfilled in Body — PASS
+Minor note: The "abundance" framing is slightly imprecise—the transfer/no-transfer consumption *ratio* is independent of η (equation 7), so the argument works in levels but not in ratios. This is a rhetorical nuance, not an unfulfilled promise.
 
-All 15 identified promises from the Introduction are delivered in the paper body:
+## Summary
 
-| Promise | Status |
-|---------|--------|
-| AI valuation figure (NASDAQ vs. S&P) | PASS |
-| Hedging motive formalized in model | PASS |
-| Complete markets eliminates premium | PASS |
-| Closed-form P/D ratios | PASS |
-| AI P/D up to ~6× non-AI | PASS |
-| Extinction risk attenuates spread | PASS |
-| Comparative statics | PASS |
-| Household vetoes socially efficient AI | PASS |
-| Veto disappears under complete markets | PASS |
-| Transfers effective under singularity growth | PASS |
-| Two-panel figure for transfers | PASS |
-| "Singularity economics" framing | PASS |
-| AI-produced paper as self-illustration | PASS |
-| GKP as foundational framework | PASS |
-| Existence condition / infinite price | PASS |
-
-Minor editorial notes (not failures): Proposition 2(ii) qualifies the singularity-probability result as requiring "γ sufficiently large," which the introduction states without this qualifier. The "6×" ratio appears only at p = 1%, while the introduction says "across plausible singularity probabilities."
+The introduction delivers on every promise it makes (subagent 3: PASS), but two structural issues cause it to fail:
+1. A key contribution claim (financial markets are under-discussed) is invisible to skimmers.
+2. Paragraph 2 tries to do too much, overwhelming the reader before the payoff arrives.

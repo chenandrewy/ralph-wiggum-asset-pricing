@@ -36,15 +36,47 @@ share_ratio_non <- (1 - theta - dtheta * (1 - theta)) / (1 - theta)
 gamma_ai  <- share_ratio_ai * (1 + eta)
 gamma_non <- share_ratio_non * (1 + eta)
 
-# P/D computation from the Euler equation
-# K = beta * (1+g)^(1-gamma) * [(1-p) + p*(1-xi) * phi^(-gamma) * (1+eta)^(-gamma) * gamma_j]
-# P/D = K / (1 - K)
-compute_pd <- function(p, xi, gamma_j) {
+# Closed-form P/D (approximate: treats post-singularity P/D as equal to pre-singularity)
+compute_pd_approx <- function(p, xi, gamma_j) {
   sdf_sing <- phi^(-gamma) * (1 + eta)^(-gamma) * gamma_j
   base <- beta * (1 + g)^(1 - gamma)
   K <- base * ((1 - p) + p * (1 - xi) * sdf_sing)
   if (K >= 1 || K <= 0) return(NA)
   return(K / (1 - K))
+}
+
+# Exact P/D via backward recursion over the chain of theta values after
+# successive singularities. Non-AI P/D is exact in closed form (Gamma^N is
+# theta-independent), so this only matters for AI stocks.
+compute_pd_ai_exact <- function(p, xi, theta0, dtheta, n_steps = 60) {
+  B <- beta * (1 + g)^(1 - gamma)
+  S <- phi^(-gamma) * (1 + eta)^(-gamma)
+
+  # Build the chain of theta values after 0, 1, 2, ... singularities
+  thetas <- numeric(n_steps + 1)
+  thetas[1] <- theta0
+  for (k in 2:(n_steps + 1)) {
+    thetas[k] <- thetas[k - 1] + dtheta * (1 - thetas[k - 1])
+  }
+
+  # AI dividend growth factor at each theta
+  gamma_ai_k <- (thetas + dtheta * (1 - thetas)) / thetas * (1 + eta)
+
+  # Terminal value: at large k, theta ~ 1, closed-form is nearly exact
+  gamma_ai_term <- gamma_ai_k[n_steps + 1]
+  K_term <- B * ((1 - p) + p * (1 - xi) * S * gamma_ai_term)
+  if (K_term >= 1 || K_term <= 0) return(NA)
+  v <- K_term / (1 - K_term)
+
+  # Backward recursion: v[k] = [B*(1-p) + B*p*(1-xi)*S*Gamma[k]*(v[k+1]+1)] / [1 - B*(1-p)]
+  denom <- 1 - B * (1 - p)
+  if (denom <= 0) return(NA)
+  for (k in n_steps:1) {
+    numer <- B * (1 - p) + B * p * (1 - xi) * S * gamma_ai_k[k] * (v + 1)
+    v <- numer / denom
+    if (!is.finite(v) || v < 0) return(NA)
+  }
+  return(v)
 }
 
 p_grid  <- c(0.001, 0.002, 0.005, 0.008, 0.01)
@@ -54,8 +86,8 @@ results <- expand.grid(xi = xi_grid, p = p_grid) %>%
   select(p, xi) %>%
   rowwise() %>%
   mutate(
-    pd_ai  = compute_pd(p, xi, gamma_ai),
-    pd_non = compute_pd(p, xi, gamma_non),
+    pd_ai  = compute_pd_ai_exact(p, xi, theta, dtheta),
+    pd_non = compute_pd_approx(p, xi, gamma_non),
     ratio  = pd_ai / pd_non
   ) %>%
   ungroup()
@@ -89,7 +121,7 @@ for (i in seq_len(nrow(results))) {
 
 lines <- c(lines,
   "\\bottomrule",
-  "\\multicolumn{5}{p{0.85\\textwidth}}{\\footnotesize Parameters: $\\beta=0.96$, $g=0.02$, $\\gamma=4$, $\\phi=0.5$, $\\eta=0.5$, $\\theta=0.15$, $\\Delta\\theta=0.2$. $p$ is the annual singularity probability; $\\xi$ is the extinction probability conditional on singularity. The ratio column reports $\\text{P/D}^{AI} / \\text{P/D}^{N}$.} \\\\",
+  "\\multicolumn{5}{p{0.85\\textwidth}}{\\footnotesize Parameters: $\\beta=0.96$, $g=0.02$, $\\gamma=4$, $\\phi=0.5$, $\\eta=0.5$, $\\theta=0.15$, $\\Delta\\theta=0.2$. $p$ is the annual singularity probability; $\\xi$ is the extinction probability conditional on singularity. AI P/D ratios are numerically exact, computed by iterating the Euler equation over post-singularity states (see Appendix~A). The ratio column reports $\\text{P/D}^{AI} / \\text{P/D}^{N}$.} \\\\",
   "\\end{tabular}"
 )
 
@@ -150,7 +182,7 @@ theme_paper <- theme_bw(base_size = 22) +
     axis.title = element_text(size = 20),
     plot.title = element_text(size = 21),
     panel.grid.minor = element_blank(),
-    panel.grid.major = element_line(color = "gray20")
+    panel.grid.major = element_line(color = "gray75")
   )
 
 scenario_labels <- c(
@@ -168,7 +200,7 @@ scenario_colors <- c("Baseline" = "#B22222", "Large singularity" = "#1B4F99")
 # Compute y-axis bounds for Panel A: tighten to data range
 pd_data_a <- df_ext %>% filter(!is.na(pd_ai) & tau <= 0.40)
 y_min_a <- 7
-y_cap_a <- 19
+y_cap_a <- 17
 
 # Find the tau value where the large-singularity line exits the capped region
 large_sing_data <- pd_data_a %>% filter(scenario == "Large singularity")
@@ -197,7 +229,7 @@ cons_large_0 <- consumption_growth(0, 9.0, phi_large)
 
 panel_b <- ggplot(df_ext, aes(x = tau, y = cons_growth, color = scenario, linetype = scenario)) +
   geom_line(aes(linewidth = scenario)) +
-  geom_hline(yintercept = 1, linetype = "dashed", color = "black", linewidth = 1.2) +
+  geom_hline(yintercept = 1, linetype = "dashed", color = "gray30", linewidth = 1.5) +
   # Catastrophe markers at tau=0
   annotate("point", x = 0, y = cons_large_0, shape = 16, size = 3, color = "#1B4F99") +
   annotate("text", x = 0.06, y = cons_large_0 * 0.65,
@@ -321,7 +353,7 @@ fig_val <- ggplot(df_val, aes(x = Date, y = Index, color = Group, linetype = Gro
   scale_y_continuous(expand = expansion(mult = c(0.02, 0.05))) +
   theme_paper +
   theme(legend.position = c(0.30, 0.88),
-        plot.margin = margin(t = 5, r = 10, b = 5, l = 15, unit = "pt"))
+        plot.margin = margin(t = 15, r = 10, b = 5, l = 15, unit = "pt"))
 
 ggsave(file.path(outdir, "fig-ai-valuations.pdf"), fig_val, width = 7, height = 4.5)
 cat("Wrote", file.path(outdir, "fig-ai-valuations.pdf"), "\n")

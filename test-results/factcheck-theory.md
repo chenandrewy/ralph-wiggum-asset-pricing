@@ -1,56 +1,59 @@
 # tests/factcheck-theory.py
-Started: 2026-04-09 21:34:52 EDT
-Runtime: 7m 13s
-[ralph-garage/agent-logs/20260409T213452.272417-0400_factcheck-theory_claude_opus.log](../ralph-garage/agent-logs/20260409T213452.272417-0400_factcheck-theory_claude_opus.log)
+Started: 2026-04-09 21:50:56 EDT
+Runtime: 7m 27s
+[ralph-garage/agent-logs/20260409T215056.134463-0400_factcheck-theory_claude_opus.log](../ralph-garage/agent-logs/20260409T215056.134463-0400_factcheck-theory_claude_opus.log)
 
 # factcheck-theory
 
 VERDICT: PASS
-REASON: All notation is consistent, all assumptions are mutually consistent, and all mathematical objects trace back to stated assumptions.
+REASON: All notation is consistent, all assumptions are mutually consistent, and all mathematical objects trace back to the assumptions.
 
 ## Requirement 1: Notational Consistency — PASS
 
-No symbol collisions or reuse of symbols for different formal objects. Twenty-three symbol families were identified; none collide across families.
+A comprehensive audit of all mathematical symbols found no collisions, ambiguities, or inconsistencies. Key findings:
 
-**Minor observations** (standard conventions, not ambiguities):
-- $\alpha_t$ (state variable in Section 2) appears as unsubscripted $\alpha$ in Extension 2 and P/D formulas. This is standard stationary-equilibrium notation; the paper explicitly states "stationary equilibrium" (Proposition 1, Appendix A), which licenses dropping time subscripts.
-- $\theta_t$ follows the same pattern. Same convention applies.
-- $u$ (period utility) is used once informally in the proof of Proposition 3 ("$u$ is concave") without a displayed definition. The meaning is unambiguous from context ($u(c) = c^{1-\gamma}/(1-\gamma)$ per eq. 3).
-- $U_\text{ext} = 0$ is stated in prose but not in a displayed equation. This is adequate for a normalization.
-- Uppercase $C$ vs. lowercase $c^H$ for aggregate vs. household consumption is explicitly defined and maintained throughout.
+- **9 Greek-letter parameters** ($\alpha, \theta, \phi, \gamma, \beta, \eta, \xi, \delta, \tau$), each assigned to exactly one economic concept with no reuse.
+- **Consumption convention** is clean: uppercase $C_t$ for aggregate, lowercase $c_t^H$ for household, with transfer variants ($c^H_{post}$, $c^H_{no\text{-}transfer}$) clearly scoped to Section 4.2.
+- **Superscript convention** ($AI$, $N$, $H$, $j$) is stable throughout for asset type and agent identity.
+- **Time subscripts** are used consistently ($t, t+1$) and dropped only in stationary-state analysis (Propositions 1–2, Section 4.2), which is standard.
+- **Derived quantities** ($\Gamma^j$, $A^j$, $v^{AI}$, $\phi_\text{eff}$) are all explicitly defined at their point of introduction.
+- **Proofs match propositions**: Appendix A uses the same objects as Proposition 1; the Proposition 2 proof correctly uses $A^j$ from Remark 1; the Proposition 3 proof is consistent with the model setup.
+- The appendix claim that $\Gamma^N = (1-\Delta\theta)(1+\eta)$ is $\theta$-independent was verified algebraically against the Proposition 1 definition — confirmed correct.
+- **Minor observation**: The Proposition 3 proof uses informal $u$ for the period utility function without a formal definition, but this causes no confusion in context.
+
+Full notation audit: `ralph-garage/scratch/factcheck-notation.md`
 
 ## Requirement 2: Assumption Consistency — PASS
 
-Twenty-seven assumptions were identified across the baseline model, two extensions, calibrations, and proofs. All are mutually consistent.
+All mathematical assumptions were catalogued (structural, parameter restrictions, distributional, equilibrium, normalizations, existence conditions, extension-specific) and checked pairwise. No contradictions found. Key verifications:
 
-**Key consistency checks performed:**
-1. **Parameter domains**: All constraints ($\phi \in (0,1)$, $\gamma > 1$, $\beta \in (0,1)$, $\Delta\theta \in (0,1)$, etc.) are compatible with each other and with stated calibration values.
-2. **Probability structure**: Singularity probabilities sum to 1: $(1-p) + p(1-\xi) + p\xi = 1$.
-3. **Baseline vs. Extension 1**: Positive singularity ($\alpha_{t+1} = \min(1, \alpha_t/\phi)$) is a consistent augmentation of the baseline singularity structure.
-4. **Baseline vs. Extension 2**: Transfer mechanism modifies only the post-singularity consumption allocation; P/D formula reuse with $\phi_\text{eff}$ is algebraically valid.
-5. **Existence condition violation**: The large-singularity calibration ($\eta = 9$, $\phi = 0.05$) deliberately violates $A^j < 1$ at $\tau = 0$; the paper states this explicitly and uses it as an economic feature.
-6. **Proof assumptions**: All proofs derive from stated model assumptions. The stationarity approximation (A13) is explicitly acknowledged and its accuracy discussed.
-7. **Numerical claims verified**: $\phi(1+\eta) = 0.75$ ✓; $\phi^{-\gamma} = 160{,}000$ ✓; transfer ratio independent of $\eta$ ✓.
+- **All calibration values** ($\beta=0.96$, $g=0.02$, $\gamma=4$, $\phi=0.5$, $\eta=0.5$, $\theta=0.15$, $\Delta\theta=0.2$, $\alpha=0.70$, $\delta=0.5$) satisfy their stated parameter domains.
+- **Existence condition** ($A^j < 1$): Verified numerically for all baseline grid points ($A^{AI}$ ranges from 0.91 to 0.99). The intentional violation under large-singularity parameters ($\eta=9$, $\phi=0.05$) is explicitly discussed in the paper.
+- **Extinction + utility**: CRRA with $\gamma > 1$ gives negative utility for all $c > 0$, so $U_\text{ext} = 0$ means extinction is "preferred." The paper correctly notes this makes the veto result conservative. The extinction state contributes zero to pricing equations, so the utility divergence at $c = 0$ never enters the math.
+- **Transfer budget balance**: Verified algebraically — household consumption + AI owners' consumption + deadweight loss = total resources.
+- **$\phi_\text{eff}$ derivation**: Correct algebraic division of Eq (5) by $\alpha(1+\eta)(1+g)C_t$.
+- **Positive singularity** ($\alpha_{t+1} = \min(1, \alpha_t/\phi)$): Naturally inverts the negative singularity, preserves $\alpha \in (0,1]$, consistent with all parameter restrictions.
+- **"Socially efficient"**: Well-defined as a utilitarian welfare criterion, stated as an assumption about parameters.
+- **All proofs' assumptions match their propositions.**
 
-**Minor observations** (not inconsistencies):
-- The "25% consumption fall" and "consumption halves" claims refer to share displacement ($\phi(1+\eta)$) and omit the $(1+g)$ trend growth factor. This is approximately correct for $g = 0.02$ and refers to displacement-driven change.
-- The implicit constraint $\delta\tau < 1$ (for positive net transfers) is satisfied for all parameterizations but not explicitly stated.
-- Extension 1 leaves positive/negative singularity probabilities unspecified, appropriate for the qualitative nature of Proposition 3.
+Full assumptions audit: `ralph-garage/scratch/factcheck-assumptions.md`
 
-## Requirement 3: Traceability of Mathematical Objects — PASS
+## Requirement 3: Traceability — PASS
 
-All derived mathematical objects trace back to stated assumptions:
+All mathematical objects in the paper trace back to assumed primitives:
 
-| Derived Object | Source Assumptions |
-|---|---|
-| $\Gamma^{AI}$, $\Gamma^{N}$ (dividend growth factors) | A6, A9, A10 |
-| $A^j$ (existence condition) | A2, A4–A7, A9, A12 |
-| P/D ratios (Proposition 1) | A2, A4–A12 via Euler equation |
-| Comparative statics (Proposition 2) | Consequences of P/D formulas |
-| Veto result (Proposition 3) | A12, A15–A18 |
-| $c^H_{post}$ (post-transfer consumption) | A3, A6, A7, A19, A20 |
-| $\phi_\text{eff}$ (effective displacement) | A3, A7, A19, A20 |
-| Transfer ratio (eq. 7) | A21 (algebraic rearrangement) |
-| Euler equation (eq. 10) | A12 (CRRA first-order condition) |
+| Object | Traced to |
+|--------|-----------|
+| $c_t^H = \alpha_t C_t$ | $\alpha_t$, $C_t$ |
+| $D_t^{AI} = \theta_t C_t$ | $\theta_t$, $C_t$ |
+| $D_t^N = (1-\theta_t) C_t$ | $\theta_t$, $C_t$ |
+| $U_0^H$ (Eq 3) | $\beta$, $\gamma$, $c_t^H$ |
+| $\Gamma^{AI}$, $\Gamma^N$ | $\theta$, $\Delta\theta$, $\eta$ |
+| $A^j$ (Remark 1) | $\beta$, $g$, $\gamma$, $p$, $\xi$, $\eta$, $\phi$, $\Gamma^j$ |
+| $P^{AI}/D^{AI}$, $P^N/D^N$ (Prop 1) | Euler equation from all primitives |
+| $v^{AI}$ (Appendix A) | Shorthand for $P^{AI}/D^{AI}$ |
+| $\phi_\text{eff}$ (Eq 6) | $\phi$, $\tau$, $\delta$, $\alpha$ |
+| $c^H_{post}$ (Eq 5) | $\phi$, $\alpha$, $\eta$, $C_t$, $g$, $\tau$, $\delta$ |
+| Transfer ratio (Eq 7) | $\tau$, $\delta$, $\phi$, $\alpha$ |
 
-No expression in the paper fails to trace back to stated assumptions.
+No expressions were found that cannot be logically derived from the assumptions.

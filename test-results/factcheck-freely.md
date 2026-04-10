@@ -1,35 +1,29 @@
 # tests/factcheck-freely.py
-Started: 2026-04-09 21:34:52 EDT
-Runtime: 6m 48s
-[ralph-garage/agent-logs/20260409T213452.252421-0400_factcheck-freely_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260409T213452.252421-0400_factcheck-freely_claude_claude-opus-4-6.log)
+Started: 2026-04-09 21:50:56 EDT
+Runtime: 7m 29s
+[ralph-garage/agent-logs/20260409T215056.132779-0400_factcheck-freely_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260409T215056.132779-0400_factcheck-freely_claude_claude-opus-4-6.log)
 
 # factcheck-freely
 VERDICT: PASS
-REASON: No factually incorrect statements or logical inconsistencies found; all mathematical derivations are correct and quantitative claims match the code.
+REASON: The paper contains no factually incorrect statements or logical inconsistencies; minor imprecisions in proof exposition and empirical illustration do not rise to the level of errors.
 
-## Review Details
+## Detailed Review
 
-A Claude Opus subagent reviewed the paper for factual errors and logical inconsistencies. The review checked all mathematical derivations, comparative statics proofs, citation accuracy, quantitative claims against the R code, and internal consistency of the transfer/deadweight cost analysis.
+### Theoretical Framework
+The model is internally consistent. The two-asset pricing equations (Proposition 1) follow correctly from the CRRA Euler equation under incomplete markets. The comparative statics (Proposition 2) are correctly stated and the proofs, while informal, are logically sound. The extensions branch cleanly off the baseline without introducing contradictions.
 
-### Findings
+### Proof of Proposition 2(iii)
+The proof states that an increase in extinction probability $\xi$ "reduces $A^{AI}$ and $A^N$ by the same multiplicative factor on their singularity terms." This is literally correct: both singularity terms are proportional to $(1-\xi)$, so changing $\xi$ scales both by the same factor. Because $\Gamma^{AI} > \Gamma^{N}$, the absolute drop in $A^{AI}$ exceeds that in $A^{N}$. Combined with the convexity of $f(A) = A/(1-A)$, the ratio narrows. The reasoning is informal but the conclusion is correct.
 
-All core results are correct and verified:
+### Utility Normalization (Extension 1)
+The paper says "Following Jones (2024), we normalize extinction utility to zero." Jones (2024) also adds a constant $\bar{u}$ to make life preferred to death; the paper does not adopt this adjustment. However, the paper does not claim to follow Jones's full utility specification — only the normalization convention. It explicitly acknowledges that this makes the veto result conservative. The stated results are directionally correct.
 
-- **Euler equation derivation and P/D formulas** (Proposition 1, Appendix A): Correct.
-- **Comparative statics** (Proposition 2): All three parts have correct conclusions, numerically verified.
-- **Veto proposition** (Proposition 3): Logically sound in both parts.
-- **Transfer equations** (Section 4.2): Equations 5 and 6 are internally consistent and correctly derived.
-- **Quantitative claims** (Section 3): All numerical results match the R code output.
-- **Gamma definitions and ordering**: $\Gamma^{AI} > 1+\eta > \Gamma^{N}$ is correct.
-- **Consumption loss percentages**: 25% baseline and 50% large singularity are correct given the stated parameters.
-- **$\phi^{-\gamma} = 160{,}000$** for $\phi = 0.05$, $\gamma = 4$: Correct ($0.05^{-4} = 160{,}000$).
+### Empirical Comparison (Section 3)
+The paper compares cumulative NASDAQ price appreciation to model-predicted P/D ratio spreads, noting "broad consistency." Price appreciation and valuation ratios are different objects (appreciation also reflects earnings growth), so this is an imprecise comparison. However, the language is appropriately hedged and the paper is explicitly a theory paper with limited empirical content. This does not constitute a factual error.
 
-### Minor Notes (not errors)
+### Literature Characterizations
+- GKP (2012): Accurately described as showing growth stocks hedge displacement risk from innovation, earning lower expected returns. The characterization of GKP's discussion of intergenerational transfers is also accurate.
+- Jones (2024): Accurately described as studying the trade-off between AI-driven growth and existential risk with bounded utility.
 
-1. **P/D ratio range phrasing** (Section 3): "1.5 to 6 times" across 0.5–1% singularity probabilities is technically correct but the 6x figure only appears at the extreme (p=1%, xi=0).
-2. **Proposition 2(iii) proof**: The convexity argument is loosely stated but the conclusion is correct and appropriately qualified with "for the parameterizations considered."
-3. **Proposition 3 proofs**: Informal/qualitative rather than fully rigorous, but conclusions are logically sound.
-4. **Stationarity approximation**: Acknowledged in the paper; the approximation error for $\Delta\theta = 0.2$ is not quantified but the paper flags this honestly.
-5. **NASDAQ vs. S&P 500 figure**: Shows price appreciation rather than P/D ratios, but the paper uses "consistent with" rather than claiming direct evidence.
-
-None of these rise to the level of factual errors or logical inconsistencies.
+### Budget Constraints and Algebra
+The transfer model (Extension 2) satisfies the aggregate resource constraint. The deadweight cost specification $\delta\tau^2$ correctly ensures waste is convex in the tax rate. The closed-form approximation for P/D ratios is correctly identified as exact for non-AI stocks and approximate for AI stocks.

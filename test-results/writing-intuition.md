@@ -1,39 +1,34 @@
 # tests/writing-intuition.py
-Started: 2026-04-09 21:34:52 EDT
-Runtime: 59s
-[ralph-garage/agent-logs/20260409T213452.265417-0400_writing-intuition_claude_opus.log](../ralph-garage/agent-logs/20260409T213452.265417-0400_writing-intuition_claude_opus.log)
+Started: 2026-04-09 21:50:56 EDT
+Runtime: 53s
+[ralph-garage/agent-logs/20260409T215056.137162-0400_writing-intuition_claude_opus.log](../ralph-garage/agent-logs/20260409T215056.137162-0400_writing-intuition_claude_opus.log)
 
 # writing-intuition
 VERDICT: PASS
-REASON: Each proposition and key formula is accompanied by intuition grounded in its mathematical objects.
+REASON: Every proposition and key formula is discussed with intuition grounded in the specific mathematical objects that appear in the expressions.
 
 ## Detailed Findings
 
-### Proposition 1 (Price-dividend ratios, lines 123-135)
-The discussion following the proposition (lines 151ff) explicitly connects intuition to the mathematical objects:
-- Compares $\Gamma^{AI}$ vs $\Gamma^{N}$, explaining that $\Delta\theta > 0$ makes AI dividends grow faster ($\Gamma^{AI} > 1+\eta$) while non-AI dividends shrink ($\Gamma^{N} < 1+\eta$).
-- References $\phi^{-\gamma}$ (household marginal utility in singularity states) and the condition $\phi(1+\eta) < 1$ to explain why AI payoffs are especially valuable.
-- Names the hedging channel in terms of these objects.
+### Proposition 1 (P/D ratios, lines 119--131)
+The discussion (lines 145--147) explains the hedging channel by comparing $\Gamma^{AI}$ and $\Gamma^{N}$ directly: since $\Delta\theta > 0$, AI dividends grow faster ($\Gamma^{AI} > 1+\eta$) while non-AI dividends shrink ($\Gamma^{N} < 1+\eta$). The discussion then links this to the household's high marginal utility via displacement ($\phi(1+\eta) < 1$ when $\phi$ is small). All key objects in the formula---$\Gamma^{AI}$, $\Gamma^{N}$, $\phi$, $\eta$, $\Delta\theta$---are used to build the intuition.
 
-### Remark 1 (Existence condition, lines 141-147)
-Explains the condition $A^j \geq 1$ by interpreting it as "SDF-weighted expected dividend growth exceeds the discount rate," directly referencing the formula components.
+### Remark 1 (Existence condition, lines 137--143)
+Intuition is explained through $A^j$: when $A^j \geq 1$, the SDF-weighted expected dividend growth exceeds the discount rate and the geometric pricing sum diverges. The remark connects this to the economic idea that the hedging value becomes so extreme that no finite price clears the market.
 
-### Proposition 2 (Comparative statics, lines 153-168)
-Each part of the proof doubles as an intuition explanation grounded in mathematical objects:
-- (i) References $\phi^{-\gamma}$ increasing as $\phi$ falls, and $\Gamma^{AI} > \Gamma^{N}$ for differential amplification.
-- (ii) References the weight $p$ on singularity states and the role of $\gamma$.
-- (iii) References the $A^j/(1-A^j)$ representation, its convexity, and the fact that $A^{AI} > A^N$ due to $\Gamma^{AI} > \Gamma^{N}$.
+### Proposition 2 (Comparative statics, lines 149--164)
+- **(i)** Explains via $\phi^{-\gamma}$ increasing as $\phi$ falls, amplifying the singularity term, and notes $\Gamma^{AI} > \Gamma^{N}$ makes the amplification asymmetric.
+- **(ii)** Explains via $p$ putting more weight on singularity states, with $\gamma$ sufficiently large for the marginal-utility effect to dominate.
+- **(iii)** Uses $A^j/(1-A^j)$ notation, explains the convexity argument: $\xi$ reduces both $A^{AI}$ and $A^N$ by the same multiplicative factor on their singularity terms, but convexity of $A/(1-A)$ makes the higher-valued asset ($A^{AI} > A^N}$) fall proportionally more.
 
-### Proposition 3 (Veto, lines 207-218)
-A qualitative result without explicit formulas, but the proof references the key mathematical objects:
-- (i) Names $\gamma$ (large), $\phi < 1$ (consumption drops), and concavity of $u$ to explain why the downside dominates.
-- (ii) Explains complete markets allow trading claims on private AI capital, connecting to the social surplus being positive by assumption.
+### Proposition 3 (Veto, lines 203--214)
+- **(i)** References $\phi < 1$ (consumption drops), concavity of $u$, and large $\gamma$ making the downside dominate the upside despite the positive singularity being more likely.
+- **(ii)** Explains that complete markets let the household hedge displacement and participate in full surplus, eliminating the veto.
 
-### Transfer formulas (Section 4.2)
-- Equation (5): The consumption decomposition is walked through term by term.
-- Equation (6) ($\phi_\text{eff}$): Explained as entering the SDF in place of $\phi$, with the algebraic derivation from equation (5) described.
-- Equation (7) (transfer ratio): The paper explains its independence from $\eta$ and interprets this in terms of levels---both $c^H_{post}$ and $c^H_{no\text{-}transfer}$ grow with $\eta$, so even inefficient transfers deliver large gains.
-- The discussion of the existence condition violation under large singularity ($\phi^{-\gamma} = 160{,}000$) ties back to Remark 1.
+### Transfer formulas (lines 222--248)
+- Equation (5) is explained term by term: displaced consumption plus net transfer reduced by deadweight cost $\delta\tau$.
+- $\phi_\text{eff}$ (eq. 6) is derived explicitly from factoring eq. (5), and its role as a drop-in replacement for $\phi$ in Proposition 1 is stated.
+- The transfer ratio (eq. 7) is discussed in terms of its independence from $\eta$, with the economic point made through the levels: both numerator and denominator grow with $\eta$.
+- The figure discussion references $\phi(1+\eta) = 0.5$ and $\phi^{-\gamma} = 160{,}000$ to explain the existence-condition violation.
 
 ### Summary
-All propositions and key formulas have accompanying intuition that references their specific mathematical objects ($\Gamma^{AI}$, $\Gamma^{N}$, $\phi^{-\gamma}$, $A^j/(1-A^j)$, $\phi_\text{eff}$, etc.). Proposition 3 is the least formulaic, but this is appropriate for a qualitative result, and the proof still grounds intuition in the model's parameters.
+Each proposition's intuitive discussion is built from the mathematical objects appearing in the formal statement or proof. No proposition is left with only verbal hand-waving; the paper consistently traces economic logic through its notation.
