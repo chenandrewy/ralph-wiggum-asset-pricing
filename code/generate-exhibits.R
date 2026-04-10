@@ -150,7 +150,7 @@ theme_paper <- theme_bw(base_size = 22) +
     axis.title = element_text(size = 20),
     plot.title = element_text(size = 21),
     panel.grid.minor = element_blank(),
-    panel.grid.major = element_line(color = "gray50")
+    panel.grid.major = element_line(color = "gray35")
   )
 
 scenario_labels <- c(
@@ -165,10 +165,10 @@ scenario_linewidths <- c("Baseline" = 1.0, "Large singularity" = 1.4)
 # Darker, more saturated colors for better contrast
 scenario_colors <- c("Baseline" = "#B22222", "Large singularity" = "#1B4F99")
 
-# Compute y-axis bounds for Panel A: cap at 25 to avoid asymptotic spike
+# Compute y-axis bounds for Panel A: tighten to data range
 pd_data_a <- df_ext %>% filter(!is.na(pd_ai) & tau <= 0.40)
-y_min_a <- floor(min(pd_data_a$pd_ai, na.rm = TRUE) / 5) * 5  # round down to nearest 5
-y_cap_a <- 25
+y_min_a <- 7
+y_cap_a <- 20
 
 # Find the tau value where the large-singularity line exits the capped region
 large_sing_data <- pd_data_a %>% filter(scenario == "Large singularity")
@@ -197,7 +197,7 @@ cons_large_0 <- consumption_growth(0, 9.0, phi_large)
 
 panel_b <- ggplot(df_ext, aes(x = tau, y = cons_growth, color = scenario, linetype = scenario)) +
   geom_line(aes(linewidth = scenario)) +
-  geom_hline(yintercept = 1, linetype = "dashed", color = "gray20", linewidth = 1.0) +
+  geom_hline(yintercept = 1, linetype = "dashed", color = "black", linewidth = 1.2) +
   # Catastrophe markers at tau=0
   annotate("point", x = 0, y = cons_large_0, shape = 16, size = 3, color = "#1B4F99") +
   annotate("text", x = 0.06, y = cons_large_0 * 0.65,
@@ -320,7 +320,8 @@ fig_val <- ggplot(df_val, aes(x = Date, y = Index, color = Group, linetype = Gro
   scale_x_date(date_breaks = "2 years", date_labels = "%Y") +
   scale_y_continuous(expand = expansion(mult = c(0.02, 0.05))) +
   theme_paper +
-  theme(legend.position = c(0.30, 0.88))
+  theme(legend.position = c(0.30, 0.88),
+        plot.margin = margin(t = 5, r = 10, b = 5, l = 15, unit = "pt"))
 
 ggsave(file.path(outdir, "fig-ai-valuations.pdf"), fig_val, width = 7, height = 4.5)
 cat("Wrote", file.path(outdir, "fig-ai-valuations.pdf"), "\n")

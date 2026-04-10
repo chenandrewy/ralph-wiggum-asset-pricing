@@ -1,45 +1,40 @@
 # tests/factcheck-freely.py
-Started: 2026-04-09 21:06:08 EDT
-Runtime: 7m 50s
-[ralph-garage/agent-logs/20260409T210608.981679-0400_factcheck-freely_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260409T210608.981679-0400_factcheck-freely_claude_claude-opus-4-6.log)
+Started: 2026-04-09 21:20:47 EDT
+Runtime: 5m 50s
+[ralph-garage/agent-logs/20260409T212047.334524-0400_factcheck-freely_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260409T212047.334524-0400_factcheck-freely_claude_claude-opus-4-6.log)
 
 # factcheck-freely
-VERDICT: FAIL
-REASON: The bibliography omits Amit Seru as a co-author of Kogan, Papanikolaou, Seru, and Stoffman (2020, JPE), a factual error in a citation.
+VERDICT: PASS
+REASON: All mathematical derivations, arithmetic claims, and citation characterizations are verified correct; no logical inconsistencies found.
 
-## Detailed Findings
+## Detailed Review
 
-### Factual Error: Missing Author on Citation
+### Mathematics and Arithmetic
+- All parameter arithmetic verified: φ(1+η) = 0.75 (baseline), φ(1+η) = 0.5 (large singularity), φ^{-γ} = 160,000 are all correct.
+- P/D ratio claims match code output: "roughly 18" (actual 17.5), "near 11" (actual 11.1), "ratio of about 1.6" (actual 1.58), "nearly 6 to 1" (actual 5.76).
+- Euler equation derivation in Appendix A is correct. The three-state decomposition, SDF terms, and v = A/(1-A) solution all check out.
+- Γ^{AI} and Γ^{N} formulas are correct and the claims Γ^{AI} > 1+η and Γ^{N} < 1+η hold for Δθ ∈ (0,1).
+- Transfer consumption formula (Eq. 7) correctly decomposes into displaced consumption plus net transfer. The transfer ratio (Eq. 8) is correctly independent of η.
+- The effective φ formula is algebraically consistent with the P/D formula.
 
-The bib entry `KoganPapanikolaouStoffman2020` in `paper/references.bib` lists only Kogan, Papanikolaou, and Stoffman as authors of "Left Behind: Creative Destruction, Inequality, and the Stock Market" (JPE 2020). The actual paper has four authors: Kogan, Papanikolaou, **Seru**, and Stoffman. This is a factual error — omitting a co-author misattributes the work. The paper text (`paper.tex`, line 68) also cites it without Seru via `\citet{KoganPapanikolaouStoffman2020}`.
+### Proofs
+- Proposition 1 proof: Correct.
+- Proposition 2(i) and (ii) proofs: Correct.
+- Proposition 2(iii) proof: The convexity argument is heuristic rather than fully rigorous for the ratio claim, but the proposition properly qualifies with "For the parameterizations considered" and the result is numerically verified across the full parameter grid. Not a logical error.
+- Proposition 3 proof: Correct. The incomplete vs. complete markets argument is logically sound.
 
-### Items Verified as Correct
+### Code-Paper Consistency
+- R code in generate-exhibits.R implements the same formulas as the paper. The compute_pd, compute_pd_with_transfer, and consumption_growth functions correspond to the paper's equations.
 
-1. **Mathematical derivations (Proposition 1, Appendix A):** The Euler equation derivation is algebraically sound. The three-state enumeration (no singularity, non-extinction singularity, extinction) correctly produces the P/D formulas in equations (4)–(5).
+### Citations
+- GKP (2012): Correctly characterized (displacement risk, incomplete markets, growth stocks as hedge, intergenerational transfers).
+- Jones (2024): Correctly characterized (growth vs. existential risk trade-off, bounded utility).
+- Kogan & Papanikolaou (2014), KPSS (2020), Knesl (2023), Pastor & Veronesi (2009), Nordhaus (2021): All accurately described.
 
-2. **Comparative statics (Proposition 2):** All three claims — (i) increasing in displacement severity, (ii) increasing in $p$ for large $\gamma$, (iii) decreasing in $\xi$ for the parameterizations considered — are logically consistent with the formulas. The proof of (iii) uses a convexity argument qualified to specific parameterizations, which is appropriate.
+### Internal Consistency
+- The extinction utility normalization (U_ext = 0) is correctly noted as conservative for γ > 1.
+- The approximation that post-singularity P/D equals pre-singularity P/D is clearly disclosed and justified.
+- No contradictions found between sections.
 
-3. **Quantitative claims:** At $p = 1\%$, $\xi = 0$ with stated parameters, the AI-to-non-AI P/D ratio reaches roughly 6x. The "roughly six times" claim is accurate.
-
-4. **Hedging argument:** Internally consistent. AI stocks have $\Gamma^{AI} > \Gamma^{N}$, so they pay more in singularity states where household marginal utility ($\phi^{-\gamma}$) is high. This correctly implements the hedging channel.
-
-5. **Extension 1 (Veto, Proposition 3):** Logic is sound. Under incomplete markets with high $\gamma$, the concavity of CRRA utility makes the downside of negative singularity dominate the upside of positive singularity, producing the veto even when development is socially efficient. The extinction utility normalization ($U_{ext} = 0$) is correctly described as conservative.
-
-6. **Extension 2 (Transfers):** 
-   - Equation (7) transfer ratio: correctly independent of $\eta$ (it cancels in numerator and denominator).
-   - $\phi(1+\eta) = 0.5 \times 1.5 = 0.75$ for baseline: correct.
-   - $\phi(1+\eta) = 0.05 \times 10 = 0.5$ for large singularity: correct.
-   - $\phi^{-\gamma} = 0.05^{-4} = 20^4 = 160{,}000$: correct.
-
-7. **"Consumption falls by 25%":** Correct. The ratio of singularity to counterfactual consumption is $\phi(1+\eta) = 0.75$; the growth factor $(1+g)$ appears in both and cancels.
-
-8. **Literature characterizations:**
-   - GKP 2012: Accurately described as showing displacement risk from innovation under incomplete markets creates a systematic risk factor, with growth stocks providing a partial hedge.
-   - Jones 2024: The claim about bounded utility making agents conservative about extinction is accurate.
-
-9. **"Zero traditional research labor":** The abstract claim is qualified by "traditional" and the footnote clarifies the human authored the specification and test scripts. This is a rhetorical choice rather than a factual error, though it is aggressive.
-
-### Minor Notes (Not Rising to Factual Error)
-
-- The stationarity approximation (post-singularity P/D ≈ pre-singularity P/D) introduces non-trivial error when $\Delta\theta = 0.2$, since $\theta$ jumps from 0.15 to 0.32 after one singularity, changing $\Gamma^{AI}$ by ~33%. The paper acknowledges this is an approximation.
-- The characterization of GKP's discussion of transfers is slightly generous — GKP mention transfers as a robustness observation rather than a policy recommendation — but is not factually incorrect.
+### Note
+The proof of Proposition 2(iii) uses a convexity-based heuristic that does not formally establish the ratio result in full generality, but this does not constitute a factual error or logical inconsistency because (a) the proposition explicitly restricts the claim to "the parameterizations considered" and (b) the result is numerically verified.

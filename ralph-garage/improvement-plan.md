@@ -1,61 +1,51 @@
 # Improvement Plan
-AUTHOR PLAN — 2026-04-09 21:01:44 EDT
+AUTHOR PLAN — 2026-04-09 21:17:29 EDT
 
-## Current Status
+## Status: 21/25 tests passing. 4 failing.
 
-**20 pass / 5 fail** out of 25 tests. No section needs an overhaul — the model is structurally sound (factcheck-theory, theory-clarity both pass). All issues are fixable incrementally.
+## Failing Tests
 
-## Failing Tests and Fixes
+### 1. factcheck-theory (CRITICAL — model section)
+**Issue:** Dividend definitions A7–A8 set $D^{AI} + D^{N} = C_t$, exhausting aggregate consumption through public stocks. A9 then claims private AI capital pays "the residual accruing to AI owners beyond the public AI dividend" — but that residual is zero. This is an accounting inconsistency.
 
-### 1. factcheck-lit (CRITICAL) — Phantom author in bibliography
+**Impact on math:** None. Private capital never enters pricing equations. Fix is purely narrative.
 
-**Issue:** `references.bib` lists four authors for `KoganPapanikolaouSeruStoffman2020`: Kogan, Papanikolaou, **Seru**, Stoffman. The actual JPE 2020 paper has only three authors: Kogan, Papanikolaou, Stoffman. Seru is from a different paper by overlapping authors (QJE 2017).
+**Fix:** Reframe private AI capital as *restricted shares of the AI stock* that the household cannot purchase (founder stakes, pre-IPO equity, etc.), not as a separate dividend stream. Delete the "residual" language. The incomplete-markets friction becomes: the household can only trade a portion of AI equity, not all of it. Alternatively, clarify that the household's consumption share $\alpha_t$ is determined by its portfolio, and AI owners receive $(1-\alpha_t)C_t$ from their combined public and private holdings — but do not claim private capital pays dividends on top of the public dividend structure.
+
+**Where:** `paper.tex` lines 103–111 (Assets paragraph, especially the private AI capital sentence).
+
+### 2. factcheck-freely
+**Issue:** Bib entry `KoganPapanikolaouStoffman2020` omits Amit Seru as co-author. The 2020 JPE paper has four authors: Kogan, Papanikolaou, Seru, and Stoffman.
 
 **Fix:**
-- Remove `Seru, Amit` from the author field in `references.bib`.
-- Rename the bib key to `KoganPapanikolaouStoffman2020` throughout `references.bib` and `paper.tex`.
+- `paper/references.bib`: Add "Seru, Amit" to author list, rename key to `KoganPapanikolaouSeruStoffman2020`.
+- `paper/paper.tex` line 68: Update `\citet` to new key.
 
-### 2. factcheck-freely — Proof issues in Propositions 1 and 2
+### 3. visual-figures-image-only (figure formatting)
+**Issues:**
+- **fig-ai-valuations:** (a) Y-axis label clipped — closing parenthesis cut off. (b) Grid lines too light.
+- **fig-extension-panels:** (a) Panel A y-axis range 5–25 wastes space (data spans ~9–18); tighten to ~7–20. (b) Panel B: "No change" reference line at y=1 blends with grid; make it darker/thicker.
 
-**Issue A:** Appendix A (line 289) claims the post-singularity P/D ratio equals the pre-singularity one and calls this "exact when the economy is stationary conditional on the new share." This is self-contradictory — after a singularity, θ changes, so Γ^AI and Γ^N change, and the P/D ratio differs.
+**Fix in `code/generate-exhibits.R`:**
+- fig-ai-valuations: Add `plot.margin` to prevent label clipping. Grid lines already use `gray50`; verify after regeneration.
+- Panel A: Change `y_min_a`/`y_cap_a` calculation to tighten y-axis (~7–20).
+- Panel B: Darken reference line (already `gray20` + linewidth 1.0 — may need `"black"` + linewidth 1.2).
 
-**Fix A:** Rewrite the parenthetical to be honest about the approximation. State that treating the post-singularity P/D ratio as approximately equal to the pre-singularity one is an approximation that becomes exact only when Δθ → 0, and that the approximation is good for small Δθ. Remove the false stationarity claim.
+### 4. writing-intro (introduction flow)
+**Issues:**
+- Spec argument (c) — financial market solutions being under-discussed — not visible on skimming surface.
+- Broken transition P4→P5 (quantitative results → veto): P4 ends on extinction, P5 jumps to real distortions.
+- Broken transition P6→P7 (transfers → self-demonstration): jarring conceptual leap.
 
-**Issue B:** Proposition 2(iii) states the *ratio* (P^AI/D^AI)/(P^N/D^N) decreases in ξ without qualification, but the proof only gives intuition. The ratio involves convex functions and monotonicity isn't guaranteed for all parameters.
-
-**Fix B:** Add a qualifier "for the parameterizations considered" or prove it more carefully. The simplest fix: note that both P/D ratios have the form A/(1−A), which is increasing and convex in A. Since ξ enters only through the singularity term and reduces the weight on that term proportionally, the ratio narrows. Add a brief analytical argument or restrict the claim.
-
-**Issue C (borderline):** Section 4.2 says "AI owners' surplus" but the formula taxes total post-singularity consumption.
-
-**Fix C:** Change "surplus" to "post-singularity consumption" or "post-singularity income" in line 222.
-
-### 3. visual-figures and visual-figures-image-only — Figure 2 readability
-
-**Issue A:** Greek letters η and φ in legend labels render as ".." placeholders in PDF. The code uses Unicode characters (`\u03b7`, `\u03c6`) which don't embed in the default R PDF device.
-
-**Fix A:** In `generate-exhibits.R`, replace Unicode strings in `scenario_labels` with R `expression()` or `bquote()` calls so Greek letters render properly in PDF.
-
-**Issue B:** Axis labels, tick labels, panel titles, and legend text are too small in both panels of Figure 2.
-
-**Fix B:** The code already uses `base_size = 18` and explicit sizes (15–17pt). The issue is likely the wide output dimensions (`width = 14, height = 6`) diluting the font sizes. Either increase `base_size` further (e.g., 20–22) or reduce figure width. Also ensure `ggsave` dimensions match the `\includegraphics[width=\textwidth]` scaling in the paper.
-
-### 4. writing-intro — Argument clarity and flow
-
-**Issue A:** The argument that financial market solutions are under-discussed and frictions limit their effectiveness (spec argument c) is not articulated as a crisp, skimmable claim. It's buried in scene-setting.
-
-**Fix A:** Add a sentence to paragraph 2 or create a short bridging sentence that explicitly states: financial markets could in principle provide hedging, but frictions — illiquidity, private ownership, the non-existence of future capital — limit their effectiveness. Make this a distinct claim, not scene-setting.
-
-**Issue B:** Paragraph 3 is overloaded (5 ideas: GKP lineage, model setup, closed-form solutions, quantitative result, extinction attenuation).
-
-**Fix B:** Split paragraph 3. Move the GKP intellectual-lineage sentence into a new short paragraph or integrate it earlier. Keep the model description, results, and extinction mechanism in separate logical units.
-
-**Issue C:** P3→P4 transition is abrupt; P5→P6 transition is jarring (economic argument to meta-commentary).
-
-**Fix C:** Add a bridge sentence at P4 opening connecting pricing distortion to real distortion. For P5→P6, add a transitional sentence that connects the transfer result to the broader theme before pivoting to the meta-commentary.
+**Fix in `paper.tex` introduction:**
+- Add a sentence near the start of the framework paragraph (P3 area) explicitly flagging that financial-market hedging solutions are under-studied.
+- Add a bridge sentence at the end of P4 or start of P5 connecting extinction risk to broader distortions from incomplete markets.
+- Add a bridge sentence between P6 and P7 linking the policy discussion to the broader question of what AI displaces — including the research process itself.
 
 ## Execution Order
 
-1. **factcheck-lit fix** — bib key correction (quick, high-confidence)
-2. **visual-figures fixes** — Greek letter rendering + font sizes in R code, then regenerate exhibits
-3. **factcheck-freely fixes** — proof corrections in paper.tex
-4. **writing-intro fixes** — introduction restructuring
+1. Fix bib entry (factcheck-freely) — trivial, do first.
+2. Fix model narrative for private AI capital (factcheck-theory) — careful rewrite of one paragraph.
+3. Fix figures (visual-figures-image-only) — code changes + regenerate.
+4. Fix introduction flow (writing-intro) — paragraph-level edits.
+5. Recompile paper and verify.

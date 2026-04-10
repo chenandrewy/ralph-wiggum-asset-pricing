@@ -1,129 +1,103 @@
 # tests/element-lit-review.py
-Started: 2026-04-09 21:06:08 EDT
-Runtime: 4m 14s
-[ralph-garage/agent-logs/20260409T210608.982439-0400_element-lit-review_claude_opus.log](../ralph-garage/agent-logs/20260409T210608.982439-0400_element-lit-review_claude_opus.log)
+Started: 2026-04-09 21:20:47 EDT
+Runtime: 2m 40s
+[ralph-garage/agent-logs/20260409T212047.335338-0400_element-lit-review_claude_opus.log](../ralph-garage/agent-logs/20260409T212047.335338-0400_element-lit-review_claude_opus.log)
 
 # element-lit-review
-
 VERDICT: PASS
-REASON: The bibliography covers the most important papers on the paper's primary topic with no critical gaps and at most one important gap; the lit review is approximately half a page.
+REASON: The bibliography covers the most important related work in target journals; the one notable omission (Zhang 2019 JF) is partially covered by Knesl (2023 JFE) on the same topic, and the lit review stays within the half-page limit.
 
 ## 1. Scope Extracted from Spec and Paper
 
-**Primary topic:** Asset pricing of AI stocks under incomplete markets, where AI stocks serve as a hedge against displacement risk from an AI singularity.
+**Primary topic:** Asset pricing implications of an AI singularity that displaces household consumption under incomplete markets. AI stocks serve as a hedge against displacement risk.
 
-**Core contribution claims:**
-- AI stocks command a valuation premium because they hedge displacement risk under incomplete markets (builds on GKP 2012)
-- Market incompleteness distorts both valuations and the efficient development of AI
-- Government transfers become effective when singularity-driven growth overwhelms deadweight costs (extends a suggestion in GKP 2012, using the growth framework of Jones 2024)
+**Key themes:**
+- Displacement risk from technological innovation (building on GKP 2012)
+- Incomplete markets preventing full hedging of AI displacement
+- Rare-disaster-style pricing of a discrete singularity event
+- Extinction risk interacting with displacement (Jones 2024)
+- Market incompleteness distorting efficient AI development (veto)
+- Government transfers as a policy lever when singularity growth overwhelms deadweight costs
 
-**Secondary themes:**
-- Rare disasters and extinction risk
-- Technology shocks and creative destruction
-- Incomplete markets theory
-- Government redistribution under explosive growth
-
-**In-text references to named results/concepts:**
-- CRRA preferences, Euler equation, stochastic discount factor (standard, no citation needed)
-- Equity premium puzzle (Mehra and Prescott 1985 — cited)
-- Rare disasters framework (Barro 2006, Wachter 2013 — cited)
-- Displacement risk under incomplete markets (GKP 2012 — cited)
-- AI growth vs. extinction trade-off (Jones 2024 — cited)
-- Creative destruction and cross-sectional returns (Kogan-Papanikolaou 2014, KPS 2020 — cited)
-- Automation displacement risk premium (Knesl 2023 — cited)
+**Contribution claims:** The paper builds on GKP (2012) by connecting displacement risk to a discrete AI singularity, studying how extinction risk attenuates the valuation premium, showing how incomplete markets distort AI development decisions, and analyzing when government transfers become effective.
 
 ## 2. Current Bibliography Summary
 
-The paper cites 17 papers. The bibliography is well-targeted:
+The paper cites 16 references spanning displacement risk, rare disasters, technology and asset pricing, AI economics, and foundational asset pricing:
 
-**Displacement risk and incomplete markets (core):**
-- Gârleanu, Kogan, Panageas (2012 JFE) — central building block
-- Gârleanu and Panageas (2015 JPE) — heterogeneity and finite lives
-- Kogan and Papanikolaou (2014 JF) — technology shocks and asset prices
-- Kogan, Papanikolaou, Stoffman (2020 JPE) — creative destruction and inequality
-- Knesl (2023 JFE) — automation displacement and risk premium
-
-**AI and economic growth:**
-- Jones (2024 AER:I) — AI growth vs. extinction risk
-- Acemoglu (2024 NBER WP) — macroeconomics of AI
-- Aghion, Jones, Jones (2019 Chicago) — AI and economic growth
-- Korinek and Suh (2024 NBER WP) — AGI transition scenarios
-- Nordhaus (2021 AEJ:Macro) — economic singularity
-- Babina, Fedyk, He, Hodson (2024 JFE) — AI and firm growth
-
-**Asset pricing foundations:**
-- Mehra and Prescott (1985) — equity premium puzzle
-- Campbell and Cochrane (1999 JPE) — habit formation
-- Barro (2006 QJE) — rare disasters
-- Wachter (2013 JF) — time-varying disaster risk
-- Pástor and Veronesi (2009 AER) — tech revolutions and stock prices
-- Fama and French (1993 JFE) — risk factors
+| Paper | Journal | Topic |
+|-------|---------|-------|
+| Gârleanu, Kogan, Panageas (2012) | JFE | Displacement risk and asset returns |
+| Jones (2024) | AER: Insights | AI dilemma: growth vs. extinction |
+| Korinek & Suh (2024) | NBER WP | AGI transition scenarios |
+| Mehra & Prescott (1985) | JME | Equity premium puzzle |
+| Campbell & Cochrane (1999) | JPE | Habit formation and stock returns |
+| Barro (2006) | QJE | Rare disasters |
+| Wachter (2013) | JF | Time-varying rare disaster risk |
+| Pástor & Veronesi (2009) | AER | Tech revolutions and stock prices |
+| Gârleanu & Panageas (2015) | JPE | Heterogeneity, finite lives, asset pricing |
+| Acemoglu (2024) | NBER WP | Simple macroeconomics of AI |
+| Babina et al. (2024) | JFE | AI, firm growth, product innovation |
+| Fama & French (1993) | JFE | Common risk factors |
+| Nordhaus (2021) | AEJ: Macro | Economic singularity |
+| Kogan & Papanikolaou (2014) | JF | Technology shocks and asset prices |
+| Kogan, Papanikolaou, Seru, Stoffman (2020) | JPE | Creative destruction, inequality, stock market |
+| Knesl (2023) | JFE | Automation displacement and asset pricing |
+| Aghion, Jones, Jones (2019) | Chicago Press | AI and economic growth |
 
 ## 3. Missing References by Topic Area
 
-### Primary topic: AI stocks and displacement risk under incomplete markets
+### Primary topic: Displacement/automation risk and asset pricing
 
-No critical gaps identified. The paper cites the central papers on displacement risk (GKP 2012, Kogan-Papanikolaou 2014, KPS 2020, Knesl 2023) and on AI and growth (Jones 2024, Acemoglu 2024, Aghion-Jones-Jones 2019). The core building blocks are well covered.
+- **Zhang (2019, JF)** — "Labor-Technology Substitution: Implications for Asset Pricing." Studies how firms' ability to replace routine-task labor with automation affects expected returns. Firms with more routine labor have lower expected returns because the replacement option hedges against downturns. This is directly on the paper's primary topic (technology displacement and asset pricing) and appeared in the Journal of Finance.
+  - **Classification: IMPORTANT.** This is a well-known JF paper on displacement and asset pricing. However, Knesl (2023 JFE), which the paper already cites, covers closely related ground (automation displacement commanding a risk premium), and the paper's model is about a discrete singularity rather than continuous labor-capital substitution. A specialist referee might note the omission but would likely view Knesl (2023) as a reasonable substitute covering the same empirical channel.
 
-**Eisfeldt, Schubert, and Zhang (JF, forthcoming) — "Generative AI and Firm Values"**
-- Classification: **IMPORTANT**
-- This paper constructs firm-level exposure measures to generative AI and documents significant cross-sectional return effects following the release of ChatGPT. It is the most direct empirical counterpart to this paper's predictions about AI stock valuations. A specialist referee familiar with recent AI-finance work would likely flag this omission.
+### Secondary topic: Pricing transformative AI
 
-### Secondary topics
+- **Andrews & Farboodi (2025, NBER WP)** — "Pricing Transformative AI" / "Do Markets Believe in Transformative AI?" Studies how asset prices reflect beliefs about transformative AI, including singularity-like scenarios. Directly relevant to the paper's question of how AI singularity expectations are priced.
+  - **Classification: MINOR.** This is a working paper (not yet published in a target journal) and was circulated after the paper's likely drafting period. It would be a good addition but its omission is understandable.
 
-**Acemoglu and Restrepo (2020 JPE) — "Robots and Jobs: Evidence from US Labor Markets"**
-- Classification: **MINOR**
-- Documents labor displacement from industrial robots. Relevant to the displacement motivation but this paper is a theory paper about asset pricing, not about labor markets. The paper already cites Knesl (2023) which directly links automation displacement to asset returns.
+### Secondary topic: Incomplete markets and risk sharing
 
-**Acemoglu and Restrepo (2022 Econometrica) — "Tasks, Automation, and the Rise in U.S. Wage Inequality"**
-- Classification: **MINOR**
-- Task-based automation theory. Same rationale as above; the paper's focus is on asset pricing, not labor economics.
+- The paper's incomplete-markets mechanism is adequately covered through GKP (2012), which is the direct antecedent. The broader incomplete-markets asset pricing literature (Heaton & Lucas 1996, Mankiw 1986, Constantinides & Duffie 1996) is tangentially related but not essential given the paper's focused scope — it is about displacement risk specifically, not incomplete markets in general.
+  - **Classification: No gap.** The paper is not primarily about incomplete markets theory; it uses incomplete markets as a feature of the displacement risk setting.
 
-**Heaton and Lucas (1996 JPE) — "Evaluating the Effects of Incomplete Markets on Risk Sharing and Asset Pricing"**
-- Classification: **MINOR**
-- Foundational incomplete-markets asset pricing paper, but the incomplete-markets mechanism here (inability to trade private AI capital / future innovators' rents) is very specific and distinct from the standard Heaton-Lucas idiosyncratic income risk setting. GKP (2012) is the relevant incomplete-markets reference, and it is prominently cited.
+### Secondary topic: Rare disasters
 
-**Papanikolaou (2011 JPE) — "Investment Shocks and Asset Prices"**
-- Classification: **MINOR**
-- Investment-specific technology shocks and differential risk premia. The paper already cites Kogan and Papanikolaou (2014 JF), which is the more directly relevant follow-up.
+- Barro (2006) and Wachter (2013) are cited. Rietz (1988) is the original rare disasters paper but Barro (2006) is the standard modern reference. No gap.
 
-**Pástor and Veronesi (2003 JF) — "Stock Valuation and Learning about Profitability"**
-- Classification: **MINOR**
-- Technology stock valuations under learning. The paper already cites Pástor and Veronesi (2009 AER), which is closer to this paper's theme (technological revolutions and stock prices).
+### Other considered but not flagged
+
+- **Gârleanu, Panageas, Yu (2012, JF)** — "Technological Growth and Asset Pricing." Related work by overlapping authors. The paper already cites GKP (2012) and Gârleanu & Panageas (2015), covering this research program adequately.
+- **Papanikolaou (2011, JPE)** — "Investment Shocks and Asset Prices." Related to technology shocks but the paper already cites Kogan & Papanikolaou (2014) which covers the same research line.
 
 ## 4. Focus on Target Journal Set
 
 The bibliography is well-focused on the target journal set:
 
-**Finance journals represented:**
-- JF: Wachter (2013), Kogan-Papanikolaou (2014)
-- JFE: GKP (2012), Fama-French (1993), Babina et al. (2024), Knesl (2023)
-- RFS: not represented (no critical omission identified)
-- JFQA: not represented (no critical omission identified)
-- RAPS: not represented (no critical omission identified)
-- MS: not represented (no critical omission identified)
+- **JF:** Wachter (2013), Kogan & Papanikolaou (2014) — 2 papers
+- **JFE:** GKP (2012), Babina et al. (2024), Fama & French (1993), Knesl (2023) — 4 papers
+- **JPE:** Campbell & Cochrane (1999), Gârleanu & Panageas (2015), KPSS (2020) — 3 papers
+- **QJE:** Barro (2006) — 1 paper
+- **AER/AER:I:** Pástor & Veronesi (2009), Jones (2024) — 2 papers
+- **AEJ:Macro:** Nordhaus (2021) — 1 paper
 
-**Economics journals represented:**
-- AER: Pástor-Veronesi (2009)
-- AER:I: Jones (2024)
-- JPE: Campbell-Cochrane (1999), Gârleanu-Panageas (2015), KPS (2020)
-- QJE: Barro (2006)
-- AEJ:Macro: Nordhaus (2021)
-
-The coverage is appropriately concentrated on finance journals and top economics journals. Not every target journal needs to be represented; the key is that important papers from across these journals are included. The bibliography achieves this.
+Total: 13 of 16 citations are in target-set or closely related top journals. The remaining 3 are working papers (Korinek & Suh, Acemoglu) and a book chapter (Aghion, Jones, Jones). The coverage across both finance and economics journals is balanced and appropriate for the paper's themes.
 
 ## 5. Literature Review Length Check
 
-The "Related literature" section begins approximately two-thirds down page 3 (after the footnote) and continues through approximately one-quarter of page 4, ending before the "2 Model" section header. The total rendered length is approximately half a page of text — close to the half-page limit but not clearly exceeding it.
+The "Related literature" section begins near the bottom of page 3 and extends to approximately one-third of the way down page 4, where Section 2 (Model) begins. The rendered lit review occupies approximately two substantial paragraphs — roughly 15–18 lines of text in the compiled PDF. This is within the half-page limit specified by the spec. It is close to the boundary but does not clearly exceed it.
 
-**Assessment:** The lit review is at the upper boundary of the half-page constraint but does not clearly exceed it. MINOR concern at most.
+**Assessment: PASS** — the lit review is concise and within bounds.
 
 ## 6. Suggested Additions
 
 | Author(s) | Year | Title | Journal | Relevance |
-|---|---|---|---|---|
-| Eisfeldt, Schubert, Zhang | forthcoming | Generative AI and Firm Values | JF | Most direct empirical evidence on AI exposure and cross-sectional stock returns; natural complement to the paper's theoretical predictions about AI stock valuations |
+|-----------|------|-------|---------|-----------|
+| Zhang, Miao Ben | 2019 | Labor-Technology Substitution: Implications for Asset Pricing | JF | Directly models how automation/technology substitution for labor affects asset prices, complementing Knesl (2023) |
 
-This is the only paper whose omission rises to IMPORTANT level. Adding a brief mention (e.g., "Eisfeldt, Schubert, and Zhang (forthcoming) document that firm-level exposure to generative AI predicts cross-sectional returns") would strengthen the lit review without materially increasing its length.
+**Optional (working papers, not required):**
 
-All other candidates identified are MINOR and their omission is understandable given the paper's deliberately compact scope and theory focus.
+| Author(s) | Year | Title | Venue | Relevance |
+|-----------|------|-------|-------|-----------|
+| Andrews & Farboodi | 2025 | Pricing Transformative AI | NBER WP | Studies how beliefs about transformative AI (including singularity scenarios) are reflected in asset prices |

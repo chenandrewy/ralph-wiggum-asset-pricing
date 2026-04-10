@@ -1,63 +1,73 @@
 # tests/theory-deadweight.py
-Started: 2026-04-09 21:06:08 EDT
-Runtime: 1m 50s
-[ralph-garage/agent-logs/20260409T210609.010908-0400_theory-deadweight_claude_opus.log](../ralph-garage/agent-logs/20260409T210609.010908-0400_theory-deadweight_claude_opus.log)
+Started: 2026-04-09 21:20:47 EDT
+Runtime: 2m 19s
+[ralph-garage/agent-logs/20260409T212047.312680-0400_theory-deadweight_claude_opus.log](../ralph-garage/agent-logs/20260409T212047.312680-0400_theory-deadweight_claude_opus.log)
 
 # theory-deadweight
 VERDICT: PASS
-REASON: Every formal object, subpart, and parameter does meaningful economic, quantitative, or narrative work; no deadweight formalism found.
+REASON: Every formal object, parameter, and equation does identifiable economic or narrative work; no abandoned formalism, ceremonial detours, or unused variables found.
 
 ## Audit methodology
 
-Examined every displayed equation (8 in the main text, 3 in the appendix), every proposition (3), the remark (1), every named parameter ($\beta, g, \gamma, \phi, \eta, \theta, \Delta\theta, p, \xi, \delta, \tau, \alpha$), and every piece of notation ($C_t, c_t^H, \alpha_t, \theta_t, D_t^{AI}, D_t^N, \Gamma^{AI}, \Gamma^N, A^j, \phi_\text{eff}$) against four criteria: (1) Is it used in a result, calibration, or interpretation? (2) Could its takeaway be stated in plain English without loss? (3) Is it introduced and then abandoned? (4) Is it ceremonial or pompous?
+Every formal object (equations, propositions, remarks), every parameter/variable, and every prose mechanism was checked against two criteria: (1) does it appear in a result, calibration, or interpretation that matters for the paper's conclusions? (2) could its qualitative takeaway be stated in plain English without weakening the paper's economic claims?
 
-## Detailed findings
+## Parameters and variables
 
-### Equations
+| Symbol | Introduced | Used in |
+|--------|-----------|---------|
+| $C_t$, $g$ | Eq (1) | P/D formulas (Prop 1), calibration (Table 1), Extension 2 |
+| $\alpha_t$ | Setup | Extension 2 (Eqs 7–8), figure parameterization ($\alpha = 0.70$) |
+| $p$ | Singularity setup | P/D formulas, calibration grid, Prop 2(ii), figure params |
+| $\xi$ | Extinction setup | P/D formulas, calibration grid, Prop 2(iii), figure params |
+| $\eta$ | Singularity setup | P/D formulas, calibration, Eq (8) independence result, Extension 2 |
+| $\phi$ | Eq (2) | P/D formulas, Prop 2(i), calibration, Extension 2 ($\phi_\text{eff}$) |
+| $\theta_t$, $\Delta\theta$ | Asset setup | $\Gamma^{AI}$, $\Gamma^{N}$ in Prop 1, calibration |
+| $\gamma$, $\beta$ | Eq (3) | P/D formulas, calibration, Prop 2(ii), Prop 3(i) |
+| $\tau$, $\delta$ | Extension 2 | Eqs (7)–(8), figure (both panels), policy discussion |
+| $\phi_\text{eff}$ | Extension 2 | Connects transfers back to Prop 1 pricing framework |
+| $\Gamma^{AI}$, $\Gamma^{N}$ | Prop 1 | P/D formulas, proof of Prop 2(iii), economic interpretation |
+| $A^j$ | Remark 1 | Referenced in Extension 2 (P/D divergence at $\tau = 0$) |
 
-| Eq | Content | Verdict | Justification |
-|----|---------|---------|---------------|
-| (1) | $C_{t+1} = (1+g)C_t$ | Earns its keep | Sets up $g$, which appears in every P/D formula and calibration. One line, standard. |
-| (2) | $\alpha_{t+1} = \phi\alpha_t$ | Earns its keep | Core displacement mechanism. Referenced throughout. |
-| (3) | CRRA utility $U_0^H$ | Earns its keep | Establishes $\beta$ and $\gamma$, both used in every pricing result. Standard for the genre. |
-| (4)-(5) | P/D ratios for AI and non-AI stocks | Earns its keep | Central result. Both ratios used in Table 1, comparative statics, and Extension 2. |
-| (6) | Existence condition $A^j < 1$ | Earns its keep | Cross-referenced in Proposition 2(iii) proof and Extension 2 discussion of the infinite-P/D discontinuity in Figure 2. The $A^j$ shorthand is reused. |
-| (7) | Post-transfer consumption | Earns its keep | Defines the transfer mechanism; feeds into $\phi_\text{eff}$ and Figure 2. |
-| (8) | Transfer ratio independent of $\eta$ | Earns its keep | Makes a counterintuitive point (ratio doesn't depend on $\eta$) and then the text explains why the *levels* matter. This is economic insight, not ceremony. |
+**Finding:** No parameter is introduced and then abandoned. $\alpha_t$ does not appear in Propositions 1–2 (it cancels in the consumption growth ratio), but it is substantively used in Extension 2 and the figure parameterization. All other parameters appear directly in at least one result.
 
-### Propositions and Remark
+## Equations
 
-| Object | Verdict | Justification |
-|--------|---------|---------------|
-| Proposition 1 (P/D ratios) | Earns its keep | The paper's core quantitative result. Feeds into Table 1, Figure 2, and both extensions. |
-| Remark 1 (existence condition) | Earns its keep | Could have been prose, but the formal statement is cross-referenced twice (Prop 2 proof, Extension 2 discontinuity discussion). The explicit inequality adds precision, and the economic interpretation (infinite hedge value) is substantive. |
-| Proposition 2 (comparative statics) | All three parts earn their keep | (i) used in quantitative interpretation; (ii) used in table discussion; (iii) used in table discussion and connects to extinction risk theme. |
-| Proposition 3 (veto) | Both parts earn their keep | The contrast between (i) incomplete and (ii) complete markets *is* the economic point. Neither part is obvious enough to omit. |
+- **Eq (1)** ($C_{t+1} = (1+g)C_t$): Defines the consumption growth process. Could be stated in prose, but it is a model primitive that feeds directly into the Euler equation derivation. Standard practice in asset pricing; one line.
+- **Eq (2)** ($\alpha_{t+1} = \phi\alpha_t$): Core displacement mechanism. Appears throughout.
+- **Eq (3)** (CRRA utility): Needed to derive the $\phi^{-\gamma}$ terms in Proposition 1. Cannot be replaced with prose without losing the derivation.
+- **Eqs (4)–(5)** (P/D ratios): Core quantitative results. Used in calibration table and Extension 2.
+- **Eq (6)** (existence condition): Referenced in Extension 2 where P/D diverges.
+- **Eq (7)** (transfer consumption): Foundation for Extension 2 analysis and figure.
+- **Eq (8)** (transfer ratio): Delivers the key insight that the ratio is independent of $\eta$, which motivates the "singularity economics" argument about levels.
 
-### Parameters and notation
+**Finding:** No equation is decorative. Each feeds into a result, calibration, or economic argument.
 
-- **$\alpha_t$ (household share)**: Introduced in Setup, cancels out of P/D ratios (Propositions 1-2), reappears in Extensions at $\alpha = 0.70$. The cancellation is a feature (P/D ratios don't depend on the level of household share), and $\alpha$ is essential for describing the displacement mechanism and the transfer formulas. Not deadweight.
-- **$\Gamma^{AI}$, $\Gamma^N$ (dividend growth factors)**: Efficient shorthand appearing in Propositions 1-2, their proofs, Remark 1, and Extension 2.
-- **$A^j$ (SDF-weighted growth)**: Introduced in Remark 1, reused in Proposition 2(iii) proof and Extension 2. Efficient.
-- **$\phi_\text{eff}$ (effective displacement)**: Connects Extension 2 back to Proposition 1, avoiding re-derivation. Efficient.
-- **$\xi$ (extinction probability)**: Used in Propositions 1-2, Table 1, Extension 1 discussion, and Extension 2 figure. Not deadweight.
-- **$\delta$ (deadweight cost parameter)**: Used in Eqs (7)-(8), calibrated at 0.5, appears in Figure 2. Earns its keep.
+## Propositions and formal results
 
-### Proofs
+- **Proposition 1** (P/D ratios): Core result. Used in calibration (Table 1) and referenced via $\phi_\text{eff}$ in Extension 2. Cannot be replaced with prose—the quantitative calibration depends on the closed-form expressions.
+- **Remark 1** (existence condition): Could in principle be folded into prose, but it is explicitly referenced in Extension 2 (the P/D divergence at $\tau = 0$ under the large singularity). It sets up a payoff that comes later. Not ceremonial.
+- **Proposition 2** (comparative statics): All three parts connect to the calibration discussion and the paper's economic narrative: (i) displacement severity → valuation spread, (ii) singularity probability → spread (with the honest qualification "γ sufficiently large"), (iii) extinction → attenuation. Part (iii) includes a parameterization-dependent claim about the ratio, which connects to the extinction discussion that is a key theme.
+- **Proposition 3** (veto): Both parts do economic work. Part (i) connects incomplete markets to AI regulation debates. Part (ii) provides the complete-markets benchmark. The proof is verbal rather than heavily algebraic, consistent with the paper's lean style.
 
-- **Proposition 1 proof** (Appendix): Required by spec. Contains the Euler equation derivation and an honest approximation note.
-- **Proposition 2 proof** (inline): Each part has economic content. Part (iii)'s convexity argument explains *why* extinction compresses the ratio, not just *that* it does.
-- **Proposition 3 proof** (inline): Concise; each part is 3-4 sentences.
+**Finding:** No proposition or subpart is abandoned after introduction. Each connects to calibration, policy discussion, or economic interpretation.
 
-### Things that are NOT in the paper (confirming absence of common deadweight patterns)
+## Checks for pompous or ceremonial formalism
 
-- No unused notation or parameters.
-- No lemmas or corollaries that exist only to support proofs.
-- No formal welfare theorems beyond what the extensions need.
-- No explicit SDF derivation (the paper correctly skips straight to P/D ratios).
-- No unnecessary generalization (e.g., the model doesn't introduce heterogeneous agents beyond what's needed).
-- No formal definition of "market incompleteness" as a definition environment; it's stated in plain English.
+- The paper does not introduce lemmas, corollaries, or definitions beyond what the propositions require.
+- There is no formalism around the AI owners' optimization (they are a residual group, not optimizing agents—appropriate given that the household is the marginal investor).
+- The positive singularity in Extension 1 ($\alpha_{t+1} = \min(1, \alpha_t/\phi)$) is stated in one formula and used qualitatively in Proposition 3. The formula clarifies that the positive singularity is the symmetric reverse of the negative one. Minimal formalism for a concrete payoff.
+- The veto cost in Extension 1 is deliberately left unformalized—it is discussed qualitatively rather than given a symbol. This is the opposite of ceremonial formalism.
+- $\phi_\text{eff}$ is introduced in one line to connect Extension 2 back to Proposition 1. Economically informative, not decorative.
 
-## Summary
+## Could any result be stated in plain English without loss?
 
-The paper is lean. Every formal object contributes to either a quantitative result (Table 1, Figures 1-2), an economic claim (hedging channel, veto distortion, transfer effectiveness), or a cross-reference that connects sections. No formalism is introduced and abandoned, no qualitative takeaway requires its equation to be believed, and no parameter goes unused.
+- Proposition 1 cannot: the calibration table depends on the closed-form expressions.
+- Proposition 2 could in principle be stated verbally ("the AI premium rises with displacement severity and singularity probability, and falls with extinction risk"), but the formal statement adds precision about conditions (e.g., "γ sufficiently large") and the proof of (iii) reveals a non-obvious convexity mechanism.
+- Proposition 3 is already largely verbal in its proof and statement. It is a qualitative result presented in a formal wrapper, but the wrapper is appropriate for the journal audience and the result is substantive.
+- Remark 1 could be folded into prose, but it is a single displayed equation with a direct later payoff.
+
+**Finding:** No formal object can be replaced with plain English without weakening the paper's economic claims or losing content needed for the quantitative analysis.
+
+## Conclusion
+
+The paper is lean. Every formal element—parameter, equation, proposition, and remark—connects to a result, calibration, or economic argument that matters for the paper's conclusions. No formalism is introduced and abandoned, no auxiliary detours are present, and the style is restrained (no unnecessary lemmas, definitions, or corollaries).
