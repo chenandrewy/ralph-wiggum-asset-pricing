@@ -1,3 +1,1 @@
-Replace this file with the final acknowledgments. These are injected only into
-the named variant of the finalized paper, as a \thanks footnote on the title.
-The anonymous variant is left without acknowledgments.
+email:andrew.y.chen@frb.gov. I thank Andrei Goncalves, Ben Knox, Stavros Panageas, Ivo Welch, and Jie Yang for helpful comments. The views expressed herein are those of the authors and do not necessarily reflect the position of the Board of Governors of the Federal Reserve or the Federal Reserve System.
