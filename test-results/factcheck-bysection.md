@@ -1,154 +1,147 @@
 # tests/factcheck-bysection.py
-Started: 2026-04-09 21:50:56 EDT
-Runtime: 6m 21s
-[ralph-garage/agent-logs/20260409T215056.132121-0400_factcheck-bysection_claude_opus.log](../ralph-garage/agent-logs/20260409T215056.132121-0400_factcheck-bysection_claude_opus.log)
+Started: 2026-04-09 22:04:35 EDT
+Runtime: 10m 26s
+[ralph-garage/agent-logs/20260409T220435.867203-0400_factcheck-bysection_claude_opus.log](../ralph-garage/agent-logs/20260409T220435.867203-0400_factcheck-bysection_claude_opus.log)
 
 # factcheck-bysection
 VERDICT: PASS
-REASON: All arithmetic is correct, all verbal claims are supported, and no claim is materially wrong.
+REASON: All arithmetic is correct, all verbal claims are supported, and no claim is materially wrong; only minor imprecisions and one weak attribution noted.
 
-## Introduction (lines 38–68)
+## Introduction (lines 38–70)
 
 - **Line 38** — section header
-- **Line 40** [FIGURE/TABLE] OK — NASDAQ outpacing S&P 500 since 2015 is confirmed by Figure 1 (fig-ai-valuations.pdf), which shows NASDAQ (solid) ending near ~500 vs S&P 500 (dashed) near ~330, both normalized to Jan 2015 = 100
-- **Line 40** [VERBAL] OK — "gap widening sharply since 2023" is visible in the figure, consistent with the generative AI boom timeline
-- **Line 44** [FIGURE/TABLE] OK — caption correctly describes the figure content (NASDAQ solid, S&P 500 dashed, normalized to Jan 2015 = 100, sources FRED and Shiller)
-- **Line 49** [VERBAL] OK — "AI stocks serve as a hedge against a negative AI singularity" is the paper's main argument, supported by Proposition 1 and the comparison of Γ^AI > Γ^N
-- **Line 49** [VERBAL] OK — "If markets were complete, investors could insure directly" supported by model (Section 2.3, line 170) and Proposition 3(ii)
-- **Line 49** [VERBAL] OK — "Market incompleteness forces investors into publicly traded AI stocks as an imperfect substitute" supported by model mechanism throughout
-- **Line 51** [REFERENCE] OK — GKP2012 correctly cited for the idea that technological displacement creates a systematic risk factor under incomplete markets
-- **Line 51** [REFERENCE] OK — GKP2012 correctly described as showing rents accrue to agents current investors cannot trade with
-- **Line 53** [VERBAL] OK — "P/D ratios for AI stocks can reach roughly twice those of non-AI stocks" supported by Table 1 (ratio = 2.0 at p=1%, ξ=0%); "can reach" appropriately hedges the claim
-- **Line 53** [REFERENCE] OK — Jones2024 correctly cited for extinction risk; the characterization that powerful-AI states carry highest existential risk matches Jones's central thesis
-- **Line 53** [VERBAL] OK — "extinction risk attenuates this gap" confirmed by Proposition 2(iii) and Table 1 (ratios decrease as ξ increases)
-- **Line 53** [VERBAL] OK — "risk-averse household that cannot hedge displacement may rationally choose to block it" supported by Proposition 3(i)
-- **Line 53** [VERBAL] OK — "Complete markets would eliminate this distortion" supported by Proposition 3(ii)
-- **Line 55** [REFERENCE] OK — GKP2012 correctly cited for the point that future innovators' capital cannot yet be traded
-- **Line 55** [REFERENCE] OK — Jones2024 correctly cited for explosive output growth in a singularity
-- **Line 55** [VERBAL] OK — "even grossly inefficient redistribution delivers large consumption gains" supported by Extension 2 analysis (equation 7 and surrounding discussion)
-- **Line 55** [VERBAL] OK — footnote accurately describes the paper's production process (AI agents produced analysis and writing from human-authored specification)
-- **Line 60** [REFERENCE] OK — GKP2012 correctly described as developing a general-equilibrium model with displacement risk under incomplete markets and OLG structure
-- **Line 60** [REFERENCE] OK — "displacement risk is distinct from aggregate consumption risk" and "growth stocks provide a partial hedge" are accurate characterizations of GKP2012
-- **Line 62** [REFERENCE] OK — Jones2024 correctly described as studying the trade-off between AI-driven growth and existential risk with bounded utility functions
-- **Line 62** [VERBAL] OK — "extinction risk interacts with displacement in a countervailing way, attenuating rather than amplifying the valuation premium" confirmed by Proposition 2(iii)
-- **Line 64** [REFERENCE] OK — KoganPapanikolaou2014 and KoganPapanikolaouStoffman2020 correctly cited for technology shocks, creative destruction, and cross-sectional return differences
-- **Line 64** [REFERENCE] OK — Knesl2023 correctly cited for empirical evidence on automation-driven displacement risk premium
-- **Line 64** [REFERENCE] OK — AghionJonesJones2019 correctly cited for studying whether AI can sustain exponential growth
-- **Line 64** [REFERENCE] OK — Acemoglu2024 correctly cited as arguing aggregate AI productivity gains may be modest
-- **Line 64** [REFERENCE] OK — Barro2006 and Wachter2013 correctly cited for rare disasters methodology
-- **Line 64** [REFERENCE] OK — PastorVeronesi2009 correctly cited for technological revolutions and stock prices
+- **Line 40** [FIGURE/TABLE] OK — NASDAQ outpacing S&P 500 since 2015 is consistent with the figure data (code downloads NASDAQ from FRED series NASDAQCOM, S&P 500 from Shiller/datahub, normalizes to first shared observation ≈ Jan 2015 = 100)
+- **Line 40** [VERBAL] OK — "gap widening sharply since 2023 as advances in generative AI have accelerated" is a qualitative characterization consistent with actual market events
+- **Line 44** [FIGURE/TABLE] OK — caption states "NASDAQ from FRED; S&P 500 from the Shiller dataset"; code confirms these exact sources
+- **Line 44** [FIGURE/TABLE] OK — "normalized to January 2015 = 100"; code normalizes to the first observation in the filtered range (starting 2015-01-01), which is January 2015 for both series
+- **Line 49** [VERBAL] OK — "the role of financial markets remains under-explored" is a defensible framing claim; no cited paper in the bibliography addresses financial-market frictions for AI directly
+- **Line 51** [DEFINITION] OK — "negative AI singularity" definition is consistent with the model setup (Section 2, eq. 2: α_{t+1} = φα_t with φ < 1)
+- **Line 51** [VERBAL] OK — "If markets were complete, investors could insure against this risk directly" confirmed by Proposition 3(ii)
+- **Line 51** [REFERENCE] OK — "much of this equity is restricted—held by founders, early-stage investors, and firms that may not yet exist" matches GKP 2012 (future innovators cannot trade with current agents)
+- **Line 53** [REFERENCE] OK — GKP 2012 "show that rents from new technologies accrue to agents that current investors cannot trade with" confirmed against GKP abstract
+- **Line 53** [VERBAL] OK — "representative household—the marginal investor—faces a stochastic singularity that shifts consumption toward AI owners" matches model setup
+- **Line 53** [VERBAL] OK — "AI stocks grow as a share of the economy with each singularity" confirmed by θ_{t+1} = θ_t + Δθ(1−θ_t)
+- **Line 55** [VERBAL] OK — "closed-form price-dividend ratios" confirmed by Proposition 1 (eqs. 5–6)
+- **Line 55** [ARITHMETIC] OK — "P/D ratios for AI stocks can reach roughly twice those of non-AI stocks" confirmed by Table 1: at p=1%, ξ=0%, ratio = 2.0
+- **Line 55** [REFERENCE] OK — "Extinction risk (Jones 2024) attenuates this gap" confirmed by Proposition 2(iii) and Table 1 (ratio falls from 2.0 at ξ=0% to 1.7 at ξ=20% for p=1%); Jones 2024 text confirms correlated existential risk
+- **Line 55** [VERBAL] OK — "risk-averse household that cannot hedge displacement may rationally choose to block it" confirmed by Proposition 3(i)
+- **Line 55** [VERBAL] OK — "Complete markets would eliminate this distortion" confirmed by Proposition 3(ii)
+- **Line 57** [REFERENCE] OK — "as GKP 2012 emphasize, much of this capital belongs to future innovators and cannot yet be traded" confirmed in GKP text
+- **Line 57** [VERBAL] OK — "in a singularity with explosive output growth, the resource base becomes so enormous that even grossly inefficient redistribution delivers large consumption gains" confirmed by eq. 11 (transfer ratio independent of η; levels grow without bound)
+- **Line 57** [REFERENCE] OK — Jones 2024 cited for "explosive output growth" premise, not for the transfers mechanism (which is original); attribution is accurate
+- **Line 62** [REFERENCE] OK — GKP 2012 "develop a general-equilibrium model in which innovation displaces existing agents and creates a systematic risk factor under incomplete markets" matches GKP abstract exactly
+- **Line 62** [REFERENCE] OK — "displacement risk is distinct from aggregate consumption risk and that growth stocks provide a partial hedge" confirmed in GKP text
+- **Line 62** [VERBAL] OK — "Our model simplifies their overlapping-generations structure" accurate; paper uses representative household, not OLG
+- **Line 64** [REFERENCE] OK — Jones 2024 "studies the trade-off between AI-driven growth and existential risk" matches Jones 2024 title ("The AI Dilemma: Growth versus Existential Risk")
+- **Line 64** [REFERENCE] OK — Jones 2024 "bounded utility functions make agents conservative about extinction" confirmed in Jones 2024 text
+- **Line 64** [VERBAL] OK — "it interacts with displacement in a countervailing way, attenuating rather than amplifying the valuation premium" confirmed by Proposition 2(iii) and Table 1
+- **Line 66** [REFERENCE] OK — Kogan & Papanikolaou (2014) and Kogan, Papanikolaou & Stoffman (2020) cited for technology shocks generating cross-sectional return differences; consistent with paper titles in bibliography
+- **Line 66** [REFERENCE] OK — Knesl (2023) cited for "direct empirical evidence that automation-driven displacement commands a risk premium"; consistent with JFE title
+- **Line 66** [REFERENCE] OK — Aghion, Jones & Jones (2019) cited for studying whether AI can sustain exponential growth; consistent with known work
+- **Line 66** [REFERENCE] OK — Acemoglu (2024) cited for arguing AI productivity gains "may be more modest than commonly supposed"; consistent with known position
+- **Line 66** [REFERENCE] OK — Barro (2006), Wachter (2013) cited for rare disasters methodology; both are foundational rare-disaster pricing papers
+- **Line 66** [REFERENCE] OK — Pastor & Veronesi (2009) cited for technological revolutions and stock prices; matches AER paper title
 
-## Model (lines 69–174)
+## Model (lines 71–176)
 
-- **Line 69** — section header
-- **Line 73** [VERBAL] OK — AI owners described as analogous to GKP2012's future capital owners; paper correctly notes it does not model entry dynamics
-- **Line 76–80** [DEFINITION] OK — aggregate consumption growth $C_{t+1} = (1+g)C_t$ absent singularity; standard and internally consistent
-- **Line 82** [DEFINITION] OK — household consumption $c_t^H = \alpha_t C_t$; AI owners receive $(1-\alpha_t)C_t$; partitions aggregate consumption
-- **Line 85** [ASSUMPTION] OK — singularity probability $p$ per period; $\alpha_t$ unchanged absent singularity
-- **Line 88–91** [DEFINITION] OK — non-extinction singularity: aggregate consumption jumps by $1+\eta$; household share drops to $\phi\alpha_t$
-- **Line 93** [REFERENCE] OK — Jones2024 correctly cited for the connection between AI power and existential risk
-- **Line 102** [DEFINITION] OK — AI dividends $D_t^{AI} = \theta_t C_t$; upon singularity $\theta_{t+1} = \theta_t + \Delta\theta(1-\theta_t)$
-- **Line 103** [DEFINITION] OK — non-AI dividends $D_t^N = (1-\theta_t)C_t$; dividends sum to aggregate consumption ($D^{AI}+D^N = C_t$)
-- **Line 106** [VERBAL] OK — market incompleteness from restricted AI equity correctly described
-- **Line 109** [DEFINITION] OK — CRRA preferences with $\gamma > 1$, $\beta \in (0,1)$; equation (3) is standard
-- **Line 123–124** [ARITHMETIC] OK — P/D ratio for AI stocks (eq. 4) matches derivation in Appendix A; form is $A^{AI}/(1-A^{AI})$
-- **Line 127–128** [ARITHMETIC] OK — P/D ratio for non-AI stocks (eq. 5) identical structure with $\Gamma^N$ replacing $\Gamma^{AI}$
-- **Line 130** [ARITHMETIC] OK — $\Gamma^{AI} = [\theta + \Delta\theta(1-\theta)]/\theta \cdot (1+\eta)$; with baseline parameters: $(0.15+0.17)/0.15 \times 1.5 = 3.2$
-- **Line 130** [ARITHMETIC] OK — $\Gamma^N = [1-\theta-\Delta\theta(1-\theta)]/(1-\theta) \cdot (1+\eta)$; simplifies to $(1-\Delta\theta)(1+\eta) = 0.8 \times 1.5 = 1.2$; is $\theta$-independent
-- **Line 138–142** [VERBAL] OK — existence condition $A^j < 1$ correctly stated; when $A^j \geq 1$ the pricing sum diverges
-- **Line 142** [VERBAL] OK — baseline calibration satisfies $A^j < 1$ confirmed by all finite P/D values in Table 1
-- **Line 142** [REFERENCE] OK — cross-reference to Section 4.2 (label sec:ext2) correctly points to Government transfers subsection
-- **Line 145** [VERBAL] OK — closed-form approximation (post-singularity P/D = pre-singularity P/D) correctly disclosed; exact when $\Delta\theta \to 0$
-- **Line 145** [REFERENCE] OK — Table 1 described as numerically exact via backward recursion; confirmed by code implementation
-- **Line 147** [ARITHMETIC] OK — $\Gamma^{AI} > 1+\eta$: since $\Delta\theta > 0$, AI dividend share grows, so $\Gamma^{AI} = 3.2 > 1.5 = 1+\eta$
-- **Line 147** [ARITHMETIC] OK — $\Gamma^N < 1+\eta$: non-AI share shrinks, $\Gamma^N = 1.2 < 1.5 = 1+\eta$
-- **Line 147** [VERBAL] OK — "high marginal utility in singularity states due to displacement, $\phi(1+\eta) < 1$ when $\phi$ is sufficiently small": with baseline $\phi=0.5$, $\phi(1+\eta) = 0.75 < 1$, confirmed
-- **Line 147** [VERBAL] OK — hedging channel explanation: AI stocks pay off when household consumption falls; economically sound and consistent with the formulas
-- **Line 152** [VERBAL] OK — Proposition 2(i): spread increasing in displacement severity (decreasing $\phi$); proof logic is sound (lower $\phi$ raises $\phi^{-\gamma}$, amplifying AI stocks more since $\Gamma^{AI} > \Gamma^N$)
-- **Line 153** [VERBAL] OK — Proposition 2(ii): spread increasing in $p$ for $\gamma$ sufficiently large; proof logic is sound
-- **Line 154** [VERBAL] OK — Proposition 2(iii): spread decreasing in $\xi$; proof uses convexity of $A/(1-A)$
-- **Line 163** [ARITHMETIC] OK — $f(A) = A/(1-A)$ is increasing and convex for $A \in (0,1)$: $f''(A) = 2/(1-A)^3 > 0$
-- **Line 163** [VERBAL] OK — since $A^{AI} > A^N$ (because $\Gamma^{AI} > \Gamma^N$), convexity implies $f(A^{AI})$ falls more, narrowing the spread; confirmed by Table 1 (at p=1%: ratio falls from 2.0 to 1.7 as $\xi$ goes 0% to 20%)
-- **Line 168** [REFERENCE] OK — GKP2012 correctly described for growth stocks hedging displacement risk
-- **Line 168** [VERBAL] OK — distinction between GKP's continuous displacement from expanding variety vs. this paper's discrete singularity is accurate
-- **Line 170** [REFERENCE] OK — GKP2012's point about future innovators' rents correctly echoed
-- **Line 170** [VERBAL] OK — correctly notes the paper does not model entry dynamics central to GKP's framework
+- **Line 71** — section header
+- **Line 75** [REFERENCE] OK — AI owners as "future capital owners who do not yet participate in markets, as in GKP2012" matches GKP text
+- **Line 75** [VERBAL] OK — "we do not explicitly model the entry of new cohorts of firms or workers" is an accurate disclaimer consistent with the paper spec
+- **Lines 80–82** [DEFINITION] OK — C_{t+1} = (1+g)C_t defines constant consumption growth absent singularity
+- **Line 84** [DEFINITION] OK — c_t^H = α_t C_t and AI owners get (1−α_t)C_t; shares sum to 1
+- **Lines 87–96** [DEFINITION] OK — singularity structure: probability p, non-extinction with displacement α_{t+1} = φα_t and aggregate jump (1+η), extinction with probability ξ
+- **Line 95** [REFERENCE] OK — Jones 2024 cited for extinction risk; matches Jones 2024 text about correlated existential risk
+- **Line 104** [DEFINITION] OK — θ_{t+1} = θ_t + Δθ(1−θ_t); verified non-AI share contracts by factor (1−Δθ)
+- **Line 105** [DEFINITION] OK — D_t^N = (1−θ_t)C_t; dividends sum to C_t
+- **Line 108** [VERBAL] OK — market incompleteness from inability to trade restricted AI equity; consistent with GKP analogy
+- **Line 111** [DEFINITION] OK — CRRA preferences with γ > 1 and β ∈ (0,1); standard formulation
+- **Line 119** [VERBAL] OK — "the household's SDF reflects its own consumption growth, not aggregate consumption growth" is correct under incomplete markets
+- **Lines 124–132** [ARITHMETIC] OK — P/D formulas verified by deriving from Euler equation; formula structure v = A/(1−A) confirmed
+- **Line 132** [ARITHMETIC] OK — Γ^AI = [θ + Δθ(1−θ)]/θ × (1+η); with parameters: (0.15+0.17)/0.15 × 1.5 = 3.2
+- **Line 132** [ARITHMETIC] OK — Γ^N = [1−θ−Δθ(1−θ)]/(1−θ) × (1+η) = (1−Δθ)(1+η) = 0.8 × 1.5 = 1.2; confirmed θ-independent
+- **Lines 139–144** [VERBAL] OK — existence condition A^j < 1 is necessary and sufficient for positive finite P/D ratios
+- **Line 144** [VERBAL] OK — "baseline calibration satisfies A^j < 1 for both assets" verified numerically for all table entries
+- **Line 144** [REFERENCE] OK — cross-reference to Section 4.2 for violation of existence condition is correct
+- **Line 147** [VERBAL] OK — closed-form approximation treats post-singularity P/D as equal to pre-singularity; "exact when Δθ → 0" is correct
+- **Line 147** [VERBAL] OK — Table 1 reports numerically exact values via backward recursion; all 20 entries independently verified
+- **Line 149** [ARITHMETIC] OK — Γ^AI > 1+η: 3.2 > 1.5 confirmed (holds whenever Δθ > 0)
+- **Line 149** [ARITHMETIC] OK — Γ^N < 1+η: 1.2 < 1.5 confirmed (holds whenever Δθ > 0)
+- **Line 149** [ARITHMETIC] OK — φ(1+η) < 1 "when φ is sufficiently small": with φ=0.5, η=0.5: 0.75 < 1; exact condition is φ < 1/(1+η)
+- **Line 149** [VERBAL] OK — "AI stocks pay off precisely when the household's consumption falls" correctly describes the hedging channel
+- **Lines 153–157** [VERBAL] OK — Proposition 2 comparative statics: all three results verified numerically
+- **Lines 160–161** [VERBAL] OK — Proof of (i): decrease in φ raises φ^{−γ}, amplifies singularity term more for AI stocks because Γ^AI > Γ^N; logic correct
+- **Lines 162–163** [VERBAL] OK — Proof of (ii): increase in p puts more weight on singularity states; qualifier "γ sufficiently large" is conservative but not wrong (spread increases in p for all γ > 0 under baseline parameterization)
+- **Lines 164–166** [VERBAL] OK — Proof of (iii): convexity argument correct; f(A) = A/(1−A) has f'' = 2/(1−A)^3 > 0; since A^AI > A^N, same multiplicative reduction in singularity terms causes proportionally larger drop in A^AI/(1−A^AI)
+- **Line 170** [REFERENCE] OK — "GKP2012 show that growth stocks earn lower expected returns because they hedge displacement risk from innovation" matches GKP text
+- **Line 170** [VERBAL] OK — "GKP model continuous displacement from expanding technological variety, while we model a sudden, severe shift" accurately distinguishes the two frameworks
+- **Line 172** [VERBAL] OK — "If the household could buy claims on the full universe of AI shares, it could perfectly hedge displacement risk, and the valuation spread would collapse" correct under complete markets
+- **Line 172** [REFERENCE] OK — "echoes GKP2012's point that future innovators' rents cannot be traded" matches GKP text
 
-## Quantitative Analysis (lines 175–192)
+## Quantitative Analysis (lines 177–194)
 
-- **Line 175** — section header
-- **Line 184** [ASSUMPTION] OK — parameters $\beta=0.96$, $g=0.02$, $\gamma=4$, $\phi=0.5$, $\eta=0.5$, $\theta=0.15$, $\Delta\theta=0.2$ match Table 1 footnote exactly
-- **Line 184** [ARITHMETIC] OK — $\phi(1+\eta) = 0.5 \times 1.5 = 0.75$; correctly stated
-- **Line 184** [VERBAL] OK — "household consumption falls by 25%": $1 - 0.75 = 0.25$; correct
-- **Line 184** [VERBAL] OK — "aggregate consumption rises by 50%": $\eta = 0.5$ means factor $1.5$; correct
-- **Line 184** [ASSUMPTION] OK — "AI stocks are initially 15% of the economy": $\theta = 0.15$; correct
-- **Line 184** [ASSUMPTION] OK — "AI's share jumps by 20% of the non-AI remainder": $\Delta\theta = 0.2$; correct
-- **Line 186** [FIGURE/TABLE] OK — "P/D of roughly 16" for AI at $p=0.5\%$, $\xi=0\%$: Table 1 shows 15.5; "roughly 16" is at the edge but defensible (15.5 rounds to 16)
-- **Line 186** [FIGURE/TABLE] OK — "non-AI stocks trade near 11": Table 1 shows 11.1 at $p=0.5\%$, $\xi=0\%$; correct
-- **Line 186** [FIGURE/TABLE] OK — "ratio of about 1.4": Table 1 shows 1.4; exact match
-- **Line 186** [FIGURE/TABLE] OK — "At $p=1\%$, the ratio rises to 2": Table 1 shows 2.0 at $p=1\%$, $\xi=0\%$; exact match
-- **Line 186** [VERBAL] OK — "increasing the singularity probability raises the AI stock premium": confirmed by Table 1 (ratio monotonically increases from 1.1 to 2.0 across $p$ values at $\xi=0\%$)
-- **Line 186** [VERBAL] OK — "extinction risk reduces both valuations and compresses the AI premium": confirmed by Table 1 (at $p=1\%$: AI P/D falls 26.5→20.5, non-AI 13.3→12.0, ratio 2.0→1.7 as $\xi$ goes 0%→20%)
-- **Line 186** [REFERENCE] OK — "as Proposition 2(iii) predicts" correctly references the extinction comparative static
-- **Line 188** [FIGURE/TABLE] OK — "NASDAQ has appreciated roughly 50% more than S&P 500 since 2015": Figure 1 shows NASDAQ ending near ~500 and S&P 500 near ~330 (normalized to 100); ratio ≈ 1.52, so "roughly 50% more" is accurate
-- **Line 188** [FIGURE/TABLE] OK — "P/D ratios 1.3 to 2 times" for $p \in [0.5\%, 1\%]$: Table 1 confirms range from 1.3 (at $p=0.5\%$, $\xi=10\%$ or $20\%$) to 2.0 (at $p=1\%$, $\xi=0\%$)
+- **Line 177** — section header
+- **Line 186** [ASSUMPTION] OK — β=0.96, g=0.02, γ=4, φ=0.5, η=0.5, θ=0.15, Δθ=0.2 match the code and table footnote exactly
+- **Line 186** [ARITHMETIC] OK — φ(1+η) = 0.5 × 1.5 = 0.75
+- **Line 186** [VERBAL] OK — "household retains half of its consumption share upon displacement" matches φ=0.5
+- **Line 186** [ARITHMETIC] OK — "household consumption falls by 25%" follows from φ(1+η) = 0.75 (consumption is 75% of pre-singularity level)
+- **Line 186** [ARITHMETIC] OK — "aggregate consumption rises by 50% in a singularity" follows from η=0.5
+- **Line 186** [VERBAL] OK — "AI stocks are initially 15% of the economy" matches θ=0.15
+- **Line 186** [VERBAL] OK — "AI's share jumps by 20% of the non-AI remainder" matches Δθ=0.2
+- **Line 188** [ARITHMETIC] OK — "AI stocks trade at a P/D of roughly 16" for p=0.5%, ξ=0%: table reports 15.5; "roughly 16" is a slight overstatement but within rounding tolerance for qualitative discussion
+- **Line 188** [ARITHMETIC] OK — "non-AI stocks trade near 11" matches table value 11.1; independently verified via closed-form: K=0.9172, P/D=11.08
+- **Line 188** [ARITHMETIC] OK — "a ratio of about 1.4" matches table exactly (1.4)
+- **Line 188** [ARITHMETIC] OK — "At p=1%, the ratio rises to 2" matches table exactly (2.0)
+- **Line 188** [VERBAL] OK — "increasing the singularity probability raises the AI stock premium" confirmed across all rows of the table
+- **Line 188** [VERBAL] OK — "extinction risk reduces both valuations and compresses the AI premium, as Proposition 2(iii) predicts" confirmed by table (e.g., at p=1%: ratio falls from 2.0 to 1.7 as ξ goes from 0% to 20%)
+- **Line 190** [FIGURE/TABLE] OK — "NASDAQ has appreciated roughly 50% more than the S&P 500 since 2015" is an empirical claim about Figure 1; consistent with actual market data through 2025
+- **Line 190** [ARITHMETIC] OK — "P/D ratios for AI stocks that are 1.3 to 2 times those of non-AI stocks across annual singularity probabilities in the 0.5–1% range" verified against table: ratios span 1.3–2.0 for p ∈ {0.5%, 0.8%, 1.0%} across all ξ values
 
-## Extensions: Market Incompleteness and the Singularity (lines 193–261)
+## Extensions: Market Incompleteness and the Singularity (lines 195–263)
 
-- **Line 193** — section header
-- **Line 195** [VERBAL] OK — framing correctly previews Extension 1 (distortion of AI development) and Extension 2 (government policy)
-- **Line 199** [DEFINITION] OK — positive singularity: $\alpha_{t+1} = \min(1, \alpha_t/\phi)$; negative singularity: $\alpha_{t+1} = \phi\alpha_t$; internally consistent inverses
-- **Line 199** [ASSUMPTION] OK — "The positive singularity is the more likely outcome" and "AI development is socially efficient" stated as modeling assumptions
-- **Line 201** [VERBAL] OK — veto cost described as "significant" representing deadweight loss from government intervention
-- **Line 201** [REFERENCE] OK — Jones2024 cited for normalizing extinction utility to zero; consistent with his framework using bounded utility
-- **Line 201** [VERBAL] OK — "CRRA utility is negative for all $c > 0$ when $\gamma > 1$" is mathematically correct ($u(c) = c^{1-\gamma}/(1-\gamma) < 0$ for $\gamma > 1$), making the zero-normalization conservative
-- **Line 205** [VERBAL] OK — Proposition 3(i): household vetoes even when development is socially efficient; proof logic is sound (concavity of utility makes downside dominate for large $\gamma$)
-- **Line 207** [VERBAL] OK — Proposition 3(ii): complete markets eliminates veto; proof logic is sound (household can hedge displacement and participate in full surplus)
-- **Line 216** [VERBAL] OK — "higher $\xi$ reduces the weight on non-extinction singularity states, which are the states driving the veto" is logically correct
-- **Line 216** [VERBAL] OK — connection to AI regulation debates is appropriately hedged
-- **Line 220** [REFERENCE] OK — GKP2012 cited for noting intergenerational transfers could affect displacement risk; this is consistent with GKP's discussion of model abstractions
-- **Line 225** [ARITHMETIC] OK — equation (5): $c^H_{post} = \phi\alpha(1+\eta)C_t(1+g) + \tau(1-\delta\tau)(1-\phi\alpha)(1+\eta)C_t(1+g)$; first term is displaced consumption, second is net transfer; algebraically correct
-- **Line 228** [VERBAL] OK — "$(1-\phi\alpha)$ represents the AI owners' share of post-singularity aggregate consumption": household gets $\phi\alpha$, remainder is $1-\phi\alpha$; correct
-- **Line 233** [ARITHMETIC] OK — equation (6): $\phi_\text{eff} = \phi + \tau(1-\delta\tau)(1-\phi\alpha)/\alpha$; verified by factoring equation (5) as $\phi_\text{eff} \cdot \alpha \cdot (1+\eta)(1+g)C_t$
-- **Line 236** [VERBAL] OK — "P/D formula from Proposition 1 applies with $\phi$ replaced by $\phi_\text{eff}$" is correct since $\phi_\text{eff}$ enters the SDF identically
-- **Line 241** [ARITHMETIC] OK — equation (7): transfer ratio $= 1 + \tau(1-\delta\tau)(1-\phi\alpha)/(\phi\alpha)$; verified by dividing equation (5) by $\phi\alpha(1+\eta)(1+g)C_t$
-- **Line 244** [VERBAL] OK — ratio is independent of $\eta$: confirmed algebraically ($\eta$ cancels in numerator and denominator)
-- **Line 244** [VERBAL] OK — "as $\eta$ grows, both terms grow without bound, so even inefficient transfers deliver arbitrarily large consumption gains relative to the pre-singularity baseline"; correct in levels
-- **Line 246** [ASSUMPTION] OK — extension parameters $\alpha=0.70$, $p=0.5\%$, $\xi=5\%$ stated; match code
-- **Line 246** [ASSUMPTION] OK — baseline $\eta=0.5$, $\phi=0.5$; large singularity $\eta=9$, $\phi=0.05$; match code
-- **Line 246** [ARITHMETIC] OK — large singularity: $\phi(1+\eta) = 0.05 \times 10 = 0.5$, "consumption halves"; correct
-- **Line 246** [ARITHMETIC] OK — baseline: $\phi(1+\eta) = 0.5 \times 1.5 = 0.75$, "falls by 25%"; correct
-- **Line 246** [VERBAL] OK — "ten-fold growth" for $\eta=9$: factor is $1+9=10$; correct
-- **Line 246** [FIGURE/TABLE] OK — "right panel" refers to Panel (b) for consumption; matches code layout (panel_a left, panel_b right)
-- **Line 248** [ARITHMETIC] OK — $\phi^{-\gamma} = 0.05^{-4} = 20^4 = 160{,}000$; exactly correct
-- **Line 248** [VERBAL] OK — P/D undefined at $\tau=0$ under large singularity because existence condition violated ($\phi^{-\gamma}$ so extreme the pricing sum diverges); confirmed by code returning NA
-- **Line 248** [VERBAL] OK — "As $\tau$ increases and transfers cushion the displacement, effective displacement falls, the existence condition is restored, and finite P/D ratios emerge"; consistent with code and figure
-- **Line 252** [FIGURE/TABLE] OK — caption parameters ($\alpha=0.70$, $p=0.5\%$, $\xi=5\%$, $\delta=0.5$) match code exactly
-- **Line 257** [REFERENCE] OK — Jones2024 correctly cited for explosive output growth; Nordhaus2021 correctly cited as examining the economic singularity hypothesis critically
+- **Line 195** — section header
+- **Line 197** [VERBAL] OK — framing of the two extensions (distortion of AI development, government policy) matches Sections 4.1 and 4.2
+- **Line 201** [DEFINITION] OK — positive singularity defined as α_{t+1} = min(1, α_t/φ); negative as α_{t+1} = φα_t; positive is more likely
+- **Line 201** [VERBAL] OK — "AI development is socially efficient in the sense that the expected welfare gain is positive" is the maintained assumption for Proposition 3
+- **Line 203** [REFERENCE] OK — "Following Jones 2024, we normalize extinction utility to zero" is consistent with Jones 2024's treatment; CRRA utility is negative for c > 0 when γ > 1, so U_ext = 0 makes the veto result conservative
+- **Lines 206–209** [VERBAL] OK — Proposition 3 statements: (i) household vetoes under incomplete markets for γ large enough; (ii) never vetoes under complete markets. Both logically follow from the proof
+- **Lines 212–216** [VERBAL] OK — Proof of Proposition 3: (i) concavity + large γ makes downside dominate even when positive singularity is more likely; (ii) complete markets allow full hedging so household captures social surplus
+- **Line 218** [VERBAL] OK — "Extinction risk interacts with this distortion: under our conservative normalization (U_ext = 0), higher ξ reduces the weight on non-extinction singularity states, which are the states driving the veto." Logically correct
+- **Line 222** [REFERENCE] WEAK — claims GKP "note that intergenerational transfers could in principle affect the magnitude of displacement risk, while observing that such transfers do not alter the functional form of the stochastic discount factor." GKP's conclusion mentions abstracting from transfers in passing but does not make the specific claim about SDF functional form preservation. The attribution slightly overstates what GKP explicitly say, though the economic logic is plausible
+- **Lines 226–228** [ARITHMETIC] OK — transfer consumption equation verified: first term φα(1+η)(1+g)C_t is displaced household consumption; second term τ(1−δτ)(1−φα)(1+η)(1+g)C_t is net transfer from AI owners' share (1−φα)
+- **Line 230** [VERBAL] OK — "(1−φα) represents the AI owners' share of post-singularity aggregate consumption" is correct; this is distinct from the AI dividend share θ
+- **Lines 234–236** [ARITHMETIC] OK — φ_eff = φ + τ(1−δτ)(1−φα)/α verified by dividing eq. (6) by α(1+η)(1+g)C_t
+- **Line 238** [VERBAL] OK — "φ_eff enters the SDF in the same way as φ, the P/D formula from Proposition 1 applies with φ replaced by φ_eff" is correct; the transfer modifies the effective displacement but not the functional form
+- **Lines 242–244** [ARITHMETIC] OK — transfer ratio c^H_post/c^H_no-transfer = 1 + τ(1−δτ)(1−φα)/(φα) verified algebraically; the (1+η)(1+g)C_t factors cancel, confirming independence from η
+- **Line 246** [VERBAL] OK — "transfers always improve the household's position in the singularity state, regardless of η" follows from the ratio exceeding 1 whenever τ > 0
+- **Line 248** [ASSUMPTION] OK — parameters α=0.70, p=0.5%, ξ=5% stated in text; match code (alpha0=0.70, p_ext=0.005, xi_ext=0.05)
+- **Line 248** [ARITHMETIC] OK — "consumption halves under the large singularity (φ(1+η) = 0.5)": 0.05 × 10 = 0.5
+- **Line 248** [ARITHMETIC] OK — "falls by 25% under the baseline (φ(1+η) = 0.75)": 0.5 × 1.5 = 0.75
+- **Line 248** [ARITHMETIC] OK — "ten-fold growth" with η=9: (1+η) = 10
+- **Line 250** [ARITHMETIC] OK — φ^{−γ} = (0.05)^{−4} = 20^4 = 160,000
+- **Line 250** [VERBAL] OK — "P/D ratio is undefined at τ=0" for large singularity: existence condition violated because the extreme SDF weight (φ^{−γ} = 160,000) makes the pricing sum diverge; confirmed by code returning NA
+- **Line 250** [VERBAL] OK — "As τ increases and transfers cushion the displacement, effective displacement falls, the existence condition is restored, and finite P/D ratios emerge" confirmed by figure showing P/D values appearing for τ > 0
+- **Line 254** [FIGURE/TABLE] OK — caption parameters α=0.70, p=0.5%, ξ=5%, δ=0.5 match code exactly (alpha0=0.70, p_ext=0.005, xi_ext=0.05, delta=0.50)
+- **Line 259** [REFERENCE] OK — Jones 2024 cited for explosive output growth; matches Jones 2024's singularity model with infinite consumption
+- **Line 259** [REFERENCE] OK — Nordhaus 2021 cited for critically examining explosive growth; "Are We Approaching an Economic Singularity?" (AEJ:Macro) is an appropriate citation
 
-## Conclusion (lines 262–272)
+## Conclusion (lines 264–274)
 
-- **Line 262** — section header
-- **Line 264** [VERBAL] OK — "AI stocks trade at high valuations" supported by Figure 1 and Table 1
-- **Line 264** [VERBAL] OK — "part of this premium reflects a hedging motive" is the paper's main argument, supported by Proposition 1 and the Γ^AI > Γ^N comparison; "part" is appropriately hedged
-- **Line 264** [VERBAL] OK — "requires market incompleteness---the inability to trade restricted AI equity" supported by Section 2.1 (line 106) and Section 2.3 (line 170)
-- **Line 264** [VERBAL] OK — "attenuated by extinction risk, which reduces the weight on the non-extinction states where the hedging channel operates" supported by Proposition 2(iii) and Table 1
-- **Line 264** [VERBAL] OK — "risk-averse households may inefficiently block AI development" supported by Proposition 3(i); "may" correctly reflects the condition ($\gamma$ sufficiently large)
-- **Line 264** [VERBAL] OK — "government transfers, normally wasteful, can become effective if singularity-driven growth is large enough to overwhelm deadweight costs" supported by Extension 2 analysis (equations 5–7 and Figure 2)
-- **Line 266** [VERBAL] OK — "Our model is deliberately simple" and listed abstractions (continuous-time dynamics, heterogeneous beliefs, production-side details) are accurate descriptions of what the model omits
+- **Line 264** — section header
+- **Line 266** [VERBAL] OK — "hedging motive: investors use AI stocks to partially insure against an AI singularity that would displace their consumption" accurately summarizes the model's core mechanism
+- **Line 266** [VERBAL] OK — "requires market incompleteness—the inability to trade restricted AI equity" consistent with model setup and Proposition 3(ii)
+- **Line 266** [VERBAL] OK — "attenuated by extinction risk, which reduces the weight on the non-extinction states where the hedging channel operates" consistent with Proposition 2(iii)
+- **Line 266** [VERBAL] OK — "risk-averse households may inefficiently block AI development" consistent with Proposition 3(i)
+- **Line 266** [VERBAL] OK — "government transfers, normally wasteful, can become effective if singularity-driven growth is large enough to overwhelm deadweight costs" consistent with Extension 2 (eq. 11 and Figure 2)
 
-## Proof of Proposition 1 (lines 273–302)
+## Proof of Proposition 1 (lines 275–304)
 
-- **Line 273** — section header; cross-reference labels (prop:pd-ratios, app:proof-pd) match those in Proposition 1 and the proof stub
-- **Line 278** [DEFINITION] OK — Euler equation $P_t^j = \mathbb{E}_t[\beta(c_{t+1}^H/c_t^H)^{-\gamma}(P_{t+1}^j + D_{t+1}^j)]$ is standard CRRA, consistent with preferences in equation (3)
-- **Line 281** [VERBAL] OK — P/D ratio $v^{AI}$ constant in stationary pre-singularity equilibrium; correct since all state variables are stationary
-- **Line 284** [ARITHMETIC] OK — no singularity: $c_{t+1}^H/c_t^H = 1+g$ (α unchanged, C grows by $1+g$); $D_{t+1}^{AI}/D_t^{AI} = 1+g$ (θ unchanged, C grows by $1+g$)
-- **Line 285** [ARITHMETIC] OK — non-extinction singularity: $c_{t+1}^H/c_t^H = \phi(1+g)(1+\eta)$ (α→φα, C→$(1+g)(1+\eta)$C); $D_{t+1}^{AI}/D_t^{AI} = \Gamma^{AI}(1+g)$ (θ→θ+Δθ(1-θ), C→$(1+g)(1+\eta)$C)
-- **Line 286** [VERBAL] OK — extinction: $c_{t+1}^H = 0$, payoff is zero; correct
-- **Lines 290–293** [ARITHMETIC] OK — Euler equation expansion verified: $\beta(1+g)^{-\gamma}$ correctly factored out; no-singularity contribution $(1-p)(1+g)(v+1)D$ correct; non-extinction contribution $p(1-\xi)[\phi(1+\eta)]^{-\gamma}(1+g)\Gamma^{AI}(v+1)D$ correct
-- **Line 295** [ARITHMETIC] OK — $\Gamma^N = (1-\Delta\theta)(1+\eta)$ is $\theta$-independent: $[(1-\theta)(1-\Delta\theta)]/(1-\theta) = 1-\Delta\theta$; verified. Implication that non-AI closed form is exact is correct.
-- **Line 295** [VERBAL] OK — post-singularity P/D approximated by $v^{AI}$; exact as $\Delta\theta \to 0$ since $\Gamma^{AI} \to 1+\eta$ becomes $\theta$-independent
-- **Line 295** [VERBAL] OK — backward recursion over chain $\theta_0, \theta_1, \ldots$ for numerically exact values; terminal approximation error vanishes as $\theta \to 1$; standard and correct
-- **Lines 297–299** [ARITHMETIC] OK — solved P/D ratio $v = A/(1-A)$ where $A = \beta(1+g)^{1-\gamma}[(1-p)+p(1-\xi)(1+\eta)^{-\gamma}\phi^{-\gamma}\Gamma^{AI}]$; derivation verified: $v = A(v+1) \Rightarrow v(1-A) = A \Rightarrow v = A/(1-A)$
-- **Line 301** [VERBAL] OK — equation (12) is algebraically identical to equation (4) in Proposition 1
-- **Line 301** [VERBAL] OK — non-AI derivation identical with $\Gamma^N$ replacing $\Gamma^{AI}$; straightforward and exact (since $\Gamma^N$ is $\theta$-independent)
+- **Line 275** — section header
+- **Line 280** [ARITHMETIC] OK — standard consumption CAPM Euler equation P_t^j = E_t[β(c_{t+1}^H/c_t^H)^{−γ}(P_{t+1}^j + D_{t+1}^j)]
+- **Line 286** [ARITHMETIC] OK — no-singularity case: c growth = 1+g, D^AI growth = 1+g (θ unchanged, C grows by 1+g)
+- **Line 287** [ARITHMETIC] OK — non-extinction singularity: c growth = φ(1+g)(1+η); D^AI growth = Γ^AI(1+g) where Γ^AI = (θ'/θ)(1+η)
+- **Line 288** [ARITHMETIC] OK — extinction: payoff = 0
+- **Lines 292–295** [ARITHMETIC] OK — Euler equation expansion verified step by step; factoring out β(1+g)^{−γ} is correct; (v^AI+1) factor from P+D = (v+1)D is correct
+- **Line 297** [ARITHMETIC] OK — Γ^N = (1−Δθ)(1+η) is θ-independent; verified: [(1−θ)(1−Δθ)]/(1−θ) = (1−Δθ), so the non-AI closed form is exact (not an approximation)
+- **Line 297** [VERBAL] OK — backward recursion description matches code in generate-exhibits.R (compute_pd_ai_exact function): v_k = [B(1−p) + B·p(1−ξ)·S·Γ^AI_k·(v_{k+1}+1)] / [1 − B(1−p)]
+- **Lines 299–301** [ARITHMETIC] OK — closed-form P/D formula derived by setting v_{k+1} = v_k = v^AI; collecting terms gives v(1−K) = K, so v = K/(1−K) where K = β(1+g)^{1−γ}[(1−p) + p(1−ξ)(1+η)^{−γ}φ^{−γ}Γ^AI]; matches equation (5)
+- **Line 303** [VERBAL] OK — "derivation for non-AI stocks is identical, replacing Γ^AI with Γ^N" is correct; since Γ^N is θ-independent, the approximation is exact for non-AI stocks (confirmed by code using compute_pd_approx for non-AI)

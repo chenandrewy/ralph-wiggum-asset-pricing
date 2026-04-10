@@ -146,14 +146,38 @@ consumption_growth <- function(tau, eta_val, phi_val) {
   phi_val * (1 + eta_val) + tau * pmax(0, 1 - delta * tau) * (1 - phi_val * alpha0) / alpha0 * (1 + eta_val)
 }
 
-# P/D with transfers: effective phi changes
-compute_pd_with_transfer <- function(p_val, xi_val, tau_val, eta_val, gamma_j, phi_val) {
+# Exact P/D with transfers via backward recursion over the theta chain.
+# Mirrors compute_pd_ai_exact but uses phi_eff (incorporating transfers) in the SDF.
+compute_pd_with_transfer <- function(p_val, xi_val, tau_val, eta_val, phi_val, n_steps = 60) {
   phi_eff <- phi_val + tau_val * pmax(0, 1 - delta * tau_val) * (1 - phi_val * alpha0) / alpha0
-  sdf_sing <- phi_eff^(-gamma) * (1 + eta_val)^(-gamma) * gamma_j
-  base <- beta * (1 + g)^(1 - gamma)
-  K <- base * ((1 - p_val) + p_val * (1 - xi_val) * sdf_sing)
-  if (K >= 1 || K <= 0) return(NA)
-  return(K / (1 - K))
+  B <- beta * (1 + g)^(1 - gamma)
+  S <- phi_eff^(-gamma) * (1 + eta_val)^(-gamma)
+
+  # Build the chain of theta values after 0, 1, 2, ... singularities
+  thetas <- numeric(n_steps + 1)
+  thetas[1] <- theta
+  for (k in 2:(n_steps + 1)) {
+    thetas[k] <- thetas[k - 1] + dtheta * (1 - thetas[k - 1])
+  }
+
+  # AI dividend growth factor at each theta
+  gamma_ai_k <- (thetas + dtheta * (1 - thetas)) / thetas * (1 + eta_val)
+
+  # Terminal value: at large k, theta ~ 1, closed-form is nearly exact
+  gamma_ai_term <- gamma_ai_k[n_steps + 1]
+  K_term <- B * ((1 - p_val) + p_val * (1 - xi_val) * S * gamma_ai_term)
+  if (K_term >= 1 || K_term <= 0) return(NA)
+  v <- K_term / (1 - K_term)
+
+  # Backward recursion
+  denom <- 1 - B * (1 - p_val)
+  if (denom <= 0) return(NA)
+  for (k in n_steps:1) {
+    numer <- B * (1 - p_val) + B * p_val * (1 - xi_val) * S * gamma_ai_k[k] * (v + 1)
+    v <- numer / denom
+    if (!is.finite(v) || v < 0) return(NA)
+  }
+  return(v)
 }
 
 p_ext <- 0.005  # 0.5% singularity probability
@@ -167,8 +191,7 @@ df_ext <- expand.grid(tau = tau_grid,
   mutate(
     eta_val = ifelse(grepl("Baseline", scenario), 0.5, 9.0),
     phi_val = ifelse(grepl("Baseline", scenario), phi, phi_large),
-    gamma_j_val = share_ratio_ai * (1 + eta_val),
-    pd_ai = compute_pd_with_transfer(p_ext, xi_ext, tau, eta_val, gamma_j_val, phi_val),
+    pd_ai = compute_pd_with_transfer(p_ext, xi_ext, tau, eta_val, phi_val),
     cons_growth = consumption_growth(tau, eta_val, phi_val)
   ) %>%
   ungroup()
@@ -353,7 +376,8 @@ fig_val <- ggplot(df_val, aes(x = Date, y = Index, color = Group, linetype = Gro
   scale_y_continuous(expand = expansion(mult = c(0.02, 0.05))) +
   theme_paper +
   theme(legend.position = c(0.30, 0.88),
-        plot.margin = margin(t = 15, r = 10, b = 5, l = 15, unit = "pt"))
+        plot.margin = margin(t = 15, r = 10, b = 5, l = 15, unit = "pt"),
+        panel.grid.major = element_line(color = "gray50"))
 
 ggsave(file.path(outdir, "fig-ai-valuations.pdf"), fig_val, width = 7, height = 4.5)
 cat("Wrote", file.path(outdir, "fig-ai-valuations.pdf"), "\n")

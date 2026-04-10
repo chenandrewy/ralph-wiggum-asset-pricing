@@ -1,32 +1,28 @@
 # tests/visual-pages.py
-Started: 2026-04-09 21:50:56 EDT
-Runtime: 43s
-[ralph-garage/agent-logs/20260409T215056.136894-0400_visual-pages_claude_opus.log](../ralph-garage/agent-logs/20260409T215056.136894-0400_visual-pages_claude_opus.log)
+Started: 2026-04-09 22:04:35 EDT
+Runtime: 50s
+[ralph-garage/agent-logs/20260409T220435.846112-0400_visual-pages_claude_opus.log](../ralph-garage/agent-logs/20260409T220435.846112-0400_visual-pages_claude_opus.log)
 
 # visual-pages
 VERDICT: PASS
-REASON: All 15 pages have visible page numbers, exhibits are well-formatted, and no formatting issues are detected.
+REASON: All pages have visible page numbers, exhibits are well-formatted, no formatting defects detected, and the paper is within the 20-page limit.
 
 ## Page Numbers
-Every page (1--15) displays a centered page number at the bottom. No page is missing a number.
+All 15 pages display a centered page number at the bottom. No pages are missing numbers.
+
+## Figures and Tables
+- **Figure 1 (page 2):** AI valuations chart. Clear axis labels, readable legend distinguishing NASDAQ Composite and S&P 500, properly captioned.
+- **Table 1 (page 8):** Price-dividend ratios grid. Clean horizontal rules, well-aligned columns, readable parameter note at bottom.
+- **Figure 2 (page 12):** Two-panel extension figure (AI Stock Valuations and Household Consumption). Clear axis labels, readable legend with baseline and large-singularity cases, properly captioned.
+
+All exhibits are nicely formatted and readable at the rendered resolution.
+
+## Formatting Issues
+- No overflowing text or margin violations detected on any page.
+- No broken references (e.g., "??" placeholders) observed.
+- No missing figures or tables.
+- Equations are numbered where they appear in display mode.
+- Footnotes render correctly (page 3, page 9).
 
 ## Paper Length
-The paper is 15 pages, well within the spec limit of 20 pages.
-
-## Exhibits
-
-| Exhibit | Page | Assessment |
-|---------|------|------------|
-| Figure 1 (AI Valuations) | 2 | Readable axes, clear legend distinguishing NASDAQ Composite and S&P 500, normalized price axis labeled. |
-| Table 1 (Price-Dividend Ratios) | 8 | Clean column layout with horizontal rules separating parameter groups. Column headers and parameter notes are legible. |
-| Figure 2 (Extension Panels) | 12 | Two-panel figure with panels (a) and (b). Legends present, axis labels readable, line styles distinguishable. |
-
-Total exhibits: 3 (spec allows at most 6).
-
-## Formatting Check
-- **Overflowing text:** None detected on any page.
-- **Broken references:** No "??" placeholders or unresolved cross-references observed.
-- **Missing figures:** All referenced figures and tables appear in place.
-- **Margins:** Text stays within margins on all pages.
-- **Equations:** Display equations are numbered (e.g., equations (1)--(12) visible across pages 4--14).
-- **Bibliography:** References on pages 14--15 are properly formatted with italicized journal names and complete citation information.
+The paper is 15 pages, well within the spec maximum of 20 pages.

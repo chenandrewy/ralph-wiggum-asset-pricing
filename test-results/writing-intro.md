@@ -1,60 +1,50 @@
 # tests/writing-intro.py
-Started: 2026-04-09 21:50:56 EDT
-Runtime: 2m 53s
-[ralph-garage/agent-logs/20260409T215056.130448-0400_writing-intro_claude_opus.log](../ralph-garage/agent-logs/20260409T215056.130448-0400_writing-intro_claude_opus.log)
+Started: 2026-04-09 22:04:35 EDT
+Runtime: 1m 54s
+[ralph-garage/agent-logs/20260409T220435.844845-0400_writing-intro_claude_opus.log](../ralph-garage/agent-logs/20260409T220435.844845-0400_writing-intro_claude_opus.log)
 
 # writing-intro
 VERDICT: FAIL
-REASON: Introduction arguments are not all clear to skimmers, and paragraph 2 is overloaded, breaking flow.
+REASON: The introduction buries a core argument (resource abundance overcoming frictions) and overloads paragraph 5 with too many ideas, hurting both skimmability and flow.
 
-## Subagent Results
+## Subagent 1: Are main arguments clear to a skimming reader?
 
-### 1. Clarity of main arguments to a skimming reader: FAIL
+**FAIL**
 
-Evaluated the five spec arguments (a–e) against what a skimmer sees (first/last sentences of each paragraph):
+Argument-by-argument:
 
-| Argument | Verdict | Notes |
-|----------|---------|-------|
-| (a) AI stocks hedge against negative singularity | PASS | Para 2 opens with "Part of this premium…reflects a hedging motive." |
-| (b) Incomplete markets are key | PASS (borderline) | Last sentence of Para 2 and last sentence of Para 4 together convey this, but require connecting non-adjacent sentences. |
-| (c) Financial market solutions are under-discussed | FAIL | "The role of financial markets remains under-explored" is buried in the interior of Para 2. It never appears in any first or last sentence. |
-| (d) Abundance of resources overcomes frictions | PASS | Last sentence of Para 5 states it directly. |
-| (e) Incomplete markets distort AI development | PASS | Last sentence of Para 4 is explicit. |
+- **(a) AI stocks have high valuations partly due to hedging motive:** PASS. Stated directly in paragraph 2's topic sentence.
+- **(b) Incomplete markets are key:** PASS. Paragraph 3 opens with the complete-markets counterfactual.
+- **(c) Financial market solutions are under-discussed; frictions limit effectiveness:** PASS. Paragraph 2 covers this clearly.
+- **(d) In a singularity, market frictions can be overcome due to abundance of resources:** FAIL. This argument is buried in the interior of paragraph 6. The paragraph's topic sentence frames the point as a policy aside ("another policy lever is redistribution") rather than a core theoretical result. A skimming reader following topic sentences would miss it entirely.
+- **(e) Incomplete markets distort not only valuations but also AI development:** PASS. Covered in paragraph 2 and reinforced in paragraph 5.
 
-**Recommendation:** Move the "under-discussed" framing into the first or last sentence of a paragraph—either as a standalone topic sentence opening Para 2, or as the closing sentence of Para 1.
+**Fix:** Elevate argument (d) to a topic-sentence position or add explicit emphasis so a skimmer lands on it.
 
-### 2. Introduction flow: FAIL
+## Subagent 2: Does the introduction flow well?
 
-- **Hook (Para 1):** Strong. Opens with a concrete fact and plants the central tension.
-- **P1 → P2:** Clean transition ("Part of this premium…").
-- **P2 → P3:** Transition itself works, but **Para 2 is overloaded**—it introduces the thesis, defines "negative AI singularity" cold, explains market incompleteness, distinguishes private/public equity, and motivates the hedging mechanism. Five new concepts in one paragraph. This is the main flow-breaker.
-- **P3 → P4:** Textbook motivation-to-results transition. Works well.
-- **P4 internal seam:** Contains two distinct ideas (quantitative results + welfare/veto distortion) stapled together. The transition between them—"The same incomplete markets that inflate AI valuations also distort real decisions. Market incompleteness distorts the development of AI itself."—is redundant (two sentences saying the same thing). One should be cut.
-- **P4 → P5:** Strong thematic link (regulation angle sets up redistribution).
+**FAIL**
 
-**Recommendations:**
-1. Distribute Para 2's conceptual density across Para 2 and Para 3 (e.g., move singularity definition or market-incompleteness details into a separate paragraph).
-2. Cut one of the two redundant pivot sentences in Para 4.
+- **Paragraphs 1–4 are clean and well-sequenced.** The opening figure, hedging motive, incompleteness framing, and GKP positioning all progress naturally.
+- **Paragraph 5 is overloaded.** It tries to cover four distinct ideas: closed-form results, quantitative P/D magnitudes, extinction risk attenuating valuations, and the household veto/regulation channel. The jump from extinction risk to blocking is abrupt with no conceptual bridge.
+- **Transition from paragraph 5 to 6 is jarring.** Paragraph 5 ends on AI regulation/veto; paragraph 6 opens with redistribution as a policy lever. The conditional "if blocking is costly" implicitly walks back the paragraph 5 claim without acknowledging it.
+- **Paragraph 6's closing sentence is repetitive.** "The same explosive growth that drives the incomplete-markets problem also provides the means for its resolution" re-describes the mechanism just explained rather than closing with the contribution.
 
-### 3. Promises fulfilled in the body: PASS
+**Fix:** Split paragraph 5 so quantitative results, extinction risk, and veto each get their own paragraph. Revise the paragraph 6 opening for a more deliberate transition.
 
-All promises and implications from the Introduction are fulfilled:
+## Subagent 3: Are all promised analyses delivered?
 
-| Promise | Fulfilled? | Where |
-|---------|-----------|-------|
-| Closed-form P/D ratios | Yes | Proposition 1 (Section 2.2) |
-| AI P/D ~2× non-AI quantitatively | Yes | Table 1 (Section 3) |
-| Extinction risk attenuates gap | Yes | Proposition 2(iii) + Section 3 |
-| Incompleteness distorts AI development (veto) | Yes | Proposition 3 (Section 4.1) |
-| Complete markets eliminate distortion | Yes | Proposition 3(ii) |
-| Transfers effective under explosive growth | Yes | Section 4.2 + Figure 2 |
-| Abundance of resources overcomes frictions | Yes | Equation (7) + Figure 2 |
-| Consistent with observed NASDAQ vs. S&P 500 | Yes | Section 3 |
+**PASS** (with minor weaknesses)
 
-Minor note: The "abundance" framing is slightly imprecise—the transfer/no-transfer consumption *ratio* is independent of η (equation 7), so the argument works in levels but not in ratios. This is a rhetorical nuance, not an unfulfilled promise.
+| Promise | Delivered? |
+|---------|-----------|
+| Closed-form P/D ratios | PASS — Proposition 1 |
+| AI P/D roughly twice non-AI | PASS (weak) — Table 1 shows 1.4–2×; "roughly twice" is the ceiling, not the typical result |
+| Extinction risk attenuates gap | PASS — Proposition 2(iii) and Table 1 |
+| Household may veto socially efficient AI | PASS — Proposition 3 |
+| Complete markets eliminate veto distortion | PASS — Proposition 3(ii) |
+| Transfers effective despite deadweight costs | PASS — Extension 2, Figure 2 panel (b) |
+| P/D compression from transfers | PASS — Figure 2 panel (a) |
+| Connection to AI regulation debates | PASS (weak) — qualitative interpretation rather than quantitative analysis |
 
-## Summary
-
-The introduction delivers on every promise it makes (subagent 3: PASS), but two structural issues cause it to fail:
-1. A key contribution claim (financial markets are under-discussed) is invisible to skimmers.
-2. Paragraph 2 tries to do too much, overwhelming the reader before the payoff arrives.
+All core modeling promises are fulfilled. Two minor weaknesses: "roughly twice" overstates the typical result, and the regulatory-debate connection remains qualitative rather than grounded in the analysis sections.

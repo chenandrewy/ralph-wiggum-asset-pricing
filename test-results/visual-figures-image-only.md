@@ -1,35 +1,33 @@
 # tests/visual-figures-image-only.py
-Started: 2026-04-09 21:50:56 EDT
-Runtime: 1m 30s
-[ralph-garage/agent-logs/20260409T215056.141538-0400_visual-figures-image-only_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260409T215056.141538-0400_visual-figures-image-only_claude_claude-opus-4-6.log)
+Started: 2026-04-09 22:04:35 EDT
+Runtime: 1m 39s
+[ralph-garage/agent-logs/20260409T220435.876262-0400_visual-figures-image-only_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260409T220435.876262-0400_visual-figures-image-only_claude_claude-opus-4-6.log)
 
 # visual-figures-image-only
 
-VERDICT: FAIL
+VERDICT: PASS
 
-REASON: fig-ai-valuations fails the contrast requirement due to light gray grid lines.
+REASON: Both figures pass all readability, distinguishability, contrast, and use-of-space requirements.
 
 ---
 
 ## fig-ai-valuations
 
-VERDICT: FAIL
+VERDICT: PASS
 
-REASON: Grid lines are light gray with low contrast, violating the requirement that every plotted element must be dark and high-contrast.
+REASON: The single-panel figure has readable labels, clearly distinguishable series, strong contrast, good use of space, and a clear narrative message.
 
-### Single panel (no sub-panels)
+### Full Figure (single panel)
 
-**Caption:** Monthly closing prices for the NASDAQ Composite (solid) and S&P 500 (dashed), each normalized to January 2015 = 100.
+**1. Readability: PASS.** The base font size is large (~22pt), and all text elements — y-axis label ("Normalized Price (Jan 2015 = 100)"), x-axis year tick labels (2016 through 2026), y-axis tick labels (100 through 500), and legend entries — are fully legible. Nothing is cut off or overlapping.
 
-**Readability: PASS.** Y-axis label, x-axis tick labels, y-axis tick labels, and legend are all clearly readable. Font sizes are adequate throughout. No text overlapping or cut off.
+**2. Distinguishability: PASS.** The NASDAQ Composite is rendered as a solid blue line and the S&P 500 as a dashed dark red line. The two series differ on three channels simultaneously — color, linetype, and trajectory — making them instantly separable. The legend is positioned in the upper-left area where the data values are low, so it does not occlude any meaningful portion of the plotted series.
 
-**Distinguishability: PASS.** NASDAQ is a solid blue line; S&P 500 is a dashed dark red line. Easy to tell apart via both color and line style. Legend clearly encodes both series and does not obscure data.
+**3. Contrast: PASS.** Both data lines are dark, saturated colors at sufficient line weight against a white background. The major gridlines are medium gray, visible without competing with the data. There are no light-gray or low-opacity elements on the plot.
 
-**Contrast: FAIL.** Grid lines are light gray and thin. Per the requirements, every drawn element must have strong visual contrast with no exemption for auxiliary elements. The two data series themselves have excellent contrast (solid blue, dashed dark red).
+**4. Use of space: PASS.** The data spans roughly 100 to ~500; the y-axis runs from just below 100 to just above 500, which is tight. The x-axis spans the full date range of the data (approximately 2015 to early 2026) with 2-year breaks. No edge has a gap exceeding 20% of the data range.
 
-**Use of space: PASS.** Y-axis data ranges ~100 to ~500; axis runs ~100 to ~500. X-axis data runs ~2015 to early 2026; axis spans the same. All four edges are within acceptable bounds.
-
-**Narrative clarity: PASS.** The figure clearly shows AI/tech-heavy stocks (NASDAQ) dramatically outpacing the broad market (S&P 500) since 2015, with a sharp divergence beginning around 2023.
+**5. Narrative clarity: PASS.** The caption explains that this shows monthly closing prices for the NASDAQ Composite vs. the S&P 500, normalized to January 2015 = 100. The visual immediately conveys the main message: the AI/tech-heavy NASDAQ has dramatically outpaced the broader market, with the gap widening sharply from around 2023 onward.
 
 ---
 
@@ -37,32 +35,26 @@ REASON: Grid lines are light gray with low contrast, violating the requirement t
 
 VERDICT: PASS
 
-REASON: Both panels have readable labels, clearly distinguishable series, strong contrast, good use of space, and clear narrative.
+REASON: Both panels are readable, all series are clearly distinguishable with strong contrast, axis limits are appropriate for the data, and the narrative message is clear from the figure and caption alone.
 
-### Panel (a): AI Stock Valuations
+### Panel (a) — AI Stock Valuations
 
-**Readability: PASS.** Title, axis labels ("Tax rate tau", "P/D Ratio (AI Stocks)"), and tick labels are all clearly rendered at adequate sizes. The annotation "P/D -> infinity as tau -> 0" is small but still readable at the rendered figure width.
+**1. Readability: PASS.** The panel title "(a) AI Stock Valuations" is large and clear. The y-axis label "P/D Ratio (AI Stocks)" and x-axis label "Tax rate tau" are both legible. Tick labels (7.5 through 17.5 on y-axis; 0% through 40% on x-axis) are readable. The annotation "P/D -> infinity as tau -> 0" for the dashed blue curve is legible.
 
-**Distinguishability: PASS.** Two series use distinct colors (dark red solid vs. dark blue long-dash) with different line widths. Immediately separable.
+**2. Distinguishability: PASS.** The two series use distinct visual channels: a solid red line (Baseline) and a thick dashed blue line (Large singularity). They are immediately separable.
 
-**Contrast: PASS.** Both data lines are dark and saturated against the white background. Grid lines are medium gray (gray75), visible but subordinate to the data.
+**3. Contrast: PASS.** Both curves are dark and rendered with sufficient line weight. The red and blue are both saturated, high-contrast colors against the white/light-gray background.
 
-**Use of space: PASS.** Y-axis spans 7 to 17. Data runs from ~8.5 to ~17. Y-min gap is ~1.5/8.5 = 18%, under 20%. Y-max is tight to the data. X-axis (0% to 40%) fully used.
+**4. Use of space: PASS.** The y-axis spans roughly 7.5 to 17.5. The data spans approximately 8 to 16 (range ~8). The y-max of 17.5 gives headroom of 1.5/8 = ~19%, under the 20% threshold. The x-axis spans 0% to 40%, matching the data range.
 
-**Narrative clarity: PASS.** Clearly shows that transfers (higher tax rate) compress AI stock P/D ratios, and that the large-singularity scenario starts with extremely high valuations that fall steeply with modest transfers.
+### Panel (b) — Household Consumption
 
-### Panel (b): Household Consumption
+**1. Readability: PASS.** The panel title "(b) Household Consumption" is large and clear. The y-axis label "Household Consumption Growth in Singularity" and x-axis label "Tax rate tau" are legible. The y-axis uses a log scale with tick labels at 0.5, 1.0, 2.0, 5.0. The annotations "Catastrophe: 50% loss," "25% loss," and "No change" are legible and appropriately placed.
 
-**Readability: PASS.** Title, axis labels, and tick labels are sized consistently with Panel (a). Log-scale y-axis has labeled breaks at 0.5, 1.0, 2.0, 5.0. Annotations ("Catastrophe: 50% loss", "25% loss", "No change") are legible.
+**2. Distinguishability: PASS.** The two series use solid red versus thick dashed blue, immediately separable. The "No change" reference line at y = 1.0 is rendered as a thick dark gray dashed line, clearly visible and distinct from the data series. The dot markers at tau = 0 are clearly visible.
 
-**Distinguishability: PASS.** Same color/linetype encoding as Panel (a). Reference line at y=1 is gray30 dashed with linewidth 1.5 — dark enough to be clearly visible. Catastrophe dots at tau=0 are appropriately marked.
+**3. Contrast: PASS.** All lines are dark and high-contrast. The reference line at y = 1.0 is dark gray and thick, not light or faint. Both data curves and the reference marks are immediately visible.
 
-**Contrast: PASS.** Reference line is gray30 (dark gray), providing strong contrast. Both data lines are dark red and dark blue. All elements are immediately visible.
+**4. Use of space: PASS.** The y-axis spans 0.5 to ~7 on a log scale, covering the full data range including catastrophe points. The x-axis spans 0% to ~65%, covering the full data range. No large empty regions.
 
-**Use of space: PASS.** Y-axis log scale spans ~0.3 to ~7. Data ranges from 0.5 to ~6. X-axis (0% to ~65%) accommodates both curves fully. Blue dashed curve is still rising at the right edge, so the axis is not wasted.
-
-**Narrative clarity: PASS.** Clearly communicates that absent transfers, households suffer catastrophic consumption losses, and that with increasing tax rates the large-singularity scenario responds dramatically while the baseline gains modestly.
-
-### Shared Legend
-
-**Readability: PASS.** Positioned below both panels with size 18 text and properly rendered Greek letters.
+**5. Narrative clarity: PASS.** The figure and caption together tell a clear story: government transfers reduce AI stock valuations by diminishing the hedging motive (Panel a), and transfers dramatically improve household consumption outcomes in the singularity state (Panel b). The catastrophe markers at tau = 0 anchor the narrative by showing what happens without transfers.

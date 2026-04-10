@@ -1,58 +1,61 @@
 # tests/factcheck-exhibits.py
-Started: 2026-04-09 21:50:56 EDT
-Runtime: 5m 44s
-[ralph-garage/agent-logs/20260409T215056.131017-0400_factcheck-exhibits_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260409T215056.131017-0400_factcheck-exhibits_claude_claude-opus-4-6.log)
+Started: 2026-04-09 22:04:35 EDT
+Runtime: 3m 52s
+[ralph-garage/agent-logs/20260409T220435.847828-0400_factcheck-exhibits_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260409T220435.847828-0400_factcheck-exhibits_claude_claude-opus-4-6.log)
 
 # factcheck-exhibits
-VERDICT: FAIL
-REASON: Figure 2 Panel (a) uses an approximate P/D formula that overstates AI stock valuations by ~11% versus the exact backward-recursion method used in Table 1 at identical parameters.
+VERDICT: PASS
+REASON: All three exhibits are correctly generated from the code and consistent with the paper's claims; no artifacts or errors found.
 
 ## Figure 1: Valuations of AI-Exposed Stocks vs. the Broader Market
 
-**Description:** Time-series plot of NASDAQ Composite and S&P 500 monthly closing prices, normalized to January 2015 = 100. NASDAQ (solid blue) outpaces S&P 500 (dashed red), with the gap widening sharply from 2023 onward.
+**Description:** A time-series plot showing monthly closing prices for the NASDAQ Composite (solid blue) and S&P 500 (dashed red) from 2015 to ~2025, each normalized to January 2015 = 100.
 
 ### Suspicious features
-1. **Sharp NASDAQ run-up post-2023:** The NASDAQ line steepens notably around 2023, creating a widening gap.
-2. **COVID dip (~2020) and 2022 drawdown:** Both lines show dips at these dates.
+
+1. **Sharp divergence starting ~2023.** The NASDAQ line rises steeply relative to the S&P 500 around 2023–2024, with NASDAQ reaching roughly 5× its 2015 level while S&P reaches roughly 3×.
+2. **COVID dip ~2020.** Both series show a visible dip around early 2020.
 
 ### Code check
-- The code (`code/generate-exhibits.R`, lines 286–358) downloads NASDAQ from FRED and S&P 500 from the Shiller/datahub dataset, takes the last observation per month, aligns date ranges, and normalizes the earliest common month to 100.
-- The sharp NASDAQ run-up post-2023 reflects the AI/tech boom in the actual market data. The COVID dip and 2022 drawdown are real market events.
-- Data sources match the caption ("NASDAQ from FRED; S&P 500 from the Shiller dataset").
-- Y-axis label ("Normalized Price (Jan 2015 = 100)") matches the normalization logic.
-- Legend labels and line styles match the code's `scale_color_manual` and `scale_linetype_manual` specifications.
 
-**Exhibit verdict: PASS** — All visible features are consistent with real market data and correctly generated code.
+1. **Sharp divergence:** The code downloads real market data from FRED (NASDAQ) and the Shiller/datahub dataset (S&P 500). The post-2023 divergence reflects the actual AI/tech boom in public markets. Both series are normalized to first-common-month = 100 (`normalize()` at line 354). The NASDAQ ending near 500 and S&P near 300 is consistent with actual market performance over this period. **Verified as real.**
+2. **COVID dip:** Real market event (March 2020 crash). Both indices fell sharply before recovering. **Verified as real.**
 
-## Table 1: Price-Dividend Ratios: AI Stocks vs. Non-AI Stocks
+**Exhibit verdict: PASS** — Data is downloaded from authoritative external sources (FRED, Shiller dataset), normalization logic is correct, labels and caption match the code.
 
-**Description:** Grid of P/D ratios for AI and non-AI stocks across singularity probabilities ($p$ = 0.1%–1.0%) and extinction probabilities ($\xi$ = 0%–20%). Parameters: $\beta=0.96$, $g=0.02$, $\gamma=4$, $\phi=0.5$, $\eta=0.5$, $\theta=0.15$, $\Delta\theta=0.2$.
+## Table 1: Price-Dividend Ratios — AI Stocks vs. Non-AI Stocks
+
+**Description:** A grid of model-implied P/D ratios for AI and non-AI stocks across five singularity probabilities (p = 0.1% to 1.0%) and four extinction probabilities (ξ = 0% to 20%). Parameters: β=0.96, g=0.02, γ=4, φ=0.5, η=0.5, θ=0.15, Δθ=0.2.
 
 ### Suspicious features
-1. **AI P/D jumps from 15.5 to 26.5 as $p$ goes from 0.5% to 1.0% (at $\xi=0$):** A near-doubling for a doubling of $p$.
-2. **Non-AI P/D also rises with $p$:** Counterintuitive since non-AI stocks lose share in a singularity.
+
+1. **AI P/D at p=1%, ξ=0% is 26.5, much higher than the rest of the table.** This could be an artifact of the recursion diverging.
+2. **Non-AI P/D varies little across ξ at low p.** At p=0.1%, non-AI P/D ranges from 9.7 to 9.8 — nearly flat.
 
 ### Code check
-1. **AI P/D jump (15.5 → 26.5):** The exact backward-recursion formula (`compute_pd_ai_exact`, lines 51–80) is nonlinear in $p$. At higher $p$, the singularity SDF component ($\phi^{-\gamma}(1+\eta)^{-\gamma}\Gamma^{AI}$) dominates. Manually verified: Non-AI P/D at $p=0.001, \xi=0$ gives 9.77 → rounds to 9.8 ✓. Non-AI at $p=0.005, \xi=0.10$ gives 10.84 → rounds to 10.8 ✓. Non-AI at $p=0.01, \xi=0$ gives 13.26 → rounds to 13.3 ✓.
-2. **Non-AI P/D rising with $p$:** Although non-AI dividend share shrinks ($\Gamma^N = 0.8 \times 1.5 = 1.2$), the SDF product $\phi^{-\gamma}(1+\eta)^{-\gamma}\Gamma^N = 16 \times 0.1975 \times 1.2 = 3.79 > 1$. Because the SDF-weighted dividend growth exceeds 1, higher $p$ raises non-AI P/D. This is correct: the displacement-driven marginal-utility surge ($\phi^{-\gamma}=16$) more than compensates for the dividend share loss.
-3. **Footnote parameters** match code parameters at lines 18–25. Table header, column structure, and rounding format verified against `format_num` (line 97: `sprintf("%.1f", x)`).
 
-**Exhibit verdict: PASS** — All values verified numerically; patterns are consistent with model mechanics.
+1. **High AI P/D at p=1%, ξ=0%:** Manual verification of the non-AI closed-form formula confirms the non-AI value (13.3) is correct: K = β(1+g)^(1−γ) × [(1−p) + p(1−ξ)S·Γ^N] ≈ 0.9046 × 1.0280 = 0.9299, yielding P/D = 0.9299/0.0701 ≈ 13.3. The AI exact recursion (`compute_pd_ai_exact`, lines 51–80) iterates backward over 60 post-singularity theta states. At high p, AI's dividend growth multiplier (Γ^AI ≈ 3.2 at θ₀=0.15 vs Γ^N ≈ 1.2) amplifies the option value, producing legitimately high P/D. The ratio of 2.0 is economically sensible: higher singularity probability means AI stocks' hedging value is more frequently realized. **Verified as correct.**
+
+2. **Flat non-AI P/D at low p:** At p=0.1%, the singularity-related term p(1−ξ)S·Γ^N contributes only ~0.0038 to K, so varying ξ from 0% to 20% changes K by ~0.0008, producing negligible variation in P/D. This is mathematically correct — extinction risk is essentially irrelevant at very low singularity probabilities. **Verified as correct.**
+
+**Exhibit verdict: PASS** — Spot-checked entries match manual calculations; monotonicity patterns (increasing in p, decreasing in ξ) are economically correct; the exact backward-recursion code for AI stocks is properly implemented; table footnote accurately describes the method.
 
 ## Figure 2: Government Transfers and the Singularity
 
-**Description:** Two-panel figure. Panel (a) shows AI stock P/D ratio vs. tax rate $\tau$ for baseline ($\eta=0.5, \phi=0.5$) and large singularity ($\eta=9, \phi=0.05$). Panel (b) shows household consumption growth in the singularity state vs. $\tau$, with a log-scaled y-axis.
+**Description:** Two-panel figure. Panel (a) shows AI stock P/D ratios vs. tax rate τ (0–40%) for baseline (η=0.5, φ=0.5) and large-singularity (η=9, φ=0.05) scenarios. Panel (b) shows household consumption growth in the singularity state vs. τ (0–70%) on a log scale, with annotations marking the catastrophic losses at τ=0.
 
 ### Suspicious features
-1. **Panel (a): Large-singularity line entering from the top with "P/D → ∞ as τ → 0" annotation.** P/D is undefined (NA) at low $\tau$ values.
-2. **Panel (a): Baseline P/D level at $\tau=0$ appears to be ~16.7, but Table 1 reports 15.0 for matching parameters ($p=0.5\%, \xi=5\%$).**
-3. **Panel (b): Catastrophe annotations** — "50% loss" for large singularity and "25% loss" for baseline at $\tau=0$.
+
+1. **Panel (a): The large-singularity line appears to start from the upper boundary of the chart, with an annotation "P/D → ∞ as τ → 0".** This suggests the P/D is undefined at τ=0 for the large singularity.
+2. **Panel (b): The large-singularity line starts very low (~0.5) and rises steeply, crossing the baseline line.** The crossover and steep rise could be artifacts.
+3. **Panel (b): Annotation says "Catastrophe: 50% loss" at τ=0 for large singularity and "25% loss" for baseline.**
 
 ### Code check
-1. **Large-singularity P/D divergence:** At $\tau=0$, $\phi=0.05$, $\eta=9$: the SDF product is $0.05^{-4} \times 10^{-4} \times \Gamma^{AI} = 160{,}000 \times 0.0001 \times 21.3 = 341$. This yields $K = 0.905 \times (0.995 + 0.005 \times 0.95 \times 341) = 2.37 > 1$, so P/D is undefined. The code returns `NA` (line 155), and the annotation (lines 217–219) correctly marks this divergence. **Verified as correct.**
 
-2. **Baseline P/D level discrepancy (16.7 vs. 15.0):** The extension figure uses `compute_pd_with_transfer` (lines 150–157), which is the *approximate* closed-form treating post-singularity P/D as equal to pre-singularity. Table 1 uses `compute_pd_ai_exact` (lines 51–80), which performs backward recursion over successive singularity states. At $p=0.005, \xi=0.05$: approximate gives 16.7, exact gives 15.0 — an 11.3% overstatement. The two exhibits use inconsistent computation methods for the same economic quantity at the same parameters without disclosure. **This is a methodological inconsistency.**
+1. **P/D undefined at τ=0 for large singularity:** At τ=0, φ_eff = φ_large = 0.05. The SDF factor S = 0.05^(−4) × 10^(−4) = 160,000 × 0.0001 = 16. The terminal K_term = B × [(1−p) + p(1−ξ)·S·Γ_term] with Γ_term ≈ 10 gives K_term = 0.9046 × (0.995 + 0.005 × 0.95 × 16 × 10) = 0.9046 × 1.755 ≈ 1.59 > 1, so the function correctly returns NA. The annotation and paper text (line 250: "the existence condition in Remark 1 is violated because φ^(−γ) = 160,000") are consistent. **Verified as correct.**
 
-3. **Catastrophe annotations:** `consumption_growth(0, 0.5, 0.5) = 0.5 × 1.5 = 0.75`, so 25% loss ✓. `consumption_growth(0, 9.0, 0.05) = 0.05 × 10 = 0.5`, so 50% loss ✓. Both match the code (lines 227–228) and the paper text. **Verified as correct.**
+2. **Steep rise of large-singularity consumption:** `consumption_growth(τ, 9, 0.05)` = 0.05×10 + τ(1−0.5τ)(1−0.035)/0.70 × 10 = 0.5 + τ(1−0.5τ)×13.79. At τ=0.5: 0.5 + 0.5×0.75×13.79 = 0.5 + 5.17 = 5.67. The large-singularity curve rises far faster than baseline because the transfer base scales with (1+η)=10. The crossover is real: at low τ, baseline starts higher (0.75 vs 0.5), but the large-singularity curve's slope is ~10× steeper. **Verified as correct.**
 
-**Exhibit verdict: FAIL** — Panel (a) uses an approximate P/D formula (`compute_pd_with_transfer`) that overstates the AI P/D level by ~11% versus the exact backward-recursion method (`compute_pd_ai_exact`) used to generate Table 1 at identical parameter values ($p=0.5\%, \xi=5\%$). A reader comparing the two exhibits would see the baseline starting at ~16.7 in the figure versus 15.0 in the table. The figure code should use the exact method for consistency, or the discrepancy should be disclosed.
+3. **Catastrophe annotations:** At τ=0: cons_large_0 = φ_large×(1+η) = 0.05×10 = 0.5 → 50% loss. cons_base_0 = φ×(1+η) = 0.5×1.5 = 0.75 → 25% loss. Both annotations match the code output exactly. **Verified as correct.**
+
+**Exhibit verdict: PASS** — The P/D divergence at τ=0 for large singularity is a genuine mathematical feature (K>1), not an artifact; consumption growth formulas produce correct values at boundary cases; annotations match computed quantities; caption parameters (α=0.70, p=0.5%, ξ=5%, δ=0.5) match the code (p_ext=0.005, xi_ext=0.05, alpha0=0.70, delta=0.50).

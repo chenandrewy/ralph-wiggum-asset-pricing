@@ -1,22 +1,23 @@
 # tests/element-opening-fig.py
-Started: 2026-04-09 21:50:56 EDT
-Runtime: 50s
-[ralph-garage/agent-logs/20260409T215056.131539-0400_element-opening-fig_claude_opus.log](../ralph-garage/agent-logs/20260409T215056.131539-0400_element-opening-fig_claude_opus.log)
+Started: 2026-04-09 22:04:35 EDT
+Runtime: 42s
+[ralph-garage/agent-logs/20260409T220435.852976-0400_element-opening-fig_claude_opus.log](../ralph-garage/agent-logs/20260409T220435.852976-0400_element-opening-fig_claude_opus.log)
 
 # element-opening-fig
 VERDICT: PASS
-REASON: The figure is empirical, compares AI-exposed vs. broad-market stock performance, supports the intro's motivating claim, and is publication-quality.
+REASON: The opening figure is empirical, compares AI-exposed vs. broader market valuations using real data, directly supports the intro's motivating claim, and is publication-quality.
 
 ## Findings
 
-**Requirement 1 — Empirical, not theoretical:** PASS. The figure plots real monthly closing prices for the NASDAQ Composite and S&P 500, downloaded from FRED and the Shiller dataset. It is purely empirical.
+**Requirement 1 — Empirical, not theoretical:** PASS. The figure plots real monthly closing prices for the NASDAQ Composite and S&P 500, downloaded from FRED and the Shiller dataset. No model output is involved.
 
-**Requirement 2 — Compares AI and non-AI valuations:** PASS (with caveat). The NASDAQ Composite serves as a proxy for AI/tech-exposed stocks vs. the S&P 500 as the broader market. This is a reasonable but imperfect proxy — NASDAQ includes many non-AI firms. The caption and legend label it "AI/Tech-Heavy," which is honest. The figure shows normalized price levels rather than valuation ratios (e.g., P/D or P/E), which is a minor mismatch with the spec's language about "valuation ratios." However, for a motivational opening figure in a theory paper with deliberately limited empirical content, price-level divergence conveys the relevant stylized fact.
+**Requirement 2 — Compares AI and non-AI public-stock valuations:** PASS. The figure contrasts the NASDAQ Composite (labeled "AI/Tech-Heavy") against the S&P 500, both normalized to January 2015 = 100. The NASDAQ serves as a reasonable proxy for AI-exposed public equities; the S&P 500 represents the broader market.
 
-**Requirement 3 — Supports the intro's motivating claim:** PASS. The intro's opening sentence asserts that AI-exposed stocks have reached "remarkable valuations." The figure shows NASDAQ dramatically outpacing the S&P 500 since 2015, with the gap widening sharply post-2023 as generative AI expectations surged. The text references the figure directly and connects the visual to the hedging motive.
+**Requirement 3 — Supports the intro's motivating claim:** PASS. The intro opens with "The publicly traded stocks most exposed to artificial intelligence have reached remarkable valuations." The figure directly illustrates this: the NASDAQ line dramatically diverges upward from the S&P 500 after ~2023, consistent with the claim that AI-exposed stocks have outpaced the market as generative-AI expectations intensified.
 
-**Requirement 4 — Clear and publication-quality:** PASS. The rendered figure (page 2) has clean axis labels, legible font sizes (base_size = 22 in code), distinct line styles (solid vs. dashed) and colors (blue vs. red), a well-placed legend, and appropriate date formatting. The y-axis label ("Normalized Price (Jan 2015 = 100)") is precise. No visual clutter.
+**Requirement 4 — Clear and publication-quality:** PASS. The rendered figure (page 2) uses clean dual-series line plot with solid/dashed distinction, clear legend, properly labeled axes ("Normalized Price"), and appropriate date range (2016–2026). Font sizes are legible. Color contrast (blue vs. red) is strong. Caption is informative and cites data sources.
 
-## Minor Weaknesses (not failures)
-- **NASDAQ ≠ AI stocks.** A more targeted comparison (e.g., an AI-firm basket vs. non-AI firms) would be sharper. The spec acknowledges this is acceptable: "empirical content remains very limited."
-- **Prices vs. valuation ratios.** The caption says "Valuations" but the y-axis plots normalized price levels. Strictly, price appreciation and valuation ratios are different concepts. This is a minor labeling tension but does not undermine the economic point.
+## Minor observations
+
+- The figure uses broad indices (NASDAQ vs. S&P 500) rather than a curated AI stock portfolio or CRSP-based sort. This is adequate for a theory paper's motivating figure, though a more targeted AI vs. non-AI comparison would be sharper.
+- The spec (IV.8.b) says "ideally a single figure in the introduction illustrating how the high valuation ratios of publicly traded AI stocks are higher than those of other stocks." The figure shows price appreciation (normalized prices) rather than valuation ratios (P/E or P/D). This is a defensible choice for a motivating figure, but it is worth noting the distinction.
