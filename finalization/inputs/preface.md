@@ -204,7 +204,7 @@ This is still true, even with agentic Claude Opus. I used a `theory-unmodeled-ch
 
 ## Limitations of the Current AI (April 12, 2025)
 
-Right now, AI is like an all-purpose cognitive power tool. It can plow forward on just about any cognitive task. But it's difficult to wield with subtlety or artistry. 
+Right now, AI is a cognitive power tool, or cognitive [heavy equipment](https://en.wikipedia.org/wiki/Heavy_equipment). It can plow forward on just about any kind of knowledge task. But it's difficult to wield with subtlety or artistry. 
 
 The artisanal elements of research, like
 
@@ -213,93 +213,52 @@ The artisanal elements of research, like
 - turning dry statistics into compelling figures and text
 - **responding to referees and editors**
 
-these are best done with humans *in* the loop (not *on* the loop).
+these are still best done with humans *in* the loop.
 
-That last element is critical. My dream when I started this revision was to be able to just pass the AIs the referee report and editor letter, to have them iterate based on it (subject to quality checks), and to return to me a paper that I believed could get us published.
+That last element is important to me. My dream was to have the AIs respond to the CFR referee and editor. I attempted this in old versions of the `paper-spec`:
 
-I could not achieve this. In earlier drafts of the algo, the `paper-spec` hinted at how to respond to the referee, but did not specify the full answer:
+- 5. An extension of the main model addresses the referee's suggestions in `spec/CFR-R1-report.md`:
+    - a. The singularity may cause extinction, following `spec/lit/Jones-2024-AERI.md`.
+    - b. Consumption may become infinite (in our case, only for the AI owners).
+    - c. Government transfer programs attenuate displacement risk, emphasizing the role of heterogeneity at the singularity (cf. `spec/lit/Jones-2024-AERI.md`). 
 
-5. An extension of the main model formally incorporates ideas from `spec/lit/Jones-2024-AERI.md`:
-    - The singularity may cause extinction.
-    - Consumption may become infinite (in our case, only for the AI owners).
-    - Data on the value of a statistical life can be used to calibrate the model.
-    - Consider how infinite output and consumption affects the assumption that agents cannot make trades despite the mutual benefit (see `spec/lit/GKP-2012-WP.md`).
-    - Keep these ideas in an extension, so that the main argument stays simple.
-...
-7. The paper explains how it contributes relative to `spec/lit/GKP-2012-WP.md`
-    - In GKP, there is a footnote mentioning how government debt or intergenerational transfers would affect the magnitude of the displacement factor.
+and also with a `referee-cfr-r1` agent:
 
-Instead, the Ralph loop had a `referee-cfr-r1` agent:
 ```
+
 You are a constructive referee at a top finance journal.
-You do NOT accept or reject this paper. You provide suggestions to help the author improve it.
 
-A prior referee (CFR R1) raised two concerns about an earlier draft. That report is at:
-  {cfr_path}
+You do NOT accept or reject this paper. You provide suggestions to help 
+the author improve it.
 
-You are NOT that referee. Use their concerns as a guide for where to focus, but write your own assessment of the current draft. 
+A prior referee (CFR R1) raised two concerns about an earlier draft. 
+That report is at `spec/CFR-R1-report`.
 ```
 
-The referee agents' suggestions were decent, but the author agents could not assemble the advice into coherent and convincing model extensions. The resulting extensions had inconsistent assumptions, theoretical dead ends, and weak-to-non-existent economic takeaways. 
+`referee-cfr-r1` produced decent suggestions, but the author agents could not assemble the advice into a coherent and convincing response. The resulting extensions had inconsistent assumptions, theoretical dead ends, and weak-to-non-existent economic takeaways. 
 
+Ultimately, I hard-coded the extension's details. For example, the final `paper-spec` specified
+- d. Extension 2: Government transfers could attenuate the incomplete markets problem, despite their deadweight costs.
+    - i. The ideal resolution of market incompleteness is to allow broader trading of AI capital. But as pointed out by `spec/lit/GKP-2012.md`, this capital may not yet exist, and thus this ideal solution has limits.
+    - ii. Government transfers may help resolve this deeper incompleteness problem, as mentioned in `spec/lit/GKP-2012.md`. But they incur sizeable deadweight costs (waste, fraud, abuse) that scale with the size of the transfers, making this solution ineffective and unattractive in standard settings. 
+    - iii. But in a singularity, with potentially infinite output growth (`spec/lit/Jones-2024-AERI.md`), the government solution is worth considering, even in the face of immense deadweight costs. This possibility is analyzed quantitatively.         
 
-
+This kind of artisanal work: tying together distant ideas and weaving it into an interesting economic takeaway, based on a general direction provided by a referee---this seems quite out of reach of current AI. 
 
 To put it another way, in April 2025 I speculated
 
 > At some point, 2024-style economic analysis will be "on tap." You'll be able to go to a chatbot and ask "write me a paper about hedging AI disaster risk," and it will return you something like this paper (probably something much better). 
 
-And now we do have economic analysis on tap. But what we can offer on tap is more like 2024 Finance Research Letters than 2024 Journal of Finance.
+Now we do have economic analysis on tap. But what we can offer on tap is more like 2024 Finance Research Letters than 2024 Journal of Finance. At least right now.
 
-I really *wanted* to have 2024-style Journal of Finance on tap. I tried my hardest to make it happen, just for short little theory papers, like this one. But as you can see from the (TBC: links) exquisitely detailed paper spec, the dozens fo tests, and the human checking of the paper direction, it's very hard to just turn on the tap and get a high quality paper.
+## The Future of AI and Economics Research (Speculative)
 
-I'm going to go out on a limb and make prediction: 2024-style JF papers on tap will not come unless we have another revolution like the advent of [reasoning models](https://openai.com/index/learning-to-reason-with-llms/). The agentic revolution turned these models from research advisors into research power tools, but the artisanal elements are still missing.
-
-
-## Lessons about Research
-
-A common response to Novy-Marx and Velikov (2025) was: "people are not ready for this." I heard concerns that peer review will be inundated with AI-generated slop. 
-
-Working on this paper gave me a different perspective. It made me think about the fundamentals. I think the fundamentals are the following:
-
-1. Readers want to learn something interesting and true.
-2. Readers don't want to check all the math.
-3. A system of author reputations makes 1 and 2 possible.
-
-AI-generated papers don't change any of these fundamentals. Critically, fundamental 3 made me quite wary of putting my name on AI slop. 
-As a result, I made a [prediction](https://github.com/chenandrewy/Prompts-to-Paper/edit/master/README.md#lessons-about-research) in the April 2025 draft:
-> I don't think AI-generated papers will change much about peer review, at least not the current generation of AI.
-So far, this prediction has been born out. The JF and RFS journal statistics pages show no sign of an increase in submissions. 
-
-| Sub Year	| JF 	| RFS* |
-| ---       | ---        | ---  |
-|2023 		| 1,142 	 | 1534 |
-|2024 		|  937		 | 1544 |
-|2025 		|  1,100 (p) | 1474 |
-
-where 2025 is projected, and * indicates RFS counts end in May (2025 means May 8, 2024 to May 8, 2025).
-There could be an “AI investment” effect in this table. Perhaps many scholars, like myself, took time off producing papers in favor of investing in AI tools.
-But I personally found the AI developments also led me to invest *more* in any individual paper. Now I can do so much! I can’t settle for the kind of work I did way back in 2024, or even 2025! I have a reputation to maintain. 
-
-
-
-
-
-
-
-
-## The Future of AI and Economics Research
+What will happen if and when economics research is actually "on tap"?
 
 "Economics on tap" could be a disaster for the economics labor market (could be). It certainly *will* be an extremely cheap substitute for at least some economists' labor. I suppose the questions is whether that will result in a strong substitution away from labor.
 
 The optimistic argument is that AI also *complements* economists' labor. Perhaps, the number of economists will remain the same, but our research output increases in terms of both quantity and quality. 
 
-But there are reasons why total research output is limited. Two key factors in academic publishing are attention and reputation ([Klamer and van Dalen 2001, J of Economic Methodology](https://repub.eur.nl/pub/6875/2001-0221.pdf)). Readers can only pay attention to so many scholars.  Put another way, I might augment the fundamentals of economics research with a sub-bullet:
-
-1. Readers want to learn something interesting and true.
-    1. **What bleeding edge experts are studying is interesting**
-
-By definition, there are a limited number of experts at the bleeding edge. These experts, in turn, can only pay attention to so many projects.
+But there are reasons why total research output is limited. Two key factors in academic publishing are attention and reputation ([Klamer and van Dalen 2001, J of Economic Methodology](https://repub.eur.nl/pub/6875/2001-0221.pdf)). Readers can only pay attention to so many reputable scholars. These scholars, in turn, can only pay attention to so may projects. 
 
 I'm not saying that I *expect* a disaster for the economics labor market.  But even if it's highly unlikely, it's still a scenario that economists should consider. 
-
