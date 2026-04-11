@@ -24,18 +24,19 @@ Your only job is to make the paper compile. Do not make any content, style, or s
 Procedure:
 
 1. Read `paper/.latex-build.log` to identify the error(s).
-2. Read the relevant source files (`paper/paper.tex`, `paper/references.bib`, or files under `paper/exhibits/`) to find the cause.
+2. Read the relevant durable source files (`paper/paper.tex` and `paper/references.bib`) to find the cause.
 3. Fix the error(s). Common causes include:
-   - Raw Unicode characters that pdflatex cannot handle (replace with LaTeX accent commands, or add `\usepackage[utf8]{inputenc}` to the preamble). Check `paper/paper.bbl` too — biber can emit raw UTF-8 there.
-   - References to missing files under `paper/exhibits/` (remove the include or generate the file).
-   - Undefined labels or cross-references.
+   - Raw Unicode characters that pdflatex cannot handle. For Unicode or encoding failures in citations or bibliography output, convert names and titles in `paper/references.bib` to LaTeX-safe forms.
+   - Undefined labels or cross-references that can be fixed in `paper/paper.tex`.
    - BibTeX/Biber errors in `paper/references.bib`.
 4. Verify your fix by running `bash ralph/build-paper.sh`. If it still fails, read the new error and fix it. Repeat until the build passes or you are confident no further fixes are possible.
 
 Rules:
 - Only change what is necessary to make the build succeed.
 - Do not rewrite, reorganize, or improve the paper content.
-- Only edit files under `paper/`. Do not edit `ralph/`, `spec/`, `tests/`, or `test-results/`."""
+- A valid fix may modify only `paper/paper.tex` and `paper/references.bib`.
+- Do not modify intermediate or generated files such as `paper/paper.bbl`, `paper/*.aux`, `paper/*.out`, `paper/*.bcf`, `paper/*.blg`, `paper/*.log`, `paper/paper.pdf`, or similar build artifacts.
+- Do not edit `ralph/`, `spec/`, `tests/`, or `test-results/`."""
 
 
 def main() -> int:
