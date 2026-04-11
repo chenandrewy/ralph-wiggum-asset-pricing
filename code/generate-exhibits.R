@@ -237,9 +237,10 @@ panel_a <- ggplot(pd_data_a,
        title = "(a) AI Stock Valuations") +
   scale_x_continuous(labels = scales::percent_format(), limits = c(0, 0.40)) +
   scale_y_continuous(limits = c(y_min_a, y_cap_a)) +
-  annotate("text", x = exit_tau + 0.01, y = y_cap_a * 0.95,
+  annotate("label", x = exit_tau + 0.01, y = y_cap_a * 0.95,
            label = expression(P/D %->% infinity ~ "as" ~ tau %->% 0),
-           color = "#1B4F99", size = 3.5, hjust = 0, fontface = "italic") +
+           color = "#1B4F99", size = 5, hjust = 0, fontface = "bold",
+           fill = "white") +
   scale_color_manual(values = scenario_colors, labels = scenario_labels) +
   scale_linetype_manual(values = scenario_linetypes, labels = scenario_labels) +
   scale_linewidth_manual(values = scenario_linewidths, labels = scenario_labels) +

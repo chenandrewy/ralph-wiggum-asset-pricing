@@ -1,7 +1,7 @@
 # tests/theory-intro-payoff.py
-Started: 2026-04-11 10:02:08 EDT
-Runtime: 1m 28s
-[ralph-garage/agent-logs/20260411T100208.986357-0400_theory-intro-payoff_claude_opus.log](../ralph-garage/agent-logs/20260411T100208.986357-0400_theory-intro-payoff_claude_opus.log)
+Started: 2026-04-11 10:15:04 EDT
+Runtime: 1m 9s
+[ralph-garage/agent-logs/20260411T101504.818081-0400_theory-intro-payoff_claude_opus.log](../ralph-garage/agent-logs/20260411T101504.818081-0400_theory-intro-payoff_claude_opus.log)
 
 # theory-intro-payoff
 VERDICT: PASS
@@ -9,30 +9,21 @@ REASON: Every modeling feature in the paper leads to an economic result that is 
 
 ## Detailed Mapping
 
-Each modeling feature is listed below with the corresponding economic result discussed in the introduction.
+Each modeling feature was checked for a corresponding economic result discussed in the introduction.
 
-1. **Representative household + AI owners, consumption share alpha_t**: Intro discusses the hedging motive arising from the household's displacement and its use of AI stocks as a partial hedge.
+| # | Modeling Feature | Intro Payoff | Location in Intro |
+|---|---|---|---|
+| 1 | Market incompleteness (restricted AI equity, cannot trade private capital) | Hedging motive and valuation premium | Para 2-3: "markets are incomplete—investors cannot trade the restricted equity of AI owners" |
+| 2 | Displacement parameter φ (household share drops upon singularity) | Displacement of consumption | Para 2: "singularity that displaces the typical investor's labor income and consumption" |
+| 3 | Singularity probability p | Quantitative valuation spread | Para 3: "P/D ratios for AI stocks can reach roughly twice those of non-AI stocks across plausible singularity probabilities" |
+| 4 | Productivity jump η (aggregate consumption rises by 1+η) | Aggregate output growth in singularity | Para 3: implied in closed-form results; Para 6: "singularity with explosive output growth" |
+| 5 | Extinction probability ξ | Attenuation of valuation gap | Para 3: "Extinction risk attenuates this gap: the states in which AI is powerful enough to produce enormous growth are also those in which existential risk is highest" |
+| 6 | Two asset types (AI stocks with share θ, Non-AI stocks) | Valuation spread between AI and non-AI stocks | Para 3: "P/D ratios for AI stocks can reach roughly twice those of non-AI stocks" |
+| 7 | CRRA preferences with γ > 1 | Drives hedging demand and veto threshold | Implicit in hedging motive (Para 3) and explicit in veto discussion (Para 4): "risk-averse household" |
+| 8 | Positive singularity probability q (Extension 1) | Social efficiency of AI development | Para 4: "When the positive singularity is more likely than the negative one, AI development is socially efficient" |
+| 9 | Veto mechanism with cost κ (Extension 1) | Distortion of efficient AI development | Para 4: "risk-averse household that cannot hedge displacement may rationally choose to block it—the uninsurable downside looms larger than the expected upside" |
+| 10 | Government transfers with deadweight cost δ (Extension 2) | Policy resolution under explosive growth | Para 5: "Government transfers offer an alternative, though they ordinarily incur deadweight costs... even grossly inefficient redistribution delivers large consumption gains" |
 
-2. **Singularity probability p**: Intro discusses how P/D ratios vary "across plausible singularity probabilities" and how increasing p raises the AI stock premium.
+## Summary
 
-3. **Displacement parameter phi**: Intro defines the negative singularity as displacement of "the typical investor's labor income and consumption" and explains that the hedging channel operates because AI stocks pay off when the household's consumption falls.
-
-4. **Productivity jump eta**: Intro references "transformative productivity gains" and the transfers discussion relies on eta being large enough that "even grossly inefficient redistribution delivers large consumption gains."
-
-5. **Extinction probability xi**: Intro states "Extinction risk attenuates this gap: the states in which AI is powerful enough to produce enormous growth are also those in which existential risk is highest."
-
-6. **Two public assets (AI stocks vs non-AI stocks, theta, Delta-theta)**: Intro discusses the valuation spread: "P/D ratios for AI stocks can reach roughly twice those of non-AI stocks."
-
-7. **Market incompleteness (restricted equity)**: Central to the intro: "markets are incomplete---investors cannot trade private AI capital---AI stocks command a premium."
-
-8. **CRRA preferences with gamma > 1**: Intro references the "risk-averse household" whose inability to hedge displacement drives both the valuation premium and the veto distortion.
-
-9. **Positive singularity probability q**: Intro discusses the veto extension: "When the positive singularity is more likely than the negative one, AI development is socially efficient. Yet a risk-averse household that cannot hedge displacement may rationally choose to block it."
-
-10. **Veto cost kappa**: Intro discusses: "calls to slow or halt AI development may partly reflect investors' inability to share in its upside."
-
-11. **Government transfers (tax rate tau, deadweight cost delta)**: Intro discusses: "Government transfers offer an alternative, though they ordinarily incur deadweight costs...in a singularity with explosive output growth, the resource base becomes so enormous that even grossly inefficient redistribution delivers large consumption gains."
-
-## Conclusion
-
-No modeling feature is gratuitous. Every element of the model setup (baseline and extensions) pays off in an economic result that the introduction previews for the reader.
+All ten distinct modeling features produce economic results that the introduction previews. The intro follows a logical progression: (1) hedging motive from market incompleteness → (2) quantitative valuation predictions → (3) extinction attenuation → (4) real distortion via veto → (5) policy resolution via transfers. No modeling feature is introduced without a corresponding payoff in the introduction, and no introductory claim lacks a modeling foundation in the paper.

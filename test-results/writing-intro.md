@@ -1,63 +1,63 @@
 # tests/writing-intro.py
-Started: 2026-04-11 10:02:08 EDT
-Runtime: 3m 15s
-[ralph-garage/agent-logs/20260411T100208.993377-0400_writing-intro_claude_opus.log](../ralph-garage/agent-logs/20260411T100208.993377-0400_writing-intro_claude_opus.log)
+Started: 2026-04-11 10:15:04 EDT
+Runtime: 3m 45s
+[ralph-garage/agent-logs/20260411T101504.820229-0400_writing-intro_claude_opus.log](../ralph-garage/agent-logs/20260411T101504.820229-0400_writing-intro_claude_opus.log)
 
 # writing-intro
 VERDICT: FAIL
-REASON: Introduction has flow problems and makes a promise about financial market solutions that the body does not fully deliver.
+REASON: Two of the paper's five main arguments are not clearly identifiable to a skimming reader of the Introduction.
 
-## Subagent Results
+## Sub-test 1: Skimmability of main arguments (FAIL)
 
-### 1. Skimmability of Main Arguments: PASS
+Each of the five main arguments from the spec was checked for whether a skimming reader—someone reading first sentences of paragraphs, bold/italic terms, and topic sentences—could pick it up.
 
-All five main arguments from the spec are conveyed to a skimming reader:
+| # | Argument | Verdict |
+|---|----------|---------|
+| 1 | AI stocks may have high valuations because they hedge a negative AI singularity | PASS — stated clearly in the topic sentence of paragraph 2 |
+| 2 | Incomplete markets are key; complete markets would eliminate the need to hedge | PARTIAL FAIL — incompleteness appears in paragraph 2, but the counterfactual ("complete markets ⟹ no valuation premium") is only stated in paragraph 5, in the context of the veto/development distortion, not the pricing result. A skimmer may not connect it back to valuations. |
+| 3 | Financial market solutions to AI disaster risk are under-discussed, though frictions limit effectiveness | FAIL — this literature-positioning claim does not appear in any first sentence or scannable topic sentence. Paragraph 6 addresses feasibility of policy solutions but not the observation that the literature has underemphasized this channel. |
+| 4 | If the singularity occurs, market frictions can be overcome due to abundance of resources | PASS — paragraph 6's closing sentence ("The same explosive growth that drives the incomplete-markets problem also provides the means for its resolution") is memorable and scannable |
+| 5 | Incomplete markets may distort not only valuations but also the development of AI | PASS — paragraph 5 opens with "The model has a second implication, for real decisions rather than just prices," a clean signpost |
 
-| Argument | Verdict | Notes |
-|----------|---------|-------|
-| (a) AI stocks hedge against negative singularity | Clear | Appears in para 2 opener and multiple paragraph openers |
-| (b) Incomplete markets are key | Clear | Para 3 opens with exactly this |
-| (c) Financial market solutions are under-discussed | Marginally present | Only in last sentence of the dense summary paragraph (para 2); not a paragraph opener |
-| (d) Abundance of resources overcomes frictions | Clear | Summary paragraph closer + para 7 closer |
-| (e) Incomplete markets distort AI development | Clear | Para 6 opener states it directly |
+The "AI agents wrote this paper" device is present and clearly scannable in the roadmap paragraph.
 
-Argument (c) is the weakest — it shares space with three other ideas in one sentence and could be overlooked. The paper would benefit from giving this point its own paragraph opener or foregrounding it more distinctly. But all five are present; a careful skimmer will find them.
+### Suggestions
+- Add a sentence in the pricing discussion (around paragraph 2 or 3) that explicitly states the complete-markets counterfactual for valuations: if markets were complete, the valuation premium would vanish.
+- Surface argument 3 ("financial market solutions are under-discussed") as a visible claim, either in the policy paragraph's topic sentence or as a brief standalone sentence earlier in the introduction.
 
-### 2. Introduction Flow: FAIL
+## Sub-test 2: Introduction flow (PASS)
 
-The introduction has several flow problems:
+Paragraph-by-paragraph assessment:
 
-1. **Paragraph 2 front-loads too much.** The second paragraph previews the entire paper in four sentences — definition, hedging motive, incomplete markets, AI development distortions, policy, and singularity resolution. The reader hasn't been given context for most of these threads yet. It reads like an abstract jammed into the narrative rather than a problem statement that pulls the reader forward.
+- **P1 (AI valuations / figure):** Strong hook grounded in observable fact. Plants the seed of "displacement" for P2.
+- **P2 (Define singularity / hedging motive):** Lands cleanly after P1; offers the mechanism and thesis.
+- **P3 (Why can't investors insure? / GKP):** Answers the natural skeptical question from P2. Excellent anticipatory writing.
+- **P4 (The model / quantitative results / extinction):** Appropriate transition from informal argument to formalization. Dense but organized. Extinction qualification at the end is slightly abrupt but creates forward tension.
+- **P5 (Real decisions / veto):** Sharpest transition in the piece. "The model has a second implication" is a clean signpost. Pivot from prices to real decisions is logical.
+- **P6 (Policy / transfers / explosive growth):** Follows P5's implicit question ("Can the distortion be fixed?"). Payoff sentence is rhetorically satisfying.
+- **P7 (Roadmap + AI-authorship):** Brief and well-placed. AI-authorship disclosure is a deliberate rhetorical move, not a non-sequitur.
+- **Lit review:** Clear hierarchy (primary antecedent → extinction channel → broader cluster). No jarring jumps.
 
-2. **Transition from para 3 to para 4 is abrupt.** Para 3 discusses market incompleteness and public AI stocks as imperfect substitutes. Para 4 pivots immediately to GKP (2012) and the model's consumption-based structure with no bridging sentence from economic mechanism to formalization.
+Overall: the introduction follows a clean problem → mechanism → formalization → extension → policy → resolution arc. Each paragraph earns the next one.
 
-3. **Para 6 (veto/regulation) appears without transition.** The logical sequence through para 5 is: observation → definition → mechanism → model → quantitative result. Para 6 introduces a second, distinct contribution (AI development distortion) without signaling the pivot. The transition sentence ("Incomplete markets distort not only valuations but also...") is the right instinct, but the paragraph then leaps to Proposition 3 and normative claims about AI regulation.
+## Sub-test 3: Promises fulfilled in body (PASS)
 
-4. **Para 7 nearly repeats para 2.** The summary paragraph's closer says "the abundance of resources in a singularity can overcome the very frictions that make displacement catastrophic." Para 7's second sentence is near-verbatim: "The abundance of resources in a singularity can overcome the frictions that make displacement catastrophic." This feels like returning to the starting line rather than deepening the idea.
+Every substantive promise or implied analysis in the Introduction is delivered in the body:
 
-5. **"Product of displacement" sentence is a tonal break.** The self-referential meta-commentary ("This paper is itself a product of the displacement it models") is tonally disconnected from the surrounding argument. Placed between the policy discussion and the roadmap, it interrupts the logical close.
+| Promise | Status |
+|---------|--------|
+| Figure showing NASDAQ vs. S&P 500 since 2015 | FULFILLED |
+| Hedging motive drives AI stock premium | FULFILLED |
+| Closed-form P/D ratios | FULFILLED (Proposition 1) |
+| P/D ratios reach ~2× across plausible parameters | FULFILLED (Table 1, p=1%) |
+| Consistent with observed valuation spreads | FULFILLED (appropriately hedged) |
+| Extinction risk attenuates the gap | FULFILLED (Proposition 2(iii), Table 1) |
+| Positive singularity + social efficiency | FULFILLED (Extension 1) |
+| Risk-averse household may veto under incomplete markets | FULFILLED (Proposition 3(i) + numerical example) |
+| Complete markets eliminate veto distortion | FULFILLED (Proposition 3(ii)) |
+| Transfers incur deadweight costs in normal settings | FULFILLED (Section 4.2) |
+| Explosive growth makes even inefficient transfers effective | FULFILLED (eq. 7, Figure 2) |
+| Section forward references (model, quant, extensions) | FULFILLED |
+| Parallels to GKP2012 | FULFILLED (Section 2.3) |
 
-### 3. Promises Fulfilled in Body: FAIL
-
-| # | Introduction Promise | Status |
-|---|---------------------|--------|
-| 1 | Figure 1 (NASDAQ vs S&P) | Fulfilled |
-| 2 | Formal definition of negative singularity | Fulfilled |
-| 3 | Hedging motive drives valuation premium | Fulfilled |
-| 4 | Market incompleteness distorts AI development | Fulfilled |
-| 5 | Financial market solutions under-discussed, frictions limit effectiveness | **Partially fulfilled** |
-| 6 | Abundance of resources overcomes frictions | Fulfilled |
-| 7 | Complete markets eliminate premium | Partially fulfilled (limiting case only, no formal proposition) |
-| 8 | Closed-form P/D ratios | Fulfilled |
-| 9 | P/D ratios ~2x for AI vs non-AI | Fulfilled |
-| 10 | Extinction risk attenuates gap | Fulfilled |
-| 11 | Positive singularity more likely → socially efficient | Marginally fulfilled (premise, not standalone result) |
-| 12 | Proposition 3 (veto result) | Fulfilled |
-| 13 | Connection to AI regulation debates | Fulfilled |
-| 14 | Government transfers with deadweight costs | Fulfilled |
-| 15 | Explosive growth overwhelms deadweight costs | Fulfilled |
-| 16 | Roadmap matches sections | Fulfilled |
-
-**Key gap:** The Introduction states "financial market solutions are under-discussed, though frictions limit their effectiveness," implying the paper analyzes financial hedging instruments and their friction-limited effectiveness. The body does not deliver this — Section 4 jumps directly to government transfers, and the only treatment of financial solutions is a qualitative limiting-case argument in Section 2 (phi_eff → 1). This is insufficient given the Introduction's framing of financial market solutions as a distinct point.
-
-**Secondary gap:** The Introduction states complete markets would cause the valuation premium to "vanish" as though this is a formal result, but the body treats it only as a limiting-case discussion rather than a stated proposition or corollary.
+No significant promise is left unfulfilled.

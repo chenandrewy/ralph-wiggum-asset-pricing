@@ -1,73 +1,54 @@
 # tests/theory-deadweight.py
-Started: 2026-04-11 10:02:08 EDT
-Runtime: 1m 56s
-[ralph-garage/agent-logs/20260411T100209.039200-0400_theory-deadweight_claude_opus.log](../ralph-garage/agent-logs/20260411T100209.039200-0400_theory-deadweight_claude_opus.log)
+Started: 2026-04-11 10:15:04 EDT
+Runtime: 2m 16s
+[ralph-garage/agent-logs/20260411T101504.830354-0400_theory-deadweight_claude_opus.log](../ralph-garage/agent-logs/20260411T101504.830354-0400_theory-deadweight_claude_opus.log)
 
 # theory-deadweight
 VERDICT: PASS
-REASON: Every formal object in the paper contributes to an economic claim, quantitative result, or narrative argument; no deadweight formalism was found.
+REASON: Every formal object, parameter, and equation earns its place through use in a result, calibration, or economic interpretation.
 
-## Audit methodology
+## Detailed Audit
 
-Every formal object (equation, proposition, remark, parameter, and variable) was cataloged and traced through the paper to verify that it (a) appears in at least one result, calibration, or interpretation, (b) cannot be replaced by plain English without weakening the economic claims, and (c) does not constitute a ceremonial or pompous detour.
+### Formal Objects Inventory
 
-## Formal objects cataloged
+| Object | Purpose | Used In |
+|--------|---------|---------|
+| Eq (1): $C_{t+1}=(1+g)C_t$ | Defines deterministic growth | Euler equation, all P/D formulas |
+| Eq (2): $\alpha_{t+1}=\phi\alpha_t$ | Displacement mechanism | Core of hedging channel, SDF |
+| Eq (3): CRRA utility | Preferences | SDF derivation, veto proof |
+| Prop 1 + Eqs (4)-(5) | Closed-form P/D ratios | Table 1 calibration, Extension 2 |
+| Remark 1 + Eq (6) | Existence condition $A^j<1$ | Extension 2 (infinite P/D at $\tau=0$), Prop 2(iii) proof |
+| Prop 2 (i)-(iii) | Comparative statics | Interprets Table 1 patterns directly |
+| Prop 3 + Eq (7) | Veto under incomplete markets | Extension 1 main result |
+| Eq (8) | Post-transfer consumption | Extension 2 setup, feeds Eq (9) |
+| Eq (9): $\phi_\text{eff}$ | Effective displacement | Connects transfers to Prop 1 formula |
+| Eq (10) | Transfer ratio independent of $\eta$ | Key insight: explosive growth overwhelms deadweight costs |
+| Appendix Eqs (11)-(14) | Full Euler equation proof | Proves Proposition 1 |
 
-### Parameters and variables (all used)
+### Parameters Check
 
-| Symbol | Introduced | Used in |
-|--------|-----------|---------|
-| $C_t$, $g$ | Setup (Eq 1) | P/D formulas, quantitative analysis, transfers |
-| $\alpha_t$, $c_t^H$ | Setup | SDF, veto analysis, transfer base |
-| $p$, $\xi$ | Singularity | P/D formulas, comparative statics, calibration grid |
-| $\eta$ | Singularity | P/D formulas, displacement condition $\phi(1+\eta)<1$, transfer levels |
-| $\phi$ | Displacement (Eq 2) | P/D formulas, comparative statics, veto, transfers ($\phi_\text{eff}$) |
-| $\theta_t$, $\Delta\theta$ | Assets | $\Gamma^{AI}$, $\Gamma^{N}$, hedging channel |
-| $\gamma$, $\beta$ | Preferences (Eq 3) | P/D formulas, veto threshold, calibration |
-| $\Gamma^{AI}$, $\Gamma^{N}$ | Prop 1 | Comparative statics, hedging channel interpretation |
-| $A^j$ | Remark 1 (Eq 6) | Existence condition, comparative statics proof (iii), Extension 2 |
-| $q$ | Extension 1 | Veto proof (Eq 7), numerical example |
-| $\kappa$ | Extension 1 | Veto cost, Proposition 3 |
-| $\tau$, $\delta$ | Extension 2 | Transfer consumption (Eq 8), $\phi_\text{eff}$ (Eq 9), Figure 2 |
-| $\phi_\text{eff}$ | Eq 9 | Connects transfers to baseline P/D formula |
+Every parameter introduced is used in at least one result, calibration value, or figure:
 
-No parameter or variable is introduced and then abandoned.
+- $\beta, g, \gamma, \phi, \eta, \theta, \Delta\theta, p, \xi$: All appear in the P/D formulas (Prop 1) and the calibration table
+- $\Gamma^{AI}, \Gamma^{N}$: Carry the key economic content (hedging channel comparison) and appear in comparative statics
+- $q$: Probability of positive singularity — used in Prop 3 proof (Eq 7) and numerical example
+- $\kappa$: Veto cost — used in Prop 3 statement and numerical example (1% of permanent consumption)
+- $\tau, \delta$: Tax rate and deadweight cost — used in Eqs (8)-(10) and the two-panel figure
+- $\alpha$: Household's consumption share — used in veto numerical example and transfer formula
+- $\alpha^+ = \min(1, \alpha/\phi)$: Positive singularity share — used in Prop 3 proof
 
-### Equations
+### Checks for Dead Weight
 
-1. **Eq 1** (consumption growth): Sets notation; feeds into the Euler equation and every pricing formula. One line, no bloat.
-2. **Eq 2** (displacement): Core mechanism of the model. Referenced throughout.
-3. **Eq 3** (CRRA utility): Standard preference specification. Used through the Euler equation and explicitly in the veto analysis.
-4. **Eqs 4--5** (P/D ratios, Proposition 1): The paper's main quantitative result. Calibrated in Table 1.
-5. **Eq 6** (existence condition, Remark 1): Not decorative---it is used in the Discussion (Section 2.3), in the comparative statics proof (iii), and is the key feature exploited in Extension 2 (infinite hedging demand at $\tau = 0$ under the large singularity).
-6. **Eq 7** ($\Delta u(\gamma)$, veto proof): Required for the limiting argument in Proposition 3(i). The proof would be incomplete without it.
-7. **Eq 8** (transfer consumption): Sets up the transfer mechanism. Every subsequent result in Extension 2 flows from it.
-8. **Eq 9** ($\phi_\text{eff}$): Bridges transfers to the baseline pricing formula, enabling reuse of Proposition 1. Efficient.
-9. **Eq 10** (transfer ratio): Makes transparent that the ratio is independent of $\eta$---the key insight that singularity-scale growth overwhelms deadweight costs. Stating this in words alone would obscure the mechanism.
-10. **Appendix Eqs 11--14**: Proof of Proposition 1, required by paper spec.
+**Introduced and abandoned?** No. Every formal object introduced in the setup or extensions is referenced in at least one downstream result. The $\Gamma$ growth factors, the existence condition $A^j$, and $\phi_\text{eff}$ all reappear where needed.
 
-### Propositions and remarks
+**Could any formal object be replaced by plain English?** The comparative statics in Proposition 2 are directional claims that could in principle be stated informally, but the proof of part (iii) — using convexity of $A/(1-A)$ — reveals a non-obvious mechanism (why extinction compresses the *ratio*, not just the levels). The transfer ratio in Eq (10) delivers a non-trivial insight (independence from $\eta$) that requires the algebra. The P/D closed forms are the paper's main analytical contribution and cannot be replaced by prose.
 
-- **Proposition 1** (P/D ratios): The central result. Calibrated quantitatively.
-- **Remark 1** (existence condition): Does real work---motivates Extension 2 and the infinite-hedging-demand discontinuity.
-- **Proposition 2** (comparative statics): Organizes the key qualitative predictions. Each part is interpreted against Table 1. The convexity argument in part (iii) adds genuine insight about extinction risk.
-- **Proposition 3** (veto): Central to Extension 1. Both parts do economic work: (i) shows incomplete markets distort real decisions, (ii) shows complete markets eliminate the distortion.
+**Unused variables?** None found. All parameters map to calibration values or figure axes.
 
-### Subparts within objects
+**Pompous or ceremonial formalism?** The "Kaldor-Hicks" label for social efficiency is the closest candidate, but it serves a precise purpose: it clarifies that efficiency is defined by aggregate surplus, not Pareto improvement, which matters for the veto result. The condition is trivially satisfied ($\eta > 0$), but the label anchors the welfare comparison. No auxiliary lemmas, no detour propositions, no notation introduced for its own sake.
 
-- **$\Gamma^{AI}$ vs $\Gamma^{N}$**: The comparison is the economic heart of Proposition 1 (hedging channel). Not extraneous notation.
-- **$\alpha^+ = \min(1, \alpha/\phi)$** in the positive singularity: Technical but necessary to ensure the share stays in $(0,1)$. Used in Eq 7.
-- **$(1-\alpha_t)C_t$** (AI owners' consumption): Introduced in the setup and used as the transfer base in Extension 2 (Eq 8). Would be a loose end if Extension 2 didn't exist, but it does.
-- **$V_\text{veto}$, $V_\text{develop}$, $V_\text{develop}^{CM}$**: Referenced in Proposition 3 without explicit display formulas. The proof works through $\Delta u(\gamma)$ and limits, which is more transparent than displaying the full Bellman. This is the right level of formalism.
+**Auxiliary formal detours?** None. The paper moves linearly: setup → pricing → calibration → extensions. Each extension branches from the baseline without building intermediate machinery.
 
-## Specific checks
+### Overall Assessment
 
-**Introduced-then-abandoned formalism?** No. Every symbol traces to at least one result, calibration value, or interpretive passage.
-
-**Could any formal object's takeaway be stated in plain English without weakening claims?** The closest candidate is Eq 10 (transfer ratio), but its independence from $\eta$ is the key analytical insight of Extension 2, and displaying it makes the mechanism transparent. Stating "the ratio doesn't depend on $\eta$" in words alone would be less convincing and would deprive the reader of the ability to verify the claim at a glance.
-
-**Unused variables or parameters?** None found. Every parameter appears in a formula, calibration, or proposition.
-
-**Pompous or ceremonial formalism?** No. The paper avoids unnecessary generality (e.g., no measure-theoretic probability, no abstract state spaces, no general equilibrium existence theorems). The singularity is modeled as a simple Bernoulli event. CRRA is stated in one line. The appendix proof is mechanical and compact.
-
-**Auxiliary formal detours?** No. Each extension branches directly off the baseline model and introduces only the new parameters it needs ($q, \kappa$ for Extension 1; $\tau, \delta$ for Extension 2). There are no formal lemmas, no intermediate results that exist only to support other results.
+The formalism is lean and functional. The paper introduces exactly the machinery needed for its three propositions, one remark, and one quantitative figure, with no residual notation or abandoned threads.

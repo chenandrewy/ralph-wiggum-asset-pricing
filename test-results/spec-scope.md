@@ -1,20 +1,20 @@
 # tests/spec-scope.py
-Started: 2026-04-11 10:02:08 EDT
-Runtime: 39s
-[ralph-garage/agent-logs/20260411T100208.993382-0400_spec-scope_claude_opus.log](../ralph-garage/agent-logs/20260411T100208.993382-0400_spec-scope_claude_opus.log)
+Started: 2026-04-11 10:15:04 EDT
+Runtime: 40s
+[ralph-garage/agent-logs/20260411T101504.822724-0400_spec-scope_claude_opus.log](../ralph-garage/agent-logs/20260411T101504.822724-0400_spec-scope_claude_opus.log)
 
 # spec-scope
 VERDICT: PASS
-REASON: The paper maintains a compact theoretical scope with illustrative quantitative analysis, no empirical estimation, and no broad prediction menus.
+REASON: The paper maintains a compact theoretical scope with illustrative quantitative material and no empirical estimation or broad prediction menus.
 
 ## Findings
 
-**Theoretical core.** The paper develops a parsimonious consumption-based asset pricing model with a representative household, two public assets (AI and non-AI stocks), and a discrete singularity event. It delivers three propositions: closed-form P/D ratios (Prop 1), comparative statics (Prop 2), and a veto result under incomplete markets (Prop 3). All results are analytical.
+**Theoretical core.** The paper builds a single consumption-based asset pricing model with a discrete AI singularity, derives closed-form price-dividend ratios (Proposition 1), comparative statics (Proposition 2), and two tightly scoped extensions (veto under incomplete markets, government transfers). All results flow from one mechanism: hedging displacement under incomplete markets.
 
-**Empirical content is minimal and illustrative.** The only empirical object is Figure 1 (NASDAQ vs S&P 500 since 2015), used as motivation rather than as a test. There is no regression, no moment-matching calibration, no estimated parameters. The quantitative section (Section 3) reports model-implied P/D ratios on a grid and describes the magnitudes as "broadly suggestive" and "consistent with" observed spreads — explicitly illustrative language.
+**Quantitative material is illustrative, not calibrated.** Section 3 reports P/D ratios across a grid of singularity probabilities and extinction risks (Table 1) using round-number parameters ($\beta=0.96$, $g=0.02$, $\gamma=4$, $\phi=0.5$, $\eta=0.5$). The paper explicitly describes the magnitudes as "broadly suggestive" and flags that the NASDAQ/S&P comparison is "imperfect." There is no moment-matching, GMM estimation, or structural calibration.
 
-**No broad prediction menu.** The paper focuses on one channel (hedging displacement under incomplete markets) and traces its implications for valuations, development distortions, and transfers. It does not attempt to explain cross-sectional returns, predict specific stock prices, or generate a menu of testable predictions.
+**Empirical content is minimal.** The only data shown is a single time-series figure (NASDAQ vs. S&P 500, Figure 1) used for motivation, not estimation. No regressions, no panel data, no cross-sectional tests.
 
-**Extensions stay theoretical.** Both extensions (veto distortion, government transfers) are analytical, with numerical examples used to illustrate rather than calibrate. The transfer analysis uses stylized parameters (e.g., η = 9 for a "large singularity") to show qualitative mechanisms.
+**No broad prediction menus.** The model yields three focused comparative statics (displacement severity, singularity probability, extinction probability) and two extension results (veto threshold, transfer effectiveness). The conclusion explicitly acknowledges the model is "deliberately simple" and does not attempt a "definitive account."
 
-**Self-description confirms intent.** The conclusion states: "Our model is deliberately simple. It abstracts from continuous-time dynamics, heterogeneous beliefs, production-side details, and many other features that would enrich the analysis."
+**Extensions stay within scope.** Both extensions (veto in Section 4.1, transfers in Section 4.2) are direct consequences of the core incomplete-markets mechanism, not separate empirical exercises. The veto extension adds one parameter ($q$, probability of positive singularity) and the transfer extension adds two ($\tau$, $\delta$). Both use numerical examples rather than calibration.

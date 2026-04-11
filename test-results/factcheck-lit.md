@@ -1,82 +1,98 @@
 # tests/factcheck-lit.py
-Started: 2026-04-11 10:02:08 EDT
-Runtime: 5m 9s
-[ralph-garage/agent-logs/20260411T100209.012980-0400_factcheck-lit_claude_opus.log](../ralph-garage/agent-logs/20260411T100209.012980-0400_factcheck-lit_claude_opus.log)
+Started: 2026-04-11 10:15:04 EDT
+Runtime: 6m 46s
+[ralph-garage/agent-logs/20260411T101504.838554-0400_factcheck-lit_claude_opus.log](../ralph-garage/agent-logs/20260411T101504.838554-0400_factcheck-lit_claude_opus.log)
 
 # factcheck-lit
 VERDICT: PASS
-REASON: All 11 cited works are externally verified with accurate metadata and materially accurate in-text usage; no CRITICAL or IMPORTANT issues found.
+REASON: All 11 cited works are externally verified with accurate metadata and materially accurate in-text claims; one minor grouping imprecision does not rise to IMPORTANT.
 
 ## 1. Citation inventory audited
 
-| # | Citation key | Cited in paper |
-|---|-------------|----------------|
-| 1 | GKP2012 | Yes |
-| 2 | Jones2024 | Yes |
-| 3 | KoganPapanikolaou2014 | Yes |
-| 4 | KoganPapanikolaouStoffman2020 | Yes |
-| 5 | Knesl2023 | Yes |
-| 6 | AghionJonesJones2019 | Yes |
-| 7 | Acemoglu2025 | Yes |
-| 8 | Barro2006 | Yes |
-| 9 | Wachter2013 | Yes |
-| 10 | PastorVeronesi2009 | Yes |
-| 11 | Nordhaus2021 | Yes |
+All 11 citation keys used in the paper text (including footnotes) were audited:
+
+1. GKP2012
+2. Jones2024
+3. KoganPapanikolaou2014
+4. KoganPapanikolaouStoffman2020
+5. Knesl2023
+6. AghionJonesJones2019
+7. Acemoglu2025
+8. Barro2006
+9. Wachter2013
+10. PastorVeronesi2009
+11. Nordhaus2021
+
+No citation keys in the bibliography were left uncited. No cited keys were omitted from this audit.
 
 ## 2. External verification coverage
 
-| Citation key | Status | External sources |
-|-------------|--------|-----------------|
-| GKP2012 | VERIFIED | EconPapers/RePEc, ScienceDirect, MIT DSpace |
-| Jones2024 | VERIFIED | AEA, IDEAS/RePEc, Stanford Report |
-| KoganPapanikolaou2014 | VERIFIED | Wiley/JF, IDEAS/RePEc, NBER WP 17795 |
-| KoganPapanikolaouStoffman2020 | VERIFIED | Journal of Political Economy, IDEAS/RePEc, MIT DSpace |
-| Knesl2023 | VERIFIED | ScienceDirect/JFE, IDEAS/RePEc, SSRN |
-| AghionJonesJones2019 | VERIFIED | De Gruyter/UChicago Press, NBER WP 23928, Stanford author page |
-| Acemoglu2025 | VERIFIED | Oxford Academic/Economic Policy, IDEAS/RePEc, NBER WP 32487 |
-| Barro2006 | VERIFIED | Oxford Academic/QJE, EconPapers/RePEc, Harvard DASH |
-| Wachter2013 | VERIFIED | EconPapers/RePEc, Wharton author page, SSRN |
-| PastorVeronesi2009 | VERIFIED | AEA journal page, NBER WP 11876, SSRN |
-| Nordhaus2021 | VERIFIED | AEA journal page, IDEAS/RePEc, Nordhaus author page |
+| Key | Status | External sources |
+|-----|--------|-----------------|
+| GKP2012 | VERIFIED | EconPapers/RePEc, ScienceDirect, MIT DSpace, SSRN, NBER |
+| Jones2024 | VERIFIED | AEA website, RePEc/IDEAS, Stanford GSB, Stanford Report, NBER |
+| KoganPapanikolaou2014 | VERIFIED | Wiley Online Library, RePEc/IDEAS, MIT DSpace, NBER |
+| KoganPapanikolaouStoffman2020 | VERIFIED | University of Chicago Press (journals.uchicago.edu), MIT DSpace, RePEc/IDEAS, Northwestern Scholars, Kellogg |
+| Knesl2023 | VERIFIED | ScienceDirect, RePEc/IDEAS, SSRN, EconPapers, author personal site |
+| AghionJonesJones2019 | VERIFIED | De Gruyter/University of Chicago Press, NBER, Stanford (chadj), RePEc |
+| Acemoglu2025 | VERIFIED | Oxford Academic (Economic Policy), RePEc/IDEAS, MIT economics, NBER, SSRN |
+| Barro2006 | VERIFIED | Oxford Academic (QJE), EconPapers/RePEc, Harvard DASH, ResearchGate |
+| Wachter2013 | VERIFIED | EconPapers/RePEc, NBER WP 14386, Wharton author page |
+| PastorVeronesi2009 | VERIFIED | AEA official page (DOI: 10.1257/aer.99.4.1451), EconPapers/RePEc, SSRN |
+| Nordhaus2021 | VERIFIED | AEA official page (DOI: 10.1257/mac.20170105), IDEAS/RePEc, NBER WP 21547 |
 
-**Coverage: 11/11 (100%) externally verified.**
+**Coverage: 11/11 VERIFIED (100%)**
 
 ## 3. Metadata accuracy findings
 
-All 11 citations have materially accurate bibliographic metadata:
+All 11 bibliography entries have materially accurate metadata:
 
-- **Author names:** Correct for all entries.
-- **Publication years:** Correct for all entries.
-- **Titles:** Correct for all entries.
-- **Journals/outlets:** Correct for all entries (JFE, AER: Insights, JF, JPE, JFE, UChicago Press book chapter, Economic Policy, QJE, JF, AER, AEJ: Macro).
-- **Volume/number/pages:** Correct for all entries.
+| Key | Authors | Year | Title | Journal/Outlet | Vol/Issue/Pages |
+|-----|---------|------|-------|----------------|-----------------|
+| GKP2012 | Correct | Correct | Correct | Correct (JFE) | Correct |
+| Jones2024 | Correct | Correct | Correct | Correct (AER: Insights) | Correct |
+| KoganPapanikolaou2014 | Correct | Correct | Correct | Correct (JF) | Correct |
+| KoganPapanikolaouStoffman2020 | Correct | Correct | Correct | Correct (JPE) | Correct |
+| Knesl2023 | Correct | Correct | Correct | Correct (JFE) | Correct |
+| AghionJonesJones2019 | Correct | Correct | Correct | Correct (UChicago Press) | Correct |
+| Acemoglu2025 | Correct | Correct | Correct | Correct (Economic Policy) | Correct |
+| Barro2006 | Correct | Correct | Correct | Correct (QJE) | Correct |
+| Wachter2013 | Correct | Correct | Correct | Correct (JF) | Correct |
+| PastorVeronesi2009 | Correct | Correct | Correct | Correct (AER) | Correct |
+| Nordhaus2021 | Correct | Correct | Correct | Correct (AEJ: Macro) | Correct |
 
 No metadata errors found.
 
 ## 4. In-text description accuracy findings
 
-All in-text uses are materially accurate and supported by the cited works:
-
-- **GKP2012:** Accurately described as modeling displacement risk from innovation in an OLG setting with incomplete intergenerational risk sharing. One sub-claim about bequests under altruistic dynasties could not be confirmed from publicly accessible abstracts alone but is consistent with the OLG framework.
-- **Jones2024:** Accurately described as studying the trade-off between AI-driven growth and existential risk, including the role of consumption levels and risk aversion.
-- **KoganPapanikolaou2014:** Accurately characterized as studying creative destruction and displacement risk premia via investment-specific technology shocks.
-- **KoganPapanikolaouStoffman2020:** Accurately characterized as studying displacement risk premia from creative destruction with asymmetric distribution of innovation benefits.
-- **Knesl2023:** Accurately characterized as studying displacement risk premia from automation displacing labor.
-- **AghionJonesJones2019:** Accurately cited as examining the macroeconomics of AI growth.
-- **Acemoglu2025:** Accurately cited as examining the macroeconomics of AI growth with a task-based model.
-- **Barro2006:** Accurately cited as foundational rare disasters literature.
-- **Wachter2013:** Accurately cited as rare disasters literature (time-varying disaster probabilities).
-- **PastorVeronesi2009:** Accurately cited as analyzing technological revolutions in asset pricing.
-- **Nordhaus2021:** Accurately described as critically examining explosive output growth from an AI singularity.
+| Key | In-text claim-support | Notes |
+|-----|----------------------|-------|
+| GKP2012 | Accurate | Multiple uses all consistent with the paper's OLG/displacement/incomplete-markets framework |
+| Jones2024 | Accurate | Claims about growth-vs-risk trade-off, extinction channel, consumption-level attitudes all supported |
+| KoganPapanikolaou2014 | Minor imprecision | See flagged issue below |
+| KoganPapanikolaouStoffman2020 | Accurate | Creative destruction framing matches paper's title and content |
+| Knesl2023 | Accurate | Displacement risk premia framing matches paper's content |
+| AghionJonesJones2019 | Accurate | Macroeconomics of AI growth characterization is correct |
+| Acemoglu2025 | Accurate | Macroeconomics of AI characterization is correct |
+| Barro2006 | Accurate | Standard and correct attribution to rare disasters literature |
+| Wachter2013 | Accurate | Standard and correct attribution to rare disasters literature |
+| PastorVeronesi2009 | Accurate | "Analysis of technological revolutions" accurately describes the paper |
+| Nordhaus2021 | Accurate | "Examined critically" accurately captures Nordhaus's skeptical assessment of the singularity |
 
 ## 5. Flagged issues by citation key and severity
 
-| Citation key | Severity | Issue |
-|-------------|----------|-------|
-| GKP2012 | MINOR | Sub-claim about bequests under altruistic dynasties eliminating displacement could not be confirmed from publicly available abstracts/summaries, though it is consistent with the OLG framework. |
+### KoganPapanikolaou2014 — MINOR
 
-All other citation keys: **NONE**.
+**Issue:** The paper groups KP2014 with KPS2020 and Knesl2023 under "Creative destruction and displacement risk premia are studied by..." KP2014 studies investment-specific technology (IST) shocks and growth opportunities explaining the value premium, rather than creative destruction or displacement risk per se. The grouping is thematically defensible given the shared focus on technology-driven cross-sectional return premia, but "creative destruction and displacement risk premia" more precisely describes KPS2020 and Knesl2023 than KP2014.
+
+**Severity:** MINOR — the thematic connection is real and the citation is not misleading, but the specific framing is a slight stretch for KP2014.
+
+**External source:** Wiley Online Library (Journal of Finance, vol. 69, no. 2, 2014); NBER WP 17795.
+
+---
+
+No CRITICAL or IMPORTANT issues found.
 
 ## 6. Overall reliability of the paper's citations
 
-The paper's citations are highly reliable. All 11 cited works were externally verified with multiple authoritative sources. Bibliographic metadata is accurate across the board. In-text descriptions faithfully represent the cited works' contributions. The single MINOR issue (a specific sub-claim about GKP2012's discussion of bequests) is a verification gap rather than an error — the claim is plausible given the paper's OLG structure but could not be confirmed from publicly accessible abstracts alone.
+The paper's citation practices are strong. All 11 cited works are correctly identified with accurate bibliographic metadata. The in-text descriptions are materially faithful to the cited works across all uses, including the extensive characterizations of GKP2012 and Jones2024 that appear throughout the paper. The single MINOR issue (KP2014's grouping) reflects a slight imprecision in a literature-review sentence rather than any substantive mischaracterization. The paper appropriately uses published versions of all cited works.
