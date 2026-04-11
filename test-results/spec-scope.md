@@ -1,20 +1,18 @@
 # tests/spec-scope.py
-Started: 2026-04-09 22:04:35 EDT
-Runtime: 29s
-[ralph-garage/agent-logs/20260409T220435.843515-0400_spec-scope_claude_opus.log](../ralph-garage/agent-logs/20260409T220435.843515-0400_spec-scope_claude_opus.log)
+Started: 2026-04-10 22:15:41 EDT
+Runtime: 28s
+[ralph-garage/agent-logs/20260410T221541.760805-0400_spec-scope_claude_opus.log](../ralph-garage/agent-logs/20260410T221541.760805-0400_spec-scope_claude_opus.log)
 
 # spec-scope
 VERDICT: PASS
-REASON: The paper maintains a compact theoretical scope with illustrative (not calibrated) quantitative material and no broad prediction menu.
+REASON: The paper maintains a compact theoretical scope with illustrative rather than calibrated quantitative material and no broad prediction menu.
 
 ## Findings
 
-**Theoretical core.** The paper develops a parsimonious consumption-based asset pricing model with five parameters (β, g, γ, φ, η, θ, Δθ, p, ξ). It delivers two propositions (closed-form P/D ratios and comparative statics) and one extension proposition (veto under incomplete markets). The entire theoretical apparatus fits in a single representative-agent CRRA framework with a discrete singularity shock—deliberately simple.
+**Theoretical scope.** The paper develops a single consumption-based asset pricing model with CRRA preferences, a discrete AI singularity, and two public asset types (AI and non-AI stocks). It derives closed-form price-dividend ratios (Proposition 1) and comparative statics (Proposition 2), then offers two focused extensions: a veto/efficiency result (Proposition 3) and a government transfers analysis. All results flow from one mechanism — hedging displacement under incomplete markets.
 
-**Empirical content is minimal and illustrative.** The only empirical exhibit is Figure 1, which plots NASDAQ vs. S&P 500 indices normalized to 2015. This is purely motivational—it establishes a stylized fact (AI-exposed stocks trade at higher valuations) rather than testing the model. There is no regression, no GMM estimation, no calibration to match moments, no panel data analysis.
+**Empirical content is minimal and motivational.** The only empirical exhibit is Figure 1 (NASDAQ vs. S&P 500 since 2015), used to motivate the valuation premium. There are no regressions, no moment-matching, no estimation, and no empirical tests of the model's predictions.
 
-**Quantitative analysis is illustrative, not calibrated.** Table 1 reports P/D ratios across a grid of singularity probabilities and extinction risks using round-number parameters (β=0.96, g=0.02, γ=4, φ=0.5, η=0.5). The paper explicitly states the goal is to show magnitudes are "broadly consistent" with observed spreads, not to match specific data targets. Figure 2 (extension panels) similarly illustrates the transfer mechanism with stylized parameters.
+**Quantitative material is illustrative, not calibrated.** Table 1 reports model-implied P/D ratios across a grid of singularity probabilities and extinction risks using a single illustrative parameterization. Figure 2 shows how government transfers affect valuations and consumption under two scenarios. The paper explicitly states: "The goal is not to provide a definitive account of AI stock valuations but to highlight a specific channel" (Section 5).
 
-**No broad prediction menu.** The paper makes exactly three comparative-statics predictions (Proposition 2: displacement severity, singularity probability, extinction probability) and one policy prediction (transfers become effective when growth is explosive). It does not generate a laundry list of testable implications.
-
-**The conclusion explicitly acknowledges the limited scope:** "Our model is deliberately simple. It abstracts from continuous-time dynamics, heterogeneous beliefs, production-side details, and many other features that would enrich the analysis."
+**No broad prediction menu.** The paper focuses on one channel and its implications, without attempting to generate a wide array of testable predictions or match multiple empirical moments.

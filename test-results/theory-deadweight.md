@@ -1,68 +1,63 @@
 # tests/theory-deadweight.py
-Started: 2026-04-09 22:04:35 EDT
-Runtime: 1m 47s
-[ralph-garage/agent-logs/20260409T220435.838087-0400_theory-deadweight_claude_opus.log](../ralph-garage/agent-logs/20260409T220435.838087-0400_theory-deadweight_claude_opus.log)
+Started: 2026-04-10 22:15:41 EDT
+Runtime: 1m 45s
+[ralph-garage/agent-logs/20260410T221541.754886-0400_theory-deadweight_claude_opus.log](../ralph-garage/agent-logs/20260410T221541.754886-0400_theory-deadweight_claude_opus.log)
 
 # theory-deadweight
 VERDICT: PASS
-REASON: Every formal object in the paper does meaningful economic or narrative work; no dead-weight formalism found.
+REASON: Every formal object in the paper contributes to an economic claim, calibration, or result; no deadweight formalism was found.
 
-## Audit methodology
+## Audit Details
 
-Every formal object—equations, propositions, remarks, parameters, and defined variables—was checked against three criteria: (1) is it used in a result, calibration, or interpretation that matters for the paper's conclusions? (2) could its qualitative takeaway be stated in plain English without loss? (3) is it ceremonial or pompous?
+### Parameters
+All 14 parameters are used in at least one result, calibration, or interpretation:
 
-## Formal objects reviewed
+| Parameter | Introduced | Used in |
+|-----------|-----------|---------|
+| $g$ (growth rate) | Eq (1) | P/D formulas (4–5), calibration (Table 1) |
+| $\alpha_t$ (household share) | Setup | Displacement (2), utility (3), transfers (7–9), veto (Prop 3) |
+| $\phi$ (displacement) | Eq (2) | P/D formulas, comp statics (Prop 2), transfers ($\phi_\text{eff}$), veto, calibration |
+| $\eta$ (productivity jump) | Singularity setup | P/D formulas, $\Gamma$ factors, transfer ratio (9), calibration |
+| $\xi$ (extinction prob) | Singularity setup | P/D formulas, comp statics (iii), calibration, veto discussion |
+| $p$ (singularity prob) | Singularity setup | P/D formulas, comp statics (ii), calibration, veto numerical example |
+| $\theta_t$ (AI dividend share) | Assets setup | $\Gamma^{AI}$, $\Gamma^{N}$, backward recursion, calibration |
+| $\Delta\theta$ (share jump) | Assets setup | $\Gamma$ factors, approximation discussion, calibration |
+| $\beta$ (discount factor) | Eq (3) | P/D formulas, calibration |
+| $\gamma$ (risk aversion) | Eq (3) | P/D formulas, comp statics, veto condition, calibration |
+| $\tau$ (tax rate) | Eq (7) | Transfer consumption, $\phi_\text{eff}$, transfer ratio, Figure 2 |
+| $\delta$ (deadweight cost) | Eq (7) | Transfer consumption, $\phi_\text{eff}$, transfer ratio, Figure 2 |
 
-### Parameters ($\beta, g, \gamma, p, \xi, \eta, \phi, \theta, \Delta\theta, \alpha, \tau, \delta$)
-All twelve parameters appear in either the P/D formulas (Proposition 1), the comparative statics (Proposition 2), the calibration table, or the extension figures. None is introduced and abandoned.
+No parameter is introduced without being used in a result or calibration.
 
-### Equation (1): Aggregate consumption growth $C_{t+1} = (1+g)C_t$
-Defines $g$, which enters every P/D formula and the calibration. Minimal—one line.
+### Equations
+All display equations do economic or derivational work:
 
-### Equation (2): Displacement $\alpha_{t+1} = \phi \alpha_t$
-Core mechanism. Used in Propositions 1–3, the table, and both extensions.
+1. **Eq (1)** ($C_{t+1} = (1+g)C_t$): Establishes the growth process; enters the SDF and P/D formulas.
+2. **Eq (2)** ($\alpha_{t+1} = \phi\alpha_t$): Defines displacement, the central mechanism.
+3. **Eq (3)** (CRRA utility): Needed for the Euler equation and all pricing results.
+4. **Eqs (4–5)** (P/D ratios): Main results of the paper, used in quantitative section.
+5. **Eq (6)** (existence condition $A^j < 1$): Referenced in Prop 2 proof (iii) and Extension 2 (infinite P/D at extreme displacement).
+6. **Eq (7)** (transfer consumption): Basis for Extension 2 analysis and Figure 2.
+7. **Eq (8)** ($\phi_\text{eff}$): Connects transfers back to Prop 1, enabling reuse of the P/D formula.
+8. **Eq (9)** (transfer ratio): Establishes the key economic point that the ratio is $\eta$-independent while levels grow with $\eta$.
 
-### Equation (3): CRRA utility
-Defines the SDF that drives all pricing results. Could in principle be omitted ("CRRA with $\gamma$ and $\beta$"), but a two-line display for the utility function is standard practice and keeps the paper self-contained. Not ceremonial.
+### Propositions and Remark
 
-### Dividend definitions ($D_t^{AI} = \theta_t C_t$, $D_t^N = (1-\theta_t) C_t$, and $\Delta\theta$ dynamics)
-Define the two assets whose valuation spread is the paper's central object of study. Essential.
+- **Proposition 1** (P/D ratios): Core pricing result. Used in quantitative section (Table 1), Extension 2 (via $\phi_\text{eff}$), and guides all economic interpretation.
+- **Proposition 2** (Comparative statics): Organizes the interpretation of Table 1. Part (iii) uses a non-obvious convexity argument about $A^j/(1-A^j)$ that would be hard to convey in prose alone.
+- **Proposition 3** (Veto): Main result of Extension 1. Both parts do distinct economic work: (i) shows incomplete markets distort real decisions, (ii) shows complete markets eliminate the distortion.
+- **Remark 1** (Existence condition): Referenced in Prop 2 proof (iii) and in Extension 2's discussion of infinite P/D ratios under extreme displacement. It also motivates the transfer mechanism (Section 4.2).
 
-### Proposition 1 (P/D ratios) and $\Gamma^{AI}$, $\Gamma^{N}$
-Core result. The dividend growth factors $\Gamma^{AI}$ and $\Gamma^{N}$ are the key objects that explain *why* AI stocks trade at a premium. Both are used in Proposition 2 and the quantitative section. No dead weight.
+### Derived Quantities
 
-### Remark 1 (Existence condition, $A^j < 1$)
-Not decorative. It is invoked in Extension 2 to explain the infinite-P/D discontinuity at $\tau = 0$ under the large singularity—one of the paper's most striking results. Also reused in the proof of Proposition 2(iii).
+- $\Gamma^{AI}$, $\Gamma^{N}$: Dividend growth factors that carry the economic content of Prop 1 (the comparison $\Gamma^{AI} > \Gamma^{N}$ drives the hedging channel). Used in P/D formulas and comparative statics.
+- $A^j$: Compact notation for the existence condition. Used in Prop 2 proof (iii) and Remark 1.
+- $\phi_\text{eff}$: Effective displacement under transfers. Connects Extension 2 back to the baseline P/D formula.
 
-### Proposition 2 (Comparative statics)
-All three subparts do work:
-- **(i)** Spread increasing in displacement severity: directly interpreted in the quantitative section.
-- **(ii)** Spread increasing in $p$: confirmed in the table and discussed in Section 3.
-- **(iii)** Spread decreasing in $\xi$: the extinction-attenuation result, discussed in the introduction, quantitative section, and veto extension.
+### Checks for Specific Problems
 
-No subpart is introduced and then abandoned.
-
-### Proposition 3 (Veto)
-Both subparts do work:
-- **(i)** Veto under incomplete markets: the core Extension 1 result, connecting asset pricing to AI regulation debates.
-- **(ii)** No veto under complete markets: provides the contrast that gives (i) its economic punch. Without (ii), the reader cannot see that market incompleteness—not risk aversion alone—drives the distortion.
-
-### Equations (7)–(9): Transfer mechanism
-- Equation (7) defines post-transfer consumption—used in the figure and to derive $\phi_\text{eff}$.
-- Equation (8) defines $\phi_\text{eff}$, which bridges transfers back to Proposition 1's P/D formula. This is economical, not ceremonial—it avoids re-deriving the pricing formula.
-- Equation (9) shows the transfer ratio is independent of $\eta$, a meaningful economic point (the ratio is constant but levels grow without bound). Used in the surrounding prose and the figure interpretation.
-
-### Appendix proof (Proposition 1)
-The Euler equation derivation is appropriately placed in the appendix. It serves double duty: it proves the closed form *and* explains the backward-recursion method used for the numerically exact values in the table.
-
-## Potential concerns considered and dismissed
-
-1. **Could equation (1) be omitted?** No—$g$ enters every pricing formula and the calibration.
-2. **Is the existence condition (Remark 1) a detour?** No—it is load-bearing for Extension 2's infinite-P/D result.
-3. **Are non-AI stocks ($D_t^N$) formal baggage?** No—the paper's entire quantitative message is the *spread* between AI and non-AI P/D ratios.
-4. **Is the CRRA utility display ceremonial?** Borderline, but it is two lines and standard practice. Omitting it would save one display equation at the cost of making the paper less self-contained.
-5. **Is $\phi_\text{eff}$ an unnecessary intermediate variable?** No—it economically bridges equations (7) and Proposition 1, avoiding a re-derivation.
-
-## Summary
-
-The paper contains 9 numbered equations, 3 propositions, 1 remark, and 12 parameters. Every one connects to either a quantitative result (table or figure), a comparative static, or the economic argument of an extension. No formal object is introduced and abandoned, no subpart is dead weight, and no formalism is pompous or ceremonial. The formalism-to-insight ratio is appropriate for a compact theory paper.
+1. **Formalism introduced then abandoned?** No. Every formal object appears in at least one downstream result or calibration.
+2. **Qualitative takeaway statable in plain English without loss?** No. The P/D formulas (Prop 1) deliver closed-form expressions used in calibration. The comparative statics (Prop 2) include a non-obvious convexity result in (iii). The veto proposition (Prop 3) requires the formal distinction between incomplete and complete markets to state precisely.
+3. **Unused variables or parameters?** No. All 14 parameters are used.
+4. **Pompous or ceremonial formalism?** No. The paper uses three propositions, one remark, and nine display equations for a model with two assets, two agent types, three states, and two extensions. This is lean for an asset pricing theory paper.
+5. **Auxiliary formal detours?** No. The extensions branch directly off the baseline (as the spec requires) and each addresses a specific economic question.

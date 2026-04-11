@@ -1,28 +1,28 @@
 # tests/factcheck-anaphora.py
-Started: 2026-04-09 22:04:35 EDT
-Runtime: 54s
-[ralph-garage/agent-logs/20260409T220435.865303-0400_factcheck-anaphora_claude_opus.log](../ralph-garage/agent-logs/20260409T220435.865303-0400_factcheck-anaphora_claude_opus.log)
+Started: 2026-04-10 22:15:41 EDT
+Runtime: 1m 18s
+[ralph-garage/agent-logs/20260410T221541.754290-0400_factcheck-anaphora_claude_opus.log](../ralph-garage/agent-logs/20260410T221541.754290-0400_factcheck-anaphora_claude_opus.log)
 
 # factcheck-anaphora
 VERDICT: PASS
-REASON: All demonstratives near cross-references resolve correctly to their intended targets.
+REASON: All demonstratives near cross-references resolve unambiguously to meanings consistent with their referenced targets.
 
-## Section-by-section findings
+## Findings by Section
 
-### Introduction (lines 38--70)
-No issues found. Demonstratives such as "this gap" (line 55) and "this capital" (line 57) near citations resolve correctly to the valuation spread and AI capital discussed in surrounding prose.
+### Introduction (lines 38–70)
+No issues. The sole cross-reference (`Figure~\ref{fig:ai-valuations}`) has no nearby demonstrative ambiguity. Demonstratives like "such gains" and "this gap" resolve to their immediate antecedents without interference from cross-references.
 
-### Model (lines 71--176)
-No issues found. Key references checked: "this condition" (line 144) correctly resolves to the existence condition in eq. (5); Proposition 1 references on lines 140, 147, 149 all match their targets.
+### Model (lines 71–178)
+No issues. References to `Proposition~\ref{prop:pd-ratios}`, `Section~\ref{sec:ext2}`, `Table~\ref{tab:pd-ratios}`, and `Appendix~\ref{app:proof-pd}` all match their targets. Demonstratives such as "This is exact when…" and "This is the hedging channel" resolve to immediately preceding content.
 
-### Quantitative Analysis (lines 177--194)
-No issues found. The reference to Proposition 2(iii) on line 188 correctly describes extinction risk compressing the AI premium. Figure 1 reference on line 190 correctly describes the NASDAQ vs. S&P 500 comparison.
+### Quantitative Analysis (lines 179–196)
+No issues. References to `Proposition~\ref{prop:comp-statics}(iii)` and `Figure~\ref{fig:ai-valuations}` are used with direct noun phrases, no ambiguous demonstratives.
 
-### Extensions (lines 195--263)
-No issues found. References to Proposition 1 (line 238), Remark 1 (line 250), and Figure 2 (line 248) all match their targets. No demonstratives near cross-references create ambiguity.
+### Extensions (lines 197–269)
+No issues. Demonstratives near `\eqref{eq:transfer-consumption}`, `Proposition~\ref{prop:pd-ratios}`, and `Remark~\ref{rem:existence}` all resolve correctly. "This follows directly from dividing \eqref{eq:transfer-consumption}" correctly refers to the derivation of `\phi_\text{eff}`.
 
-### Conclusion (lines 264--274)
-No issues found. No cross-references appear in this section.
+### Conclusion (lines 270–280)
+No issues. No cross-references appear in this section.
 
-### Proof of Proposition 1 (lines 275--304)
-No issues found. "This" on line 303 correctly refers to the preceding equation and its rewriting as eq. (4). Table 1 reference on line 297 correctly describes the numerically exact values.
+### Proof of Proposition (lines 281–310)
+No issues. "This approximation" correctly refers to the preceding approximation step. "This can be rewritten as equation~\eqref{eq:pd-ai}" correctly refers to the derived equation matching the referenced target.

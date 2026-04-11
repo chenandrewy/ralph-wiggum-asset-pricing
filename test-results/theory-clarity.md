@@ -1,49 +1,54 @@
 # tests/theory-clarity.py
-Started: 2026-04-09 22:04:35 EDT
-Runtime: 1m 50s
-[ralph-garage/agent-logs/20260409T220435.843994-0400_theory-clarity_claude_opus.log](../ralph-garage/agent-logs/20260409T220435.843994-0400_theory-clarity_claude_opus.log)
+Started: 2026-04-10 22:15:41 EDT
+Runtime: 1m 56s
+[ralph-garage/agent-logs/20260410T221541.743134-0400_theory-clarity_claude_opus.log](../ralph-garage/agent-logs/20260410T221541.743134-0400_theory-clarity_claude_opus.log)
 
 # theory-clarity
 VERDICT: PASS
-REASON: All key model assumptions are introduced in clearly labeled setup paragraphs or display math; critical expressions appear in display equations; prose assumptions appear at or near the start of their paragraphs.
+REASON: All key model assumptions are introduced in clearly labeled setup paragraphs before any results invoke them; the most critical expressions appear in display math, with one notable gap in the dividend growth factors.
 
 ## Key Items Identified
 
-### Display math (main text)
-1. Aggregate consumption growth $C_{t+1}=(1+g)C_t$ — eq (1)
-2. Displacement rule $\alpha_{t+1}=\phi\,\alpha_t$ — eq (2)
-3. CRRA utility — eq (3)
-4. P/D ratios for AI and non-AI stocks — eqs (4)–(5), Proposition 1
-5. Existence condition $A^j<1$ — eq (6), Remark 1
-6. Post-transfer consumption — eq (7)
-7. Effective displacement $\phi_\text{eff}$ — eq (8)
-8. Transfer consumption ratio — eq (9)
-9. Dividend growth factors $\Gamma^{AI}$, $\Gamma^{N}$ — defined inline in Proposition 1
+### Should appear in display math (and do)
+1. Aggregate consumption growth $C_{t+1} = (1+g)C_t$ — eq. (1), display in "Consumption" paragraph
+2. Displacement rule $\alpha_{t+1} = \phi\alpha_t$ — eq. (2), display in "Singularity" paragraph
+3. CRRA utility — eq. (3), display in "Preferences" paragraph
+4. Existence condition $A^j < 1$ — eq. (4), display in Remark 1
+5. Transfer consumption $c^H_{post}$ — eq. (5), display in Section 4.2
+6. Effective displacement $\phi_\text{eff}$ — eq. (6), display in Section 4.2
+7. Transfer ratio $c^H_{post}/c^H_{\text{no-transfer}}$ — eq. (7), display in Section 4.2
 
-### Prose assumptions (at paragraph start)
-a. Household share $c_t^H = \alpha_t C_t$, $\alpha_t\in(0,1)$ — Consumption paragraph
-b. Singularity probability $p$ — Singularity paragraph opening
-c. Productivity jump $(1+\eta)$ — first enumerate item in Singularity paragraph
-d. Extinction probability $\xi$ — second enumerate item in Singularity paragraph
-e. AI dividend share $D_t^{AI}=\theta_t C_t$ and jump rule — Assets paragraph, first bullet
-f. Non-AI dividends $D_t^N=(1-\theta_t)C_t$ — Assets paragraph, second bullet
-g. Market incompleteness — Assets paragraph, closing sentence (emphasized with italics)
-h. Positive singularity $\alpha_{t+1}=\min(1,\alpha_t/\phi)$ — Extension 1 opening paragraph
-i. Veto mechanism — Extension 1, second setup paragraph
-j. Transfer mechanism ($\tau$, $\delta\tau$) — Extension 2 setup paragraph
+### In prose but correctly placed at paragraph/item start
+1. Household share $c_t^H = \alpha_t C_t$, $\alpha_t \in (0,1)$ — line 83, immediately after eq. (1)
+2. Singularity probability $p$, extinction probability $\xi$, productivity boost $\eta$ — lines 86–95, opening the "Singularity" paragraph
+3. $\gamma > 1$, $\beta \in (0,1)$ — line 112, opening the "Preferences" paragraph
+4. AI owners hold private capital — line 74, opening sentence of Setup
+5. Market incompleteness (cannot buy restricted shares) — lines 109–110, dedicated paragraph
+6. AI dividend $D_t^{AI} = \theta_t C_t$ and share evolution $\theta_{t+1} = \theta_t + \Delta\theta(1-\theta_t)$ — line 103, opening the AI stocks bullet
+7. Positive singularity $\alpha_{t+1} = \min(1, \alpha_t/\phi)$ — line 203, start of Extension 1
+8. Veto mechanism and cost — line 205, setup prose before Proposition 3
+9. Deadweight cost fraction $\delta\tau$ — line 230, setup prose before eq. (5)
+10. Extinction utility normalized to zero — line 205, setup prose in Extension 1
+
+### Gap: defined only inside a proposition
+- Dividend growth factors $\Gamma^{AI}$ and $\Gamma^N$ — currently defined as a "where" clause inside Proposition 1 (line 133), not as a standalone display equation in the model setup
 
 ## Section-Level Findings
 
-**Section 2.1 (Setup):** All assumptions are introduced in four clearly labeled paragraphs (Consumption, Singularity, Assets, Preferences). Each paragraph leads with its key assumption. The singularity structure uses a well-organized enumerate block. Display math is used for the three most critical expressions (consumption growth, displacement, utility). Prose assumptions (household share, singularity probability, extinction probability, dividend definitions) all appear at or near the start of their respective paragraphs or list items.
+### Section 2.1 (Setup)
+The model setup is well-organized with labeled paragraphs (Consumption, Singularity, Assets, Preferences). All foundational assumptions are introduced in their own paragraphs before any results. Minor note: the AI and non-AI dividend definitions and the $\theta$ evolution rule are in prose bullets rather than display math; this is an acceptable presentation choice given that they are simple definitions clearly stated at the top of their respective bullets.
 
-**Section 2.2 (Equilibrium prices):** The P/D ratios and existence condition appear in display math within Proposition 1 and Remark 1. The dividend growth factors $\Gamma^{AI}$ and $\Gamma^{N}$ are defined inline at the end of Proposition 1's display equations. These are derived quantities rather than new assumptions, and they appear in display math (within the proposition environment), so this is acceptable. The discussion paragraph after Proposition 1 correctly highlights the key comparison $\Gamma^{AI}>\Gamma^{N}$ and explains the hedging channel.
+### Section 2.2 (Equilibrium Prices)
+The P/D ratio formulas are in display math (Proposition 1). The dividend growth factors $\Gamma^{AI}$ and $\Gamma^N$ are the most important objects for understanding the hedging channel — every comparative static and the transfer extension depend on the comparison $\Gamma^{AI} > \Gamma^N$. They are currently defined only as a subordinate "where" clause at the end of Proposition 1. Promoting them to a standalone display equation (either in the Assets paragraph or just before Proposition 1) would improve findability. This is the paper's single notable clarity gap, but it does not rise to a failure: the factors are clearly labeled and defined within the proposition where they first appear.
 
-**Section 2.3 (Discussion):** No new assumptions; recalls earlier setup correctly.
+### Section 2.3 (Discussion)
+No new assumptions. Correctly recalls earlier setup without re-introducing anything.
 
-**Section 3 (Quantitative Analysis):** Lists calibration parameters clearly. No new model assumptions introduced.
+### Section 3 (Quantitative Analysis)
+All calibration parameters are stated in the opening paragraph with clear values. No new model assumptions.
 
-**Section 4.1 (Extension 1 — Veto):** The positive singularity and veto mechanism are introduced in clear setup paragraphs before Proposition 3. The extinction-utility normalization is stated explicitly with attribution.
+### Section 4.1 (Extension 1: Veto)
+The positive singularity, veto mechanism, and extinction-utility normalization are all introduced in setup prose before Proposition 3. Correctly placed.
 
-**Section 4.2 (Extension 2 — Transfers):** The transfer mechanism is introduced in a setup paragraph, immediately followed by display math for the post-transfer consumption equation. The effective displacement parameter and transfer ratio both appear in labeled display equations. The connection back to Proposition 1's P/D formula (with $\phi$ replaced by $\phi_\text{eff}$) is stated explicitly.
-
-**Minor note:** $\Gamma^{AI}$ and $\Gamma^{N}$ could be given their own standalone labeled display equation for easier cross-referencing, since they are central to the hedging-channel intuition and are invoked repeatedly in the comparative statics proofs. This is a stylistic preference, not a clarity failure — they are already visible in display math within the proposition.
+### Section 4.2 (Extension 2: Transfers)
+The transfer mechanism, deadweight cost, and all new expressions ($c^H_{post}$, $\phi_\text{eff}$, transfer ratio) are introduced in setup prose and display math before any results invoke them. Well-structured.

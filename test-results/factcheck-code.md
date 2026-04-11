@@ -1,73 +1,84 @@
 # tests/factcheck-code.py
-Started: 2026-04-09 22:04:35 EDT
-Runtime: 2m 12s
-[ralph-garage/agent-logs/20260409T220435.859367-0400_factcheck-code_claude_opus.log](../ralph-garage/agent-logs/20260409T220435.859367-0400_factcheck-code_claude_opus.log)
+Started: 2026-04-10 22:15:41 EDT
+Runtime: 1m 54s
+[ralph-garage/agent-logs/20260410T221541.753147-0400_factcheck-code_claude_opus.log](../ralph-garage/agent-logs/20260410T221541.753147-0400_factcheck-code_claude_opus.log)
 
 # factcheck-code
 VERDICT: PASS
-REASON: The canonical analysis path runs from scratch, produces all exhibits, and is consistent with the paper's quantitative claims.
+REASON: The canonical analysis path runs from scratch, produces all exhibits, and is fully consistent with the paper's claims and parameters.
 
 ## Canonical local analysis path
 
-Single entry point: `code/generate-exhibits.R`, run via `Rscript code/generate-exhibits.R`. The script generates all three exhibits used in the paper:
-
-1. `paper/exhibits/table-pd-ratios.tex` (Table 1 / Exhibit 1): P/D ratio grid.
-2. `paper/exhibits/fig-extension-panels.pdf` (Figure 2 / Exhibit 2): Two-panel extension figure.
-3. `paper/exhibits/fig-ai-valuations.pdf` (Figure 1 / Exhibit 3): NASDAQ vs S&P 500 normalized price chart.
-
-The code downloads external data (S&P 500 from the Shiller/datahub dataset, NASDAQ from FRED) as part of the canonical pipeline. No precomputed local caches or intermediate files are required. The `data/` directory is empty and unused, consistent with a from-scratch execution model.
+- **Entry point:** `Rscript code/generate-exhibits.R` (single canonical script, as required by spec III.3.b)
+- **Outputs:** Three exhibits written directly to `paper/exhibits/`:
+  1. `table-pd-ratios.tex` — P/D ratio table (Exhibit 1)
+  2. `fig-extension-panels.pdf` — Government transfers two-panel figure (Exhibit 2)
+  3. `fig-ai-valuations.pdf` — NASDAQ vs S&P 500 normalized price figure (Exhibit 3)
+- **Dependencies:** R with packages `ggplot2`, `dplyr`, `tidyr`, `gridExtra`, `scales`
+- **External data:** Downloads S&P 500 (datahub/Shiller) and NASDAQ (FRED) monthly price data at runtime
+- **Veto example:** Computed in the same script (printed to console, referenced in Section 4.1 text)
+- All files in `paper/exhibits/` are used in the paper; no orphan exhibits
 
 ## Execution status
 
-- **Full pipeline executed successfully** in this environment in under 30 seconds.
-- R 4.2.2 is available; all required packages (`ggplot2`, `dplyr`, `tidyr`, `gridExtra`, `scales`) loaded without issue.
-- Network downloads from FRED and datahub completed successfully.
-- Two `geom_line` warnings about removed rows are benign (NA values from undefined P/D at extreme parameters, handled intentionally by the plotting code).
-- All three output files were regenerated and written to `paper/exhibits/`.
+- **Status:** Successfully executed from scratch in this environment
+- **Runtime:** Well under 180 seconds (spec III.3.d satisfied)
+- **No precomputed caches or intermediate files required** (spec III.3.c satisfied)
+- **Network access required** for FRED and datahub downloads; this ran without issue
+- **Warnings:** Two ggplot warnings about removed rows (capped y-axis in panel A) — cosmetic, not errors
 
 ## Paper-code consistency
 
-All verified claims match:
+### Parameter verification (all match)
 
-| Paper claim | Code/output verification | Status |
-|---|---|---|
-| Parameters: beta=0.96, g=0.02, gamma=4, phi=0.5, eta=0.5, theta=0.15, dtheta=0.2 | Lines 18-24 of code match exactly | Consistent |
-| phi(1+eta) = 0.75 (25% consumption loss) | 0.5 * 1.5 = 0.75 | Consistent |
-| phi_large(1+eta_large) = 0.5 (50% loss) | 0.05 * 10 = 0.5 | Consistent |
-| AI P/D ~16 at p=0.5%, xi=0% | Table output: 15.5 | Consistent |
-| Non-AI P/D ~11 at p=0.5%, xi=0% | Table output: 11.1 | Consistent |
-| Ratio ~1.4 at p=0.5% | Table output: 1.4 | Consistent |
-| Ratio rises to 2 at p=1% | Table output: 2.0 (at xi=0%) | Consistent |
-| P/D ratios 1.3-2x across p=0.5-1% | Table range: 1.3 to 2.0 | Consistent |
-| phi^(-gamma) = 160,000 for phi=0.05, gamma=4 | 0.05^(-4) = 160,000 | Consistent |
-| P/D undefined at tau=0 for large singularity | K_term = 1.59 >= 1, existence violated | Consistent |
-| Transfers restore finite P/D | phi_eff increases with tau, K < 1 for tau >= 0.05 | Consistent |
-| AI exact P/D via backward recursion over theta chain | Euler equation verified numerically (residual < 1e-10) | Consistent |
-| Non-AI closed form is exact (Gamma^N theta-independent) | Gamma^N = (1-dtheta)(1+eta), no theta dependence | Consistent |
-| Figure caption: NASDAQ from FRED, S&P 500 from Shiller | Code: `download_fred("NASDAQCOM")`, datahub Shiller CSV | Consistent |
-| Extension figure parameters: alpha=0.70, p=0.5%, xi=5%, delta=0.5 | Code lines 140-141, 183-184 match | Consistent |
-| Transfer ratio (eq 7) independent of eta | Algebraically confirmed from code formula | Consistent |
+| Parameter | Paper | Code |
+|-----------|-------|------|
+| $\beta$ | 0.96 | 0.96 |
+| $g$ | 0.02 | 0.02 |
+| $\gamma$ | 4 | 4 |
+| $\phi$ | 0.5 | 0.5 |
+| $\eta$ | 0.5 | 0.5 |
+| $\theta$ | 0.15 | 0.15 |
+| $\Delta\theta$ | 0.2 | 0.2 |
+| Extension: $\alpha$ | 0.70 | 0.70 |
+| Extension: $p$ | 0.5% | 0.005 |
+| Extension: $\xi$ | 5% | 0.05 |
+| Extension: $\delta$ | 0.5 | 0.5 |
+| Large singularity: $\eta$ | 9 | 9.0 |
+| Large singularity: $\phi$ | 0.05 | 0.05 |
+| Veto: $\gamma$ | 10 | 10 |
+| Veto: $p$ | 1% | 0.01 |
+| Veto: positive/negative split | 70/30 | 0.70/0.30 |
+| Veto: $\kappa$ | 1% | 0.01 |
+
+### Quantitative claims verification (all match)
+
+- Paper: "AI stocks trade at a P/D of roughly 16" at p=0.5%, xi=0%. Table: 15.5. Consistent.
+- Paper: "non-AI stocks trade near 11." Table: 11.1. Consistent.
+- Paper: "a ratio of about 1.4." Table: 1.4. Exact match.
+- Paper: "At p=1%, the ratio rises to 2." Table: 2.0. Exact match.
+- Paper: "P/D ratios 1.3 to 2 times" in 0.5–1% range. Table: 1.3–2.0. Exact match.
+- Paper: $\phi^{-\gamma} = 160{,}000$ for large singularity. $0.05^{-4} = 160{,}000$. Correct.
+- Paper: "consumption halves under the large singularity ($\phi(1+\eta) = 0.5$)." $0.05 \times 10 = 0.5$. Correct.
+- Paper: "falls by 25% under the baseline ($\phi(1+\eta) = 0.75$)." $0.5 \times 1.5 = 0.75$. Correct.
+- Veto: code confirms household vetoes under incomplete markets, develops under complete markets. Matches paper.
+
+### Code logic verification
+
+- **AI P/D:** Computed via exact backward recursion over the chain of post-singularity $\theta$ values (`compute_pd_ai_exact`). This is correct because $\Gamma^{AI}$ depends on the current $\theta$, which changes with each singularity.
+- **Non-AI P/D:** Computed via closed-form approximation (`compute_pd_approx`). This is actually exact because $\Gamma^{N} = (1 - \Delta\theta)(1+\eta)$ is independent of $\theta$ — the non-AI dividend share ratio $(1-\theta-\Delta\theta(1-\theta))/(1-\theta) = 1-\Delta\theta$ simplifies, making the post-singularity P/D identical to the pre-singularity P/D.
+- **Extension P/D:** Uses `compute_pd_with_transfer` with $\phi_\text{eff}$ replacing $\phi$ in the SDF, consistent with equation (7) in the paper.
+- **Consumption growth function:** Matches equation (6) in the paper.
+- **Per-share data (Req 5):** The empirical figure uses market-level index data (S&P 500 index, NASDAQ Composite index), not individual stock per-share data. No split-adjustment or share-count issues arise.
 
 ## Reproducibility classification
 
 | Output | Classification |
-|---|---|
-| Table 1 (P/D ratios) | **Locally reproducible** -- pure computation, no external data needed |
-| Figure 2 (extension panels) | **Locally reproducible** -- pure computation, no external data needed |
-| Figure 1 (AI valuations) | **Locally reproducible with network access** -- requires downloading FRED and datahub CSV data; no credentials needed |
-| Proposition 1 (closed-form P/D) | Not code-generated; theoretical derivation in paper. Code implements the exact backward recursion described in the appendix |
-| Proposition 2 (comparative statics) | Not code-generated; theoretical derivation. Table values are consistent with stated comparative statics |
-| Proposition 3 (veto) | Not code-generated; theoretical result. No code implementation expected |
+|--------|---------------|
+| `table-pd-ratios.tex` | **Locally reproducible** — pure computation, no external data needed |
+| `fig-extension-panels.pdf` | **Locally reproducible** — pure computation, no external data needed |
+| `fig-ai-valuations.pdf` | **Locally reproducible with network** — requires downloading from FRED and datahub at runtime |
+| Veto numerical example (Section 4.1) | **Locally reproducible** — pure computation, printed to console |
+| All theoretical propositions and proofs | **Analytical** — not generated by code; verified by inspection |
 
-### Per-share data handling (Requirement 5)
-
-The empirical exhibit (Figure 1) uses index-level price data (NASDAQ Composite, S&P 500), not per-share quantities. No share counts are involved. No per-share mixing concern applies.
-
-### Spec compliance
-
-- **One canonical entry point** (spec III.3.b): Yes, `generate-exhibits.R`.
-- **Runs from scratch** (spec III.3.c): Yes, no precomputed caches.
-- **Executes in <180 seconds** (spec III.3.d): Yes, completed in ~30 seconds.
-- **Outputs to paper/exhibits/** (spec III.3.e): Yes.
-- **Written in R** (spec III.3.a): Yes.
-- **All files in paper/exhibits/ used in paper** (spec III.1.d): Yes, all three are referenced.
+No violations of requirements found.

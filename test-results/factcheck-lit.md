@@ -1,15 +1,15 @@
 # tests/factcheck-lit.py
-Started: 2026-04-09 22:04:35 EDT
-Runtime: 3m 27s
-[ralph-garage/agent-logs/20260409T220435.845010-0400_factcheck-lit_claude_opus.log](../ralph-garage/agent-logs/20260409T220435.845010-0400_factcheck-lit_claude_opus.log)
+Started: 2026-04-10 22:15:41 EDT
+Runtime: 5m 13s
+[ralph-garage/agent-logs/20260410T221541.757643-0400_factcheck-lit_claude_opus.log](../ralph-garage/agent-logs/20260410T221541.757643-0400_factcheck-lit_claude_opus.log)
 
 # factcheck-lit
 VERDICT: PASS
-REASON: All 11 cited works are externally verified with materially accurate metadata and supported in-text claims; only minor cosmetic issues found.
+REASON: All 11 cited works are externally verified with accurate metadata and accurate in-text descriptions; one minor issue noted.
 
 ## 1. Citation inventory audited
 
-The following 11 citation keys appear in the paper text (including footnotes) and were audited:
+All citation keys appearing in the paper text were audited (11 total):
 
 1. GKP2012
 2. Jones2024
@@ -23,59 +23,56 @@ The following 11 citation keys appear in the paper text (including footnotes) an
 10. PastorVeronesi2009
 11. Nordhaus2021
 
-Bibliography entries not cited in the paper text (and therefore not audited): KorinekSuh2024, MehraPrescott1985, CampbellCochrane1999, BabinaMotta2024, FamaFrench1993, GarleanuPanageas2015.
+Bibliography entries not cited in the paper text (excluded from audit): KorinekSuh2024, MehraPrescott1985, CampbellCochrane1999, GarleanuPanageas2015, BabinaMotta2024, FamaFrench1993.
 
 ## 2. External verification coverage
 
-| Key | Status | External sources |
-|-----|--------|-----------------|
-| GKP2012 | VERIFIED | EconPapers/RePEc, ScienceDirect, Semantic Scholar |
-| Jones2024 | VERIFIED | AEA website, RePEc/IDEAS, Stanford GSB |
-| KoganPapanikolaou2014 | VERIFIED | Wiley/Journal of Finance, NBER, RePEc/IDEAS |
-| KoganPapanikolaouStoffman2020 | VERIFIED | Journal of Political Economy, RePEc/IDEAS, MIT DSpace |
-| Knesl2023 | VERIFIED | ScienceDirect, EconPapers/RePEc, SSRN |
-| AghionJonesJones2019 | VERIFIED | De Gruyter/UChicago Press, NBER WP 23928, Stanford/Jones page |
-| Acemoglu2024 | VERIFIED | Oxford Academic/Economic Policy, RePEc/IDEAS, SSRN |
-| Barro2006 | VERIFIED | Oxford Academic/QJE, Harvard DASH, EconPapers/RePEc |
-| Wachter2013 | VERIFIED | EconPapers/RePEc, Wiley Online Library, UPenn repository |
-| PastorVeronesi2009 | VERIFIED | AEA publisher page, EconPapers/RePEc, SSRN |
-| Nordhaus2021 | VERIFIED | AEA publisher page, NBER WP page, IDEAS/RePEc |
+| # | Citation Key | Status | External Sources |
+|---|---|---|---|
+| 1 | GKP2012 | VERIFIED | EconPapers, ScienceDirect, Crossref DOI 10.1016/j.jfineco.2012.04.002 |
+| 2 | Jones2024 | VERIFIED | AEA website, IDEAS/RePEc, Crossref DOI 10.1257/aeri.20230570 |
+| 3 | KoganPapanikolaou2014 | VERIFIED | Wiley Online Library, IDEAS/RePEc, Crossref DOI 10.1111/jofi.12136 |
+| 4 | KoganPapanikolaouStoffman2020 | VERIFIED | U Chicago Press Journals, IDEAS/RePEc, Crossref DOI 10.1086/704619 |
+| 5 | Knesl2023 | VERIFIED | ScienceDirect, IDEAS/RePEc, Crossref DOI 10.1016/j.jfineco.2022.11.003 |
+| 6 | AghionJonesJones2019 | VERIFIED | NBER, De Gruyter, SSRN |
+| 7 | Acemoglu2024 | VERIFIED | Oxford Academic, IDEAS/RePEc, Crossref DOI 10.1093/epolic/eiae042 |
+| 8 | Barro2006 | VERIFIED | Oxford Academic / QJE, Crossref DOI 10.1162/qjec.121.3.823 |
+| 9 | Wachter2013 | VERIFIED | Crossref DOI 10.1111/jofi.12018 |
+| 10 | PastorVeronesi2009 | VERIFIED | Crossref DOI 10.1257/aer.99.4.1451 |
+| 11 | Nordhaus2021 | VERIFIED | Crossref DOI 10.1257/mac.20170105 |
 
 Coverage: 11/11 cited works externally verified (100%).
 
 ## 3. Metadata accuracy findings
 
-All 11 entries have materially accurate metadata (authors, title, journal/outlet, volume, issue, pages, year). Two minor cosmetic issues:
+All 11 citations have correct bibliographic metadata: author names, titles, journals/outlets, volumes, issues, page numbers, and years all match external records.
 
-- **Acemoglu2024:** Citation key says "2024" but bib year field is 2025. The year field 2025 matches the journal's official volume/issue dating (Economic Policy, Vol. 40, Issue 121, Jan 2025). The key name is cosmetic and does not affect rendered output.
-- **Wachter2013:** Journal listed as "Journal of Finance" rather than "The Journal of Finance." The leading "The" is omitted. This is a common style variant and does not impair identification.
+One naming note: The bib key `Acemoglu2024` has year field 2025 in the .bib file, which is correct for the journal publication (Economic Policy, January 2025). The key name reflects the NBER working paper date (2024). This is not a metadata error.
 
 ## 4. In-text description accuracy findings
 
-All 11 in-text characterizations are materially accurate and supported by the cited works:
+All in-text descriptions are materially accurate and supported by the cited works, with one minor exception:
 
-- **GKP2012:** Described as developing a general-equilibrium model where innovation displaces existing agents and creates a systematic risk factor under incomplete markets, with growth stocks providing a partial hedge and future innovators' rents not tradeable. Confirmed.
-- **Jones2024:** Described as studying the trade-off between AI-driven growth and existential risk, with bounded utility making agents conservative about extinction. Confirmed.
-- **KoganPapanikolaou2014:** Described as showing technology shocks generate cross-sectional return differences through heterogeneous exposures. Confirmed.
-- **KoganPapanikolaouStoffman2020:** Described as showing creative destruction generates inequality and return differences. Confirmed.
-- **Knesl2023:** Described as providing empirical evidence that automation-driven displacement commands a risk premium. Confirmed.
-- **AghionJonesJones2019:** Described as studying whether AI can sustain exponential growth. Confirmed.
-- **Acemoglu2024:** Described as arguing AI productivity gains may be more modest than commonly supposed. Confirmed.
-- **Barro2006:** Described as supplying the methodological foundation for pricing discrete catastrophic events. Confirmed.
-- **Wachter2013:** Described as part of the rare disasters literature for pricing catastrophic events. Confirmed.
-- **PastorVeronesi2009:** Described as studying how technological revolutions affect stock prices through productivity uncertainty. Confirmed.
-- **Nordhaus2021:** Described as critically examining explosive output growth from an AI singularity. Confirmed.
+- **KoganPapanikolaou2014**: The paper's sentence groups KP2014 and KPS2020 together as showing "technology shocks and creative destruction generate cross-sectional return differences and inequality through firms' heterogeneous exposures." The "inequality" component is primarily a contribution of KPS2020, not KP2014, which focuses on asset pricing implications (value/growth return differences). This is a minor conflation in a grouped citation sentence.
 
 ## 5. Flagged issues by citation key and severity
 
-| Key | Severity | Issue |
-|-----|----------|-------|
-| Acemoglu2024 | MINOR | Citation key "2024" vs. bib year field "2025" (both defensible dates; no effect on rendered output) |
-| Acemoglu2024 | MINOR | Title capitalization ("Simple" vs. "simple") — handled by BibTeX styles |
-| Wachter2013 | MINOR | Journal name missing leading "The" ("Journal of Finance" vs. "The Journal of Finance") |
+| Citation Key | Issue | Severity |
+|---|---|---|
+| GKP2012 | None | NONE |
+| Jones2024 | None | NONE |
+| KoganPapanikolaou2014 | In-text description attributes "inequality" to KP2014, but this is primarily a contribution of KPS2020. The two papers are cited in the same sentence, making the conflation understandable but imprecise. | MINOR |
+| KoganPapanikolaouStoffman2020 | None | NONE |
+| Knesl2023 | None | NONE |
+| AghionJonesJones2019 | None | NONE |
+| Acemoglu2024 | None | NONE |
+| Barro2006 | None | NONE |
+| Wachter2013 | None | NONE |
+| PastorVeronesi2009 | None | NONE |
+| Nordhaus2021 | None | NONE |
 
 No CRITICAL or IMPORTANT issues found.
 
 ## 6. Overall reliability of the paper's citations
 
-The paper's citations are highly reliable. All 11 cited works were externally verified against publisher pages, DOI landing pages, and academic repositories. Bibliographic metadata is materially accurate across all entries, with only cosmetic formatting differences noted. Every in-text characterization of a cited work is faithful to the actual content of that work as confirmed by external sources. The paper does not misattribute results, overstate findings, or mischaracterize any cited contribution. The three minor issues identified are standard bibliographic formatting variants that do not affect the accuracy or integrity of the citations.
+The paper's citations are highly reliable. All 11 cited works have correct bibliographic metadata verified against publisher pages and Crossref records. In-text descriptions accurately characterize the cited works' contributions and findings. The single minor issue (attributing "inequality" to KP2014 in a grouped citation with KPS2020) does not materially misrepresent either paper. The citation practices meet the standards expected for a top finance journal submission.

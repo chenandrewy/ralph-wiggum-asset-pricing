@@ -1,36 +1,41 @@
 # tests/writing-intuition.py
-Started: 2026-04-09 22:04:35 EDT
-Runtime: 49s
-[ralph-garage/agent-logs/20260409T220435.841601-0400_writing-intuition_claude_opus.log](../ralph-garage/agent-logs/20260409T220435.841601-0400_writing-intuition_claude_opus.log)
+Started: 2026-04-10 22:15:41 EDT
+Runtime: 1m 3s
+[ralph-garage/agent-logs/20260410T221541.757128-0400_writing-intuition_claude_opus.log](../ralph-garage/agent-logs/20260410T221541.757128-0400_writing-intuition_claude_opus.log)
 
 # writing-intuition
 VERDICT: PASS
-REASON: Every proposition and key formula is discussed with explicit reference to the mathematical objects that appear in it.
+REASON: Each proposition and key formula is accompanied by intuition that directly references the mathematical objects involved.
 
 ## Detailed Findings
 
-### Proposition 1 (Price-dividend ratios, lines 121-133)
-The discussion (lines 149) explicitly references $\Gamma^{AI}$ vs. $\Gamma^{N}$, $\Delta\theta > 0$, the displacement parameter $\phi$, the condition $\phi(1+\eta) < 1$, and the household's marginal utility in singularity states. The hedging channel is explained through the comparison of the dividend growth factors that appear directly in the P/D formulas.
+### Proposition 1 (P/D ratios, lines 122-134)
+The discussion (lines 150-151) explicitly connects intuition to the formula's mathematical objects:
+- $\Gamma^{AI}$ vs $\Gamma^{N}$: explains that $\Delta\theta > 0$ implies $\Gamma^{AI} > 1+\eta$ and $\Gamma^{N} < 1+\eta$
+- $\phi^{-\gamma}$: explains that displacement ($\phi$ sufficiently small so $\phi(1+\eta) < 1$) raises marginal utility in singularity states
+- Connects these two forces to explain why AI stocks' P/D exceeds non-AI stocks' P/D
 
-### Remark 1 (Existence condition, lines 139-145)
-The discussion references the compound term $A^j$ defined in the remark, explains it as "SDF-weighted expected dividend growth," and connects divergence of the geometric pricing sum to the condition $A^j \geq 1$.
+### Remark 1 (Existence condition, lines 140-146)
+Explains $A^j \geq 1$ in terms of SDF-weighted expected dividend growth exceeding the discount rate, causing the geometric pricing sum to diverge. References the condition again in the transfers extension where $\phi^{-\gamma} = 160{,}000$ (line 256).
 
-### Proposition 2 (Comparative statics, lines 151-166)
-- **(i)** References $\phi$, $\phi^{-\gamma}$ (marginal utility), and the inequality $\Gamma^{AI} > \Gamma^{N}$ to explain why the amplification benefits AI stocks more.
-- **(ii)** References $p$, the singularity-state payoff comparison, and the role of $\gamma$ in the marginal utility effect vs. the denominator level effect.
-- **(iii)** References $\xi$, the $A^j/(1-A^j)$ functional form, its convexity in $A^j$, and the fact that $A^{AI} > A^N$ (from $\Gamma^{AI} > \Gamma^{N}$) to explain the proportionally larger fall.
+### Proposition 2 (Comparative statics, lines 152-167)
+Each part of the proof ties directly to mathematical objects:
+- (i): Decrease in $\phi$ raises $\phi^{-\gamma}$, amplifying the singularity term; benefits AI more because $\Gamma^{AI} > \Gamma^{N}$
+- (ii): Increase in $p$ puts more weight on singularity states where $\Gamma^{AI} > \Gamma^{N}$
+- (iii): Uses convexity of $A^j/(1-A^j)$ in $A^j$, and the fact that $A^{AI} > A^N$ since $\Gamma^{AI} > \Gamma^{N}$, to show extinction compresses the ratio
 
-### Proposition 3 (Veto, lines 205-216)
-- **(i)** References $\phi < 1$ (consumption drops), large $\gamma$ (risk aversion), and concavity of $u$ (sharply declining marginal utility) to explain why the downside dominates even when the positive singularity is more likely.
-- **(ii)** References complete markets enabling hedging of displacement and participation in the full surplus, connecting to the assumption that social surplus is positive.
+### Proposition 3 (Veto, lines 207-218)
+The proof references:
+- $\phi < 1$ causing consumption drops in the negative singularity
+- Concavity of $u$ with large $\gamma$ making downside dominate upside
+- Complete markets allowing hedging, so expected utility reflects the social surplus
+The numerical example (line 220) uses concrete parameter values ($\phi = 0.5$, $\eta = 0.5$, $\gamma = 10$, 70/30 split) to sharpen the point.
 
-### Transfer formulas (equations 7-9, lines 224-246)
-- **Equation 7**: Each term is explained: $\phi\alpha(1+\eta)C_t(1+g)$ as displaced consumption, $\tau(1-\delta\tau)$ as the net transfer reduced by deadweight cost, and $(1-\phi\alpha)$ as AI owners' share.
-- **Equation 8 ($\phi_\text{eff}$)**: Derived explicitly from equation 7 by dividing through, with the explanation that $\phi_\text{eff}$ enters the SDF identically to $\phi$.
-- **Equation 9 (transfer ratio)**: Independence from $\eta$ is highlighted and interpreted economically: as $\eta$ grows, both numerator and denominator grow without bound, so even inefficient transfers deliver large gains.
+### Transfer formula (eq 10, line 233)
+Each term is explained: $\phi \alpha (1+\eta) C_t (1+g)$ is displaced consumption; $\tau(1 - \delta\tau)(1-\phi\alpha)(1+\eta)C_t(1+g)$ is the net transfer reduced by deadweight cost $\delta\tau$. The derivation of $\phi_\text{eff}$ (eq 11) is explained as dividing eq 10 by $\alpha(1+\eta)(1+g)C_t$.
 
-### Figure 2 discussion (lines 248-251)
-References specific parameter products ($\phi(1+\eta) = 0.5$, $\phi^{-\gamma} = 160{,}000$), the existence condition from Remark 1, and the divergence of the pricing sum---all mathematical objects from the model.
+### Transfer ratio (eq 12, line 249)
+Explained as independent of $\eta$, with the economic content being in the levels: as $\eta$ grows, both numerator and denominator grow without bound, so even inefficient transfers deliver large gains relative to the pre-singularity baseline.
 
-## Summary
-Across all propositions and key formulas, the paper explains economic intuition by directly referencing the parameters ($\phi$, $\gamma$, $\xi$, $p$, $\eta$, $\Delta\theta$, $\tau$, $\delta$), compound terms ($\Gamma^{AI}$, $\Gamma^{N}$, $A^j$, $\phi_\text{eff}$), and functional forms ($A^j/(1-A^j)$, $\phi^{-\gamma}$) that appear in the formal statements. No discussion relies solely on verbal description disconnected from the math.
+### Approximation quality (line 148)
+The closed-form approximation (post-singularity P/D equals pre-singularity P/D) is discussed in terms of $\Delta\theta$: exact when $\Delta\theta \to 0$, less accurate as $\Delta\theta$ grows because each singularity shifts $\theta$ and therefore the dividend growth factors.

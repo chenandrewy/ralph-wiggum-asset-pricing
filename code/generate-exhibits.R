@@ -382,4 +382,62 @@ fig_val <- ggplot(df_val, aes(x = Date, y = Index, color = Group, linetype = Gro
 ggsave(file.path(outdir, "fig-ai-valuations.pdf"), fig_val, width = 7, height = 4.5)
 cat("Wrote", file.path(outdir, "fig-ai-valuations.pdf"), "\n")
 
-cat("All exhibits generated successfully.\n")
+# =============================================================================
+# Veto example computation (printed to console, referenced in-text in Section 4.1)
+# =============================================================================
+
+# Infinite-horizon expected utility: develop AI vs veto.
+# Bellman equation with CRRA homogeneity. Extinction utility normalized to 0.
+
+gamma_veto  <- 10
+p_veto      <- 0.01   # 1% annual singularity probability
+prob_pos_v  <- 0.70
+prob_neg_v  <- 0.30
+kappa_veto  <- 0.01   # 1% permanent consumption loss from veto
+alpha_veto  <- 0.70
+
+u_crra <- function(c, gam) c^(1 - gam) / (1 - gam)
+pv_factor <- function(gam) 1 / (1 - beta * (1 + g)^(1 - gam))
+
+# V = u(alpha) + B*[(1-p)*V + p*(1-xi)*(q*V_pos + (1-q)*V_neg) + p*xi*0]
+# where V_pos/V_neg are PV of deterministic post-singularity streams.
+compute_v_develop_veto <- function(gam, p_val) {
+  B <- beta * (1 + g)^(1 - gam)
+  alpha_pos <- min(1, alpha_veto / phi)
+  alpha_neg <- phi * alpha_veto
+  pv <- pv_factor(gam)
+  v_post_pos <- u_crra(alpha_pos * (1 + eta), gam) * pv
+  v_post_neg <- u_crra(alpha_neg * (1 + eta), gam) * pv
+  denom <- 1 - B * (1 - p_val)
+  if (denom <= 0) return(NA)
+  sing_val <- p_val * (1 - xi_ext) * (prob_pos_v * v_post_pos + prob_neg_v * v_post_neg)
+  (u_crra(alpha_veto, gam) + B * sing_val) / denom
+}
+
+compute_v_veto <- function(gam) {
+  u_crra(alpha_veto * (1 - kappa_veto), gam) * pv_factor(gam)
+}
+
+compute_v_develop_complete_veto <- function(gam, p_val) {
+  B <- beta * (1 + g)^(1 - gam)
+  pv <- pv_factor(gam)
+  v_post <- u_crra(alpha_veto * (1 + eta), gam) * pv
+  denom <- 1 - B * (1 - p_val)
+  if (denom <= 0) return(NA)
+  (u_crra(alpha_veto, gam) + B * p_val * (1 - xi_ext) * v_post) / denom
+}
+
+v_dev  <- compute_v_develop_veto(gamma_veto, p_veto)
+v_vet  <- compute_v_veto(gamma_veto)
+v_comp <- compute_v_develop_complete_veto(gamma_veto, p_veto)
+
+cat("\n=== Veto Example (Section 4.1) ===\n")
+cat(sprintf("gamma=%d, p=%.0f%%, kappa=%.0f%%, phi=%.1f, eta=%.1f, xi=%.0f%%\n",
+            gamma_veto, p_veto*100, kappa_veto*100, phi, eta, xi_ext*100))
+cat(sprintf("Positive singularity prob (cond. non-ext): %.0f%%\n", prob_pos_v*100))
+cat(sprintf("Incomplete markets: V_develop=%.4f, V_veto=%.4f => %s\n",
+            v_dev, v_vet, ifelse(v_vet > v_dev, "VETO", "develop")))
+cat(sprintf("Complete markets:   V_develop=%.4f, V_veto=%.4f => %s\n",
+            v_comp, v_vet, ifelse(v_vet > v_comp, "VETO", "develop")))
+
+cat("\nAll exhibits generated successfully.\n")

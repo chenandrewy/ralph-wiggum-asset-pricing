@@ -1,73 +1,58 @@
 # tests/factcheck-theory.py
-Started: 2026-04-09 22:04:35 EDT
-Runtime: 8m 33s
-[ralph-garage/agent-logs/20260409T220435.845325-0400_factcheck-theory_claude_opus.log](../ralph-garage/agent-logs/20260409T220435.845325-0400_factcheck-theory_claude_opus.log)
+Started: 2026-04-10 22:15:41 EDT
+Runtime: 7m 15s
+[ralph-garage/agent-logs/20260410T221541.756081-0400_factcheck-theory_claude_opus.log](../ralph-garage/agent-logs/20260410T221541.756081-0400_factcheck-theory_claude_opus.log)
 
 # factcheck-theory
 VERDICT: PASS
-REASON: All notation is consistent, all assumptions are mutually consistent, and all mathematical objects are traceable to the assumptions.
+REASON: All notation is consistent, all assumptions are mutually consistent, and all mathematical objects trace back to the assumptions.
 
-## Requirement 1: Notational Consistency
+## Requirement 1: Notational Consistency — PASS
 
-**Status: PASS**
+23 symbol families identified and audited. Zero collisions, zero ambiguities. Every symbol is introduced before use and has a single meaning throughout the paper. Key checks:
 
-21 symbol families were cataloged across all sections including appendix/proofs:
-$t$, $C$, $c$, $\alpha$, $\phi$, $g$, $p$, $\xi$, $\eta$, $\theta$, $\Delta\theta$, $D$, $P$, $v$, $\Gamma$, $A$, $\beta$, $\gamma$, $U$, $\tau$, $\delta$
+- **Aggregate vs. household consumption:** Clean case separation ($C_t$ vs. $c_t^H$) maintained throughout.
+- **Consumption share vs. dividend share:** $\alpha_t$ (household consumption share) and $\theta_t$ (AI dividend share) are never conflated.
+- **Superscript conventions:** $H$ (household), $AI$ (AI stocks), $N$ (non-AI stocks), $j$ (generic asset) are disjoint and consistently applied across all families.
+- **$\Gamma^N$ simplification:** Prop 1 form $\frac{1-\theta-\Delta\theta(1-\theta)}{1-\theta}(1+\eta)$ is algebraically identical to Appendix A form $(1-\Delta\theta)(1+\eta)$. Verified.
+- **$\phi$ vs. $\phi_\text{eff}$:** Explicitly related by Eq.(9) with a clear substitution statement.
+- **$U$ vs. $u$:** Lifetime utility ($U_0^H$) and period utility ($u$, used informally in Prop 3 proof) are distinguished by standard case convention. The lowercase $u$ appears only once ("$u$ is concave") and is unambiguous from the CRRA specification.
+- **Time subscript dropping:** Standard practice in stationary equilibrium formulas (Prop 1) and single-period extension analysis (Sec 4.2). No confusion.
 
-**Zero genuine symbol collisions found.** Every mathematical symbol denotes a single formal object throughout the paper. Superscript conventions ($H$, $AI$, $N$, $j$) are applied uniformly across all families.
+Full notation inventory: $t$, $C_t$, $c_t^H$, $\alpha_t$, $g$, $p$, $\xi$, $\eta$, $\phi$, $\phi_\text{eff}$, $\theta_t$, $\Delta\theta$, $D_t^{AI}$, $D_t^N$, $P_t^j$, $v^{AI}$, $\Gamma^{AI}$, $\Gamma^N$, $A^j$, $\gamma$, $\beta$, $U_0^H$, $U_\text{ext}$, $u$, $\tau$, $\delta$, $\mathbb{E}_t$, $j$.
 
-Minor notes (none are errors):
-- $u$ (period utility) appears informally in the proof of Proposition 3(i) without explicit definition, though unambiguous from context.
-- $\alpha$ (household consumption share) and $\theta$ (AI dividend share) both partition $C_t$; the paper explicitly addresses this distinction in the transfers section.
-- Time subscripts are dropped in comparative-static sections — standard practice.
-- $\phi$ is reused symmetrically in Extension 1 ($\alpha/\phi$ for positive singularity) — internally consistent.
+## Requirement 2: Assumption Consistency — PASS
 
-## Requirement 2: Assumption Consistency
+25 assumptions identified across baseline (A1–A17, A25), Extension 1/Veto (A18–A20), and Extension 2/Transfers (A21–A24). No contradictions found. Key consistency checks:
 
-**Status: PASS**
+- **Parameter ranges:** All open intervals are non-contradictory ($g>0$, $\alpha_t \in (0,1)$, $\phi \in (0,1)$, $\gamma>1$, $\beta \in (0,1)$, $\Delta\theta \in (0,1)$, $\tau \in [0,1)$, $\delta>0$).
+- **Repeated displacement preserves bounds:** $\alpha_t = \phi^n \alpha_0 \in (0,1)$ since $\phi \in (0,1)$. Similarly $\theta_n = 1-(1-\theta_0)(1-\Delta\theta)^n \in (0,1)$.
+- **Positive singularity preserves bounds:** $\alpha_{t+1} = \min(1, \alpha_t/\phi) \leq 1$ by construction.
+- **Existence condition vs. calibration:** $A^{AI} \approx 0.987 < 1$ at baseline ($p=1\%$, $\xi=0$). Verified numerically.
+- **CRRA sign vs. extinction normalization:** $\gamma > 1$ makes CRRA utility negative, so $U_\text{ext}=0$ is above all finite-consumption utilities. Paper explicitly acknowledges this is conservative. Not an inconsistency.
+- **Euler equation in extinction:** $c_{t+1}^H = 0$ makes SDF undefined, but payoff is also zero. Product resolves as zero. Standard treatment.
+- **Transfer formula:** Verified algebraically that Eq.(8) follows from baseline displacement (A6) plus tax/deadweight assumptions (A21–A22). $\phi_\text{eff}$ derivation is correct.
+- **Extension assumptions augment baseline:** Extensions add new branches/parameters without contradicting existing assumptions.
 
-21 assumptions were cataloged spanning time structure (A1), agents (A2-A3), consumption processes (A4-A5), singularity mechanics (A6-A8), asset definitions (A9-A10), market structure (A11), preferences (A12), approximations (A13-A14), calibration (A15), and extensions (A16-A21).
+Minor observations (not inconsistencies):
+1. Implicit restriction $\delta\tau < 1$ not formally stated, but always satisfied under calibration ($\delta=0.5$, $\tau<1$).
+2. Stationarity approximation acknowledged as exact only when $\Delta\theta \to 0$; numerically exact values provided separately.
 
-Cross-referencing all assumptions against each other revealed no direct or implicit contradictions:
-- Consumption growth under singularity correctly compounds normal growth $(1+g)$ with jump $(1+\eta)$.
-- Dividend shares sum to one: $D^{AI} + D^N = C_t$.
-- $\alpha$ and $\theta$ are independent parameters by construction.
-- $\phi \in (0,1)$ is compatible with positive singularity $\alpha/\phi$ (capped by $\min(1, \cdot)$).
-- Extinction utility $U_{\text{ext}} = 0$ is consistent with $\gamma > 1$ CRRA (where $u(c) < 0$).
-- Parameter restrictions are non-conflicting.
-- Existence condition $A^j < 1$ is satisfied numerically for baseline calibration and correctly violated for large-singularity calibration (as claimed).
-- Euler equation expansion in Appendix A verified step by step.
-- $\Gamma^N = (1-\Delta\theta)(1+\eta)$ is correctly $\theta$-independent.
-- $\phi \to \phi_{\text{eff}}$ substitution is valid (transfers affect SDF but not dividend growth factors).
-- Extensions are clearly separated from the baseline and introduce no contradictions.
+## Requirement 3: Traceability — PASS
 
-Minor issues (not contradictions):
-1. **Deadweight cost parameter range**: General formulation permits $\delta\tau > 1$ when $\delta > 1$, making net transfers negative. Calibration ($\delta = 0.5$) avoids this, but no general restriction $\delta\tau < 1$ is stated. (Low severity)
-2. **Transfer effect on aggregate dividends**: Deadweight loss destroys resources but is implicitly assumed not to affect the dividend process $D_t = \theta_t C_t$. Standard simplification, not explicitly stated. (Low severity)
-3. **Extension 1 missing probability parameterization**: Probabilities of positive vs. negative non-extinction singularity are not parameterized; Proposition 3 is stated qualitatively. (Low severity)
-4. **Extension 2 incomplete parameter restatement**: Figure caption does not restate $\theta$ and $\Delta\theta$, leaving readers to infer baseline values apply. (Negligible)
+All mathematical objects trace back to the 25 assumptions. Objects not directly in the assumptions are derived quantities:
 
-## Requirement 3: Traceability
+| Derived Object | Traced To |
+|----------------|-----------|
+| $\Gamma^{AI} = \frac{\theta+\Delta\theta(1-\theta)}{\theta}(1+\eta)$ | A5 ($\eta$), A9 ($\theta_t$), A10 ($\Delta\theta$) |
+| $\Gamma^N = (1-\Delta\theta)(1+\eta)$ | A5, A10 |
+| $A^j$ (existence condition) | A2 ($g$), A4 ($p$), A5 ($\eta$), A6 ($\phi$), A7 ($\xi$), A14 ($\beta,\gamma$), plus $\Gamma^j$ |
+| $v^{AI} = P^{AI}/D^{AI}$ | A15 (Euler equation), A9 ($D^{AI}$) |
+| $P^{AI}/D^{AI}$, $P^N/D^N$ (Prop 1) | Derived from Euler equation (A15) using consumption dynamics (A2–A7) and preferences (A14) |
+| Valuation spread (Prop 2) | Derived from Prop 1 closed forms |
+| $c^H_{post}$ (Eq. 8) | A3 ($\alpha$), A5 ($\eta$), A6 ($\phi$), A21 ($\tau$), A22 ($\delta$) |
+| $c^H_{no\text{-}transfer}$ (Eq. 10) | A3, A5, A6 (baseline with $\tau=0$) |
+| $\phi_\text{eff}$ (Eq. 9) | A6 ($\phi$), A21 ($\tau$), A22 ($\delta$), A3 ($\alpha$) |
+| $u$ (Prop 3 proof) | Implicit period utility from A14: $u(c) = c^{1-\gamma}/(1-\gamma)$ |
 
-**Status: PASS**
-
-All mathematical objects in propositions, remarks, equations, and proofs were traced to the stated assumptions:
-
-| Expression | Traced to |
-|---|---|
-| Eq. (1): $C_{t+1} = (1+g)C_t$ | A4 directly |
-| Eq. (2): $\alpha_{t+1} = \phi\alpha_t$ | A7 directly |
-| Eq. (3): CRRA utility | A12 directly |
-| Euler equation (Appendix A) | Standard result from A2 + A12 |
-| $\Gamma^{AI}$, $\Gamma^N$ | Algebraic from A9, A10, A7 |
-| Proposition 1 (P/D ratios) | Euler equation + A4-A10 + A13 |
-| Remark 1 ($A^j < 1$) | Mathematical consequence of Prop. 1 |
-| Proposition 2 (comparative statics) | Derivatives of Prop. 1 formulas |
-| Proposition 3 (veto) | A16-A18 + social efficiency as stated assumption |
-| Eq. (7): $c^H_{\text{post}}$ | Algebraic from A5, A7, A19 |
-| Eq. (8): $\phi_{\text{eff}}$ | Algebraic factoring of Eq. (7) |
-| Eq. (9): transfer ratio | Ratio of Eq. (7) to no-transfer case |
-
-No mathematical expression was found that cannot be logically derived from the stated assumptions.
-
-Note: The Euler equation is invoked as a standard result from consumption-based asset pricing (following from the household being the marginal investor with CRRA preferences), not re-derived from first principles. This is standard practice in the target literature and does not constitute a traceability gap.
+No expression in the paper lacks a derivation path from the stated assumptions.
