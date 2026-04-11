@@ -11,7 +11,9 @@ import argparse
 import json
 import pathlib
 import re
+import shutil
 import subprocess
+import tempfile
 
 
 DEFAULT_PDF = "paper/paper.pdf"
@@ -100,10 +102,16 @@ def exhibits_from_aux(aux_path: pathlib.Path) -> list[dict[str, object]]:
     return exhibits
 
 
-def build_manifest(aux_path: pathlib.Path, output_dir: pathlib.Path, tex_dir: pathlib.Path | None = None) -> dict[str, object]:
+def build_manifest(
+    aux_path: pathlib.Path,
+    output_dir: pathlib.Path,
+    tex_dir: pathlib.Path | None = None,
+    public_output_dir: pathlib.Path | None = None,
+) -> dict[str, object]:
     images = sorted(output_dir.glob("page-*.png"))
     exhibits = exhibits_from_aux(aux_path)
     long_labels = longtable_labels(tex_dir) if tex_dir is not None else set()
+    manifest_output_dir = public_output_dir or output_dir
     page_to_exhibits: dict[int, list[dict[str, object]]] = {}
     figure_pages: set[int] = set()
     table_pages: set[int] = set()
@@ -136,7 +144,7 @@ def build_manifest(aux_path: pathlib.Path, output_dir: pathlib.Path, tex_dir: pa
         seen_pages.add(page_number)
         pages.append({
             "page": page_number,
-            "image": str(image_path.relative_to(output_dir.parents[1])),
+            "image": str((manifest_output_dir / image_path.name).relative_to(manifest_output_dir.parents[1])),
             "has_figures": page_number in figure_pages,
             "has_tables": page_number in table_pages,
             "exhibits": page_to_exhibits.get(page_number, []),
@@ -150,10 +158,15 @@ def build_manifest(aux_path: pathlib.Path, output_dir: pathlib.Path, tex_dir: pa
     return {"pages": pages}
 
 
-def write_manifest(aux_path: pathlib.Path, output_dir: pathlib.Path, tex_dir: pathlib.Path | None = None) -> int:
+def write_manifest(
+    aux_path: pathlib.Path,
+    output_dir: pathlib.Path,
+    tex_dir: pathlib.Path | None = None,
+    public_output_dir: pathlib.Path | None = None,
+) -> int:
     manifest_path = output_dir / MANIFEST_FILENAME
     try:
-        manifest = build_manifest(aux_path, output_dir, tex_dir)
+        manifest = build_manifest(aux_path, output_dir, tex_dir, public_output_dir)
     except ValueError as exc:
         print(f"ERROR: {exc}")
         return 1
@@ -164,8 +177,6 @@ def write_manifest(aux_path: pathlib.Path, output_dir: pathlib.Path, tex_dir: pa
 
 def render_images(pdf_path: pathlib.Path, output_dir: pathlib.Path) -> int | None:
     output_dir.mkdir(parents=True, exist_ok=True)
-    for old in output_dir.glob("page-*.png"):
-        old.unlink()
 
     result = subprocess.run(
         ["pdftoppm", "-png", "-r", "150", str(pdf_path), str(output_dir / "page")],
@@ -182,6 +193,24 @@ def render_images(pdf_path: pathlib.Path, output_dir: pathlib.Path) -> int | Non
         return None
 
     return count
+
+
+def replace_output_dir(staged_dir: pathlib.Path, output_dir: pathlib.Path) -> None:
+    backup_dir: pathlib.Path | None = None
+    if output_dir.exists():
+        backup_dir = pathlib.Path(
+            tempfile.mkdtemp(prefix=f"{output_dir.name}-backup-", dir=output_dir.parent)
+        )
+        backup_dir.rmdir()
+        output_dir.rename(backup_dir)
+    try:
+        staged_dir.rename(output_dir)
+    except Exception:
+        if backup_dir is not None and backup_dir.exists() and not output_dir.exists():
+            backup_dir.rename(output_dir)
+        raise
+    if backup_dir is not None and backup_dir.exists():
+        shutil.rmtree(backup_dir)
 
 
 def main() -> int:
@@ -207,11 +236,20 @@ def main() -> int:
         print(f"[page-images] {count} images up to date")
         return 0
 
-    count = render_images(pdf_path, output_dir)
-    if count is None:
-        return 1
-    if write_manifest(aux_path, output_dir, tex_dir) != 0:
-        return 1
+    output_dir.parent.mkdir(parents=True, exist_ok=True)
+    staged_dir = pathlib.Path(
+        tempfile.mkdtemp(prefix=f"{output_dir.name}-tmp-", dir=output_dir.parent)
+    )
+    try:
+        count = render_images(pdf_path, staged_dir)
+        if count is None:
+            return 1
+        if write_manifest(aux_path, staged_dir, tex_dir, public_output_dir=output_dir) != 0:
+            return 1
+        replace_output_dir(staged_dir, output_dir)
+    finally:
+        if staged_dir.exists():
+            shutil.rmtree(staged_dir, ignore_errors=True)
     print(f"[page-images] generated {count} images")
     return 0
 
