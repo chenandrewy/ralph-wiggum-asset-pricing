@@ -254,7 +254,7 @@ cons_large_0 <- consumption_growth(0, 9.0, phi_large)
 
 panel_b <- ggplot(df_ext, aes(x = tau, y = cons_growth, color = scenario, linetype = scenario)) +
   geom_line(aes(linewidth = scenario)) +
-  geom_hline(yintercept = 1, linetype = "dotted", color = "black", linewidth = 1.8) +
+  geom_hline(yintercept = 1, linetype = "dashed", color = "black", linewidth = 2.0) +
   # Catastrophe markers at tau=0
   annotate("point", x = 0, y = cons_large_0, shape = 16, size = 3, color = "#1B4F99") +
   annotate("text", x = 0.06, y = cons_large_0 * 0.65,
@@ -264,11 +264,11 @@ panel_b <- ggplot(df_ext, aes(x = tau, y = cons_growth, color = scenario, linety
   annotate("text", x = 0.06, y = cons_base_0 * 0.75,
            label = paste0(round((1 - cons_base_0) * 100), "% loss"),
            color = "#B22222", size = 3.2, hjust = 0) +
-  annotate("text", x = 0.55, y = 1.15, label = "No change", color = "black", size = 4.5, fontface = "bold") +
+  annotate("text", x = 0.42, y = 1.15, label = "No change", color = "black", size = 4.5, fontface = "bold") +
   labs(x = expression("Tax rate " * tau),
        y = "Household Consumption Growth\nin Singularity",
        title = "(b) Household Consumption") +
-  scale_x_continuous(labels = scales::percent_format()) +
+  scale_x_continuous(labels = scales::percent_format(), limits = c(0, 0.50)) +
   scale_y_log10(breaks = c(0.1, 0.25, 0.5, 1, 2, 5)) +
   scale_color_manual(values = scenario_colors, labels = scenario_labels) +
   scale_linetype_manual(values = scenario_linetypes, labels = scenario_labels) +

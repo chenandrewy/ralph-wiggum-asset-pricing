@@ -1,49 +1,53 @@
 # Improvement Plan
-AUTHOR PLAN — 2026-04-11 10:25:27 EDT
+AUTHOR PLAN — 2026-04-11 14:57:23 EDT
 
-## Status
+## Status: 20/25 tests pass, 5 fail
 
-- **Tests**: 21/25 pass, 4 fail
-- **No overhaul needed**: Model, extensions, and code are structurally sound. All issues are targeted fixes.
+## Failing Tests and Fixes
 
-## Failing Tests (Priority)
+### 1. factcheck-bysection (paper + code)
 
-### 1. factcheck-anaphora (paper fix)
+**Issue A — Prop 2 proof false claim (line 164).** The proof says "common additive reduction" when xi increases. This is wrong: the singularity component is proportional to Gamma^j, so the additive changes differ by factor Gamma^AI/Gamma^N ≈ 2.67. The factor (1-xi) applies multiplicatively to both, so the correct argument is: higher xi scales down the singularity component by the same *multiplicative* factor in both A^AI and A^N. Since A/(1-A) is increasing and convex and A^AI > A^N, a common multiplicative scaling of the singularity term (which is larger for AI) compresses the ratio.
 
-**Issue**: Line 195–196 says "extinction risk reduces both valuations and compresses the AI premium, as Proposition 2(iii) predicts." Proposition 2(iii) only establishes that the *spread* and *ratio* decrease in $\xi$ — it says nothing about individual P/D levels decreasing.
+- **Fix:** Rewrite the Prop 2 proof to use the multiplicative argument. Replace "common additive reduction" with the correct reasoning.
 
-**Fix**: Narrow the claim. Change to something like: "extinction risk compresses the AI premium, as Proposition 2(iii) predicts — at high extinction probabilities, even AI stocks lose value because the states in which they pay off become less likely." The separate observation about both levels falling can stand on its own without citing Prop 2(iii).
+**Issue B — "roughly 50%" claim (line 191).** The figure shows NASDAQ ending ~470-480 vs S&P ~340 (normalized to 100), which is ~38% outperformance, not 50%.
 
-### 2. factcheck-freely (paper fix — two sub-issues)
+- **Fix:** Change "roughly 50%" to "roughly 40%" or regenerate the figure to check the exact latest data point, then state the correct number.
 
-**Issue A**: Section 2.3, line 177–178 claims the P/D spread "vanishes" when $\phi_\text{eff} \to 1$. This is false within the model: $\Gamma^{AI} \neq \Gamma^{N}$ regardless of $\phi$, so a residual spread from differential dividend growth remains even when displacement is fully hedged. The displacement-driven component of the spread vanishes, but the total spread does not.
+### 2. writing-intro (paper)
 
-**Fix A**: Replace "the P/D spread between AI and non-AI stocks vanishes" with language reflecting that the displacement-driven spread is eliminated while a small residual spread from differential dividend growth remains. E.g., "the displacement-driven valuation premium largely collapses" or "the valuation spread would collapse to a small residual reflecting differential dividend growth."
+**Issues:** P4 is overloaded (model + closed-form + quantitative + complete markets + extinction in one paragraph). P4→P5 transition is forced. P5→P6 is a non-sequitur. P2/P3 redundancy.
 
-**Issue B**: Proposition 3(ii) states unconditionally "the household never vetoes" but the proof establishes this only for $\kappa$ sufficiently small. The proposition and proof are misaligned.
+- **Fix:** 
+  - Merge P2 and P3 into a single tighter paragraph that introduces the hedging motive and explains restricted equity once.
+  - Split P4: one paragraph on the model and its main result (hedging premium), a second on complete markets and extinction attenuation.
+  - Smooth P5 transition by linking from "market incompleteness drives valuations" to "market incompleteness also distorts development."
+  - Tighten P6 opening so it flows from veto → policy response.
 
-**Fix B**: Add "for $\kappa$ sufficiently small" to the proposition statement, or note it holds for the same $\kappa$ as in part (i). The proof already says "for any $\kappa$ small enough, and in particular for the same $\kappa$ used in part (i)" — so the fix is just aligning the proposition statement with the proof.
+### 3. element-rhetoric-meta (paper)
 
-### 3. visual-figures-image-only (code fix)
+**Issues:** "requiring zero traditional research labor" is too blunt/boastful. Near-identical phrasing in abstract and intro. The device takes too much space in the abstract.
 
-**Issue**: Panel (a) of fig-extension-panels has ~31% y-axis headroom (y-axis runs to ~17.5 but data only reaches ~15.3). The threshold is 20%.
+- **Fix:**
+  - Abstract: shorten to something like "This paper demonstrates the displacement it models: AI agents produced all analysis and writing from a human-authored specification." Drop the "requiring zero" quantifier.
+  - Intro: vary the phrasing — develop the device with more specificity about the human/AI division rather than repeating the abstract's formulation.
 
-**Fix**: In `code/generate-exhibits.R`, tighten the y-axis upper limit for Panel (a). Currently `y_cap_a <- 17`. Reduce to ~16 or compute it from the data (e.g., `ceiling(max(pd_data_a$pd_ai, na.rm=TRUE)) + 0.5`). Then regenerate exhibits.
+### 4. visual-figures-image-only (code)
 
-### 4. writing-intro (paper fix)
+**Issue:** Panel (b) x-axis extends to ~65%, but curves flatten and converge by ~50%.
 
-**Issue**: Two of five main arguments are not skimmable in the introduction:
-- **Argument 2** (complete markets eliminate the valuation premium): The counterfactual appears only in the veto paragraph (P5), not in the pricing discussion (P2–P3). A skimmer may not connect it back to valuations.
-- **Argument 3** ("financial market solutions are under-discussed"): This literature-positioning claim is absent from any topic sentence.
+- **Fix:** Cap Panel (b) x-axis at 50% (tau_max = 0.50) so curves fill the plot area.
 
-**Fix**:
-- Add a sentence in the pricing discussion (around paragraphs 2–3) explicitly stating the complete-markets counterfactual: if markets were complete, the valuation premium would vanish (or nearly vanish, per fix 2A above).
-- Surface argument 3 — e.g., add a brief clause in paragraph 3 or 6 noting that financial market solutions to AI disaster risk are under-discussed in the literature, though frictions limit their effectiveness.
+### 5. visual-figures (paper + code)
 
-## Sequencing
+**Issue:** Panel (a) large-singularity line is absent for most of x-axis (P/D undefined at low tau), and caption doesn't explain this.
 
-1. Fix paper text for factcheck-anaphora (line 195–196 rewording)
-2. Fix paper text for factcheck-freely Issue A (Section 2.3 "vanishes" claim) and Issue B (Proposition 3(ii) qualifier)
-3. Fix code for visual-figures-image-only (tighten Panel (a) y-axis), regenerate exhibits
-4. Fix intro for writing-intro (add complete-markets counterfactual + under-discussed claim)
-5. Rebuild LaTeX to verify
+- **Fix:** Add to the caption for Panel (a): explain that the large-singularity P/D is undefined at low tax rates because the existence condition is violated (the hedge value becomes infinite). This is actually a key visual message — make it explicit in the caption.
+
+## Execution Order
+
+1. **Code fix (items 4, 5, 1B):** Tighten Panel (b) x-axis to 50%. Regenerate figures. Check exact NASDAQ/S&P outperformance from the data.
+2. **Prop 2 proof fix (item 1A):** Rewrite the proof's intermediate reasoning.
+3. **Caption fix (item 5):** Add existence-condition explanation to fig-extension-panels caption.
+4. **Intro rewrite (items 2, 3):** Restructure paragraphs, soften meta-rhetoric, vary abstract vs intro phrasing.

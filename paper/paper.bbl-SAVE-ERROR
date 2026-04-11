@@ -1,0 +1,393 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nyt/global//global/global}
+    \entry{Acemoglu2025}{article}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=d849e6f8de178bfb18aa67341c9f8d38}{%
+           family={Acemoglu},
+           familyi={A\bibinitperiod},
+           given={Daron},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{d849e6f8de178bfb18aa67341c9f8d38}
+      \strng{fullhash}{d849e6f8de178bfb18aa67341c9f8d38}
+      \strng{bibnamehash}{d849e6f8de178bfb18aa67341c9f8d38}
+      \strng{authorbibnamehash}{d849e6f8de178bfb18aa67341c9f8d38}
+      \strng{authornamehash}{d849e6f8de178bfb18aa67341c9f8d38}
+      \strng{authorfullhash}{d849e6f8de178bfb18aa67341c9f8d38}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Economic Policy}
+      \field{number}{121}
+      \field{title}{The Simple Macroeconomics of {AI}}
+      \field{volume}{40}
+      \field{year}{2025}
+      \field{pages}{13\bibrangedash 58}
+      \range{pages}{46}
+    \endentry
+    \entry{AghionJonesJones2019}{incollection}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=7c80c989fdd0b446cc5cdac1d9584afe}{%
+           family={Aghion},
+           familyi={A\bibinitperiod},
+           given={Philippe},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{un=1,uniquepart=given,hash=ed4887cd39c168b7200165f6c467a449}{%
+           family={Jones},
+           familyi={J\bibinitperiod},
+           given={Benjamin\bibnamedelima F.},
+           giveni={B\bibinitperiod\bibinitdelim F\bibinitperiod},
+           givenun=1}}%
+        {{un=1,uniquepart=given,hash=36bf88f6a0c291936a6300dfc04afeb2}{%
+           family={Jones},
+           familyi={J\bibinitperiod},
+           given={Charles\bibnamedelima I.},
+           giveni={C\bibinitperiod\bibinitdelim I\bibinitperiod},
+           givenun=1}}%
+      }
+      \list{publisher}{1}{%
+        {University of Chicago Press}%
+      }
+      \strng{namehash}{46ab2dec64caff92c59016056059bb81}
+      \strng{fullhash}{46ab2dec64caff92c59016056059bb81}
+      \strng{bibnamehash}{46ab2dec64caff92c59016056059bb81}
+      \strng{authorbibnamehash}{46ab2dec64caff92c59016056059bb81}
+      \strng{authornamehash}{46ab2dec64caff92c59016056059bb81}
+      \strng{authorfullhash}{46ab2dec64caff92c59016056059bb81}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{The Economics of Artificial Intelligence: An Agenda}
+      \field{title}{Artificial Intelligence and Economic Growth}
+      \field{year}{2019}
+      \field{pages}{237\bibrangedash 290}
+      \range{pages}{54}
+    \endentry
+    \entry{Barro2006}{article}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=12e80febb122b75421416b9e181d4657}{%
+           family={Barro},
+           familyi={B\bibinitperiod},
+           given={Robert\bibnamedelima J.},
+           giveni={R\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{12e80febb122b75421416b9e181d4657}
+      \strng{fullhash}{12e80febb122b75421416b9e181d4657}
+      \strng{bibnamehash}{12e80febb122b75421416b9e181d4657}
+      \strng{authorbibnamehash}{12e80febb122b75421416b9e181d4657}
+      \strng{authornamehash}{12e80febb122b75421416b9e181d4657}
+      \strng{authorfullhash}{12e80febb122b75421416b9e181d4657}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Quarterly Journal of Economics}
+      \field{number}{3}
+      \field{title}{Rare Disasters and Asset Markets in the Twentieth Century}
+      \field{volume}{121}
+      \field{year}{2006}
+      \field{pages}{823\bibrangedash 866}
+      \range{pages}{44}
+    \endentry
+    \entry{GKP2012}{article}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=0c634bc5d53d9902843ba6686ad256bc}{%
+           family={G\^{a}rleanu},
+           familyi={G\bibinitperiod},
+           given={Nicolae},
+           giveni={N\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=4b0b222a07cb059c2fb55d9200bd6369}{%
+           family={Kogan},
+           familyi={K\bibinitperiod},
+           given={Leonid},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=6e20a6c0215db8ab0b94c0141116081a}{%
+           family={Panageas},
+           familyi={P\bibinitperiod},
+           given={Stavros},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{163c5408221b2b3adce304cb3aa80732}
+      \strng{fullhash}{163c5408221b2b3adce304cb3aa80732}
+      \strng{bibnamehash}{163c5408221b2b3adce304cb3aa80732}
+      \strng{authorbibnamehash}{163c5408221b2b3adce304cb3aa80732}
+      \strng{authornamehash}{163c5408221b2b3adce304cb3aa80732}
+      \strng{authorfullhash}{163c5408221b2b3adce304cb3aa80732}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Financial Economics}
+      \field{number}{3}
+      \field{title}{Displacement Risk and Asset Returns}
+      \field{volume}{105}
+      \field{year}{2012}
+      \field{pages}{491\bibrangedash 510}
+      \range{pages}{20}
+    \endentry
+    \entry{Jones2024}{article}{}
+      \name{author}{1}{}{%
+        {{un=1,uniquepart=given,hash=36bf88f6a0c291936a6300dfc04afeb2}{%
+           family={Jones},
+           familyi={J\bibinitperiod},
+           given={Charles\bibnamedelima I.},
+           giveni={C\bibinitperiod\bibinitdelim I\bibinitperiod},
+           givenun=1}}%
+      }
+      \strng{namehash}{36bf88f6a0c291936a6300dfc04afeb2}
+      \strng{fullhash}{36bf88f6a0c291936a6300dfc04afeb2}
+      \strng{bibnamehash}{36bf88f6a0c291936a6300dfc04afeb2}
+      \strng{authorbibnamehash}{36bf88f6a0c291936a6300dfc04afeb2}
+      \strng{authornamehash}{36bf88f6a0c291936a6300dfc04afeb2}
+      \strng{authorfullhash}{36bf88f6a0c291936a6300dfc04afeb2}
+      \field{sortinit}{J}
+      \field{sortinithash}{b2f54a9081ace9966a7cb9413811edb4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{American Economic Review: Insights}
+      \field{number}{4}
+      \field{title}{The {AI} Dilemma: Growth versus Existential Risk}
+      \field{volume}{6}
+      \field{year}{2024}
+      \field{pages}{575\bibrangedash 590}
+      \range{pages}{16}
+    \endentry
+    \entry{Knesl2023}{article}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=7c79f0712a42582ea53f557ccf9ce895}{%
+           family={Knesl},
+           familyi={K\bibinitperiod},
+           given={Ji\v{r}\'{\i}},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{7c79f0712a42582ea53f557ccf9ce895}
+      \strng{fullhash}{7c79f0712a42582ea53f557ccf9ce895}
+      \strng{bibnamehash}{7c79f0712a42582ea53f557ccf9ce895}
+      \strng{authorbibnamehash}{7c79f0712a42582ea53f557ccf9ce895}
+      \strng{authornamehash}{7c79f0712a42582ea53f557ccf9ce895}
+      \strng{authorfullhash}{7c79f0712a42582ea53f557ccf9ce895}
+      \field{sortinit}{K}
+      \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Financial Economics}
+      \field{number}{2}
+      \field{title}{Automation and the Displacement of Labor by Capital: Asset Pricing Theory and Empirical Evidence}
+      \field{volume}{147}
+      \field{year}{2023}
+      \field{pages}{271\bibrangedash 296}
+      \range{pages}{26}
+    \endentry
+    \entry{KoganPapanikolaou2014}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=4b0b222a07cb059c2fb55d9200bd6369}{%
+           family={Kogan},
+           familyi={K\bibinitperiod},
+           given={Leonid},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c5d15f4351bb863d8785d5dd8176deba}{%
+           family={Papanikolaou},
+           familyi={P\bibinitperiod},
+           given={Dimitris},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{059f37de9d260d202b67bf391948a7e0}
+      \strng{fullhash}{059f37de9d260d202b67bf391948a7e0}
+      \strng{bibnamehash}{059f37de9d260d202b67bf391948a7e0}
+      \strng{authorbibnamehash}{059f37de9d260d202b67bf391948a7e0}
+      \strng{authornamehash}{059f37de9d260d202b67bf391948a7e0}
+      \strng{authorfullhash}{059f37de9d260d202b67bf391948a7e0}
+      \field{sortinit}{K}
+      \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Finance}
+      \field{number}{2}
+      \field{title}{Growth Opportunities, Technology Shocks, and Asset Prices}
+      \field{volume}{69}
+      \field{year}{2014}
+      \field{pages}{675\bibrangedash 718}
+      \range{pages}{44}
+    \endentry
+    \entry{KoganPapanikolaouStoffman2020}{article}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=4b0b222a07cb059c2fb55d9200bd6369}{%
+           family={Kogan},
+           familyi={K\bibinitperiod},
+           given={Leonid},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c5d15f4351bb863d8785d5dd8176deba}{%
+           family={Papanikolaou},
+           familyi={P\bibinitperiod},
+           given={Dimitris},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f8240ec71c8cfd91bb75800853ef1079}{%
+           family={Stoffman},
+           familyi={S\bibinitperiod},
+           given={Noah},
+           giveni={N\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{a9c241195acbb8461a1e01936e9952b8}
+      \strng{fullhash}{a9c241195acbb8461a1e01936e9952b8}
+      \strng{bibnamehash}{a9c241195acbb8461a1e01936e9952b8}
+      \strng{authorbibnamehash}{a9c241195acbb8461a1e01936e9952b8}
+      \strng{authornamehash}{a9c241195acbb8461a1e01936e9952b8}
+      \strng{authorfullhash}{a9c241195acbb8461a1e01936e9952b8}
+      \field{sortinit}{K}
+      \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Political Economy}
+      \field{number}{3}
+      \field{title}{Left Behind: Creative Destruction, Inequality, and the Stock Market}
+      \field{volume}{128}
+      \field{year}{2020}
+      \field{pages}{855\bibrangedash 906}
+      \range{pages}{52}
+    \endentry
+    \entry{Nordhaus2021}{article}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=32c3eb7d6cf2296e0234eb5ecc493827}{%
+           family={Nordhaus},
+           familyi={N\bibinitperiod},
+           given={William\bibnamedelima D.},
+           giveni={W\bibinitperiod\bibinitdelim D\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{32c3eb7d6cf2296e0234eb5ecc493827}
+      \strng{fullhash}{32c3eb7d6cf2296e0234eb5ecc493827}
+      \strng{bibnamehash}{32c3eb7d6cf2296e0234eb5ecc493827}
+      \strng{authorbibnamehash}{32c3eb7d6cf2296e0234eb5ecc493827}
+      \strng{authornamehash}{32c3eb7d6cf2296e0234eb5ecc493827}
+      \strng{authorfullhash}{32c3eb7d6cf2296e0234eb5ecc493827}
+      \field{sortinit}{N}
+      \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{American Economic Journal: Macroeconomics}
+      \field{number}{1}
+      \field{title}{Are We Approaching an Economic Singularity? {I}nformation Technology and the Future of Economic Growth}
+      \field{volume}{13}
+      \field{year}{2021}
+      \field{pages}{299\bibrangedash 332}
+      \range{pages}{34}
+    \endentry
+    \entry{PastorVeronesi2009}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=1be825d7175b7af626c78cd8d18cb165}{%
+           family={P\'{a}stor},
+           familyi={P\bibinitperiod},
+           given={\v{L}ubo\v{s}},
+           giveni={\v{L}\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=fe1ab971d5c8e3b83f7b36b6511a6186}{%
+           family={Veronesi},
+           familyi={V\bibinitperiod},
+           given={Pietro},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{6a86a406260c702444f89656159f5e6c}
+      \strng{fullhash}{6a86a406260c702444f89656159f5e6c}
+      \strng{bibnamehash}{6a86a406260c702444f89656159f5e6c}
+      \strng{authorbibnamehash}{6a86a406260c702444f89656159f5e6c}
+      \strng{authornamehash}{6a86a406260c702444f89656159f5e6c}
+      \strng{authorfullhash}{6a86a406260c702444f89656159f5e6c}
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{American Economic Review}
+      \field{number}{4}
+      \field{title}{Technological Revolutions and Stock Prices}
+      \field{volume}{99}
+      \field{year}{2009}
+      \field{pages}{1451\bibrangedash 1483}
+      \range{pages}{33}
+    \endentry
+    \entry{Wachter2013}{article}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=a548e32ce59a1ffc6cc287f13e099474}{%
+           family={Wachter},
+           familyi={W\bibinitperiod},
+           given={Jessica\bibnamedelima A.},
+           giveni={J\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{a548e32ce59a1ffc6cc287f13e099474}
+      \strng{fullhash}{a548e32ce59a1ffc6cc287f13e099474}
+      \strng{bibnamehash}{a548e32ce59a1ffc6cc287f13e099474}
+      \strng{authorbibnamehash}{a548e32ce59a1ffc6cc287f13e099474}
+      \strng{authornamehash}{a548e32ce59a1ffc6cc287f13e099474}
+      \strng{authorfullhash}{a548e32ce59a1ffc6cc287f13e099474}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Finance}
+      \field{number}{3}
+      \field{title}{Can Time-Varying Risk of Rare Disasters Explain Aggregate Stock Market Volatility?}
+      \field{volume}{68}
+      \field{year}{2013}
+      \field{pages}{987\bibrangedash 1035}
+      \range{pages}{49}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
