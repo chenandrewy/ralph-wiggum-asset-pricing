@@ -2,10 +2,10 @@
 # Internal-use note for this Ralph stretch; not included in iteration commit subjects.
 run-note: revamp check-direction
 startup-source: ralph-garage/check-direction/run-01
-max-iter: 20
+max-iter: 30
 
 # Optional pre-loop baseline test run
-test-before-loop: on
+test-before-loop: off
 
 # == Test Set ==
 test-mode: selected
