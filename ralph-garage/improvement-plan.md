@@ -1,35 +1,34 @@
 # Improvement Plan
-AUTHOR PLAN — 2026-04-10 22:25:36 EDT
+AUTHOR PLAN — 2026-04-10 23:07:26 EDT
 
 ## Current State
 
-22/25 tests pass. Three failures, all fixable without structural changes.
+22/25 tests pass. No overhaul needed — model section is clean and correct. Three tests fail, all related to writing/formatting issues in the introduction.
 
 ## Failing Tests
 
-### 1. element-gkp-cites (FAIL)
+### 1. `element-lit-review` + `spec-paper` (same root cause)
+**Issue:** Lit review is ~20 lines (~65-75% of a page), exceeding the half-page limit (~13-15 lines). Previous iteration (rloop-16) attempted trimming but didn't cut enough.
 
-**Issue:** Line 228 in Extension 2 opening uses "note that" and "Building on this suggestion" to describe GKP's transfer discussion. The test flags this as minimizing GKP's substantive analytical paragraph (GKP Section 3.2), where they work through the altruistic dynasty example and discuss multiple transfer mechanisms. "Note" implies a passing remark; "suggestion" implies a hint rather than analysis.
+### 2. `writing-intro`
+**Issue A:** Paragraph 6's topic sentence is about redistribution as a policy lever, not about resource abundance overcoming frictions. The "abundance overcomes frictions" idea (spec argument 3d) is buried in interior sentences.
+**Issue B:** The self-demonstration device (spec requirement IV.5.c) appears only in a footnote. The spec says it should be used in the abstract *and* introduction — a footnote doesn't count for skimmability.
 
-**Fix in paper.tex (line 228):** Replace the opening of Extension 2 with language that properly credits GKP's analytical treatment. Something like: "\citet{GKP2012} analyze how intergenerational transfers affect the magnitude of displacement risk, showing that under altruistic dynasties bequests can eliminate displacement entirely, while observing that such transfers do not alter the functional form of the stochastic discount factor. Building on their analysis, we study transfers in the specific setting of an AI singularity..." Key changes: "note that" -> "analyze how"; "suggestion" -> "their analysis."
+## Plan
 
-### 2. spec-paper (FAIL)
+### Step 1: Cut the lit review to under half a page
+- The third paragraph (lines 66 in tex, the "broader literature" sweep) is the longest at ~8 lines. Compress it aggressively: combine KP (2014), KPS (2020), and Knesl (2023) into a single parenthetical list with one shared sentence about creative destruction and displacement risk premia. Reduce AJJ (2019) and Acemoglu (2025) to parenthetical cites. Keep Barro/Wachter/PV as a parenthetical cluster.
+- Target: 3 paragraphs totaling ~12-13 lines of rendered text (safely under half a page).
+- The first two paragraphs (GKP, Jones) are important and well-written but can each lose 1-2 lines of detail.
 
-**Issue:** Style Requirement 8 requires all display equations be numbered. The `align` environment at lines 298-301 in the appendix uses `\nonumber` on the first line.
+### Step 2: Fix paragraph 6 topic sentence
+- Rewrite the opening of paragraph 6 (currently "If blocking AI is costly, another policy lever is redistribution.") to lead with the abundance-overcomes-frictions idea.
+- Something like: "The abundance of resources in a singularity can overcome the market frictions that make displacement catastrophic." Then pivot to redistribution as the mechanism.
 
-**Fix in paper.tex (lines 298-301):** Replace the `align` with `equation` + `split` (single number for the whole equation), or remove the `\nonumber` and let both lines get numbered. The `equation`+`split` approach is cleaner since this is one equation broken across two lines.
+### Step 3: Elevate self-demonstration device from footnote to body text
+- Move the self-demonstration content from the footnote (line 57) into a brief sentence in the introduction body text — either at the end of the opening paragraph or in a short closing paragraph before the lit review.
+- Keep it to one sentence. The abstract already contains the device; this ensures the intro body does too.
 
-### 3. visual-figures-image-only (FAIL)
+## Sequencing
 
-**Issue:** fig-ai-valuations has grid lines in gray50 (too dark, competes with data lines).
-
-**Fix in code/generate-exhibits.R (line 380):** Change `panel.grid.major = element_line(color = "gray50")` to `panel.grid.major = element_line(color = "gray80")`. This is a fig-ai-valuations-specific theme override; the extension figure already uses gray75 from theme_paper and passes.
-
-## Execution Order
-
-1. Fix code/generate-exhibits.R grid color (line 380): gray50 -> gray80.
-2. Regenerate exhibits: `Rscript code/generate-exhibits.R`.
-3. Fix paper.tex line 228: reword GKP transfer attribution.
-4. Fix paper.tex lines 298-301: replace align+nonumber with equation+split.
-5. Rebuild paper PDF and page images.
-6. Run tests to verify.
+Do Steps 1-3 in a single edit pass to the introduction. No code or exhibit changes needed. All three fixes are localized to `paper/paper.tex` lines 40-67.
