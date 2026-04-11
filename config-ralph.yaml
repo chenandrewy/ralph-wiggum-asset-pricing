@@ -5,7 +5,7 @@ startup-source: ralph-garage/check-direction/run-01
 max-iter: 30
 
 # Optional pre-loop baseline test run
-test-before-loop: off
+test-before-loop: on
 
 # == Test Set ==
 test-mode: selected
@@ -41,8 +41,8 @@ selected-tests:
 agent-log-mode: verbose
 
 # Stop before tests if Claude's budget is low
-quota-preflight: false
-claude-5h-utilization-limit: 0.67
+quota-preflight: true
+claude-5h-utilization-limit: 0.75
 
 # == Referees and continual-improvement mode ==
 continual-improvement: false
