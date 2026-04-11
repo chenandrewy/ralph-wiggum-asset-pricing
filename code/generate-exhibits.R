@@ -223,7 +223,8 @@ scenario_colors <- c("Baseline" = "#B22222", "Large singularity" = "#1B4F99")
 # Compute y-axis bounds for Panel A: tighten to data range
 pd_data_a <- df_ext %>% filter(!is.na(pd_ai) & tau <= 0.40)
 y_min_a <- 7
-y_cap_a <- 17
+baseline_max_a <- max(pd_data_a$pd_ai[pd_data_a$scenario == "Baseline"], na.rm = TRUE)
+y_cap_a <- ceiling(baseline_max_a)
 
 # Find the tau value where the large-singularity line exits the capped region
 large_sing_data <- pd_data_a %>% filter(scenario == "Large singularity")

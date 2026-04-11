@@ -1,20 +1,25 @@
 # tests/spec-scope.py
-Started: 2026-04-11 10:15:04 EDT
-Runtime: 40s
-[ralph-garage/agent-logs/20260411T101504.822724-0400_spec-scope_claude_opus.log](../ralph-garage/agent-logs/20260411T101504.822724-0400_spec-scope_claude_opus.log)
+Started: 2026-04-11 10:30:39 EDT
+Runtime: 39s
+[ralph-garage/agent-logs/20260411T103039.126874-0400_spec-scope_claude_opus.log](../ralph-garage/agent-logs/20260411T103039.126874-0400_spec-scope_claude_opus.log)
 
 # spec-scope
 VERDICT: PASS
-REASON: The paper maintains a compact theoretical scope with illustrative quantitative material and no empirical estimation or broad prediction menus.
+REASON: The paper maintains a compact theoretical scope with one core model, illustrative (not calibrated) quantitative analysis, and two tightly scoped extensions.
 
 ## Findings
 
-**Theoretical core.** The paper builds a single consumption-based asset pricing model with a discrete AI singularity, derives closed-form price-dividend ratios (Proposition 1), comparative statics (Proposition 2), and two tightly scoped extensions (veto under incomplete markets, government transfers). All results flow from one mechanism: hedging displacement under incomplete markets.
+### Theoretical scope
+The paper develops a single consumption-based asset pricing model with a discrete AI singularity, market incompleteness, and extinction risk. The model delivers closed-form price-dividend ratios (Proposition 1) and comparative statics (Proposition 2). The two extensions — veto/efficient development (Proposition 3) and government transfers — are direct consequences of the core mechanism, not separate models. The conclusion explicitly states: "Our model is deliberately simple. It abstracts from continuous-time dynamics, heterogeneous beliefs, production-side details, and many other features that would enrich the analysis."
 
-**Quantitative material is illustrative, not calibrated.** Section 3 reports P/D ratios across a grid of singularity probabilities and extinction risks (Table 1) using round-number parameters ($\beta=0.96$, $g=0.02$, $\gamma=4$, $\phi=0.5$, $\eta=0.5$). The paper explicitly describes the magnitudes as "broadly suggestive" and flags that the NASDAQ/S&P comparison is "imperfect." There is no moment-matching, GMM estimation, or structural calibration.
+### Empirical content
+Empirical content is minimal and illustrative:
+- **Figure 1**: NASDAQ vs. S&P 500 since 2015, used only to motivate the valuation spread. The paper explicitly notes this comparison is "imperfect" and "broadly suggestive."
+- **Table 1**: Model-generated P/D ratios across a parameter grid. This is quantitative analysis of the model, not empirical estimation.
+- No regressions, no calibration to match empirical moments, no estimation.
 
-**Empirical content is minimal.** The only data shown is a single time-series figure (NASDAQ vs. S&P 500, Figure 1) used for motivation, not estimation. No regressions, no panel data, no cross-sectional tests.
+### Prediction menu
+The paper does not offer a broad menu of testable predictions. The comparative statics (Proposition 2) are limited to three results about the valuation spread's response to displacement severity, singularity probability, and extinction probability — all direct implications of the single mechanism.
 
-**No broad prediction menus.** The model yields three focused comparative statics (displacement severity, singularity probability, extinction probability) and two extension results (veto threshold, transfer effectiveness). The conclusion explicitly acknowledges the model is "deliberately simple" and does not attempt a "definitive account."
-
-**Extensions stay within scope.** Both extensions (veto in Section 4.1, transfers in Section 4.2) are direct consequences of the core incomplete-markets mechanism, not separate empirical exercises. The veto extension adds one parameter ($q$, probability of positive singularity) and the transfer extension adds two ($\tau$, $\delta$). Both use numerical examples rather than calibration.
+### Quantitative material
+Section 3 ("Quantitative Analysis") is illustrative rather than calibrated. Parameters are chosen for transparency ($\phi = 0.5$, $\eta = 0.5$, etc.) and the paper reports that "magnitudes are broadly suggestive" rather than claiming precise empirical fit. The extension figures use round-number parameters to illustrate how transfers interact with singularity severity.

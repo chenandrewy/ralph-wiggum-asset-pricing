@@ -1,11 +1,11 @@
 # tests/factcheck-lit.py
-Started: 2026-04-11 10:15:04 EDT
-Runtime: 6m 46s
-[ralph-garage/agent-logs/20260411T101504.838554-0400_factcheck-lit_claude_opus.log](../ralph-garage/agent-logs/20260411T101504.838554-0400_factcheck-lit_claude_opus.log)
+Started: 2026-04-11 10:30:39 EDT
+Runtime: 6m 30s
+[ralph-garage/agent-logs/20260411T103039.137547-0400_factcheck-lit_claude_opus.log](../ralph-garage/agent-logs/20260411T103039.137547-0400_factcheck-lit_claude_opus.log)
 
 # factcheck-lit
 VERDICT: PASS
-REASON: All 11 cited works are externally verified with accurate metadata and materially accurate in-text claims; one minor grouping imprecision does not rise to IMPORTANT.
+REASON: All 11 cited works are externally verified with materially accurate metadata; one IMPORTANT characterization issue on Jones2024 does not rise to a factual error.
 
 ## 1. Citation inventory audited
 
@@ -23,76 +23,68 @@ All 11 citation keys used in the paper text (including footnotes) were audited:
 10. PastorVeronesi2009
 11. Nordhaus2021
 
-No citation keys in the bibliography were left uncited. No cited keys were omitted from this audit.
+No bibliography entries are unused; no in-text citations are missing from the bibliography.
 
 ## 2. External verification coverage
 
 | Key | Status | External sources |
 |-----|--------|-----------------|
-| GKP2012 | VERIFIED | EconPapers/RePEc, ScienceDirect, MIT DSpace, SSRN, NBER |
-| Jones2024 | VERIFIED | AEA website, RePEc/IDEAS, Stanford GSB, Stanford Report, NBER |
-| KoganPapanikolaou2014 | VERIFIED | Wiley Online Library, RePEc/IDEAS, MIT DSpace, NBER |
-| KoganPapanikolaouStoffman2020 | VERIFIED | University of Chicago Press (journals.uchicago.edu), MIT DSpace, RePEc/IDEAS, Northwestern Scholars, Kellogg |
-| Knesl2023 | VERIFIED | ScienceDirect, RePEc/IDEAS, SSRN, EconPapers, author personal site |
-| AghionJonesJones2019 | VERIFIED | De Gruyter/University of Chicago Press, NBER, Stanford (chadj), RePEc |
-| Acemoglu2025 | VERIFIED | Oxford Academic (Economic Policy), RePEc/IDEAS, MIT economics, NBER, SSRN |
-| Barro2006 | VERIFIED | Oxford Academic (QJE), EconPapers/RePEc, Harvard DASH, ResearchGate |
-| Wachter2013 | VERIFIED | EconPapers/RePEc, NBER WP 14386, Wharton author page |
-| PastorVeronesi2009 | VERIFIED | AEA official page (DOI: 10.1257/aer.99.4.1451), EconPapers/RePEc, SSRN |
-| Nordhaus2021 | VERIFIED | AEA official page (DOI: 10.1257/mac.20170105), IDEAS/RePEc, NBER WP 21547 |
+| GKP2012 | VERIFIED | EconPapers/RePEc, ScienceDirect, MIT DSpace |
+| Jones2024 | VERIFIED | AEA page, NBER, IDEAS/RePEc, AEI summary, EA Forum summary |
+| KoganPapanikolaou2014 | VERIFIED | Wiley Online Library, IDEAS/RePEc, NBER |
+| KoganPapanikolaouStoffman2020 | VERIFIED | Journal of Political Economy / UChicago Press, IDEAS/RePEc, MIT DSpace |
+| Knesl2023 | VERIFIED | ScienceDirect, IDEAS/RePEc |
+| AghionJonesJones2019 | VERIFIED | De Gruyter / UChicago Press, NBER, IDEAS/RePEc |
+| Acemoglu2025 | VERIFIED | Oxford Academic / Economic Policy, IDEAS/RePEc, NBER |
+| Barro2006 | VERIFIED | Oxford Academic / QJE, EconPapers, Harvard author page |
+| Wachter2013 | VERIFIED | EconPapers/RePEc, Wharton author page, NBER |
+| PastorVeronesi2009 | VERIFIED | AEA article page, EconPapers/RePEc, NBER |
+| Nordhaus2021 | VERIFIED | AEA article page, IDEAS/RePEc, NBER, author page |
 
 **Coverage: 11/11 VERIFIED (100%)**
 
 ## 3. Metadata accuracy findings
 
-All 11 bibliography entries have materially accurate metadata:
-
-| Key | Authors | Year | Title | Journal/Outlet | Vol/Issue/Pages |
-|-----|---------|------|-------|----------------|-----------------|
-| GKP2012 | Correct | Correct | Correct | Correct (JFE) | Correct |
-| Jones2024 | Correct | Correct | Correct | Correct (AER: Insights) | Correct |
-| KoganPapanikolaou2014 | Correct | Correct | Correct | Correct (JF) | Correct |
-| KoganPapanikolaouStoffman2020 | Correct | Correct | Correct | Correct (JPE) | Correct |
-| Knesl2023 | Correct | Correct | Correct | Correct (JFE) | Correct |
-| AghionJonesJones2019 | Correct | Correct | Correct | Correct (UChicago Press) | Correct |
-| Acemoglu2025 | Correct | Correct | Correct | Correct (Economic Policy) | Correct |
-| Barro2006 | Correct | Correct | Correct | Correct (QJE) | Correct |
-| Wachter2013 | Correct | Correct | Correct | Correct (JF) | Correct |
-| PastorVeronesi2009 | Correct | Correct | Correct | Correct (AER) | Correct |
-| Nordhaus2021 | Correct | Correct | Correct | Correct (AEJ: Macro) | Correct |
-
-No metadata errors found.
+All 11 entries have materially accurate bibliographic metadata (author names, year, title, journal/outlet, volume, number, pages). No errors found.
 
 ## 4. In-text description accuracy findings
 
-| Key | In-text claim-support | Notes |
-|-----|----------------------|-------|
-| GKP2012 | Accurate | Multiple uses all consistent with the paper's OLG/displacement/incomplete-markets framework |
-| Jones2024 | Accurate | Claims about growth-vs-risk trade-off, extinction channel, consumption-level attitudes all supported |
-| KoganPapanikolaou2014 | Minor imprecision | See flagged issue below |
-| KoganPapanikolaouStoffman2020 | Accurate | Creative destruction framing matches paper's title and content |
-| Knesl2023 | Accurate | Displacement risk premia framing matches paper's content |
-| AghionJonesJones2019 | Accurate | Macroeconomics of AI growth characterization is correct |
-| Acemoglu2025 | Accurate | Macroeconomics of AI characterization is correct |
-| Barro2006 | Accurate | Standard and correct attribution to rare disasters literature |
-| Wachter2013 | Accurate | Standard and correct attribution to rare disasters literature |
-| PastorVeronesi2009 | Accurate | "Analysis of technological revolutions" accurately describes the paper |
-| Nordhaus2021 | Accurate | "Examined critically" accurately captures Nordhaus's skeptical assessment of the singularity |
+| Key | In-text accuracy | Notes |
+|-----|-----------------|-------|
+| GKP2012 | Accurate | Core characterization (displacement risk, incomplete markets, OLG structure) supported. Some detailed claims about paper internals (bequests, transfers) not fully verifiable from abstract alone but consistent with framework. |
+| Jones2024 | Mostly accurate | See IMPORTANT issue below regarding growth-extinction linkage characterization. Other claims (growth-risk tradeoff, consumption-level attitudes, explosive growth, bounded utility) are supported. |
+| KoganPapanikolaou2014 | Accurate | Grouped under "creative destruction and displacement risk premia"; the paper studies technology shocks and cross-sectional risk premia from growth opportunities, which is thematically correct though the exact label is imprecise. |
+| KoganPapanikolaouStoffman2020 | Accurate | "Creative destruction and displacement risk premia" matches the paper's focus on creative destruction, inequality, and risk premia. |
+| Knesl2023 | Accurate | "Displacement risk premia" matches the paper's focus on automation displacing labor and the associated return premium. |
+| AghionJonesJones2019 | Accurate | "Macroeconomics of AI growth" is a correct characterization. |
+| Acemoglu2025 | Accurate | "Macroeconomics of AI growth" is correct, though the grouping with AghionJonesJones2019 elides the fact that Acemoglu is skeptical about large AI effects. |
+| Barro2006 | Accurate | Correctly cited as foundational to "the rare disasters literature." |
+| Wachter2013 | Accurate | Correctly cited as part of "the rare disasters literature." |
+| PastorVeronesi2009 | Accurate | Correctly characterized as "analysis of technological revolutions" in a pricing context. |
+| Nordhaus2021 | Accurate | "Examined critically" accurately captures Nordhaus's skeptical empirical assessment of the singularity hypothesis. |
 
 ## 5. Flagged issues by citation key and severity
 
-### KoganPapanikolaou2014 — MINOR
+### Jones2024 -- IMPORTANT
 
-**Issue:** The paper groups KP2014 with KPS2020 and Knesl2023 under "Creative destruction and displacement risk premia are studied by..." KP2014 studies investment-specific technology (IST) shocks and growth opportunities explaining the value premium, rather than creative destruction or displacement risk per se. The grouping is thematically defensible given the shared focus on technology-driven cross-sectional return premia, but "creative destruction and displacement risk premia" more precisely describes KPS2020 and Knesl2023 than KP2014.
+**Issue:** The paper states twice that Jones (2024) "emphasizes that the states in which AI is powerful enough to produce enormous growth are precisely those in which existential risk is highest." External sources confirm that in Jones's model, the extinction risk parameter (delta) is a constant independent of the growth rate parameter. Jones frames AI as a package deal (growth and risk come together when AI is developed), but his model does not formalize a positive correlation between growth magnitude and extinction probability across states. The phrasing "precisely those in which" implies a structural within-model linkage that Jones does not establish.
 
-**Severity:** MINOR — the thematic connection is real and the citation is not misleading, but the specific framing is a slight stretch for KP2014.
+**External support:** AEA article page, AEI summary, EA Forum analysis of the Jones (2024) model structure.
 
-**External source:** Wiley Online Library (Journal of Finance, vol. 69, no. 2, 2014); NBER WP 17795.
+**Recommendation:** Rephrase to something like "Jones (2024) emphasizes that AI development simultaneously produces both growth and extinction risk" rather than implying states with higher growth have higher extinction probability.
 
----
+### GKP2012 -- MINOR
 
-No CRITICAL or IMPORTANT issues found.
+**Issue:** Some detailed claims about GKP2012's treatment of intergenerational transfers and bequests under altruistic dynasties could not be fully verified from external abstracts, though they are consistent with the OLG framework described.
+
+### KoganPapanikolaou2014 -- MINOR
+
+**Issue:** Characterized as studying "creative destruction and displacement risk premia." The paper studies investment-specific technology shocks and growth-opportunity risk premia. The thematic connection is genuine but the specific label is imprecise.
+
+### Acemoglu2025 -- MINOR
+
+**Issue:** Grouped with AghionJonesJones2019 under "macroeconomics of AI growth," which elides a substantive disagreement: Acemoglu is skeptical about large AI macro effects while Aghion/Jones/Jones model potentially explosive growth. The grouping is defensible in a compressed lit review but obscures a meaningful difference.
 
 ## 6. Overall reliability of the paper's citations
 
-The paper's citation practices are strong. All 11 cited works are correctly identified with accurate bibliographic metadata. The in-text descriptions are materially faithful to the cited works across all uses, including the extensive characterizations of GKP2012 and Jones2024 that appear throughout the paper. The single MINOR issue (KP2014's grouping) reflects a slight imprecision in a literature-review sentence rather than any substantive mischaracterization. The paper appropriately uses published versions of all cited works.
+The paper's citation practices are strong. All 11 cited works are real, correctly identified, and published in the journals stated. Bibliographic metadata is fully accurate across all entries. In-text characterizations are generally fair and supported by the cited works. The one IMPORTANT issue (Jones2024 growth-extinction linkage) is a characterization imprecision rather than a factual error -- the conceptual point is broadly correct but the phrasing overstates the formal model structure. The three MINOR issues are typical of compressed literature review passages and do not materially mislead the reader. No CRITICAL issues were found.

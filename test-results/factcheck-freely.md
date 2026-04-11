@@ -1,34 +1,39 @@
 # tests/factcheck-freely.py
-Started: 2026-04-11 10:15:04 EDT
-Runtime: 8m 51s
-[ralph-garage/agent-logs/20260411T101504.810663-0400_factcheck-freely_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260411T101504.810663-0400_factcheck-freely_claude_claude-opus-4-6.log)
+Started: 2026-04-11 10:30:39 EDT
+Runtime: 6m 29s
+[ralph-garage/agent-logs/20260411T103039.143177-0400_factcheck-freely_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260411T103039.143177-0400_factcheck-freely_claude_claude-opus-4-6.log)
 
 # factcheck-freely
 VERDICT: FAIL
-REASON: The paper contains one factually incorrect claim (P/D spread "vanishes" under complete markets) and one logical inconsistency (Proposition 3(ii) stated unconditionally but proved only for small veto costs).
+REASON: Figure 1 caption labels price indices as "valuations," which is factually inaccurate, and the proof of Proposition 2(iii) contains imprecise logical reasoning.
 
-## Issue 1: P/D spread does not vanish when displacement is hedged
+## Issues Found
 
-**Location:** Section 2.3, line 178.
+### 1. Figure 1 caption mislabels price indices as "valuations" (Factual Error)
 
-**Claim:** "If the household could trade the restricted equity, its effective displacement parameter would become $\phi_\text{eff} \to 1$: displacement is fully hedged, the SDF no longer overweights singularity states, and the P/D spread between AI and non-AI stocks vanishes."
+**Location**: Section 1, Figure 1 caption.
 
-**Problem:** Setting $\phi_\text{eff} = 1$ eliminates the displacement channel in the SDF ($\phi^{-\gamma} = 1$, so singularity states are no longer overweighted). However, the P/D spread does not vanish because the dividend growth factors $\Gamma^{AI}$ and $\Gamma^{N}$ remain different. Specifically, $\Gamma^{AI}$ depends on $\theta + \Delta\theta(1-\theta)$, while $\Gamma^{N} = (1-\Delta\theta)(1+\eta)$. Since $\Delta\theta > 0$, AI stocks still have superior dividend growth in singularity states regardless of $\phi$. At baseline parameters with $\phi = 1$, the P/D ratio is approximately 1.02 (versus 1.40 at $\phi = 0.5$) --- dramatically reduced but not zero.
+The caption reads "Valuations of AI-Exposed Stocks vs. the Broader Market," but the figure shows normalized *price levels* (Jan 2015 = 100), not valuation multiples (P/D or P/E). A stock can have a higher normalized price without having a higher valuation ratio if its earnings grew proportionally. The paper partially acknowledges this in Section 3 ("return differences partly reflect earnings growth rather than valuation multiples"), but the caption itself is factually misleading.
 
-**Severity:** Moderate. The economic intuition is correct (displacement is the dominant driver), but the mathematical claim is false within the paper's own model. The displacement-driven premium nearly vanishes; the total spread does not.
+### 2. Proof of Proposition 2(iii) uses imprecise reasoning (Logical Imprecision)
 
-**Fix:** Replace "vanishes" with language reflecting that the displacement-driven spread is eliminated while a small residual spread from differential dividend growth remains, or qualify that the claim holds approximately when $\Delta\theta$ is small.
+**Location**: Proof of Proposition 2, part (iii).
 
-## Issue 2: Proposition 3(ii) overstated relative to its proof
+The proof states that "an increase in $\xi$ reduces $A^{AI}$ and $A^{N}$ by the same multiplicative factor on their singularity terms." This is ambiguous and not quite right: increasing $\xi$ reduces the singularity term $p(1-\xi)S\Gamma^j$ proportionally in both, but this is not the same as reducing $A^j$ by the same factor, since $A^j$ also contains the $(1-p)$ term which is unaffected. The final conclusion (spread narrows) is correct via the convexity argument, but the verbal exposition in the proof is sloppy.
 
-**Location:** Section 4.1, line 220.
+### 3. Transfer extension uses undisclosed approximation (Moderate Concern)
 
-**Statement:** "Under complete markets: the household never vetoes socially efficient AI development ($V_\text{develop}^{CM} > V_\text{veto}$)."
+**Location**: Section 4.2, equations (11)-(12), and code implementation.
 
-**Proof (line 233):** "The household strictly prefers development for any $\gamma > 1$ and any $\kappa$ small enough, and in particular for the same $\kappa$ used in part (i)."
+The effective displacement parameter $\phi_{\text{eff}}$ depends on the household's consumption share $\alpha$, which changes after each singularity ($\alpha_{k+1} = \phi \alpha_k$). The backward recursion uses $\phi_{\text{eff}}$ computed at $\alpha_0 = 0.70$ for every step, but after the first singularity the share drops to $\phi \alpha_0 = 0.35$, changing the transfer formula. This is an undisclosed approximation affecting the quantitative accuracy of Figure 2, though not the qualitative conclusions.
 
-**Problem:** The proposition states an unconditional result ("never vetoes") but the proof establishes it only for $\kappa$ below a threshold. For arbitrarily large veto costs $\kappa$, the result need not hold --- the positive utility gain $u(\alpha(1+\eta)) - u(\alpha)$ from development can be offset by a sufficiently large $\kappa$. The proposition statement and proof are not aligned.
+## Items Verified as Correct
 
-**Severity:** Minor. The result holds for all economically plausible $\kappa$ values, and the proof is transparent about the qualification. But a formal proposition should match its proof.
-
-**Fix:** Add "for $\kappa$ sufficiently small" to the proposition statement, or note that the result holds for the same $\kappa$ as in part (i).
+- Proposition 1 derivation and closed-form P/D expressions
+- Proposition 2 comparative statics (conclusions correct, despite proof imprecision)
+- Proposition 3 (veto result) and its limit argument
+- Numerical claims: P/D ratios (~15.5 and ~11 at p=0.5%, ratio ~1.4; ratio ~2 at p=1%)
+- The $\phi^{-\gamma} = 160{,}000$ claim ($0.05^{-4} = 160{,}000$)
+- All citations present in references.bib
+- Remark 1 existence condition
+- Code correctly implements the backward recursion for the baseline model

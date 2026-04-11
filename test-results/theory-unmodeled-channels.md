@@ -1,42 +1,47 @@
 # tests/theory-unmodeled-channels.py
-Started: 2026-04-11 10:15:04 EDT
-Runtime: 1m 20s
-[ralph-garage/agent-logs/20260411T101504.817333-0400_theory-unmodeled-channels_claude_opus.log](../ralph-garage/agent-logs/20260411T101504.817333-0400_theory-unmodeled-channels_claude_opus.log)
+Started: 2026-04-11 10:30:39 EDT
+Runtime: 1m 8s
+[ralph-garage/agent-logs/20260411T103039.152104-0400_theory-unmodeled-channels_claude_opus.log](../ralph-garage/agent-logs/20260411T103039.152104-0400_theory-unmodeled-channels_claude_opus.log)
 
 # theory-unmodeled-channels
 VERDICT: PASS
-REASON: The paper consistently hedges claims about channels it does not explicitly model, using appropriate caveats and disclaimers throughout.
+REASON: The paper is consistently cautious about channels it does not explicitly model, flagging each limitation clearly and avoiding overclaiming.
 
-## Channels and modeling status
+## Channels and Modeling Status
 
-| Channel | Modeled? | Cautious? |
-|---------|----------|-----------|
-| Hedging displacement via AI stocks | Yes (core mechanism) | N/A |
-| Market incompleteness (restricted equity) | Yes (core assumption) | N/A |
-| Extinction risk | Yes (parameter xi) | N/A |
-| Displacement of household consumption | Yes (parameter phi) | N/A |
-| Veto / blocking AI development | Yes (Extension 1) | N/A |
-| Government transfers with deadweight costs | Yes (Extension 2) | N/A |
-| Positive singularity | Yes (Extension 1) | N/A |
-| Entry of new cohorts / creative destruction (GKP) | No | Yes |
-| Continuous-time dynamics | No | Yes |
-| Heterogeneous beliefs | No | Yes |
-| Production-side details | No | Yes |
-| Wealth heterogeneity across households | No (comparative statics only) | Yes |
-| Earnings growth vs. valuation multiples (empirical) | No (empirical comparison only) | Yes |
+### Explicitly Modeled
+1. **Hedging motive / displacement risk**: Core mechanism. Household consumption share drops by factor phi upon singularity.
+2. **Market incompleteness**: Household cannot trade restricted AI equity (founder stakes, pre-IPO shares). Drives the valuation premium.
+3. **Extinction risk**: With probability xi, singularity triggers extinction. Attenuates the hedging premium.
+4. **Veto / blocking AI development** (Extension 1): Household can block AI at cost kappa. Incomplete markets cause inefficient vetoes.
+5. **Government transfers** (Extension 2): Tax rate tau with quadratic deadweight costs. Explosive growth can overwhelm waste.
+6. **Positive singularity** (Extension 1): With probability q, household share increases rather than decreases.
 
-## Assessment of cautiousness for unmodeled channels
+### Discussed but Not Explicitly Modeled
+1. **Entry of new cohorts / creative destruction (GKP channel)**: The paper's AI owners play an analogous role to GKP's future innovators but are a static group.
+2. **Continuous displacement**: GKP models gradual displacement from expanding technological variety; this paper models a discrete singularity instead.
+3. **Continuous-time dynamics**: Acknowledged as absent in the conclusion.
+4. **Heterogeneous beliefs**: Acknowledged as absent in the conclusion.
+5. **Production-side details**: Acknowledged as absent in the conclusion.
+6. **Wealth heterogeneity and differential AI attitudes**: Discussed in connection with Jones (2024) as a "complementary channel" but not formally derived.
+7. **Broader trading of AI capital**: Discussed as the ideal but infeasible solution due to non-existent future capital.
 
-**Entry dynamics (GKP).** The paper explicitly flags this twice: "Importantly, we do not explicitly model the entry of new cohorts of firms or workers; AI owners are a static group whose share changes only through the singularity mechanism" (line 77) and "we do not model the entry dynamics that are central to their framework" (line 178). This is clear and appropriately cautious.
+## Cautiousness Assessment
 
-**Continuous-time dynamics, heterogeneous beliefs, production-side details.** The conclusion states: "Our model is deliberately simple. It abstracts from continuous-time dynamics, heterogeneous beliefs, production-side details, and many other features that would enrich the analysis" (line 292). The paper explicitly acknowledges these omissions and frames the model's goal as highlighting a specific channel rather than providing a comprehensive account.
+The paper handles unmodeled channels with consistent care:
 
-**Wealth heterogeneity.** The paper discusses how "households with larger consumption shares---more exposed to displacement---have stronger veto incentives" (line 240) as a comparative static interpretation of the single-agent model. It uses the phrase "Our model offers a complementary channel" rather than claiming to model heterogeneity directly. This is a standard and appropriate use of comparative statics.
+- **Entry dynamics (GKP)**: Flagged explicitly twice. Line 77: "Importantly, we do not explicitly model the entry of new cohorts of firms or workers; AI owners are a static group whose share changes only through the singularity mechanism." Line 178: "we do not model the entry dynamics that are central to their framework; the displacement in our model comes from the singularity's reallocation of consumption shares rather than from creative destruction by new entrants."
 
-**Empirical comparison.** The paper states: "This comparison is imperfect: the NASDAQ is broader than 'AI stocks,' return differences partly reflect earnings growth rather than valuation multiples, and the S&P 500 itself has substantial AI exposure" (line 198). It frames magnitudes as "broadly suggestive" rather than calibrated.
+- **Conclusion disclaimer**: "Our model is deliberately simple. It abstracts from continuous-time dynamics, heterogeneous beliefs, production-side details, and many other features that would enrich the analysis. The goal is not to provide a definitive account of AI stock valuations but to highlight a specific channel."
 
-**Closed-form approximation.** The paper acknowledges the stationarity approximation in Proposition 1, notes it "becomes less accurate as Delta-theta grows," and provides numerically exact values in the table as a check (line 153).
+- **Empirical hedging**: The NASDAQ/S&P comparison is explicitly called "imperfect" with three specific caveats (NASDAQ broader than AI stocks, return vs. valuation differences, S&P has AI exposure). Magnitudes are described as "broadly suggestive" rather than as evidence.
 
-**Policy implications.** The paper hedges: "In normal times, government transfers are a blunt and wasteful tool" and frames the singularity case as a conditional possibility, not a recommendation (line 283).
+- **Closed-form approximation**: Transparently noted as exact only when Delta-theta approaches zero, with numerically exact values reported separately.
 
-Throughout, the paper uses appropriately cautious language for unmodeled channels: "may partly reflect," "complementary channel," "comparison is imperfect," "broadly suggestive," "deliberately simple." No unmodeled channel is presented as though it were captured by the formal framework.
+- **GKP attribution**: Contribution is characterized modestly throughout. Key displacement/incomplete-markets insights are credited to GKP. The paper says it "builds on" and "parallels" GKP rather than claiming novelty.
+
+- **Policy implications**: Described as "nuanced" with explicit caveat that transfers are "blunt and wasteful" in normal times.
+
+- **Jones (2024) wealth channel**: Presented as a "complementary channel" rather than something the model derives.
+
+No instance was found where the paper claims a result or insight from an unmodeled channel without appropriate hedging.

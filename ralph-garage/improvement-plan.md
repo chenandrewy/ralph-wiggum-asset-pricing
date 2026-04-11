@@ -1,46 +1,49 @@
 # Improvement Plan
-AUTHOR PLAN — 2026-04-11 10:12:09 EDT
+AUTHOR PLAN — 2026-04-11 10:25:27 EDT
 
-## Current State
+## Status
 
-- **Tests:** 23/25 pass. Two failures: `visual-figures-image-only`, `writing-intro`.
-- **Referees:** Disabled (not run).
-- **Model section:** Sound — no overhaul needed. Propositions, proofs, and quantitative analysis are clean and internally consistent.
-- **Code:** Generates all three exhibits correctly. Single entry point, runs from scratch.
+- **Tests**: 21/25 pass, 4 fail
+- **No overhaul needed**: Model, extensions, and code are structurally sound. All issues are targeted fixes.
 
-## Failing Tests
+## Failing Tests (Priority)
 
-### 1. `visual-figures-image-only` — Panel (a) annotation contrast
+### 1. factcheck-anaphora (paper fix)
 
-**Problem:** The annotation `$P/D \to \infty$ as $\tau \to 0$` in Panel (a) of `fig-extension-panels` is rendered in light gray (`color = "#1B4F99"` at `size = 3.5` with `fontface = "italic"`). The test requires all drawn elements to have strong contrast. The color itself is dark blue, but the small size + italic face makes it appear faint against the gray grid.
+**Issue**: Line 195–196 says "extinction risk reduces both valuations and compresses the AI premium, as Proposition 2(iii) predicts." Proposition 2(iii) only establishes that the *spread* and *ratio* decrease in $\xi$ — it says nothing about individual P/D levels decreasing.
 
-**Fix in `code/generate-exhibits.R`:**
-- Increase annotation `size` from 3.5 to 5.
-- Change `fontface` from `"italic"` to `"bold"`.
-- Ensure the annotation color is the same dark blue (`#1B4F99`) but stands out against the `gray75` grid by optionally adding a white background via `annotate("label", ...)` instead of `annotate("text", ...)`.
+**Fix**: Narrow the claim. Change to something like: "extinction risk compresses the AI premium, as Proposition 2(iii) predicts — at high extinction probabilities, even AI stocks lose value because the states in which they pay off become less likely." The separate observation about both levels falling can stand on its own without citing Prop 2(iii).
 
-### 2. `writing-intro` — Flow and unfulfilled promise
+### 2. factcheck-freely (paper fix — two sub-issues)
 
-**Problem (flow):** The test identifies five specific issues:
-1. Para 2 front-loads too much (reads like a second abstract).
-2. Abrupt transition from para 3 (incomplete markets) to para 4 (GKP/model).
-3. Para 6 (veto) appears without signaling a pivot to a second contribution.
-4. Para 7 near-verbatim repeats para 2's closer.
-5. Meta-commentary ("product of displacement") is a tonal break before the roadmap.
+**Issue A**: Section 2.3, line 177–178 claims the P/D spread "vanishes" when $\phi_\text{eff} \to 1$. This is false within the model: $\Gamma^{AI} \neq \Gamma^{N}$ regardless of $\phi$, so a residual spread from differential dividend growth remains even when displacement is fully hedged. The displacement-driven component of the spread vanishes, but the total spread does not.
 
-**Problem (promise):** The intro says "financial market solutions are under-discussed, though frictions limit their effectiveness" — implying the paper analyzes financial hedging instruments. The body doesn't deliver this; Section 4 jumps to government transfers and the only financial-market treatment is the qualitative $\phi_\text{eff} \to 1$ argument in Section 2.3.
+**Fix A**: Replace "the P/D spread between AI and non-AI stocks vanishes" with language reflecting that the displacement-driven spread is eliminated while a small residual spread from differential dividend growth remains. E.g., "the displacement-driven valuation premium largely collapses" or "the valuation spread would collapse to a small residual reflecting differential dividend growth."
 
-**Fix in `paper/paper.tex` (introduction):**
-- **Para 2:** Strip the dense four-idea preview. Instead, state the paper's core claim (hedging motive) and one supporting reason (incomplete markets). Let the details emerge paragraph by paragraph.
-- **Para 3 → 4 transition:** Add a bridging sentence: something like "To formalize this mechanism, we build on [GKP]..."
-- **Para 6 pivot:** Open with a clear signal: "The model has a second implication for real decisions, not just prices."
-- **Para 7 repetition:** Rewrite the closing paragraph so it advances the idea (e.g., highlight the policy implication) rather than echoing para 2.
-- **Meta-commentary placement:** Move the AI-authorship sentence to immediately after the roadmap, or integrate it into the abstract reference so it's not a tonal break mid-argument.
-- **Financial market solutions promise:** Downgrade the intro claim to match what the body delivers. Replace "financial market solutions are under-discussed, though frictions limit their effectiveness" with a more accurate framing: the paper focuses on why the ideal solution (broader trading) is infeasible and how government transfers can substitute. The financial-market point is already adequately handled in Section 2.3's discussion; the intro just oversells it.
+**Issue B**: Proposition 3(ii) states unconditionally "the household never vetoes" but the proof establishes this only for $\kappa$ sufficiently small. The proposition and proof are misaligned.
 
-## Priority Order
+**Fix B**: Add "for $\kappa$ sufficiently small" to the proposition statement, or note it holds for the same $\kappa$ as in part (i). The proof already says "for any $\kappa$ small enough, and in particular for the same $\kappa$ used in part (i)" — so the fix is just aligning the proposition statement with the proof.
 
-1. Fix Panel (a) annotation contrast (code change, quick).
-2. Rewrite introduction for flow and promise alignment (paper change, main effort).
-3. Regenerate exhibits after code fix.
-4. Recompile paper after tex changes.
+### 3. visual-figures-image-only (code fix)
+
+**Issue**: Panel (a) of fig-extension-panels has ~31% y-axis headroom (y-axis runs to ~17.5 but data only reaches ~15.3). The threshold is 20%.
+
+**Fix**: In `code/generate-exhibits.R`, tighten the y-axis upper limit for Panel (a). Currently `y_cap_a <- 17`. Reduce to ~16 or compute it from the data (e.g., `ceiling(max(pd_data_a$pd_ai, na.rm=TRUE)) + 0.5`). Then regenerate exhibits.
+
+### 4. writing-intro (paper fix)
+
+**Issue**: Two of five main arguments are not skimmable in the introduction:
+- **Argument 2** (complete markets eliminate the valuation premium): The counterfactual appears only in the veto paragraph (P5), not in the pricing discussion (P2–P3). A skimmer may not connect it back to valuations.
+- **Argument 3** ("financial market solutions are under-discussed"): This literature-positioning claim is absent from any topic sentence.
+
+**Fix**:
+- Add a sentence in the pricing discussion (around paragraphs 2–3) explicitly stating the complete-markets counterfactual: if markets were complete, the valuation premium would vanish (or nearly vanish, per fix 2A above).
+- Surface argument 3 — e.g., add a brief clause in paragraph 3 or 6 noting that financial market solutions to AI disaster risk are under-discussed in the literature, though frictions limit their effectiveness.
+
+## Sequencing
+
+1. Fix paper text for factcheck-anaphora (line 195–196 rewording)
+2. Fix paper text for factcheck-freely Issue A (Section 2.3 "vanishes" claim) and Issue B (Proposition 3(ii) qualifier)
+3. Fix code for visual-figures-image-only (tighten Panel (a) y-axis), regenerate exhibits
+4. Fix intro for writing-intro (add complete-markets counterfactual + under-discussed claim)
+5. Rebuild LaTeX to verify
