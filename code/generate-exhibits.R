@@ -252,7 +252,7 @@ cons_large_0 <- consumption_growth(0, 9.0, phi_large)
 
 panel_b <- ggplot(df_ext, aes(x = tau, y = cons_growth, color = scenario, linetype = scenario)) +
   geom_line(aes(linewidth = scenario)) +
-  geom_hline(yintercept = 1, linetype = "dashed", color = "gray30", linewidth = 1.5) +
+  geom_hline(yintercept = 1, linetype = "dotted", color = "black", linewidth = 1.8) +
   # Catastrophe markers at tau=0
   annotate("point", x = 0, y = cons_large_0, shape = 16, size = 3, color = "#1B4F99") +
   annotate("text", x = 0.06, y = cons_large_0 * 0.65,
@@ -262,7 +262,7 @@ panel_b <- ggplot(df_ext, aes(x = tau, y = cons_growth, color = scenario, linety
   annotate("text", x = 0.06, y = cons_base_0 * 0.75,
            label = paste0(round((1 - cons_base_0) * 100), "% loss"),
            color = "#B22222", size = 3.2, hjust = 0) +
-  annotate("text", x = 0.55, y = 1.15, label = "No change", color = "gray20", size = 4.5) +
+  annotate("text", x = 0.55, y = 1.15, label = "No change", color = "black", size = 4.5, fontface = "bold") +
   labs(x = expression("Tax rate " * tau),
        y = "Household Consumption Growth\nin Singularity",
        title = "(b) Household Consumption") +
