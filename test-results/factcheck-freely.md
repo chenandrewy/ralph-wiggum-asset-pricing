@@ -1,31 +1,33 @@
 # tests/factcheck-freely.py
-Started: 2026-04-11 15:15:49 EDT
-Runtime: 4m 27s
-[ralph-garage/agent-logs/20260411T151549.432797-0400_factcheck-freely_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260411T151549.432797-0400_factcheck-freely_claude_claude-opus-4-6.log)
+Started: 2026-04-11 16:10:24 EDT
+Runtime: 8m 2s
+[ralph-garage/agent-logs/20260411T161024.919126-0400_factcheck-freely_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260411T161024.919126-0400_factcheck-freely_claude_claude-opus-4-6.log)
 
 # factcheck-freely
 VERDICT: PASS
-REASON: The paper contains no factually incorrect statements or logical inconsistencies; all propositions, derivations, and literature characterizations are substantively correct.
+REASON: No factual errors or logical inconsistencies found; all proofs, formulas, and numerical claims are internally consistent and correctly derived.
 
-## Detail
+## Detailed Review
 
-An Opus-level review examined the full paper for factual errors and logical inconsistencies. Findings:
+A Claude Opus subagent reviewed the full paper (paper/paper.tex) and supporting R code (code/generate-exhibits.R) for mathematical errors, logical inconsistencies, and factual misstatements. The review checked 23 specific items.
 
-### No factual errors found
-- All literature characterizations (GKP 2012, Jones 2024, Acemoglu 2025, etc.) are accurately represented.
-- All numerical calculations verified ($\phi(1+\eta) = 0.75$, $\phi^{-\gamma} = 160{,}000$, etc.) are correct.
-- Institutional and economic facts cited are accurate.
+### Mathematical Correctness
+- **Proposition 1 (P/D ratios):** Re-derived from the Euler equation. The three states (no singularity, non-extinction singularity, extinction) are correctly enumerated, the SDF is correctly applied, and the algebra yielding $v^j = A^j/(1-A^j)$ is correct. Dividend growth factors $\Gamma^{AI}$ and $\Gamma^N$ are correctly computed.
+- **Proposition 2 (Extinction attenuation):** Proof is correct. The condition $A^j > 1/2$ (equivalently P/D > 1) is explicitly acknowledged and verified numerically across the parameter grid.
+- **Proposition 3 (Veto):** Limiting argument as $\gamma \to \infty$ is correct. Numerical example confirmed via R code Bellman computation ($V_{veto} = -15.32 > V_{develop} = -15.53$ under incomplete markets; reversed under complete markets).
+- **Transfer formula (eq. 11-13):** Budget constraint holds. $\phi_\text{eff}$ correctly derived. The claim that $c^H_{post}/c^H_{no-transfer}$ is independent of $\eta$ is verified ($(1+\eta)$ cancels).
+- **Existence condition:** $\phi^{-\gamma} = 160{,}000$ for $\phi=0.05, \gamma=4$ is correct ($0.05^{-4} = 20^4 = 160{,}000$).
 
-### No logical inconsistencies found
-- Proposition 1 derivation (Euler equation algebra, closed-form P/D ratio) is correct.
-- Proposition 2 comparative statics hold: the math shows $\partial A^j / \partial \xi = -BpS\Gamma^j$ with $\Gamma^{AI} > \Gamma^N$, correctly implying larger absolute reduction in $A^{AI}$.
-- Proposition 3 results (veto and transfers) are logically valid.
-- The model setup (consumption structure, singularity mechanism, asset definitions, preferences) is internally consistent.
-- The transfer formula (equations 8–10) is mathematically correct.
+### Internal Consistency
+- All numerical claims in Section 3 match the generated table values.
+- Extension parameters ($\eta=9, \phi=0.05$ giving $\phi(1+\eta)=0.5$; baseline $\phi(1+\eta)=0.75$) are consistent with text.
+- No contradictions between model setup, quantitative analysis, extensions, and appendix.
+- The closed-form approximation is correctly characterized and the table uses exact backward recursion.
 
-### Minor exposition notes (not errors)
-- The Prop 2 proof's verbal explanation ("same multiplicative factor") is slightly imprecise, though the underlying math is correct.
-- The Prop 3(ii) proof omits explicit treatment of the extinction branch, but since extinction utility (0) exceeds ongoing CRRA utility (negative for $\gamma > 1$), the omission is conservative and the result holds.
-- The Prop 3(i) proof informally jumps from per-period to infinite-horizon, but the conclusion is valid.
+### Factual Claims About Other Papers
+- **GKP (2012):** Accurately described as modeling displacement risk from innovation under incomplete markets with future innovators' rents that cannot be traded.
+- **Jones (2024):** Accurately characterized as studying the trade-off between AI-driven growth and existential risk.
+- **Minor note:** The paper's attribution to Jones (2024) regarding wealth levels and AI risk attitudes (line 233) slightly repackages Jones's point about utility curvature ($\gamma$) into a statement about wealth. This is a reasonable derived implication, not a factual error.
 
-None of these affect the validity of stated results.
+### Conclusion
+All proofs are correct. The R code faithfully implements the model. Numerical claims match computed outputs. No factual errors or logical inconsistencies were identified.
