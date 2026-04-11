@@ -1,41 +1,33 @@
 # tests/writing-intuition.py
-Started: 2026-04-10 22:15:41 EDT
-Runtime: 1m 3s
-[ralph-garage/agent-logs/20260410T221541.757128-0400_writing-intuition_claude_opus.log](../ralph-garage/agent-logs/20260410T221541.757128-0400_writing-intuition_claude_opus.log)
+Started: 2026-04-10 22:56:42 EDT
+Runtime: 57s
+[ralph-garage/agent-logs/20260410T225642.538785-0400_writing-intuition_claude_opus.log](../ralph-garage/agent-logs/20260410T225642.538785-0400_writing-intuition_claude_opus.log)
 
 # writing-intuition
 VERDICT: PASS
-REASON: Each proposition and key formula is accompanied by intuition that directly references the mathematical objects involved.
+REASON: Every proposition and key formula in the paper is accompanied by intuition explained in terms of its specific mathematical objects.
 
 ## Detailed Findings
 
-### Proposition 1 (P/D ratios, lines 122-134)
-The discussion (lines 150-151) explicitly connects intuition to the formula's mathematical objects:
-- $\Gamma^{AI}$ vs $\Gamma^{N}$: explains that $\Delta\theta > 0$ implies $\Gamma^{AI} > 1+\eta$ and $\Gamma^{N} < 1+\eta$
-- $\phi^{-\gamma}$: explains that displacement ($\phi$ sufficiently small so $\phi(1+\eta) < 1$) raises marginal utility in singularity states
-- Connects these two forces to explain why AI stocks' P/D exceeds non-AI stocks' P/D
+### Proposition 1 (Price-dividend ratios)
+The discussion (following the proposition) explains the hedging channel by directly referencing the dividend growth factors $\Gamma^{AI}$ and $\Gamma^{N}$, noting that $\Gamma^{AI} > 1+\eta$ while $\Gamma^{N} < 1+\eta$, and connecting the household's high marginal utility in singularity states to $\phi^{-\gamma}$. The interplay between these terms is used to explain why AI stocks command higher P/D ratios.
 
-### Remark 1 (Existence condition, lines 140-146)
-Explains $A^j \geq 1$ in terms of SDF-weighted expected dividend growth exceeding the discount rate, causing the geometric pricing sum to diverge. References the condition again in the transfers extension where $\phi^{-\gamma} = 160{,}000$ (line 256).
+### Remark 1 (Existence condition)
+The remark explains the condition $A^j \geq 1$ as the SDF-weighted expected dividend growth exceeding the discount rate, causing the geometric pricing sum to diverge. The intuition ("hedging value so extreme that no finite price can clear the market") is tied directly to the mathematical object $A^j$.
 
-### Proposition 2 (Comparative statics, lines 152-167)
-Each part of the proof ties directly to mathematical objects:
-- (i): Decrease in $\phi$ raises $\phi^{-\gamma}$, amplifying the singularity term; benefits AI more because $\Gamma^{AI} > \Gamma^{N}$
-- (ii): Increase in $p$ puts more weight on singularity states where $\Gamma^{AI} > \Gamma^{N}$
-- (iii): Uses convexity of $A^j/(1-A^j)$ in $A^j$, and the fact that $A^{AI} > A^N$ since $\Gamma^{AI} > \Gamma^{N}$, to show extinction compresses the ratio
+### Proposition 2 (Comparative statics)
+Each comparative static is explained through the relevant mathematical objects:
+- (i) Decreasing $\phi$ raises $\phi^{-\gamma}$, amplifying the singularity term; because $\Gamma^{AI} > \Gamma^{N}$, the amplification benefits AI stocks more.
+- (ii) Increasing $p$ puts more weight on singularity states where $\Gamma^{AI} > \Gamma^{N}$.
+- (iii) Higher $\xi$ reduces $A^j$ proportionally, but convexity of $A^j/(1-A^j)$ means $A^{AI}/(1-A^{AI})$ falls more since $A^{AI} > A^N$.
 
-### Proposition 3 (Veto, lines 207-218)
-The proof references:
-- $\phi < 1$ causing consumption drops in the negative singularity
-- Concavity of $u$ with large $\gamma$ making downside dominate upside
-- Complete markets allowing hedging, so expected utility reflects the social surplus
-The numerical example (line 220) uses concrete parameter values ($\phi = 0.5$, $\eta = 0.5$, $\gamma = 10$, 70/30 split) to sharpen the point.
+### Proposition 3 (Veto under incomplete markets)
+The proof explains the veto result through the concavity of CRRA utility, the displacement parameter $\phi < 1$, and the role of $\gamma$ in making the downside dominate. Under complete markets, the household can hedge displacement, and expected utility reflects the positive social surplus.
 
-### Transfer formula (eq 10, line 233)
-Each term is explained: $\phi \alpha (1+\eta) C_t (1+g)$ is displaced consumption; $\tau(1 - \delta\tau)(1-\phi\alpha)(1+\eta)C_t(1+g)$ is the net transfer reduced by deadweight cost $\delta\tau$. The derivation of $\phi_\text{eff}$ (eq 11) is explained as dividing eq 10 by $\alpha(1+\eta)(1+g)C_t$.
+### Transfer formulas (Equations 7-9)
+- Equation 7: Each term is explained — first term is displaced consumption ($\phi \alpha (1+\eta) C_t (1+g)$), second term is net transfer reduced by deadweight cost $\delta\tau$.
+- Equation 8: $\phi_\text{eff}$ is derived by factoring equation 7, and the paper explains how it enters the SDF in the same way as $\phi$.
+- Equation 9: The transfer ratio's independence from $\eta$ is explained, with the economic content located in the levels rather than the ratio.
 
-### Transfer ratio (eq 12, line 249)
-Explained as independent of $\eta$, with the economic content being in the levels: as $\eta$ grows, both numerator and denominator grow without bound, so even inefficient transfers deliver large gains relative to the pre-singularity baseline.
-
-### Approximation quality (line 148)
-The closed-form approximation (post-singularity P/D equals pre-singularity P/D) is discussed in terms of $\Delta\theta$: exact when $\Delta\theta \to 0$, less accurate as $\Delta\theta$ grows because each singularity shifts $\theta$ and therefore the dividend growth factors.
+### Extension discussions
+The figure discussion connects the divergence of P/D ratios to $\phi^{-\gamma} = 160{,}000$ under extreme displacement, tying the mathematical explosion to the economic intuition of infinite hedge value.

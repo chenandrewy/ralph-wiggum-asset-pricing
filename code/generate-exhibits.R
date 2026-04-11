@@ -377,7 +377,7 @@ fig_val <- ggplot(df_val, aes(x = Date, y = Index, color = Group, linetype = Gro
   theme_paper +
   theme(legend.position = c(0.30, 0.88),
         plot.margin = margin(t = 15, r = 10, b = 5, l = 15, unit = "pt"),
-        panel.grid.major = element_line(color = "gray50"))
+        panel.grid.major = element_blank())
 
 ggsave(file.path(outdir, "fig-ai-valuations.pdf"), fig_val, width = 7, height = 4.5)
 cat("Wrote", file.path(outdir, "fig-ai-valuations.pdf"), "\n")

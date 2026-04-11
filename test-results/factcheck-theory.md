@@ -1,58 +1,63 @@
 # tests/factcheck-theory.py
-Started: 2026-04-10 22:15:41 EDT
-Runtime: 7m 15s
-[ralph-garage/agent-logs/20260410T221541.756081-0400_factcheck-theory_claude_opus.log](../ralph-garage/agent-logs/20260410T221541.756081-0400_factcheck-theory_claude_opus.log)
+Started: 2026-04-10 22:56:42 EDT
+Runtime: 6m 18s
+[ralph-garage/agent-logs/20260410T225642.494332-0400_factcheck-theory_claude_opus.log](../ralph-garage/agent-logs/20260410T225642.494332-0400_factcheck-theory_claude_opus.log)
 
 # factcheck-theory
 VERDICT: PASS
-REASON: All notation is consistent, all assumptions are mutually consistent, and all mathematical objects trace back to the assumptions.
+REASON: All notation is consistent, all assumptions are mutually consistent, and all mathematical objects trace back to stated assumptions.
 
 ## Requirement 1: Notational Consistency — PASS
 
-23 symbol families identified and audited. Zero collisions, zero ambiguities. Every symbol is introduced before use and has a single meaning throughout the paper. Key checks:
+24 symbol families identified. No collisions found. Every symbol has a unique, stable meaning throughout the paper. Key checks:
 
-- **Aggregate vs. household consumption:** Clean case separation ($C_t$ vs. $c_t^H$) maintained throughout.
-- **Consumption share vs. dividend share:** $\alpha_t$ (household consumption share) and $\theta_t$ (AI dividend share) are never conflated.
-- **Superscript conventions:** $H$ (household), $AI$ (AI stocks), $N$ (non-AI stocks), $j$ (generic asset) are disjoint and consistently applied across all families.
-- **$\Gamma^N$ simplification:** Prop 1 form $\frac{1-\theta-\Delta\theta(1-\theta)}{1-\theta}(1+\eta)$ is algebraically identical to Appendix A form $(1-\Delta\theta)(1+\eta)$. Verified.
-- **$\phi$ vs. $\phi_\text{eff}$:** Explicitly related by Eq.(9) with a clear substitution statement.
-- **$U$ vs. $u$:** Lifetime utility ($U_0^H$) and period utility ($u$, used informally in Prop 3 proof) are distinguished by standard case convention. The lowercase $u$ appears only once ("$u$ is concave") and is unambiguous from the CRRA specification.
-- **Time subscript dropping:** Standard practice in stationary equilibrium formulas (Prop 1) and single-period extension analysis (Sec 4.2). No confusion.
+- **$\alpha$ vs $\theta$**: Distinct objects (consumption share vs. dividend share). The paper explicitly distinguishes them (line 108).
+- **$\phi$ vs $\phi_\text{eff}$**: Clearly distinguished via subscript. $\phi_\text{eff}$ is a derived quantity with an explicit definition (eq. 8).
+- **$\delta$ vs $\Delta\theta$**: Different symbols, no collision.
+- **$v^{AI}$ vs $P^{AI}/D^{AI}$**: $v^{AI}$ introduced in the proof as shorthand; consistent usage.
+- **Superscript conventions**: $AI$, $N$, $H$, $j$ are each used for a single role throughout.
+- **Time subscript dropping**: $\alpha$, $\theta$ drop time subscripts in stationary-equilibrium and extension analyses. Standard practice, semantically clear.
 
-Full notation inventory: $t$, $C_t$, $c_t^H$, $\alpha_t$, $g$, $p$, $\xi$, $\eta$, $\phi$, $\phi_\text{eff}$, $\theta_t$, $\Delta\theta$, $D_t^{AI}$, $D_t^N$, $P_t^j$, $v^{AI}$, $\Gamma^{AI}$, $\Gamma^N$, $A^j$, $\gamma$, $\beta$, $U_0^H$, $U_\text{ext}$, $u$, $\tau$, $\delta$, $\mathbb{E}_t$, $j$.
+Minor observations (not failures):
+- Lowercase $u$ used once informally in prose (Proposition 3 proof) for period utility. Not formally defined but unambiguous in context.
 
 ## Requirement 2: Assumption Consistency — PASS
 
-25 assumptions identified across baseline (A1–A17, A25), Extension 1/Veto (A18–A20), and Extension 2/Transfers (A21–A24). No contradictions found. Key consistency checks:
+28 assumptions cataloged across timing/structure, consumption, singularity, assets, preferences, equilibrium, and both extensions. No parameter range conflicts, no logical contradictions, no timing conflicts.
 
-- **Parameter ranges:** All open intervals are non-contradictory ($g>0$, $\alpha_t \in (0,1)$, $\phi \in (0,1)$, $\gamma>1$, $\beta \in (0,1)$, $\Delta\theta \in (0,1)$, $\tau \in [0,1)$, $\delta>0$).
-- **Repeated displacement preserves bounds:** $\alpha_t = \phi^n \alpha_0 \in (0,1)$ since $\phi \in (0,1)$. Similarly $\theta_n = 1-(1-\theta_0)(1-\Delta\theta)^n \in (0,1)$.
-- **Positive singularity preserves bounds:** $\alpha_{t+1} = \min(1, \alpha_t/\phi) \leq 1$ by construction.
-- **Existence condition vs. calibration:** $A^{AI} \approx 0.987 < 1$ at baseline ($p=1\%$, $\xi=0$). Verified numerically.
-- **CRRA sign vs. extinction normalization:** $\gamma > 1$ makes CRRA utility negative, so $U_\text{ext}=0$ is above all finite-consumption utilities. Paper explicitly acknowledges this is conservative. Not an inconsistency.
-- **Euler equation in extinction:** $c_{t+1}^H = 0$ makes SDF undefined, but payoff is also zero. Product resolves as zero. Standard treatment.
-- **Transfer formula:** Verified algebraically that Eq.(8) follows from baseline displacement (A6) plus tax/deadweight assumptions (A21–A22). $\phi_\text{eff}$ derivation is correct.
-- **Extension assumptions augment baseline:** Extensions add new branches/parameters without contradicting existing assumptions.
+Key consistency checks:
+- **$\gamma > 1$ (E1)** is consistent with the extinction utility normalization $U_\text{ext} = 0$ (G5), since CRRA utility is negative for $c > 0$ when $\gamma > 1$.
+- **$\phi \in (0,1)$ (C3)** is preserved under both positive ($\min(1, \alpha/\phi)$) and negative ($\phi\alpha$) singularity transitions.
+- **Market incompleteness (D4)** vs. Extension 1's complete-markets counterfactual (Prop 3(ii)): explicitly a comparison, not a contradiction.
+- **Baseline negative-only singularity (C3)** vs. Extension 1's positive singularity (G1): explicitly an augmentation.
+- **Total dividends $= C_t$ (D3)** is consistent with household consumption $= \alpha_t C_t$ (B2): the paper explains that dividends are distributed among all investors, not solely the household.
+- **Calibration values** all satisfy stated parameter constraints.
 
-Minor observations (not inconsistencies):
-1. Implicit restriction $\delta\tau < 1$ not formally stated, but always satisfied under calibration ($\delta=0.5$, $\tau<1$).
-2. Stationarity approximation acknowledged as exact only when $\Delta\theta \to 0$; numerically exact values provided separately.
+Three negligible implicit constraints ($\delta\tau < 1$, $p \in (0,1)$, $\xi \in [0,1)$) are never explicitly stated but are standard and satisfied by all calibrations.
 
 ## Requirement 3: Traceability — PASS
 
-All mathematical objects trace back to the 25 assumptions. Objects not directly in the assumptions are derived quantities:
+All mathematical objects trace back to the stated assumptions:
 
-| Derived Object | Traced To |
-|----------------|-----------|
-| $\Gamma^{AI} = \frac{\theta+\Delta\theta(1-\theta)}{\theta}(1+\eta)$ | A5 ($\eta$), A9 ($\theta_t$), A10 ($\Delta\theta$) |
-| $\Gamma^N = (1-\Delta\theta)(1+\eta)$ | A5, A10 |
-| $A^j$ (existence condition) | A2 ($g$), A4 ($p$), A5 ($\eta$), A6 ($\phi$), A7 ($\xi$), A14 ($\beta,\gamma$), plus $\Gamma^j$ |
-| $v^{AI} = P^{AI}/D^{AI}$ | A15 (Euler equation), A9 ($D^{AI}$) |
-| $P^{AI}/D^{AI}$, $P^N/D^N$ (Prop 1) | Derived from Euler equation (A15) using consumption dynamics (A2–A7) and preferences (A14) |
-| Valuation spread (Prop 2) | Derived from Prop 1 closed forms |
-| $c^H_{post}$ (Eq. 8) | A3 ($\alpha$), A5 ($\eta$), A6 ($\phi$), A21 ($\tau$), A22 ($\delta$) |
-| $c^H_{no\text{-}transfer}$ (Eq. 10) | A3, A5, A6 (baseline with $\tau=0$) |
-| $\phi_\text{eff}$ (Eq. 9) | A6 ($\phi$), A21 ($\tau$), A22 ($\delta$), A3 ($\alpha$) |
-| $u$ (Prop 3 proof) | Implicit period utility from A14: $u(c) = c^{1-\gamma}/(1-\gamma)$ |
+| Derived Object | Source Assumptions |
+|---|---|
+| $\Gamma^{AI}, \Gamma^N$ (dividend growth factors) | $\theta_t$ (D1), $\Delta\theta$ (D1), $\eta$ (C3) |
+| $A^j$ (existence condition) | $\beta$ (E1), $g$ (B1), $\gamma$ (E1), $p$ (C1), $\xi$ (C3/C4), $\eta$ (C3), $\phi$ (C3), $\Gamma^j$ |
+| $P^{AI}/D^{AI}$, $P^N/D^N$ (P/D ratios) | Euler equation from E1 + singularity structure (C1-C5) + asset definitions (D1-D2) |
+| $v^{AI}$ (proof shorthand) | $= P^{AI}/D^{AI}$, same derivation |
+| Comparative statics (Prop 2) | Derivatives of P/D formulas w.r.t. $\phi$, $p$, $\xi$ |
+| Veto result (Prop 3) | Extension 1 assumptions (G1-G5) + baseline preferences (E1) |
+| $c^H_{post}$ (eq. 6) | $\phi$ (C3), $\alpha$ (B2), $\eta$ (C3), $g$ (B1), $C_t$ (B1), $\tau$ (H1), $\delta$ (H2) |
+| $\phi_\text{eff}$ (eq. 8) | $\phi$ (C3), $\tau$ (H1), $\delta$ (H2), $\alpha$ (B2) |
+| Transfer ratio (eq. 9) | Ratio of eq. 6 to baseline, using same primitives |
 
-No expression in the paper lacks a derivation path from the stated assumptions.
+### Proof algebra verification
+
+The Euler equation expansion (eq. 10) correctly handles all three branches:
+- No singularity: SDF $= \beta(1+g)^{-\gamma}$, dividend growth $= (1+g)$, product $= \beta(1+g)^{1-\gamma}$. Correct.
+- Non-extinction singularity: SDF $= \beta[\phi(1+g)(1+\eta)]^{-\gamma}$, dividend growth $= \Gamma^{AI}(1+g)$, product $= \beta(1+g)^{1-\gamma}\phi^{-\gamma}(1+\eta)^{-\gamma}\Gamma^{AI}$. Correct.
+- Extinction: payoff is zero. Correct.
+
+Solving $v = A/(1-A)$ from the Euler equation is algebraically verified. The $\phi_\text{eff}$ factorization (eq. 8 from eq. 6) is verified. The transfer ratio (eq. 9) is verified. $\Gamma^N = (1-\Delta\theta)(1+\eta)$ simplification in the proof is verified.
+
+No expression was found that cannot be logically derived from the stated assumptions.

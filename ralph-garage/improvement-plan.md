@@ -1,62 +1,35 @@
 # Improvement Plan
-AUTHOR PLAN — 2026-04-10 22:03:35 EDT
+AUTHOR PLAN — 2026-04-10 22:25:36 EDT
 
-## Assessment
+## Current State
 
-No overhaul needed. The model is mathematically correct, the code produces correct exhibits, and the paper addresses the referee report. After 14 rloop iterations, the paper is structurally sound. Improvements target model clarity, quantitative depth in Extension 1, and tighter alignment with the referee's suggestions.
+22/25 tests pass. Three failures, all fixable without structural changes.
 
-## Issues
+## Failing Tests
 
-1. **Model clarity on α vs θ (Section 2.1).** The model defines two share variables—α_t (household consumption share) and θ_t (AI dividend share)—but never explains their relationship. Since D^AI + D^N = C_t, a reader may wonder where AI owners' private claims come from if public stocks already account for all aggregate consumption. The answer is that AI owners also hold public stocks; the household is the *marginal* investor, not the sole investor. This needs a brief clarification to make the incomplete-markets story airtight.
+### 1. element-gkp-cites (FAIL)
 
-2. **Extension 1 (Veto) lacks quantitative teeth.** Proposition 3 is purely qualitative ("for γ sufficiently large"). Extension 2 has a compelling two-panel figure; Extension 1 has nothing quantitative. A brief numerical example showing the household vetoes at baseline parameters would strengthen this section significantly.
+**Issue:** Line 228 in Extension 2 opening uses "note that" and "Building on this suggestion" to describe GKP's transfer discussion. The test flags this as minimizing GKP's substantive analytical paragraph (GKP Section 3.2), where they work through the altruistic dynasty example and discuss multiple transfer mechanisms. "Note" implies a passing remark; "suggestion" implies a hint rather than analysis.
 
-3. **Referee suggestion on Jones (2024) heterogeneity.** The referee specifically asked the paper to engage with Jones (2024)'s observation that rich and poor households hold heterogeneous views about AI risk. The paper uses Jones only for extinction risk. A brief remark connecting the model's displacement mechanism to Jones's rich-vs-poor framing would directly address this referee comment and differentiate the paper from GKP.
+**Fix in paper.tex (line 228):** Replace the opening of Extension 2 with language that properly credits GKP's analytical treatment. Something like: "\citet{GKP2012} analyze how intergenerational transfers affect the magnitude of displacement risk, showing that under altruistic dynasties bequests can eliminate displacement entirely, while observing that such transfers do not alter the functional form of the stochastic discount factor. Building on their analysis, we study transfers in the specific setting of an AI singularity..." Key changes: "note that" -> "analyze how"; "suggestion" -> "their analysis."
 
-4. **Introduction flow.** After 14 iterations of reworking, verify the introduction reads cleanly from start to finish: each paragraph should set up the next, and the GKP contribution framing should remain appropriately modest per spec.
+### 2. spec-paper (FAIL)
 
-## Plan
+**Issue:** Style Requirement 8 requires all display equations be numbered. The `align` environment at lines 298-301 in the appendix uses `\nonumber` on the first line.
 
-### Step 1: Clarify α vs θ in model setup (paper)
+**Fix in paper.tex (lines 298-301):** Replace the `align` with `equation` + `split` (single number for the whole equation), or remove the `\nonumber` and let both lines get numbered. The `equation`+`split` approach is cleaner since this is one equation broken across two lines.
 
-In Section 2.1, after the "Assets" paragraph, add 2–3 sentences:
-- Public stock dividends (D^AI + D^N = C_t) are distributed among all investors, not solely the household.
-- The household's consumption α_t C_t reflects the net outcome of its portfolio returns (from public stocks it holds) and any labor-like income.
-- AI owners hold restricted equity *and* some public stocks; the household is the marginal investor setting prices via its Euler equation, not necessarily the sole holder.
+### 3. visual-figures-image-only (FAIL)
 
-This makes explicit why α_t < 1 is consistent with the dividend structure and why market incompleteness (the household cannot trade restricted AI equity) matters for pricing.
+**Issue:** fig-ai-valuations has grid lines in gray50 (too dark, competes with data lines).
 
-### Step 2: Add quantitative veto example (paper + code)
+**Fix in code/generate-exhibits.R (line 380):** Change `panel.grid.major = element_line(color = "gray50")` to `panel.grid.major = element_line(color = "gray80")`. This is a fig-ai-valuations-specific theme override; the extension figure already uses gray75 from theme_paper and passes.
 
-In Section 4.1, after Proposition 3's proof, add a brief numerical illustration:
-- Use baseline parameters plus a positive-singularity probability (e.g., 70% positive, 30% negative conditional on non-extinction).
-- Compute the household's expected utility with and without AI development, including a veto cost.
-- Show that the household vetoes even when development is socially efficient and the veto cost is substantial.
-- Show that under complete markets (household consumption share doesn't drop), the household does not veto.
+## Execution Order
 
-Add the computation to `code/generate-exhibits.R` (can be printed to console or included as a brief in-text number, no new exhibit needed).
-
-### Step 3: Add Jones (2024) heterogeneity remark (paper)
-
-In the discussion after Proposition 3 (Section 4.1), add 2–3 sentences connecting the veto result to Jones (2024)'s observation:
-- Jones notes that wealthier households are more concerned about AI existential risk, while poorer households are more willing to accept risk for higher consumption.
-- The model offers a complementary channel: under incomplete markets, households with more to lose from displacement (higher α) have stronger veto incentives—connecting wealth heterogeneity to attitudes about AI development through the financial channel, not just existential risk.
-
-### Step 4: Review introduction flow (paper)
-
-Read the introduction cold and verify:
-- Each paragraph transitions naturally to the next.
-- The GKP contribution framing is modest ("builds on," "inherits their central economic logic").
-- The AI-authorship device appears in both abstract and introduction (currently in footnote—verify this is the right placement per spec).
-- The lit review is under half a page and centered on top-journal papers.
-
-### Step 5: Verify spec compliance
-
-- Abstract ≤ 100 words: currently ~92 words ✓
-- ≤ 20 pages: currently ~14 pages ✓
-- ≤ 6 exhibits: currently 3 ✓
-- All display equations numbered ✓
-- All propositions proved ✓
-- Code runs from scratch in < 180s ✓
-
-No spec violations found. Focus on Steps 1–3 for substantive improvement.
+1. Fix code/generate-exhibits.R grid color (line 380): gray50 -> gray80.
+2. Regenerate exhibits: `Rscript code/generate-exhibits.R`.
+3. Fix paper.tex line 228: reword GKP transfer attribution.
+4. Fix paper.tex lines 298-301: replace align+nonumber with equation+split.
+5. Rebuild paper PDF and page images.
+6. Run tests to verify.

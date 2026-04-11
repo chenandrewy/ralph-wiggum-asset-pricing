@@ -1,60 +1,80 @@
 # tests/visual-figures.py
-Started: 2026-04-10 22:15:41 EDT
-Runtime: 1m 16s
-[ralph-garage/agent-logs/20260410T221541.751660-0400_visual-figures_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260410T221541.751660-0400_visual-figures_claude_claude-opus-4-6.log)
+Started: 2026-04-10 22:56:42 EDT
+Runtime: 1m 9s
+[ralph-garage/agent-logs/20260410T225642.526995-0400_visual-figures_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260410T225642.526995-0400_visual-figures_claude_claude-opus-4-6.log)
 
 # visual-figures
 
 VERDICT: PASS
 
-REASON: Both figures are readable, distinguishable, and convey their main messages clearly from captions alone.
+REASON: Both figures have readable labels, clearly distinguishable series, and self-evident narrative messages.
 
 ---
 
-## Figure 1 (page 2)
+## Figure 1: Valuations of AI-Exposed Stocks vs. the Broader Market (page 2)
 
-VERDICT: PASS
+**VERDICT: PASS**
 
-REASON: The single-panel figure is readable, the two series are clearly distinguishable, and the caption conveys the main message without ambiguity.
+**REASON:** The figure is clean, with readable labels and legend, clearly distinguishable solid vs. dashed lines, and a self-evident message that AI-exposed stocks have dramatically outperformed the broader market since approximately 2023.
 
-### Panel identification
-Single-panel figure (no sub-panels). Plots two time series of normalized stock index prices from roughly 2015 to 2026.
+### Full Figure (Single Panel)
 
-### Readability
-- The caption is rendered in standard LaTeX caption style and is fully legible.
+**Readability:**
 - The y-axis label ("Normalized Price (Jan 2015 = 100)") is readable.
 - The x-axis tick labels (2016, 2018, 2020, 2022, 2024, 2026) are readable.
-- The y-axis tick labels (100, 200, 300, 400, 500) are readable.
-- The legend in the upper-left corner is readable, with entries "NASDAQ Composite (AITech-Heavy)" and "S&P 500" clearly labeled.
-- Font sizes are appropriate throughout; nothing is truncated or overlapping.
-- No readability problems found.
+- The legend is placed in the upper-left area and is readable. The text "NASDAQ Composite (AITech-Heavy)" and "S&P 500" are legible.
+- Font sizes are adequate throughout.
+- No text is cut off or overlapping.
+- **Assessment: PASS**
 
-### Distinguishability
-- The NASDAQ Composite is rendered as a solid line and the S&P 500 as a dashed line. The two line styles are immediately distinguishable.
-- The legend is placed in the upper-left region of the plot where no data series passes, so it does not obscure any plotted content.
-- The two series diverge visibly starting around 2023, and the gap is unambiguous.
-- No distinguishability problems found.
+**Distinguishability:**
+- Two series are plotted: one solid line (NASDAQ Composite) and one dashed line (S&P 500), both in dark colors.
+- The solid vs. dashed distinction is clearly visible along the entire length of both lines.
+- The two lines diverge substantially after roughly 2023, making them easy to track individually. In the earlier period (2015–2022) they are closer together but the line-style difference keeps them separable.
+- The legend does not obscure any meaningful portion of the plotted data.
+- **Assessment: PASS**
 
-### Narrative clarity
-The figure shows that since 2015, the NASDAQ Composite (heavily weighted toward AI and technology firms) has dramatically outpaced the S&P 500, with the divergence accelerating sharply after roughly 2023. Both indices are normalized to 100 in January 2015; by 2026, the NASDAQ reaches approximately 500 while the S&P 500 reaches roughly 250. The takeaway is clear: AI- and tech-exposed stocks have commanded significantly higher valuations relative to the broad market, especially in recent years.
+**Narrative Clarity:**
+- From caption alone: AI-exposed stocks (NASDAQ) have risen dramatically relative to the broader market (S&P 500) since roughly 2023, with both normalized to January 2015 = 100. The NASDAQ reaches roughly 500 while the S&P 500 reaches roughly 300.
+- From paper text: The paper argues this premium reflects a hedging motive — investors use AI stocks to partially insure against an AI singularity that displaces their consumption.
+- **Assessment: PASS**
 
 ---
 
-## Figure 2 (page 13)
+## Figure 2: AI Valuations and Consumption under Transfers (page 13)
 
-VERDICT: PASS
+**VERDICT: PASS**
 
-REASON: Both panels are readable, series are clearly distinguishable, and the caption conveys the main message without requiring the body text.
+**REASON:** Both panels are readable, series are clearly distinguishable, and the figure's main message is understandable from the caption alone.
 
 ### Panel (a): AI Stock Valuations
 
-- **Readability:** PASS. The title "AI Stock Valuations" is clear. The y-axis label "P/D Ratio" and x-axis label "Tax Rate τ" are legible. Tick labels on both axes are readable. The legend at the bottom is readable.
-- **Distinguishability:** PASS. Two lines are plotted: a solid line for the baseline scenario and a dashed line for the large singularity scenario. They are clearly separated in both line style and vertical position. The dashed line starts partway through the x-axis range (reflecting the undefined P/D at low tax rates), which is a meaningful feature, not a rendering problem. The legend clearly identifies each series.
+**Readability:**
+- Panel title "(a) AI Stock Valuations" is clearly readable.
+- Y-axis label "P/D Ratio (AI Stock)" and x-axis label "Tax rate tau" are legible.
+- Tick labels on both axes are readable. Legend at the bottom is clearly printed.
+- **Assessment: PASS**
+
+**Distinguishability:**
+- Two series: solid line ("Baseline") and dashed line ("Large singularity"), clearly distinguishable by line style.
+- The dashed line begins partway across the x-axis (around τ = 10%), corresponding to P/D being undefined at low τ for the large singularity case.
+- Both lines are well separated vertically for most of the domain.
+- **Assessment: PASS**
 
 ### Panel (b): Household Consumption
 
-- **Readability:** PASS. The title "Household Consumption" is clear. The y-axis label "Household Consumption Growth in Singularity" is legible. The x-axis label "Tax Rate τ" is legible. Tick labels are readable. The legend is shared with Panel (a) at the bottom center and applies to both panels.
-- **Distinguishability:** PASS. The two lines (solid baseline, dashed large singularity) are clearly distinguishable. Their trajectories diverge dramatically -- the dashed line rises steeply while the solid line rises gently -- making visual separation effortless.
+**Readability:**
+- Panel title "(b) Household Consumption" is clearly readable.
+- Y-axis label "Household Consumption Growth" and x-axis label "Tax rate tau" are legible.
+- Tick labels are readable. Shared legend at the bottom is clear.
+- **Assessment: PASS**
 
-### Narrative clarity
-Government transfers (financed by a tax rate τ) have two effects. First, they compress AI stock P/D ratios by reducing households' hedging demand (Panel a). Second, they deliver consumption gains in the singularity state (Panel b). Under the large singularity scenario, the P/D ratio is undefined at low tax rates, and consumption gains from transfers are enormous. Under the baseline, effects are modest.
+**Distinguishability:**
+- Same two series (solid baseline, dashed large singularity), easy to tell apart.
+- The dashed line rises steeply from about −0.5 to roughly 3.5, while the solid baseline rises gently from about −0.25 to roughly 0.1. The dramatic scale difference visually reinforces the paper's message.
+- **Assessment: PASS**
+
+**Narrative Clarity:**
+- From caption alone: Panel (a) shows transfers compressing AI P/D ratios by reducing hedging demand; Panel (b) shows household consumption change in the singularity state, with a catastrophe at τ = 0 but large gains as τ increases under the large singularity.
+- From paper text: The baseline uses η = 0.5, φ = 0.5 while the large singularity uses η = 9, φ = 0.05. Transfers are especially effective under the large singularity because explosive output growth swamps deadweight costs.
+- **Assessment: PASS**
