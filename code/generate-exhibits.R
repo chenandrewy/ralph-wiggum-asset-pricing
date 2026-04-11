@@ -295,20 +295,26 @@ ggsave(file.path(outdir, "fig-extension-panels.pdf"), fig, width = 12, height = 
 cat("Wrote", file.path(outdir, "fig-extension-panels.pdf"), "\n")
 
 # =============================================================================
-# Exhibit 3: AI valuations vs market — real data from FRED
+# Exhibit 3: Valuation ratios — S&P 500 P/D from Shiller data
 # =============================================================================
 
-# Download monthly stock price data from FRED
-# FRED series: SP500 (S&P 500), NASDAQCOM (NASDAQ Composite)
-# AI-exposed firms: individual stock prices via FRED are unavailable, so we
-# download S&P 500 and NASDAQ from FRED, then supplement with individual
-# firm prices from the datahub Shiller dataset URL for the S&P 500.
-#
-# Since FRED does not carry individual stock prices, we download an
-# equal-weighted basket of AI firms (NVDA, MSFT, GOOGL, META) via
-# Yahoo Finance CSV when available, with FRED's NASDAQ as fallback.
+# Download Shiller dataset with price, dividend, and PE10 (CAPE)
+cat("Downloading S&P 500 data from datahub (Shiller dataset)...\n")
+sp500_raw <- read.csv("https://datahub.io/core/s-and-p-500/r/data.csv",
+                       stringsAsFactors = FALSE)
+sp500_raw$Date <- as.Date(sp500_raw$Date)
 
-download_fred <- function(series_id, start = "2015-01-01", end = "2025-12-31") {
+# Compute trailing 12-month P/D ratio
+sp500_val <- sp500_raw %>%
+  filter(!is.na(SP500), !is.na(Dividend), Dividend > 0) %>%
+  mutate(PD = SP500 / Dividend) %>%
+  filter(Date >= as.Date("1990-01-01"), Date <= as.Date("2025-12-31"))
+
+# PE10 (Shiller CAPE) is also available
+sp500_val <- sp500_val %>% filter(!is.na(PE10), PE10 > 0)
+
+# Download NASDAQ from FRED for the price ratio
+download_fred <- function(series_id, start = "1990-01-01", end = "2025-12-31") {
   url <- sprintf(
     "https://fred.stlouisfed.org/graph/fredgraph.csv?id=%s&cosd=%s&coed=%s&fq=Monthly",
     series_id, start, end
@@ -323,16 +329,6 @@ download_fred <- function(series_id, start = "2015-01-01", end = "2025-12-31") {
   d
 }
 
-# S&P 500 from Shiller/datahub (monthly, goes back to 1871; FRED series starts late)
-cat("Downloading S&P 500 data from datahub (Shiller dataset)...\n")
-sp500_raw <- read.csv("https://datahub.io/core/s-and-p-500/r/data.csv",
-                       stringsAsFactors = FALSE)
-sp500_raw$Date <- as.Date(sp500_raw$Date)
-sp500 <- sp500_raw %>%
-  filter(Date >= as.Date("2015-01-01"), Date <= as.Date("2025-12-31")) %>%
-  select(Date, Value = SP500)
-
-# NASDAQ from FRED
 cat("Downloading NASDAQ data from FRED...\n")
 nasdaq <- download_fred("NASDAQCOM")
 
@@ -343,45 +339,62 @@ to_monthly <- function(d) {
     select(Date, Value)
 }
 
-sp500_m  <- to_monthly(sp500)
 nasdaq_m <- to_monthly(nasdaq)
+sp500_m <- sp500_val %>% select(Date, Value = SP500) %>% to_monthly()
 
-# Align date ranges
+# Compute NASDAQ/S&P price ratio as a measure of relative valuation
 min_date <- max(min(sp500_m$Date), min(nasdaq_m$Date))
 max_date <- min(max(sp500_m$Date), max(nasdaq_m$Date))
 sp500_m  <- sp500_m  %>% filter(Date >= min_date, Date <= max_date)
 nasdaq_m <- nasdaq_m %>% filter(Date >= min_date, Date <= max_date)
 
-# Normalize to first common month = 100
-normalize <- function(d) {
-  base <- d$Value[which.min(d$Date)]
-  d$Index <- d$Value / base * 100
-  d
-}
+# Merge and compute ratio
+price_ratio <- inner_join(
+  sp500_m %>% rename(SP500 = Value),
+  nasdaq_m %>% rename(NASDAQ = Value),
+  by = "Date"
+) %>%
+  mutate(Ratio = NASDAQ / SP500)
 
-sp500_m  <- normalize(sp500_m)
-nasdaq_m <- normalize(nasdaq_m)
+# Get S&P 500 P/D for joined dates (aggregate to monthly)
+sp500_pd <- sp500_val %>%
+  select(Date, PD, PE10) %>%
+  mutate(YM = format(Date, "%Y-%m")) %>%
+  group_by(YM) %>% slice_tail(n = 1) %>% ungroup() %>%
+  select(Date, PD, PE10)
 
-df_val <- bind_rows(
-  sp500_m  %>% mutate(Group = "S&P 500"),
-  nasdaq_m %>% mutate(Group = "NASDAQ Composite (AI/Tech-Heavy)")
-)
+# Two-panel figure: Panel (a) S&P 500 P/D ratio over time, Panel (b) NASDAQ/S&P price ratio
+df_pd <- sp500_pd %>%
+  inner_join(price_ratio %>% select(Date, Ratio), by = "Date") %>%
+  filter(Date >= as.Date("2000-01-01"))
 
-fig_val <- ggplot(df_val, aes(x = Date, y = Index, color = Group, linetype = Group)) +
-  geom_line(linewidth = 1) +
-  labs(x = NULL, y = "Normalized Price (Jan 2015 = 100)") +
-  scale_color_manual(values = c("NASDAQ Composite (AI/Tech-Heavy)" = "#2166AC",
-                                "S&P 500" = "#B2182B")) +
-  scale_linetype_manual(values = c("NASDAQ Composite (AI/Tech-Heavy)" = "solid",
-                                   "S&P 500" = "dashed")) +
-  scale_x_date(date_breaks = "2 years", date_labels = "%Y") +
+panel_val_a <- ggplot(df_pd, aes(x = Date, y = PD)) +
+  geom_line(linewidth = 1, color = "#B2182B") +
+  labs(x = NULL, y = "Price / Trailing Dividend") +
+  scale_x_date(date_breaks = "5 years", date_labels = "%Y") +
   scale_y_continuous(expand = expansion(mult = c(0.02, 0.05))) +
+  ggtitle("(a) S&P 500 P/D Ratio") +
   theme_paper +
-  theme(legend.position = c(0.30, 0.88),
-        plot.margin = margin(t = 15, r = 10, b = 5, l = 15, unit = "pt"),
+  theme(plot.margin = margin(t = 10, r = 10, b = 5, l = 10, unit = "pt"),
         panel.grid.major = element_blank())
 
-ggsave(file.path(outdir, "fig-ai-valuations.pdf"), fig_val, width = 7, height = 4.5)
+# Normalize NASDAQ/S&P ratio to Jan 2015 = 100
+base_ratio <- df_pd$Ratio[which.min(abs(df_pd$Date - as.Date("2015-01-01")))]
+df_pd$Ratio_norm <- df_pd$Ratio / base_ratio * 100
+
+panel_val_b <- ggplot(df_pd, aes(x = Date, y = Ratio_norm)) +
+  geom_line(linewidth = 1, color = "#2166AC") +
+  geom_hline(yintercept = 100, linetype = "dashed", color = "gray50") +
+  labs(x = NULL, y = "NASDAQ / S&P 500 Price Ratio\n(Jan 2015 = 100)") +
+  scale_x_date(date_breaks = "5 years", date_labels = "%Y") +
+  scale_y_continuous(expand = expansion(mult = c(0.02, 0.05))) +
+  ggtitle("(b) Relative Valuation: NASDAQ vs. S&P 500") +
+  theme_paper +
+  theme(plot.margin = margin(t = 10, r = 10, b = 5, l = 10, unit = "pt"),
+        panel.grid.major = element_blank())
+
+fig_val <- arrangeGrob(panel_val_a, panel_val_b, ncol = 2)
+ggsave(file.path(outdir, "fig-ai-valuations.pdf"), fig_val, width = 12, height = 4.5)
 cat("Wrote", file.path(outdir, "fig-ai-valuations.pdf"), "\n")
 
 # =============================================================================
