@@ -1,32 +1,30 @@
 # tests/theory-intro-payoff.py
-Started: 2026-04-11 16:10:24 EDT
+Started: 2026-04-11 21:15:26 EDT
 Runtime: 1m 5s
-[ralph-garage/agent-logs/20260411T161024.924237-0400_theory-intro-payoff_claude_opus.log](../ralph-garage/agent-logs/20260411T161024.924237-0400_theory-intro-payoff_claude_opus.log)
+[ralph-garage/agent-logs/20260411T211526.518593-0400_theory-intro-payoff_claude_opus.log](../ralph-garage/agent-logs/20260411T211526.518593-0400_theory-intro-payoff_claude_opus.log)
 
 # theory-intro-payoff
 VERDICT: PASS
-REASON: Every modeling feature leads to an economic result that is discussed in the introduction.
+REASON: Every modeling feature in the paper leads to an economic result that is explicitly discussed in the introduction.
 
-## Detailed Mapping
+## Detailed Findings
 
-### Modeling Features → Introduction Payoffs
+### Mapping of modeling features to introduction payoffs
 
-1. **Singularity probability $p$, displacement $\phi$, productivity boost $\eta$**: The introduction explains that investors use AI stocks to hedge against displacement from an AI singularity, and that P/D ratios for AI stocks can reach roughly twice those of non-AI stocks (paragraphs 2–3). These parameters drive the hedging channel and the closed-form P/D ratios of Proposition 1.
+1. **Displacement (φ) + market incompleteness** → Intro paras 2–3: hedging motive explanation for AI valuation premia; AI stocks as partial hedge; P/D ratios can reach ~2x non-AI stocks.
 
-2. **Market incompleteness (restricted AI equity, AI owners)**: The introduction identifies market incompleteness as "the key driver" — investors cannot trade restricted equity (founder stakes, pre-IPO shares, future innovators' capital), forcing them into public AI stocks as a partial hedge. It notes that under complete markets the premium would largely vanish (paragraph 4).
+2. **Market incompleteness (restricted equity)** → Intro para 4: "Under complete markets the displacement-driven premium would largely vanish, because the household could trade the restricted AI equity directly; market incompleteness is the key driver."
 
-3. **Extinction probability $\xi$**: The introduction discusses extinction risk as a force that "attenuates the hedging channel," because states powerful enough for enormous growth also carry existential risk, reducing the weight on non-extinction states where hedging demand operates (paragraph 4, referencing Proposition 2).
+3. **Extinction risk (ξ)** → Intro para 4: "extinction risk attenuates the hedging channel, because the states in which AI is powerful enough to produce enormous growth are also those in which existential risk is highest." Proposition 2 quantifies this.
 
-4. **Positive singularity probability $q$ and veto cost $\kappa$**: The introduction explains that a risk-averse household unable to hedge displacement may rationally block AI development even when the positive singularity is more likely, and that complete markets would eliminate this distortion (paragraph 5, referencing Proposition 3).
+4. **Positive/negative singularity (q) + veto mechanism (κ)** → Intro para 5: "a risk-averse household that cannot hedge displacement may rationally choose to block it—the uninsurable downside looms larger than the expected upside. As Proposition 3 shows, calls to slow or halt AI development may partly reflect investors' inability to hedge the downside."
 
-5. **Government transfers $\tau$ and deadweight cost $\delta$**: The introduction argues that fiscal policy can substitute for missing markets when singularity-driven growth is large enough to overwhelm deadweight costs (paragraph 7).
+5. **Government transfers (τ) + deadweight costs (δ)** → Intro paras 7–8: "even grossly inefficient government transfers become effective, because the resource base grows so large that deadweight costs are overwhelmed." Links to Jones (2024) singularity growth.
 
-6. **CRRA preferences with risk aversion $\gamma > 1$**: Risk aversion is embedded throughout the introduction's discussion — it is what makes the household's marginal utility high in displacement states, driving the hedging channel, and what makes sufficiently risk-averse households prefer the veto.
+6. **Productivity boost (η)** → Intro para 3 (quantitative magnitudes) and para 8 (explosive growth enables transfers despite deadweight costs).
 
-7. **AI dividend share $\theta$ and expansion $\Delta\theta$**: The introduction discusses AI stocks growing "as a share of the economy with each singularity, making them a partial hedge" (paragraph 3), which is the role of $\theta$ and $\Delta\theta$.
+7. **AI/non-AI dividend shares (θ, Δθ)** → Intro para 3: "AI stocks grow as a share of the economy with each singularity, making them a partial hedge."
 
-8. **Two public assets (AI stocks vs. non-AI stocks)**: The valuation spread between these two asset classes is the paper's central empirical prediction, discussed prominently in the introduction (paragraphs 2–3).
+### Conclusion
 
-### Summary
-
-The introduction presents three linked results — (1) hedging-based AI valuation premia, (2) resistance to AI development from market incompleteness, and (3) government transfers enabled by explosive growth — and every model parameter contributes to at least one of these results. No modeling feature is introduced without a corresponding economic payoff in the introduction.
+No modeling feature is introduced without a corresponding economic result in the introduction. The intro's final summary paragraph explicitly ties together all three linked results: (1) hedging-based valuation premia, (2) resistance to AI development from market incompleteness, and (3) singularity-driven growth enabling effective redistribution. Standard auxiliary parameters (β, g, γ, CRRA) serve as modeling tools and are referenced where relevant (e.g., "risk-averse household") without needing standalone discussion.

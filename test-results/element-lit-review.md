@@ -1,86 +1,93 @@
 # tests/element-lit-review.py
-Started: 2026-04-11 16:10:24 EDT
-Runtime: 5m 48s
-[ralph-garage/agent-logs/20260411T161024.928569-0400_element-lit-review_claude_opus.log](../ralph-garage/agent-logs/20260411T161024.928569-0400_element-lit-review_claude_opus.log)
+Started: 2026-04-11 21:15:26 EDT
+Runtime: 3m 20s
+[ralph-garage/agent-logs/20260411T211526.527068-0400_element-lit-review_claude_opus.log](../ralph-garage/agent-logs/20260411T211526.527068-0400_element-lit-review_claude_opus.log)
 
 # element-lit-review
+
 VERDICT: PASS
-REASON: The paper covers the primary displacement-risk and AI asset pricing literature adequately, with no critical gaps and at most one important gap; the lit review is within the half-page limit.
+REASON: The bibliography covers the core displacement-risk, rare-disasters, and AI-economics literatures with no critical gaps and at most one important gap; the lit review is well under half a page.
 
-## 1. Scope Extracted from Spec and Paper
+## 1. Scope extracted from spec and paper
 
-The paper, "Hedging the Singularity," is an asset pricing theory paper arguing that AI stocks command high valuations because investors use them to hedge against displacement from an AI singularity under incomplete markets. Key themes:
+The paper is an asset pricing theory paper titled "Hedging the Singularity." Its primary contribution is a hedging-based explanation for high AI stock valuations under incomplete markets with displacement risk from an AI singularity. The paper builds directly on Garleanu, Kogan, and Panageas (2012 JFE) and incorporates extinction risk from Jones (2024 AER:Insights).
 
-- **PRIMARY**: Displacement risk and asset pricing under incomplete markets (building on GKP 2012)
-- **Secondary**: AI singularity and economic growth / extinction risk (Jones 2024)
-- **Secondary**: Creative destruction, technology shocks, and the cross-section of returns
+Key themes requiring literature coverage:
+- **PRIMARY**: AI stock valuations and hedging demand under incomplete markets with displacement risk
+- **Secondary**: Creative destruction, technology shocks, and displacement in asset pricing
 - **Secondary**: Rare disasters and asset pricing
-- **Secondary**: Government transfers as a substitute for missing markets
-- **Secondary**: Technological revolutions and stock prices
+- **Secondary**: AI singularity, existential risk, and macroeconomics of AI
+- **Secondary**: Government transfers and market incompleteness
 
-The paper's contribution claims: (1) hedging-based explanation for AI valuation premia, (2) a veto/resistance rationale rooted in market incompleteness, (3) a mechanism through which singularity-driven growth enables effective redistribution.
+The spec states the paper is "intentionally limited in scope to a compact but richer theoretical contribution" with "very limited" empirical content, and requires the lit review to be at most half a page.
 
-## 2. Current Bibliography Summary
+## 2. Current bibliography summary
 
-The paper cites 11 references:
+The paper cites 11 works:
 
 | Citation | Journal | Theme |
-|---|---|---|
-| Garleanu, Kogan, Panageas (2012) | JFE | Displacement risk and asset returns (primary building block) |
-| Jones (2024) | AER: Insights | AI growth vs. existential risk |
-| Barro (2006) | QJE | Rare disasters |
-| Wachter (2013) | JF | Time-varying rare disasters |
-| Pastor, Veronesi (2009) | AER | Technological revolutions and stock prices |
-| Acemoglu (2025) | Economic Policy | Macroeconomics of AI |
-| Nordhaus (2021) | AEJ: Macro | Economic singularity |
-| Kogan, Papanikolaou (2014) | JF | Growth opportunities, technology shocks, asset prices |
+|----------|---------|-------|
+| Garleanu, Kogan, Panageas (2012) | JFE | Displacement risk and asset returns — direct predecessor |
+| Jones (2024) | AER:Insights | AI growth vs. existential risk — extinction channel |
+| Barro (2006) | QJE | Rare disasters and asset markets |
+| Wachter (2013) | JF | Time-varying rare disaster risk |
+| Pastor & Veronesi (2009) | AER | Technological revolutions and stock prices |
+| Kogan & Papanikolaou (2014) | JF | Growth opportunities, technology shocks, asset prices |
 | Kogan, Papanikolaou, Stoffman (2020) | JPE | Creative destruction, inequality, stock market |
-| Knesl (2023) | JFE | Automation and displacement of labor by capital |
-| Aghion, Jones, Jones (2019) | UChicago Press | AI and economic growth |
+| Knesl (2023) | JFE | Automation and labor displacement in asset pricing |
+| Acemoglu (2025) | Economic Policy | Simple macroeconomics of AI |
+| Nordhaus (2021) | AEJ:Macro | Economic singularity and growth |
+| Aghion, Jones, Jones (2019) | U Chicago Press | AI and economic growth |
 
-## 3. Missing References by Topic Area
+The bibliography is compact and focused, covering the displacement-risk lineage (GKP, Kogan-Papanikolaou, Knesl), rare disasters (Barro, Wachter), tech revolutions (Pastor-Veronesi), and AI economics (Jones, Acemoglu, Nordhaus, Aghion et al.).
 
-### Primary topic: Displacement risk / creative destruction and asset pricing
-**No critical gaps.** The paper cites the four most directly relevant papers in the target journals: GKP (2012 JFE) as the main building block, Kogan-Papanikolaou (2014 JF), Kogan-Papanikolaou-Stoffman (2020 JPE), and Knesl (2023 JFE). This provides strong coverage of the primary topic.
+## 3. Missing references by topic area
 
-Other related papers (Papanikolaou 2011 JPE on investment shocks; Kung and Schmid 2015 JF on innovation and asset prices; Eisfeldt and Papanikolaou 2013 JF on organization capital) are tangentially related but address different mechanisms. Their omission is understandable given the paper's compact scope. **Classification: MINOR.**
+### AI and asset pricing / firm valuations
 
-### Secondary: Rare disasters
-The paper cites Barro (2006 QJE) and Wachter (2013 JF). Gabaix (2012 QJE), "Variable Rare Disasters: An Exactly Solved Framework for Ten Puzzles in Macro-Finance," is a prominent tractable rare-disasters model in a target journal. However, the paper does not use Gabaix's specific linearity framework or time-varying disaster probabilities; it cites the rare disasters literature as background for its pricing approach rather than building directly on any specific rare-disasters model beyond the general idea. **Classification: IMPORTANT** — a well-known paper on a secondary theme — but not critical since Barro (the seminal paper) and Wachter (the leading extension) are both cited.
+- **Babina, Fedyk, He, Hodson (2024 JFE)** — "Artificial Intelligence, Firm Growth, and Product Innovation." Empirical evidence on AI adoption driving firm growth and market valuations. A well-known paper in a target journal on the broader topic of AI and stock values.
+  - **Classification: IMPORTANT.** This is the most prominent empirical paper on AI and firm valuations in a target journal. A referee specializing in AI and finance may expect it. However, the paper under review is purely theoretical with deliberately minimal empirical content, and Babina et al. addresses a different mechanism (firm-level AI adoption) rather than hedging demand or displacement risk.
 
-### Secondary: AI and financial markets
-The paper cites Jones (2024), Acemoglu (2025), Aghion-Jones-Jones (2019), and Nordhaus (2021) for the economics of AI. Babina, Fedyk, He, and Hodson (2024 JFE), "Artificial Intelligence, Firm Growth, and Product Innovation," is the leading empirical paper on AI and firm valuations in a top finance journal. However, the paper is purely theoretical and explicitly limits its empirical content, so omitting an empirical AI-finance paper is understandable. **Classification: MINOR.**
+- **Eisfeldt, Schubert, Zhang (~2023–2024)** — "Generative AI and Firm Values." Measures firm-level exposure to generative AI and stock market reactions. Forthcoming/working paper status unclear for a target journal.
+  - **Classification: MINOR.** Relevant to AI valuations but publication status in a target journal is uncertain, and the mechanism (cross-sectional generative AI exposure) is distinct from the paper's hedging channel.
 
-### Secondary: Incomplete markets and asset pricing
-The paper's incomplete-markets mechanism is specific to GKP's displacement framework (inability to trade restricted/non-existent AI equity), not the standard framework of uninsurable idiosyncratic shocks. Constantinides and Duffie (1996 JPE) is the canonical incomplete-markets asset pricing paper, but addresses a fundamentally different friction. Its omission is reasonable given the paper's specific framing. **Classification: MINOR.**
+### Incomplete markets and asset pricing
 
-### Secondary: Technology stocks and valuation
-Pastor and Veronesi (2009 AER) is cited for technological revolutions. No critical gaps identified.
+- **Constantinides & Duffie (1996 JPE)** — "Asset Pricing with Heterogeneous Consumers." Foundational incomplete-markets model with uninsurable idiosyncratic risk.
+  - **Classification: MINOR.** The paper's incomplete-markets mechanism is specifically about displacement risk following GKP, not about idiosyncratic labor income shocks in the Constantinides-Duffie sense. GKP (2012) already establishes the intellectual lineage for the specific form of market incompleteness used.
 
-## 4. Focus on the Target Journal Set
+### Rare disasters
+
+- **Gabaix (2012 QJE)** — "Variable Rare Disasters: An Exactly Solved Framework for Ten Puzzles in Macro-Finance." Major tractable rare disasters model.
+  - **Classification: MINOR.** Barro (2006) and Wachter (2013) already represent the rare disasters literature adequately. The paper's use of rare disasters is as a building block, not its main contribution. Adding Gabaix would be natural but its absence is understandable given the paper's compact scope.
+
+### Technology and labor displacement
+
+- **Autor, Levy, Murnane (2003 QJE)** — "The Skill Content of Recent Technological Change." Canonical paper on task-based automation displacing labor.
+  - **Classification: MINOR.** This is a labor economics paper, not an asset pricing paper. The displacement-risk asset pricing literature is well covered through GKP, Kogan-Papanikolaou, and Knesl.
+
+## 4. Focus on the target journal set
 
 The bibliography is well-focused on the target journal set. Of the 11 citations:
-- **Finance journals**: GKP2012 (JFE), Wachter2013 (JF), KoganPapanikolaou2014 (JF), Knesl2023 (JFE) — 4 papers
-- **Economics journals**: Barro2006 (QJE), PastorVeronesi2009 (AER), Jones2024 (AER:Insights), KPS2020 (JPE), Nordhaus2021 (AEJ:Macro) — 5 papers
-- **Other**: Acemoglu2025 (Economic Policy), AJJ2019 (UChicago Press) — 2 papers
+- 4 are in top finance journals: JFE (GKP 2012, Knesl 2023), JF (Wachter 2013, Kogan-Papanikolaou 2014)
+- 3 are in top economics journals: QJE (Barro 2006), AER (Pastor-Veronesi 2009), JPE (Kogan-Papanikolaou-Stoffman 2020)
+- 1 is in AER:Insights (Jones 2024)
+- 3 are in adjacent outlets: AEJ:Macro (Nordhaus), Economic Policy (Acemoglu), book chapter (Aghion et al.)
 
-The literature review appropriately emphasizes papers from the target journals across both finance and economics. Coverage spans JFE, JF, JPE, QJE, AER, and AER:Insights. The two papers outside the target journal set (Acemoglu, Aghion-Jones-Jones) are highly relevant to the AI economics theme and their inclusion is justified. There is no concern about inappropriate focus.
+The coverage of the core displacement-risk literature in JFE, JF, and JPE is strong. The rare disasters literature is represented by landmark papers from QJE and JF. The AI economics literature draws on AER:Insights and adjacent top outlets. The paper does not over-index on any secondary theme at the expense of its primary topic.
 
-## 5. Literature Review Length Check
+## 5. Literature review length check
 
-The "Related literature" section begins near the bottom of page 3 and ends in the first quarter of page 4, before Section 2 begins. Based on the rendered page images, the lit review spans approximately 3 short paragraphs totaling roughly 14 lines of 1.5-spaced text. This is well under half a page. **PASS on length.**
+The "Related literature" section begins near the bottom of page 3 and continues for approximately 6–7 lines at the top of page 4, totaling roughly 12 lines or about one-quarter of a page. This is well within the half-page limit specified in the paper spec.
 
-## 6. Suggested Additions
+**Length verdict: PASS.**
 
-| Author(s) | Year | Title | Journal | Relevance |
-|---|---|---|---|---|
-| Gabaix | 2012 | Variable Rare Disasters: An Exactly Solved Framework for Ten Puzzles in Macro-Finance | QJE | Leading tractable rare-disasters model; a natural companion to the already-cited Barro and Wachter papers when invoking the disasters literature. |
-| Babina, Fedyk, He, Hodson | 2024 | Artificial Intelligence, Firm Growth, and Product Innovation | JFE | Main empirical paper in a top finance journal documenting how AI adoption drives firm growth and valuations; relevant to the paper's premise about AI stock premia. |
-| Kung, Schmid | 2015 | Innovation, Growth, and Asset Prices | JF | Endogenous innovation drives long-run risk and equity premia; connects innovation to asset pricing in a target journal. |
+## 6. Suggested additions
 
-**Gap summary:**
-- CRITICAL: 0
-- IMPORTANT: 1 (Gabaix 2012 QJE)
-- MINOR: Several (Babina et al. 2024, Kung-Schmid 2015, Constantinides-Duffie 1996, Papanikolaou 2011, others)
+| Authors | Year | Title | Journal | Relevance |
+|---------|------|-------|---------|-----------|
+| Babina, Fedyk, He, Hodson | 2024 | Artificial Intelligence, Firm Growth, and Product Innovation | JFE | Most prominent empirical paper on AI adoption and firm valuations in a target journal; would anchor the paper's opening claim about AI stock valuations in the academic literature. |
+| Gabaix | 2012 | Variable Rare Disasters: An Exactly Solved Framework for Ten Puzzles in Macro-Finance | QJE | Major tractable rare-disasters model that complements the existing Barro and Wachter citations; a natural addition to the rare-disasters parenthetical. |
+| Eisfeldt, Schubert, Zhang | 2023 | Generative AI and Firm Values | WP / forthcoming | Documents stock market reactions to generative AI exposure; relevant but lower priority given uncertain target-journal publication status. |
 
-The paper passes with no critical gaps and only one important gap. The bibliography provides strong coverage of the primary displacement-risk topic and adequate coverage of secondary themes, consistent with a compact theory paper.
+These are suggestions for strengthening coverage; none represents a critical omission that would cause a referee to flag the paper.

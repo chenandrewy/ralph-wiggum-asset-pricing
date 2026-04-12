@@ -1,49 +1,60 @@
 # tests/writing-intro.py
-Started: 2026-04-11 16:10:24 EDT
-Runtime: 3m 13s
-[ralph-garage/agent-logs/20260411T161024.927177-0400_writing-intro_claude_opus.log](../ralph-garage/agent-logs/20260411T161024.927177-0400_writing-intro_claude_opus.log)
+Started: 2026-04-11 21:15:26 EDT
+Runtime: 2m 54s
+[ralph-garage/agent-logs/20260411T211526.523574-0400_writing-intro_claude_opus.log](../ralph-garage/agent-logs/20260411T211526.523574-0400_writing-intro_claude_opus.log)
 
 # writing-intro
-VERDICT: PASS
-REASON: The introduction clearly communicates all main arguments to skimmers, flows well with explicit transitions, and every promised analysis is fulfilled in the body.
+VERDICT: FAIL
+REASON: The introduction's second half (paragraphs 4-7) loses coherence with abrupt transitions and disconnected summaries, despite strong skimmability and full promise fulfillment.
 
-## 1. Clarity for a Skimming Reader (PASS)
+## Subagent Results
 
-All five main arguments from the specification are recoverable by a reader who reads only first/last sentences of paragraphs:
+### 1. Skimmability of Main Arguments: PASS
 
-- **(a) Hedging motive drives AI valuations.** P2 opens: "Part of this premium, we argue, reflects a hedging motive." Unmissable.
-- **(b) Incomplete markets are key.** P4 opens: "Under complete markets the displacement-driven premium would largely vanish...market incompleteness is the key driver." Direct and emphatic.
-- **(c) Financial market solutions are under-discussed; frictions limit them.** P6 opens: "Financial market solutions to AI displacement risk are under-discussed, and the frictions that limit them are severe." Verbatim alignment with the spec.
-- **(d) Singularity abundance can overcome frictions.** Present in P6's closing sentence and P7's summary. This is the weakest of the five in skimming salience---it does not lead any paragraph---but it is recoverable from natural skimming positions (last sentence of P6, first sentence of P7).
-- **(e) Incomplete markets distort AI development.** P5 opens: "The consequences of market incompleteness extend beyond valuations to the efficient development of AI itself." Also reinforced in P3's closing sentence and P7's summary.
+All five spec arguments are clearly surfaced in topic sentences where a skimming reader reliably looks:
 
-Minor note: Argument (d) could be front-loaded more aggressively, but its presence in the summary paragraph is sufficient.
+- **(a) Hedging motive for AI valuations:** Paragraph 2 topic sentence states it directly ("Part of this premium, we argue, reflects a hedging motive"). Summary paragraph repeats it.
+- **(b) Incomplete markets are key:** Paragraph 4 opens with "Under complete markets the displacement-driven premium would largely vanish...market incompleteness is the key driver."
+- **(c) Financial market solutions under-discussed:** Paragraph 6 opens with exactly this claim.
+- **(d) Singularity overcomes frictions:** Paragraph 7 topic sentence: "But if the singularity produces explosive output growth, even grossly inefficient government transfers become effective."
+- **(e) Incomplete markets distort AI development:** Paragraph 5 opens: "The consequences of market incompleteness extend beyond valuations to the efficient development of AI itself."
 
-## 2. Flow (PASS)
+### 2. Introduction Flow: FAIL
 
-The introduction follows a clear logical arc: empirical motivation (P1) -> hedging thesis (P2) -> formal model preview (P3) -> counterfactual and attenuation (P4) -> real distortions (P5) -> fiscal remedy (P6) -> roadmap (P7) -> lit review.
+The first three paragraphs are well-crafted: vivid opening, clear mechanism, natural formalization. The second half loses coherence.
 
-Each major transition is explicit. Two minor seams:
+**Specific issues:**
 
-- **P4 internal pivot.** The paragraph carries two logically distinct points---the complete-markets counterfactual and extinction attenuation---without a bridging sentence. A brief connective (e.g., "Even within the incomplete-markets setting, a second force...") would smooth this.
-- **Jones (2024) dual role.** Jones appears in P4 (extinction risk) and P6 (explosive growth) playing opposite-signed roles. The duality is not acknowledged, which could briefly disorient a careful reader.
+| Location | Issue | Severity |
+|---|---|---|
+| P3 -> P4 | Extinction channel introduced without preparation | Moderate |
+| P4 -> P5 | Pivot from extinction to development distortions is abrupt | Moderate |
+| P6 | Generic "frictions are severe" paragraph adds little; reads as filler | Moderate |
+| P6 -> P7 | "But if..." conjunction is jarring for introducing a new mechanism | High |
+| P7 -> Roadmap | Jones result orphaned before the roadmap rather than integrated | Moderate |
+| P5-P6 | Results vs. extensions boundary unclear | Low-Moderate |
+| Length distribution | Extensions underdeveloped relative to the space they occupy | Moderate |
 
-Neither issue rises to a FAIL.
+**Recommendations:**
+1. Integrate the extinction channel into the results paragraph (P3) rather than giving it a separate paragraph that interrupts the flow.
+2. Rewrite or eliminate P6 (the generic frictions paragraph).
+3. Restructure P7 so the Jones/redistribution result is embedded within the extensions narrative rather than orphaned before the roadmap.
+4. Sharpen the motivation for the development-distortions and fiscal-policy extensions so they feel like natural payoffs rather than appendages.
 
-## 3. Promises vs. Fulfillment (PASS)
+### 3. Promises Fulfilled in Analysis Sections: PASS
 
-Every analysis promised or implied in the Introduction is delivered in the body:
+Every substantive promise in the introduction is fulfilled:
 
-| Promise (Introduction) | Fulfillment (Body) |
+| Promise | Fulfilled? |
 |---|---|
-| Closed-form P/D ratios | Proposition 1, equations (4)-(5) |
-| P/D ratios ~2x for AI vs non-AI | Table 1: ratio = 2.0 at p=1%, xi=0 |
-| Extinction attenuates hedging; Prop 2 quantifies | Proposition 2 with full proof |
-| Displacement distorts AI development decisions | Extension 1, Proposition 3 |
-| Calls to halt AI reflect inability to hedge; Prop 3 | Proposition 3(i)-(ii) with proof and numerical example |
-| Fiscal policy substitutes for missing markets | Extension 2 with effective displacement parameter |
-| Grossly inefficient transfers become effective | Equation (7), Figure 3, large-singularity parameterization |
-| Three linked results | All three delivered across Sections 2-4 |
-| Section roadmap (Secs 2-5) | Structure matches exactly |
+| Closed-form P/D ratios | PASS - Proposition 1 |
+| P/D ratios ~2x for AI stocks | PASS - Table 1 shows ~2x at p=1% |
+| Proposition 2 quantifies extinction attenuation | PASS - proved with convexity argument |
+| Proposition 3 shows veto under incomplete markets | PASS - both parts proved and illustrated numerically |
+| Displacement risk distorts AI development | PASS - Extension 1 formalizes veto mechanism |
+| Fiscal policy substitutes for missing markets | PASS - Extension 2 with phi_eff derivation |
+| Singularity growth enables redistribution despite frictions | PASS - Figure 2 illustrates large-singularity case |
+| Section roadmap (Sections 2-5) | PASS - all sections deliver as promised |
+| AI-written paper claim (footnote) | PASS - present in footnote |
 
-Minor rhetorical imprecision: "roughly twice...across plausible singularity probabilities" slightly overstates, since the ratio reaches 2.0 only at p=1%, xi=0, and is 1.1-1.7 at lower probabilities. This is a phrasing nuance, not an unfulfilled promise.
+Minor note: "roughly twice...across plausible singularity probabilities" slightly overstates breadth (the ~2x ratio holds at p=1% but is ~1.4x at p=0.5%). This is a precision issue in language, not an unfulfilled promise.

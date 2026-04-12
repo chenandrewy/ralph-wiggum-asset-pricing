@@ -1,37 +1,48 @@
 # tests/writing-intuition.py
-Started: 2026-04-11 16:10:24 EDT
-Runtime: 1m 16s
-[ralph-garage/agent-logs/20260411T161024.923954-0400_writing-intuition_claude_opus.log](../ralph-garage/agent-logs/20260411T161024.923954-0400_writing-intuition_claude_opus.log)
+Started: 2026-04-11 21:15:26 EDT
+Runtime: 1m 19s
+[ralph-garage/agent-logs/20260411T211526.534520-0400_writing-intuition_claude_opus.log](../ralph-garage/agent-logs/20260411T211526.534520-0400_writing-intuition_claude_opus.log)
 
 # writing-intuition
 VERDICT: PASS
-REASON: Every proposition and key formula is accompanied by discussion that explains the economic intuition in terms of the specific mathematical objects appearing in that result.
+REASON: All propositions and key formulas have their intuition explained in terms of the mathematical objects they use.
 
 ## Detailed Findings
 
-### Proposition 1 (P/D Ratios)
-The discussion (lines 155-157) anchors intuition directly in the model's math objects:
-- Compares $\Gamma^{AI}$ vs $\Gamma^{N}$ to explain why AI stocks trade at a premium ($\Gamma^{AI} > 1+\eta$ while $\Gamma^{N} < 1+\eta$).
-- Explains the hedging channel via $\phi^{-\gamma}$ (high marginal utility in singularity states due to displacement).
-- Notes the valuation spread widens with decreasing $\phi$ and increasing $p$, tying each to the relevant term in the formula.
+### Proposition 1 (Price-dividend ratios, line 128)
 
-### Remark 1 (Existence Condition)
-Explains $A^j \geq 1$ as the SDF-weighted expected dividend growth exceeding the discount rate, and connects the intuition (infinite hedging demand) to the divergence of the geometric pricing sum.
+The discussion following the proposition (lines 156--158) explains the economic content directly through the mathematical objects:
 
-### Proposition 2 (Extinction Attenuation)
-The proof decomposes $A^j$ into components $B$, $S$, and $\Gamma^j$, and uses the convexity of $f(A) = A/(1-A)$ to explain why the common multiplicative scaling by $(1-\xi)$ produces a larger reduction in the AI P/D ratio. The preceding paragraph (line 157) grounds the comparative static in $\phi^{-\gamma}$ and $p$.
+- **$\Gamma^{AI}$ vs $\Gamma^{N}$**: "Since $\Delta\theta > 0$, AI stocks' dividends grow faster than aggregate consumption upon a singularity ($\Gamma^{AI} > 1+\eta$), while non-AI stocks' dividends grow more slowly ($\Gamma^{N} < 1+\eta$)."
+- **$\phi^{-\gamma}$**: "Combined with the household's high marginal utility in singularity states (due to displacement, $\phi(1+\eta) < 1$ when $\phi$ is sufficiently small), AI stocks' payoffs are especially valuable."
+- **Comparative statics on $\phi$ and $p$**: "the valuation spread widens with displacement severity (decreasing $\phi$, which raises marginal utility in singularity states via $\phi^{-\gamma}$) and with singularity probability $p$."
 
-### Proposition 3 (Veto)
-- Part (i): Explains how $\Delta u(\gamma)$ is dominated by the negative-singularity term as $\gamma \to \infty$, specifically because $\phi(1+\eta) < 1$ makes the consumption drop grow without bound in utility terms.
-- Part (ii): Ties the complete-markets result to the specific consumption expression $\alpha(1+\eta)C_t(1+g)$, showing the gain is unambiguously positive since $\eta > 0$.
-- The numerical example (lines 229-230) uses the actual parameter values ($\phi = 0.5$, $\eta = 0.5$, $\gamma = 10$, etc.) to make the math concrete.
+The existence condition (Remark 1, lines 146--152) is also explained via $A^j$: "the SDF-weighted expected dividend growth exceeds the discount rate and the geometric pricing sum diverges."
 
-### Key Formulas
+### Proposition 2 (Extinction attenuation, line 160)
 
-**Equation (8) — Transfer consumption:** Decomposed into two terms, each explained: the first is displaced consumption ($\phi \alpha (1+\eta) C_t (1+g)$), the second is the net transfer ($\tau(1 - \delta\tau)$ of AI owners' surplus $(1 - \phi\alpha)$).
+The proposition statement itself gives the intuition in terms of the math: "higher extinction probability reduces the weight on non-extinction states where the valuation divergence occurs." The proof (lines 164--166) walks through the mechanism explicitly:
 
-**Equation (9) — $\phi_\text{eff}$:** Explained as entering the SDF in the same way as $\phi$, so Proposition 1's formula applies directly with this substitution. The derivation from equation (8) is made explicit.
+- Decomposes $A^j$ into components $B$, $S$, $\Gamma^j$.
+- Explains how $(1-\xi)$ scales the singularity component and why $\Gamma^{AI} > \Gamma^{N}$ makes the absolute reduction larger for AI stocks.
+- Uses convexity of $f(A) = A/(1-A)$ to complete the argument.
 
-**Equation (10) — Transfer ratio:** The paper explains why this ratio is independent of $\eta$ (both numerator and denominator scale with it) and grounds the economic content in levels: as $\eta$ grows, both $c^H_{post}$ and $c^H_{no\text{-}transfer}$ grow without bound, so even inefficient transfers deliver large gains.
+### Proposition 3 (Veto under incomplete markets, line 212)
 
-**Figure 3 discussion:** Connects the undefined P/D ratio at $\tau = 0$ to Remark 1's existence condition and to the specific magnitude $\phi^{-\gamma} = 160{,}000$, making the math tangible.
+The proof (lines 220--229) explains the intuition through the formula $\Delta u(\gamma)$:
+
+- "As $\gamma \to \infty$, the negative-singularity term dominates because $\phi\alpha(1+\eta) < \alpha$ when $\phi(1+\eta) < 1$: the utility cost of the consumption drop grows without bound relative to the utility gain."
+- Complete-markets case is explained via the consumption level $\alpha(1+\eta)C_t(1+g)$.
+
+The subsequent discussion (lines 231--235) also ties back to parameters: veto cost $\kappa$, positive singularity probability $q$, and specific calibration values.
+
+### Key Formulas in Extensions
+
+- **Eq. (6), transfer consumption (line 246)**: Each term is explained -- "The first term is the household's displaced consumption. The second is the net transfer: a fraction $\tau$ of the AI surplus, reduced by the deadweight cost $\delta\tau$."
+- **Eq. (7), $\phi_\text{eff}$ (line 254)**: Derived explicitly from Eq. (6) and connected to the SDF: "Since $\phi_\text{eff}$ enters the SDF in the same way as $\phi$, the P/D formula from Proposition 1 applies with $\phi$ replaced by $\phi_\text{eff}$."
+- **Eq. (8), transfer ratio (line 262)**: Explained as independent of $\eta$, with intuition tied to levels: "as $\eta$ grows, both $c^H_{post}$ and $c^H_{no\text{-}transfer}$ grow without bound, so even inefficient transfers deliver arbitrarily large consumption gains."
+- **Infinite P/D at $\tau = 0$ under large singularity (line 269)**: Connected to the existence condition via $\phi^{-\gamma}$: "the household's marginal utility in the singularity state ($\phi^{-\gamma} = 160{,}000$) is so extreme that the pricing sum diverges."
+
+### Summary
+
+Every proposition and key formula in the paper is accompanied by intuitive discussion that references the specific mathematical objects ($\Gamma^{AI}$, $\Gamma^{N}$, $\phi^{-\gamma}$, $A^j$, $(1-\xi)$, $\Delta u(\gamma)$, $\phi_\text{eff}$, $\tau$, $\eta$, $\delta$) from the respective expressions. The paper consistently grounds economic intuition in the formalism rather than relying on purely verbal arguments.

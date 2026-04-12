@@ -384,11 +384,11 @@ df_pd$Ratio_norm <- df_pd$Ratio / base_ratio * 100
 
 panel_val_b <- ggplot(df_pd, aes(x = Date, y = Ratio_norm)) +
   geom_line(linewidth = 1, color = "#2166AC") +
-  geom_hline(yintercept = 100, linetype = "dashed", color = "gray50") +
+  geom_hline(yintercept = 100, linetype = "dashed", color = "black") +
   labs(x = NULL, y = "NASDAQ / S&P 500 Price Ratio\n(Jan 2015 = 100)") +
   scale_x_date(date_breaks = "5 years", date_labels = "%Y") +
   scale_y_continuous(expand = expansion(mult = c(0.02, 0.05))) +
-  ggtitle("(b) Relative Valuation: NASDAQ vs. S&P 500") +
+  ggtitle("(b) NASDAQ vs. S&P 500") +
   theme_paper +
   theme(plot.margin = margin(t = 10, r = 10, b = 5, l = 10, unit = "pt"),
         panel.grid.major = element_blank())

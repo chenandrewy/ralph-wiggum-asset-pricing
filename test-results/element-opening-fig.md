@@ -1,25 +1,20 @@
 # tests/element-opening-fig.py
-Started: 2026-04-11 16:10:24 EDT
-Runtime: 47s
-[ralph-garage/agent-logs/20260411T161024.950326-0400_element-opening-fig_claude_opus.log](../ralph-garage/agent-logs/20260411T161024.950326-0400_element-opening-fig_claude_opus.log)
+Started: 2026-04-11 21:15:26 EDT
+Runtime: 43s
+[ralph-garage/agent-logs/20260411T211526.520234-0400_element-opening-fig_claude_opus.log](../ralph-garage/agent-logs/20260411T211526.520234-0400_element-opening-fig_claude_opus.log)
 
 # element-opening-fig
 VERDICT: PASS
-REASON: The two-panel empirical figure effectively compares AI-proxy (NASDAQ) and broad-market (S&P 500) valuations using credible public data sources, directly supporting the introduction's motivating claim.
+REASON: The two-panel empirical figure uses credible public data to document both elevated S&P 500 valuations and the AI/tech premium, directly supporting the intro's motivating claim.
 
 ## Findings
 
-### Requirement 1: Empirical, not theoretical
-PASS. Both panels use real financial data: Panel (a) draws from the Shiller dataset (S&P 500 trailing P/D ratio), and Panel (b) uses NASDAQ Composite from FRED and S&P 500 from Shiller. No model output is displayed.
+**Requirement 1 -- Empirical, not theoretical.** PASS. Both panels plot real-world time series data (Shiller S&P 500 P/D ratio; NASDAQ/S&P 500 price ratio from FRED). No model output is involved.
 
-### Requirement 2: Compares AI and non-AI public-stock valuations
-PASS. Panel (b) shows the NASDAQ Composite price relative to the S&P 500, normalized to January 2015 = 100. The NASDAQ is heavily weighted toward AI and technology firms, making this a reasonable proxy for AI vs. non-AI relative valuations. Panel (a) complements by showing that overall market valuations are at historically elevated levels.
+**Requirement 2 -- Compares AI and non-AI valuations.** PASS. Panel (a) shows the broad-market S&P 500 P/D ratio at historically elevated levels. Panel (b) shows the NASDAQ Composite (heavily weighted toward AI/tech) relative to the S&P 500, normalized to Jan 2015 = 100, with a clear upward breakout post-2023. Together the panels establish that AI-exposed stocks have grown more expensive both absolutely and relative to the broader market.
 
-### Requirement 3: Supports the intro's motivating claim
-PASS. The introduction opens with "The publicly traded stocks most exposed to artificial intelligence have reached remarkable valuations" and immediately references Figure 1. The figure substantiates this: Panel (a) shows the P/D ratio at historic highs, and Panel (b) shows a sharp widening of the NASDAQ/S&P gap since 2023, coinciding with advances in generative AI.
+**Requirement 3 -- Supports the intro's motivating claim.** PASS. The opening paragraph states that "publicly traded stocks most exposed to artificial intelligence have reached remarkable valuations" and that "the valuation gap widening since 2023." The figure directly illustrates both points. The caption explicitly connects the NASDAQ's rise to AI and technology exposure.
 
-### Requirement 4: Clear and publication-quality
-PASS. The two-panel layout is clean and well-labeled. Axes are properly titled, time periods are consistent (2003-2025 range), sources are cited in the caption, and the figure spans the full text width. The caption is informative and concise.
+**Requirement 4 -- Clear and publication-quality.** PASS. The rendered figure (page 2) is clean: two side-by-side panels with distinct colors (red for P/D, blue for relative price), legible axis labels, a reference dashed line at 100 in Panel (b), proper date formatting, and a detailed caption with source attribution. Layout is well-proportioned at 12 x 4.5 inches.
 
-### Minor note
-Using NASDAQ as an AI proxy is reasonable for a theory paper's motivating figure. A more targeted AI-stock index (e.g., constructed from CRSP) would be ideal but is not required per the test guidelines.
+**Minor note.** The figure uses NASDAQ/S&P as a proxy for AI vs. non-AI rather than a direct AI-stock basket (e.g., from CRSP individual holdings). This is a reasonable proxy for a theory paper; the spec explicitly says CRSP is "ideal but not a hard requirement" and the paper spec itself describes the figure as "illustrating how the high valuation ratios of publicly traded AI stocks are higher than those of other stocks." The NASDAQ-based approach is adequate for this illustrative purpose.

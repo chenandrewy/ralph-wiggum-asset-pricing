@@ -1,88 +1,78 @@
 # tests/factcheck-lit.py
-Started: 2026-04-11 16:10:24 EDT
-Runtime: 3m 27s
-[ralph-garage/agent-logs/20260411T161024.927180-0400_factcheck-lit_claude_opus.log](../ralph-garage/agent-logs/20260411T161024.927180-0400_factcheck-lit_claude_opus.log)
+Started: 2026-04-11 21:15:26 EDT
+Runtime: 4m 26s
+[ralph-garage/agent-logs/20260411T211526.521043-0400_factcheck-lit_claude_opus.log](../ralph-garage/agent-logs/20260411T211526.521043-0400_factcheck-lit_claude_opus.log)
 
 # factcheck-lit
 VERDICT: PASS
-REASON: All 11 cited works are externally verified with accurate metadata and faithful in-text characterizations.
+REASON: All 11 cited works are externally verified with accurate metadata and materially supported in-text claims.
 
 ## 1. Citation inventory audited
 
-| # | Citation key | Times cited | Role in paper |
-|---|-------------|-------------|---------------|
-| 1 | GKP2012 | ~10 | Core framework; displacement risk under incomplete markets |
-| 2 | Jones2024 | ~6 | Extinction channel; AI growth vs existential risk |
-| 3 | KoganPapanikolaou2014 | 1 | Lit review: creative destruction and displacement risk premia |
-| 4 | KoganPapanikolaouStoffman2020 | 1 | Lit review: creative destruction and displacement risk premia |
-| 5 | Knesl2023 | 1 | Lit review: creative destruction and displacement risk premia |
-| 6 | AghionJonesJones2019 | 1 | Lit review: macroeconomics of AI growth |
-| 7 | Acemoglu2025 | 1 | Lit review: macroeconomics of AI growth |
-| 8 | Barro2006 | 1 | Lit review: rare disasters literature |
-| 9 | Wachter2013 | 1 | Lit review: rare disasters literature |
-| 10 | PastorVeronesi2009 | 1 | Lit review: technological revolutions and stock prices |
-| 11 | Nordhaus2021 | 1 | Extensions: critical examination of economic singularity |
+All citation keys appearing in the paper text were audited:
 
-All 11 bibliography entries are cited in the paper text. No uncited entries exist.
+1. GKP2012
+2. Jones2024
+3. KoganPapanikolaou2014
+4. KoganPapanikolaouStoffman2020
+5. Knesl2023
+6. AghionJonesJones2019
+7. Acemoglu2025
+8. Barro2006
+9. Wachter2013
+10. PastorVeronesi2009
+11. Nordhaus2021
+
+No bibliography entries are unused; all 11 bib entries correspond to in-text citations.
 
 ## 2. External verification coverage
 
-| Citation key | Status | External sources |
-|-------------|--------|-----------------|
-| GKP2012 | VERIFIED | Crossref DOI 10.1016/j.jfineco.2012.04.002 |
-| Jones2024 | VERIFIED | Crossref DOI 10.1257/aeri.20230570 |
-| KoganPapanikolaou2014 | VERIFIED | Crossref DOI 10.1111/jofi.12136 |
-| KoganPapanikolaouStoffman2020 | VERIFIED | Crossref DOI 10.1086/704619 |
-| Knesl2023 | VERIFIED | Crossref DOI 10.1016/j.jfineco.2022.11.003 |
-| AghionJonesJones2019 | VERIFIED | Crossref DOI 10.7208/chicago/9780226613475.003.0009; NBER WP 23928 |
-| Acemoglu2025 | VERIFIED | Crossref DOI 10.1093/epolic/eiae042 |
-| Barro2006 | VERIFIED | Crossref DOI 10.1162/qjec.121.3.823 |
-| Wachter2013 | VERIFIED | Wiley Online Library DOI 10.1111/jofi.12018; EconPapers/RePEc |
-| PastorVeronesi2009 | VERIFIED | AEA publisher page DOI 10.1257/aer.99.4.1451; EconPapers/RePEc; SSRN |
-| Nordhaus2021 | VERIFIED | AEA publisher page DOI 10.1257/mac.20170105; IDEAS/RePEc; NBER WP 21547 |
+| # | Key | Status | External sources |
+|---|-----|--------|-----------------|
+| 1 | GKP2012 | VERIFIED | EconPapers/RePEc; ScienceDirect; MIT DSpace; IDEAS/RePEc |
+| 2 | Jones2024 | VERIFIED | AEA publisher page; IDEAS/RePEc; AEI summary; EA Forum summary |
+| 3 | KoganPapanikolaou2014 | VERIFIED | Wiley/JF publisher page; IDEAS/RePEc; EconPapers |
+| 4 | KoganPapanikolaouStoffman2020 | VERIFIED | Journal of Political Economy publisher page; IDEAS/RePEc; Northwestern Scholars; EconPapers |
+| 5 | Knesl2023 | VERIFIED | ScienceDirect; IDEAS/RePEc; EconPapers |
+| 6 | AghionJonesJones2019 | VERIFIED | De Gruyter/UChicago Press; NBER WP; Stanford author PDF |
+| 7 | Acemoglu2025 | VERIFIED | Oxford Academic/Economic Policy; IDEAS/RePEc; NBER WP |
+| 8 | Barro2006 | VERIFIED | Oxford Academic/QJE; IDEAS/RePEc; Harvard author page |
+| 9 | Wachter2013 | VERIFIED | Wiley Online Library/JF publisher page; EconPapers/RePEc |
+| 10 | PastorVeronesi2009 | VERIFIED | AEA publisher page; EconPapers/RePEc |
+| 11 | Nordhaus2021 | VERIFIED | AEA publisher page; IDEAS/RePEc; NBER WP page |
 
-**Coverage: 11/11 cited works externally verified (100%).**
+**Coverage: 11/11 VERIFIED (100%)**
 
 ## 3. Metadata accuracy findings
 
-All 11 entries have accurate bibliographic metadata (authors, year, title, journal/outlet, volume, issue, pages) confirmed against Crossref and publisher records.
+All 11 entries have materially accurate bibliographic metadata: author names, publication years, titles, journals/outlets, volumes, issue numbers, and page ranges all match external sources.
 
-No metadata errors found.
+One MINOR note: the `@incollection` entry for AghionJonesJones2019 omits the volume editors (Agrawal, Gans, Goldfarb). This is standard BibTeX practice for many bibliography styles and does not affect citation identification, but it is technically incomplete metadata for a book chapter.
 
 ## 4. In-text description accuracy findings
 
-All in-text characterizations of cited works are substantively accurate and supported by the cited works:
+All in-text characterizations of cited works are materially accurate and supported:
 
-- **GKP2012**: All ~10 uses are faithful. The paper correctly describes GKP's displacement-risk mechanism, OLG structure, incomplete markets, growth-stock return implications, non-tradeability of future innovators' rents, and the role of intergenerational transfers.
-- **Jones2024**: All ~6 uses are faithful. The paper correctly describes the growth-vs-extinction trade-off, the correlation between AI power and existential risk, explosive growth modeling, bounded-utility arguments, and consumption-level dependence of risk attitudes.
-- **KoganPapanikolaou2014**: Correctly placed under creative destruction and displacement risk premia.
-- **KoganPapanikolaouStoffman2020**: Correctly placed under creative destruction and displacement risk premia.
-- **Knesl2023**: Correctly placed under creative destruction and displacement risk premia (automation displacing labor).
-- **AghionJonesJones2019**: Correctly placed under macroeconomics of AI growth.
-- **Acemoglu2025**: Correctly placed under macroeconomics of AI growth.
-- **Barro2006**: Correctly placed as foundational rare disasters literature.
-- **Wachter2013**: Correctly placed as rare disasters literature (time-varying disaster risk).
-- **PastorVeronesi2009**: Correctly characterized as analysis of technological revolutions and stock prices.
-- **Nordhaus2021**: Correctly characterized as critically examining the economic singularity hypothesis ("examined critically" is apt given Nordhaus's skeptical conclusions).
+- **GKP2012**: Described as modeling displacement risk from innovation under incomplete markets, with future innovators' capital untradeable. Supported by the paper's OLG structure and displacement mechanism.
+- **Jones2024**: Described as studying the AI growth-vs-existential-risk trade-off, with states of enormous growth coinciding with highest extinction risk. Confirmed by AEA publication and third-party summaries.
+- **KoganPapanikolaou2014**: Grouped under "creative destruction and displacement risk premia." Accurate for a paper on technology shocks and differential asset pricing effects.
+- **KoganPapanikolaouStoffman2020**: Same grouping. Accurate for a paper on creative destruction, inequality, and stock market implications.
+- **Knesl2023**: Same grouping. Accurate for a paper on automation displacing labor with asset pricing implications.
+- **AghionJonesJones2019**: Described as examining "the macroeconomics of AI growth." Accurate for a paper modeling AI as automation in a growth framework.
+- **Acemoglu2025**: Same characterization. Accurate for a task-based framework evaluating AI's macroeconomic impact.
+- **Barro2006**: Cited as part of "the rare disasters literature." Accurate for the foundational rare-disasters asset pricing paper.
+- **Wachter2013**: Cited as part of "the rare disasters literature." Accurate for a time-varying rare-disaster probability model of stock market volatility.
+- **PastorVeronesi2009**: Described as providing "analysis of technological revolutions" in a pricing context. Accurate for a general equilibrium model of technological revolutions and stock prices.
+- **Nordhaus2021**: Characterized as critically examining explosive AI-driven growth. Accurate: Nordhaus tests the singularity hypothesis empirically and concludes skeptically.
 
 ## 5. Flagged issues by citation key and severity
 
-No CRITICAL, IMPORTANT, or MINOR issues found for any citation key.
+| Key | Issue | Severity |
+|-----|-------|----------|
+| AghionJonesJones2019 | Bib entry omits volume editors (Agrawal, Gans, Goldfarb) | MINOR |
 
-| Citation key | Severity | Issue |
-|-------------|----------|-------|
-| GKP2012 | NONE | — |
-| Jones2024 | NONE | — |
-| KoganPapanikolaou2014 | NONE | — |
-| KoganPapanikolaouStoffman2020 | NONE | — |
-| Knesl2023 | NONE | — |
-| AghionJonesJones2019 | NONE | — |
-| Acemoglu2025 | NONE | — |
-| Barro2006 | NONE | — |
-| Wachter2013 | NONE | — |
-| PastorVeronesi2009 | NONE | — |
-| Nordhaus2021 | NONE | — |
+No CRITICAL or IMPORTANT issues found for any citation key.
 
 ## 6. Overall reliability of the paper's citations
 
-The paper's citations are highly reliable. All 11 cited works were externally verified against Crossref and publisher records with 100% coverage. Bibliographic metadata is accurate across all entries. In-text characterizations are faithful and well-supported, with no overstatements or misattributions detected. The two most heavily cited works (GKP2012 and Jones2024) receive detailed, multi-faceted treatment that accurately reflects the content of the originals.
+The paper's citation practices are strong. All 11 cited works were externally verified against publisher pages, journal databases, and academic repositories. Bibliographic metadata is accurate across all entries, with only one minor omission (book chapter editors). In-text characterizations faithfully represent the cited works' content and contributions. No misattributions, fabricated claims, or materially misleading descriptions were found. The citations are reliable.

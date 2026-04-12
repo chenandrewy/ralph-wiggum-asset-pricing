@@ -1,32 +1,25 @@
 # Improvement Plan
-AUTHOR PLAN — 2026-04-11 16:09:00 EDT
+AUTHOR PLAN — 2026-04-11 21:14:22 EDT
 
 ## Current State
 
-All 25 tests PASS. Paper is 18 pages, well within the 20-page limit.
+- **Tests:** 24/25 pass. One failure: `writing-intro`.
+- **Model section:** All theory tests pass (clarity, deadweight, factcheck-theory, unmodeled-channels). No overhaul needed.
+- **Code:** Runs cleanly, all exhibits verified, parameters match paper.
+- **Referee concerns (CFR-R1):** Addressed—GKP relationship is handled modestly, Jones extinction channel incorporated, extensions on veto and transfers differentiate the paper.
 
-## Completed This Iteration
+## Failing Test: `writing-intro`
 
-1. **Prop 2 proof tightened**: Added explicit sufficient condition ($A^j > 1/2$, equivalently P/D > 1) and the convexity argument with $f''(A) = 2/(1-A)^3 > 0$.
+**Issue:** Argument (d) from the spec—"if the singularity occurs, then market frictions can be overcome due to the abundance of resources"—is buried in the body of paragraph 6 of the introduction. A skimming reader who reads only first sentences would miss it. The first sentence of paragraph 6 leads with the severity of frictions, which signals the opposite.
 
-2. **Opening figure upgraded**: Changed from single-panel normalized prices to two-panel figure: Panel (a) S&P 500 P/D ratio from Shiller data, Panel (b) NASDAQ/S&P 500 price ratio normalized to Jan 2015.
+**Fix:** Restructure the introduction's paragraph 6 (the one beginning "Financial market solutions to AI displacement risk are under-discussed...") so the resource-abundance mechanism is prominent in the opening sentence. The simplest approach:
 
-3. **GKP transfers citation sharpened**: Replaced generic attribution with specific description of GKP's robustness argument about intergenerational transfers affecting magnitude but not functional form.
+1. Split paragraph 6 into two paragraphs:
+   - **Para 6a** (keep current opening): "Financial market solutions to AI displacement risk are under-discussed, and the frictions that limit them are severe..." — covers the under-discussed point and the nature of the friction.
+   - **Para 6b** (new paragraph, new opening sentence): Lead with the resource-abundance insight: something like "But if the singularity produces explosive output growth, even grossly inefficient government transfers become effective because the resource base overwhelms deadweight costs." Then continue with the Jones citation and the closing sentence about the same explosive growth providing the means to overcome the problem.
 
-4. **Veto mechanism text corrected**: Changed "inability to share in its upside" to "inability to hedge the downside of displacement" and "unhedgeable downside risk from displacement."
+2. This split also addresses the secondary note from the test that the Para 6 → Para 7 (roadmap) transition is slightly abrupt: the new Para 6b ends on the resource-abundance point, which connects naturally to the roadmap's third linked result (redistribution).
 
-5. **Introduction extensively rewritten** to address writing-intro test:
-   - P4 leads with complete-markets counterfactual in first sentence
-   - P5 bridged from P4 with "consequences of market incompleteness extend beyond valuations"
-   - P6 restored "under-discussed" language for spec argument (c)
-   - P7 leads with explicit mechanism: explosive growth overwhelming deadweight costs
-   - Forward signal added in P3 about development distortions and fiscal policy
-   - AI-authorship disclosure moved to footnote
-   - Synthesis sentence added before roadmap
-   - Explicit bridges between paragraphs
+## No Other Changes Needed
 
-6. **Bib entry verified correct**: KoganPapanikolaouStoffman2020 has 3 authors in the published JPE version (factcheck-lit confirmed via web search).
-
-## No Remaining Issues
-
-All 25 tests pass. No further changes needed.
+All other tests pass. The model, extensions, figures, code, and factual content are verified. No overhaul required. Focus this iteration entirely on the introduction paragraph restructuring.

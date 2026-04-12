@@ -1,33 +1,39 @@
 # tests/factcheck-freely.py
-Started: 2026-04-11 16:10:24 EDT
-Runtime: 8m 2s
-[ralph-garage/agent-logs/20260411T161024.919126-0400_factcheck-freely_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260411T161024.919126-0400_factcheck-freely_claude_claude-opus-4-6.log)
+Started: 2026-04-11 21:15:26 EDT
+Runtime: 7m 2s
+[ralph-garage/agent-logs/20260411T211526.521120-0400_factcheck-freely_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260411T211526.521120-0400_factcheck-freely_claude_claude-opus-4-6.log)
 
 # factcheck-freely
 VERDICT: PASS
-REASON: No factual errors or logical inconsistencies found; all proofs, formulas, and numerical claims are internally consistent and correctly derived.
+REASON: No factual errors or logical inconsistencies found; all derivations, proofs, citations, and code are correct.
 
-## Detailed Review
+## Review details
 
-A Claude Opus subagent reviewed the full paper (paper/paper.tex) and supporting R code (code/generate-exhibits.R) for mathematical errors, logical inconsistencies, and factual misstatements. The review checked 23 specific items.
+A Claude Opus subagent reviewed the full paper for factual errors and logical inconsistencies. The review covered:
 
-### Mathematical Correctness
-- **Proposition 1 (P/D ratios):** Re-derived from the Euler equation. The three states (no singularity, non-extinction singularity, extinction) are correctly enumerated, the SDF is correctly applied, and the algebra yielding $v^j = A^j/(1-A^j)$ is correct. Dividend growth factors $\Gamma^{AI}$ and $\Gamma^N$ are correctly computed.
-- **Proposition 2 (Extinction attenuation):** Proof is correct. The condition $A^j > 1/2$ (equivalently P/D > 1) is explicitly acknowledged and verified numerically across the parameter grid.
-- **Proposition 3 (Veto):** Limiting argument as $\gamma \to \infty$ is correct. Numerical example confirmed via R code Bellman computation ($V_{veto} = -15.32 > V_{develop} = -15.53$ under incomplete markets; reversed under complete markets).
-- **Transfer formula (eq. 11-13):** Budget constraint holds. $\phi_\text{eff}$ correctly derived. The claim that $c^H_{post}/c^H_{no-transfer}$ is independent of $\eta$ is verified ($(1+\eta)$ cancels).
-- **Existence condition:** $\phi^{-\gamma} = 160{,}000$ for $\phi=0.05, \gamma=4$ is correct ($0.05^{-4} = 20^4 = 160{,}000$).
+### Mathematical derivations (all correct)
+- **Proposition 1 (P/D ratios):** Euler equation derivation verified step by step. The SDF correctly uses household consumption growth (not aggregate), the state-by-state decomposition is correct, and the closed-form $v^j = A^j/(1-A^j)$ follows from the algebra. The stationarity approximation (post-singularity P/D equal to pre-singularity P/D) is explicitly flagged and the exact backward recursion in the code handles it properly.
+- **Proposition 2 (extinction attenuation):** The proof that the P/D ratio decreases in $\xi$ is correct. Higher $\xi$ scales down the singularity component by $(1-\xi)$; since $\Gamma^{AI} > \Gamma^{N}$, the absolute reduction in $A^{AI}$ is larger; and for $A^j > 1/2$ the elasticity of $f(A) = A/(1-A)$ is increasing, giving the ratio result.
+- **Proposition 3 (veto):** Part (i): as $\gamma \to \infty$, the negative-singularity term dominates because $\phi(1+\eta) < 1$, making the veto attractive. Part (ii): under complete markets, the household benefits from the productivity jump without displacement, so it never vetoes. Both parts are correct.
+- **Transfer mechanism (Extension 2):** The effective displacement parameter $\phi_\text{eff}$ is correctly derived from the transfer consumption equation. The independence of the transfer ratio from $\eta$ is verified algebraically.
+- **Existence condition (Remark 1):** Correctly stated; $A^j < 1$ ensures convergence of the geometric pricing sum.
 
-### Internal Consistency
-- All numerical claims in Section 3 match the generated table values.
-- Extension parameters ($\eta=9, \phi=0.05$ giving $\phi(1+\eta)=0.5$; baseline $\phi(1+\eta)=0.75$) are consistent with text.
-- No contradictions between model setup, quantitative analysis, extensions, and appendix.
-- The closed-form approximation is correctly characterized and the table uses exact backward recursion.
+### Numerical claims (all verified)
+- $\phi(1+\eta) = 0.5 \times 1.5 = 0.75$ (household consumption falls 25%): correct.
+- $\phi_\text{large}(1+\eta_\text{large}) = 0.05 \times 10 = 0.5$ (consumption halves): correct.
+- $\phi^{-\gamma} = (0.05)^{-4} = 160{,}000$: correct.
 
-### Factual Claims About Other Papers
-- **GKP (2012):** Accurately described as modeling displacement risk from innovation under incomplete markets with future innovators' rents that cannot be traded.
-- **Jones (2024):** Accurately characterized as studying the trade-off between AI-driven growth and existential risk.
-- **Minor note:** The paper's attribution to Jones (2024) regarding wealth levels and AI risk attitudes (line 233) slightly repackages Jones's point about utility curvature ($\gamma$) into a statement about wealth. This is a reasonable derived implication, not a factual error.
+### Citations (all accurate)
+- GKP (2012): correctly characterized as showing growth stocks earn lower returns due to displacement risk hedging; the intergenerational transfers discussion accurately reflects GKP's robustness argument.
+- Jones (2024): correctly characterized regarding extinction risk and attitudes toward AI risk depending on consumption levels.
+- Nordhaus (2021): correctly cited as critically examining the economic singularity.
+- Other citations (Kogan-Papanikolaou, Kogan-Papanikolaou-Stoffman, Knesl, Aghion-Jones-Jones, Acemoglu, Barro, Wachter, Pastor-Veronesi) are used appropriately.
 
-### Conclusion
-All proofs are correct. The R code faithfully implements the model. Numerical claims match computed outputs. No factual errors or logical inconsistencies were identified.
+### Code verification
+The R code in `code/generate-exhibits.R` correctly implements the closed-form P/D approximation, exact backward recursion, transfer mechanism, consumption growth calculation, and veto Bellman equation. All parameter values match those stated in the paper.
+
+### Minor exposition notes (not errors)
+- Proposition 2 uses "valuation spread" before defining whether it means difference or ratio; the proof establishes the ratio result.
+- Proposition 2's proof invokes "convexity" as shorthand for a more precise elasticity argument; the conclusion is correct.
+- Proposition 3's proof connects one-period utility comparisons to infinite-horizon values informally rather than with a formal inequality.
+- These are stylistic observations, not factual or logical errors.

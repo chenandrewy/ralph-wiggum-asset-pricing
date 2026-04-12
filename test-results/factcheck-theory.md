@@ -1,7 +1,7 @@
 # tests/factcheck-theory.py
-Started: 2026-04-11 16:10:24 EDT
-Runtime: 8m 25s
-[ralph-garage/agent-logs/20260411T161024.950254-0400_factcheck-theory_claude_opus.log](../ralph-garage/agent-logs/20260411T161024.950254-0400_factcheck-theory_claude_opus.log)
+Started: 2026-04-11 21:15:26 EDT
+Runtime: 7m 29s
+[ralph-garage/agent-logs/20260411T211526.533322-0400_factcheck-theory_claude_opus.log](../ralph-garage/agent-logs/20260411T211526.533322-0400_factcheck-theory_claude_opus.log)
 
 # factcheck-theory
 
@@ -10,51 +10,44 @@ REASON: All notation is consistent, all assumptions are mutually compatible, and
 
 ## Requirement 1: Notational Consistency — PASS
 
-Reviewed 30 symbol families. Three minor flags, none constituting a true semantic collision:
+Cataloged 30 symbol families covering all mathematical objects across the baseline model, two extensions, three propositions, one remark, and the appendix proof. Every symbol is used for a single formal object throughout the paper. Key findings:
 
-1. **$\theta$ subscript convention shift** (moderate): In the body, $\theta_t$ is time-indexed. In Appendix A, $\theta_0, \theta_1, \theta_2, \ldots$ index the chain of post-singularity states. The text at line 316 explicitly defines the chain ("$\theta_0, \theta_1 = \theta_0 + \Delta\theta(1-\theta_0), \theta_2, \ldots$"), which disambiguates. No reader would confuse the two usages.
-
-2. **Implicit time-subscript dropping** (minor): $\alpha_t$ and $\theta_t$ lose their subscripts when the paper moves to stationary-equilibrium expressions. Standard practice for the target audience.
-
-3. **Dual use of $\Delta$** (minor): $\Delta\theta$ is a compound parameter name; $\Delta u(\gamma)$ uses $\Delta$ as a difference operator. Both are conventional and unambiguous in context.
-
-No symbol family is reused for a genuinely different formal object.
+- **No collisions**: No two distinct formal objects share the same symbol anywhere in the paper.
+- **Consistent conventions**: Superscripts ($AI$, $N$, $j$, $H$, $CM$) are stable throughout. Time subscripts follow standard conventions. Local proof variables ($A^j$, $B$, $S$, $f$, $v^{AI}$) are clearly scoped.
+- **Extension parameters are distinct**: All extension-specific parameters ($q$, $\kappa$, $\tau$, $\delta$) are fresh symbols that do not collide with baseline parameters.
+- **$\Gamma^N$ cross-check**: The definition $\Gamma^N = \frac{1 - \theta - \Delta\theta(1-\theta)}{1-\theta}(1+\eta)$ simplifies to $(1-\Delta\theta)(1+\eta)$, matching the Appendix A statement exactly.
+- **$\phi$/$\phi_\text{eff}$ relationship**: Explicitly defined via an equivalence equation; no ambiguity.
 
 ## Requirement 2: Assumption Consistency — PASS
 
-Cataloged 24 assumptions across Sections 2.1–4.2 and Appendix A. No contradictions found.
+Identified 32 mathematical assumptions across the baseline model (A1–A18), Extension 1 on veto (A19–A26), and Extension 2 on transfers (A27–A32). Checked 14 groups of related assumptions for mutual consistency:
 
-Key checks:
-- $\phi(1+\eta) < 1$ (Prop 3 proof) is a tighter restriction than $\phi \in (0,1)$ but is correctly scoped to the veto result and satisfied by all calibrations.
-- Existence condition $A^j < 1$ is correctly noted as violated under large-singularity parameters ($\phi = 0.05$, $\eta = 9$); the paper uses this violation as a feature motivating transfers.
-- Extinction utility $U_\text{ext} = 0$ with $\gamma > 1$ (negative CRRA utility) is explicitly discussed as making the veto result conservative.
-- Extension assumptions augment rather than contradict the baseline.
-
-Minor implicit restrictions (not inconsistencies): $p \in (0,1)$ and $\delta\tau < 1$ are not formally stated but are satisfied in all parameterizations.
+- **Parameter domains**: All simultaneously satisfiable with no conflicts.
+- **$\alpha_t$ dynamics**: Domain-preserving under both negative ($\phi\alpha_t$) and positive ($\min(1, \alpha_t/\phi)$) singularity. Minor boundary note: positive singularity can push $\alpha$ to exactly 1, technically outside the open interval $(0,1)$; handled by the $\min$ operator.
+- **$\theta_t$ dynamics**: Strictly increasing, bounded below 1. Domain preserved.
+- **Probability tree**: Sums to 1 at every branching node in both the baseline and Extension 1.
+- **Consumption dynamics**: Household consumption growth ratios in Appendix A match the structural assumptions exactly.
+- **Euler equation derivation**: Verified algebraically. The P/D formula $A^j/(1-A^j)$ follows correctly from the Euler equation with the stationarity approximation.
+- **Baseline calibration**: All parameter values satisfy their stated domains, the existence condition ($A^j < 1$), and the Prop 2 convexity condition ($A^j > 1/2$).
+- **Veto example**: All parameter values satisfy stated constraints. $\phi(1+\eta) = 0.75 < 1$ as required.
+- **Transfer formulas**: $\phi_\text{eff}$ derivation verified algebraically from the transfer consumption formula. Transfer ratio independence of $\eta$ confirmed.
+- **Extensions vs baseline**: Clean augmentation; no conflicts with baseline assumptions.
+- **Large singularity parameters**: Existence condition deliberately violated ($A^{AI} \approx 2.37 > 1$), correctly flagged in the paper.
+- **Extinction utility normalization**: $U_\text{ext} = 0$ is above achievable CRRA utility when $\gamma > 1$; conservative and explicitly acknowledged.
 
 ## Requirement 3: Traceability — PASS
 
-All mathematical objects trace to the stated assumptions:
+All mathematical objects not in the assumptions are derived quantities:
 
-| Derived Object | Source Assumptions |
+| Derived Object | Traced To |
 |---|---|
-| $\Gamma^{AI}$, $\Gamma^{N}$ (dividend growth factors) | A5 ($\eta$), A8 ($\theta_t$, $\Delta\theta$) |
-| P/D ratios, eqs. (4)–(5) | A2 ($g$), A4 ($p$), A5 ($\eta$), A6 ($\phi$), A7 ($\xi$), A8 ($\theta$, $\Delta\theta$), A11 ($\beta$, $\gamma$) via Euler equation |
-| $A^j$, eq. (4) | Same as P/D ratios (collects primitives) |
-| $B$, $S$ (Prop 2 proof locals) | Subsets of P/D primitives |
-| $\Delta u(\gamma)$, eq. (6) | A5, A6, A11, A15 ($q$, $\alpha^+$) |
-| $V_\text{veto}$, $V_\text{develop}$, $V_\text{develop}^{CM}$ | A11, A17 ($\kappa$), A18 ($U_\text{ext}$), model primitives |
-| $c^H_{post}$, eq. (7) | A6, A19 ($\tau$), A20 ($\delta$) |
-| $\phi_\text{eff}$, eq. (8) | Algebraic rearrangement of eq. (7) |
-| Transfer ratio, eq. (9) | Division of eq. (7) by displaced consumption |
-| $\bar{\gamma}$ (Prop 3 threshold) | Existence guaranteed by limit argument using A6, A5, A11 |
+| $\Gamma^{AI}$, $\Gamma^{N}$ | $\theta$, $\Delta\theta$ dynamics (A10), productivity jump $\eta$ (A6) |
+| $A^j$ (existence term) | $\beta$, $\gamma$ (A14), $g$ (A2), $p$ (A5), $\xi$ (A9), $\eta$ (A6), $\phi$ (A7), $\Gamma^j$ |
+| P/D ratios | Euler equation from CRRA (A14), consumption dynamics (A2, A6, A7, A8), dividends (A10, A11) |
+| $\Delta u(\gamma)$ | $q$ (A19), $\phi$ (A7), $\eta$ (A6), $u$ from CRRA (A14) |
+| $\bar{\gamma}$ (veto threshold) | Limiting argument on $\Delta u(\gamma)$; existence from $\phi(1+\eta) < 1$ (A25) |
+| $V_\text{veto}$, $V_\text{develop}$, $V_\text{develop}^{CM}$ | Utility (A14), veto cost (A22), singularity (A5, A6, A7, A19), complete markets (A24) |
+| $c^H_{post}$, $\phi_\text{eff}$, transfer ratio | Transfer parameters $\tau$ (A27), $\delta$ (A28), displacement $\phi$ (A7) |
+| $B$, $S$, $f$, $v^{AI}$ | Local proof shorthands for model primitives |
 
-**Algebraic verification of key derivations:**
-
-- **Proposition 1 (P/D ratios):** Euler equation substitution verified step-by-step. The three consumption-growth states (no singularity, non-extinction singularity, extinction) correctly produce the closed-form $v^j = A^j/(1-A^j)$.
-- **Proposition 2 (extinction attenuation):** The ratio $f(A^{AI})/f(A^N)$ decreases in $\xi$ because (i) $\Gamma^{AI}/A^{AI} > \Gamma^N/A^N$ (so proportional decrease in $A^{AI}$ exceeds that in $A^N$), and (ii) the elasticity of $f(A) = A/(1-A)$ is $1/(1-A)$, increasing in $A$. Both effects work in the same direction.
-- **Proposition 3 (veto):** The limit $\Delta u(\gamma)/u(\alpha) \to +\infty$ as $\gamma \to \infty$ when $\phi(1+\eta) < 1$ is correct: the negative-singularity utility term $[\phi(1+\eta)]^{1-\gamma}$ dominates as $\gamma \to \infty$.
-- **$\phi_\text{eff}$ derivation:** Factoring eq. (7) by $\alpha(1+\eta)(1+g)C_t$ correctly yields eq. (8).
-- **Transfer ratio (eq. 9):** $c^H_{post}/c^H_{no\text{-}transfer} = 1 + \tau(1-\delta\tau)(1-\phi\alpha)/(\phi\alpha)$, independent of $\eta$. Verified by direct division.
-
-No expression was found that cannot be logically derived from the assumptions.
+No expression in the paper is underived or untraceable. Every formal result follows from the stated model assumptions.
