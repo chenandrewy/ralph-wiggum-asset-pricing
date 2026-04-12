@@ -1,55 +1,71 @@
 # tests/factcheck-theory.py
-Started: 2026-04-12 09:58:42 EDT
-Runtime: 7m 35s
-[ralph-garage/agent-logs/20260412T095842.938480-0400_factcheck-theory_claude_opus.log](../ralph-garage/agent-logs/20260412T095842.938480-0400_factcheck-theory_claude_opus.log)
+Started: 2026-04-12 14:18:19 EDT
+Runtime: 9m 26s
+[ralph-garage/agent-logs/20260412T141819.070814-0400_factcheck-theory_claude_opus.log](../ralph-garage/agent-logs/20260412T141819.070814-0400_factcheck-theory_claude_opus.log)
 
 # factcheck-theory
-
 VERDICT: PASS
-REASON: All notation is consistent, all assumptions are mutually consistent, and all mathematical objects trace back to the assumptions.
+REASON: All notation is consistent, all assumptions are mutually consistent, and all mathematical objects trace back to stated assumptions.
 
 ## Requirement 1: Notational Consistency — PASS
 
-26 symbol families were identified and checked for internal consistency, cross-family collisions, and semantic stability. Every symbol family denotes a single formal object throughout the paper. Variants within families follow transparent conventions (time indexing, asset-type superscripts, state-descriptor subscripts, or explicitly defined transformations). No symbol collisions or genuine ambiguities were found.
+28 symbol families were identified across the full paper. Every family maintains a stable invariant meaning throughout. No symbol is reused for a different formal object, semantic role, or model without explicit redefinition.
 
-Key families: $\alpha$ (household share), $\phi$/$\phi_\text{eff}$ (displacement), $\theta$ (AI dividend share), $\gamma$ (risk aversion), $\beta$ (discount), $\eta$ (productivity jump), $\xi$ (extinction), $\delta$ (deadweight), $\kappa$ (veto cost), $\tau$ (tax rate), $C$/$c^H$ (consumption), $P$/$D$ (prices/dividends), $\Gamma$ (dividend growth factors), $U$/$u$/$V$ (utility hierarchy), $A$/$B$/$S$/$f$/$v$ (proof auxiliaries).
+Key checks:
+- $\alpha_t$ (household consumption share) vs. $\theta_t$ (AI dividend share) are explicitly distinguished (line 108) and never conflated.
+- $\phi$ vs. $\phi_\text{eff}$: the effective displacement parameter is explicitly defined and the substitution into Proposition 1 is clearly stated.
+- Uppercase $C$ (aggregate consumption) vs. lowercase $c$ (household consumption): standard convention, explicitly defined.
+- $U$ (lifetime utility) vs. $u$ (per-period utility): standard convention.
+- $V$ (value functions in Extension 1) vs. $v$ (P/D ratio in Appendix A): distinguished by case and context, both explicitly defined where introduced.
+- $\delta$ is used for deadweight cost severity rather than the discount factor convention ($\beta$ is the discount factor). Internally consistent.
+- $\Delta\theta$ (share jump) vs. $\Delta u$ (utility change): both use $\Delta$ prefix for different objects, but no reader confusion is possible.
 
-Three minor stylistic observations (implicit $N$ = "Non-AI" convention, asymmetric $v^{AI}$ without $v^N$ in the appendix, shift from time-subscript to state-descriptor subscript on $c^H$) do not rise to genuine ambiguity.
+Two minor stylistic notes (not errors): (1) $\delta$ may briefly confuse readers expecting it as a discount factor; (2) $V/v$ use the same letter family for different objects, separated by case and section.
 
-Detailed report: `ralph-garage/scratch/factcheck-notation.md`.
+Full audit: `/ralph-garage/scratch/factcheck-notation.md`
 
-## Requirement 2: Assumption Consistency — PASS
+## Requirement 2: Mutual Consistency of Assumptions — PASS
 
-50+ assumptions were cataloged across 7 categories (parameter restrictions, structural, behavioral, probability, market structure, extension-specific, calibration). All are mutually consistent:
+36 assumptions were cataloged across all sections (setup, propositions, extensions, appendix, calibration). All are mutually consistent.
 
-1. **Parameter restrictions**: 15 explicit restrictions on distinct objects, no contradictions.
-2. **Probability structure**: Probabilities sum to 1 at every branching node (baseline 3-branch tree and Extension 1 4-branch tree). All non-negative.
-3. **Dynamics**: $\alpha_t$ and $\theta_t$ remain in $(0,1)$ under all singularity paths including repeated events.
-4. **Extensions vs. baseline**: Extension 1 nests the baseline (set $q=0$). Extension 2 modifies post-singularity allocation without altering aggregate dynamics.
-5. **Complete markets**: The claim $\phi_\text{eff} = 1$ under complete markets is consistent; veto part (ii) follows correctly from $\eta > 0$.
-6. **Veto proof**: The limit argument ($\gamma \to \infty$) is valid under $\phi(1+\eta) < 1$, which the calibration satisfies ($0.75 < 1$).
-7. **Transfer accounting**: Full consumption accounting verified algebraically — household + AI owners + deadweight loss = aggregate output. Numerical claims verified (e.g., $3.5\times$ consumption multiple at $\delta = 0.9$, $\tau = 0.30$).
-8. **Existence condition**: $A^j < 1$ verified for baseline calibration; $A^{AI} > 1$ verified for large singularity without transfers — both as claimed.
+Key consistency checks performed:
+1. **Parameter domains**: All 14 parameters have calibration values strictly within stated domains.
+2. **Displacement condition** $\phi(1+\eta) < 1$: Holds for all three parameterizations (baseline 0.75, large singularity 0.5, veto example 0.75).
+3. **Existence condition** $A^j < 1$: Verified numerically for baseline ($A^{AI} \approx 0.944$, $A^N \approx 0.916$). Correctly violated for large singularity without transfers ($A^{AI} \approx 2.37$), consistent with the paper's claim that P/D is undefined at $\tau = 0$.
+4. **Budget constraint**: $D^{AI} + D^N = C_t$ holds by construction ($\theta_t C_t + (1-\theta_t)C_t = C_t$).
+5. **Dividend growth factors**: $\Gamma^{AI} > 1+\eta > \Gamma^N$ verified algebraically. $\Gamma^N = (1-\Delta\theta)(1+\eta)$ is $\theta$-independent, confirming the Appendix claim.
+6. **Extension 1 vs. baseline**: The $\min(1, \alpha/\phi)$ cap prevents $\alpha > 1$. At $\alpha = 0.70$, $\phi = 0.5$: $\alpha^+ = 1$ (household gets everything), a boundary case handled by the $\min$ function.
+7. **Extension 2 transfers**: $\phi_\text{eff}$ derivation verified algebraically. The $3.5\times$ consumption multiple claim ($\delta = 0.9$, $\tau = 0.30$) verified numerically ($\approx 3.52$). Net transfer per dollar taxed $= 0.219$ verified.
+8. **Proposition 2 proof**: $A^j > 1/2$ condition satisfied across parameterizations. Semi-elasticity $1/[A(1-A)]$ is increasing for $A > 1/2$, and since $A^{AI} > A^N$ with larger absolute reductions in $A^{AI}$, the ratio decreases in $\xi$.
+9. **Normalizations**: $U_\text{ext} = 0$ is conservative since CRRA utility is negative for $\gamma > 1$.
 
-One minor observation (not an inconsistency): the deadweight specification implicitly requires $\delta\tau < 1$, which is guaranteed for all numerical examples but not formally restricted when $\delta > 1$.
+Full audit: `/ralph-garage/scratch/factcheck-assumptions.md`
 
-Detailed report: `ralph-garage/scratch/factcheck-assumptions.md`.
+## Requirement 3: Traceability of Mathematical Objects — PASS
 
-## Requirement 3: Traceability — PASS
+All derived mathematical objects trace back to stated assumptions (primitives: $\beta, g, \gamma, \phi, \eta, p, \xi, \theta, \Delta\theta, \alpha, q, \kappa, \tau, \delta, C_t$).
 
-All mathematical objects in the paper trace back to declared assumptions and parameters:
+Derived objects and their traceability:
 
-| Expression | Objects Used | Source |
-|-----------|-------------|--------|
-| P/D ratios (eqs 4–5) | $\beta, g, \gamma, p, \xi, \eta, \phi, \Gamma^{AI}, \Gamma^N$ | Assumptions A1–A10, B2–B7 |
-| $\Gamma^{AI}, \Gamma^N$ (Prop 1) | $\theta, \Delta\theta, \eta$ | Assumptions A5–A7, B7, B10 |
-| $A^j$ (Remark 1, eq 6) | Same as P/D numerator | Same as P/D |
-| $B, S, f(A)$ (Prop 2 proof) | $\beta, g, \gamma, \eta, \phi, A$ | Local proof definitions from assumptions |
-| $\Delta u(\gamma)$ (eq 9) | $q, \alpha^+, \alpha, \phi, \eta$ | Assumptions A8, A11, A12, F1 |
-| $V_\text{veto}, V_\text{develop}, V_\text{develop}^{CM}$ (Prop 3) | $\beta, p, \xi, q, \alpha, \phi, \eta, \kappa, \gamma, g$ | Assumptions A1–A5, A8–A13, F1, F3, F4 |
-| $c^H_{post}$ (eq 6) | $\phi, \alpha, \eta, C_t, g, \tau, \delta$ | Assumptions A2, A5, A8, A14, A15, B3, F5, F6 |
-| $\phi_\text{eff}$ (eq 7) | $\phi, \tau, \delta, \alpha$ | Assumptions A2, A8, A14, A15 |
-| Transfer ratio (eq 8) | $\tau, \delta, \phi, \alpha$ | Same as $\phi_\text{eff}$ |
-| Euler equation (eq 10) | $\beta, \gamma, c_t^H, P_t^j, D_t^j$ | Assumptions C1, C2, E1, E3 |
+| Object | Traces to |
+|--------|-----------|
+| $\Gamma^{AI}, \Gamma^N$ | $\theta, \Delta\theta, \eta$ (dividend definitions + singularity dynamics) |
+| $A^j$ | $\beta, g, \gamma, p, \xi, \eta, \phi, \Gamma^j$ (Remark 1 definition) |
+| $P^{AI}/D^{AI}, P^N/D^N$ | Euler equation + all baseline primitives |
+| $v^{AI}$ | Notation for $P^{AI}/D^{AI}$ |
+| $B, S, f(A)$ | Proof auxiliaries from $\beta, g, \gamma, \phi, \eta$ |
+| $V_\text{veto}, V_\text{develop}, V_\text{develop}^{CM}$ | Lifetime utility under different regimes |
+| $\bar{\gamma}$ | Threshold from veto condition ($\Delta u(\gamma) \to -\infty$) |
+| $\Delta u(\gamma)$ | $q, \alpha, \phi, \eta, \gamma$ (eq:veto-delta-u) |
+| $\alpha^+$ | $\min(1, \alpha/\phi)$ |
+| $c^H_{post}, c^H_\text{no-transfer}$ | $\phi, \alpha, \eta, g, C_t, \tau, \delta$ (transfer mechanism) |
+| $\phi_\text{eff}$ | $\phi, \tau, \delta, \alpha$ (eq:phi-eff) |
 
-No orphan mathematical objects were found. Every derived quantity is built from primitives declared in the model setup or extensions.
+Key derivation checks:
+- **Proposition 1**: Euler equation expansion (lines 308-311) is algebraically correct. The $(1+g)^{-\gamma} \cdot (1+g)$ factors combine to $(1+g)^{1-\gamma}$, and $[\phi(1+\eta)]^{-\gamma}$ correctly decomposes into $\phi^{-\gamma}(1+\eta)^{-\gamma}$.
+- **Proposition 2**: The semi-elasticity argument is valid. Both $\Gamma^{AI}/[A^{AI}(1-A^{AI})]$ and $\Gamma^N/[A^N(1-A^N)]$ are the relevant quantities; since both numerator and denominator favor AI stocks, the ratio decreases in $\xi$.
+- **Proposition 3(i)**: As $\gamma \to \infty$, $[\phi(1+\eta)]^{1-\gamma} \to \infty$ dominates the negative singularity term, making $\Delta u(\gamma) \to -\infty$.
+- **Proposition 3(ii)**: Under complete markets, $u(\alpha(1+\eta)) > u(\alpha)$ for all $\gamma > 1$ since $\eta > 0$.
+- **Transfer ratio (eq:transfer-ratio)**: $(1+\eta)(1+g)C_t$ cancels in numerator and denominator, confirming $\eta$-independence.
+
+No expression was found that cannot be logically derived from the stated assumptions.

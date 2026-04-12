@@ -205,7 +205,7 @@ theme_paper <- theme_bw(base_size = 32) +
     axis.title = element_text(size = 30),
     plot.title = element_text(size = 31),
     panel.grid.minor = element_blank(),
-    panel.grid.major = element_line(color = "gray75")
+    panel.grid.major = element_line(color = "gray55")
   )
 
 scenario_labels <- c(
@@ -280,7 +280,7 @@ panel_b <- ggplot(df_ext, aes(x = tau, y = cons_growth, color = scenario, linety
   annotate("text", x = 0.42, y = 1.15, label = "No change", color = "black", size = 6.5, fontface = "bold") +
   labs(x = expression("Tax rate " * tau),
        y = "Household Consumption Growth\nin Singularity",
-       title = "(b) Household Consumption") +
+       title = "(b) Consumption Growth") +
   scale_x_continuous(labels = scales::percent_format(), limits = c(0, 0.50)) +
   scale_y_log10(breaks = c(0.5, 0.75, 1, 1.5, 2, 5), limits = c(0.4, 6)) +
   scale_color_manual(values = scenario_colors, labels = scenario_labels) +
