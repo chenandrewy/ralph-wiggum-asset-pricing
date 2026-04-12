@@ -1,28 +1,34 @@
 # tests/factcheck-anaphora.py
-Started: 2026-04-12 09:46:31 EDT
-Runtime: 2m 36s
-[ralph-garage/agent-logs/20260412T094631.073455-0400_factcheck-anaphora_claude_opus.log](../ralph-garage/agent-logs/20260412T094631.073455-0400_factcheck-anaphora_claude_opus.log)
+Started: 2026-04-12 09:58:42 EDT
+Runtime: 5m 38s
+[ralph-garage/agent-logs/20260412T095842.925338-0400_factcheck-anaphora_claude_opus.log](../ralph-garage/agent-logs/20260412T095842.925338-0400_factcheck-anaphora_claude_opus.log)
 
 # factcheck-anaphora
 VERDICT: PASS
-REASON: All demonstratives near cross-references resolve correctly to their intended targets.
+REASON: All demonstratives near cross-references resolve correctly to their intended referents.
 
 ## Findings by section
 
 ### Introduction (lines 38–70)
-No issues. All references (`fig:ai-valuations`, `prop:comp-statics`, `prop:veto`, `sec:model`, `sec:quant`, `sec:extensions`, `sec:conclusion`) are described accurately in the surrounding prose. Demonstratives like "such" (line 40, referring to productivity gains) and "this" (line 51, referring to attenuation) resolve to the correct antecedents and match the referenced targets.
+- "Proposition~\ref{prop:comp-statics} quantifies **this** attenuation": "this attenuation" resolves to the extinction-risk attenuation described in the preceding clause, which matches what Proposition 2 formalizes. **PASS.**
+- No other demonstrative+ref pairs found.
 
 ### Model (lines 71–175)
-No issues. References to `sec:ext2`, `prop:pd-ratios`, `tab:pd-ratios`, `eq:existence`, and `rem:existence` all have prose descriptions that match target content. "This condition" near `\ref{sec:ext2}` refers to the local existence condition, not the section itself, which is correct usage.
+- "this condition" near \ref{sec:ext2} (line 148): "this condition" resolves to A^j < 1 defined in the immediately preceding equation; the ref only locates where transfers are discussed. **PASS.**
+- "This is exact" after \ref{prop:pd-ratios} (line 151): "This" resolves to the stated approximation (post-singularity P/D treated as equal to pre-singularity P/D), not to Proposition 1 itself. **PASS.**
+- No other demonstrative+ref pairs found.
 
 ### Quantitative Analysis (lines 176–193)
-No issues. References to `tab:pd-ratios`, `prop:comp-statics`, and `fig:ai-valuations` are all introduced with descriptions that directly match their targets. No demonstratives appear adjacent to any cross-reference.
+- No demonstrative+ref pairs found. All cross-references are used as direct noun phrases without adjacent demonstratives. **PASS.**
 
 ### Extensions (lines 194–278)
-No issues. References to `prop:veto`, `eq:phi-eff`, `eq:transfer-consumption`, `prop:pd-ratios`, `eq:transfer-ratio`, `fig:extension-panels`, and `rem:existence` all resolve correctly. Prose descriptions match target content in every case.
+- "This ratio" near \eqref{eq:transfer-ratio}: resolves to the ratio equation immediately above. **PASS.**
+- "This connects...Proposition~\ref{prop:veto} implies": "this" refers to the preceding discussion of extinction risk interacting with the veto distortion; the proposition is not the antecedent. **PASS.**
+- No other demonstrative+ref pairs found.
 
 ### Conclusion (lines 279–289)
-No issues. No cross-references appear in this section.
+- No cross-references in this section. **PASS.**
 
 ### Proof of Proposition 1 (lines 290–321)
-No issues. "This can be rewritten as equation~\eqref{eq:pd-ai}" correctly refers to the solved expression in the preceding display. References to `prop:pd-ratios` and `tab:pd-ratios` are accurately described.
+- "This can be rewritten as equation~\eqref{eq:pd-ai}": "This" points to the immediately preceding displayed equation \eqref{eq:pd-ai-solve}, and the rewrite target is correctly identified. **PASS.**
+- No other demonstrative+ref pairs found.

@@ -1,20 +1,20 @@
 # tests/spec-scope.py
-Started: 2026-04-12 09:46:31 EDT
-Runtime: 45s
-[ralph-garage/agent-logs/20260412T094631.065491-0400_spec-scope_claude_opus.log](../ralph-garage/agent-logs/20260412T094631.065491-0400_spec-scope_claude_opus.log)
+Started: 2026-04-12 09:58:42 EDT
+Runtime: 36s
+[ralph-garage/agent-logs/20260412T095842.935763-0400_spec-scope_claude_opus.log](../ralph-garage/agent-logs/20260412T095842.935763-0400_spec-scope_claude_opus.log)
 
 # spec-scope
 VERDICT: PASS
-REASON: The paper maintains a compact theoretical scope with illustrative (not calibrated) quantitative material and minimal empirical content.
+REASON: The paper maintains a compact theoretical scope with illustrative quantitative material and no broad empirical agenda.
 
 ## Findings
 
-**Theoretical core.** The paper develops a single asset pricing model with closed-form price-dividend ratios (Proposition 1), a comparative-statics result on extinction attenuation (Proposition 2), and a veto result on AI development distortions (Proposition 3). All three propositions flow from the same incomplete-markets setup. There is no sprawl into additional mechanisms or auxiliary models.
+**Theoretical core.** The paper develops a parsimonious asset pricing model with closed-form price-dividend ratios (Proposition 1), a comparative statics result on extinction attenuation (Proposition 2), and a veto/efficiency result under incomplete markets (Proposition 3). All results flow from a single mechanism: hedging displacement under market incompleteness.
 
-**Limited empirical content.** The only empirical exhibit is Figure 1, which shows S&P 500 P/D ratios and NASDAQ-vs-S&P relative valuations. It is used illustratively to motivate the hedging channel, not as a formal calibration target. The paper explicitly acknowledges the mapping is "imperfect" (line 189) and describes magnitudes as "broadly suggestive."
+**Limited empirical content.** The only empirical material is Figure 1 (S&P 500 P/D ratio and NASDAQ/S&P relative valuation), which serves a purely motivating role. The paper does not estimate any model parameters from data, run regressions, or test hypotheses empirically. The text explicitly acknowledges that "the mapping from NASDAQ vs. S&P 500 to the model's AI vs. non-AI distinction is imperfect."
 
-**No broad prediction menus.** The paper does not generate a long list of testable predictions or cross-sectional implications. Results are confined to three linked themes: valuation premia, veto distortions, and transfer effectiveness—all unified by market incompleteness under the singularity.
+**Illustrative, not calibrated, quantitative material.** Table 1 reports P/D ratios across a parameter grid and is described as "broadly suggestive." Figure 2 illustrates the transfers extension. Neither exhibit is presented as a calibration exercise matching specific empirical targets. The numerical examples (e.g., the veto computation with specific parameter values) are illustrative rather than disciplined by moment-matching.
 
-**Illustrative rather than calibrated quantitative material.** Table 1 reports P/D ratios across a parameter grid, and Figure 2 shows transfer effects, but neither is presented as a formal calibration exercise. The conclusion states: "Our model is deliberately simple. It abstracts from continuous-time dynamics, heterogeneous beliefs, production-side details, and many other features that would enrich the analysis. The goal is not to provide a definitive account of AI stock valuations but to highlight a specific channel."
+**No broad prediction menus.** The paper does not generate menus of testable predictions across asset classes or empirical settings. It focuses on one channel (hedging displacement) and its implications for AI vs. non-AI valuation spreads, development vetoes, and transfer policy.
 
-**Two focused extensions.** The extensions (veto and transfers) are tightly linked to the core incomplete-markets mechanism rather than being standalone empirical or computational exercises. Both are developed analytically with supporting numerical illustrations, not calibrated estimation.
+**Deliberate simplicity acknowledged.** The conclusion states: "Our model is deliberately simple. It abstracts from continuous-time dynamics, heterogeneous beliefs, production-side details, and many other features that would enrich the analysis."

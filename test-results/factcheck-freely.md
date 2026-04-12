@@ -1,35 +1,41 @@
 # tests/factcheck-freely.py
-Started: 2026-04-12 09:46:31 EDT
-Runtime: 4m 21s
-[ralph-garage/agent-logs/20260412T094631.065124-0400_factcheck-freely_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260412T094631.065124-0400_factcheck-freely_claude_claude-opus-4-6.log)
+Started: 2026-04-12 09:58:42 EDT
+Runtime: 6m 56s
+[ralph-garage/agent-logs/20260412T095842.936206-0400_factcheck-freely_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260412T095842.936206-0400_factcheck-freely_claude_claude-opus-4-6.log)
 
 # factcheck-freely
 VERDICT: PASS
-REASON: No factual errors or logical inconsistencies found after thorough review of all derivations, numerical claims, and literature descriptions.
+REASON: No factually incorrect statements or logical inconsistencies found after thorough review of mathematics, numerical claims, citations, and internal logic.
 
-## Detailed Review
+## What Was Verified
 
 ### Mathematical Derivations
-- **Euler equation derivation (Appendix A):** Correct. The substitution of three states (no singularity, non-extinction singularity, extinction) into the Euler equation, division by $D_t^{AI}$, and algebraic solution for $v = A/(1-A)$ all check out. The backward recursion for numerically exact values is correctly structured.
-- **Proposition 2 (extinction attenuation):** The semi-elasticity argument is correct. $f'(A)/f(A) = 1/[A(1-A)]$ is increasing for $A > 1/2$; since $A^{AI} > A^{N} > 1/2$ (confirmed by all table P/D values exceeding 1), the larger absolute reduction in $A^{AI}$ occurs at a point of higher semi-elasticity, producing a larger proportional decline. The ratio of P/D ratios therefore decreases in $\xi$.
-- **Proposition 3 (veto proof):** The limit argument works. As $\gamma \to \infty$, the negative-singularity utility term $(\phi(1+\eta))^{1-\gamma}$ diverges because $\phi(1+\eta) = 0.75 < 1$, while the positive-singularity term vanishes. $\Delta u \to -\infty$ overwhelms any finite veto cost $\kappa$. Part (ii) on complete markets is straightforward.
-- **Transfer consumption equation:** Equation (8) is correct. The ratio $c^H_{post}/c^H_{no-transfer}$ is indeed independent of $\eta$. The $\delta = 0.9$, $\tau = 0.30$ numerical example yielding a 3.5x consumption multiple checks out.
-- **$\Gamma^N = (1-\Delta\theta)(1+\eta)$ is $\theta$-independent:** Correct, the $(1-\theta)$ terms cancel.
+- **Proposition 1 (P/D ratios):** Euler equation derivation in Appendix A is correct. Closed-form P/D formula $v = A/(1-A)$ follows from the standard geometric sum. Backward recursion for exact P/D ratios correctly handles singularity vs. no-singularity continuations.
+- **Key identity:** $\Gamma^N = (1-\Delta\theta)(1+\eta)$ is theta-independent, confirming the paper's claim that the non-AI closed form is exact while the AI closed form is an approximation.
+- **Proposition 2 (Extinction attenuation):** Semi-elasticity $f'(A)/f(A) = 1/[A(1-A)]$ is increasing in $A$ for $A > 1/2$. All parameterizations satisfy $A^j > 1/2$.
+- **Proposition 3 (Veto):** Limit argument as $\gamma \to \infty$ is correct. The negative-singularity term dominates because $\phi\alpha(1+\eta) < \alpha$ when $\phi(1+\eta) < 1$, and $|u(\phi\alpha(1+\eta))|$ grows faster than $|u(\alpha)|$.
 
-### Numerical Claims vs. Table
-- P/D of ~15.5 at $p=0.5\%$, $\xi=0\%$: table shows 15.5. Correct.
-- Non-AI stocks ~11: table shows 11.1. Correct.
-- Ratio ~1.4: table shows 1.4. Correct.
-- At $p=1\%$, ratio rises to 2: table shows 2.0. Correct.
-- $\phi(1+\eta) = 0.75$ giving 25% consumption drop: correct ($0.5 \times 1.5 = 0.75$).
-- Large singularity $\phi(1+\eta) = 0.5$: correct ($0.05 \times 10 = 0.5$).
-- $\phi^{-\gamma} = 160{,}000$ for $\phi=0.05$, $\gamma=4$: correct ($0.05^{-4} = 160{,}000$).
+### Numerical Claims
+All numerical claims in the text match the code output:
+- At $p=0.5\%$, $\xi=0$: AI P/D ≈ 15.5, non-AI P/D ≈ 11, ratio ≈ 1.4. **Correct.**
+- At $p=1\%$: P/D ratio for AI stocks roughly doubles relative to non-AI. Exact ratio at $\xi=0$ is 2.00. **Correct.**
+- $\phi(1+\eta) = 0.75$, so household consumption falls by 25%. **Correct.**
+- $\phi^{-\gamma} = 0.05^{-4} = 160{,}000$. **Correct.**
+- Net transfer per dollar taxed at $\tau=0.30$, $\delta=0.9$: $0.30 \times (1-0.27) = 0.219$. **Correct.**
+- Consumption multiple of $3.5\times$ at $\tau=0.30$ under large singularity with $\delta=0.9$. **Correct.**
+- "50% consumption loss" without transfers: $\phi(1+\eta) = 0.05 \times 10 = 0.5$. **Correct.**
 
-### Literature Descriptions
-- **GKP (2012):** Accurately described as modeling displacement risk from innovation under incomplete markets. The paper correctly credits GKP for the main insights and notes the distinction between continuous vs. discrete displacement.
-- **Jones (2024):** Accurately described as studying the tradeoff between AI-driven growth and existential risk.
+### Citation Accuracy
+- **GKP (2012):** Accurately characterized as modeling displacement risk from innovation under incomplete markets.
+- **Jones (2024):** Growth-vs-existential-risk tradeoff correctly described. CRRA utility $\gamma \geq 2$ conservatism claim is accurate.
+- Bibliographic details checked and correct.
 
 ### Internal Consistency
-- Existence condition ($A^j < 1$) is correctly stated and consistently invoked.
-- Complete markets claim (premium "largely vanishes") is correct: removing $\phi^{-\gamma}$ collapses most of the spread, with a residual from $\Gamma^{AI} \neq \Gamma^{N}$.
-- Total public dividends equaling aggregate consumption ($D^{AI} + D^{N} = C_t$) is verified.
+- Distinction between $\alpha$ (consumption share) and $\theta$ (AI dividend share) maintained consistently.
+- Transfer equation correctly uses $\alpha$ as the tax base; $\phi_{eff}$ correctly substitutes into the P/D formula.
+- Extinction normalization ($U_{ext} = 0$) is indeed conservative for the veto result, as claimed.
+- Complete-markets result verified: with $\phi_{eff} = 1$, displacement premium largely vanishes.
+
+## Minor Observations (Not Errors)
+1. "P/D ratios roughly double" at $p=1\%$ is accurate across reasonable extinction probabilities ($\xi$), though exact ratio varies from 2.00 to 1.92.
+2. "250% gain" language (from 0.5x to 3.5x consumption) is slightly ambiguous but defensible as a 250% gain relative to pre-singularity baseline.

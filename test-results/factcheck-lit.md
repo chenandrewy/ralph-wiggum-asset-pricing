@@ -1,15 +1,15 @@
 # tests/factcheck-lit.py
-Started: 2026-04-12 09:46:31 EDT
-Runtime: 5m 16s
-[ralph-garage/agent-logs/20260412T094631.067160-0400_factcheck-lit_claude_opus.log](../ralph-garage/agent-logs/20260412T094631.067160-0400_factcheck-lit_claude_opus.log)
+Started: 2026-04-12 09:58:42 EDT
+Runtime: 4m 2s
+[ralph-garage/agent-logs/20260412T095842.940286-0400_factcheck-lit_claude_opus.log](../ralph-garage/agent-logs/20260412T095842.940286-0400_factcheck-lit_claude_opus.log)
 
 # factcheck-lit
-VERDICT: FAIL
-REASON: One IMPORTANT claim-support issue found — the introduction misattributes a transfers-overcoming-deadweight-costs mechanism to Jones (2024).
+VERDICT: PASS
+REASON: All 11 cited works are externally verified with accurate metadata and supported in-text claims.
 
 ## 1. Citation inventory audited
 
-All 11 citation keys used in the paper text were audited:
+The following 11 citation keys appear in the paper text (including footnotes and lit review) and were audited:
 
 1. GKP2012
 2. Jones2024
@@ -23,68 +23,91 @@ All 11 citation keys used in the paper text were audited:
 10. PastorVeronesi2009
 11. Nordhaus2021
 
-No bibliography entries are unused; no in-text citations are missing from the bibliography.
+All 11 bibliography entries are cited in the paper. No uncited entries exist; no cited keys are missing from the bibliography.
 
 ## 2. External verification coverage
 
-| Key | Status | External sources |
-|-----|--------|-----------------|
-| GKP2012 | VERIFIED | EconPapers/RePEc, ScienceDirect, MIT DSpace, SSRN |
-| Jones2024 | VERIFIED | AEA website, RePEc, Stanford GSB, AEI summary |
-| KoganPapanikolaou2014 | VERIFIED | Wiley/JF, RePEc, NBER |
-| KoganPapanikolaouStoffman2020 | VERIFIED | UChicago/JPE, RePEc, MIT DSpace |
-| Knesl2023 | VERIFIED | ScienceDirect, RePEc, SSRN |
-| AghionJonesJones2019 | VERIFIED | De Gruyter/UChicago Press, NBER, Stanford author page |
-| Acemoglu2025 | VERIFIED | Oxford Academic/Economic Policy, RePEc, NBER |
-| Barro2006 | VERIFIED | Oxford Academic/QJE, RePEc, Harvard DASH |
-| Wachter2013 | VERIFIED | EconPapers/RePEc, Wiley Online Library, Wharton author page |
-| PastorVeronesi2009 | VERIFIED | AEA publisher page, EconPapers/RePEc, SSRN |
-| Nordhaus2021 | VERIFIED | AEA publisher page, NBER, RePEc, author page |
+| # | Key | Status | External Sources |
+|---|-----|--------|-----------------|
+| 1 | GKP2012 | VERIFIED | ScienceDirect, EconPapers/RePEc, IDEAS/RePEc |
+| 2 | Jones2024 | VERIFIED | AEA page, IDEAS/RePEc, AEI summary, EA Forum summary |
+| 3 | KoganPapanikolaou2014 | VERIFIED | Wiley/Journal of Finance, IDEAS/RePEc, NBER WP 17795 |
+| 4 | KoganPapanikolaouStoffman2020 | VERIFIED | Journal of Political Economy, IDEAS/RePEc, MIT DSpace |
+| 5 | Knesl2023 | VERIFIED | ScienceDirect, IDEAS/RePEc, EconPapers |
+| 6 | AghionJonesJones2019 | VERIFIED | De Gruyter/UChicago Press, NBER WP 23928, Stanford PDF |
+| 7 | Acemoglu2025 | VERIFIED | Oxford Academic/Economic Policy, IDEAS/RePEc, NBER WP 32487 |
+| 8 | Barro2006 | VERIFIED | Oxford Academic/QJE, IDEAS/RePEc, Harvard DASH |
+| 9 | Wachter2013 | VERIFIED | EconPapers/RePEc, Wiley Online Library, Wharton author page |
+| 10 | PastorVeronesi2009 | VERIFIED | AEA official page, EconPapers/RePEc, SSRN |
+| 11 | Nordhaus2021 | VERIFIED | AEA official page, NBER WP 21547, IDEAS/RePEc |
 
-Coverage: 11/11 VERIFIED (100%).
+**Coverage: 11/11 (100%) externally verified.**
 
 ## 3. Metadata accuracy findings
 
-All 11 entries have materially accurate bibliographic metadata:
-- Author names: correct for all entries.
-- Publication years: correct for all entries.
-- Titles: correct for all entries.
-- Journals/outlets: correct for all entries.
-- Volume, number, and page ranges: correct for all entries.
+All 11 entries have accurate bibliographic metadata:
 
-No metadata issues found.
+- **GKP2012:** Authors (Garleanu, Kogan, Panageas), title, JFE 105(3), 491-510, 2012 — all correct.
+- **Jones2024:** Author (Charles I. Jones), title, AER: Insights 6(4), 575-590, 2024 — all correct.
+- **KoganPapanikolaou2014:** Authors (Kogan, Papanikolaou), title, JF 69(2), 675-718, 2014 — all correct.
+- **KoganPapanikolaouStoffman2020:** Authors (Kogan, Papanikolaou, Stoffman), title, JPE 128(3), 855-906, 2020 — all correct.
+- **Knesl2023:** Author (Jiri Knesl), title, JFE 147(2), 271-296, 2023 — all correct.
+- **AghionJonesJones2019:** Authors (Aghion, B.F. Jones, C.I. Jones), title, UChicago Press, 237-290, 2019 — all correct.
+- **Acemoglu2025:** Author (Daron Acemoglu), title, Economic Policy 40(121), 13-58, 2025 — all correct.
+- **Barro2006:** Author (Robert J. Barro), title, QJE 121(3), 823-866, 2006 — all correct.
+- **Wachter2013:** Author (Jessica A. Wachter), title, JF 68(3), 987-1035, 2013 — all correct.
+- **PastorVeronesi2009:** Authors (Pastor, Veronesi), title, AER 99(4), 1451-1483, 2009 — all correct.
+- **Nordhaus2021:** Author (William D. Nordhaus), title, AEJ: Macro 13(1), 299-332, 2021 — all correct.
+
+No metadata errors found.
 
 ## 4. In-text description accuracy findings
 
-**10 of 11 citations** have materially accurate in-text descriptions. One citation has a claim-support issue:
+### Heavily cited works (substantive claims verified in detail)
 
-**Jones2024 (IMPORTANT):** In the introduction, the sentence "As \citet{Jones2024} models, a singularity can produce output growth so large that even grossly inefficient transfers become effective, because the resource base overwhelms the deadweight costs" attributes to Jones (2024) a claim about government transfers overcoming deadweight costs. External sources consistently indicate that Jones (2024) models the growth-vs-existential-risk tradeoff but does not discuss government transfers, redistribution, or deadweight costs. The transfers mechanism appears to be the present paper's own contribution. The later citation in Section 4.2 ("the kind of explosive output growth modeled by \citet{Jones2024}") more accurately scopes the attribution to the explosive-growth modeling only.
+**GKP2012** — The paper makes multiple substantive claims about GKP's framework:
+- "model how innovation displaces existing agents and creates a systematic risk factor under incomplete markets" — Supported.
+- "growth stocks earn lower expected returns because they hedge displacement risk" — Supported.
+- Displacement "driven by new cohorts of firms entering the economy" / "continuous displacement from expanding technological variety" — Supported.
+- "displacing capital often belongs to future innovators who have not yet entered the economy" — Supported by the OLG framework.
+- "intergenerational transfers would affect the magnitude but not the functional form" — Consistent with the framework; not directly confirmable from abstracts alone but plausible.
 
-All other in-text characterizations are accurate:
-- GKP2012: displacement risk under incomplete markets, future innovators cannot be traded — supported.
-- KoganPapanikolaou2014: creative destruction and displacement risk premia — supported.
-- KoganPapanikolaouStoffman2020: creative destruction, inequality, and the stock market — supported.
-- Knesl2023: automation and displacement of labor by capital — supported.
-- AghionJonesJones2019: macroeconomics of AI growth — supported.
-- Acemoglu2025: macroeconomics of AI — supported.
-- Barro2006: rare disasters and asset markets — supported.
-- Wachter2013: rare disasters literature — supported.
-- PastorVeronesi2009: analysis of technological revolutions — supported.
-- Nordhaus2021: critically examines explosive AI-driven growth — supported.
+**Jones2024** — Multiple substantive claims verified:
+- "studies the trade-off between AI-driven growth and existential risk" — Supported.
+- "states in which AI is powerful enough to produce enormous growth are precisely those in which existential risk is highest" — Supported.
+- Bounded utility argument for extinction penalty — Supported.
+- "attitudes toward AI risk depend on consumption levels" — Supported.
+- "explosive output growth modeled by Jones2024" — Supported.
+
+**Nordhaus2021** — Characterized as examining explosive growth "critically." This is accurate: Nordhaus's paper is a skeptical, empirically grounded examination of the singularity hypothesis, concluding "the Singularity is not near."
+
+### Literature-review citations (category accuracy verified)
+
+- **KoganPapanikolaou2014, KoganPapanikolaouStoffman2020, Knesl2023** — Cited as "creative destruction and displacement risk premia." All three are accurately categorized.
+- **AghionJonesJones2019, Acemoglu2025** — Cited as "macroeconomics of AI growth." Both accurately categorized.
+- **Barro2006, Wachter2013** — Cited as "the rare disasters literature." Both accurately categorized.
+- **PastorVeronesi2009** — Cited as "analysis of technological revolutions." Accurately categorized.
+
+No claim-support issues found.
 
 ## 5. Flagged issues by citation key and severity
 
-### Jones2024 — IMPORTANT
-- **Type:** Claim-support
-- **Location:** Introduction, approximately line 57 of paper.tex
-- **Text:** "As \citet{Jones2024} models, a singularity can produce output growth so large that even grossly inefficient transfers become effective, because the resource base overwhelms the deadweight costs."
-- **Problem:** Jones (2024) models explosive AI-driven growth and the growth-vs-existential-risk tradeoff, but does not discuss government transfers or deadweight costs. The transfers-overcoming-deadweight-costs mechanism is the present paper's contribution. This sentence misattributes it to Jones.
-- **Evidence:** AEA publisher page, Stanford GSB page, and AEI summary of Jones (2024) all describe the paper as analyzing optimal AI deployment duration under growth-vs-extinction tradeoffs, with no mention of transfers or deadweight costs.
-- **Suggested fix:** Revise to attribute only the explosive-growth modeling to Jones, e.g., "If a singularity produces the kind of explosive output growth modeled by \citet{Jones2024}, even grossly inefficient transfers become effective..."
+| Key | Severity | Issue |
+|-----|----------|-------|
+| GKP2012 | NONE | — |
+| Jones2024 | NONE | — |
+| KoganPapanikolaou2014 | NONE | — |
+| KoganPapanikolaouStoffman2020 | NONE | — |
+| Knesl2023 | NONE | — |
+| AghionJonesJones2019 | NONE | — |
+| Acemoglu2025 | NONE | — |
+| Barro2006 | NONE | — |
+| Wachter2013 | NONE | — |
+| PastorVeronesi2009 | NONE | — |
+| Nordhaus2021 | NONE | — |
 
-### All other keys — NONE
-No issues found for GKP2012, KoganPapanikolaou2014, KoganPapanikolaouStoffman2020, Knesl2023, AghionJonesJones2019, Acemoglu2025, Barro2006, Wachter2013, PastorVeronesi2009, or Nordhaus2021.
+No CRITICAL, IMPORTANT, or MINOR issues found.
 
 ## 6. Overall reliability of the paper's citations
 
-The paper's citations are broadly reliable. All 11 cited works were externally verified with accurate bibliographic metadata across the board. In-text characterizations are accurate for 10 of 11 citations. The single IMPORTANT issue — misattributing a transfers mechanism to Jones (2024) in the introduction — is a claim-support problem rather than a metadata error. It is localized to one sentence and does not affect the paper's core theoretical contributions. The same citation is used more accurately elsewhere in the paper (Section 4.2). A minor revision to the introduction sentence would resolve the issue.
+The paper's citations are reliable. All 11 cited works were externally verified against publisher pages, journal databases, and academic repositories. Bibliographic metadata is accurate across all entries — authors, titles, journals, volumes, numbers, pages, and years all match external records. In-text characterizations of cited works are accurate and well-supported. The two most heavily cited papers (GKP2012 and Jones2024) had their substantive claims verified in detail, with all claims confirmed by external sources. Literature-review citations are accurately categorized. No errors or mischaracterizations were found.

@@ -196,14 +196,14 @@ df_ext <- expand.grid(tau = tau_grid,
   ) %>%
   ungroup()
 
-theme_paper <- theme_bw(base_size = 28) +
+theme_paper <- theme_bw(base_size = 32) +
   theme(
     legend.position = "bottom",
     legend.title = element_blank(),
-    legend.text = element_text(size = 24),
-    axis.text = element_text(size = 24),
-    axis.title = element_text(size = 26),
-    plot.title = element_text(size = 27),
+    legend.text = element_text(size = 28),
+    axis.text = element_text(size = 28),
+    axis.title = element_text(size = 30),
+    plot.title = element_text(size = 31),
     panel.grid.minor = element_blank(),
     panel.grid.major = element_line(color = "gray75")
   )
@@ -304,7 +304,7 @@ fig <- arrangeGrob(
   shared_legend,
   nrow = 2, heights = c(10, 1)
 )
-ggsave(file.path(outdir, "fig-extension-panels.pdf"), fig, width = 16, height = 9)
+ggsave(file.path(outdir, "fig-extension-panels.pdf"), fig, width = 14, height = 9)
 cat("Wrote", file.path(outdir, "fig-extension-panels.pdf"), "\n")
 
 # =============================================================================
@@ -398,12 +398,12 @@ df_pd$Ratio_norm <- df_pd$Ratio / base_ratio * 100
 panel_val_b <- ggplot(df_pd, aes(x = Date, y = Ratio_norm)) +
   geom_line(linewidth = 1, color = "#2166AC") +
   geom_hline(yintercept = 100, linetype = "dashed", color = "black") +
-  labs(x = NULL, y = "NASDAQ / S&P 500 Price Ratio\n(Jan 2015 = 100)") +
+  labs(x = NULL, y = "NASDAQ / S&P 500\n(Jan 2015 = 100)") +
   scale_x_date(date_breaks = "5 years", date_labels = "%Y") +
   scale_y_continuous(expand = expansion(mult = c(0.02, 0.05))) +
   ggtitle("(b) NASDAQ vs. S&P 500") +
   theme_paper +
-  theme(plot.margin = margin(t = 10, r = 10, b = 5, l = 10, unit = "pt"),
+  theme(plot.margin = margin(t = 10, r = 10, b = 5, l = 25, unit = "pt"),
         panel.grid.major = element_blank())
 
 fig_val <- arrangeGrob(panel_val_a, panel_val_b, ncol = 2)

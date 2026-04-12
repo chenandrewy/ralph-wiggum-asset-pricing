@@ -1,44 +1,45 @@
 # Improvement Plan
-AUTHOR PLAN — 2026-04-12 09:42:53 EDT
+AUTHOR PLAN — 2026-04-12 09:57:08 EDT
 
 ## Current State
 
-- **Tests**: 22/25 pass, 3 fail
-- **Model section**: Sound — no overhaul needed. Propositions are correctly stated and proved, economic intuition is clear, approximation vs exact computation is well-documented.
-- **Introduction**: Recently rewritten over many iterations (rloop-17 through rloop-27); writing and narrative tests all pass.
-- **Code**: Single `generate-exhibits.R` pipeline generating 3 exhibits; factcheck-code passes.
+- **21/25 tests pass.** No section needs an overhaul.
+- **4 failing tests** are the priority. All are localized fixes.
 
 ## Failing Tests
 
-### 1. `element-rhetoric-meta` (FAIL)
+### 1. `factcheck-lit` — Jones (2024) misattribution in introduction
 
-**Problem**: The abstract's closing sentence — *"This paper demonstrates the displacement it models: AI agents produced all analysis and writing from a human-authored specification."* — is too blunt and prominent. The introduction footnote is fine. The test says this risks triggering the same aversion that caused the arxiv rejection.
+**Problem:** Line 57 of `paper.tex` says "As \citet{Jones2024} models, a singularity can produce output growth so large that even grossly inefficient transfers become effective, because the resource base overwhelms the deadweight costs." Jones (2024) models explosive growth and existential risk but does not discuss transfers or deadweight costs. The transfers mechanism is this paper's contribution.
 
-**Fix** (paper/paper.tex, line 32): Soften the abstract sentence to be more allusive and self-referential rather than a direct disclosure. Instead of a flat declaration, lean into the irony — e.g., reference the displacement the paper models without explicitly announcing "AI agents produced all analysis and writing." Keep the explicit disclosure in the introduction footnote only.
+**Fix:** Rewrite to attribute only the explosive-growth modeling to Jones:
+> "If a singularity produces the kind of explosive output growth modeled by \citet{Jones2024}, even grossly inefficient transfers become effective, because the resource base overwhelms the deadweight costs."
 
-### 2. `visual-figures` (FAIL)
+This matches the more accurate attribution already used in Section 4.2.
 
-**Problem**: Figure 2 (`fig-extension-panels`) has tick labels, legend text, and annotations that are too small to read comfortably. The "Catastrophe" annotation in Panel (b) is also too small.
+### 2. `visual-figures-image-only` — Fig 1 Panel (b) y-axis label clipped
 
-**Fix** (code/generate-exhibits.R): Increase font sizes for the extension figure:
-- Increase annotation `size` parameters (currently 4–6) to 6–8.
-- Verify legend text size (currently 22) is adequate at the rendered PDF dimensions (14×8 inches). May need to bump to 24.
-- Ensure tick labels (`axis.text`) are at least 22pt (already set, but figure dimensions may make them small — consider increasing `base_size` from 26 to 28 or the figure dimensions).
+**Problem:** The y-axis label "NASDAQ / S&P 500 Price Ratio\n(Jan 2015 = 100)" is truncated at the left margin, rendering as "ASDAQ / S&P 500 Price Rati".
 
-### 3. `visual-figures-image-only` (FAIL)
+**Fix:** In `code/generate-exhibits.R`, increase the left margin for `panel_val_b` (e.g., `l = 20` or higher in `plot.margin`) or shorten the y-axis label (e.g., "NASDAQ / S&P 500\n(Jan 2015 = 100)").
 
-**Problem**: Panel (b) baseline curve is compressed into a narrow band near y=1.0, making its trajectory unreadable alongside the large-singularity curve that reaches ~5x. A log scale is already used, but the baseline (ranging ~0.75 to ~1.2) occupies too little visual space relative to the large singularity (ranging ~0.5 to ~5).
+### 3. `visual-figures` — Fig 2 (extension panels) text too small
 
-**Fix** (code/generate-exhibits.R): Improve the visual separation of the two scenarios in Panel (b). Options ranked by preference:
-1. **Tighten y-axis limits and add more log-scale breaks** near the baseline range (e.g., breaks at `c(0.5, 0.75, 1, 1.5, 2, 5)` with limits `c(0.4, 6)`). This spreads the baseline's visual footprint.
-2. **Add explicit annotations on the baseline curve** at a few tau values showing the numeric consumption growth (e.g., "1.1×" at tau=0.3), so the baseline's modest gains are readable even when visually compressed.
-3. **Increase line width for the baseline** in Panel (b) to make its trajectory more visible.
+**Problem:** Axis labels, tick labels, and legend text in `fig-extension-panels.pdf` are below comfortable reading size.
 
-Combining options 1 + 2 is likely the most effective approach.
+**Fix:** In `code/generate-exhibits.R`, the extension figure already uses `base_size = 28` in `theme_paper`. The issue is likely the output dimensions (`width = 16, height = 9`) combined with the text sizes. Increase `base_size` to ~32, or reduce the output width to ~14 to make text proportionally larger. Also increase `legend.text` and `axis.text` sizes in the theme.
+
+### 4. `writing-intro` — Complete-markets counterfactual buried
+
+**Problem:** The complete-markets counterfactual ("if markets are complete, there would be no need to hedge") appears only as the final clause of paragraph 3, not as a topic sentence. A skimming reader may miss it.
+
+**Fix:** Add a standalone sentence to the summary paragraph (paragraph 7, line 59 area) that states the complete-markets counterfactual clearly, e.g.: "Market incompleteness is the key driver: under complete markets, the displacement-driven premium would largely vanish." Alternatively, make it a topic sentence in paragraph 3.
 
 ## Execution Order
 
-1. Fix Figure 2 readability issues (tests 2 + 3) in `code/generate-exhibits.R` — these are coupled and should be done together.
-2. Regenerate exhibits by running `Rscript code/generate-exhibits.R`.
-3. Fix the abstract rhetoric in `paper/paper.tex` line 32 (test 1).
-4. Recompile the paper and verify.
+1. Fix the Jones (2024) misattribution (paper.tex, one sentence).
+2. Fix the writing-intro issue (paper.tex, add one sentence to summary paragraph).
+3. Fix the fig-ai-valuations clipping (generate-exhibits.R, adjust margin or label).
+4. Fix the fig-extension-panels text size (generate-exhibits.R, adjust theme sizes).
+5. Regenerate exhibits (`Rscript code/generate-exhibits.R`).
+6. Rebuild PDF and verify.
