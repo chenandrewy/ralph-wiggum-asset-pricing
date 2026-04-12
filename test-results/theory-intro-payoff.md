@@ -1,32 +1,34 @@
 # tests/theory-intro-payoff.py
-Started: 2026-04-12 14:18:19 EDT
-Runtime: 1m 24s
-[ralph-garage/agent-logs/20260412T141819.037237-0400_theory-intro-payoff_claude_opus.log](../ralph-garage/agent-logs/20260412T141819.037237-0400_theory-intro-payoff_claude_opus.log)
+Started: 2026-04-12 15:47:40 EDT
+Runtime: 57s
+[ralph-garage/agent-logs/20260412T154740.740403-0400_theory-intro-payoff_claude_opus.log](../ralph-garage/agent-logs/20260412T154740.740403-0400_theory-intro-payoff_claude_opus.log)
 
 # theory-intro-payoff
 VERDICT: PASS
-REASON: Every modeling feature leads to an economic result discussed in the introduction.
+REASON: Every modeling feature maps to an economic result that is explicitly discussed in the introduction.
 
-## Detailed Mapping
+## Detailed Findings
 
-Each modeling feature in Sections 2–4 was checked for a corresponding economic result in the introduction:
+### Modeling Features and Introduction Payoffs
 
-| # | Modeling Feature | Introduction Payoff |
-|---|-----------------|-------------------|
-| 1 | Discrete AI singularity (prob $p$) | "a stochastic singularity that shifts consumption toward AI owners" |
-| 2 | Displacement parameter $\phi$ | "displaces the typical investor's labor income and consumption" |
-| 3 | Productivity boost $\eta$ | Aggregate consumption rises; drives quantitative P/D predictions |
-| 4 | Extinction risk $\xi$ (Jones 2024) | "Extinction risk partially offsets this premium…narrowing the valuation spread (Proposition 2)" |
-| 5 | Two public assets (AI with $\theta$, $\Delta\theta$; non-AI) | "AI stocks grow as a share of the economy with each singularity, making them a partial hedge" |
-| 6 | Market incompleteness (restricted equity) | "Because markets are incomplete—investors cannot trade private AI capital—AI stocks command a premium" |
-| 7 | CRRA preferences with $\gamma > 1$ | "a risk-averse household that cannot hedge displacement may rationally choose to block it" |
-| 8 | AI owners holding private capital | "restricted—held by founders, early-stage investors, and firms that may not yet exist" |
-| 9 | Positive singularity (prob $q$, Extension 1) | "When the positive singularity is more likely than the negative one, AI development is socially efficient" |
-| 10 | Veto mechanism with cost $\kappa$ | "Calls to slow or halt AI development may partly reflect investors' inability to hedge the downside" |
-| 11 | Government transfers ($\tau$, deadweight $\delta$) | "Government transfers can substitute for missing markets…deadweight costs…even grossly inefficient transfers become effective" |
-| 12 | Complete markets benchmark | "Under complete markets, the displacement-driven premium would largely vanish…AI development would proceed efficiently, and transfers would be unnecessary" |
-| 13 | Existence condition / infinite prices (Remark 1) | Covered implicitly through "Market incompleteness distorts both valuations" and the transfers motivation |
+| Modeling Feature | Economic Result | Introduction Reference |
+|---|---|---|
+| Incomplete markets (restricted AI equity) | AI stocks command a hedging premium | "Because markets are incomplete---investors cannot trade private AI capital---AI stocks command a premium." |
+| Discrete singularity with displacement (φ) | Hedging motive drives valuations | "investors use AI stocks to hedge against an AI singularity that displaces their consumption" |
+| Productivity boost (η) | Quantitative P/D ratios | "P/D ratios for AI stocks roughly double relative to non-AI stocks" at p = 1% |
+| Two asset types with dividend dynamics (θ, Δθ) | AI stocks are a partial hedge | "AI stocks grow as a share of the economy with each singularity, making them a partial hedge" |
+| CRRA preferences (γ > 1) | Risk-averse household faces uninsurable downside | "a risk-averse household that cannot hedge displacement may rationally choose to block it" |
+| Extinction risk (ξ) | Extinction attenuates the premium (Prop 2) | "Extinction risk...partially offsets this premium...narrowing the valuation spread (Proposition 2)" |
+| Positive singularity (q) | Veto distortion despite efficient development (Prop 3) | "When the positive singularity is more likely than the negative one, AI development is socially efficient, yet a risk-averse household...may rationally choose to block it" |
+| Veto mechanism (κ) | Rational blocking of AI development | "Calls to slow or halt AI development may partly reflect investors' inability to hedge the downside" |
+| Government transfers (τ, δ) | Transfers overcome deadweight costs under singularity | "Government transfers can substitute for missing markets...even grossly inefficient transfers become effective, because the resource base overwhelms the deadweight costs" |
 
-## Summary
+### Summary
 
-The introduction previews all three linked results of the paper—(1) the valuation premium from hedging under incomplete markets, (2) the veto distortion of AI development, and (3) government transfers overcoming deadweight costs under explosive growth—and every modeling ingredient in Sections 2–4 connects to at least one of these results. No modeling feature is introduced without an economic payoff discussed in the introduction.
+The introduction systematically previews every economic result that the model delivers:
+1. **Hedging premium** — from incomplete markets, displacement, and AI dividend dynamics
+2. **Extinction attenuation** — from the extinction channel (ξ)
+3. **Veto distortion** — from positive singularity (q), veto cost (κ), and risk aversion (γ)
+4. **Transfer effectiveness** — from government transfers (τ) overcoming deadweight costs (δ) when growth (η) is large
+
+No modeling feature is introduced without a corresponding payoff in the introduction. The common thread—market incompleteness—is explicitly stated in the final paragraph of the introduction.

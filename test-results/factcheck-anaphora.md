@@ -1,7 +1,7 @@
 # tests/factcheck-anaphora.py
-Started: 2026-04-12 14:18:19 EDT
-Runtime: 4m 50s
-[ralph-garage/agent-logs/20260412T141819.073930-0400_factcheck-anaphora_claude_opus.log](../ralph-garage/agent-logs/20260412T141819.073930-0400_factcheck-anaphora_claude_opus.log)
+Started: 2026-04-12 15:47:40 EDT
+Runtime: 2m 8s
+[ralph-garage/agent-logs/20260412T154740.749503-0400_factcheck-anaphora_claude_opus.log](../ralph-garage/agent-logs/20260412T154740.749503-0400_factcheck-anaphora_claude_opus.log)
 
 # factcheck-anaphora
 VERDICT: PASS
@@ -9,20 +9,20 @@ REASON: All demonstratives near cross-references resolve to meanings consistent 
 
 ## Findings by section
 
-### Introduction (lines 38–70)
-No anaphora resolution errors. Demonstratives ("this premium," "these distortions," "these frictions," "these three linked results") all resolve to antecedents in the immediately preceding prose rather than to the cross-referenced targets, and where they appear near a `\ref` the prose description matches what the target contains (e.g., "narrowing the valuation spread" for Proposition 2, which states the spread is decreasing in extinction probability).
+### Introduction (lines 38--70)
+No issues. Cross-references to `fig:ai-valuations`, `prop:comp-statics`, `prop:veto`, `sec:model`, `sec:quant`, and `sec:extensions` all use bare noun phrases without demonstratives, or have demonstratives that resolve to prior noun phrases rather than to the cross-reference target.
 
-### Model (lines 71–175)
-No anaphora resolution errors. Demonstratives near cross-references ("this condition" referring to Remark 1's existence condition $A^j < 1$; "this discontinuity" referring to the finite-to-infinite price transition near Remark 1) all resolve correctly to what the referenced targets contain.
+### Model (lines 71--175)
+No issues. The potentially tricky case is "This discontinuity" (line 171) following "(Remark~\ref{rem:existence})": it refers to the finite-to-infinite price jump, which is precisely what Remark 1's existence condition describes. References to `prop:pd-ratios`, `eq:existence`, `sec:ext2`, and `rem:existence` all resolve correctly.
 
-### Quantitative Analysis (lines 176–193)
-No anaphora resolution errors. No demonstratives appear adjacent to any cross-reference in this section.
+### Quantitative Analysis (lines 176--193)
+No issues. Cross-references to `tab:pd-ratios`, `prop:comp-statics`, and `fig:ai-valuations` appear without adjacent demonstratives.
 
-### Extensions (lines 194–278)
-No anaphora resolution errors. Key checks: "Proposition~\ref{prop:veto} implies that calls to slow or halt AI development may partly reflect unhedgeable downside risk" correctly characterizes Proposition 3's veto result; "the existence condition in Remark~\ref{rem:existence} is violated" correctly describes the $A^j < 1$ condition; equation references (\eqref{eq:transfer-consumption}, \eqref{eq:phi-eff}, \eqref{eq:transfer-ratio}) are all described accurately in surrounding prose.
+### Extensions (lines 194--278)
+No issues. References to `prop:veto`, `eq:transfer-consumption`, `eq:phi-eff`, `prop:pd-ratios`, and `rem:existence` all use definite articles or bare labels rather than demonstratives, and the prose accurately describes each target's content.
 
-### Conclusion (lines 279–289)
-No anaphora resolution errors. No demonstratives appear near cross-references.
+### Conclusion (lines 279--289)
+No cross-references appear in this section, so no anaphora resolution errors are possible.
 
-### Proof of Proposition 1 (lines 290–321)
-No anaphora resolution errors. "This can be rewritten as equation~\eqref{eq:pd-ai}" correctly refers to the immediately preceding derived expression, and the target equation is indeed the same formula.
+### Proof of Proposition 1 (lines 290--321)
+No issues. "This can be rewritten as equation~\eqref{eq:pd-ai}" (line 320): "This" refers to the solved formula on line 317, which is the same mathematical object as `eq:pd-ai`. References to `tab:pd-ratios` and `prop:pd-ratios` have no adjacent demonstratives.

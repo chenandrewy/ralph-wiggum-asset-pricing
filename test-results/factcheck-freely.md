@@ -1,36 +1,30 @@
 # tests/factcheck-freely.py
-Started: 2026-04-12 14:18:19 EDT
-Runtime: 7m 28s
-[ralph-garage/agent-logs/20260412T141819.045795-0400_factcheck-freely_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260412T141819.045795-0400_factcheck-freely_claude_claude-opus-4-6.log)
+Started: 2026-04-12 15:47:40 EDT
+Runtime: 13m 5s
+[ralph-garage/agent-logs/20260412T154740.756567-0400_factcheck-freely_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260412T154740.756567-0400_factcheck-freely_claude_claude-opus-4-6.log)
 
 # factcheck-freely
-VERDICT: PASS
-REASON: No factually incorrect statements or logical inconsistencies found; all mathematical derivations, proofs, and literature characterizations verified correct.
+VERDICT: FAIL
+REASON: One factually incorrect verbal description of a mathematical expression in the transfers section.
 
-## Detailed Review
+## Detail
 
-A Claude Opus subagent reviewed the entire paper for factual errors and logical inconsistencies, checking all mathematical derivations, proofs, economic reasoning, and claims about cited literature.
+### Issue: Incorrect description of net transfer expression (Section 4.2)
 
-### Mathematical Verification (All Correct)
-- **Euler equation derivation** (Appendix A): Correctly handles the three states (no singularity, non-extinction singularity, extinction). Algebra solving for P/D ratio is correct.
-- **Dividend growth factors**: $\Gamma^{AI}$ and $\Gamma^{N}$ correctly derived. Claim that $\Gamma^{N}$ is $\theta$-independent (making non-AI closed form exact) is correct.
-- **Existence condition** (Remark 1): $A^j < 1$ is the correct necessary and sufficient condition.
-- **Proof of Proposition 2** (extinction attenuation): Decomposition, convexity of $f(A) = A/(1-A)$, and semi-elasticity argument are all mathematically correct.
-- **Proof of Proposition 3** (veto): Part (i) correctly shows CRRA utility with increasing $\gamma$ makes the negative-singularity term dominate. Part (ii) is correct.
-- **Transfer consumption equation**: Correctly accounts for displaced consumption plus net transfer after deadweight costs.
-- **Effective displacement parameter**: $\phi_{\text{eff}}$ correctly derived from the transfer equation.
-- **Transfer ratio independence of $\eta$**: Confirmed — $(1+\eta)$ cancels from numerator and denominator.
-- **Numerical examples**: The $3.5\times$ consumption multiple and $0.5\times$ catastrophe claims verify numerically.
+**Location:** Section 4.2 (Extension 2: Government transfers), the illustrative paragraph following equation (12).
 
-### Economic Reasoning (All Consistent)
-- Hedging channel mechanism is internally consistent.
-- Complete markets counterfactual correctly described.
-- Veto extension logic is sound.
-- Transfers extension logic is sound.
-- Claims about GKP (2012) — displacement risk, growth stocks, future innovators' capital, expanding-variety mechanism — all accurate.
-- Claims about Jones (2024) — growth-vs-existential-risk tradeoff, correlation between AI power and risk — all accurate.
+**Text:** "...so that net transfers per dollar taxed are only $\tau(1 - \delta\tau)$, e.g., $0.219$ at $\tau = 0.30$"
 
-### Minor Observations (Not Rising to Errors)
-1. **Proof of Prop 3(ii)**: Omits the extinction component of the utility gain, but the omitted term is positive and only strengthens the conclusion. Not an error.
-2. **Proposition 2**: Stated as holding "for the parameterizations considered" rather than giving general sufficient conditions. The paper is correctly cautious; not an error.
-3. **Introduction sentence** (Section 1): Double-"yet" construction is stylistically awkward but not a factual issue.
+**Problem:** The expression $\tau(1 - \delta\tau)$ is the net transfer as a fraction of the AI surplus (the transfer base), not "per dollar taxed." Per dollar taxed would be $(1 - \delta\tau) = 1 - 0.9 \times 0.30 = 0.73$. The numerical value $0.219$ is correct for $\tau(1 - \delta\tau) = 0.30 \times 0.73$, but the verbal label "per dollar taxed" does not match the expression. A correct phrasing would be something like "the net transfer rate is only $\tau(1 - \delta\tau) = 0.219$" or "net transfers amount to only 21.9% of the AI surplus."
+
+**Severity:** Minor. The mathematical expression and numerical value are correct; only the English description is inaccurate. A reader following the math would not be misled, but the verbal description is factually wrong as stated.
+
+### Items verified as correct
+
+- **Proposition 1 (P/D ratios):** Euler equation derivation in Appendix A is correct. Dividend growth factors $\Gamma^{AI}$ and $\Gamma^{N}$ are correct. The approximation is properly disclosed.
+- **Proposition 2 (Extinction attenuation):** The proof logic (convexity of $f(A) = A/(1-A)$, semi-elasticity argument, larger absolute reduction at higher $A$) is correct.
+- **Proposition 3 (Veto):** Proof structure is correct. The dominance of the negative-singularity term as $\gamma \to \infty$ when $\phi(1+\eta) < 1$ is valid. Complete markets claim in part (ii) is correct.
+- **Numerical claims:** $\phi(1+\eta) = 0.75$ giving 25% consumption fall, P/D ratios roughly doubling at $p = 1\%$, $\phi^{-\gamma} = 160{,}000$ for $\phi = 0.05$ and $\gamma = 4$, consumption multiple of $3.5\times$ under the large singularity with transfers -- all verified.
+- **Transfer equations:** Equations (10), (11), and (12) are internally consistent. The transfer ratio (12) is indeed independent of $\eta$.
+- **Literature citations:** GKP (2012) and Jones (2024) are accurately represented based on the source papers.
+- **Internal consistency:** Parameters are used consistently throughout. All cross-references are correct.

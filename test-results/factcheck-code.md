@@ -1,72 +1,66 @@
 # tests/factcheck-code.py
-Started: 2026-04-12 14:18:19 EDT
-Runtime: 2m 21s
-[ralph-garage/agent-logs/20260412T141819.030829-0400_factcheck-code_claude_opus.log](../ralph-garage/agent-logs/20260412T141819.030829-0400_factcheck-code_claude_opus.log)
+Started: 2026-04-12 15:47:40 EDT
+Runtime: 2m 6s
+[ralph-garage/agent-logs/20260412T154740.773298-0400_factcheck-code_claude_opus.log](../ralph-garage/agent-logs/20260412T154740.773298-0400_factcheck-code_claude_opus.log)
 
 # factcheck-code
 
 VERDICT: PASS
-REASON: The canonical analysis pipeline runs from scratch, produces all exhibits, and its outputs are consistent with the paper's quantitative claims.
+REASON: The canonical analysis pipeline runs from scratch, produces all exhibits, and is consistent with the paper's quantitative claims.
 
 ## Canonical local analysis path
 
-The repo has a single canonical entry point: `code/generate-exhibits.R`, run via `Rscript code/generate-exhibits.R`. It produces three exhibits consumed by `paper/paper.tex`:
+Single entry point: `code/generate-exhibits.R` (run via `Rscript code/generate-exhibits.R`). Produces all three exhibits used in `paper/paper.tex`:
 
-1. `paper/exhibits/table-pd-ratios.tex` — P/D ratio table (Exhibit 2 in paper)
-2. `paper/exhibits/fig-extension-panels.pdf` — two-panel extension figure (Exhibit 3)
-3. `paper/exhibits/fig-ai-valuations.pdf` — empirical valuation figure (Exhibit 1)
+1. `paper/exhibits/table-pd-ratios.tex` — P/D ratio table (Exhibit 2)
+2. `paper/exhibits/fig-extension-panels.pdf` — Extension panels figure (Exhibit 3)
+3. `paper/exhibits/fig-ai-valuations.pdf` — AI valuations figure (Exhibit 1)
 
-No other code files exist in `code/`. No intermediate files, caches, or manually prepared inputs are required. The data directory is empty; all data is downloaded at runtime from datahub.io (Shiller S&P 500) and FRED (NASDAQ index).
+Additionally computes and prints the veto numerical example (Section 4.1) to console.
+
+Dependencies: R packages `ggplot2`, `dplyr`, `tidyr`, `gridExtra` (and `scales` as a transitive dependency). All standard CRAN packages. External data downloaded at runtime from datahub.io (Shiller S&P 500) and FRED (NASDAQ index). No local caches or precomputed intermediates used. The `data/` directory is empty.
 
 ## Execution status
 
-- **Status**: Ran successfully from scratch in this environment.
-- **Runtime dependencies**: R with packages `ggplot2`, `dplyr`, `tidyr`, `gridExtra`, `scales`. All were available.
-- **Network dependencies**: Downloads S&P 500 data from datahub.io and NASDAQ data from FRED. This is consistent with the spec (III.3.d: "executes in less than 180 seconds, including any external data download").
-- **No precomputed caches or intermediate files** are used. Satisfies spec requirement III.3.c.
+- Pipeline ran from scratch successfully in ~2.2 seconds (well under 180-second limit).
+- All three output files were regenerated.
+- Minor ggplot warnings about removed rows (points outside axis limits in the extension panels figure) are cosmetic and expected.
+- All R packages are installed in this environment.
+- Network downloads from datahub.io and FRED completed successfully.
 
 ## Paper-code consistency
 
-### Parameters
-All parameters in the code match the paper's stated values:
+**Parameters verified consistent between code and paper text:**
 
-| Parameter | Code | Paper (Section 3 / Table footnote) | Match |
-|-----------|------|-------------------------------------|-------|
+| Parameter | Code | Paper | Match |
+|-----------|------|-------|-------|
 | β | 0.96 | 0.96 | Yes |
 | g | 0.02 | 0.02 | Yes |
-| γ | 4 | 4 | Yes |
+| γ (table) | 4 | 4 | Yes |
 | φ | 0.50 | 0.5 | Yes |
 | η | 0.50 | 0.5 | Yes |
 | θ | 0.15 | 0.15 | Yes |
 | Δθ | 0.20 | 0.2 | Yes |
+| α₀ | 0.70 | 0.70 | Yes |
+| δ (figure) | 0.50 | 0.5 (caption) | Yes |
+| φ_large | 0.05 | 0.05 | Yes |
+| η_large | 9.0 | 9 | Yes |
 
-Extension parameters (Section 4.2): α=0.70, δ=0.50, p=0.5%, ξ=5%, large singularity η=9/φ=0.05. All match.
+**Veto example (Section 4.1) verified:**
+- Code: γ=10, p=1%, κ=1%, φ=0.5, η=0.5, ξ=5%, q=70%, α=0.70
+- Incomplete markets: V_develop=-15.5327, V_veto=-15.3222 → VETO (matches paper claim)
+- Complete markets: V_develop=-13.4615, V_veto=-15.3222 → develop (matches paper claim)
 
-Veto parameters (Section 4.1): γ=10, p=1%, κ=1%, q=0.70, α=0.70, ξ=5%. All match.
+**In-text δ=0.9 illustration verified:**
+- Paper claims: net transfer rate = 0.219 at τ=0.30 → consumption multiple ≈ 3.5×, vs. 0.5× catastrophe without transfers
+- Computed: net rate = 0.219, consumption multiple = 3.52, without transfers = 0.5 → all match
 
-### Numerical claims verified
+**Formulas verified consistent:**
+- P/D closed-form (Proposition 1) matches `compute_pd_approx` for non-AI and the exact backward recursion `compute_pd_ai_exact` for AI stocks
+- Transfer consumption equation matches `consumption_growth` function
+- φ_eff formula matches `compute_pd_with_transfer`
 
-- Paper: "AI stocks trade at a P/D of about 15.5" at p=0.5%, ξ=0%. Table output: 15.5. **Consistent.**
-- Paper: "non-AI stocks trade near 11." Table output: 11.1. **Consistent.**
-- Paper: "a ratio of about 1.4." Table output: 1.4. **Consistent.**
-- Paper: "At p=1%, the ratio rises to 2." Table output: 2.0. **Consistent.**
-- Paper: "consumption halves under the large singularity (φ(1+η) = 0.5)." Code: 0.05 × 10 = 0.5. **Consistent.**
-- Paper: "falls by 25% under the baseline (φ(1+η) = 0.75)." Code: 0.5 × 1.5 = 0.75. **Consistent.**
-- Paper: "net transfers per dollar taxed are only τ(1−δτ), e.g., 0.219 at τ=0.30" (with δ=0.9). Verified: 0.30 × 0.73 = 0.219. **Consistent.**
-- Paper: "consumption multiple of 3.5× at τ=0.30" (with δ=0.9). Verified: 3.52. **Consistent** (rounded).
-- Veto: "household vetoes under incomplete markets." Code output: V_veto > V_develop. **Consistent.**
-- Veto: "does not veto under complete markets." Code output: V_develop_CM > V_veto. **Consistent.**
-
-### Formula consistency
-
-- The P/D closed-form approximation (Proposition 1) matches `compute_pd_approx`.
-- The exact backward-recursion method described in the paper and appendix matches `compute_pd_ai_exact`.
-- The transfer formula (eq. transfer-consumption) matches `consumption_growth` and `compute_pd_with_transfer` via φ_eff.
-- The veto Bellman equations match `compute_v_develop_veto`, `compute_v_veto`, and `compute_v_develop_complete_veto`.
-
-### Per-share data handling (Requirement 5)
-
-Not applicable. The empirical figure uses index-level data (S&P 500 price index and trailing dividends from Shiller; NASDAQ composite index from FRED). No per-share quantities are combined with share counts from different sources.
+**Per-share data (Requirement 5):** The empirical exhibit uses index-level prices from consistent sources (Shiller for S&P 500 price and dividend; FRED for NASDAQ index). P/D is computed within the Shiller dataset (same source for numerator and denominator). The NASDAQ/S&P ratio uses index levels, not per-share quantities. No cross-source per-share combination issues.
 
 ## Reproducibility classification
 
@@ -74,8 +68,6 @@ Not applicable. The empirical figure uses index-level data (S&P 500 price index 
 |--------|---------------|
 | table-pd-ratios.tex | Locally reproducible (verified) |
 | fig-extension-panels.pdf | Locally reproducible (verified) |
-| fig-ai-valuations.pdf | Locally reproducible (requires network for data download; verified) |
-| Veto numerical example (Section 4.1) | Locally reproducible (console output; verified) |
-| All theoretical propositions | Not code-dependent; proved in paper |
-
-No violations found.
+| fig-ai-valuations.pdf | Locally reproducible, requires network (datahub.io, FRED) |
+| Veto numerical example | Locally reproducible (verified, console output) |
+| In-text δ=0.9 illustration | Locally reproducible (verified manually, not in code output) |
