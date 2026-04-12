@@ -1,32 +1,22 @@
 # tests/spec-scope.py
-Started: 2026-04-11 21:15:26 EDT
-Runtime: 35s
-[ralph-garage/agent-logs/20260411T211526.534907-0400_spec-scope_claude_opus.log](../ralph-garage/agent-logs/20260411T211526.534907-0400_spec-scope_claude_opus.log)
+Started: 2026-04-11 21:27:07 EDT
+Runtime: 44s
+[ralph-garage/agent-logs/20260411T212707.761103-0400_spec-scope_claude_opus.log](../ralph-garage/agent-logs/20260411T212707.761103-0400_spec-scope_claude_opus.log)
 
 # spec-scope
 VERDICT: PASS
-REASON: The paper maintains a compact theoretical scope with illustrative (not calibrated) quantitative material and minimal empirical content.
+REASON: The paper maintains a compact theoretical scope with illustrative quantitative material, no empirical estimation, and no broad prediction menus.
 
 ## Findings
 
-### Theoretical scope
-The paper develops a single model with three propositions, all derived analytically:
-1. Closed-form P/D ratios for AI vs. non-AI stocks under incomplete markets (Prop 1)
-2. Extinction attenuation of the valuation spread (Prop 2)
-3. Veto under incomplete vs. complete markets (Prop 3)
+**Theoretical core.** The paper develops a single, tightly specified asset pricing model with three propositions: closed-form P/D ratios (Prop 1), extinction attenuation of the valuation spread (Prop 2), and a veto result under incomplete markets (Prop 3). All results are analytical, derived from a representative-household Euler equation with CRRA preferences. The model is deliberately parsimonious — discrete time, one representative household, two asset classes, a binary singularity event.
 
-Each proposition serves a focused purpose within the hedging-under-incomplete-markets mechanism. There is no sprawling menu of predictions or auxiliary results.
+**Empirical content: minimal and illustrative.** The only empirical exhibit is Figure 1, which plots the S&P 500 P/D ratio and the NASDAQ/S&P 500 price ratio as motivating evidence. The paper explicitly qualifies this as "imperfect" and "broadly suggestive" (Section 3, around line 189), not as a formal empirical test. There is no regression, estimation, or structural calibration.
 
-### Empirical content
-Empirical content is limited to a single motivating figure (Figure 1) showing S&P 500 P/D ratios and NASDAQ/S&P relative valuations. This figure is purely illustrative — there is no regression, estimation, or formal empirical test. The text explicitly hedges the comparison ("This comparison is imperfect...").
+**Quantitative material: illustrative, not calibrated.** Table 1 reports P/D ratios across a grid of singularity probabilities and extinction risks using a fixed parameterization. This is comparative statics over a parameter grid — the standard approach for illustrative theory papers. The paper does not claim to match moments, estimate parameters from data, or provide calibrated quantitative predictions. Figure 2 similarly illustrates the transfer extension with two parameterizations.
 
-### Quantitative material
-- Table 1 reports P/D ratios across a parameter grid. These are illustrative comparative statics, not calibrated to match specific moments.
-- Figure 2 shows transfer effects under two parameterizations. Again illustrative.
-- Parameters are chosen for plausibility and round-number interpretability ($\phi = 0.5$, $\eta = 0.5$, etc.), not estimated or formally calibrated.
+**No broad prediction menus.** The paper delivers exactly three linked results (hedging premium, veto distortion, transfer effectiveness) and does not branch into additional testable implications, cross-sectional predictions, or auxiliary models.
 
-### No broad prediction menus
-The paper does not attempt to generate a wide set of testable predictions. Its conclusions are limited to three linked results: the hedging premium, the veto distortion, and the transfer mechanism. The conclusion explicitly states: "Our model is deliberately simple."
+**Self-described scope.** The conclusion states: "Our model is deliberately simple. It abstracts from continuous-time dynamics, heterogeneous beliefs, production-side details, and many other features that would enrich the analysis. The goal is not to provide a definitive account of AI stock valuations but to highlight a specific channel."
 
-### Summary
-The paper stays firmly within a compact theoretical scope. Empirical content is minimal and illustrative. Quantitative exercises explore the mechanism rather than fit data. No broad prediction menus or calibrated exercises are attempted.
+All of this is consistent with a compact theoretical scope.

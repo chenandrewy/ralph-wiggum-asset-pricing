@@ -1,43 +1,40 @@
 # tests/theory-unmodeled-channels.py
-Started: 2026-04-11 21:15:26 EDT
-Runtime: 1m 21s
-[ralph-garage/agent-logs/20260411T211526.521680-0400_theory-unmodeled-channels_claude_opus.log](../ralph-garage/agent-logs/20260411T211526.521680-0400_theory-unmodeled-channels_claude_opus.log)
+Started: 2026-04-11 21:27:07 EDT
+Runtime: 1m 16s
+[ralph-garage/agent-logs/20260411T212707.758664-0400_theory-unmodeled-channels_claude_opus.log](../ralph-garage/agent-logs/20260411T212707.758664-0400_theory-unmodeled-channels_claude_opus.log)
 
 # theory-unmodeled-channels
 VERDICT: PASS
-REASON: The paper consistently flags unmodeled channels and avoids overclaiming about mechanisms it does not formally capture.
+REASON: The paper consistently uses cautious language when discussing channels it does not explicitly model, and explicitly flags its abstractions.
 
-## Channels Identified
+## Channels identified
 
-### Explicitly Modeled
-1. **Hedging channel / displacement risk**: Core mechanism. The household's consumption share drops upon singularity (parameter phi), and AI stocks provide a partial hedge. Fully formalized in Propositions 1-2.
-2. **Market incompleteness**: The household cannot trade restricted AI equity. Central to the model; the valuation premium collapses under complete markets.
-3. **Extinction risk**: Modeled as probability xi of total loss upon singularity, following Jones (2024). Proposition 2 formally shows it attenuates the hedging channel.
-4. **Veto / blocking AI development**: Extension 1 formally models a veto option with cost kappa. Proposition 3 derives conditions under which the household blocks socially efficient development.
-5. **Government transfers with deadweight costs**: Extension 2 formally models a tax-and-transfer scheme with waste parameter delta. Closed-form expressions for effective displacement and P/D ratios under transfers.
+### Explicitly modeled channels
+1. **Hedging channel via AI stocks**: Core mechanism. Household uses AI stocks to hedge displacement under incomplete markets. Formalized in Proposition 1 with closed-form P/D ratios.
+2. **Displacement from singularity**: Household consumption share drops by factor phi upon singularity. Parameterized and quantified.
+3. **Market incompleteness**: Household cannot trade restricted AI equity (founder stakes, pre-IPO shares). Drives the valuation wedge.
+4. **Extinction risk**: Singularity triggers extinction with probability xi. Modeled explicitly following Jones (2024). Proposition 2 shows it attenuates the premium.
+5. **Veto / blocking AI development** (Extension 1): Household can block development at cost kappa. Proposition 3 proves veto occurs under incomplete markets for sufficiently risk-averse households.
+6. **Government transfers** (Extension 2): Tax-and-transfer mechanism with quadratic deadweight costs. Modeled with effective displacement parameter phi_eff.
+7. **Complete markets benchmark**: Used as counterfactual in Proposition 3 to show veto disappears.
 
-### Discussed but Not Explicitly Modeled
-6. **Entry dynamics / new cohorts of firms (GKP mechanism)**: The paper draws an analogy between AI owners and GKP's future innovators. Cautious treatment confirmed at multiple points.
-7. **Creative destruction by new entrants**: Distinguished from the paper's discrete singularity mechanism.
-8. **Wealth heterogeneity and AI attitudes**: Discussed as a comparative-statics implication, not a formal result.
-9. **Continuous-time dynamics, heterogeneous beliefs, production-side details**: Acknowledged as abstractions in the conclusion.
-10. **Labor income as a separate channel**: Bundled into the consumption share alpha rather than modeled separately.
-11. **Intergenerational transfers / bequests**: Referenced from GKP's robustness discussion; the paper takes this to its own setting rather than claiming to model the same mechanism.
+### Discussed but not explicitly modeled channels
+1. **Entry of new cohorts / creative destruction (GKP dynamics)**: The paper draws an analogy to GKP (2012) where displacement comes from new entrants. **Cautious handling**: "Importantly, we do not explicitly model the entry of new cohorts of firms or workers; AI owners are a static group whose share changes only through the singularity mechanism" (line 76). Repeated in Section 2.3: "we do not model the entry dynamics that are central to their framework" (line 169).
+2. **Continuous-time dynamics**: Noted as abstracted away in the conclusion (line 283).
+3. **Heterogeneous beliefs**: Noted as abstracted away in the conclusion (line 283).
+4. **Production-side details**: Noted as abstracted away in the conclusion (line 283).
+5. **Wealth heterogeneity and attitudes toward AI**: Discussed in connection with Jones (2024). Uses cautious framing: "Our model offers a complementary channel" (line 231).
+6. **Broader trading of AI capital (ideal market solution)**: Discussed qualitatively as the ideal fix but acknowledged as infeasible due to non-existent future capital. Not modeled; only the transfer alternative is formalized.
+7. **Repeated singularities compounding displacement**: Mentioned as a reinforcing effect in the veto discussion: "Allowing repeated singularities would reinforce the veto motive" (line 227). Acknowledged as unmodeled in the main veto analysis (one-shot treatment).
 
-## Assessment of Caution
+## Assessment of caution
 
-The paper is consistently cautious about every unmodeled channel identified:
+The paper is consistently cautious about unmodeled channels:
 
-- **Entry dynamics**: Explicitly flagged twice. Line 79: "Importantly, we do not explicitly model the entry of new cohorts of firms or workers; AI owners are a static group whose share changes only through the singularity mechanism." Line 173 (Discussion): "we do not model the entry dynamics that are central to their framework; the displacement in our model comes from the singularity's reallocation of consumption shares rather than from creative destruction by new entrants."
+- **GKP entry dynamics**: Flagged twice with explicit disclaimers (lines 76 and 169), matching the spec's requirement that the reader not be led to think entry is modeled.
+- **Policy implications**: Uses hedging language throughout. "This suggests that contingent transfer policies... may be worth designing in advance" (line 274). "Calls to slow or halt AI development may partly reflect investors' inability to hedge" (line 53).
+- **Empirical fit**: The quantitative comparison to NASDAQ valuations is explicitly qualified: "This comparison is imperfect: the NASDAQ is broader than 'AI stocks,' return differences partly reflect earnings growth rather than valuation multiples, and the S&P 500 itself has substantial AI exposure" (line 189).
+- **Scope**: The conclusion explicitly enumerates what the model abstracts from and states: "The goal is not to provide a definitive account of AI stock valuations but to highlight a specific channel" (line 283).
+- **Approximations**: The closed-form P/D approximation is flagged as becoming less accurate as Delta-theta grows (line 151), and numerically exact values are provided alongside.
 
-- **GKP relationship**: The paper carefully distinguishes its mechanism from GKP's continuous displacement, noting "The key difference is the nature of the displacement event" and attributing the core insights about displacement risk and incomplete markets to GKP.
-
-- **Empirical content**: The quantitative comparison to data is hedged explicitly: "This comparison is imperfect: the NASDAQ is broader than 'AI stocks,' return differences partly reflect earnings growth rather than valuation multiples, and the S&P 500 itself has substantial AI exposure."
-
-- **Wealth heterogeneity**: Framed as a "complementary channel" and an implication of comparative statics, not a formal result from the model.
-
-- **Scope limitations**: The conclusion states: "Our model is deliberately simple. It abstracts from continuous-time dynamics, heterogeneous beliefs, production-side details, and many other features that would enrich the analysis. The goal is not to provide a definitive account of AI stock valuations but to highlight a specific channel."
-
-- **Labor income**: Transparently bundled into the displacement parameter: "the non-tradeable component (primarily labor income) is what phi captures."
-
-No instance was found where the paper claims formal results about a channel it does not model, or where it discusses an unmodeled channel without appropriate caveats.
+No instance was found where the paper claims results about a channel it does not model without appropriate qualification.

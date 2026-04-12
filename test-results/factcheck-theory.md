@@ -1,53 +1,60 @@
 # tests/factcheck-theory.py
-Started: 2026-04-11 21:15:26 EDT
-Runtime: 7m 29s
-[ralph-garage/agent-logs/20260411T211526.533322-0400_factcheck-theory_claude_opus.log](../ralph-garage/agent-logs/20260411T211526.533322-0400_factcheck-theory_claude_opus.log)
+Started: 2026-04-11 21:27:07 EDT
+Runtime: 9m 13s
+[ralph-garage/agent-logs/20260411T212707.761027-0400_factcheck-theory_claude_opus.log](../ralph-garage/agent-logs/20260411T212707.761027-0400_factcheck-theory_claude_opus.log)
 
 # factcheck-theory
 
 VERDICT: PASS
-REASON: All notation is consistent, all assumptions are mutually compatible, and all mathematical objects trace back to the stated assumptions.
+
+REASON: All notation is consistent, all assumptions are mutually consistent, and all mathematical objects trace back to the assumptions, with minor formal gaps that do not create ambiguity or error.
+
+---
 
 ## Requirement 1: Notational Consistency — PASS
 
-Cataloged 30 symbol families covering all mathematical objects across the baseline model, two extensions, three propositions, one remark, and the appendix proof. Every symbol is used for a single formal object throughout the paper. Key findings:
+29 symbol families identified. No true symbol collisions found. Two minor flags:
 
-- **No collisions**: No two distinct formal objects share the same symbol anywhere in the paper.
-- **Consistent conventions**: Superscripts ($AI$, $N$, $j$, $H$, $CM$) are stable throughout. Time subscripts follow standard conventions. Local proof variables ($A^j$, $B$, $S$, $f$, $v^{AI}$) are clearly scoped.
-- **Extension parameters are distinct**: All extension-specific parameters ($q$, $\kappa$, $\tau$, $\delta$) are fresh symbols that do not collide with baseline parameters.
-- **$\Gamma^N$ cross-check**: The definition $\Gamma^N = \frac{1 - \theta - \Delta\theta(1-\theta)}{1-\theta}(1+\eta)$ simplifies to $(1-\Delta\theta)(1+\eta)$, matching the Appendix A statement exactly.
-- **$\phi$/$\phi_\text{eff}$ relationship**: Explicitly defined via an equivalence equation; no ambiguity.
+1. **$U_\text{ext}$ vs. $V$ convention**: The paper uses $V$ for value functions ($V_\text{veto}$, $V_\text{develop}$, $V_\text{develop}^{CM}$) but writes extinction utility as $U_\text{ext}$. This mixes the $U$/$V$ naming convention. The meaning is unambiguous, but the convention is inconsistent.
 
-## Requirement 2: Assumption Consistency — PASS
+2. **Value functions never formally defined**: $V_\text{veto}$, $V_\text{develop}$, $V_\text{develop}^{CM}$ appear in Proposition 3 inequality comparisons but no Bellman equation is written down for them. The reader must infer their construction from context.
 
-Identified 32 mathematical assumptions across the baseline model (A1–A18), Extension 1 on veto (A19–A26), and Extension 2 on transfers (A27–A32). Checked 14 groups of related assumptions for mutual consistency:
+No symbol is reused for a different formal object. The two $\Gamma^N$ representations (Proposition 1 vs. Appendix A) were verified to be algebraically identical.
 
-- **Parameter domains**: All simultaneously satisfiable with no conflicts.
-- **$\alpha_t$ dynamics**: Domain-preserving under both negative ($\phi\alpha_t$) and positive ($\min(1, \alpha_t/\phi)$) singularity. Minor boundary note: positive singularity can push $\alpha$ to exactly 1, technically outside the open interval $(0,1)$; handled by the $\min$ operator.
-- **$\theta_t$ dynamics**: Strictly increasing, bounded below 1. Domain preserved.
-- **Probability tree**: Sums to 1 at every branching node in both the baseline and Extension 1.
-- **Consumption dynamics**: Household consumption growth ratios in Appendix A match the structural assumptions exactly.
-- **Euler equation derivation**: Verified algebraically. The P/D formula $A^j/(1-A^j)$ follows correctly from the Euler equation with the stationarity approximation.
-- **Baseline calibration**: All parameter values satisfy their stated domains, the existence condition ($A^j < 1$), and the Prop 2 convexity condition ($A^j > 1/2$).
-- **Veto example**: All parameter values satisfy stated constraints. $\phi(1+\eta) = 0.75 < 1$ as required.
-- **Transfer formulas**: $\phi_\text{eff}$ derivation verified algebraically from the transfer consumption formula. Transfer ratio independence of $\eta$ confirmed.
-- **Extensions vs baseline**: Clean augmentation; no conflicts with baseline assumptions.
-- **Large singularity parameters**: Existence condition deliberately violated ($A^{AI} \approx 2.37 > 1$), correctly flagged in the paper.
-- **Extinction utility normalization**: $U_\text{ext} = 0$ is above achievable CRRA utility when $\gamma > 1$; conservative and explicitly acknowledged.
+---
+
+## Requirement 2: Mutual Consistency of Assumptions — PASS
+
+All assumptions catalogued across the setup (12 structural, 10 parameter restrictions, 2 existence conditions, 1 normalization, 6 Extension 1 assumptions, 5 Extension 2 assumptions, 13 calibration values). All are mutually consistent. Three minor flags:
+
+1. **$\phi(1+\eta) < 1$ unstated in Proposition 3**: The proof requires this condition explicitly, but the proposition does not list it among its conditions. The baseline calibration satisfies it ($0.5 \times 1.5 = 0.75 < 1$), and the condition is stated transparently within the proof, but a formal proposition should list all conditions.
+
+2. **State space boundary**: $\alpha \in (0,1)$ should technically be $(0,1]$ for Extension 1, since the positive singularity with $\alpha = 0.7$, $\phi = 0.5$ gives $\min(1, 1.4) = 1$.
+
+3. **Implicit constraint $\delta\tau < 1$** in Extension 2 for positive net transfers is not stated. Automatically satisfied under the calibration ($\delta = 0.5$, $\tau < 1$).
+
+All calibration values satisfy all stated restrictions. All quantitative claims verified numerically (P/D ratios, ratio claims, $\phi^{-\gamma}$ values, existence condition violations, transfer formula $\eta$-independence).
+
+---
 
 ## Requirement 3: Traceability — PASS
 
-All mathematical objects not in the assumptions are derived quantities:
+All mathematical objects trace back to the model primitives:
 
-| Derived Object | Traced To |
-|---|---|
-| $\Gamma^{AI}$, $\Gamma^{N}$ | $\theta$, $\Delta\theta$ dynamics (A10), productivity jump $\eta$ (A6) |
-| $A^j$ (existence term) | $\beta$, $\gamma$ (A14), $g$ (A2), $p$ (A5), $\xi$ (A9), $\eta$ (A6), $\phi$ (A7), $\Gamma^j$ |
-| P/D ratios | Euler equation from CRRA (A14), consumption dynamics (A2, A6, A7, A8), dividends (A10, A11) |
-| $\Delta u(\gamma)$ | $q$ (A19), $\phi$ (A7), $\eta$ (A6), $u$ from CRRA (A14) |
-| $\bar{\gamma}$ (veto threshold) | Limiting argument on $\Delta u(\gamma)$; existence from $\phi(1+\eta) < 1$ (A25) |
-| $V_\text{veto}$, $V_\text{develop}$, $V_\text{develop}^{CM}$ | Utility (A14), veto cost (A22), singularity (A5, A6, A7, A19), complete markets (A24) |
-| $c^H_{post}$, $\phi_\text{eff}$, transfer ratio | Transfer parameters $\tau$ (A27), $\delta$ (A28), displacement $\phi$ (A7) |
-| $B$, $S$, $f$, $v^{AI}$ | Local proof shorthands for model primitives |
+- **Fully traceable**: $\Gamma^{AI}$, $\Gamma^N$, $A^j$, P/D ratios (Eqs 1–2), $v^{AI}$, $B$, $S$, $f(A)$, $\Delta u(\gamma)$, $\alpha^+$, $c^H_{post}$, $\phi_\text{eff}$, transfer ratio, $\bar{\gamma}$.
 
-No expression in the paper is underived or untraceable. Every formal result follows from the stated model assumptions.
+- **Flag — value functions not formally defined**: $V_\text{veto}$, $V_\text{develop}$, $V_\text{develop}^{CM}$ are implicitly determined by the model primitives (CRRA preferences, discount factor, singularity dynamics) but never given explicit Bellman-equation definitions. The paper mentions "the infinite-horizon Bellman equation" in prose but does not write it. This is a formal completeness gap rather than a traceability failure — all inputs to these value functions are specified.
+
+No expression was found that cannot be logically derived from the assumptions.
+
+---
+
+## Summary of All Flags
+
+| # | Flag | Severity | Requirement |
+|---|------|----------|-------------|
+| 1 | $U_\text{ext}$ vs. $V$ naming inconsistency | Minor | Req 1 |
+| 2 | $V_\text{veto}$, $V_\text{develop}$, $V_\text{develop}^{CM}$ never formally defined | Minor | Req 1, 3 |
+| 3 | $\phi(1+\eta) < 1$ unstated in Proposition 3 | Minor | Req 2 |
+| 4 | $\alpha \in (0,1)$ should be $(0,1]$ for Extension 1 | Negligible | Req 2 |
+| 5 | Implicit $\delta\tau < 1$ constraint in Extension 2 | Negligible | Req 2 |

@@ -1,121 +1,120 @@
 # tests/factcheck-narrative.py
-Started: 2026-04-11 21:15:26 EDT
-Runtime: 2m 15s
-[ralph-garage/agent-logs/20260411T211526.521962-0400_factcheck-narrative_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260411T211526.521962-0400_factcheck-narrative_claude_claude-opus-4-6.log)
+Started: 2026-04-11 21:27:07 EDT
+Runtime: 2m 9s
+[ralph-garage/agent-logs/20260411T212707.770316-0400_factcheck-narrative_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260411T212707.770316-0400_factcheck-narrative_claude_claude-opus-4-6.log)
 
 # factcheck-narrative
-
 VERDICT: PASS
-REASON: Every section fulfills its contract; cross-references are accurate; no verbal claim materially exceeds the evidence provided.
+REASON: Every section delivers what its title and framing promise; cross-references are accurate; no verbal claim exceeds the evidence presented.
 
 ---
 
 ## Section-by-Section Analysis
 
 ### Abstract
-
-- **Contract**: Summarize the paper's contribution: hedging motive for AI valuations, role of market incompleteness, government transfers under singularity growth, and the meta-claim about AI authorship.
-- **Deliverables**: States all four elements concisely.
-- **Status**: FULFILLED. Each claim in the abstract corresponds to a delivered result in the body: hedging channel (Sections 2--3), market incompleteness as key driver (Section 2.3), government transfers (Section 4.2), AI authorship (Introduction footnote).
+- **Contract**: Summarize the paper's contribution: hedging model for AI valuations, role of market incompleteness, distortion of AI development, government transfers, and self-demonstrating AI authorship.
+- **Deliverables**: Five claims: (1) hedging motive for AI stock valuations, (2) market incompleteness drives the premium, (3) incompleteness distorts AI development, (4) government transfers become compelling under singularity growth, (5) AI agents produced the paper.
+- **Status**: FULFILLED. All five claims are delivered by the body: (1)-(2) by Sections 2-3, (3) by Section 4.1/Proposition 3, (4) by Section 4.2/Figure 3, (5) by a footnote in the introduction.
 
 ### Section 1: Introduction
-
-- **Contract**: Motivate the paper with empirical observation (AI valuations), state the hedging mechanism, preview three linked results, roadmap the paper, and provide a lit review.
-- **Deliverables**: Opens with Figure 1 on AI valuations, explains the hedging channel, previews hedging-based pricing (Sections 2--3), veto distortion (Section 4.1), and government transfers (Section 4.2). Roadmap lists Sections 2--5. Lit review covers GKP, Jones, and related work.
-- **Status**: FULFILLED. The "three linked results" (hedging-based valuation premia, resistance to AI development, singularity-enabled redistribution) are all delivered in the body. The roadmap is accurate. The lit review is present and correctly placed at the end of the introduction.
+- **Contract**: Motivate the paper, state the main arguments, preview the structure, and review related literature.
+- **Deliverables**: Empirical motivation (Figure 1), verbal statement of the hedging mechanism, summary of three linked results (valuation premia, veto distortion, government transfers), section roadmap, lit review.
+- **Status**: FULFILLED. Each claimed result is delivered by the referenced section. The roadmap ("Section 2 presents the model... Section 3 provides quantitative analysis... Section 4 develops extensions... Section 5 concludes") matches the actual structure. The claim that "P/D ratios for AI stocks roughly double relative to non-AI stocks" at p=1% is confirmed by Section 3's table analysis. References to Proposition 2 (extinction attenuation) and Proposition 3 (veto) are accurate.
 
 ### Section 2.1: Setup
-
-- **Contract**: Present the model's primitives (agents, consumption, singularity, assets, preferences).
-- **Deliverables**: Defines time structure, representative household and AI owners, aggregate consumption growth, singularity mechanism (displacement + extinction), two public assets (AI and non-AI stocks), restricted equity as source of incompleteness, and CRRA preferences.
-- **Status**: FULFILLED. All model primitives are laid out. The paragraph on restricted equity clearly explains the source of market incompleteness and the role of the displacement parameter.
+- **Contract**: Define the model primitives (agents, consumption, singularity, assets, preferences).
+- **Deliverables**: Two agents (household, AI owners), aggregate consumption growth, singularity mechanism (displacement + extinction), two public assets (AI and non-AI stocks) with dividend dynamics, restricted equity as the source of market incompleteness, CRRA preferences.
+- **Status**: FULFILLED. All model components are clearly specified. The paragraph on restricted equity explicitly connects to the market incompleteness that the introduction promises is central.
 
 ### Section 2.2: Equilibrium Prices
-
 - **Contract**: Derive equilibrium price-dividend ratios.
-- **Deliverables**: Proposition 1 (closed-form P/D ratios), Remark 1 (existence condition), discussion of the approximation and how Table 1 provides numerically exact values, explanation of the hedging channel via comparison of Gamma terms, and Proposition 2 (extinction attenuation) with proof.
-- **Status**: FULFILLED. The section delivers closed-form P/D ratios, explains the approximation and its limits, and provides Proposition 2 with a complete proof. The verbal explanation of the hedging channel (AI stocks pay off when household consumption falls) is well-supported by the formal expressions.
+- **Deliverables**: Proposition 1 (closed-form P/D ratios for both assets), Remark 1 (existence condition), discussion of the hedging channel via comparison of dividend growth factors, Proposition 2 (extinction attenuation of the valuation spread), proofs.
+- **Status**: FULFILLED. Proposition 1 provides explicit P/D formulas. The proof is deferred to Appendix A, which is standard and the appendix delivers. The discussion explains the economic content (hedging channel, role of displacement severity, interaction with extinction). Proposition 2 is stated and proved inline. The approximation underlying the closed form is disclosed, and the paper notes that Table 1 reports numerically exact values.
+
+### Remark 1 (Existence Condition)
+- **Contract**: State when P/D ratios are well-defined.
+- **Deliverables**: Condition $A^j < 1$, economic interpretation (infinite hedging demand), forward reference to Section 4.2.
+- **Status**: FULFILLED. The forward reference ("As we discuss in Section 4.2") is accurate: Section 4.2 explicitly discusses the existence condition violation and how transfers restore finite prices.
 
 ### Section 2.3: Discussion
-
-- **Contract**: Discuss the model's mechanism and its relationship to GKP (2012) and Jones (2024).
-- **Deliverables**: Three paragraphs: (1) parallels and differences with GKP's displacement mechanism, (2) centrality of market incompleteness and the complete-markets counterfactual, (3) the existence-condition discontinuity unique to discrete singularity models.
-- **Status**: FULFILLED. Each paragraph delivers a specific comparison or insight. The claim that "if the household could trade the restricted equity, its effective displacement parameter would become phi_eff -> 1" is consistent with the transfer mechanism in Extension 2. The forward reference to extensions ("as we show in the extensions, motivates the role of government transfers") is accurate.
+- **Contract**: Interpret the model's mechanism and relate it to the literature.
+- **Deliverables**: Comparison to GKP (continuous vs. discrete displacement), role of market incompleteness (complete-markets counterfactual), unique feature of discrete singularity (existence condition violation).
+- **Status**: FULFILLED. The section delivers on all three promised comparisons. The claim that under complete markets "the displacement-driven valuation premium largely collapses" is appropriately hedged ("largely") since a residual spread from differential dividend growth is acknowledged.
 
 ### Section 3: Quantitative Analysis
-
 - **Contract**: Provide quantitative analysis of the model's predictions.
-- **Deliverables**: Table 1 with P/D ratios across a grid of singularity probabilities and extinction risks. Discussion of parameterization, patterns in the table, and comparison with empirical evidence from Figure 1.
-- **Status**: FULFILLED. The section reports specific parameterizations, discusses three patterns (AI premium, singularity probability effect, extinction compression), and connects to empirical observations with appropriate caveats ("This comparison is imperfect").
+- **Deliverables**: Table 1 with P/D ratios across a grid of singularity probabilities and extinction risks, parameterization, interpretation of patterns, comparison to empirical evidence (Figure 1).
+- **Status**: FULFILLED. The section delivers a parameterized table, identifies three patterns (AI premium, increasing with p, compressed by extinction), and connects to the empirical evidence with appropriate hedging ("broadly suggestive," "imperfect comparison").
 
 ### Section 4: Extensions (Opening)
+- **Contract**: Examine further consequences of market incompleteness beyond the baseline pricing results.
+- **Deliverables**: Framing paragraph introducing two extensions.
+- **Status**: FULFILLED. The framing accurately describes what follows.
 
-- **Contract**: "Examines two further consequences" of market incompleteness beyond pricing: distortion of AI development and government policy.
-- **Deliverables**: Opening paragraph frames the two extensions.
-- **Status**: FULFILLED. The framing accurately describes what Extensions 1 and 2 deliver.
+### Section 4.1: Veto and Efficient Development
+- **Contract**: Show that market incompleteness distorts the development of AI.
+- **Deliverables**: Augmented model with positive singularity, social efficiency definition (Kaldor-Hicks), veto mechanism with deadweight cost, Proposition 3 (veto under incomplete markets, no veto under complete markets), proof, numerical example, discussion of extinction interaction and connection to AI regulation debates.
+- **Status**: FULFILLED. Proposition 3 delivers exactly what the title promises: market incompleteness causes the household to veto socially efficient AI development. The numerical example uses parameters consistent with the baseline (phi=0.5, eta=0.5, xi=5%). The claim that "calls to slow or halt AI development may partly reflect unhedgeable downside risk" is appropriately hedged ("may partly reflect").
 
-### Section 4.1: Extension 1 -- Veto and Efficient Development
-
-- **Contract**: Show how market incompleteness distorts AI development decisions via a veto mechanism.
-- **Deliverables**: Augmented model with positive singularity (probability q > 1/2), definition of social efficiency (Kaldor-Hicks), veto mechanism with cost kappa, Proposition 3 (household vetoes under incomplete markets but not under complete markets) with proof, numerical example, and discussion of extinction risk interaction and wealth heterogeneity.
-- **Status**: FULFILLED. Proposition 3 is stated with two parts (incomplete vs. complete markets) and proved. The numerical example uses specific parameters and reports outcomes. The connection to AI regulation debates is supported by the formal result.
-
-### Section 4.2: Extension 2 -- Government Transfers
-
-- **Contract**: Show how government transfers can restore efficiency, especially when singularity-driven growth overwhelms deadweight costs.
-- **Deliverables**: Transfer model with tax rate tau and deadweight cost parameter delta, effective displacement parameter phi_eff, equation showing transfer ratio is independent of eta, Figure 2 with two panels (P/D ratios and consumption changes), and discussion of the infinite-price-to-finite-price transition.
-- **Status**: FULFILLED. The section delivers a formal transfer mechanism, derives the key independence result (equation 8), provides a two-panel figure illustrating both baseline and large-singularity cases, and shows the dual role of transfers (pricing effect and real effect). The connection to the existence condition (Remark 1) is accurate.
+### Section 4.2: Government Transfers
+- **Contract**: Examine whether fiscal policy can address the market incompleteness problem.
+- **Deliverables**: Transfer mechanism with deadweight costs, effective displacement parameter (phi_eff), transfer ratio showing eta-independence, Figure 3 (two-panel: P/D ratios and consumption growth vs. tax rate), discussion of existence condition restoration, policy implications.
+- **Status**: FULFILLED. The section delivers a complete analysis: model, closed-form expressions, figure with two parameterizations (baseline and large singularity), and policy discussion. The figure illustrates both the baseline case (transfers ineffective) and the large-singularity case (transfers effective), as the spec requires. The claim about infinite P/D at tau=0 under the large singularity is supported by the existence condition from Remark 1.
 
 ### Section 5: Conclusion
-
-- **Contract**: Summarize the paper's contributions and acknowledge limitations.
-- **Deliverables**: Restates three main results, acknowledges deliberate simplicity and abstracted features.
-- **Status**: FULFILLED. The summary accurately reflects what the body delivers, without inflating claims.
+- **Contract**: Summarize the paper's contributions.
+- **Deliverables**: Recap of three results, acknowledgment of model simplicity, statement of the paper's limited ambition.
+- **Status**: FULFILLED. The conclusion accurately summarizes what the paper delivers without overstating.
 
 ### Appendix A: Proof of Proposition 1
-
-- **Contract**: Prove Proposition 1 (P/D ratios).
-- **Deliverables**: Euler equation derivation, three-state expansion, approximation discussion, backward recursion for exact values, and closed-form solution.
-- **Status**: FULFILLED. The proof derives the P/D formulas from the Euler equation and explains the approximation and the exact numerical method.
-
----
-
-## Cross-Reference Checks
-
-| Reference | Location | Target | Status |
-|-----------|----------|--------|--------|
-| Proposition 2 | Intro para 3 | Section 2.2 | Correct: Prop 2 states extinction attenuation |
-| Proposition 3 | Intro para 4 | Section 4.1 | Correct: Prop 3 states veto result |
-| Section 2 | Intro roadmap | Model section | Correct |
-| Section 3 | Intro roadmap | Quantitative Analysis | Correct |
-| Section 4 | Intro roadmap | Extensions | Correct |
-| Section 5 | Intro roadmap | Conclusion | Correct |
-| Figure 1 | Intro, Section 3 | Exhibit 1 | Correct |
-| Table 1 | Sections 2.2, 3 | Exhibit 2 | Correct |
-| Figure 2 | Section 4.2 | Exhibit 3 | Correct |
-| Remark 1 | Sections 2.3, 4.2, Fig 2 caption | Section 2.2 | Correct: existence condition |
-| Appendix A | Section 2.2 | Appendix | Correct: contains proof |
-| "Extension 1 showed..." | Section 4.2 opening | Section 4.1 | Correct: Extension 1 proves veto result |
-| eq (6) | Section 4.2 | eq (6) in same section | Correct |
-
-All cross-references point to content that exists and matches the description.
+- **Contract**: Prove Proposition 1.
+- **Deliverables**: Euler equation derivation, three-state expansion, closed-form solution, discussion of the approximation and numerically exact computation method.
+- **Status**: FULFILLED. The proof derives the P/D formula from the Euler equation, discloses the stationarity approximation, and describes the backward-recursion method for exact values.
 
 ---
 
-## Claim-Strength Assessment
+## Cross-Reference Audit
 
-1. **"fiscal policy can substitute for missing markets"** (Introduction, para 6): Slightly strong. Extension 2 shows transfers *partially* substitute by reducing effective displacement, not that they fully complete markets. The conclusion uses the more measured "can become effective," which is accurate. Minor overstatement in the introduction only.
+| Reference | Location | Target | Accurate? |
+|-----------|----------|--------|-----------|
+| Figure 1 (ai-valuations) | Intro para 1 | Exhibit 1: two-panel valuation figure | Yes |
+| Proposition 2 | Intro para 2 | Sec 2.2: extinction attenuation | Yes |
+| Proposition 3 | Intro para 3 | Sec 4.1: veto under incomplete markets | Yes |
+| Section 2 | Intro roadmap | Model section | Yes |
+| Section 3 | Intro roadmap | Quantitative Analysis | Yes |
+| Section 4 | Intro roadmap | Extensions | Yes |
+| Section 5 | Intro roadmap | Conclusion | Yes |
+| Appendix A | Prop 1 proof | Appendix A: proof of Prop 1 | Yes |
+| Section 4.2 | Remark 1 | Ext 2: government transfers | Yes |
+| Remark 1 | Sec 4.2 (existence) | Remark 1 in Sec 2.2 | Yes |
+| Table 1 | Sec 3 | Exhibit 2: P/D ratio table | Yes |
+| Figure 1 | Sec 3 (comparison) | Exhibit 1 | Yes |
+| Extension 1 | Sec 4.2 opening | Sec 4.1: veto result | Yes |
+| Eq (5) / phi_eff | Sec 4.2 | Derived in Sec 4.2 | Yes |
+| Prop 1 (with phi_eff) | Sec 4.2 | Prop 1 in Sec 2.2 | Yes |
 
-2. **"closed-form price-dividend ratios"** (Introduction, para 2): The model section acknowledges these rely on an approximation (post-singularity P/D treated as equal to pre-singularity). The intro does not caveat this, but the model section does so explicitly and provides numerically exact values in Table 1. Acceptable: the claim is accurate within the context of the full paper.
+All cross-references point to content that exists in the referenced location.
 
-3. **"P/D ratios for AI stocks can reach roughly twice those of non-AI stocks"** (Introduction, para 2): Supported by Table 1, which shows a ratio of about 2 at p = 1% with no extinction. Accurate.
+---
 
-4. **"the same explosive growth that drives the incomplete-markets problem also provides the means to overcome it"** (Introduction, para 7): The growth does not "drive" the incomplete-markets problem (displacement does); the growth is what makes transfers effective. However, reading charitably, "drives" refers to the singularity event that causes both displacement and growth simultaneously. Borderline but not materially misleading.
+## Claim-Strength Audit
 
-5. **All proposition claims**: Proposition statements are appropriately qualified. Proposition 2 explicitly restricts the ratio result to "the parameterizations considered." Proposition 3 uses existence quantifiers ("there exists a threshold") rather than universal claims.
+1. **"P/D ratios for AI stocks roughly double relative to non-AI stocks" (Intro)** -- Supported by Section 3's table analysis ("At p=1%, the ratio rises to 2"). Appropriately hedged with "roughly."
+
+2. **"the displacement-driven valuation premium largely collapses" under complete markets (Sec 2.3)** -- Hedged with "largely" since a residual spread from differential dividend growth is acknowledged. Claim strength matches evidence.
+
+3. **"calls to slow or halt AI development may partly reflect investors' inability to hedge" (Sec 4.1)** -- Appropriately hedged with "may partly reflect." Supported by Proposition 3.
+
+4. **"even grossly inefficient transfers become effective" under singularity (Intro)** -- Supported by Section 4.2's analysis and Figure 3. The transfer ratio (Eq 8) and figure demonstrate this.
+
+5. **"The magnitudes are broadly suggestive" (Sec 3)** -- Appropriate hedging for the empirical comparison. The paper explicitly notes the comparison is "imperfect."
+
+6. **"AI development is socially efficient in the Kaldor-Hicks sense" (Sec 4.1)** -- This is a definition, not a derived claim. Stated clearly as such ("We say"). No overclaim.
+
+No claims were found to be stronger than the evidence presented.
 
 ---
 
 ## Summary
 
-The paper's narrative is internally consistent and well-delivered. Every section fulfills the contract implied by its title and framing. All cross-references are accurate. Claim strength is generally well-calibrated, with two minor instances in the introduction where language is slightly stronger than the formal results (noted above), neither of which rises to the level of a material misrepresentation. The abstract and introduction claims are fully supported by the body sections.
+The paper maintains tight narrative discipline. Each section's title and opening framing set a clear contract, and the section's content delivers on that contract. Cross-references are uniformly accurate. Verbal claims are appropriately hedged and supported by the results actually present in the paper. The abstract and introduction claims are all backed by specific sections in the body. No unfulfilled promises or unsupported claims were identified.

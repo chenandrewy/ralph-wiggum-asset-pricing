@@ -1,25 +1,59 @@
 # Improvement Plan
-AUTHOR PLAN — 2026-04-11 21:14:22 EDT
+AUTHOR PLAN — 2026-04-11 21:24:19 EDT
 
-## Current State
+## Current Status
 
-- **Tests:** 24/25 pass. One failure: `writing-intro`.
-- **Model section:** All theory tests pass (clarity, deadweight, factcheck-theory, unmodeled-channels). No overhaul needed.
-- **Code:** Runs cleanly, all exhibits verified, parameters match paper.
-- **Referee concerns (CFR-R1):** Addressed—GKP relationship is handled modestly, Jones extinction channel incorporated, extensions on veto and transfers differentiate the paper.
+- **Tests**: 24/25 pass. One failure: `writing-intro`.
+- **Model section**: Sound. No overhaul needed.
+- **Code**: Clean, single entry point, all exhibits generated correctly.
+- **Referee report**: Addressed via Extensions (veto + transfers).
 
-## Failing Test: `writing-intro`
+## Key Issue: `writing-intro` Failure
 
-**Issue:** Argument (d) from the spec—"if the singularity occurs, then market frictions can be overcome due to the abundance of resources"—is buried in the body of paragraph 6 of the introduction. A skimming reader who reads only first sentences would miss it. The first sentence of paragraph 6 leads with the severity of frictions, which signals the opposite.
+The introduction's first three paragraphs are strong (vivid opening, clear mechanism, natural formalization). Paragraphs 4-7 lose coherence with abrupt transitions and disconnected summaries.
 
-**Fix:** Restructure the introduction's paragraph 6 (the one beginning "Financial market solutions to AI displacement risk are under-discussed...") so the resource-abundance mechanism is prominent in the opening sentence. The simplest approach:
+Specific problems identified by the test:
 
-1. Split paragraph 6 into two paragraphs:
-   - **Para 6a** (keep current opening): "Financial market solutions to AI displacement risk are under-discussed, and the frictions that limit them are severe..." — covers the under-discussed point and the nature of the friction.
-   - **Para 6b** (new paragraph, new opening sentence): Lead with the resource-abundance insight: something like "But if the singularity produces explosive output growth, even grossly inefficient government transfers become effective because the resource base overwhelms deadweight costs." Then continue with the Jones citation and the closing sentence about the same explosive growth providing the means to overcome the problem.
+| Location | Problem |
+|---|---|
+| P3 -> P4 | Extinction channel appears without preparation |
+| P4 -> P5 | Abrupt pivot from extinction to development distortions |
+| P6 | Generic "frictions are severe" paragraph reads as filler |
+| P6 -> P7 | "But if..." conjunction is jarring for introducing a new mechanism |
+| P7 -> Roadmap | Jones/redistribution result orphaned before roadmap |
 
-2. This split also addresses the secondary note from the test that the Para 6 → Para 7 (roadmap) transition is slightly abrupt: the new Para 6b ends on the resource-abundance point, which connects naturally to the roadmap's third linked result (redistribution).
+## Plan
 
-## No Other Changes Needed
+### Step 1: Restructure introduction paragraphs 4-7
 
-All other tests pass. The model, extensions, figures, code, and factual content are verified. No overhaul required. Focus this iteration entirely on the introduction paragraph restructuring.
+Goal: Make the second half of the introduction flow as naturally as the first half.
+
+Changes to `paper/paper.tex`, introduction section only:
+
+1. **Fold extinction into P3 (the model results paragraph).** The extinction attenuation is a model result, not a separate idea. Add one sentence at the end of P3 noting that extinction risk attenuates the premium (Prop 2), rather than giving it a standalone paragraph.
+
+2. **Merge current P4 (incomplete markets as key driver) with the extinction content.** After folding extinction into P3, repurpose the incomplete-markets framing as a bridge sentence: "Market incompleteness is the key driver---and its consequences extend beyond valuations."
+
+3. **Combine P5 (development distortions) and P6 (frictions) into one paragraph on extensions.** The current P6 is filler. Instead, write a single paragraph that (a) introduces market incompleteness distorting AI development (veto), (b) notes the natural fix is blocked by restricted ownership, and (c) pivots to government transfers as the alternative. This creates a clean narrative: incompleteness -> veto -> transfers.
+
+4. **Integrate the Jones/singularity-growth result into the extensions paragraph** rather than orphaning it in its own paragraph before the roadmap. The key insight (explosive growth overwhelms deadweight costs) belongs with the transfer discussion.
+
+5. **End with the roadmap paragraph**, which currently works fine and just needs the preceding material to flow into it.
+
+Target structure after revision:
+- P1: AI stocks are highly valued (Figure 1)
+- P2: Hedging motive mechanism
+- P3: Model formalization + quantitative results + extinction attenuation
+- P4: Incomplete markets as key driver; consequences beyond valuations
+- P5: Extensions — veto distortion, government transfers, singularity growth enabling redistribution
+- P6: Summary + roadmap + footnote
+
+### Step 2: Precision fix on "roughly twice" language
+
+The test flagged that "roughly twice...across plausible singularity probabilities" slightly overstates breadth (2x at p=1%, ~1.4x at p=0.5%). Tighten the language in P3 to be more precise about where the 2x ratio holds.
+
+### Step 3: Recompile and verify
+
+- Recompile `paper.tex` to PDF
+- Regenerate page images
+- Re-run `writing-intro` test to confirm fix
