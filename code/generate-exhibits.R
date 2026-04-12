@@ -196,14 +196,14 @@ df_ext <- expand.grid(tau = tau_grid,
   ) %>%
   ungroup()
 
-theme_paper <- theme_bw(base_size = 26) +
+theme_paper <- theme_bw(base_size = 28) +
   theme(
     legend.position = "bottom",
     legend.title = element_blank(),
-    legend.text = element_text(size = 22),
-    axis.text = element_text(size = 22),
-    axis.title = element_text(size = 24),
-    plot.title = element_text(size = 25),
+    legend.text = element_text(size = 24),
+    axis.text = element_text(size = 24),
+    axis.title = element_text(size = 26),
+    plot.title = element_text(size = 27),
     panel.grid.minor = element_blank(),
     panel.grid.major = element_line(color = "gray75")
   )
@@ -215,7 +215,7 @@ scenario_labels <- c(
 
 # Line styles: solid vs longdash with different widths for Panel (a) differentiation
 scenario_linetypes <- c("Baseline" = "solid", "Large singularity" = "longdash")
-scenario_linewidths <- c("Baseline" = 1.2, "Large singularity" = 1.6)
+scenario_linewidths <- c("Baseline" = 1.5, "Large singularity" = 1.6)
 
 # Darker, more saturated colors for better contrast
 scenario_colors <- c("Baseline" = "#B22222", "Large singularity" = "#1B4F99")
@@ -240,7 +240,7 @@ panel_a <- ggplot(pd_data_a,
   scale_y_continuous(limits = c(y_min_a, y_cap_a)) +
   annotate("label", x = exit_tau + 0.01, y = y_cap_a * 0.95,
            label = expression(P/D %->% infinity ~ "as" ~ tau %->% 0),
-           color = "#1B4F99", size = 6, hjust = 0, fontface = "bold",
+           color = "#1B4F99", size = 7, hjust = 0, fontface = "bold",
            fill = "white") +
   scale_color_manual(values = scenario_colors, labels = scenario_labels) +
   scale_linetype_manual(values = scenario_linetypes, labels = scenario_labels) +
@@ -252,24 +252,37 @@ panel_a <- ggplot(pd_data_a,
 cons_base_0 <- consumption_growth(0, 0.5, phi)
 cons_large_0 <- consumption_growth(0, 9.0, phi_large)
 
+## Compute baseline annotation points for readability
+cons_base_30 <- consumption_growth(0.30, 0.5, phi)
+cons_base_50 <- consumption_growth(0.50, 0.5, phi)
+
 panel_b <- ggplot(df_ext, aes(x = tau, y = cons_growth, color = scenario, linetype = scenario)) +
   geom_line(aes(linewidth = scenario)) +
   geom_hline(yintercept = 1, linetype = "dashed", color = "black", linewidth = 2.0) +
   # Catastrophe markers at tau=0
-  annotate("point", x = 0, y = cons_large_0, shape = 16, size = 3, color = "#1B4F99") +
-  annotate("text", x = 0.06, y = cons_large_0 * 0.65,
+  annotate("point", x = 0, y = cons_large_0, shape = 16, size = 4, color = "#1B4F99") +
+  annotate("text", x = 0.06, y = 0.42,
            label = paste0("Catastrophe:\n", round((1 - cons_large_0) * 100), "% loss"),
-           color = "#1B4F99", size = 4.5, hjust = 0, fontface = "bold") +
-  annotate("point", x = 0, y = cons_base_0, shape = 16, size = 3, color = "#B22222") +
+           color = "#1B4F99", size = 7, hjust = 0, fontface = "bold", vjust = 0) +
+  annotate("point", x = 0, y = cons_base_0, shape = 16, size = 4, color = "#B22222") +
   annotate("text", x = 0.06, y = cons_base_0 * 0.75,
            label = paste0(round((1 - cons_base_0) * 100), "% loss"),
-           color = "#B22222", size = 4, hjust = 0) +
-  annotate("text", x = 0.42, y = 1.15, label = "No change", color = "black", size = 5.5, fontface = "bold") +
+           color = "#B22222", size = 6, hjust = 0, fontface = "bold") +
+  # Baseline trajectory annotations showing numeric values
+  annotate("point", x = 0.30, y = cons_base_30, shape = 16, size = 3, color = "#B22222") +
+  annotate("label", x = 0.30, y = cons_base_30 * 1.25,
+           label = paste0(sprintf("%.1f", cons_base_30), "\u00d7"),
+           color = "#B22222", size = 5.5, fontface = "bold", fill = "white") +
+  annotate("point", x = 0.50, y = cons_base_50, shape = 16, size = 3, color = "#B22222") +
+  annotate("label", x = 0.50, y = cons_base_50 * 1.25,
+           label = paste0(sprintf("%.1f", cons_base_50), "\u00d7"),
+           color = "#B22222", size = 5.5, fontface = "bold", fill = "white") +
+  annotate("text", x = 0.42, y = 1.15, label = "No change", color = "black", size = 6.5, fontface = "bold") +
   labs(x = expression("Tax rate " * tau),
        y = "Household Consumption Growth\nin Singularity",
        title = "(b) Household Consumption") +
   scale_x_continuous(labels = scales::percent_format(), limits = c(0, 0.50)) +
-  scale_y_log10(breaks = c(0.1, 0.25, 0.5, 1, 2, 5)) +
+  scale_y_log10(breaks = c(0.5, 0.75, 1, 1.5, 2, 5), limits = c(0.4, 6)) +
   scale_color_manual(values = scenario_colors, labels = scenario_labels) +
   scale_linetype_manual(values = scenario_linetypes, labels = scenario_labels) +
   scale_linewidth_manual(values = scenario_linewidths, labels = scenario_labels) +
@@ -291,7 +304,7 @@ fig <- arrangeGrob(
   shared_legend,
   nrow = 2, heights = c(10, 1)
 )
-ggsave(file.path(outdir, "fig-extension-panels.pdf"), fig, width = 14, height = 8)
+ggsave(file.path(outdir, "fig-extension-panels.pdf"), fig, width = 16, height = 9)
 cat("Wrote", file.path(outdir, "fig-extension-panels.pdf"), "\n")
 
 # =============================================================================

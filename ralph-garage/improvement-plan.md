@@ -1,53 +1,44 @@
 # Improvement Plan
-AUTHOR PLAN — 2026-04-12 09:30:52 EDT
+AUTHOR PLAN — 2026-04-12 09:42:53 EDT
 
-## Status: 23/25 tests passing
+## Current State
 
-Two tests fail: `factcheck-freely`, `spec-paper`. No overhaul needed—the model section is sound and all economic requirements pass. Focus on the two failures.
+- **Tests**: 22/25 pass, 3 fail
+- **Model section**: Sound — no overhaul needed. Propositions are correctly stated and proved, economic intuition is clear, approximation vs exact computation is well-documented.
+- **Introduction**: Recently rewritten over many iterations (rloop-17 through rloop-27); writing and narrative tests all pass.
+- **Code**: Single `generate-exhibits.R` pipeline generating 3 exhibits; factcheck-code passes.
 
----
+## Failing Tests
 
-## Priority 1: Fix `factcheck-freely` (3 issues)
+### 1. `element-rhetoric-meta` (FAIL)
 
-### 1a. Qualify the transfer-ratio claim (Section 4.2, near eq. 9)
+**Problem**: The abstract's closing sentence — *"This paper demonstrates the displacement it models: AI agents produced all analysis and writing from a human-authored specification."* — is too blunt and prominent. The introduction footnote is fine. The test says this risks triggering the same aversion that caused the arxiv rejection.
 
-The paper says: "This ratio exceeds one whenever τ > 0: transfers always improve the household's position in the singularity state, regardless of η."
+**Fix** (paper/paper.tex, line 32): Soften the abstract sentence to be more allusive and self-referential rather than a direct disclosure. Instead of a flat declaration, lean into the irony — e.g., reference the displacement the paper models without explicitly announcing "AI agents produced all analysis and writing." Keep the explicit disclosure in the introduction footnote only.
 
-The ratio is `1 + τ(1 − δτ)(1 − φα)/(φα)`. This exceeds one only when `(1 − δτ) > 0`, i.e., `δτ < 1`. The claim needs the qualification "whenever τ > 0 **and** δτ < 1." For all parameterizations used in the paper (δ ≤ 0.9, τ < 1), the condition holds, but the unqualified statement is mathematically wrong.
+### 2. `visual-figures` (FAIL)
 
-**Fix:** Add "and δτ < 1" qualification to the sentence. Something like: "This ratio exceeds one whenever τ > 0 and δτ < 1 (i.e., deadweight costs do not consume the entire transfer)."
+**Problem**: Figure 2 (`fig-extension-panels`) has tick labels, legend text, and annotations that are too small to read comfortably. The "Catastrophe" annotation in Panel (b) is also too small.
 
-### 1b. Strengthen Proposition 2 proof (extinction attenuation)
+**Fix** (code/generate-exhibits.R): Increase font sizes for the extension figure:
+- Increase annotation `size` parameters (currently 4–6) to 6–8.
+- Verify legend text size (currently 22) is adequate at the rendered PDF dimensions (14×8 inches). May need to bump to 24.
+- Ensure tick labels (`axis.text`) are at least 22pt (already set, but figure dimensions may make them small — consider increasing `base_size` from 26 to 28 or the figure dimensions).
 
-The proof correctly identifies convexity of f(A) = A/(1−A) but skips the key step: why convexity plus A > 1/2 implies the conclusion. Need to show that the semi-elasticity f'(A)/f(A) = 1/[A(1−A)] is increasing for A > 1/2, so the larger absolute reduction in A^{AI} translates to a larger proportional reduction in the P/D ratio.
+### 3. `visual-figures-image-only` (FAIL)
 
-**Fix:** Add 1–2 sentences after the convexity statement explaining that for A > 1/2 the semi-elasticity is increasing, so equal absolute reductions produce larger proportional reductions at higher A values. Since A^{AI} > A^{N}, the ratio falls.
+**Problem**: Panel (b) baseline curve is compressed into a narrow band near y=1.0, making its trajectory unreadable alongside the large-singularity curve that reaches ~5x. A log scale is already used, but the baseline (ranging ~0.75 to ~1.2) occupies too little visual space relative to the large singularity (ranging ~0.5 to ~5).
 
-### 1c. Close Proposition 3 proof gap (infinite-horizon)
+**Fix** (code/generate-exhibits.R): Improve the visual separation of the two scenarios in Panel (b). Options ranked by preference:
+1. **Tighten y-axis limits and add more log-scale breaks** near the baseline range (e.g., breaks at `c(0.5, 0.75, 1, 1.5, 2, 5)` with limits `c(0.4, 6)`). This spreads the baseline's visual footprint.
+2. **Add explicit annotations on the baseline curve** at a few tau values showing the numeric consumption growth (e.g., "1.1×" at tau=0.3), so the baseline's modest gains are readable even when visually compressed.
+3. **Increase line width for the baseline** in Panel (b) to make its trajectory more visible.
 
-The proof shows one-period utility loss Δu(γ) grows without bound as γ → ∞, but the veto comparison is between infinite-horizon value functions. Need to link the per-period loss to the infinite-horizon inequality.
+Combining options 1 + 2 is likely the most effective approach.
 
-**Fix:** Add a sentence stating that in the infinite-horizon problem, V_develop − V_veto can be written as a discounted sum of per-period differences, with the singularity term contributing p(1−ξ)Δu(γ) each period. Since Δu(γ) → −∞ while the veto cost κ is fixed, the infinite-horizon inequality holds for γ large enough.
+## Execution Order
 
----
-
-## Priority 2: Fix `spec-paper` (lit review length)
-
-The lit review spans ~0.55–0.65 rendered pages, exceeding the half-page limit.
-
-**Fix:** Trim the lit review. Candidates for cuts:
-- The third paragraph (creative destruction citations + macro AI + rare disasters + Pastor-Veronesi) can be compressed to 1–2 lines by listing citations more compactly without individual descriptions.
-- The GKP paragraph could trim the sentence about "our contribution is the more modest one" since this is already stated elsewhere in the paper.
-
-Target: reduce from ~174 words / ~15 typeset lines to ~130 words / ~11 lines.
-
----
-
-## No other changes needed
-
-- All 28 economic sub-requirements pass.
-- Code generates correct exhibits (factcheck-code, factcheck-exhibits pass).
-- Model theory is correct (factcheck-theory passes).
-- Writing quality passes (writing-intro, writing-intuition pass).
-- Visual quality passes (visual-figures, visual-pages pass).
-- No referee tests are currently enabled.
+1. Fix Figure 2 readability issues (tests 2 + 3) in `code/generate-exhibits.R` — these are coupled and should be done together.
+2. Regenerate exhibits by running `Rscript code/generate-exhibits.R`.
+3. Fix the abstract rhetoric in `paper/paper.tex` line 32 (test 1).
+4. Recompile the paper and verify.

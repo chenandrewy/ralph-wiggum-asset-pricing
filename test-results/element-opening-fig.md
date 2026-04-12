@@ -1,18 +1,20 @@
 # tests/element-opening-fig.py
-Started: 2026-04-12 09:32:52 EDT
-Runtime: 51s
-[ralph-garage/agent-logs/20260412T093252.143769-0400_element-opening-fig_claude_opus.log](../ralph-garage/agent-logs/20260412T093252.143769-0400_element-opening-fig_claude_opus.log)
+Started: 2026-04-12 09:46:31 EDT
+Runtime: 50s
+[ralph-garage/agent-logs/20260412T094631.071854-0400_element-opening-fig_claude_opus.log](../ralph-garage/agent-logs/20260412T094631.071854-0400_element-opening-fig_claude_opus.log)
 
 # element-opening-fig
 VERDICT: PASS
-REASON: The figure is empirical, compares AI-proxy (NASDAQ) vs. broader-market (S&P 500) valuations using real data, directly supports the intro's motivating claim, and is publication-quality.
+REASON: The opening figure is empirical, compares AI-proxy and broad-market valuations using real data, directly supports the intro's motivating claim, and is publication-quality.
 
 ## Findings
 
-**Requirement 1 (Empirical, not theoretical):** Satisfied. Both panels plot real market data: Panel (a) uses the Shiller dataset for S&P 500 trailing P/D ratios; Panel (b) uses FRED NASDAQ data relative to S&P 500. Sources are cited in the caption.
+**Requirement 1 — Empirical, not theoretical:** Pass. The figure uses real market data: S&P 500 price-dividend ratios from the Shiller dataset and NASDAQ Composite prices from FRED. No model output appears in this figure.
 
-**Requirement 2 (Compares AI vs. non-AI valuations):** Satisfied, with a minor caveat. Panel (b) uses the NASDAQ Composite as a proxy for AI/tech-exposed stocks relative to the S&P 500. This is an imperfect proxy---NASDAQ includes non-AI firms, and S&P 500 includes major AI firms---but it is a standard and defensible choice for a motivating figure, and the caption explicitly states the interpretive logic ("the NASDAQ is heavily weighted toward AI and technology firms, so a rising ratio indicates growing relative valuations"). Panel (a) complements by showing that overall P/D ratios are at historically elevated levels.
+**Requirement 2 — Compares AI and non-AI valuations:** Pass. Panel (a) shows the S&P 500 trailing P/D ratio at historically elevated levels. Panel (b) shows the NASDAQ/S&P 500 price ratio (normalized to Jan 2015 = 100), using the NASDAQ Composite as a proxy for AI/technology-heavy stocks versus the broader market. The divergence since ~2023 is clearly visible. The proxy is imperfect (NASDAQ contains non-AI firms), but the caption is transparent about this, and the pattern is striking.
 
-**Requirement 3 (Supports intro's motivating claim):** Satisfied. The opening sentence claims "AI stocks trade at extraordinary valuations." Panel (a) shows the S&P 500 P/D ratio at historically high levels, and Panel (b) shows the NASDAQ sharply outpacing the S&P 500 since ~2015, with an acceleration post-2023 coinciding with generative AI advances. The text references the figure directly ("Figure 1 illustrates") and narrates both panels.
+**Requirement 3 — Supports the intro's motivating claim:** Pass. The opening sentence states that "publicly traded stocks most exposed to artificial intelligence have reached remarkable valuations." Panel (a) shows P/D at historic highs; Panel (b) shows the NASDAQ sharply outpacing the S&P since 2015, with the gap widening post-2023 as generative AI expectations accelerated. The figure-text connection is tight—the intro paragraph directly references Figure 1 and describes both panels.
 
-**Requirement 4 (Clear and publication-quality):** Satisfied. Two-panel layout is clean and well-organized. Distinct colors (red, blue) differentiate the panels. Axis labels, panel titles, and the reference dashed line at 100 in Panel (b) are all legible. The caption is detailed and informative, citing data sources. Layout on the rendered page (page 2) is well-positioned immediately after the opening paragraph.
+**Requirement 4 — Clear and publication-quality:** Pass. Two-panel layout is clean. Axis labels are legible, panel titles are descriptive, colors are distinct (red vs. blue), and the reference line at 100 in Panel (b) aids interpretation. The caption cites sources (FRED, Shiller dataset) and explains the normalization. Font sizes are appropriate for a journal figure.
+
+**Data sources:** Shiller dataset (S&P 500 P/D) and FRED (NASDAQ Composite). Not CRSP, but the guideline notes CRSP is ideal, not required. The Shiller and FRED sources are standard and credible.

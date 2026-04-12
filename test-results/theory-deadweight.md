@@ -1,56 +1,58 @@
 # tests/theory-deadweight.py
-Started: 2026-04-12 09:32:52 EDT
-Runtime: 2m 11s
-[ralph-garage/agent-logs/20260412T093252.129321-0400_theory-deadweight_claude_opus.log](../ralph-garage/agent-logs/20260412T093252.129321-0400_theory-deadweight_claude_opus.log)
+Started: 2026-04-12 09:46:31 EDT
+Runtime: 1m 54s
+[ralph-garage/agent-logs/20260412T094631.065298-0400_theory-deadweight_claude_opus.log](../ralph-garage/agent-logs/20260412T094631.065298-0400_theory-deadweight_claude_opus.log)
 
 # theory-deadweight
 VERDICT: PASS
-REASON: Every formal object, parameter, and proposition contributes to an economic claim, calibration, or narrative thread; no deadweight formalism found.
+REASON: Every formal object in the paper contributes to an economic claim, calibration, or narrative argument; no formalism is introduced and abandoned, ceremonial, or replaceable by plain English without losing precision.
 
 ## Audit Details
 
-### Parameters audited (all used)
+### Formal Inventory
 
-| Parameter | Introduced | Used in |
-|-----------|-----------|---------|
-| $C_t$, $g$ | Setup (eq 1) | P/D formulas, transfers (eq 7), veto numerics |
-| $\alpha_t$ | Setup | SDF, veto, transfers, throughout |
-| $p$ | Singularity | P/D formulas, calibration table, veto numerics |
-| $\xi$ | Singularity | Prop 2, calibration table, veto discussion |
-| $\eta$ | Singularity | P/D formulas, transfers, calibration |
-| $\phi$ | Displacement (eq 2) | P/D formulas, veto, transfers, Remark 1 |
-| $\theta_t$, $\Delta\theta$ | Assets | $\Gamma^{AI}$, $\Gamma^N$ in P/D formulas, calibration |
-| $\gamma$, $\beta$ | Preferences (eq 3) | P/D formulas, veto threshold, calibration |
-| $\Gamma^{AI}$, $\Gamma^N$ | Prop 1 | Core hedging-channel comparison, Prop 2 proof |
-| $A^j$ | Remark 1 (eq 6) | Prop 2 proof, Extension 2 (infinite P/D at low $\tau$) |
-| $q$ | Extension 1 | Veto proposition, numerical example |
-| $\kappa$ | Extension 1 | Veto proposition, numerical example |
-| $\alpha^+$ | Extension 1 | Veto proof (eq 8) |
-| $\tau$ | Extension 2 | Transfer consumption (eq 7), $\phi_\text{eff}$ (eq 8), figure |
-| $\delta$ | Extension 2 | Deadweight costs in transfers, figure |
-| $\phi_\text{eff}$ | Extension 2 (eq 8) | Bridges transfers back to Prop 1 P/D formula |
+**Parameters (all used):**
+- $C_t$, $g$: aggregate consumption and growth — used in setup, P/D formulas, calibration, extensions.
+- $\alpha_t$, $\phi$: household share and displacement — used in P/D formulas, calibration, veto proposition, transfers.
+- $p$, $\xi$, $\eta$: singularity probability, extinction probability, productivity boost — used in P/D formulas, Prop 2, calibration table, extensions.
+- $\theta_t$, $\Delta\theta$: AI dividend share and jump — used in P/D formulas, dividend growth factors, calibration.
+- $\gamma$, $\beta$: risk aversion and discount factor — used in utility, P/D formulas, veto threshold, calibration.
+- $q$: positive singularity probability (Extension 1) — used in Prop 3 and numerical example.
+- $\kappa$: veto cost (Extension 1) — used in Prop 3.
+- $\tau$, $\delta$: tax rate and deadweight cost (Extension 2) — used in transfer equations and figure.
+- $\phi_\text{eff}$: effective displacement (Extension 2) — bridges transfers to the P/D formula from Prop 1.
+- $\Gamma^{AI}$, $\Gamma^{N}$: dividend growth factors — used in P/D formulas, Prop 2, and discussion of hedging channel.
+- $A^j$: SDF-weighted growth (Remark 1) — used in Prop 2 proof and Extension 2 existence discussion.
 
-### Propositions audited (all contribute)
+**Propositions:**
+1. **Prop 1 (P/D ratios):** Core result. Delivers closed-form P/D ratios used in calibration (Table 1), discussion, and Extension 2 (via $\phi_\text{eff}$ substitution).
+2. **Prop 2 (Extinction attenuation):** Comparative static on $\xi$. Substantive: shows extinction partially offsets the hedging premium. Used in calibration discussion and connects to Jones (2024).
+3. **Prop 3 (Veto under incomplete markets):** Shows market incompleteness distorts real decisions, not just prices. Both parts (incomplete vs. complete markets) are essential for the paper's thesis. Numerical example sharpens the point.
 
-1. **Proposition 1 (P/D ratios)**: Core result. Delivers closed-form valuations used in calibration table, discussion of hedging channel, and Extension 2 (via $\phi_\text{eff}$ substitution).
-2. **Proposition 2 (Extinction attenuation)**: Interprets calibration table patterns. The proof is inline but all steps are necessary — the ratio result (not just the level result) requires the convexity and semi-elasticity argument.
-3. **Proposition 3 (Veto)**: Core extension result. Both parts (incomplete vs. complete markets) do distinct work. Numerical example grounds the result at reasonable parameter values.
+**Remark 1 (Existence condition):** Identifies when P/D ratios are infinite. Not ceremonial — referenced substantively in Extension 2, where the large-singularity parameterization violates the condition and transfers restore it. The remark number makes it easy to cross-reference.
 
-### Remark 1 (Existence condition)
+**Display equations (all contribute):**
+- eq:agg-consumption-growth: basic setup, referenced implicitly throughout.
+- eq:displacement: defines $\phi$, the paper's central displacement mechanism.
+- eq:utility: standard CRRA specification, underpins Euler equation and veto analysis.
+- eq:pd-ai, eq:pd-nonai: Prop 1 results, used in calibration and extensions.
+- eq:existence: Remark 1, referenced in Extension 2.
+- eq:veto-delta-u: Prop 3 proof, shows why risk aversion drives the veto.
+- eq:transfer-consumption: Extension 2, defines the transfer mechanism.
+- eq:phi-eff: bridges transfers to baseline P/D formula — not just algebra, but shows the economic connection.
+- eq:transfer-ratio: shows consumption improvement is independent of $\eta$ — a non-obvious fact that supports the "abundance overwhelms deadweight costs" argument. Prose alone would lose this precision.
+- eq:euler, eq:euler-expand, eq:pd-ai-solve: appendix proof steps for Prop 1.
 
-Not ceremonial. Directly invoked in Extension 2 to explain the infinite P/D ratio phenomenon in Figure 3 (large-singularity case at low tax rates). Also motivates why transfers matter — they restore the existence condition.
+### Checks Against Criteria
 
-### Other formal objects audited
+**1. Formalism introduced and then abandoned?**
+No. Every parameter, proposition, and equation is referenced in at least one of: a later result, the calibration, the figure, or the discussion. No formal object is orphaned.
 
-- **Euler equation and appendix proof**: Required by the paper's convention of explicit proofs. Standard derivation, no excess.
-- **AI owners**: Described but deliberately not given formal preferences or optimization — the paper explicitly states they are not marginal investors. This is the right level of formalism; modeling them further would be unnecessary.
-- **Complete-markets counterfactual** ($\phi_\text{eff} \to 1$): Invoked in discussion and Prop 3(ii) without a separate formal equilibrium. Efficient treatment.
-- **Transfer ratio (eq 9)**: Does economic work — shows the ratio is independent of $\eta$, which is the key insight enabling the "growth overwhelms deadweight costs" argument.
-- **$B$, $S$ in Prop 2 proof**: Intermediate proof variables, not promoted to named model objects. Appropriate.
+**2. Could any formal object's takeaway be stated in plain English without weakening the claims?**
+No. The key results (P/D ratios, extinction attenuation, veto threshold, transfer effectiveness) involve specific quantitative relationships that cannot be stated in prose without losing the precision needed for calibration and cross-referencing. For example, eq:transfer-ratio's independence from $\eta$ is a specific mathematical fact that drives the paper's policy argument.
 
-### Checks for specific failure modes
+**3. Variables introduced and unused in any result, calibration, or interpretation?**
+No. Every variable appears in at least one proposition, calibration value, or figure parameterization.
 
-- **Introduced and abandoned?** No. Every named object reappears in a result, calibration, or interpretation.
-- **Qualitative takeaway statable without formalism?** The P/D formulas, existence condition, and $\phi_\text{eff}$ bridge all provide quantitative content beyond what prose could deliver. The veto threshold $\bar{\gamma}$ is existence-type, not computable in plain English.
-- **Pompous or ceremonial?** No. The paper uses standard asset-pricing notation. No unnecessary generality (e.g., no general SDF beyond CRRA, no multi-good extensions, no continuous-time embedding).
-- **Auxiliary formal detours?** No. Each extension branches from the baseline with minimal new notation and directly addresses a stated economic question.
+**4. Pompous or ceremonial formalism? Auxiliary formal detours?**
+No. The paper is lean. There are no lemmas-for-the-sake-of-lemmas, no unnecessary generality, no detours into mathematical machinery that doesn't serve the economic argument. The Prop 2 proof is the most technical piece, but it proves a non-trivial claim (the P/D *ratio* decreases in $\xi$) that is used in the calibration discussion.
