@@ -1,13 +1,13 @@
 # tests/visual-figures-image-only.py
-Started: 2026-04-11 21:43:22 EDT
-Runtime: 1m 25s
-[ralph-garage/agent-logs/20260411T214322.790793-0400_visual-figures-image-only_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260411T214322.790793-0400_visual-figures-image-only_claude_claude-opus-4-6.log)
+Started: 2026-04-12 09:32:52 EDT
+Runtime: 1m 35s
+[ralph-garage/agent-logs/20260412T093252.169544-0400_visual-figures-image-only_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260412T093252.169544-0400_visual-figures-image-only_claude_claude-opus-4-6.log)
 
 # visual-figures-image-only
 
-VERDICT: PASS
+VERDICT: FAIL
 
-REASON: Both figures pass all readability, distinguishability, contrast, and use-of-space requirements.
+REASON: fig-extension-panels Panel (b) fails use-of-space — the baseline curve is compressed into a narrow band near y=1.0, making its trajectory effectively unreadable alongside the large-singularity curve.
 
 ---
 
@@ -15,43 +15,52 @@ REASON: Both figures pass all readability, distinguishability, contrast, and use
 
 VERDICT: PASS
 
-REASON: Both panels are clearly readable, use high-contrast series, fill the plot area well, and convey the intended message without ambiguity.
+REASON: Both panels have readable labels, high-contrast series, well-used plot area, and the reference line in Panel (b) is dark and clearly visible.
 
 ### Panel (a): S&P 500 P/D Ratio
 
-- **Readability:** PASS. Title "(a) S&P 500 P/D Ratio" is large and clear. Y-axis label "Price / Trailing Dividend" is legible. Tick labels on both axes (2003–2023 and 40–80) are appropriately sized and uncluttered.
-- **Distinguishability:** PASS. Single dark-red series on a white background; no ambiguity.
-- **Contrast:** PASS. Dark red/maroon line is bold and high-contrast against the white background. No reference lines or auxiliary marks to evaluate.
-- **Use of space:** PASS. Data ranges from roughly 30 to 90 on the y-axis; axis spans approximately 25–95. Data fills the vertical space well. X-axis spans the full date range. No large empty regions.
-- **Narrative clarity:** PASS. Reader can immediately see that the P/D ratio has risen to historically elevated levels comparable to the early-2000s dot-com peak.
+- **Readability:** PASS. The panel title "(a) S&P 500 P/D Ratio" is large and clear. The y-axis label ("Price / Trailing Dividend") is legible. Tick labels on both axes (2003, 2008, 2013, 2018, 2023 on x; 40, 60, 80 on y) are appropriately sized and not overlapping or cut off.
+- **Distinguishability:** PASS. There is a single dark red/maroon time series line. No ambiguity or confusion with other series.
+- **Contrast:** PASS. The dark red line is clearly visible against the white background.
+- **Use of space:** PASS. The data ranges from roughly 30 to 90 on the y-axis. The y-axis spans approximately 30 to 90, fitting the data tightly. The x-axis spans the full sample period (~2000 to ~2025) with data filling the range. No large empty regions.
+- **Narrative clarity:** PASS. A reader can immediately see that the S&P 500 P/D ratio hit a peak around 2000, fell sharply during the financial crisis (~2008-2009), then climbed back to historically elevated levels by the 2020s.
 
 ### Panel (b): NASDAQ vs. S&P 500
 
-- **Readability:** PASS. Title "(b) NASDAQ vs. S&P 500" is clear. Y-axis label wraps to two lines but remains legible. Tick labels are clear.
-- **Distinguishability:** PASS. Single blue series plus one black dashed reference line at 100. Both are immediately identifiable.
-- **Contrast:** PASS. Blue line is bold and high-contrast. Dashed black reference line at 100 is thick and clearly visible.
-- **Use of space:** PASS. Data ranges from roughly 55 to 145; y-axis spans approximately 60–150. Both bounds are tight to the data. X-axis covers the full sample. No wasted space.
-- **Narrative clarity:** PASS. Reader can see that NASDAQ has outperformed the S&P 500 dramatically since roughly 2015, consistent with growing relative valuations of AI/tech firms.
+- **Readability:** PASS. The panel title "(b) NASDAQ vs. S&P 500" is large and clear. The y-axis label ("NASDAQ / S&P 500 Price Ratio (Jan 2015 = 100)") is legible. Tick labels on both axes are appropriately sized.
+- **Distinguishability:** PASS. There is a single blue time series line and one black dashed reference line at 100. The two are clearly distinguishable by color, line type, and orientation.
+- **Contrast:** PASS. The blue line is dark and high-contrast. The dashed reference line at 100 is rendered in black, making it immediately visible.
+- **Use of space:** PASS. The data ranges from roughly 60 to 145. The y-axis spans approximately 60 to 150. Headroom above maximum data (~5 units) is well within the 20% threshold (0.2 × 85 = 17).
+- **Narrative clarity:** PASS. The NASDAQ was relatively expensive at the start (dot-com era), crashed, then steadily outperformed the S&P 500 from around 2010 onward, with sharp acceleration post-2020 associated with AI/tech enthusiasm.
+
+### Figure-Level Narrative
+
+Equity valuations have reached historically elevated levels (Panel a), disproportionately driven by AI and technology firms as evidenced by the NASDAQ's growing premium over the broad S&P 500 (Panel b).
 
 ---
 
 ## fig-extension-panels
 
-VERDICT: PASS
+VERDICT: FAIL
 
-REASON: Both panels are readable, distinguishable, use space efficiently, and convey the figure's narrative clearly.
+REASON: Panel (b) fails use-of-space — the baseline curve is compressed into a narrow band near y=1.0, making its trajectory visually indistinguishable from flat.
 
 ### Panel (a): AI Stock Valuations
 
-- **Readability:** PASS. Title is large and clear. Axis labels ("Tax rate τ" and "P/D Ratio (AI Stocks)") are properly sized. Tick labels (0%–40% on x-axis; 8–16 on y-axis) are legible. Annotation "P/D → ∞ as τ → 0" is boxed with white background and bold text.
-- **Distinguishability:** PASS. Two series use distinct colors (dark red solid vs. dark blue dashed) with different line widths. Immediately separable. Shared legend at bottom clearly labels each scenario.
-- **Contrast:** PASS. Both lines use dark, saturated colors (firebrick red and dark blue) against light gray grid. Grid lines do not compete with data lines.
-- **Use of space:** PASS. Y-axis spans 7–16 (data range approximately 8–15); headroom is within the 20% threshold. X-axis spans 0%–40%, matching data range.
+- **Readability:** PASS. The panel title "(a) AI Stock Valuations" is clearly readable. Axis labels ("Tax rate tau", "P/D Ratio (AI Stocks)") are legible. Tick labels on both axes are appropriately sized. The annotation "P/D -> infinity as tau -> 0" is readable and boxed.
+- **Distinguishability:** PASS. The two series — red solid (Baseline) and blue dashed (Large singularity) — are clearly distinguishable by both color and line style.
+- **Contrast:** PASS. Both main curves are dark and high-contrast. No problematic reference lines.
+- **Use of space:** PASS. The y-axis spans 8–16 and data runs from roughly 9 to 15. The x-axis spans 0%–40% and data fills this range.
+- **Narrative clarity:** PASS. Transfers (higher tau) compress P/D ratios, and the large-singularity scenario has undefined P/D at low tau, illustrating divergence.
 
 ### Panel (b): Household Consumption
 
-- **Readability:** PASS. Title is large and readable. Axis labels are properly sized. Log-scale y-axis shows well-chosen breaks at 0.5, 1.0, 2.0, 5.0. Annotations ("Catastrophe: 50% loss", "25% loss", "No change") are clearly placed without overlap.
-- **Distinguishability:** PASS. Same color/linetype encoding from Panel (a) carries over: dark red solid vs. dark blue dashed. Black dashed "No change" reference line at y=1 is thick with bold annotation. Catastrophe markers (filled dots at τ=0) are well-placed and labeled.
-- **Contrast:** PASS. All lines are dark and high-contrast against white/light-gray background. Reference line at y=1 is thick black dashed — highly visible. No light gray or low-opacity elements carry important information.
-- **Use of space:** PASS. Y-axis spans approximately 0.3–5.5 on log scale, tightly containing the plotted curves. X-axis spans 0%–50%, with curves still rising at the boundary — axis extent is appropriate.
-- **Narrative clarity:** PASS. Figure clearly shows that government transfers compress AI stock valuations (Panel a) and transform a consumption catastrophe into large consumption gains (Panel b), connecting asset pricing and welfare consequences of the same policy lever.
+- **Readability:** PASS. Title, axis labels, and tick labels are all legible. Annotations ("Catastrophe: 50% loss", "25% loss", "No change") are readable. The y-axis uses a multiplicative scale (0.5, 1.0, 2.0, 5.0).
+- **Distinguishability:** PASS. Red solid (Baseline) and blue dashed (Large singularity) are clearly distinguishable. The black dashed "No change" reference line at y=1.0 is thick and high-contrast.
+- **Contrast:** PASS. The "No change" reference line is thick black dashed — clearly visible. All curves are dark and well-contrasted.
+- **Use of space:** FAIL. The y-axis extends to approximately 5.0. The large-singularity curve (blue dashed) reaches roughly 5.0 at the right edge, but the baseline curve (red solid) is confined to a narrow band between roughly 0.8 and 1.2. The baseline's trajectory — economically important for showing modest gains from transfers — is essentially flattened into a thin strip near y=1.0. A reader cannot gauge whether baseline transfers help at all; "modestly" is visually indistinguishable from "not at all" at this scale. The two scenarios span such different magnitudes that co-plotting them compresses the baseline into near-illegibility.
+- **Narrative clarity:** PASS. The caption and figure convey the main message: absent transfers, households face catastrophic consumption losses; under a large singularity, even modest transfers produce enormous consumption gains. However, the baseline scenario's story is partially lost due to the compression issue.
+
+### Figure-Level Narrative
+
+The extensions figure shows how AI singularity scenarios affect both asset valuations (Panel a) and household welfare (Panel b). The large-singularity parameterization produces dramatic effects — exploding P/D ratios and enormous consumption gains from transfers — while the baseline shows more modest outcomes.

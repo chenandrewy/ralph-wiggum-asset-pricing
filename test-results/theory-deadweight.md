@@ -1,69 +1,56 @@
 # tests/theory-deadweight.py
-Started: 2026-04-11 21:43:22 EDT
-Runtime: 1m 43s
-[ralph-garage/agent-logs/20260411T214322.784493-0400_theory-deadweight_claude_opus.log](../ralph-garage/agent-logs/20260411T214322.784493-0400_theory-deadweight_claude_opus.log)
+Started: 2026-04-12 09:32:52 EDT
+Runtime: 2m 11s
+[ralph-garage/agent-logs/20260412T093252.129321-0400_theory-deadweight_claude_opus.log](../ralph-garage/agent-logs/20260412T093252.129321-0400_theory-deadweight_claude_opus.log)
 
 # theory-deadweight
 VERDICT: PASS
-REASON: Every formal object in the paper contributes to a result, calibration, or economic interpretation; no deadweight formalism was found.
+REASON: Every formal object, parameter, and proposition contributes to an economic claim, calibration, or narrative thread; no deadweight formalism found.
 
-## Audit methodology
+## Audit Details
 
-Inventoried every formal object (parameters, variables, equations, propositions, remarks) and checked whether each (a) appears in at least one result, calibration, or interpretation that matters for the paper's conclusions, (b) could be replaced by plain English without weakening the economic claims, and (c) avoids ceremonial or pompous detours.
+### Parameters audited (all used)
 
-## Inventory of formal objects and their uses
+| Parameter | Introduced | Used in |
+|-----------|-----------|---------|
+| $C_t$, $g$ | Setup (eq 1) | P/D formulas, transfers (eq 7), veto numerics |
+| $\alpha_t$ | Setup | SDF, veto, transfers, throughout |
+| $p$ | Singularity | P/D formulas, calibration table, veto numerics |
+| $\xi$ | Singularity | Prop 2, calibration table, veto discussion |
+| $\eta$ | Singularity | P/D formulas, transfers, calibration |
+| $\phi$ | Displacement (eq 2) | P/D formulas, veto, transfers, Remark 1 |
+| $\theta_t$, $\Delta\theta$ | Assets | $\Gamma^{AI}$, $\Gamma^N$ in P/D formulas, calibration |
+| $\gamma$, $\beta$ | Preferences (eq 3) | P/D formulas, veto threshold, calibration |
+| $\Gamma^{AI}$, $\Gamma^N$ | Prop 1 | Core hedging-channel comparison, Prop 2 proof |
+| $A^j$ | Remark 1 (eq 6) | Prop 2 proof, Extension 2 (infinite P/D at low $\tau$) |
+| $q$ | Extension 1 | Veto proposition, numerical example |
+| $\kappa$ | Extension 1 | Veto proposition, numerical example |
+| $\alpha^+$ | Extension 1 | Veto proof (eq 8) |
+| $\tau$ | Extension 2 | Transfer consumption (eq 7), $\phi_\text{eff}$ (eq 8), figure |
+| $\delta$ | Extension 2 | Deadweight costs in transfers, figure |
+| $\phi_\text{eff}$ | Extension 2 (eq 8) | Bridges transfers back to Prop 1 P/D formula |
 
-### Core parameters (all appear in Propositions 1-2, Table 1, and/or extensions)
-| Object | Introduced | Used in |
-|--------|-----------|---------|
-| $C_t$, $g$ (eq 1) | Setup | P/D formulas via $(1+g)^{1-\gamma}$; calibration |
-| $\alpha_t$, $\phi$ (eq 2) | Setup | SDF, P/D formulas via $\phi^{-\gamma}$; veto analysis; transfer analysis |
-| $p$, $\xi$, $\eta$ | Setup | P/D formulas; Prop 2 (extinction attenuation); Table 1 grid axes; Extension 2 |
-| $\theta_t$, $\Delta\theta$ | Assets | $\Gamma^{AI}$, $\Gamma^{N}$ definitions; Table 1 |
-| $\gamma$, $\beta$ (eq 3) | Preferences | P/D formulas; veto threshold $\bar{\gamma}$ (Prop 3); calibration |
+### Propositions audited (all contribute)
 
-### Propositions and remarks
-| Object | Role | Deadweight? |
-|--------|------|-------------|
-| Prop 1 (P/D ratios) | Core pricing result; drives Table 1 and all quantitative analysis | No |
-| Remark 1 (existence condition) | Foreshadows Extension 2; directly used in Figure 3 narrative (infinite P/D at $\tau=0$) | No |
-| Prop 2 (extinction attenuation) | Second main result; verified in Table 1 | No |
-| Prop 3 (veto) | Extension 1 main result; illustrated with numerical example | No |
+1. **Proposition 1 (P/D ratios)**: Core result. Delivers closed-form valuations used in calibration table, discussion of hedging channel, and Extension 2 (via $\phi_\text{eff}$ substitution).
+2. **Proposition 2 (Extinction attenuation)**: Interprets calibration table patterns. The proof is inline but all steps are necessary — the ratio result (not just the level result) requires the convexity and semi-elasticity argument.
+3. **Proposition 3 (Veto)**: Core extension result. Both parts (incomplete vs. complete markets) do distinct work. Numerical example grounds the result at reasonable parameter values.
 
-### Derived quantities
-| Object | Role | Deadweight? |
-|--------|------|-------------|
-| $\Gamma^{AI}$, $\Gamma^{N}$ | Core of the hedging mechanism comparison; appear in Prop 1-2 and proof of Prop 2 | No |
-| $A^j$ (eq 6) | Compact form for existence condition; used in Prop 2 proof and Extension 2 | No |
+### Remark 1 (Existence condition)
 
-### Extension 1 parameters
-| Object | Role | Deadweight? |
-|--------|------|-------------|
-| $q$ (positive singularity prob) | Appears in Prop 3 proof (eq 7) and numerical example ($q=0.70$) | No |
-| $\kappa$ (veto cost) | Appears in Prop 3 statement and numerical example ($\kappa=1\%$) | No |
-| $\alpha^+$ | Appears in eq 7 and proof | No |
-| $\Delta u(\gamma)$ (eq 7) | Core of Prop 3 proof; shows how risk aversion drives veto | No |
+Not ceremonial. Directly invoked in Extension 2 to explain the infinite P/D ratio phenomenon in Figure 3 (large-singularity case at low tax rates). Also motivates why transfers matter — they restore the existence condition.
 
-### Extension 2 parameters
-| Object | Role | Deadweight? |
-|--------|------|-------------|
-| $\tau$ (tax rate) | x-axis of Figure 3; appears in eqs 8-10 | No |
-| $\delta$ (deadweight cost) | Appears in eqs 8-10; calibrated at 0.5 and 0.9 | No |
-| $\phi_\text{eff}$ (eq 9) | Links transfers to baseline pricing (Prop 1 with $\phi \to \phi_\text{eff}$) | No |
-| Transfer ratio (eq 10) | Key insight: ratio is $\eta$-independent, so levels grow with singularity size | No |
-| $c^H_{post}$ (eq 8) | Defines household post-transfer consumption; basis for Figure 3 panel (b) | No |
+### Other formal objects audited
 
-### Appendix
-The Euler equation derivation (eqs 11-13) is the proof of Proposition 1, required by the spec (all propositions explicitly proved, long proofs in appendix).
+- **Euler equation and appendix proof**: Required by the paper's convention of explicit proofs. Standard derivation, no excess.
+- **AI owners**: Described but deliberately not given formal preferences or optimization — the paper explicitly states they are not marginal investors. This is the right level of formalism; modeling them further would be unnecessary.
+- **Complete-markets counterfactual** ($\phi_\text{eff} \to 1$): Invoked in discussion and Prop 3(ii) without a separate formal equilibrium. Efficient treatment.
+- **Transfer ratio (eq 9)**: Does economic work — shows the ratio is independent of $\eta$, which is the key insight enabling the "growth overwhelms deadweight costs" argument.
+- **$B$, $S$ in Prop 2 proof**: Intermediate proof variables, not promoted to named model objects. Appropriate.
 
-## Checks for specific failure modes
+### Checks for specific failure modes
 
-**Introduced-then-abandoned formalism:** None found. Every parameter introduced in the Setup appears in at least one of Propositions 1-3, the calibration table, or the extension figures.
-
-**Qualitative takeaway replaceable by plain English:** The display equations are concise (most are one line) and all carry quantitative content used in calibrations or proofs. Equation (1) ($C_{t+1} = (1+g)C_t$) and equation (2) ($\alpha_{t+1} = \phi\alpha_t$) are simple enough to state in prose, but they establish notation referenced in later equations, so removing them would require more verbose prose elsewhere. This is standard and not deadweight.
-
-**Unused variables/parameters:** None. Every symbol introduced appears in a result, proof, or calibration.
-
-**Pompous or ceremonial formalism:** The paper uses only three propositions and one remark. There are no lemmas, corollaries, definitions, or assumptions environments. The model has a small parameter set (9 core parameters, 3 extension-specific parameters per extension). The formalism is lean relative to standard theory papers in top finance journals.
-
-**Auxiliary formal detours:** None. The paper moves linearly: setup -> pricing -> quantitative analysis -> extensions -> conclusion. There are no side results or tangential formal excursions.
+- **Introduced and abandoned?** No. Every named object reappears in a result, calibration, or interpretation.
+- **Qualitative takeaway statable without formalism?** The P/D formulas, existence condition, and $\phi_\text{eff}$ bridge all provide quantitative content beyond what prose could deliver. The veto threshold $\bar{\gamma}$ is existence-type, not computable in plain English.
+- **Pompous or ceremonial?** No. The paper uses standard asset-pricing notation. No unnecessary generality (e.g., no general SDF beyond CRRA, no multi-good extensions, no continuous-time embedding).
+- **Auxiliary formal detours?** No. Each extension branches from the baseline with minimal new notation and directly addresses a stated economic question.

@@ -1,91 +1,59 @@
 # tests/factcheck-code.py
-Started: 2026-04-11 21:43:22 EDT
-Runtime: 1m 49s
-[ralph-garage/agent-logs/20260411T214322.773879-0400_factcheck-code_claude_opus.log](../ralph-garage/agent-logs/20260411T214322.773879-0400_factcheck-code_claude_opus.log)
+Started: 2026-04-12 09:32:52 EDT
+Runtime: 2m 36s
+[ralph-garage/agent-logs/20260412T093252.130492-0400_factcheck-code_claude_opus.log](../ralph-garage/agent-logs/20260412T093252.130492-0400_factcheck-code_claude_opus.log)
 
 # factcheck-code
+
 VERDICT: PASS
-REASON: The canonical analysis path runs from scratch, produces all three exhibits, and every quantitative claim in the paper is consistent with the code.
+
+REASON: The canonical analysis path runs from scratch, produces all three exhibits, and all numerical claims in the paper are consistent with the code.
 
 ## Canonical local analysis path
 
-- **Single entry point:** `code/generate-exhibits.R` (run via `Rscript code/generate-exhibits.R`).
-- **Outputs:** Three files written to `paper/exhibits/`:
-  1. `table-pd-ratios.tex` — P/D ratio table (Exhibit 2)
-  2. `fig-extension-panels.pdf` — Extension two-panel figure (Exhibit 3)
-  3. `fig-ai-valuations.pdf` — S&P 500 P/D and NASDAQ/S&P ratio figure (Exhibit 1)
-- **External data:** Downloads S&P 500 data from datahub.io (Shiller dataset) and NASDAQ composite from FRED. No WRDS credentials or local caches required.
-- **Dependencies:** R packages `ggplot2`, `dplyr`, `tidyr`, `gridExtra`, `scales`.
-- **No intermediate files or precomputed caches.** All model computations (table, extension figure, veto example) are performed from parameters defined at the top of the script.
+Single entry point: `code/generate-exhibits.R`, run via `Rscript code/generate-exhibits.R`. Produces three outputs directly to `paper/exhibits/`:
+
+1. `table-pd-ratios.tex` — P/D ratio table (Exhibit 2)
+2. `fig-extension-panels.pdf` — two-panel extension figure (Exhibit 3)
+3. `fig-ai-valuations.pdf` — S&P 500 P/D and NASDAQ/S&P ratio (Exhibit 1)
+
+Additionally prints veto example computations (Section 4.1) to console.
 
 ## Execution status
 
-| Item | Status |
-|------|--------|
-| R available in environment | Yes |
-| Script runs from scratch | Yes, completed successfully |
-| All three exhibits generated | Yes |
-| Runtime | Well under 180 seconds |
-| External downloads | Succeeded (datahub.io, FRED) |
-| Warnings | Minor ggplot warnings about rows outside scale range (cosmetic, expected for capped axes) |
-
-**Classification: Locally reproducible** (all three exhibits). Requires network access for the empirical figure data download, which is consistent with spec III.3.d ("including any external data download").
+- **Executed successfully from scratch.** All three exhibits regenerated.
+- **Runtime dependencies:** R 4.2.2 with packages `ggplot2`, `dplyr`, `tidyr`, `gridExtra`, `scales`. All available in this environment.
+- **Network access:** Required for two downloads (Shiller S&P 500 data from datahub.io, NASDAQ data from FRED). Both succeeded. This is compatible with the spec, which allows up to 180 seconds including external data downloads (spec III.3.d).
+- **No local caches or precomputed intermediates required.** The `data/` directory is empty and unused. Compliant with spec III.3.c.
+- **Warnings:** ggplot2 warns about rows removed due to scale limits in the extension figure panels. These are intentional — the code caps y-axis ranges for readability and annotates the out-of-range behavior.
 
 ## Paper-code consistency
 
-### Parameters
-All parameters in the code match the paper's stated values:
+All verified claims match:
 
-| Parameter | Code | Paper (line 189, 231, 267) | Match |
-|-----------|------|----------------------------|-------|
-| beta | 0.96 | 0.96 | Yes |
-| g | 0.02 | 0.02 | Yes |
-| gamma | 4 | 4 | Yes |
-| phi | 0.50 | 0.5 | Yes |
-| eta | 0.50 | 0.5 | Yes |
-| theta | 0.15 | 0.15 | Yes |
-| dtheta | 0.20 | 0.2 | Yes |
-| alpha0 | 0.70 | 0.70 | Yes |
-| delta | 0.50 | 0.5 | Yes |
-| phi_large | 0.05 | 0.05 | Yes |
-| gamma_veto | 10 | 10 | Yes |
-| p_veto | 0.01 | 1% | Yes |
-| kappa_veto | 0.01 | 1% | Yes |
-| q (prob_pos_v) | 0.70 | 0.70 | Yes |
-| xi_ext | 0.05 | 5% | Yes |
-
-### Quantitative claims verified
-
-1. **Table values (line 191):** "p=0.5%, xi=0%: AI P/D about 15.5, non-AI near 11, ratio about 1.4." Table output: 15.5, 11.1, 1.4. Consistent.
-2. **Table values (line 191):** "At p=1%, the ratio rises to 2." Table output: ratio = 2.0. Consistent.
-3. **Veto example (line 231):** "household vetoes under incomplete markets." Code output: V_veto (-15.32) > V_develop (-15.53). Consistent.
-4. **Veto example (line 231):** "Under complete markets... does not veto." Code output: V_develop_CM (-13.46) > V_veto (-15.32). Consistent.
-5. **phi(1+eta) = 0.75 (line 189):** 0.5 * 1.5 = 0.75. Consistent.
-6. **Large singularity phi(1+eta) = 0.5 (line 267):** 0.05 * 10 = 0.5. Consistent.
-7. **phi^(-gamma) = 160,000 (line 269):** 0.05^(-4) = 160,000. Consistent.
-8. **delta=0.9, tau=0.30 gives 3.5x consumption (line 265):** Computed 3.52. Consistent with "3.5x."
-
-### Per-share data (Requirement 5)
-
-Not applicable. The code uses aggregate price indices (S&P 500, NASDAQ composite) and trailing dividend yields from the Shiller dataset. No per-share quantities are combined with share counts from different sources.
-
-### Exhibit coverage
-
-All files in `paper/exhibits/` are referenced in the paper:
-- `fig-ai-valuations.pdf` at line 46
-- `table-pd-ratios.tex` at line 186
-- `fig-extension-panels.pdf` at line 275
-
-No orphaned or missing exhibit files.
+| Paper claim | Code/output | Status |
+|---|---|---|
+| Parameters: β=0.96, g=0.02, γ=4, φ=0.5, η=0.5, θ=0.15, Δθ=0.2 | Lines 18–24 of `generate-exhibits.R` | Match |
+| p=0.5%, ξ=0: AI P/D ≈ 15.5, non-AI ≈ 11, ratio ≈ 1.4 | Table row: 15.5, 11.1, 1.4 | Match |
+| p=1%, ξ=0: ratio rises to 2 | Table row: 26.5, 13.3, 2.0 | Match |
+| Extension: α=0.70, p=0.5%, ξ=5%, δ=0.5 | Lines 138–184 | Match |
+| Large singularity: η=9, φ=0.05 (φ(1+η)=0.5) | Line 25, lines 187–196 | Match |
+| δ=0.9 illustration: net transfer 0.219 at τ=0.30, consumption multiple 3.5× | Verified numerically: 0.219 and 3.52 (rounds to 3.5) | Match |
+| τ=0 catastrophe: consumption halves (large sing.), falls 25% (baseline) | φ(1+η)=0.5 and 0.75 confirmed | Match |
+| Veto example: γ=10, p=1%, κ=1%, q=0.70, α=0.70 → veto under incomplete, develop under complete | Console output confirms V_veto > V_develop (incomplete), V_develop > V_veto (complete) | Match |
+| AI P/D computed by backward recursion over post-singularity θ chain | `compute_pd_ai_exact` function, lines 51–80 | Match |
+| Non-AI closed form is exact (Γ^N is θ-independent) | Paper states this; code uses `compute_pd_approx` for non-AI (no recursion needed) | Consistent |
 
 ## Reproducibility classification
 
 | Output | Classification |
-|--------|---------------|
-| `table-pd-ratios.tex` | Locally reproducible |
-| `fig-extension-panels.pdf` | Locally reproducible |
-| `fig-ai-valuations.pdf` | Locally reproducible (requires network for data download, permitted by spec) |
-| Veto example (console output, referenced in-text) | Locally reproducible |
-| All in-text quantitative claims checked | Consistent with code |
+|---|---|
+| `table-pd-ratios.tex` | **Locally reproducible** — pure computation, no external data |
+| `fig-extension-panels.pdf` | **Locally reproducible** — pure computation, no external data |
+| `fig-ai-valuations.pdf` | **Locally reproducible with network access** — requires downloading S&P 500 and NASDAQ data |
+| Veto example (Section 4.1) | **Locally reproducible** — console output from same script |
+| All theoretical propositions | Not code-dependent — mathematical derivations in the paper |
 
-No violations found.
+No per-share data issues arise: the empirical figure uses index-level prices and trailing dividends from the Shiller dataset and a FRED price index. No share counts are combined across sources.
+
+No hidden or unnecessary auxiliary files. The `data/` directory is empty. The code is self-contained in a single script with a clear header documenting how to run it, its inputs, and its outputs.

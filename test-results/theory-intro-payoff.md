@@ -1,30 +1,29 @@
 # tests/theory-intro-payoff.py
-Started: 2026-04-11 21:43:22 EDT
-Runtime: 1m 5s
-[ralph-garage/agent-logs/20260411T214322.801347-0400_theory-intro-payoff_claude_opus.log](../ralph-garage/agent-logs/20260411T214322.801347-0400_theory-intro-payoff_claude_opus.log)
+Started: 2026-04-12 09:32:52 EDT
+Runtime: 1m 8s
+[ralph-garage/agent-logs/20260412T093252.130993-0400_theory-intro-payoff_claude_opus.log](../ralph-garage/agent-logs/20260412T093252.130993-0400_theory-intro-payoff_claude_opus.log)
 
 # theory-intro-payoff
 VERDICT: PASS
-REASON: Every modeling feature introduced in the model and extensions maps to an economic result that is previewed in the introduction.
+REASON: Every modeling feature leads to an economic result discussed in the introduction.
 
 ## Detailed Findings
 
 ### Mapping of modeling features to introduction payoffs
 
-| Modeling Feature | Where Introduced | Introduction Payoff |
-|---|---|---|
-| Discrete AI singularity with displacement (φ) | Section 2.1 (eq. 2) | Para 2: "investors use AI stocks to partially insure against displacement from AI" |
-| Market incompleteness (restricted AI equity) | Section 2.1, Assets paragraph | Para 2: "investors cannot trade the restricted equity"; Para 4: "market incompleteness is the key driver" |
-| Two assets: AI stocks (θ, Δθ) vs non-AI stocks | Section 2.1, Assets paragraph | Para 3: "P/D ratios for AI stocks roughly double relative to non-AI stocks" |
-| Extinction risk (ξ) from Jones (2024) | Section 2.1, Singularity paragraph | Para 3: "extinction risk attenuates the premium" and "Proposition 2 quantifies this attenuation" |
-| CRRA preferences (γ > 1, β) | Section 2.1, Preferences paragraph | Implicitly supports hedging channel and veto result; risk aversion drives both |
-| Closed-form P/D ratios (Proposition 1) | Section 2.2 | Para 3: "The model delivers closed-form price-dividend ratios" with quantitative magnitudes |
-| Positive singularity (probability q) and veto cost (κ) | Section 4.1 | Para 5: "risk-averse household...may rationally choose to block it—the uninsurable downside looms larger than the expected upside (Proposition 3)" |
-| Government transfers (τ) with deadweight costs (δ) | Section 4.2 | Para 6–7: "Government transfers can substitute for missing markets, but standard fiscal tools are limited by deadweight costs"; "singularity can produce output growth so large that even grossly inefficient transfers become effective" |
-| Existence condition (Remark 1) | Section 2.2 | Not explicitly named in the intro, but the economic consequence (infinite hedging demand motivating transfers) is covered in para 7: "the resource base overwhelms the deadweight costs." The extensions discussion ties it to the transfer mechanism. |
+| # | Modeling Feature | Economic Result | Intro Coverage |
+|---|---|---|---|
+| 1 | Discrete AI singularity with displacement parameter φ | AI stocks command a hedging premium because they pay off when household consumption falls | Para 2–3: "investors use AI stocks to partially insure against displacement from AI" |
+| 2 | Market incompleteness (restricted equity unavailable for trading) | Valuation spread between AI and non-AI stocks; identified as "the key driver" | Para 2–3: "Because investors cannot trade the restricted equity, they turn to publicly traded AI stocks as the only available partial hedge" |
+| 3 | Extinction risk ξ (Jones 2024) | Attenuates the valuation premium; Proposition 2 | Para 3: "extinction risk attenuates the premium, because the states in which AI is powerful enough to produce enormous growth are also those in which existential risk is highest" |
+| 4 | Two public assets: AI stocks (θ share) and non-AI stocks | Closed-form P/D ratios; AI P/D roughly doubles non-AI at p=1% | Para 3: "closed-form price-dividend ratios…P/D ratios for AI stocks roughly double relative to non-AI stocks" |
+| 5 | Positive singularity (probability q), veto mechanism with cost κ | Risk-averse household may rationally block socially efficient AI development; Proposition 3 | Para 5: "a risk-averse household that cannot hedge displacement may rationally choose to block it—the uninsurable downside looms larger than the expected upside" |
+| 6 | Government transfers (tax rate τ) with deadweight costs (δτ) | Singularity-driven growth overwhelms deadweight costs, making even inefficient transfers effective | Para 6–7: "singularity can produce output growth so large that even grossly inefficient transfers become effective, because the resource base overwhelms the deadweight costs" |
+| 7 | CRRA preferences with γ > 1 | High marginal utility in displacement states drives hedging demand and veto incentive | Para 3 (implied via displacement mechanics) and para 5: "risk-averse household" |
+| 8 | Existence condition (Remark 1: infinite hedging demand when displacement is extreme) | Motivates government transfers as necessary to restore finite prices | Para 7 (implicitly): "the same explosive growth that drives the incomplete-markets problem also provides the means to overcome it" |
 
-### Assessment
+### Summary paragraph from introduction confirming full coverage
 
-The introduction previews three linked results (para 8): "(1) a hedging-based explanation for AI valuation premia, (2) a rationale for resistance to AI development rooted in market incompleteness, and (3) a mechanism through which singularity-driven growth enables effective redistribution despite frictions." Every modeling ingredient in Sections 2–4 serves at least one of these three results, and each result is clearly flagged in the introduction before the reader encounters the formal model.
+The introduction explicitly enumerates all three main results in its penultimate paragraph: "the paper offers three linked results: a hedging-based explanation for AI valuation premia, a rationale for resistance to AI development rooted in market incompleteness, and a mechanism through which singularity-driven growth enables effective redistribution despite frictions."
 
-The only borderline item is the existence condition (Remark 1), which is a technical result rather than a standalone modeling feature. Its economic consequence—that displacement can be so severe that no finite price clears the market—is not explicitly named in the introduction, but it is implicitly covered by the discussion of how transfers overcome the incomplete-markets problem. Since this is a remark supporting the transfer result rather than an independent economic finding, it does not constitute a failure.
+No modeling feature is orphaned (present in the model without a payoff in the introduction), and no introduction claim lacks a corresponding model feature.
