@@ -1,22 +1,32 @@
 # tests/spec-scope.py
-Started: 2026-04-11 21:27:07 EDT
-Runtime: 44s
-[ralph-garage/agent-logs/20260411T212707.761103-0400_spec-scope_claude_opus.log](../ralph-garage/agent-logs/20260411T212707.761103-0400_spec-scope_claude_opus.log)
+Started: 2026-04-11 21:43:22 EDT
+Runtime: 34s
+[ralph-garage/agent-logs/20260411T214322.783450-0400_spec-scope_claude_opus.log](../ralph-garage/agent-logs/20260411T214322.783450-0400_spec-scope_claude_opus.log)
 
 # spec-scope
 VERDICT: PASS
-REASON: The paper maintains a compact theoretical scope with illustrative quantitative material, no empirical estimation, and no broad prediction menus.
+REASON: The paper maintains a compact theoretical scope with illustrative (not calibrated) quantitative material, no empirical tests, and no broad prediction menus.
 
 ## Findings
 
-**Theoretical core.** The paper develops a single, tightly specified asset pricing model with three propositions: closed-form P/D ratios (Prop 1), extinction attenuation of the valuation spread (Prop 2), and a veto result under incomplete markets (Prop 3). All results are analytical, derived from a representative-household Euler equation with CRRA preferences. The model is deliberately parsimonious — discrete time, one representative household, two asset classes, a binary singularity event.
+### Theoretical core
+The paper develops a single discrete-time asset pricing model with CRRA preferences, two publicly traded assets (AI and non-AI stocks), and a stochastic singularity event. It delivers three propositions:
+1. Closed-form price-dividend ratios (Proposition 1)
+2. Extinction attenuation of the valuation spread (Proposition 2)
+3. Veto under incomplete vs. complete markets (Proposition 3)
 
-**Empirical content: minimal and illustrative.** The only empirical exhibit is Figure 1, which plots the S&P 500 P/D ratio and the NASDAQ/S&P 500 price ratio as motivating evidence. The paper explicitly qualifies this as "imperfect" and "broadly suggestive" (Section 3, around line 189), not as a formal empirical test. There is no regression, estimation, or structural calibration.
+All three are tightly linked to the same model and mechanism (hedging displacement under incomplete markets).
 
-**Quantitative material: illustrative, not calibrated.** Table 1 reports P/D ratios across a grid of singularity probabilities and extinction risks using a fixed parameterization. This is comparative statics over a parameter grid — the standard approach for illustrative theory papers. The paper does not claim to match moments, estimate parameters from data, or provide calibrated quantitative predictions. Figure 2 similarly illustrates the transfer extension with two parameterizations.
+### Empirical content: minimal and illustrative
+- **Figure 1** shows S&P 500 P/D ratios and NASDAQ-to-S&P relative performance. This is motivational, not a formal empirical test.
+- **Table 1** reports P/D ratios across a parameter grid. The paper explicitly calls the comparison to data "imperfect" and "broadly suggestive" (Section 3), not a calibration exercise.
+- No regression analysis, no GMM estimation, no formal empirical hypothesis testing.
 
-**No broad prediction menus.** The paper delivers exactly three linked results (hedging premium, veto distortion, transfer effectiveness) and does not branch into additional testable implications, cross-sectional predictions, or auxiliary models.
+### No broad prediction menus
+The paper does not generate lists of testable predictions or cross-sectional implications. It focuses on one mechanism and its qualitative implications for valuations, development distortions, and transfers.
 
-**Self-described scope.** The conclusion states: "Our model is deliberately simple. It abstracts from continuous-time dynamics, heterogeneous beliefs, production-side details, and many other features that would enrich the analysis. The goal is not to provide a definitive account of AI stock valuations but to highlight a specific channel."
+### Extensions are focused
+The two extensions (veto distortion, government transfers) both flow directly from the core incomplete-markets mechanism. They do not introduce new asset classes, additional agents, or alternative models. The conclusion explicitly acknowledges the model is "deliberately simple" and lists features it abstracts from.
 
-All of this is consistent with a compact theoretical scope.
+### Quantitative material is illustrative
+Parameters are chosen for transparency ($\phi = 0.5$, $\eta = 0.5$, $\gamma = 4$, etc.) and the paper explores comparative statics across a grid rather than fitting to data. The large-singularity parameterization ($\eta = 9$, $\phi = 0.05$) in Extension 2 is used to illustrate a theoretical point about deadweight costs, not to match moments.

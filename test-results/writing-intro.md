@@ -1,59 +1,65 @@
 # tests/writing-intro.py
-Started: 2026-04-11 21:27:07 EDT
-Runtime: 2m 47s
-[ralph-garage/agent-logs/20260411T212707.771372-0400_writing-intro_claude_opus.log](../ralph-garage/agent-logs/20260411T212707.771372-0400_writing-intro_claude_opus.log)
+Started: 2026-04-11 21:43:22 EDT
+Runtime: 3m 35s
+[ralph-garage/agent-logs/20260411T214322.823519-0400_writing-intro_claude_opus.log](../ralph-garage/agent-logs/20260411T214322.823519-0400_writing-intro_claude_opus.log)
 
 # writing-intro
 VERDICT: FAIL
-REASON: Key arguments (c)–(e) from the spec are not recoverable by a skimmer reading only first sentences; one quantitative promise is under-delivered.
+REASON: The introduction fulfills all analytical promises but loses narrative momentum in paragraphs 4–7 and buries the "under-discussed" contribution claim so that a skimming reader cannot recover it.
 
 ## Subagent Results
 
 ### 1. Skimmability of Main Arguments — FAIL
 
-Arguments (a) and (b) from the spec are exemplary—each leads a paragraph's first sentence in plain language:
-- **(a)** "Part of this premium, we argue, reflects a hedging motive" (¶2, first sentence). Clear.
-- **(b)** "Under complete markets the displacement-driven premium would largely vanish… market incompleteness is the key driver" (¶4, first sentence). Clear.
+Each of the five spec arguments (a–e) was checked for recoverability by a reader scanning only topic sentences and emphasized text.
 
-Three arguments fail the skimmability test:
-- **(c)** "Financial market solutions to AI disaster risk are under-discussed, though frictions can limit their effectiveness." The Introduction says the market fix is *blocked* by restricted ownership, but never states that financial market solutions are *under-discussed* in the literature. The normative/rhetorical claim from the spec is absent.
-- **(d)** "If the singularity occurs, market frictions can be overcome due to abundance of resources." Present in ¶5 but buried mid-paragraph ("The singularity changes this calculus…"). A skimmer reading only first sentences misses it entirely, since ¶5 opens with the natural fix being blocked.
-- **(e)** "Incomplete markets may distort not only valuations, but also the development of AI." This is the *second* sentence of ¶4, subordinated to the complete-markets point. It is a substantial independent result that deserves its own paragraph lead or at minimum its own first sentence.
+| Argument | Verdict | Notes |
+|----------|---------|-------|
+| (a) AI stocks hedge against negative singularity | PASS | Topic sentence of P2 delivers this directly with "Part of this premium...reflects a hedging motive" |
+| (b) Incomplete markets are key | PASS (marginal) | Single-sentence P4 states "market incompleteness is the key driver" but lacks visual emphasis; easy to scroll past |
+| (c) Financial market solutions are under-discussed | FAIL | The topic sentence of P6 foregrounds "frictions severely limit their effectiveness" rather than the normative claim that these solutions are under-discussed. A skimmer absorbs the negative result but misses the contribution claim. |
+| (d) Singularity abundance overcomes frictions | PASS | Topic sentence of P7 delivers this nearly verbatim |
+| (e) Incomplete markets distort AI development | PASS | Topic sentence of P5 matches spec almost word-for-word |
 
-**Recommendation:** Restructure so each of the five arguments leads its own paragraph, or add a compact summary paragraph early in the Introduction that states all five arguments in sequence.
+**Recommended fix for (c):** Foreground the under-discussion claim more aggressively before pivoting to frictions, e.g., "**Financial market solutions** to AI disaster risk—broader equity trading, government redistribution—are strikingly under-discussed relative to regulatory and alignment approaches."
 
-### 2. Introduction Flow — PASS
+### 2. Introduction Flow — FAIL
 
-The introduction flows well:
-- ¶1→¶2: Empirical puzzle to proposed explanation ("Part of this premium, we argue…"). Clean.
-- ¶2→¶3: Informal mechanism to formalization ("To formalize this mechanism…"). Logical.
-- ¶3→¶4: Positive result to its key driver (market incompleteness) and real-side consequences. Well-motivated.
-- ¶4→¶5: Problem (distorted AI development) to proposed remedy (fiscal policy). Natural.
-- ¶5→¶6: Surprising insight (singularity growth enables redistribution) to roadmap summary. Standard.
+The introduction has a strong opening (P1–P3) but loses narrative momentum in the back half (P4–P7).
 
-One minor rough edge: the extinction risk / Proposition 2 content in ¶3 arrives somewhat abruptly as "a second force" mid-paragraph. Not a flow-breaker.
+| Transition | Assessment |
+|------------|------------|
+| P1 → P2 | Strong: empirical puzzle → paper's answer |
+| P2 → P3 | Strong: verbal claim → formalization |
+| P3 → P4 | Adequate but P4 is underdeveloped as a one-sentence paragraph |
+| P4 → P5 | Thin bridge: the leap from "markets are incomplete" to "this distorts AI development" needs more setup |
+| P5 → P6 | **Jarring**: genre shift from veto result to policy/literature-gap paragraph without signaling |
+| P6 → P7 | Effective: the "however" reversal works well |
+| P7 → P8 | Abrupt closure: "three linked results" listed but not unified |
 
-### 3. Promise Fulfillment — FAIL (marginal)
+**Core issue:** The paper has a compelling three-act arc (hedging premium → development distortion → singularity-scale redistribution), but paragraphs 4–7 present results in a fragmented, additive style rather than as a building argument. The reader finishes the introduction knowing *what* the three results are but not feeling the narrative logic that connects them.
 
-Nine of ten checkable promises are fully delivered:
+**Recommended fixes:**
+1. Expand P4 or merge it into P3—the complete-markets counterfactual is too important for a one-sentence paragraph.
+2. Add a transition sentence at the start of P5 (e.g., bridging from "valuations are distorted" to "behavior is also distorted").
+3. Add a framing sentence at the top of P6 (e.g., "This raises the question of whether financial markets or policy can correct these distortions.").
+4. At the end of P8, add one sentence explaining why these three results form a unified paper.
 
-| # | Promise | Verdict |
-|---|---------|---------|
-| 1 | Closed-form P/D ratios | PASS — Proposition 1 |
-| 2 | P/D roughly doubles at p=1% | PASS — Table 1 |
-| 3 | Proposition 2 quantifies extinction attenuation | PASS |
-| 4 | Complete markets → premium vanishes | PASS — Discussion §2.3 |
-| 5 | Risk-averse household may block AI (Prop. 3) | PASS — Extension 1 |
-| 6 | Fiscal policy / government transfers | PASS — Extension 2 |
-| 7 | "Even grossly inefficient transfers become effective" | MARGINAL FAIL |
-| 8 | Three linked results all present | PASS |
-| 9 | Section roadmap matches actual sections | PASS |
-| 10 | AI-written paper footnote | PASS — footnote in ¶6 |
+### 3. Promise Fulfillment — PASS
 
-Promise 7 details: The Introduction claims "even grossly inefficient transfers become effective." Extension 2 and Figure 3 show the mechanism with δ=0.5 (50% deadweight cost), which is suggestive. However, no explicit threshold or table demonstrates the transition from ineffective to effective transfers as a function of deadweight severity. The strong language in the Introduction implies a more direct quantitative demonstration than what is provided.
+All promises and implied analyses in the introduction are fulfilled in the body of the paper.
 
-**Recommendation:** Either add a numerical example showing transfer effectiveness at a very high δ value (e.g., δ=0.9) that would ordinarily preclude effectiveness, or moderate the Introduction's language to match the figure's demonstration.
+| Promise | Verdict | Notes |
+|---------|---------|-------|
+| Closed-form P/D ratios | PASS | Proposition 1, with approximation disclosed |
+| P/D doubles at p=1% | PASS | Stated explicitly in Section 3 |
+| Proposition 2 quantifies extinction attenuation | PASS | Formal proof provided |
+| Complete-markets premium vanishes | PASS (informal) | Argued in Section 2.3 discussion, no separate theorem |
+| Proposition 3: veto under incomplete markets | PASS | Delivered with proof and numerical example |
+| Transfers limited by deadweight costs | PASS | Modeled and shown in Figure 3 |
+| Singularity abundance overcomes frictions | PASS | Quantified with 3.5× example |
+| Section structure matches roadmap | PASS | Exact match |
+| AI-produced paper claim | Consistent | Cannot verify from text alone but internally consistent |
+| Figure 1, Proposition 2, Proposition 3 exist | PASS | All present and properly labeled |
 
-## Overall Assessment
-
-The introduction is well-written with strong flow, but fails on skimmability of the full argument set and has one marginal promise-fulfillment gap. Two of three subagents returned FAIL.
+**Minor flag:** The complete-markets benchmark (promise 4) is only argued discursively in Section 2.3 via the intuition that φ_eff → 1. A short formal statement or corollary would strengthen the claim, but the current treatment is adequate given the introduction does not promise a formal proof.

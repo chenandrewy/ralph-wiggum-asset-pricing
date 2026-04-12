@@ -1,25 +1,38 @@
 # tests/factcheck-anaphora.py
-Started: 2026-04-11 21:27:07 EDT
-Runtime: 5m 20s
-[ralph-garage/agent-logs/20260411T212707.778762-0400_factcheck-anaphora_claude_opus.log](../ralph-garage/agent-logs/20260411T212707.778762-0400_factcheck-anaphora_claude_opus.log)
+Started: 2026-04-11 21:43:22 EDT
+Runtime: 4m 51s
+[ralph-garage/agent-logs/20260411T214322.792186-0400_factcheck-anaphora_claude_opus.log](../ralph-garage/agent-logs/20260411T214322.792186-0400_factcheck-anaphora_claude_opus.log)
 
 # factcheck-anaphora
-VERDICT: PASS
-REASON: All demonstratives near cross-references resolve correctly to their intended targets.
+VERDICT: FAIL
+REASON: One demonstrative near a cross-reference has ambiguous resolution between an empirical and a theoretical comparison.
 
-## Findings by section
+## Findings
 
-### Introduction (lines 38–70)
-No anaphora resolution errors. Cross-references to Figure 1, Proposition 2, Proposition 3, and section labels all match their targets. Demonstratives like "this attenuation" near Proposition 2 correctly resolve to the extinction-attenuates-premium mechanism that the proposition formalizes.
+### Section: Introduction (lines 38–74)
+**PASS.** All demonstratives near cross-references resolve correctly:
+- "such gains" near `Figure~\ref{fig:ai-valuations}` — refers to "transformative productivity gains" in the same sentence; the figure shows valuation data consistent with that context.
+- "this attenuation" near `Proposition~\ref{prop:comp-statics}` — refers to the extinction-risk attenuation just described; the proposition states the valuation spread decreases in extinction probability. Match.
+- "the downside" near `Proposition~\ref{prop:veto}` — refers to displacement downside; the proposition addresses the household's veto under incomplete markets driven by unhedgeable downside. Match.
 
-### Model (lines 71–175)
-No anaphora resolution errors. "This condition" near the existence condition (Remark 1) correctly resolves to A^j < 1. References to Proposition 1, Table 1, Appendix A, and Section 4.2 all align with their targets.
+### Section: Model (lines 75–179)
+**PASS.** All demonstratives near cross-references resolve correctly:
+- "this condition" (line 152) near `Section~\ref{sec:ext2}` — refers to the existence condition $A^j < 1$ stated in the same remark. Match.
+- "This is the hedging channel" (line 157) near `Proposition~\ref{prop:pd-ratios}` — refers to the mechanism just described (AI stocks pay off when household consumption falls). Match.
+- "This condition" (line 166) near `Table~\ref{tab:pd-ratios}` — refers to the $A^j > 1/2$ condition stated two sentences prior. Match.
 
-### Quantitative Analysis (lines 176–193)
-No anaphora resolution errors. References to Table 1, Proposition 2, and Figure 1 all match their targets without demonstrative ambiguity.
+### Section: Quantitative Analysis (lines 180–197)
+**FAIL.** One ambiguous demonstrative found:
+- **Line 193**: "This comparison is imperfect" appears after a sentence referencing `Figure~\ref{fig:ai-valuations}`. The demonstrative "This comparison" could resolve to (a) the empirical comparison between NASDAQ and S&P 500 shown in the figure, or (b) the theoretical comparison between AI and non-AI stock valuations from the model (discussed via `Table~\ref{tab:pd-ratios}` in the preceding paragraph). The subsequent qualifications ("the NASDAQ is broader than 'AI stocks'...") clarify the intended referent is the empirical-to-theoretical mapping, but the demonstrative itself is ambiguous between the figure's empirical content and the table's theoretical content.
 
-### Extensions and Conclusion (lines 194–289)
-No anaphora resolution errors. References to equations (transfer-consumption, phi-eff), Proposition 1, Proposition 3, Remark 1, and Figure 3 all resolve correctly. Panel references (left/right) match figure caption ordering (a/b).
+### Section: Extensions (lines 198–282)
+**PASS.** All demonstratives near cross-references resolve correctly. Key instances:
+- "This connects to debates about AI regulation: Proposition~\ref{prop:veto} implies..." — "This" refers to the preceding discussion of extinction risk interacting with the veto distortion. The proposition addresses the veto mechanism. Match.
+- No other demonstratives appear immediately before cross-references in this section.
 
-### Appendix: Proof of Proposition 1 (lines 290–321)
-No anaphora resolution errors. The one demonstrative "This" before \eqref{eq:pd-ai} unambiguously refers to the preceding display equation and correctly states it can be rewritten as the Proposition 1 form.
+### Section: Conclusion (lines 283–293)
+**PASS.** No cross-references appear in this section. All demonstratives ("this mechanism", "this premium") have clear, unambiguous antecedents within the local text.
+
+### Section: Proof of Proposition (lines 294–325)
+**PASS.** One demonstrative near a cross-reference:
+- "This can be rewritten as equation~\eqref{eq:pd-ai}" — "This" refers to the formula in `eq:pd-ai-solve` derived immediately above. The target `eq:pd-ai` is the equivalent P/D ratio formula from Proposition 1. Match.

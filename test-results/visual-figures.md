@@ -1,73 +1,60 @@
 # tests/visual-figures.py
-Started: 2026-04-11 21:27:07 EDT
-Runtime: 1m 14s
-[ralph-garage/agent-logs/20260411T212707.791660-0400_visual-figures_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260411T212707.791660-0400_visual-figures_claude_claude-opus-4-6.log)
+Started: 2026-04-11 21:43:22 EDT
+Runtime: 1m 23s
+[ralph-garage/agent-logs/20260411T214322.801260-0400_visual-figures_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260411T214322.801260-0400_visual-figures_claude_claude-opus-4-6.log)
 
 # visual-figures
 
-VERDICT: FAIL
+VERDICT: PASS
 
-REASON: Figure 1 passes all checks, but Figure 2 fails on readability (small axis/legend text) and distinguishability (too many similar line styles in Panel a).
+REASON: Both figures have readable labels, distinguishable series, and clear narrative messages.
 
 ---
 
-## Figure 1 (page 2)
+## Figure 1 (page 2): AI Valuations — S&P 500 P/D Ratio and NASDAQ vs. S&P 500
 
 **VERDICT: PASS**
 
-**REASON:** Both panels are clearly readable with distinguishable single-series lines, legible labels, and a caption that fully conveys the main message.
+**REASON:** Both panels are readable, distinguishable, and clearly convey the intended message of historically elevated and diverging AI-related valuations.
 
 ### Panel (a): S&P 500 P/D Ratio
 
-- **Readability:** PASS. Panel title, y-axis label ("Price / Trailing Dividend"), and tick labels are all clearly legible. X-axis shows years (2003–2023) at regular intervals.
-- **Distinguishability:** PASS. Single red line series with no competing elements. No legend needed.
+- **Readability:** PASS. The panel title "(a) S&P 500 P/D Ratio" is clearly legible. The y-axis label "Price / Dividend" is readable. Tick labels on both axes are legible, with x-axis showing years (2003, 2008, 2013, 2018, 2023) and the y-axis showing values. A horizontal dashed reference line is present with a label ("Historical Threshold") that is small but readable.
+- **Distinguishability:** PASS. There is a single dark line series against a light background. The dashed reference line is clearly distinct from the main series in both style (dashed vs. solid) and weight. No legend clutter or overlapping elements.
+- **Assessment:** Clean single-series time-series plot. The sharp rise in P/D ratios to historically elevated levels is immediately visible.
 
 ### Panel (b): NASDAQ vs. S&P 500
 
-- **Readability:** PASS. Panel title, y-axis label ("NASDAQ / S&P 500 Price Ratio (Jan 2015 = 100)"), and tick labels are all clearly legible.
-- **Distinguishability:** PASS. Single blue line plus a black dashed reference line at 100, trivially distinguishable by color, style, and orientation.
+- **Readability:** PASS. The panel title "(b) NASDAQ vs. S&P 500" is clearly legible. The y-axis label referencing the price ratio normalized to January 2015 = 100 is readable (though the label text is somewhat long, it is not truncated or overlapping). X-axis tick labels showing years are clear. A vertical dashed reference line is present and labeled.
+- **Distinguishability:** PASS. A single dark line series with a clean background. The vertical reference line is visually distinct (dashed). No overlapping series or ambiguous encodings.
+- **Assessment:** The NASDAQ's sharp outperformance of the S&P 500 starting around 2015 and accelerating after 2023 is immediately apparent.
 
 ### Narrative Clarity
 
-- **From figure and caption alone:** U.S. equity valuations have reached historically elevated levels (Panel a), driven disproportionately by technology/AI-heavy stocks whose prices have grown substantially relative to the broad market since ~2015 (Panel b).
-- **From figure and paper text:** The paper uses these panels as motivating evidence that AI-related stocks command a growing valuation premium, reflecting a hedging motive where investors use AI stocks to partially insure against displacement.
+- **From figure and caption alone:** The figure shows two facets of elevated AI-related valuations. Panel (a) shows the S&P 500 price-dividend ratio has risen to historically elevated levels. Panel (b) shows the NASDAQ Composite has dramatically outpaced the broader S&P 500 since 2015, with the gap widening sharply since 2023. Together, the panels document both the absolute level of market valuations and the growing relative premium commanded by AI/tech-heavy stocks.
+- **From figure and paper text:** The paper argues this valuation premium reflects a hedging motive: because most AI equity is restricted, publicly traded AI stocks serve as the only available partial hedge against displacement from an AI singularity. The figure motivates the theoretical model by establishing the empirical fact that AI-exposed stocks command a large and growing valuation premium.
 
 ---
 
-## Figure 2 (page 14)
+## Figure 2 (page 15): Government Transfers — AI Stock Valuations and Household Consumption
 
-**VERDICT: FAIL**
+**VERDICT: PASS**
 
-**REASON:** Panel (a) axis labels and legend text are too small to read comfortably, and several legend entries are difficult to distinguish from one another.
+**REASON:** Both panels are readable, series are clearly distinguishable, and the figure's main message is understandable from the caption alone.
 
 ### Panel (a): AI Stock Valuations
 
-- **Readability:** FAIL.
-  - Y-axis label ("P/D (Price/Dividend Ratio)") and x-axis label ("Tax rate tau") are very small and hard to read.
-  - Legend text is small; five entries crammed into a compact box with difficult-to-read descriptions.
-  - Tick labels on both axes are small but marginally legible.
-  - Panel title "(a) AI Stock Valuations" is adequately sized.
-- **Distinguishability:** FAIL.
-  - Five series with three using dashed/dotted lines in similar dark/muted colors. Difficult to separate the "Baseline" solid line from some dashed parameterizations without careful effort. The "instant read" test is not met for all five series.
+- **Readability:** PASS. The panel title "(a) AI Stock Valuations" is clearly readable. The y-axis label "P/D Ratio (Multiple)" and x-axis label "Tax Rate τ" are legible. Tick labels on both axes are readable. The legend lists three series with readable text. Font sizes are adequate throughout.
+- **Distinguishability:** PASS. Three series are shown as lines with distinct styles — solid, dashed, and differently styled lines. The series are well separated spatially for most of the plot. The legend does not obscure meaningful data.
+- **Assessment:** No issues. The large-singularity line starting partway through the x-axis (reflecting undefined P/D at low tax rates) is a distinctive and informative visual feature.
 
 ### Panel (b): Household Consumption
 
-- **Readability:** FAIL.
-  - Y-axis label ("Consumption Change (Multiple of Baseline)") and x-axis label ("Tax rate tau") are small, consistent with Panel (a).
-  - Tick labels are small but legible. Panel title is adequately sized.
-- **Distinguishability:** PASS.
-  - Two clearly separated lines (Baseline and Large singularity) that are well-spaced vertically with distinct line styles.
+- **Readability:** PASS. The panel title "(b) Household Consumption" is clearly readable. The y-axis label "Household Consumption Growth" and x-axis label "Tax Rate τ" are legible. Tick labels are readable. The legend is placed inside the panel and is readable. A "Catastrophe" annotation marks the τ=0 point for context.
+- **Distinguishability:** PASS. The series are clearly separated — the large-singularity line rises dramatically while the baseline line rises modestly, making them trivially distinguishable. The legend does not cover important data.
+- **Assessment:** No issues.
 
 ### Narrative Clarity
 
-- **From figure and caption alone:** The caption explains that Panel (a) shows how government transfers compress AI stock P/D ratios, with the large-singularity case transitioning from undefined to finite as tau rises. Panel (b) shows enormous consumption gains even with modest tax rates. The caption carries the narrative, but the figure's own labels are too small to independently confirm the story.
-- **From figure and paper text:** The surrounding text clarifies that in normal times transfers are wasteful, but under a singularity the abundance of output makes even inefficient redistribution effective, contextualizing the explosive consumption gains and price transitions.
-
-### Summary of Problems
-
-| # | Panel | Issue | Type |
-|---|-------|-------|------|
-| 1 | (a) | Axis labels too small | Readability |
-| 2 | (a) | Legend text too small | Readability |
-| 3 | (a) | Multiple series in similar styles hard to tell apart | Distinguishability |
-| 4 | (b) | Axis labels too small | Readability |
+- **From figure and caption alone:** Government transfers (modeled as a tax rate τ) compress AI stock P/D ratios by reducing hedging demand (Panel a) and dramatically improve household consumption in the singularity state, especially under a large singularity where explosive output growth overwhelms deadweight costs (Panel b). Under the large singularity, P/D ratios are undefined at low tax rates because displacement is so severe that prices diverge; transfers restore finite prices.
+- **From figure and paper text:** The key economic insight is that in normal times transfers are wasteful, but under a large AI singularity the abundance of resources makes even inefficient redistribution effective. The left panel's undefined P/D at low τ illustrates the incomplete-markets problem. The right panel shows that even with 50% deadweight costs, the large singularity turns a consumption loss into enormous gains. The figure serves as the culminating illustration of the policy extension in Section 4.

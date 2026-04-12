@@ -1,70 +1,52 @@
 # tests/theory-clarity.py
-Started: 2026-04-11 21:27:07 EDT
-Runtime: 3m 3s
-[ralph-garage/agent-logs/20260411T212707.787432-0400_theory-clarity_claude_opus.log](../ralph-garage/agent-logs/20260411T212707.787432-0400_theory-clarity_claude_opus.log)
+Started: 2026-04-11 21:43:22 EDT
+Runtime: 2m 18s
+[ralph-garage/agent-logs/20260411T214322.784207-0400_theory-clarity_claude_opus.log](../ralph-garage/agent-logs/20260411T214322.784207-0400_theory-clarity_claude_opus.log)
 
 # theory-clarity
 VERDICT: PASS
-REASON: The model setup uses well-structured paragraphs and display math for most critical expressions; two items merit attention but do not impair a careful reader's ability to follow the results.
+REASON: Nearly all key model assumptions are introduced in clearly labeled setup paragraphs or display math before results that use them; two minor presentation gaps do not impair readability.
 
 ## Key items identified
 
 ### Should appear in display math (and do)
-1. **[AGG-GROWTH]** Aggregate consumption growth $C_{t+1}=(1+g)C_t$ — eq. (1), display math in setup
-2. **[DISPLACEMENT]** Household share displacement $\alpha_{t+1}=\phi\alpha_t$ — eq. (2), display math in setup
-3. **[UTILITY]** CRRA utility functional — eq. (3), display math in setup
-4. **[PD-AI / PD-NONAI]** Closed-form P/D ratios — eqs. (4)–(5), display math in Proposition 1
-5. **[EXISTENCE]** Existence condition $A^j<1$ — eq. (6), display math in Remark 1
-6. **[TRANSFER-CONS]** Transfer consumption $c^H_{post}$ — eq. (8), display math in Extension 2
-7. **[PHI-EFF]** Effective displacement $\phi_\text{eff}$ — eq. (9), display math in Extension 2
-8. **[TRANSFER-RATIO]** Consumption ratio independent of $\eta$ — eq. (10), display math in Extension 2
+1. Aggregate consumption growth $C_{t+1} = (1+g)C_t$ — eq. (1), Setup/Consumption
+2. Displacement rule $\alpha_{t+1} = \phi\alpha_t$ — eq. (2), Setup/Singularity
+3. CRRA utility — eq. (3), Setup/Preferences
+4. P/D ratios for AI and non-AI stocks — eqs. (4)–(5), Proposition 1
+5. Post-transfer consumption — eq. (5), Extension 2
+6. Effective displacement $\phi_\text{eff}$ — eq. (6), Extension 2
 
-### Could be promoted to display math
-9. **[GAMMA-DEF]** Dividend growth factors $\Gamma^{AI}$, $\Gamma^{N}$ — currently inline in the "where" clause of Proposition 1. These are the key objects distinguishing AI from non-AI pricing and drive the hedging channel explanation and the Proposition 2 proof. A standalone display equation would make them easier to find on re-reading.
+### Should appear in display math but currently do not
+7. Dividend growth factors $\Gamma^{AI}$, $\Gamma^{N}$ — defined only inline at the end of Proposition 1 (line 140). These drive the entire premium mechanism and are referenced repeatedly in discussion and proofs.
 
-### Prose items — should appear at/near paragraph start
-10. **[HOUSEHOLD-SHARE]** $c_t^H = \alpha_t C_t$ — introduced mid-paragraph after eq. (1); follows naturally from the display equation
-11. **[SINGULARITY-PROB]** Probability $p$ — opens the Singularity paragraph (line 86). Good.
-12. **[EXTINCTION-PROB]** Probability $\xi$ — inside numbered list under Singularity paragraph. Acceptable given the list structure.
-13. **[AI-DIVIDEND-DEF]** $D_t^{AI}=\theta_t C_t$ and $\theta$ dynamics — inside bullet list under Assets paragraph. Acceptable.
-14. **[INCOMPLETE-MARKETS]** Household cannot trade restricted AI equity — stated at line 109, mid-paragraph after the asset list. The emphasis (\emph{cannot}) helps, but this is the central economic mechanism and could open its own paragraph.
-15. **[POSITIVE-SING]** Positive singularity probability $q$ and structure — opens Extension 1 setup (line 200). Good.
-16. **[VETO-COST]** Veto cost $\kappa$ — mid-paragraph (line 204), but it defines the veto concept in its lead sentence. Acceptable.
-17. **[TAX-DEADWEIGHT]** Tax rate $\tau$ and deadweight $\delta\tau$ — introduced in prose then immediately given display math (eq. 8). Good.
+### Prose assumptions (correctly placed at or near paragraph start)
+8. Household consumption share $c_t^H = \alpha_t C_t$ — Setup/Consumption paragraph
+9. Singularity probability $p$ — opens Setup/Singularity paragraph
+10. Extinction probability $\xi$ — Setup/Singularity, within enumerated list item 2
+11. Productivity boost $\eta$ — Setup/Singularity, within enumerated list item 1
+12. AI and non-AI dividend definitions — Setup/Assets bullets
+13. AI share dynamics $\theta_{t+1} = \theta_t + \Delta\theta(1-\theta_t)$ — Setup/Assets bullet
+14. Positive singularity probability $q > 1/2$ — opens Extension 1 paragraph
+15. Transfer deadweight cost $\delta$ — Extension 2, before transfer equation
 
-### Key condition appearing only in proof
-18. **[PHI-ETA-CONDITION]** $\phi(1+\eta)<1$ — this condition determines whether household consumption actually falls despite aggregate growth. It is the economic linchpin of the veto result (Proposition 3) and the hedging intuition after Proposition 1. Currently it appears explicitly only inside the proof of Proposition 3 (line 222). It is used implicitly in the quantitative section ($\phi(1+\eta)=0.75$, line 185) but never stated as a named condition in the model setup or any proposition statement.
+### Prose assumptions with placement issues
+16. Market incompleteness (household cannot trade restricted equity) — introduced mid-paragraph in Assets (line 113), after the two asset bullets
+17. Condition $\phi(1+\eta) < 1$ — first appears mid-paragraph in Section 2.3 Discussion (line 157), not in Setup; later used in Proposition 3 proof
+18. Veto cost $\kappa$ — mid-paragraph in Extension 1 (line 208)
 
 ## Section-level findings
 
-### Section 2.1 (Setup)
-- Well organized into labeled paragraphs (Consumption, Singularity, Assets, Preferences). Most primitives are introduced clearly.
-- Items [AGG-GROWTH], [DISPLACEMENT], [UTILITY] all appear in display math. Good.
-- [HOUSEHOLD-SHARE] ($c_t^H = \alpha_t C_t$) is inline after eq. (1) rather than in display math, but it is simple and follows naturally from the preceding display. Acceptable.
-- [INCOMPLETE-MARKETS] is the central economic assumption but is introduced mid-paragraph (line 109) after listing the assets. It would benefit from opening its own paragraph or formal assumption block, but it is clearly stated with emphasis. Minor note.
-- [PHI-ETA-CONDITION] ($\phi(1+\eta)<1$) is never stated in the setup. Since both $\phi$ and $\eta$ are introduced here, this would be the natural place to note the joint condition. This is the most actionable finding.
+**Section 2.1 (Setup):** Well organized with labeled paragraphs (Consumption, Singularity, Assets, Preferences). All core parameters ($g$, $p$, $\phi$, $\xi$, $\eta$, $\alpha$, $\theta$, $\Delta\theta$, $\gamma$, $\beta$) are introduced before any results. Market incompleteness is stated clearly but appears after the asset bullets rather than at the paragraph opening; since the paragraph opens by listing tradeable assets, this ordering is logical (define what can be traded, then state what cannot).
 
-### Section 2.2 (Equilibrium prices)
-- P/D ratios in display math. Good.
-- [GAMMA-DEF]: $\Gamma^{AI}$ and $\Gamma^{N}$ are defined inline in a "where" clause inside Proposition 1. These are load-bearing for the hedging channel discussion and for Proposition 2's proof (which relies on $\Gamma^{AI} > \Gamma^{N}$). Promoting them to a standalone display equation would improve findability. Minor note.
-- The discussion paragraph after Proposition 1 (line 153) correctly explains the hedging channel by comparing $\Gamma^{AI}$ and $\Gamma^{N}$ and implicitly invokes [PHI-ETA-CONDITION] ("AI stocks pay off precisely when the household's consumption falls"). This implicit usage would be clearer if the condition were stated explicitly in the setup.
+**Section 2.2 (Equilibrium prices):** The SDF statement correctly opens the section. The dividend growth factors $\Gamma^{AI}$ and $\Gamma^{N}$ are the main gap: they are defined only inside Proposition 1 rather than in a standalone display equation in Setup or before the proposition. Since these factors are the core economic content (the paper says so at line 157), pulling them into display math before or outside the proposition would improve scanability. This is a minor issue — they are clearly defined and immediately discussed.
 
-### Section 2.3 (Discussion)
-- No new assumptions introduced. Refers back to earlier items appropriately. No issues.
+**Section 2.3 (Discussion):** The condition $\phi(1+\eta) < 1$ first appears here mid-paragraph (line 157) rather than in Setup. This is a borderline issue: the condition is an implication of the parameters $\phi$ and $\eta$ already defined in Setup, not a new assumption. It would benefit from explicit statement in the Singularity paragraph, but its absence does not prevent understanding.
 
-### Section 3 (Quantitative Analysis)
-- No new model assumptions. Uses $\phi(1+\eta) = 0.75$ (line 185) implicitly confirming [PHI-ETA-CONDITION] but does not name the condition. No issues for this section specifically.
+**Section 3 (Quantitative Analysis):** All calibration values are stated in a single paragraph. No new model assumptions.
 
-### Section 4.1 (Extension 1: Veto)
-- [POSITIVE-SING] and [VETO-COST] are introduced clearly in setup prose. Good.
-- [COMPLETE-MARKETS] consumption is stated mid-paragraph (line 206) but is short and clear. Acceptable.
-- Proposition 3 statement does not mention [PHI-ETA-CONDITION]; the condition surfaces only inside the proof (line 222). A reader who skips the proof would not know what parameter restriction drives the veto result. This is the main clarity concern but does not rise to a failure because the proof is short and inline.
+**Section 4.1 (Extension 1 — Veto):** The positive singularity setup ($q$, share recovery rule) is introduced at the paragraph start before Proposition 3. The veto cost $\kappa$ appears mid-paragraph (line 208) but in a short, clearly scoped paragraph — acceptable.
 
-### Section 4.2 (Extension 2: Transfers)
-- [TAX-DEADWEIGHT], [TRANSFER-CONS], [PHI-EFF], and [TRANSFER-RATIO] are all introduced with display math. Good.
-- Setup paragraph clearly motivates the extension before introducing parameters. Good.
+**Section 4.2 (Extension 2 — Transfers):** Transfer mechanism, tax rate $\tau$, and deadweight cost $\delta$ are all introduced in prose before the transfer equation. The effective displacement $\phi_\text{eff}$ gets its own display equation. Well structured.
 
-## Summary of actionable notes (not failures)
-1. **[PHI-ETA-CONDITION]**: State $\phi(1+\eta)<1$ explicitly when $\phi$ and $\eta$ are first introduced together in the Singularity paragraph, and reference it in the Proposition 3 statement.
-2. **[GAMMA-DEF]**: Consider promoting $\Gamma^{AI}$ and $\Gamma^{N}$ to a standalone display equation for easier reference.
-3. **[INCOMPLETE-MARKETS]**: Consider giving market incompleteness its own paragraph heading or opening sentence in the model setup.
+**Appendix A:** Contains derivation details only; no new assumptions introduced.

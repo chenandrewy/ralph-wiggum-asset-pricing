@@ -1,59 +1,54 @@
 # Improvement Plan
-AUTHOR PLAN — 2026-04-11 21:24:19 EDT
+AUTHOR PLAN — 2026-04-11 21:39:31 EDT
 
-## Current Status
+## Current State
 
-- **Tests**: 24/25 pass. One failure: `writing-intro`.
-- **Model section**: Sound. No overhaul needed.
-- **Code**: Clean, single entry point, all exhibits generated correctly.
-- **Referee report**: Addressed via Extensions (veto + transfers).
+- **22/25 tests pass.** 3 failures: `spec-paper`, `visual-figures`, `writing-intro`.
+- Model section, proofs, code, and all factchecks pass. No overhaul needed.
 
-## Key Issue: `writing-intro` Failure
+## Failing Tests
 
-The introduction's first three paragraphs are strong (vivid opening, clear mechanism, natural formalization). Paragraphs 4-7 lose coherence with abrupt transitions and disconnected summaries.
+### 1. `spec-paper` — Missing "under-discussed" claim (I.3c)
 
-Specific problems identified by the test:
+**Problem:** Spec requires the paper to argue that "financial market solutions to AI disaster risk are under-discussed." The paper says the natural fix is *blocked* but never says financial market solutions are *under-discussed* in the literature or policy discourse.
 
-| Location | Problem |
-|---|---|
-| P3 -> P4 | Extinction channel appears without preparation |
-| P4 -> P5 | Abrupt pivot from extinction to development distortions |
-| P6 | Generic "frictions are severe" paragraph reads as filler |
-| P6 -> P7 | "But if..." conjunction is jarring for introducing a new mechanism |
-| P7 -> Roadmap | Jones/redistribution result orphaned before roadmap |
+**Fix:** Add a sentence in the introduction (paragraph 4 or 5, near the "natural fix" discussion) explicitly stating that financial market solutions to AI disaster risk are under-discussed relative to regulatory approaches, even though frictions limit their effectiveness. One sentence suffices — e.g., noting that discussion of AI risk focuses on regulation and alignment while financial hedging mechanisms receive little attention.
 
-## Plan
+### 2. `visual-figures` — Figure 2 readability and distinguishability
 
-### Step 1: Restructure introduction paragraphs 4-7
+**Problem:** `fig-extension-panels.pdf` (Exhibit 3) fails on:
+- Axis labels too small in both panels
+- Legend text too small
+- Panel (a) has 5 series in similar styles that are hard to distinguish
 
-Goal: Make the second half of the introduction flow as naturally as the first half.
+**Fix in `code/generate-exhibits.R`:**
+- The figure currently has only 2 scenarios (Baseline and Large singularity), so the "5 series" complaint likely stems from the legend rendering or visual complexity of annotations. Increase `base_size` in `theme_paper` from 22 to something larger, or more precisely:
+  - Increase axis title font size (currently 20 → 22+)
+  - Increase axis text / tick label size (currently 18 → 20+)
+  - Increase legend text size (currently 18 → 20+)
+  - Ensure only 2 series are plotted in Panel (a) with clearly distinct colors and line styles (already dark red vs. dark blue, solid vs. longdash — verify this renders cleanly)
+- Increase figure output dimensions if needed (`width = 14, height = 8` instead of `12, 7`)
+- Rebuild exhibits and recompile PDF
 
-Changes to `paper/paper.tex`, introduction section only:
+### 3. `writing-intro` — Skimmability and promise fulfillment
 
-1. **Fold extinction into P3 (the model results paragraph).** The extinction attenuation is a model result, not a separate idea. Add one sentence at the end of P3 noting that extinction risk attenuates the premium (Prop 2), rather than giving it a standalone paragraph.
+**Problem A:** Arguments (c), (d), (e) from the spec are not in first sentences of their paragraphs:
+- **(c)** "Financial market solutions under-discussed" — absent entirely (overlaps with spec-paper fix above)
+- **(d)** "Singularity overcomes frictions" — buried mid-paragraph 5, not in the first sentence
+- **(e)** "Incomplete markets distort AI development" — second sentence of paragraph 4
 
-2. **Merge current P4 (incomplete markets as key driver) with the extinction content.** After folding extinction into P3, repurpose the incomplete-markets framing as a bridge sentence: "Market incompleteness is the key driver---and its consequences extend beyond valuations."
+**Fix A:** Restructure introduction paragraphs so each of the 5 spec arguments leads its own paragraph's first sentence:
+- Current ¶4 starts with complete markets / incompleteness (argument b), then buries (e) in sentence 2. Split: give (e) its own paragraph or promote it to lead.
+- Current ¶5 opens with the natural fix being blocked, then gets to (d) mid-paragraph. Restructure so (d) — "singularity growth overcomes frictions" — leads or is very near the top.
+- Add (c) — "financial market solutions are under-discussed" — as a distinct first-sentence claim (this also fixes spec-paper).
 
-3. **Combine P5 (development distortions) and P6 (frictions) into one paragraph on extensions.** The current P6 is filler. Instead, write a single paragraph that (a) introduces market incompleteness distorting AI development (veto), (b) notes the natural fix is blocked by restricted ownership, and (c) pivots to government transfers as the alternative. This creates a clean narrative: incompleteness -> veto -> transfers.
+**Problem B:** Promise 7 — "even grossly inefficient transfers become effective" is under-delivered. The paper shows δ=0.5 but doesn't demonstrate the claim at extreme δ values.
 
-4. **Integrate the Jones/singularity-growth result into the extensions paragraph** rather than orphaning it in its own paragraph before the roadmap. The key insight (explosive growth overwhelms deadweight costs) belongs with the transfer discussion.
+**Fix B:** Add a brief numerical example in Extension 2 text (or a parenthetical in the figure discussion) showing that transfers remain effective even at δ=0.9 (90% waste). Alternatively, moderate the intro language. The stronger fix is to add the example — it's a single computation and strengthens the argument. Could also add a δ=0.9 line to Figure 3 Panel (b) or mention the result in the caption.
 
-5. **End with the roadmap paragraph**, which currently works fine and just needs the preceding material to flow into it.
+## Execution Order
 
-Target structure after revision:
-- P1: AI stocks are highly valued (Figure 1)
-- P2: Hedging motive mechanism
-- P3: Model formalization + quantitative results + extinction attenuation
-- P4: Incomplete markets as key driver; consequences beyond valuations
-- P5: Extensions — veto distortion, government transfers, singularity growth enabling redistribution
-- P6: Summary + roadmap + footnote
-
-### Step 2: Precision fix on "roughly twice" language
-
-The test flagged that "roughly twice...across plausible singularity probabilities" slightly overstates breadth (2x at p=1%, ~1.4x at p=0.5%). Tighten the language in P3 to be more precise about where the 2x ratio holds.
-
-### Step 3: Recompile and verify
-
-- Recompile `paper.tex` to PDF
-- Regenerate page images
-- Re-run `writing-intro` test to confirm fix
+1. **Fix introduction structure** (addresses `writing-intro` skimmability + `spec-paper` I.3c simultaneously)
+2. **Fix Figure 2 formatting** in `generate-exhibits.R` (addresses `visual-figures`)
+3. **Add high-δ example** in Extension 2 text (addresses `writing-intro` promise 7)
+4. Rebuild exhibits (`Rscript code/generate-exhibits.R`) and recompile paper

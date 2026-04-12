@@ -1,92 +1,118 @@
 # tests/factcheck-lit.py
-Started: 2026-04-11 21:27:07 EDT
-Runtime: 3m 1s
-[ralph-garage/agent-logs/20260411T212707.765952-0400_factcheck-lit_claude_opus.log](../ralph-garage/agent-logs/20260411T212707.765952-0400_factcheck-lit_claude_opus.log)
+Started: 2026-04-11 21:43:22 EDT
+Runtime: 5m 24s
+[ralph-garage/agent-logs/20260411T214322.809008-0400_factcheck-lit_claude_opus.log](../ralph-garage/agent-logs/20260411T214322.809008-0400_factcheck-lit_claude_opus.log)
 
 # factcheck-lit
 VERDICT: PASS
-REASON: All 11 cited works are externally verified with accurate metadata and faithful in-text characterizations.
+REASON: All 11 cited works are externally verified with accurate metadata; one IMPORTANT claim-support ambiguity found (Jones2024 at line 59) but no CRITICAL issues.
 
 ## 1. Citation inventory audited
 
-| # | Citation Key | In-text locations |
-|---|---|---|
-| 1 | GKP2012 | Introduction (hedging mechanism, lit review, model setup, discussion) |
-| 2 | Jones2024 | Introduction (extinction channel), model (singularity definition), extensions (veto, transfers) |
-| 3 | KoganPapanikolaou2014 | Lit review (creative destruction and displacement risk premia) |
-| 4 | KoganPapanikolaouStoffman2020 | Lit review (creative destruction and displacement risk premia) |
-| 5 | Knesl2023 | Lit review (creative destruction and displacement risk premia) |
-| 6 | AghionJonesJones2019 | Lit review (macroeconomics of AI growth) |
-| 7 | Acemoglu2025 | Lit review (macroeconomics of AI growth) |
-| 8 | Barro2006 | Lit review (rare disasters literature) |
-| 9 | Wachter2013 | Lit review (rare disasters literature) |
-| 10 | PastorVeronesi2009 | Lit review (technological revolutions and stock prices) |
-| 11 | Nordhaus2021 | Extension 2 (critical examination of economic singularity hypothesis) |
+All 11 bibliography entries are cited in the paper text. No uncited entries exist.
 
-All 11 bibliography entries are cited in the paper text. No bibliography entry is unused. No in-text citation lacks a bibliography entry.
+| # | Citation Key | Location(s) in paper |
+|---|---|---|
+| 1 | GKP2012 | Lines 48, 50, 65, 78, 170, 172, 174, 238, 241 |
+| 2 | Jones2024 | Lines 50, 59, 69, 98, 170, 233, 235, 278 |
+| 3 | KoganPapanikolaou2014 | Line 70 |
+| 4 | KoganPapanikolaouStoffman2020 | Line 70 |
+| 5 | Knesl2023 | Line 70 |
+| 6 | AghionJonesJones2019 | Line 70 |
+| 7 | Acemoglu2025 | Line 70 |
+| 8 | Barro2006 | Line 70 |
+| 9 | Wachter2013 | Line 70 |
+| 10 | PastorVeronesi2009 | Line 70 |
+| 11 | Nordhaus2021 | Line 278 |
 
 ## 2. External verification coverage
 
-| Citation Key | Status | External Sources |
+| Citation Key | Status | External Sources Used |
 |---|---|---|
-| GKP2012 | VERIFIED | EconPapers/RePEc, ScienceDirect, SSRN |
-| Jones2024 | VERIFIED | AEA official page, IDEAS/RePEc, Stanford GSB |
-| KoganPapanikolaou2014 | VERIFIED | Wiley Online Library / Journal of Finance, IDEAS/RePEc, EconPapers |
-| KoganPapanikolaouStoffman2020 | VERIFIED | Journal of Political Economy (UChicago), EconPapers/RePEc, MIT DSpace |
-| Knesl2023 | VERIFIED | ScienceDirect, EconPapers/RePEc, SSRN |
-| AghionJonesJones2019 | VERIFIED | De Gruyter / UChicago Press, NBER Working Paper 23928 |
-| Acemoglu2025 | VERIFIED | Oxford Academic / Economic Policy, IDEAS/RePEc, NBER Working Paper 32487 |
-| Barro2006 | VERIFIED | Oxford Academic / QJE, EconPapers/RePEc, Harvard author page |
-| Wachter2013 | VERIFIED | Wiley Online Library (publisher), EconPapers/RePEc |
-| PastorVeronesi2009 | VERIFIED | AEA publisher page, EconPapers/RePEc |
-| Nordhaus2021 | VERIFIED | AEA publisher page, IDEAS/RePEc, williamnordhaus.com author page |
+| GKP2012 | VERIFIED | EconPapers/RePEc, ScienceDirect, MIT DSpace, IDEAS/RePEc |
+| Jones2024 | VERIFIED | AEA official page, IDEAS/RePEc, Stanford GSB, AEI summary, EA Forum summary |
+| KoganPapanikolaou2014 | VERIFIED | Wiley/Journal of Finance, IDEAS/RePEc, NBER WP 17795 |
+| KoganPapanikolaouStoffman2020 | VERIFIED | IDEAS/RePEc, MIT DSpace, Northwestern Scholars |
+| Knesl2023 | VERIFIED | ScienceDirect, EconPapers/RePEc, Oxford ORA |
+| AghionJonesJones2019 | VERIFIED | De Gruyter/UChicago Press, NBER WP 23928, Stanford/Jones page |
+| Acemoglu2025 | VERIFIED | Oxford Academic, IDEAS/RePEc, NBER WP 32487 |
+| Barro2006 | VERIFIED | Oxford Academic/QJE, Harvard DASH, EconPapers/RePEc |
+| Wachter2013 | VERIFIED | EconPapers/RePEc, UPenn repository, NBER WP 14386 |
+| PastorVeronesi2009 | VERIFIED | AEA official page, EconPapers/RePEc, SSRN |
+| Nordhaus2021 | VERIFIED | AEA official page, IDEAS/RePEc, Nordhaus author page |
 
 **Coverage: 11/11 cited works externally verified (100%).**
 
 ## 3. Metadata accuracy findings
 
-All 11 entries have accurate bibliographic metadata:
+All 11 citations have materially accurate bibliographic metadata:
 
-- **GKP2012:** Authors (Garleanu, Kogan, Panageas), title, JFE vol. 105(3), pp. 491--510, 2012 -- all correct.
-- **Jones2024:** Author (Charles I. Jones), title, AER: Insights vol. 6(4), pp. 575--590, 2024 -- all correct.
-- **KoganPapanikolaou2014:** Authors (Kogan, Papanikolaou), title, JF vol. 69(2), pp. 675--718, 2014 -- all correct.
-- **KoganPapanikolaouStoffman2020:** Authors (Kogan, Papanikolaou, Stoffman), title, JPE vol. 128(3), pp. 855--906, 2020 -- all correct.
-- **Knesl2023:** Author (Knesl), title, JFE vol. 147(2), pp. 271--296, 2023 -- all correct.
-- **AghionJonesJones2019:** Authors (Aghion, Jones, Jones), title, UChicago Press volume, pp. 237--290, 2019 -- all correct.
-- **Acemoglu2025:** Author (Acemoglu), title, Economic Policy vol. 40(121), pp. 13--58, 2025 -- all correct.
-- **Barro2006:** Author (Barro), title, QJE vol. 121(3), pp. 823--866, 2006 -- all correct.
-- **Wachter2013:** Author (Wachter), title, JF vol. 68(3), pp. 987--1035, 2013 -- all correct.
-- **PastorVeronesi2009:** Authors (Pastor, Veronesi), title, AER vol. 99(4), pp. 1451--1483, 2009 -- all correct.
-- **Nordhaus2021:** Author (Nordhaus), title, AEJ: Macro vol. 13(1), pp. 299--332, 2021 -- all correct.
+| Citation Key | Authors | Year | Title | Journal/Outlet | Vol/Issue/Pages | Verdict |
+|---|---|---|---|---|---|---|
+| GKP2012 | Garleanu, Kogan, Panageas | 2012 | Displacement Risk and Asset Returns | Journal of Financial Economics | 105(3), 491--510 | Accurate |
+| Jones2024 | Jones, Charles I. | 2024 | The AI Dilemma: Growth versus Existential Risk | AER: Insights | 6(4), 575--590 | Accurate |
+| KoganPapanikolaou2014 | Kogan, Papanikolaou | 2014 | Growth Opportunities, Technology Shocks, and Asset Prices | Journal of Finance | 69(2), 675--718 | Accurate |
+| KoganPapanikolaouStoffman2020 | Kogan, Papanikolaou, Stoffman | 2020 | Left Behind: Creative Destruction, Inequality, and the Stock Market | Journal of Political Economy | 128(3), 855--906 | Accurate |
+| Knesl2023 | Knesl, Jiri | 2023 | Automation and the Displacement of Labor by Capital... | Journal of Financial Economics | 147(2), 271--296 | Accurate |
+| AghionJonesJones2019 | Aghion, Jones, Jones | 2019 | Artificial Intelligence and Economic Growth | UChicago Press (incollection) | pp. 237--290 | Accurate |
+| Acemoglu2025 | Acemoglu, Daron | 2025 | The Simple Macroeconomics of AI | Economic Policy | 40(121), 13--58 | Accurate |
+| Barro2006 | Barro, Robert J. | 2006 | Rare Disasters and Asset Markets in the Twentieth Century | Quarterly Journal of Economics | 121(3), 823--866 | Accurate |
+| Wachter2013 | Wachter, Jessica A. | 2013 | Can Time-Varying Risk of Rare Disasters Explain Aggregate Stock Market Volatility? | Journal of Finance | 68(3), 987--1035 | Accurate |
+| PastorVeronesi2009 | Pastor, Veronesi | 2009 | Technological Revolutions and Stock Prices | American Economic Review | 99(4), 1451--1483 | Accurate |
+| Nordhaus2021 | Nordhaus, William D. | 2021 | Are We Approaching an Economic Singularity? | AEJ: Macroeconomics | 13(1), 299--332 | Accurate |
 
-No metadata errors found.
+**No metadata errors found.**
 
 ## 4. In-text description accuracy findings
 
-All in-text characterizations are materially accurate:
-
-- **GKP2012:** Described as modeling how innovation displaces existing agents under incomplete markets, with future innovators whose rents cannot be traded. The paper's discussion of their OLG structure, distinction between displacement and aggregate consumption risk, and the role of intergenerational transfers are all faithful.
-- **Jones2024:** Described as studying the trade-off between AI-driven growth and existential risk, with the insight that powerful AI states entail both enormous growth and highest existential risk, and that attitudes toward AI risk depend on consumption levels. All accurate.
-- **KoganPapanikolaou2014:** Described as studying creative destruction and displacement risk premia. The cited paper studies technology shocks differentially affecting assets in place vs. growth opportunities -- a reasonable characterization.
-- **KoganPapanikolaouStoffman2020:** Described as studying creative destruction and displacement risk premia. The cited paper models asymmetric distribution of innovation benefits with innovators who cannot sell claims on future ideas -- accurate.
-- **Knesl2023:** Described as studying creative destruction and displacement risk premia. The cited paper explicitly studies automation displacing labor and its asset pricing implications -- accurate.
-- **AghionJonesJones2019:** Described as examining the macroeconomics of AI growth. The cited paper models AI as automation and studies long-run growth implications including growth singularity -- accurate.
-- **Acemoglu2025:** Described as examining the macroeconomics of AI growth. The cited paper evaluates macroeconomic implications of AI using a task-based framework -- accurate.
-- **Barro2006:** Described as part of the rare disasters literature. The cited paper is foundational in rare disaster risk asset pricing -- accurate.
-- **Wachter2013:** Described as part of the rare disasters literature. The cited paper models time-varying disaster probability to explain equity premium and stock volatility -- accurate.
-- **PastorVeronesi2009:** Described as analyzing technological revolutions. The cited paper analyzes how technological revolutions affect stock prices through a GE model with learning -- accurate.
-- **Nordhaus2021:** Described as critically examining the economic singularity hypothesis. The cited paper develops tests for approaching an economic singularity and concludes skeptically -- "examined critically" is accurate.
-
-No claim-support issues found.
+| Citation Key | In-text Characterization | Verdict |
+|---|---|---|
+| GKP2012 | "model how innovation displaces existing agents and creates a systematic risk factor under incomplete markets"; "growth stocks earn lower expected returns because they hedge displacement risk"; "future innovators who have not yet entered the economy, so investors cannot trade it" | Accurate and well-supported by the cited work's OLG/displacement framework |
+| Jones2024 | "studies the trade-off between AI-driven growth and existential risk"; "the states in which AI is powerful enough to produce enormous growth are precisely those in which existential risk is highest"; "attitudes toward AI risk depend on consumption levels" | Accurate. **One ambiguous attribution at line 59** (see Flagged Issues) |
+| KoganPapanikolaou2014 | "Creative destruction and displacement risk premia" | Accurate — the paper studies technology shocks, growth opportunities, and differential asset pricing |
+| KoganPapanikolaouStoffman2020 | "Creative destruction and displacement risk premia" | Accurate — the paper models asymmetric distribution of innovation gains |
+| Knesl2023 | "Creative destruction and displacement risk premia" | Accurate — the paper examines automation displacing labor and its asset pricing implications |
+| AghionJonesJones2019 | "The macroeconomics of AI growth" | Accurate — models AI as automation and examines growth effects |
+| Acemoglu2025 | "The macroeconomics of AI growth" | Accurate — evaluates macroeconomic implications of AI using a task-based framework |
+| Barro2006 | "the rare disasters literature" | Accurate — foundational paper on rare disasters in asset pricing |
+| Wachter2013 | "the rare disasters literature" | Accurate — extends rare disaster models with time-varying disaster probabilities |
+| PastorVeronesi2009 | "analysis of technological revolutions" | Accurate — develops a general equilibrium model of technological revolutions and stock prices |
+| Nordhaus2021 | "examined critically" explosive/singularity-driven growth | Accurate — critically tests whether an economic singularity is approaching, concluding it is "not near" |
 
 ## 5. Flagged issues by citation key and severity
 
-No issues flagged for any citation key.
+### Jones2024 — IMPORTANT
 
-| Citation Key | Severity | Issue |
-|---|---|---|
-| (none) | -- | -- |
+**Location:** Line 59 of paper.tex
+
+**Text:** "As \citet{Jones2024} models, a singularity can produce output growth so large that even grossly inefficient transfers become effective, because the resource base overwhelms the deadweight costs."
+
+**Issue:** This sentence can be read as attributing to Jones (2024) both the modeling of explosive growth AND the conclusion that transfers become effective despite deadweight costs. Jones (2024) models the trade-off between AI-driven growth and existential risk but does not model transfers, redistribution, or deadweight costs. The transfer-effectiveness mechanism is this paper's own contribution (Section 4.2). The phrasing is ambiguous: "As Jones models" could refer only to the explosive growth, with the transfer conclusion being the paper's inference, but the natural reading conflates the two.
+
+**External support:** Verified via the AEA article page, Stanford GSB description, and third-party summaries — Jones (2024) covers growth vs. existential risk, not fiscal transfers.
+
+**Recommendation:** Clarify that Jones models the explosive growth, while the transfer-effectiveness argument is this paper's contribution. For example: "As \citet{Jones2024} models, a singularity can produce enormous output growth. We show that such growth makes even grossly inefficient transfers effective..."
+
+---
+
+### GKP2012 — MINOR
+
+**Location:** Line 241 of paper.tex
+
+**Text:** "\citet{GKP2012} note, in the context of a robustness argument, that intergenerational transfers---bequests, government mandates---would affect the magnitude but not the functional form of the displacement factor"
+
+**Issue:** This specific claim about GKP's robustness discussion could not be independently verified from publicly available abstracts and metadata. It is plausible given GKP's OLG framework but remains unverifiable from external sources alone.
+
+**Severity:** MINOR — the claim is plausible and concerns a secondary point; insufficient external evidence to call it wrong.
 
 ## 6. Overall reliability of the paper's citations
 
-The paper's citations are highly reliable. All 11 cited works were externally verified against publisher pages, journal databases, and author pages. Bibliographic metadata (authors, titles, journals, volumes, pages, years) is accurate for every entry. In-text characterizations of each cited work are materially faithful and well-supported by the cited works' actual content. No critical, important, or minor issues were identified.
+The paper's citations are highly reliable overall:
+
+- **Verification coverage:** 11/11 cited works (100%) externally verified.
+- **Metadata accuracy:** No errors found across any citation. All authors, years, titles, journals, volumes, issues, and page ranges are correct.
+- **Claim-support accuracy:** 10 of 11 citations have fully accurate in-text characterizations. One citation (Jones2024 at line 59) has an ambiguous attribution that could mislead readers about the origin of the transfer-effectiveness argument, rated IMPORTANT.
+- **Source quality:** All citations reference published versions in peer-reviewed journals or edited volumes from major publishers. No working papers are cited where published versions exist.
+- **No CRITICAL issues found.**
+
+The citation practices reflect careful scholarship. The single IMPORTANT issue is a phrasing ambiguity rather than a substantive mischaracterization, and is easily correctable.
