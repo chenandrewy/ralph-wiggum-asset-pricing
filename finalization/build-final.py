@@ -181,8 +181,34 @@ def render_markdown_blockquote(lines: list[str], monochrome: bool = False) -> st
     )
 
 
+def render_fenced_block_line_tex(text: str) -> str:
+    tokens: dict[str, str] = {}
+
+    def stash(value: str) -> str:
+        token = f"@@FENCELINK{len(tokens)}@@"
+        tokens[token] = value
+        return token
+
+    def render_link(label: str, target: str) -> str:
+        if target.startswith("#"):
+            return stash(
+                rf"\hyperlink{{{tex_escape(target[1:])}}}{{\textcolor{{blue}}{{{tex_escape(label)}}}}}"
+            )
+        return stash(rf"\href{{{target}}}{{\textcolor{{blue}}{{{tex_escape(label)}}}}}")
+
+    text = re.sub(
+        r"\[(.*?)\]\((.*?)\)",
+        lambda m: render_link(m.group(1), m.group(2)),
+        text,
+    )
+    rendered = tex_escape(text)
+    for token, value in tokens.items():
+        rendered = rendered.replace(tex_escape(token), value)
+    return rendered
+
+
 def render_preface_fenced_block(lines: list[str]) -> str:
-    body = "\n".join(tex_escape(raw_line) for raw_line in lines)
+    body = "\n".join(render_fenced_block_line_tex(raw_line) for raw_line in lines)
     return (
         "\\begin{mdframed}["
         "backgroundcolor=gray!10,"
@@ -317,6 +343,12 @@ def render_markdown_list(
             break
 
         item_text = re.sub(marker_pattern, "", stripped, count=1)
+        item_label = ""
+        if not ordered:
+            label_match = re.match(r"((?:\d+|[a-z]|[ivxlcdm]+)\.)\s+(.*)$", item_text)
+            if label_match is not None:
+                item_label = f"[{tex_escape(label_match.group(1))}]"
+                item_text = label_match.group(2)
         item_parts = [render_inline_markdown_tex(item_text, monochrome=monochrome)]
         index += 1
 
@@ -342,7 +374,7 @@ def render_markdown_list(
             if child_body.strip():
                 item_parts.append(child_body.strip())
 
-        items.append("\\item " + "\n".join(item_parts))
+        items.append("\\item" + item_label + " " + "\n".join(item_parts))
 
     body = "\n".join(items)
     return (
