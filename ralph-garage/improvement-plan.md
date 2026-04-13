@@ -1,50 +1,36 @@
 # Improvement Plan
-AUTHOR PLAN — 2026-04-12 19:58:22 EDT
+AUTHOR PLAN — 2026-04-12 20:10:07 EDT
 
-## Status Summary
+## Current State
 
-- **Tests:** 21 pass, 4 fail
-- **Failing tests:** `visual-figures-image-only`, `visual-figures`, `visual-pages`, `writing-intro`
-- **No overhaul needed.** All theory tests pass. Proofs are correct. Model section is sound.
+- **Tests**: 24/25 pass. One failure: `visual-figures-image-only`.
+- **Model section**: Sound. No overhaul needed.
+- **Referee feedback (CFR-R1)**: Addressed by the extensions section (veto + transfers).
 
-## Issues and Fixes
+## Issues
 
-### Priority 1: Fix failing tests
+### 1. Failing test: `visual-figures-image-only`
 
-**A. fig-extension-panels visual defects (3 tests)**
+`fig-extension-panels` fails on two visual defects:
 
-All three visual test failures stem from the same figure: `fig-extension-panels.pdf`.
+**(a) Panel (b) x-axis tick labels are cramped and overlapping.**
+The current code uses `breaks = seq(0, 0.50, by = 0.10)`, producing 6 tick labels (0%, 10%, 20%, 30%, 40%, 50%) in a narrow half-width panel at base_size 32. The labels collide.
 
-Defects:
-1. Panel (b) title truncated at "Consumption Grow" — the title string is too long for the plot area.
-2. Shared legend entries run together with no spacing between them.
-3. Panel (b) x-axis tick labels are cramped.
+**(b) Shared legend entries run together without spacing.**
+`legend.spacing.x = unit(1, "cm")` is insufficient at the current font sizes; the two legend items appear as one garbled string.
 
-Fix in `code/generate-exhibits.R`:
-- Shorten Panel (b) title. Current: `"(b) Consumption Growth"`. The `plot.title` text size is 31 and the panel is half the figure width, causing truncation. Either shorten the title (e.g., `"(b) Cons. Growth in Singularity"` is worse; better: just reduce title font or use `"\n"`) or reduce `base_size`/`plot.title` size for this figure. Simplest fix: shorten to `"(b) Cons. Growth in Singularity"` or abbreviate, but cleaner: reduce `plot.title` size to ~26 so the full title fits.
-- Add spacing between legend entries: add `legend.spacing.x = unit(1, "cm")` or similar to `theme_paper`.
-- Fix cramped x-axis: use `scale_x_continuous(breaks = seq(0, 0.50, by = 0.10), ...)` to reduce the number of tick marks, or increase `axis.text` spacing.
+### 2. Grid line contrast (noted but not failing)
 
-After fixing code, regenerate the figure with `Rscript code/generate-exhibits.R`, then recompile the paper.
+The test flagged Panel (a) grid lines as "distractingly bold" (`panel.grid.major = element_line(color = "gray40")`). This is a marginal pass but worth softening.
 
-**B. writing-intro: Complete-markets counterfactual missing from skimmable position**
+## Plan
 
-The introduction explains that markets are incomplete but never states the counterfactual — that complete markets would eliminate the premium. The word "complete" does not appear in the introduction.
+### Step 1: Fix fig-extension-panels visual issues (code/generate-exhibits.R)
 
-Fix in `paper/paper.tex`, paragraph P2 (line 49): Add a clause making the complete-markets benchmark explicit. The test suggests appending to the hedging-channel sentence something like: "...pushing valuations above those of non-AI stocks — a premium that would vanish if markets were complete."
+1. **Reduce Panel (b) x-axis tick density**: Change `by = 0.10` to `by = 0.20` so only 3 ticks appear (0%, 20%, 40%) — or use `breaks = c(0, 0.10, 0.30, 0.50)` for better coverage without crowding.
+2. **Increase legend spacing**: Raise `legend.spacing.x` to `unit(2, "cm")` or more, and/or add `legend.key.width = unit(2.5, "cm")` to give each entry breathing room.
+3. **Soften grid lines**: Change `gray40` to `gray70` or `gray75` in `theme_paper` so data lines dominate.
 
-### Priority 2: Presentation improvements (from passing tests with notes)
+### Step 2: Rebuild exhibits and verify
 
-**C. Delta parameter inconsistency (factcheck-bysection note)**
-
-The in-text numerical example (line 261) uses $\delta = 0.9$ to show that even grossly inefficient transfers work, but the figure caption (line 269) and code use $\delta = 0.5$. This is not wrong (they are different parameterizations) but could confuse readers.
-
-Fix: Add a brief clarifying phrase to the text, e.g., "To illustrate the robustness to even more severe waste, raising the deadweight cost parameter to $\delta = 0.9$ (compared with the $\delta = 0.5$ used in Figure 2)..." — making explicit that this is a separate, more extreme parameterization.
-
-## Execution Order
-
-1. Fix `code/generate-exhibits.R` for Panel (b) title, legend spacing, and x-axis ticks.
-2. Run `Rscript code/generate-exhibits.R` to regenerate figures.
-3. Edit `paper/paper.tex` P2 to add complete-markets counterfactual.
-4. Edit `paper/paper.tex` Extension 2 text to clarify delta inconsistency.
-5. Recompile paper PDF.
+Run `Rscript code/generate-exhibits.R`, recompile the paper, regenerate page images, and re-run the failing test to confirm it passes.

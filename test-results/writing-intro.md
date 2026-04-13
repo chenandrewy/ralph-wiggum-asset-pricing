@@ -1,49 +1,52 @@
 # tests/writing-intro.py
-Started: 2026-04-12 20:00:23 EDT
-Runtime: 2m 10s
-[ralph-garage/agent-logs/20260412T200023.695443-0400_writing-intro_claude_opus.log](../ralph-garage/agent-logs/20260412T200023.695443-0400_writing-intro_claude_opus.log)
+Started: 2026-04-12 20:12:03 EDT
+Runtime: 2m 51s
+[ralph-garage/agent-logs/20260412T201203.496018-0400_writing-intro_claude_opus.log](../ralph-garage/agent-logs/20260412T201203.496018-0400_writing-intro_claude_opus.log)
 
 # writing-intro
-VERDICT: PASS
-REASON: All three evaluation criteria—argument clarity for skimmers, paragraph flow, and promise fulfillment—pass.
+VERDICT: FAIL
+REASON: Introduction flow has two weak transitions (P3→P4 and P6→P7) that stall momentum.
 
-## 1. Argument Clarity for Skimming Readers (PASS)
+## Sub-evaluations
 
-All five main arguments from the spec are identifiable to a skimming reader:
+### 1. Main arguments clear to a skimmer: PASS
 
-- **(a) Hedging motive drives AI valuations**: P2 opens with "Part of this premium, we argue, reflects a hedging motive." Direct and prominent.
-- **(b) Incomplete markets are key**: Stated as a closing clause in P2 ("a premium that would vanish if markets were complete") and reinforced in the closing paragraph. Slightly buried but recoverable.
-- **(c) Financial solutions under-discussed, frictions limit them**: P5 opens with this claim explicitly.
-- **(d) Singularity abundance overcomes frictions**: P6 opens with "The singularity setting, however, offers a distinctive resolution."
-- **(e) Incomplete markets distort AI development**: P4 opens with "The same market incompleteness that inflates AI valuations also distorts real decisions—it can distort the development of AI itself."
+All five main arguments from the spec are clearly present and accessible to a reader scanning first sentences:
 
-**Minor note**: Argument (b) appears as a clause rather than a topic sentence, so the fastest skimmers might underweight it. The closing paragraph's "market incompleteness" framing rescues it.
+- **(a) Hedging motive drives AI valuations.** P2 opens: "Part of this premium, we argue, reflects a hedging motive." Immediately visible.
+- **(b) Incomplete markets are key.** P2 closes with "a premium that would vanish if markets were complete." P4 reinforces with "The same market incompleteness…"
+- **(c) Financial market solutions under-discussed.** P5 opens: "financial approaches to AI disaster risk are strikingly under-discussed." First sentence.
+- **(d) Singularity abundance overcomes frictions.** P6 opens: "If the singularity occurs, these frictions can be overcome due to the sheer abundance of resources." Verbatim in first sentence.
+- **(e) Incomplete markets distort AI development.** P4 opens: "The same market incompleteness that inflates AI valuations also distorts real decisions—it can distort the development of AI itself." First sentence.
 
-## 2. Introduction Flow (PASS)
+No argument is buried or requires deep reading to find.
 
-The arc is clear and maintains momentum: empirical puzzle → mechanism → formalization → real distortions → policy obstacles → singularity resolution → synthesis/roadmap.
+### 2. Introduction flow: FAIL
 
-Transition quality:
-- **P1→P2**: Strong. "Part of this premium, we argue..." picks up directly.
-- **P2→P3**: Strong. "To formalize this mechanism..." is explicit.
-- **P3→P4**: Good. "The same market incompleteness" widens scope naturally.
-- **P4→P5**: Good. "These distortions call for market-based solutions" is a clean callback.
-- **P5→P6**: Minor friction. The contrast between "ordinary settings" (P5) and "singularity setting" (P6) requires a small inference step. The word "however" helps, but a reader must track that "ordinary" was the limiting qualifier.
-- **P6→P7**: Acceptable. Synthesis sentence restates somewhat, but the roadmap is functional.
+The overall arc (fact → mechanism → model → distortions → solutions → singularity resolution → roadmap) is logical. Two transitions are weak:
 
-No sag in momentum. The introduction escalates stakes throughout.
+- **P3 → P4 (model summary → development distortions).** P3 closes on the extinction-risk nuance (Proposition 2). P4 opens with "The same market incompleteness…" jumping to a new topic (real distortions) without connecting back from the extinction thread. The reader is still processing the extinction attenuation point when a new argument begins. A bridging sentence is needed.
 
-## 3. Promises Fulfilled in Body (PASS)
+- **P6 → P7 (singularity resolution → roadmap).** P6 closes: "The same explosive growth that drives the incomplete-markets problem also provides the means to overcome it through redistribution." P7 opens: "The common thread is market incompleteness: the very growth that creates the problem can also resolve it if policy channels exist." These say nearly the same thing. The redundancy stalls momentum right before the roadmap.
 
-All promises and implied analyses from the Introduction are delivered:
+Other transitions are clean:
+- P1 → P2: "Part of this premium" bridges naturally from the observed fact.
+- P2 → P3: "To formalize this mechanism" is a direct handoff.
+- P4 → P5: "These distortions" picks up logically.
+- P5 → P6: "however" executes a well-earned reversal.
 
-| Promise | Where Delivered |
-|---------|----------------|
-| Closed-form P/D ratios | Proposition 1, Section 2 |
-| P/D roughly doubles at p=1% | Table 1, Section 3 |
-| Extinction attenuates premium (Prop 2) | Proposition 2, Section 2; Table 1 confirms |
-| Veto distortion (Prop 3) | Extension 1, Section 4 |
-| Financial solutions under-discussed | Extension 2 discussion, Section 4 |
-| Transfers ineffective ordinarily, effective in singularity | Extension 2 with phi_eff derivation; Figure 2 |
-| Premium vanishes under complete markets | Section 2 discussion; Proposition 3 contrasts |
-| Section roadmap (Sections 2, 3, 4) | Exact match to stated structure |
+### 3. Promises fulfilled in analysis sections: PASS
+
+Every analytical claim, proposition, quantitative result, and figure referenced in the Introduction is delivered:
+
+- Closed-form P/D ratios → Proposition 1 (Section 2.2), proved in Appendix A
+- P/D roughly doubles at p = 1% → Section 3, Table 1
+- Ratio ~1.4 at p = 0.5% → Section 3
+- Extinction risk attenuates premium (Proposition 2) → Section 2.2, with proof
+- Veto under incomplete markets (Proposition 3) → Section 4.1, with numerical example
+- Complete markets eliminate veto → Proposition 3(ii)
+- Government transfers ineffective in ordinary settings → Section 4.2, Figure 2 baseline
+- Explosive growth overwhelms deadweight costs → Section 4.2, equation (6), Figure 2 large-singularity panel
+- Figure 1 (valuation ratios) → Present with both panels
+
+No missing or unfulfilled promises found.

@@ -1,77 +1,89 @@
 # tests/spec-economic.py
-Started: 2026-04-12 20:00:23 EDT
-Runtime: 2m 0s
-[ralph-garage/agent-logs/20260412T200023.655591-0400_spec-economic_claude_opus.log](../ralph-garage/agent-logs/20260412T200023.655591-0400_spec-economic_claude_opus.log)
+Started: 2026-04-12 20:12:03 EDT
+Runtime: 2m 17s
+[ralph-garage/agent-logs/20260412T201203.494318-0400_spec-economic_claude_opus.log](../ralph-garage/agent-logs/20260412T201203.494318-0400_spec-economic_claude_opus.log)
 
 # spec-economic
 VERDICT: PASS
-REASON: All economic concepts from the spec are used consistently with their definitions throughout the paper.
+REASON: All five economic concepts from the spec are used consistently with their definitions throughout the paper.
 
-## Concept-by-Concept Analysis
+## Concepts Evaluated
 
-### 1. AI Singularity
+The economic background spec defines five concepts with definitional constraints: (1) AI Singularity / Negative AI Singularity, (2) Budget Constraints, (3) Complete vs. Incomplete Markets, (4) Hedging, (5) General Equilibrium vs. Partial Equilibrium.
 
-**Spec definition:** "A sudden improvement in AI that vastly increases productivity and output." Negative AI singularity: "devastating for the typical investor."
+---
 
-**Paper usage:**
-- Abstract: "AI singularity that displaces their consumption" -- consistent.
-- Introduction (line 48): "a *negative* AI singularity as a sudden, dramatic improvement in AI productivity that displaces the typical investor's labor income and consumption" -- consistent with both the general and negative definitions.
-- Model (line 86--97): Singularity produces a consumption jump of factor $1+\eta$ (productivity boost) but the household's share drops by $\phi$. With the baseline $\phi(1+\eta) = 0.75$, household consumption falls 25% -- clearly "devastating for the typical investor."
-- Extension 1 (line 200): Introduces a "positive singularity" where the household's share increases. This is distinct from the "negative" singularity and is not described as devastating -- consistent with the spec's definitions.
-- Large singularity case (line 263): $\phi(1+\eta) = 0.5$, consumption halves -- devastating.
-- Conclusion (line 281): "AI singularity that would displace their consumption" -- consistent.
+## 1. AI Singularity
 
-**Cross-section consistency:** The term maintains the same meaning (sudden productivity jump) across all sections. The negative/positive distinction is used correctly throughout.
+**Spec definition:** "A sudden improvement in AI that vastly increases productivity and output." A negative AI singularity is "an AI singularity that is devastating for the typical investor."
 
-### 2. Budget Constraints
+**Paper usages:**
 
-**Spec definition:** Budget constraints must be satisfied; violations are fundamental flaws.
+- **Introduction (line 49):** "We define a *negative* AI singularity as a sudden, dramatic improvement in AI productivity that displaces the typical investor's labor income and consumption." — Consistent with both parts of the spec definition.
+- **Model Setup (line 87):** "Each period, with probability $p$, an AI singularity occurs." The non-extinction branch has "Aggregate consumption jumps by a factor $1 + \eta$" (sudden productivity increase) with displacement via $\phi$ (devastating for the household). — Consistent.
+- **Extension 1 (line 200):** Introduces a "positive singularity" where the household's share increases, vs. "negative" (as in the baseline). The positive singularity still involves a productivity boost ($1+\eta$) but is not devastating for the household. — Consistent distinction.
+- **Extinction sub-event (line 95):** The singularity triggers extinction with probability $\xi$: "$C_{t+1} = 0$." This is framed not as a separate concept but as a consequence of the same AI improvement event, following Jones (2024): "the states in which AI is powerful enough to produce enormous growth are precisely those in which existential risk is highest." The AI improvement occurs; extinction is a possible outcome of it. — Consistent with the spec's intent; the "sudden improvement in AI" is the triggering event, and the paper is clear about what happens next.
 
-**Paper usage:**
-- Model (line 107): "Total public dividends equal aggregate consumption ($D^{AI} + D^{N} = C_t$)." Dividend shares $\theta_t$ and $1-\theta_t$ sum to 1. Consumption shares $\alpha_t$ and $1-\alpha_t$ sum to 1. Budget constraints hold.
-- Transfer equation (line 241--243): Household post-transfer consumption plus AI owners' post-tax consumption plus deadweight loss sums to total post-singularity output $(1+\eta)(1+g)C_t$. Budget constraint verified algebraically.
+**Cross-section consistency:** The term "singularity" carries the same meaning (sudden AI-driven productivity jump) across abstract, introduction, model, quantitative analysis, extensions, and conclusion. No drift.
 
-**Cross-section consistency:** No budget-constraint violations found anywhere in the paper.
+---
 
-### 3. Complete vs. Incomplete Markets
+## 2. Budget Constraints
 
-**Spec definition:** Incomplete markets = some assets cannot be bought by the representative investor. NOT necessarily Arrow-Debreu securities. Complete markets should focus on important assets unavailable to the representative investor.
+**Spec definition:** "Budget constraints are satisfied. We instinctively look for violations of budget constraints, and treat violations as fundamental flaws."
 
-**Paper usage:**
-- Abstract (line 31): "markets are incomplete---investors cannot trade private AI capital" -- focuses on specific unavailable assets, consistent with spec.
-- Introduction (line 48): "Much of the relevant AI equity is restricted---held by founders, early-stage investors, and firms that may not yet exist." -- focuses on specific unavailable assets.
-- Model (line 109): "AI owners also hold restricted equity---founder stakes, pre-IPO shares, and other claims on AI firms that are not available for public trading. The household *cannot* purchase these restricted shares. This is the source of market incompleteness." -- directly matches spec's focus on unavailable assets.
-- Model (line 122): "Because markets are incomplete, the household's stochastic discount factor (SDF) reflects its own consumption growth, not aggregate consumption growth." -- consequence of incompleteness, consistent.
-- Extension 1 (line 206): "Under complete markets, the household can trade the restricted AI equity---founder stakes, pre-IPO shares, and other claims currently unavailable---so that it fully hedges displacement risk." -- complete markets defined as gaining access to the specific assets that were unavailable, consistent with spec.
-- Conclusion (line 281): "market incompleteness---the inability to trade restricted AI equity" -- consistent.
+**Paper usages:**
 
-**Cross-section consistency:** No mention of Arrow-Debreu securities. The concept is consistently defined as the inability to trade specific restricted AI assets across all sections. Complete markets consistently means gaining access to those specific assets.
+- **Assets (line 108):** "$D^{AI} + D^{N} = C_t$" — total public dividends equal aggregate consumption. Satisfied.
+- **Consumption split (line 84):** Household gets $\alpha_t C_t$; AI owners get $(1 - \alpha_t) C_t$. These sum to $C_t$. Satisfied.
+- **Government transfers (line 242):** The transfer equation taxes AI owners at rate $\tau$ on their surplus $(1 - \phi\alpha)(1+\eta)C_t(1+g)$, with deadweight loss $\delta\tau$ consuming part of the transfer. The household receives the net amount. The deadweight cost is explicitly accounted for as real resource loss. — Budget constraint satisfied; resources are conserved (output = household consumption + AI owner consumption + deadweight loss).
 
-### 4. Hedging
+**Cross-section consistency:** No budget constraint violations identified anywhere in the paper.
+
+---
+
+## 3. Complete vs. Incomplete Markets
+
+**Spec definition:** "Incomplete markets refers to the idea that some assets cannot be bought by the representative investor." Complete markets "does not necessarily refer to Arrow-Debreu securities. Discussions of complete markets should instead focus on the important assets that are unavailable to the representative investor."
+
+**Paper usages:**
+
+- **Abstract (line 32):** "markets are incomplete---investors cannot trade private AI capital" — Exactly the spec's framing: specific assets unavailable to the representative investor.
+- **Model (line 110):** "The household *cannot* purchase these restricted shares. This is the source of market incompleteness: although the household can trade publicly listed AI stocks, it cannot access the full universe of AI equity." — Identifies the specific assets that are unavailable. Consistent.
+- **Equilibrium (line 123):** "Because markets are incomplete, the household's stochastic discount factor (SDF) reflects its own consumption growth, not aggregate consumption growth." — Uses incompleteness to derive pricing implications. Consistent.
+- **Extension 1 (line 206):** "Under complete markets, the household can trade the restricted AI equity---founder stakes, pre-IPO shares, and other claims currently unavailable---so that it fully hedges displacement risk." — Complete markets defined as the household gaining access to the specific assets it was previously excluded from. Consistent with spec's instruction to focus on "the important assets that are unavailable."
+- **Discussion (line 169):** "If the household could trade the restricted equity, its effective displacement parameter would become $\phi_\text{eff} \to 1$: displacement is fully hedged." — Same framing.
+
+**Arrow-Debreu:** The paper never mentions Arrow-Debreu securities anywhere. Consistent with spec's instruction.
+
+**Cross-section consistency:** The meaning of incomplete markets (inability to trade restricted AI equity) is identical across abstract, model, discussion, extensions, and conclusion.
+
+---
+
+## 4. Hedging
 
 **Spec definition:** "An asset 'hedges' a risk if its payoff tends to increase when that risk materializes. The hedge need not be perfect, and the asset need not earn a negative risk premium overall."
 
-**Paper usage:**
-- Abstract (line 31): "investors use AI stocks to hedge against an AI singularity" -- consistent.
-- Introduction (line 48): "investors use AI stocks to partially insure against displacement from AI" -- uses "partially," consistent with spec's "need not be perfect."
-- Model (line 152): "AI stocks pay off precisely when the household's consumption falls, making them a partial hedge against displacement." -- payoff increases when displacement risk materializes, directly matches spec definition. "Partial" is consistent with "need not be perfect."
-- Discussion (line 168): "displacement is fully hedged" under complete markets where $\phi_\text{eff} \to 1$ -- uses hedging as full insurance when all assets are available, consistent.
-- Extension 2 (line 265): "transfers reduce the hedge value of AI stocks" -- hedging demand falls when displacement is cushioned by transfers, consistent.
+**Paper usages:**
 
-**Cross-section consistency:** Hedging is consistently used as "payoff increases when displacement risk materializes." The paper consistently describes the hedge as partial, never claiming AI stocks perfectly hedge displacement. The paper does not claim AI stocks earn a negative risk premium, consistent with the spec's allowance.
+- **Introduction (line 49):** "investors use AI stocks to partially insure against displacement from AI" — "partially" is consistent with "the hedge need not be perfect."
+- **Model (line 153):** "AI stocks pay off precisely when the household's consumption falls, making them a partial hedge against displacement." — Payoff increases when risk materializes (displacement). Explicitly partial. Consistent.
+- **Model (line 112):** "Holding AI stocks allows the household to smooth marginal utility across states---this is the hedging channel that inflates AI stock valuations---but does not eliminate displacement." — Acknowledges the hedge is imperfect. Consistent.
+- **Abstract (line 32):** "investors use AI stocks to hedge against an AI singularity that displaces their consumption" — Uses "hedge" without "partial," but in context of the full abstract where "Markets are incomplete" is stated, this is not misleading.
+- **Extension 2 (line 265):** "the hedge value of AI stocks becomes infinite---no finite price can compensate for the catastrophic displacement" — Uses "hedge value" to describe the extreme case. This still refers to payoffs increasing when risk materializes; the infinite price reflects extreme marginal utility, not a claim of perfect hedging. Consistent.
 
-### 5. General Equilibrium vs. Partial Equilibrium
+**Cross-section consistency:** Hedging consistently means "AI stocks' payoffs increase when displacement occurs" throughout. Never claimed to be perfect; never claimed to require negative risk premia.
 
-**Spec definition:** General equilibrium = prices determined by equilibrium conditions (NOT that consumption is endogenous). Partial equilibrium = prices exogenous.
+---
 
-**Paper usage:**
-- The paper uses "stationary equilibrium" (line 125) and "equilibrium prices" (line 120) -- prices are determined endogenously via the household's Euler equation, consistent with general equilibrium per the spec.
-- Consumption growth is exogenous ($g$ is constant, displacement is mechanical through $\phi$) -- the spec explicitly notes that general equilibrium does NOT require consumption to be endogenous, so this is not a violation.
-- The paper does not incorrectly label itself as "partial equilibrium" despite having exogenous consumption growth.
-- The paper does not claim that having endogenous prices means consumption must be endogenous.
+## 5. General Equilibrium vs. Partial Equilibrium
 
-**Cross-section consistency:** No misuse of equilibrium terminology found.
+**Spec definition:** "General equilibrium means that prices are determined by the equilibrium conditions. It does *not* mean that consumption is endogenous. Partial equilibrium means that prices are exogenous."
+
+**Paper usages:** The paper never explicitly uses the terms "general equilibrium" or "partial equilibrium." The model determines prices through the Euler equation (equilibrium conditions), which is general equilibrium by the spec's definition. Consumption growth is exogenous ($g$ is a constant), which the spec explicitly says is compatible with general equilibrium. No inconsistency is possible since the terms are not invoked.
+
+---
 
 ## Summary
 
-All five concepts from the economic background spec are used consistently with their definitions throughout the paper. No cross-section drift, definitional inconsistencies, or ambiguities that change economic meaning were found.
+All five concepts from the economic background spec are used consistently with their definitions. The paper's treatment of incomplete markets is particularly well-aligned with the spec's emphasis on specific unavailable assets rather than Arrow-Debreu framing. Hedging is always described as partial and payoff-based. Budget constraints are satisfied in every equation. The AI singularity definition is stable across all sections.

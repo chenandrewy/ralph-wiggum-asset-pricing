@@ -1,66 +1,59 @@
 # tests/factcheck-code.py
-Started: 2026-04-12 20:00:23 EDT
-Runtime: 2m 29s
-[ralph-garage/agent-logs/20260412T200023.666091-0400_factcheck-code_claude_opus.log](../ralph-garage/agent-logs/20260412T200023.666091-0400_factcheck-code_claude_opus.log)
+Started: 2026-04-12 20:12:03 EDT
+Runtime: 1m 48s
+[ralph-garage/agent-logs/20260412T201203.489833-0400_factcheck-code_claude_opus.log](../ralph-garage/agent-logs/20260412T201203.489833-0400_factcheck-code_claude_opus.log)
 
 # factcheck-code
+
 VERDICT: PASS
-REASON: The canonical analysis path runs from scratch, produces all exhibits, and its outputs are consistent with the paper's quantitative claims.
+REASON: The canonical analysis path runs from scratch, produces all exhibits, and paper claims are consistent with the code.
 
 ## Canonical local analysis path
 
-Single entry point: `code/generate-exhibits.R`, run via `Rscript code/generate-exhibits.R`. The script:
+Single entry point: `code/generate-exhibits.R` (run via `Rscript code/generate-exhibits.R`). Produces three exhibits:
 
-1. Computes Table 1 (`table-pd-ratios.tex`) via backward recursion over post-singularity states (AI stocks) and closed-form (non-AI stocks).
-2. Generates Figure 3 (`fig-extension-panels.pdf`): two-panel extension figure (AI P/D vs. tax rate; household consumption growth vs. tax rate).
-3. Downloads S&P 500 (Shiller/datahub) and NASDAQ (FRED) data, then generates Figure 1 (`fig-ai-valuations.pdf`): two-panel empirical valuation figure.
-4. Prints veto example computations (Section 4.1) to console.
+1. `paper/exhibits/table-pd-ratios.tex` — P/D ratio table (Exhibit 2)
+2. `paper/exhibits/fig-extension-panels.pdf` — Extension panels figure (Exhibit 3)
+3. `paper/exhibits/fig-ai-valuations.pdf` — AI valuations figure (Exhibit 1)
 
-All three exhibit files are output to `paper/exhibits/` and are the only files in that directory. All three are referenced in `paper/paper.tex`. No hidden intermediate files or caches are required.
+Additionally prints veto example computations referenced in Section 4.1 to console.
+
+Dependencies: R packages `ggplot2`, `dplyr`, `tidyr`, `gridExtra`, `scales`. External data downloaded at runtime from datahub.io (Shiller S&P 500) and FRED (NASDAQ index). No local data files, precomputed caches, or manually prepared intermediates are used.
 
 ## Execution status
 
-- **Executed successfully** in this environment with R and required packages (ggplot2, dplyr, tidyr, gridExtra, scales).
-- External data downloads (datahub.io for Shiller S&P 500, FRED for NASDAQ) completed without error.
-- Runtime well under 180 seconds.
-- Minor ggplot warnings about removed rows (expected: large-singularity P/D values go to infinity/NA at low tax rates, intentionally excluded from plot range).
+- **Executed successfully from scratch.** All three exhibits regenerated. Runtime well under 180 seconds.
+- Two external downloads completed (datahub.io Shiller dataset, FRED NASDAQ series). These are required by the canonical path and permitted by the spec ("including any external data download").
+- R and all required packages were available in the environment.
+- No credentials or authentication required.
 
 ## Paper-code consistency
 
-All quantitative claims verified against code output:
+All checked quantitative claims match the code:
 
-| Paper claim | Code output | Status |
-|---|---|---|
-| P/D AI ≈ 15.5 at p=0.5%, ξ=0% | 15.5 | Match |
-| P/D non-AI ≈ 11 at p=0.5%, ξ=0% | 11.1 | Match |
-| Ratio ≈ 1.4 at p=0.5%, ξ=0% | 1.4 | Match |
-| Ratio rises to 2 at p=1% | 2.0 (at ξ=0%) | Match |
-| Extinction attenuates ratio | Ratio decreasing in ξ across all p | Match |
-| Veto under incomplete markets (γ=10, p=1%) | V_veto=-15.32 > V_develop=-15.53 | Match |
-| No veto under complete markets | V_develop=-13.46 > V_veto=-15.32 | Match |
-| Consumption halves under large singularity (φ(1+η)=0.5) | 0.05×10 = 0.5 | Match |
-| Baseline consumption falls 25% (φ(1+η)=0.75) | 0.5×1.5 = 0.75 | Match |
-| δ=0.9 robustness: 3.5× at τ=0.30 | 3.52 | Match |
-| Net transfer factor 0.219 at δ=0.9, τ=0.30 | 0.219 | Match |
+| Paper claim | Code/output verification |
+|---|---|
+| p=0.5%, ξ=0: AI P/D ≈ 15.5, Non-AI ≈ 11, ratio ≈ 1.4 | Table: 15.5, 11.1, 1.4 |
+| p=1%, ξ=0: ratio ≈ 2 | Table: 2.0 |
+| Baseline φ(1+η) = 0.75 | 0.50 × 1.50 = 0.75 |
+| Large singularity φ(1+η) = 0.5 | 0.05 × 10 = 0.5 |
+| φ^{-γ} = 160,000 for large singularity | 0.05^{-4} = 160,000 |
+| Veto example: γ=10, p=1%, κ=1%, household vetoes under incomplete markets | V_develop = -15.53, V_veto = -15.32, VETO |
+| Complete markets: household develops | V_develop_CM = -13.46 > V_veto = -15.32, develop |
+| δ=0.9, τ=0.30: net transfer rate 0.219, consumption multiple ≈ 3.5× | τ(1-δτ) = 0.219; growth ≈ 3.52 |
+| Parameters in table footnote match code globals | β=0.96, g=0.02, γ=4, φ=0.5, η=0.5, θ=0.15, Δθ=0.2 |
+| Extension figure uses α=0.70, p=0.5%, ξ=5%, δ=0.5 | Code: alpha0=0.70, p_ext=0.005, xi_ext=0.05, delta=0.50 |
 
-Parameters in code match parameters stated in paper: β=0.96, g=0.02, γ=4, φ=0.5, η=0.5, θ=0.15, Δθ=0.2, α=0.70, δ=0.5, φ_large=0.05.
+Model formulas in the code (SDF construction, backward recursion for AI P/D, consumption growth with transfers, φ_eff, veto Bellman equations) are consistent with the paper's equations.
 
-Formula implementations verified by static inspection:
-- P/D closed-form and exact backward recursion match paper equations (1)-(3).
-- φ_eff formula matches paper equation (5).
-- Consumption growth formula matches paper equation (4).
-- Veto Bellman equations match paper Section 4.1 description.
+The empirical figure (fig-ai-valuations) uses S&P 500 P/D from Shiller data and NASDAQ/S&P price ratio normalized to Jan 2015 = 100. No per-share data is combined with share counts from different sources; all quantities are index-level.
 
 ## Reproducibility classification
 
 | Output | Classification |
 |---|---|
-| `table-pd-ratios.tex` | **Locally reproducible** — pure computation, no external data |
-| `fig-extension-panels.pdf` | **Locally reproducible** — pure computation, no external data |
-| `fig-ai-valuations.pdf` | **Reproducible with network access** — requires downloads from datahub.io and FRED |
-| Veto example (console output) | **Locally reproducible** — pure computation, referenced in-text but not an exhibit file |
-| All in-text quantitative claims | **Consistent with code** — verified against code output |
-
-Per-share data handling: The empirical figure uses S&P 500 price and dividend data from a single source (Shiller dataset), avoiding cross-source share count issues. The NASDAQ/S&P ratio uses index-level prices from FRED, which are already adjusted. No per-share quantity combinations from different sources.
-
-No undocumented dependencies, no hidden auxiliary files, no precomputed caches required.
+| `table-pd-ratios.tex` | Locally reproducible (pure computation) |
+| `fig-extension-panels.pdf` | Locally reproducible (pure computation) |
+| `fig-ai-valuations.pdf` | Locally reproducible with network access (downloads from datahub.io and FRED) |
+| Veto example (Section 4.1 in-text) | Locally reproducible (console output; not saved to file) |
+| All theoretical propositions and proofs | Not code-dependent (analytical derivations in LaTeX) |

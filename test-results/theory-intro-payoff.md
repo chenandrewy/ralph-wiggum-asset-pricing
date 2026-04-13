@@ -1,37 +1,34 @@
 # tests/theory-intro-payoff.py
-Started: 2026-04-12 20:00:23 EDT
-Runtime: 1m 2s
-[ralph-garage/agent-logs/20260412T200023.658806-0400_theory-intro-payoff_claude_opus.log](../ralph-garage/agent-logs/20260412T200023.658806-0400_theory-intro-payoff_claude_opus.log)
+Started: 2026-04-12 20:12:03 EDT
+Runtime: 1m 34s
+[ralph-garage/agent-logs/20260412T201203.499754-0400_theory-intro-payoff_claude_opus.log](../ralph-garage/agent-logs/20260412T201203.499754-0400_theory-intro-payoff_claude_opus.log)
 
 # theory-intro-payoff
 VERDICT: PASS
-REASON: Every modeling feature maps to an economic result previewed in the introduction.
+REASON: Every modeling feature leads to at least one economic result discussed in the introduction, though the existence condition (Remark 1) is a near-miss.
 
 ## Detailed Findings
 
-Each modeling ingredient in the paper connects to at least one result discussed in the introduction. No orphan features exist.
+### Feature-to-Intro Mapping
 
-### Mapping of modeling features to introduction payoffs
-
-| Modeling Feature | Where in Model | Introduction Payoff |
+| Modeling Feature | Economic Result | Discussed in Introduction? |
 |---|---|---|
-| Singularity probability $p$ | Section 2.1 (Singularity) | "at a singularity probability of one percent, P/D ratios for AI stocks roughly double relative to non-AI stocks" |
-| Displacement parameter $\phi$ | Eq. (2), Section 2.1 | "investors use AI stocks to partially insure against displacement from AI" |
-| Market incompleteness (restricted equity) | Section 2.1 (Assets) | "Because markets are incomplete---investors cannot trade private AI capital---AI stocks command a premium" |
-| Extinction risk $\xi$ | Section 2.1 (Singularity) | "Extinction risk partially offsets this premium: the states in which AI is powerful enough to produce enormous growth are also those in which existential risk is highest, narrowing the valuation spread" |
-| Two public assets (AI vs non-AI) with $\theta$, $\Delta\theta$ | Section 2.1 (Assets) | Mechanism for the hedging channel producing the valuation spread discussed in the introduction |
-| CRRA preferences with $\gamma > 1$ | Eq. (3), Section 2.1 | Drives high marginal utility in displacement states; "risk-averse household that cannot hedge displacement may rationally choose to block it" |
-| Productivity boost $\eta$ | Section 2.1 (Singularity) | "singularity-driven growth overwhelms deadweight costs" |
-| Positive singularity probability $q$ | Section 4.1 (Extension 1) | "When the positive singularity is more likely than the negative one, AI development is socially efficient, yet a risk-averse household...may rationally choose to block it" |
-| Veto mechanism with cost $\kappa$ | Section 4.1 (Extension 1) | "Calls to slow or halt AI development may partly reflect investors' inability to hedge the downside" |
-| Government transfers $\tau$ with deadweight cost $\delta$ | Section 4.2 (Extension 2) | "Government transfers can substitute for missing markets, but standard fiscal tools are limited by deadweight costs...even grossly inefficient transfers become effective, because the resource base overwhelms the deadweight costs" |
+| Market incompleteness (restricted equity) | AI valuation premium via hedging channel | Yes — "investors use AI stocks to partially insure against displacement" |
+| Displacement parameter φ | Household consumption falls, hedging demand | Yes — "singularity that displaces the typical investor's labor income and consumption" |
+| Singularity probability p | P/D ratios scale with p | Yes — "at a singularity probability of one percent, P/D ratios for AI stocks roughly double" |
+| Extinction risk ξ (Jones 2024) | Attenuates valuation premium (Prop 2) | Yes — "Extinction risk partially offsets this premium" |
+| CRRA preferences (γ > 1) | Risk aversion drives hedging demand | Yes — implicit in hedging motive discussion |
+| Productivity boost η | Aggregate consumption jump | Yes — implicit in singularity definition |
+| Two public assets (θ, Δθ) | AI vs non-AI valuation spread | Yes — "pushing valuations above those of non-AI stocks" |
+| Positive singularity probability q | Veto distortion (Prop 3) | Yes — "When the positive singularity is more likely than the negative one" |
+| Veto cost κ | Household blocks socially efficient development | Yes — "risk-averse household...may rationally choose to block it" |
+| Transfer parameters (τ, δ) | Transfers overcome deadweight costs in singularity | Yes — "government transfers that becomes compelling when singularity-driven growth overwhelms deadweight costs" |
 
-### Summary
+### Near-Miss: Existence Condition (Remark 1)
 
-The introduction previews four main results:
-1. **AI valuation premium** from hedging under incomplete markets (driven by $p$, $\phi$, restricted equity, $\theta/\Delta\theta$, CRRA $\gamma$)
-2. **Extinction attenuation** of the premium (driven by $\xi$)
-3. **Veto distortion** of AI development (driven by $q$, $\kappa$, $\gamma$, incomplete markets)
-4. **Government transfers effectiveness** under singularity growth (driven by $\tau$, $\delta$, $\eta$)
+The existence condition — where displacement is so severe that the SDF-weighted expected dividend growth exceeds the discount rate and no finite P/D ratio can clear the market — is discussed at length in:
+- Section 2.2 (Remark 1)
+- Section 2.3 (Discussion: "sufficiently severe displacement can violate the existence condition for finite prices")
+- Section 4.2 (Extension 2: transfers restore finite prices from infinite hedging demand)
 
-Every modeling feature serves at least one of these results. No feature is introduced without an economic payoff that the introduction discusses.
+This result is NOT explicitly mentioned in the introduction. The intro covers the transfers channel but does not mention the infinite-price discontinuity that motivates it. However, this is a mathematical property of the P/D formula rather than a separate modeling feature, and the economic content it delivers (extreme displacement → transfers as solution) IS covered in the intro. Every actual model ingredient (parameter or assumption) does produce at least one economic result that appears in the introduction.

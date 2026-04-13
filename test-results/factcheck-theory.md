@@ -1,61 +1,54 @@
 # tests/factcheck-theory.py
-Started: 2026-04-12 20:00:23 EDT
-Runtime: 6m 55s
-[ralph-garage/agent-logs/20260412T200023.686135-0400_factcheck-theory_claude_opus.log](../ralph-garage/agent-logs/20260412T200023.686135-0400_factcheck-theory_claude_opus.log)
+Started: 2026-04-12 20:12:03 EDT
+Runtime: 7m 24s
+[ralph-garage/agent-logs/20260412T201203.516759-0400_factcheck-theory_claude_opus.log](../ralph-garage/agent-logs/20260412T201203.516759-0400_factcheck-theory_claude_opus.log)
 
 # factcheck-theory
-
 VERDICT: PASS
-REASON: All notation is consistent, all assumptions are mutually consistent, and all mathematical objects trace back to the assumptions.
+REASON: All notation is consistent, all assumptions are mutually consistent, and all mathematical objects trace back to stated assumptions.
 
 ## Requirement 1: Notational Consistency — PASS
 
-28 symbol families were identified across the paper. Zero true collisions were found. No symbol family is reused for a different formal object, semantic role, model, or decision problem without explicit renaming.
+31 symbol families were cataloged across the entire paper. No genuine collisions were found — no symbol is reused for a different formal object without explicit renaming or an equivalence statement.
 
-Two low-severity notes (neither constitutes ambiguity for the target audience):
+Three minor ambiguities were identified, all consistent with standard economics conventions:
 
-1. **$\Delta$ prefix dual use.** $\Delta\theta$ is a fixed parameter (jump in AI share), while $\Delta u(\gamma)$ uses $\Delta$ as a difference operator. These are syntactically distinguishable ($\Delta\theta$ takes no argument; $\Delta u(\gamma)$ is applied to a function).
+1. **Delta prefix dual use**: $\Delta\theta$ is a parameter (AI share jump size) while $\Delta u(\gamma)$ is a difference operator on utility. The objects are clearly distinguishable by their arguments (Greek letter vs. Roman letter).
+2. **Subscript slot overload on $c^H$**: $c_t^H$ uses the subscript for time, but $c^H_{post}$ and $c^H_{no\text{-}transfer}$ in Section 4.2 use it for state labels. Context makes the distinction clear.
+3. **Notational proliferation**: The appendix introduces $v^{AI}$ as shorthand for $P^{AI}/D^{AI}$, adding a redundant but explicitly defined symbol.
 
-2. **Time-subscript suppression.** The paper uses two conventions: explicit statement for $\alpha$/$\theta$ (Section 4: "we write $\alpha$ for $\alpha_t$") and implicit stationarity for P/D ratios in Proposition 1. Both are clearly communicated. $\Gamma^{AI}$ implicitly depends on $\theta_t$, which is acknowledged in the Appendix.
-
-Full notation audit: `ralph-garage/scratch/factcheck-notation.md`
+None of these rise to the level of genuine inconsistency. The paper maintains clean symbol discipline: uppercase/lowercase distinctions ($C$ vs. $c$, $U$ vs. $u$), superscript conventions ($AI$, $N$, $H$, $CM$), and subscript conventions (time, state, effective) are internally coherent. Notational simplifications (dropping $t$ subscripts in Section 4) are explicitly flagged.
 
 ## Requirement 2: Assumption Consistency — PASS
 
-35 assumptions were identified across the baseline model (20), Extension 1/Veto (8), and Extension 2/Transfers (7). No contradictions or inconsistencies were found.
+28 assumptions were identified across the baseline model, extensions, appendix, and calibrations. All assumptions are mutually consistent. Specifically:
 
-- No contradictory parameter restrictions. Each parameter has a single domain maintained consistently.
-- No functional form conflicts. CRRA utility and multiplicative displacement used uniformly.
-- No stochastic process conflicts. Baseline and extension singularity processes are clearly delineated.
-- No extension-baseline conflicts. Extensions augment rather than contradict.
-- No implicit-explicit conflicts. The key implicit condition $\phi(1+\eta) < 1$ is always satisfied in calibrations and stated as sufficient where needed.
+- **Parameter ranges are compatible**: Every calibration value satisfies its stated restrictions ($\phi \in (0,1)$, $\gamma > 1$, $\beta \in (0,1)$, $\eta > 0$, $g > 0$, $\Delta\theta \in (0,1)$, $q > 1/2$, $\kappa > 0$, $\tau \in [0,1)$, $\delta > 0$).
+- **Baseline and extensions are compatible**: Extensions augment rather than contradict the baseline. Extension 1 adds positive singularities; Extension 2 adds government transfers.
+- **Structural assumptions are compatible**: Market incompleteness is a structural assumption; complete markets appear only as a counterfactual comparison.
+- **Stochastic structure is consistent**: Probabilities ($p$, $\xi$, $q$) nest correctly.
+- **Existence condition violations are deliberate**: The large-singularity parameterization ($\eta = 9$, $\phi = 0.05$) deliberately violates the existence condition at $\tau = 0$ to motivate transfers; this is explicitly acknowledged.
 
-Minor notes (not inconsistencies):
-
-1. $\phi(1+\eta) < 1$ is required for the veto result (Prop. 3) but is not given a formal assumption label.
-2. $\delta\tau < 1$ (needed for transfers to be net-positive) is not explicitly stated as a maintained assumption, though always satisfied in calibrations.
-3. Extensions 1 and 2 are not formally combined into a unified model.
-4. The $\min(1, \alpha/\phi)$ cap could push $\alpha_t$ to exactly 1, technically extending the stated domain $(0,1)$ to $(0,1]$.
-
-Full assumptions audit: `ralph-garage/scratch/factcheck-assumptions.md`
+Three minor observations (not errors):
+1. The condition $\phi(1+\eta) < 1$, essential for the veto result (Proposition 3), is used but never elevated to a labeled assumption.
+2. Parameters $p$ and $\xi$ lack explicit domain restrictions (only implicitly probabilities).
+3. The initial AI dividend share $\theta_0$ lacks an explicit domain restriction (implicitly in $(0,1)$).
 
 ## Requirement 3: Traceability — PASS
 
-All mathematical objects not among the primitive assumptions were traced back to those assumptions:
+All mathematical objects in derived expressions trace back to the stated assumptions:
 
-| Derived Object | Source Assumptions |
+| Derived Object | Traces To |
 |---|---|
-| $\Gamma^{AI}$, $\Gamma^{N}$ (dividend growth factors) | A6, A9, A10 |
-| $A^j$ (existence condition) | A3, A5, A6, A7, A8, A14 + $\Gamma^j$ |
-| P/D ratios (Prop. 1) | A2, A3–A11, A14, A16 |
-| $B$, $S$, $f$ (Prop. 2 proof auxiliaries) | Defined from primitives |
-| $\Delta u(\gamma)$ (Eq. 7) | A4, A6, A7, A14, A21, A22 |
-| $\alpha^+ = \min(1, \alpha/\phi)$ | A4, A7, A21 |
-| $V_\text{veto}$, $V_\text{develop}$, $V_\text{develop}^{CM}$ | A14, A24, A25, A27 + singularity process |
-| $\bar{\gamma}$ (Prop. 3 threshold) | Derived from full assumption set |
-| $c^H_{post}$ (Eq. 8) | A4, A6, A7, A29, A30 |
-| $\phi_\text{eff}$ (Eq. 9) | Derived from Eq. 8 |
-| Transfer ratio (Eq. 10) | Derived from Eq. 8 |
-| Euler equation (Appendix) | A2, A14 |
+| $\Gamma^{AI}$, $\Gamma^{N}$ (dividend growth factors) | $\theta_t$, $\Delta\theta$ (A8), $\eta$ (A5) |
+| $A^j$ (existence auxiliary) | $\beta$, $\gamma$ (A12), $g$ (A2), $p$ (A4), $\xi$, $\eta$, $\phi$ (A5/A6), $\Gamma^j$ |
+| P/D ratios (Proposition 1) | Euler equation from CRRA (A12) + singularity structure (A4–A6) + dividends (A8–A9) |
+| $V_\text{veto}$, $V_\text{develop}$, $V_\text{develop}^{CM}$ | CRRA (A12), singularity (A4–A6, A16), veto cost (A18), complete markets (A21) |
+| $\Delta u(\gamma)$ (eq. 8) | $q$ (A16), $\phi$, $\eta$ (A5), $\alpha$ (A3), CRRA (A12) |
+| $\bar{\gamma}$ (veto threshold) | Existence proved in Proposition 3 from above objects |
+| $c^H_{post}$ (eq. 9) | $\phi$ (A5), $\alpha$ (A3), $g$, $C_t$ (A2), $\eta$ (A5), $\tau$, $\delta$ (A24) |
+| $\phi_\text{eff}$ (eq. 10) | Algebraic factoring of eq. 9 |
+| Transfer ratio (eq. 11) | $\tau$, $\delta$ (A24), $\phi$ (A5), $\alpha$ (A3) |
+| $B$, $S$, $f(A)$ (Prop. 2 proof) | Local auxiliaries from assumption parameters |
 
 No expression was found that cannot be logically derived from the assumptions.
