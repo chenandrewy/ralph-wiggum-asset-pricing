@@ -126,7 +126,7 @@ I guess that's our comparative advantage?
 
 The Ralph loop runs on its own branch, and commits after each iteration. So you can see in painstaking detail how the paper progressed on the [ralph/run-final branch](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/commits/ralph/run-final/).
 
-Usually, the first 3-4 iterations catch the major issues. This was evident in the final run:
+Usually, the very first [author plan](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/main/ralph/author-plan.py) and [author improve](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/main/ralph/author-improve.py) prompts generate a [fairly complete paper](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/35fd4d6270862b1a51e1fe64002899acdc239bc7/paper/paper.tex).  Then, the first 3-4 iterations catch the major issues. This was evident in the final run:
 
 - `iter 1` fixed:
   - Missing core literature on displacement risk and asset pricing, especially Kogan-Papanikolaou line of work
@@ -253,12 +253,31 @@ Now we do have economic analysis on tap. But what we can offer on tap is more li
 
 ## The Future of AI and Economics Research (Speculative)
 
-What will happen if and when economics research is actually "on tap"?
+A common response to [Novy-Marx and Velikov (2025)](https://www.nber.org/papers/w33363) is: "people are not ready for this." I heard concerns that peer review will be inundated with AI-generated slop.
 
-"Economics on tap" could be a disaster for the economics labor market (could be). It certainly *will* be an extremely cheap substitute for at least some economists' labor. I suppose the questions is whether that will result in a strong substitution away from labor.
+Working on this paper gave me a different perspective. It made me think about the drivers of demand for research. I think the key drivers are:
 
-The optimistic argument is that AI also *complements* economists' labor. Perhaps, the number of economists will remain the same, but our research output increases in terms of both quantity and quality. 
+1. Readers want to learn something interesting and true.
 
-But there are reasons why total research output is limited. Two key factors in academic publishing are attention and reputation ([Klamer and van Dalen 2001, J of Economic Methodology](https://repub.eur.nl/pub/6875/2001-0221.pdf)). Readers can only pay attention to so many reputable scholars. These scholars, in turn, can only pay attention to so may projects. 
+2. Readers don't want to check all the work.
 
-I'm not saying that I *expect* a disaster for the economics labor market.  But even if it's highly unlikely, it's still a scenario that economists should consider. 
+3. A system of author reputations makes 1 and 2 possible.
+
+The current generation of AI does not fundamentally alter these drivers. Critically, driver 3 made me quite wary of putting my name on AI slop. As a result, I don't see  the journals becoming overwelmed by AI-generated submissions.
+
+Instead, I see AI pushing the frontier of what is "interesting and true".  Questions that can be answered by asking AI, or even by running a Ralph loop for a few days---these will soon be uninteresting. To get into the top journals, and be declared "interesting" by the reputation system, that will require doing more. Accordingly, it will be come harder to check the work. The top journals will shoot for publications that can only be certified as "true" by combining expert human labor *with* AI. 
+
+As a result, even if I could crank out 2024-style papers with Ralph loops---I won't. I have a reputation to maintain!
+
+I worry a bit about AI pushing what is interesting so far that for most readers economics research will be unintelligible, or worse irrelevant. What if the intelligible and useful economics has already been done? But AI is not my main worry here. Based on my [work with Lopez-Lira and Zimmermann](https://arxiv.org/pdf/2212.10317), I fear we've already reached this point without the help of AI.
+
+My main worry is about the labor market for economists. The key issue is how AI affects the supply of research:
+
+1. Economists use AI and labor to produce research of a certain quality. 
+2. Reputable authors use their attention to combine economists' research into papers that are read.
+
+I would not worry if I was sure AI *complements* economists' labor. If this were the case, the number of economists will remain the same, but our research output increases in terms of both quantity and quality. 
+
+But there are reasons why total research output is limited. Namely, if the number of reputable authors is fixed (perhaps due to limited attention of readers), and if AI does not expand the attention capacity of reputable authors, then we could see a strong substitution away from economists' labor. This could be a disaster for the economics labor market.
+
+I'm not saying that I *expect* a disaster.  But even if it's highly unlikely, it's still a scenario that economists should consider.
