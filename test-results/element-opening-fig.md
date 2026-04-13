@@ -1,26 +1,22 @@
 # tests/element-opening-fig.py
-Started: 2026-04-12 20:12:03 EDT
-Runtime: 57s
-[ralph-garage/agent-logs/20260412T201203.499579-0400_element-opening-fig_claude_opus.log](../ralph-garage/agent-logs/20260412T201203.499579-0400_element-opening-fig_claude_opus.log)
+Started: 2026-04-12 20:26:02 EDT
+Runtime: 1m 7s
+[ralph-garage/agent-logs/20260412T202602.606280-0400_element-opening-fig_claude_opus.log](../ralph-garage/agent-logs/20260412T202602.606280-0400_element-opening-fig_claude_opus.log)
 
 # element-opening-fig
 VERDICT: PASS
-REASON: The two-panel figure is empirical, uses real market data, and supports the intro's motivating claim about elevated AI-related valuations, with publication-quality formatting.
+REASON: The two-panel empirical figure effectively documents elevated AI/tech valuations using public data and directly supports the introduction's motivating claim.
 
 ## Findings
 
 ### Requirement 1: Empirical, not theoretical
-PASS. Panel (a) plots the S&P 500 trailing price-dividend ratio from the Shiller dataset. Panel (b) plots the NASDAQ Composite price relative to the S&P 500, normalized to Jan 2015 = 100. Both series are drawn from real market data (FRED and Shiller).
+PASS. Both panels plot real financial data: Panel (a) uses the Shiller S&P 500 trailing price-dividend ratio; Panel (b) uses the NASDAQ Composite price relative to the S&P 500 from FRED. No model output is involved.
 
-### Requirement 2: Compares AI and non-AI valuations
-PASS (with caveat). Panel (b) uses the NASDAQ/S&P 500 price ratio as a proxy for AI vs. non-AI relative valuations. This is an index-level comparison rather than a direct AI vs. non-AI stock sort (e.g., based on firm-level AI exposure scores). For a theory paper with intentionally limited empirical scope (spec §IV.8.b), the proxy is adequate. Panel (a) alone would not satisfy this requirement, as it only shows aggregate market P/D.
+### Requirement 2: Compares AI and non-AI public-stock valuations
+PASS. Panel (b) explicitly compares the NASDAQ Composite (heavily weighted toward AI and technology firms) against the S&P 500 (broader market), normalized to January 2015 = 100. The rising ratio, especially post-2023, shows the AI/tech valuation premium. Panel (a) provides context by showing the overall market P/D has also reached historically elevated levels. While NASDAQ is a proxy rather than a hand-picked AI portfolio, the caption and text acknowledge this, and the proxy is standard and defensible for a theory paper.
 
 ### Requirement 3: Supports the intro's motivating claim
-PASS. The opening paragraph states AI-exposed stocks have "reached remarkable valuations" and that "the valuation gap [has been] widening since 2023." Panel (a) shows the P/D ratio at historically elevated levels. Panel (b) shows a sharp NASDAQ/S&P divergence accelerating post-2023. Both directly support the motivating claim.
+PASS. The introduction's opening paragraph directly references the figure: "Figure 1 illustrates: the S&P 500's price-dividend ratio has reached historically elevated levels, and the AI- and technology-heavy NASDAQ Composite has sharply outpaced the broader market since 2015, with the valuation gap widening since 2023." This ties directly to the paper's central argument that AI stocks command a premium due to their hedging value against displacement risk.
 
 ### Requirement 4: Clear and publication-quality
-PASS. Two-panel layout is clean and well-proportioned. Axis labels are readable. Color scheme (red for P/D, blue for relative price) is distinct. Caption is detailed and informative, citing data sources. Grid lines are removed for a clean look. Overall formatting is appropriate for a top finance journal.
-
-### Minor observations
-- The NASDAQ is a rough proxy for "AI stocks" — it includes many non-AI tech firms and omits AI-exposed firms outside the index. A more targeted comparison (e.g., AI-themed ETF vs. broad market) would be sharper but is not required given the paper's limited empirical scope.
-- Panel (a) showing the S&P 500 P/D ratio is somewhat tangential to the AI-specific claim; its main contribution is establishing the broad valuation environment.
+PASS. The rendered figure (page 2) is clean and professional. Two well-sized panels with distinct colors (red for P/D, blue for relative price), clear axis labels, readable tick marks, and an informative caption with data sources. The panel titles use the (a)/(b) convention. Layout is appropriately sized at full text width.

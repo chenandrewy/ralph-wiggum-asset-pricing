@@ -200,14 +200,14 @@ theme_paper <- theme_bw(base_size = 32) +
   theme(
     legend.position = "bottom",
     legend.title = element_blank(),
-    legend.text = element_text(size = 28),
-    legend.spacing.x = unit(2.5, "cm"),
-    legend.key.width = unit(2.5, "cm"),
+    legend.text = element_text(size = 22),
+    legend.spacing.x = unit(1.5, "cm"),
+    legend.key.width = unit(2.0, "cm"),
     axis.text = element_text(size = 28),
     axis.title = element_text(size = 30),
     plot.title = element_text(size = 26),
     panel.grid.minor = element_blank(),
-    panel.grid.major = element_line(color = "gray75")
+    panel.grid.major = element_line(color = "gray55")
   )
 
 scenario_labels <- c(
@@ -391,7 +391,9 @@ panel_val_a <- ggplot(df_pd, aes(x = Date, y = PD)) +
   ggtitle("(a) S&P 500 P/D Ratio") +
   theme_paper +
   theme(plot.margin = margin(t = 10, r = 10, b = 5, l = 10, unit = "pt"),
-        panel.grid.major = element_blank())
+        panel.grid.major = element_blank(),
+        axis.text.x = element_text(size = 18),
+        plot.title = element_text(size = 22))
 
 # Normalize NASDAQ/S&P ratio to Jan 2015 = 100
 base_ratio <- df_pd$Ratio[which.min(abs(df_pd$Date - as.Date("2015-01-01")))]
@@ -405,11 +407,14 @@ panel_val_b <- ggplot(df_pd, aes(x = Date, y = Ratio_norm)) +
   scale_y_continuous(expand = expansion(mult = c(0.02, 0.05))) +
   ggtitle("(b) NASDAQ vs. S&P 500") +
   theme_paper +
-  theme(plot.margin = margin(t = 10, r = 10, b = 5, l = 25, unit = "pt"),
-        panel.grid.major = element_blank())
+  theme(plot.margin = margin(t = 10, r = 10, b = 5, l = 10, unit = "pt"),
+        panel.grid.major = element_blank(),
+        axis.text.x = element_text(size = 18),
+        axis.title.y = element_text(size = 24),
+        plot.title = element_text(size = 22))
 
 fig_val <- arrangeGrob(panel_val_a, panel_val_b, ncol = 2)
-ggsave(file.path(outdir, "fig-ai-valuations.pdf"), fig_val, width = 12, height = 4.5, device = cairo_pdf)
+ggsave(file.path(outdir, "fig-ai-valuations.pdf"), fig_val, width = 14, height = 5, device = cairo_pdf)
 cat("Wrote", file.path(outdir, "fig-ai-valuations.pdf"), "\n")
 
 # =============================================================================

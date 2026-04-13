@@ -1,54 +1,68 @@
 # tests/factcheck-theory.py
-Started: 2026-04-12 20:12:03 EDT
-Runtime: 7m 24s
-[ralph-garage/agent-logs/20260412T201203.516759-0400_factcheck-theory_claude_opus.log](../ralph-garage/agent-logs/20260412T201203.516759-0400_factcheck-theory_claude_opus.log)
+Started: 2026-04-12 20:26:02 EDT
+Runtime: 7m 29s
+[ralph-garage/agent-logs/20260412T202602.592189-0400_factcheck-theory_claude_opus.log](../ralph-garage/agent-logs/20260412T202602.592189-0400_factcheck-theory_claude_opus.log)
 
 # factcheck-theory
-VERDICT: PASS
-REASON: All notation is consistent, all assumptions are mutually consistent, and all mathematical objects trace back to stated assumptions.
+
+VERDICT: FAIL
+REASON: Proposition 3(i) relies on the condition $\phi(1+\eta) < 1$, which is neither a stated assumption nor implied by the stated assumptions, so the result cannot be logically derived from the paper's formal premises.
 
 ## Requirement 1: Notational Consistency — PASS
 
-31 symbol families were cataloged across the entire paper. No genuine collisions were found — no symbol is reused for a different formal object without explicit renaming or an equivalence statement.
+The paper uses 25 symbol families, all well-defined with non-overlapping meanings. Three minor issues were identified, none constituting genuine ambiguity:
 
-Three minor ambiguities were identified, all consistent with standard economics conventions:
+1. **Silent subscript drop for $\theta$**: The paper explicitly announces dropping the time subscript for $\alpha$ (line 202) but does so silently for $\theta$ starting in Proposition 1. Contextually clear in stationary equilibrium.
+2. **$V$ vs. $v$ overlap**: $V$ is used for household value functions in the veto analysis (Section 4.1), while $v^{AI}$ is used for P/D ratio shorthand in Appendix A. These appear in completely separate contexts and carry different subscript conventions.
+3. **$\alpha^+$ notation**: A one-off superscript convention defined and used in a single line of the Proposition 3 proof.
 
-1. **Delta prefix dual use**: $\Delta\theta$ is a parameter (AI share jump size) while $\Delta u(\gamma)$ is a difference operator on utility. The objects are clearly distinguishable by their arguments (Greek letter vs. Roman letter).
-2. **Subscript slot overload on $c^H$**: $c_t^H$ uses the subscript for time, but $c^H_{post}$ and $c^H_{no\text{-}transfer}$ in Section 4.2 use it for state labels. Context makes the distinction clear.
-3. **Notational proliferation**: The appendix introduces $v^{AI}$ as shorthand for $P^{AI}/D^{AI}$, adding a redundant but explicitly defined symbol.
+Full notation report: `ralph-garage/scratch/factcheck-notation.md`.
 
-None of these rise to the level of genuine inconsistency. The paper maintains clean symbol discipline: uppercase/lowercase distinctions ($C$ vs. $c$, $U$ vs. $u$), superscript conventions ($AI$, $N$, $H$, $CM$), and subscript conventions (time, state, effective) are internally coherent. Notational simplifications (dropping $t$ subscripts in Section 4) are explicitly flagged.
+## Requirement 2: Mutual Consistency of Assumptions — PASS
 
-## Requirement 2: Assumption Consistency — PASS
+24 assumptions were cataloged across the baseline model and extensions. All are mutually consistent: no contradictory parameter restrictions, no conflicting functional forms, and no baseline-vs-extension conflicts.
 
-28 assumptions were identified across the baseline model, extensions, appendix, and calibrations. All assumptions are mutually consistent. Specifically:
+Two minor exposition gaps (not inconsistencies) were identified:
 
-- **Parameter ranges are compatible**: Every calibration value satisfies its stated restrictions ($\phi \in (0,1)$, $\gamma > 1$, $\beta \in (0,1)$, $\eta > 0$, $g > 0$, $\Delta\theta \in (0,1)$, $q > 1/2$, $\kappa > 0$, $\tau \in [0,1)$, $\delta > 0$).
-- **Baseline and extensions are compatible**: Extensions augment rather than contradict the baseline. Extension 1 adds positive singularities; Extension 2 adds government transfers.
-- **Structural assumptions are compatible**: Market incompleteness is a structural assumption; complete markets appear only as a counterfactual comparison.
-- **Stochastic structure is consistent**: Probabilities ($p$, $\xi$, $q$) nest correctly.
-- **Existence condition violations are deliberate**: The large-singularity parameterization ($\eta = 9$, $\phi = 0.05$) deliberately violates the existence condition at $\tau = 0$ to motivate transfers; this is explicitly acknowledged.
+1. **$\phi(1+\eta) < 1$ is used but not formally assumed.** This condition is essential for the negative singularity to cause a household consumption drop, and is required by the Proposition 3 proof. It is not implied by $\phi \in (0,1)$ and $\eta > 0$ (e.g., $\phi = 0.9, \eta = 0.5 \Rightarrow \phi(1+\eta) = 1.35 > 1$). All calibrations satisfy it, but it is not stated as a maintained assumption.
+2. **$\delta\tau < 1$ is implicitly needed** for transfers to benefit the household, but is stated only conditionally rather than as an assumption. All calibrations satisfy it.
 
-Three minor observations (not errors):
-1. The condition $\phi(1+\eta) < 1$, essential for the veto result (Proposition 3), is used but never elevated to a labeled assumption.
-2. Parameters $p$ and $\xi$ lack explicit domain restrictions (only implicitly probabilities).
-3. The initial AI dividend share $\theta_0$ lacks an explicit domain restriction (implicitly in $(0,1)$).
+Full assumptions report: `ralph-garage/scratch/factcheck-assumptions.md`.
 
-## Requirement 3: Traceability — PASS
+## Requirement 3: Traceability to Assumptions — FAIL
 
-All mathematical objects in derived expressions trace back to the stated assumptions:
+### Objects successfully traced
 
-| Derived Object | Traces To |
+All derived mathematical objects trace back to the stated assumptions:
+
+| Derived Object | Source Assumptions |
 |---|---|
-| $\Gamma^{AI}$, $\Gamma^{N}$ (dividend growth factors) | $\theta_t$, $\Delta\theta$ (A8), $\eta$ (A5) |
-| $A^j$ (existence auxiliary) | $\beta$, $\gamma$ (A12), $g$ (A2), $p$ (A4), $\xi$, $\eta$, $\phi$ (A5/A6), $\Gamma^j$ |
-| P/D ratios (Proposition 1) | Euler equation from CRRA (A12) + singularity structure (A4–A6) + dividends (A8–A9) |
-| $V_\text{veto}$, $V_\text{develop}$, $V_\text{develop}^{CM}$ | CRRA (A12), singularity (A4–A6, A16), veto cost (A18), complete markets (A21) |
-| $\Delta u(\gamma)$ (eq. 8) | $q$ (A16), $\phi$, $\eta$ (A5), $\alpha$ (A3), CRRA (A12) |
-| $\bar{\gamma}$ (veto threshold) | Existence proved in Proposition 3 from above objects |
-| $c^H_{post}$ (eq. 9) | $\phi$ (A5), $\alpha$ (A3), $g$, $C_t$ (A2), $\eta$ (A5), $\tau$, $\delta$ (A24) |
-| $\phi_\text{eff}$ (eq. 10) | Algebraic factoring of eq. 9 |
-| Transfer ratio (eq. 11) | $\tau$, $\delta$ (A24), $\phi$ (A5), $\alpha$ (A3) |
-| $B$, $S$, $f(A)$ (Prop. 2 proof) | Local auxiliaries from assumption parameters |
+| $c_t^H = \alpha_t C_t$ | A3 ($\alpha_t$), A2 ($C_t$) |
+| $D_t^{AI} = \theta_t C_t$ | A8 ($\theta_t$), A2 ($C_t$) |
+| $D_t^N = (1-\theta_t) C_t$ | A9, A8, A2 |
+| $\Gamma^{AI}, \Gamma^N$ | A8 ($\theta$, $\Delta\theta$), A5 ($\eta$) |
+| $A^j$ (existence condition) | A12 ($\beta$, $\gamma$), A2 ($g$), A4 ($p$), A7 ($\xi$), A5 ($\eta$), A6 ($\phi$), $\Gamma^j$ |
+| P/D ratios (Prop. 1) | Euler equation from A12, all baseline primitives |
+| Extinction attenuation (Prop. 2) | $A^j$ decomposition, $\Gamma^{AI} > \Gamma^N$ from A8 |
+| $c^H_{post}$ | A6 ($\phi$), A3 ($\alpha$), A5 ($\eta$), A2 ($g$, $C_t$), A21 ($\tau$), A22 ($\delta$) |
+| $\phi_\text{eff}$ | A6 ($\phi$), A21 ($\tau$), A22 ($\delta$), A3 ($\alpha$) |
+| Transfer ratio (eq. 9) | Derived from $c^H_{post}$ and $c^H_{no\text{-}transfer}$ |
+| $V_\text{veto}, V_\text{develop}, V_\text{develop}^{CM}$ | A12, A17 ($\kappa$), A4 ($p$), A7 ($\xi$), A15 ($q$), A5, A6, A3 |
 
-No expression was found that cannot be logically derived from the assumptions.
+### Expression that cannot be derived from stated assumptions
+
+**Proposition 3(i) — Veto under incomplete markets (line 214–216):**
+
+The proposition states unconditionally: *"there exists a threshold $\bar{\gamma}$ such that for all $\gamma > \bar{\gamma}$, the household vetoes AI development."*
+
+The proof (line 228) establishes this by showing $\Delta u(\gamma) \to -\infty$ as $\gamma \to \infty$, which requires $\phi\alpha(1+\eta) < \alpha$, i.e., $\phi(1+\eta) < 1$. This is the condition that ensures the negative singularity causes a household consumption drop.
+
+**The problem:** $\phi(1+\eta) < 1$ is:
+- Not stated as a formal assumption anywhere in the paper.
+- Not implied by the stated assumptions ($\phi \in (0,1)$ and $\eta > 0$ do not jointly imply $\phi(1+\eta) < 1$).
+- Mentioned only conditionally within the proof text ("when $\phi(1+\eta) < 1$"), not in the proposition statement.
+- Used earlier in the paper (line 159) also only conditionally ("$\phi(1+\eta) < 1$ when $\phi$ is sufficiently small").
+
+Without this condition, if $\phi(1+\eta) \geq 1$, the household's consumption rises even in the "negative" singularity, the utility cost $\Delta u(\gamma)$ does not diverge to $-\infty$, and the veto result does not hold. Therefore, Proposition 3(i) as stated cannot be logically derived from the paper's formal premises.
+
+**Fix:** Either add $\phi(1+\eta) < 1$ as a maintained assumption in the model setup, or add it as an explicit condition in Proposition 3(i)'s statement (e.g., "Suppose $\phi(1+\eta) < 1$. Then there exists...").

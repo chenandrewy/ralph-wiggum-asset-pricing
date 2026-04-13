@@ -1,36 +1,47 @@
 # Improvement Plan
-AUTHOR PLAN — 2026-04-12 20:10:07 EDT
+AUTHOR PLAN — 2026-04-12 20:22:00 EDT
 
 ## Current State
 
-- **Tests**: 24/25 pass. One failure: `visual-figures-image-only`.
-- **Model section**: Sound. No overhaul needed.
-- **Referee feedback (CFR-R1)**: Addressed by the extensions section (veto + transfers).
+- **Tests**: 23/25 pass. Two failures: `visual-figures-image-only`, `writing-intro`.
+- **Model**: No overhaul needed. Theory fact-checks pass clean (notation, assumptions, traceability, arithmetic). Code matches paper.
+- **Referees**: Disabled; no referee outputs in summary.
 
-## Issues
+## Failing Tests
 
-### 1. Failing test: `visual-figures-image-only`
+### 1. `visual-figures-image-only` (FAIL)
 
-`fig-extension-panels` fails on two visual defects:
+**fig-ai-valuations issues:**
+- X-axis tick labels cramped in both panels (5-year breaks at 28pt on ~6-inch panels).
+- Panel (b) title truncated: "(b) NASDAQ vs. S&P 5" instead of "(b) NASDAQ vs. S&P 500".
 
-**(a) Panel (b) x-axis tick labels are cramped and overlapping.**
-The current code uses `breaks = seq(0, 0.50, by = 0.10)`, producing 6 tick labels (0%, 10%, 20%, 30%, 40%, 50%) in a narrow half-width panel at base_size 32. The labels collide.
+**fig-extension-panels issues:**
+- Shared legend truncated (closing parenthesis and parameter value cut off).
+- Grid lines in both panels are light gray with insufficient contrast.
 
-**(b) Shared legend entries run together without spacing.**
-`legend.spacing.x = unit(1, "cm")` is insufficient at the current font sizes; the two legend items appear as one garbled string.
+**Fix (code/generate-exhibits.R):**
+- fig-ai-valuations: Reduce x-axis tick label size (e.g., `axis.text.x = element_text(size = 22)`). Shorten panel (b) title or reduce title font size to prevent truncation.
+- fig-extension-panels: Increase legend text wrapping or reduce legend text size to prevent truncation. Darken grid lines further (already `gray75`; try `gray55` or darker).
 
-### 2. Grid line contrast (noted but not failing)
+### 2. `writing-intro` (FAIL)
 
-The test flagged Panel (a) grid lines as "distractingly bold" (`panel.grid.major = element_line(color = "gray40")`). This is a marginal pass but worth softening.
+**Issues:**
+- P3->P4 transition: P3 closes on extinction-risk nuance, P4 jumps to development distortions without bridging.
+- P6->P7 transition: P6 and P7 opening say nearly the same thing, creating redundancy that stalls momentum.
 
-## Plan
+**Fix (paper/paper.tex):**
+- P3->P4: Add a bridging sentence at end of P3 or start of P4 connecting the extinction discussion to the broader incomplete-markets theme before pivoting to real distortions.
+- P6->P7: Rewrite P7 opening to avoid repeating P6's closing. Go directly to the roadmap without restating the "growth creates and resolves the problem" line.
 
-### Step 1: Fix fig-extension-panels visual issues (code/generate-exhibits.R)
+## Passing Tests with Actionable Suggestions
 
-1. **Reduce Panel (b) x-axis tick density**: Change `by = 0.10` to `by = 0.20` so only 3 ticks appear (0%, 20%, 40%) — or use `breaks = c(0, 0.10, 0.30, 0.50)` for better coverage without crowding.
-2. **Increase legend spacing**: Raise `legend.spacing.x` to `unit(2, "cm")` or more, and/or add `legend.key.width = unit(2.5, "cm")` to give each entry breathing room.
-3. **Soften grid lines**: Change `gray40` to `gray70` or `gray75` in `theme_paper` so data lines dominate.
+### 3. `theory-clarity` (PASS, with suggestion)
 
-### Step 2: Rebuild exhibits and verify
+The AI dividend share update rule $\theta_{t+1} = \theta_t + \Delta\theta(1-\theta_t)$ is currently in a bullet point. This is the single expression driving $\Gamma^{AI} \neq \Gamma^{N}$ and therefore the entire valuation spread. Elevate it to a numbered display equation.
 
-Run `Rscript code/generate-exhibits.R`, recompile the paper, regenerate page images, and re-run the failing test to confirm it passes.
+## Execution Order
+
+1. Fix fig-ai-valuations (code change: tick labels, panel title).
+2. Fix fig-extension-panels (code change: legend truncation, grid contrast).
+3. Fix P3->P4 and P6->P7 intro transitions (paper change).
+4. Elevate theta update rule to display math (paper change).

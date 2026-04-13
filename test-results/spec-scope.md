@@ -1,20 +1,20 @@
 # tests/spec-scope.py
-Started: 2026-04-12 20:12:03 EDT
-Runtime: 34s
-[ralph-garage/agent-logs/20260412T201203.500444-0400_spec-scope_claude_opus.log](../ralph-garage/agent-logs/20260412T201203.500444-0400_spec-scope_claude_opus.log)
+Started: 2026-04-12 20:26:02 EDT
+Runtime: 35s
+[ralph-garage/agent-logs/20260412T202602.576114-0400_spec-scope_claude_opus.log](../ralph-garage/agent-logs/20260412T202602.576114-0400_spec-scope_claude_opus.log)
 
 # spec-scope
 VERDICT: PASS
-REASON: The paper maintains a compact theoretical scope with illustrative quantitative material and minimal empirical content.
+REASON: The paper maintains a compact theoretical scope with illustrative quantitative material and no empirical estimation or broad prediction menus.
 
 ## Findings
 
-**Empirical content is minimal and illustrative.** The paper contains a single empirical figure (Figure 1) showing S&P 500 P/D ratios and NASDAQ-to-S&P relative valuations. This is used purely to motivate the model, not to test it. The paper explicitly acknowledges the mapping is "imperfect" and calls the magnitudes "broadly suggestive" (Section 3). There is no regression analysis, no estimation, and no formal empirical testing.
+**Theoretical core.** The paper develops a single, deliberately simple discrete-time asset pricing model with three propositions (P/D ratios, extinction attenuation, veto under incomplete markets). All results are derived in closed form or via straightforward Bellman equation solutions. There are no ancillary models, no alternative specifications, and no broad menus of testable predictions.
 
-**Quantitative analysis is illustrative, not calibrated.** Section 3 reports P/D ratios across a grid of singularity probabilities and extinction risks using round-number parameters ($\beta = 0.96$, $g = 0.02$, $\gamma = 4$, $\phi = 0.5$, $\eta = 0.5$, etc.). The exercise demonstrates that the model's mechanism produces plausible magnitudes, not that it matches specific moments in data.
+**Empirical content is minimal and illustrative.** The only data-facing exhibit is Figure 1 (S&P 500 P/D ratio and NASDAQ/S&P relative price), used to motivate the paper rather than to test it. The text explicitly hedges the data mapping: "The mapping from NASDAQ vs. S&P 500 to the model's AI vs. non-AI distinction is imperfect." There is no regression analysis, no GMM estimation, no calibration to match moments, and no empirical hypothesis testing.
 
-**No broad prediction menu.** The paper derives three propositions, each tightly connected to the core incomplete-markets hedging mechanism: (1) closed-form P/D ratios, (2) extinction attenuation of the valuation spread, and (3) veto under incomplete markets. The extensions (veto and government transfers) are direct consequences of the same market incompleteness, not bolt-on additions.
+**Quantitative analysis is illustrative, not calibrated.** Table 1 reports P/D ratios across a parameter grid (singularity probability x extinction risk) using round-number parameters ($\beta=0.96$, $\gamma=4$, $\phi=0.5$, $\eta=0.5$). The text describes the magnitudes as "broadly suggestive" rather than claiming precise calibration. Figure 2 similarly illustrates comparative statics (transfers vs. P/D ratios and consumption) rather than fitting data.
 
-**The paper explicitly limits its own scope.** The conclusion states: "Our model is deliberately simple. It abstracts from continuous-time dynamics, heterogeneous beliefs, production-side details, and many other features that would enrich the analysis. The goal is not to provide a definitive account of AI stock valuations but to highlight a specific channel."
+**No broad prediction menus.** The paper derives a focused set of qualitative predictions: (1) AI stocks trade at a premium under incomplete markets, (2) extinction risk attenuates the premium, (3) risk-averse households may inefficiently veto AI development, (4) transfers become effective when singularity growth overwhelms deadweight costs. These are tightly connected to the model's mechanism rather than constituting a sprawling list of testable implications.
 
-**No structural estimation, GMM, or calibration-to-moments.** All quantitative exercises are comparative-statics grids and numerical examples that illustrate the propositions rather than attempt to match data.
+**Extensions stay within scope.** The two extensions (veto, government transfers) are theoretical analyses that build directly on the baseline model's incomplete-markets mechanism. They add no new asset classes, no production-side modeling, and no empirical work. The conclusion explicitly acknowledges the model's simplicity as intentional.

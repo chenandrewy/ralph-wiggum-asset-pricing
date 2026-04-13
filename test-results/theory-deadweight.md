@@ -1,55 +1,63 @@
 # tests/theory-deadweight.py
-Started: 2026-04-12 20:12:03 EDT
-Runtime: 1m 45s
-[ralph-garage/agent-logs/20260412T201203.496362-0400_theory-deadweight_claude_opus.log](../ralph-garage/agent-logs/20260412T201203.496362-0400_theory-deadweight_claude_opus.log)
+Started: 2026-04-12 20:26:02 EDT
+Runtime: 2m 9s
+[ralph-garage/agent-logs/20260412T202602.579578-0400_theory-deadweight_claude_opus.log](../ralph-garage/agent-logs/20260412T202602.579578-0400_theory-deadweight_claude_opus.log)
 
 # theory-deadweight
 VERDICT: PASS
-REASON: Every formal object, parameter, and equation does meaningful economic or narrative work; no deadweight formalism found.
+REASON: Every formal object contributes meaningfully to the paper's economic claims, quantitative analysis, or narrative arc; no dead-weight formalism was found.
 
 ## Audit methodology
 
-Catalogued every formal object (parameters, variables, equations, propositions, remarks) and traced each one forward to check whether it contributes to (a) a proposition or proof, (b) calibration or quantitative analysis, (c) a figure, or (d) economic interpretation that advances the paper's argument.
+Every formal object—equations, propositions, remarks, parameters, and notation—was checked against four criteria: (1) whether it is introduced and then abandoned, (2) whether its takeaway could be stated in plain English without weakening the paper's claims, (3) whether any variable or parameter goes unused in results, calibration, or interpretation, and (4) whether any formalism is pompous, ceremonial, or constitutes an auxiliary detour.
 
-## Parameters and variables
+## Detailed findings
 
-| Symbol | Introduced | Used in |
-|--------|-----------|---------|
-| $C_t$, $g$ | Setup (Eq 1) | All pricing equations, calibration, transfer analysis |
-| $\alpha_t$, $\phi$ | Displacement (Eq 2) | Central to all three propositions, calibration, both extensions |
-| $p$, $\xi$, $\eta$ | Singularity setup | All propositions, Table 1, Figure 2 |
-| $\theta_t$, $\Delta\theta$ | Asset definitions | $\Gamma^{AI}$, $\Gamma^{N}$ in Prop 1; calibration; numerically exact backward recursion |
-| $\gamma$, $\beta$ | Preferences (Eq 3) | Pricing (Prop 1), extinction attenuation (Prop 2), veto threshold (Prop 3), calibration |
-| $\Gamma^{AI}$, $\Gamma^{N}$ | Prop 1 | Core of hedging channel explanation; Prop 2 proof; comparison drives all economic content |
-| $q$, $\kappa$ | Extension 1 | Prop 3 (both parts), numerical example |
-| $\tau$, $\delta$, $\phi_\text{eff}$ | Extension 2 | Transfer consumption (Eq 9), effective displacement (Eq 10), Figure 2, robustness discussion |
+### Parameters and variables
 
-No parameter is introduced and then unused. Every variable feeds into at least one result, calibration, or figure.
+All 13 parameters ($\beta, g, \gamma, \phi, \eta, \theta, \Delta\theta, p, \xi, q, \kappa, \tau, \delta$) are used in at least one proposition, proof, calibration table, or figure. None is introduced and abandoned. Specifically:
 
-## Formal objects
+- **Baseline model** ($\beta, g, \gamma, \phi, \eta, \theta, \Delta\theta, p, \xi$): All appear in the P/D expressions (Proposition 1), the quantitative table, and/or Proposition 2. Each drives a distinct economic channel (discounting, growth, risk aversion, displacement severity, productivity jump, AI share dynamics, singularity probability, extinction risk).
+- **Extension 1** ($q, \kappa$): Both are used in Proposition 3 and the numerical veto example. $q$ governs the positive-singularity probability; $\kappa$ is the veto cost. Neither is abandoned after introduction.
+- **Extension 2** ($\tau, \delta$): Both appear in the transfer consumption equation, $\phi_\text{eff}$, the transfer ratio, and Figure 3. Neither is abandoned.
 
-**Proposition 1 (P/D ratios):** Core result. Delivers the hedging channel through the comparison of $\Gamma^{AI}$ vs $\Gamma^{N}$, produces the closed-form expressions used in calibration (Table 1) and extended in both extensions. Essential.
+The auxiliary notation ($\Gamma^{AI}, \Gamma^{N}, A^j, \phi_\text{eff}, \alpha^+$) is similarly load-bearing: $\Gamma^{AI}$ and $\Gamma^{N}$ encode the hedging channel and are referenced throughout; $A^j$ (Remark 1) is used in the Proposition 2 proof and motivates Extension 2's discussion of infinite prices; $\phi_\text{eff}$ links transfers back to the P/D formula; $\alpha^+$ appears in the veto proof.
 
-**Remark 1 (Existence condition):** Defines $A^j < 1$ condition. Referenced in Extension 2 and the figure discussion (P/D undefined at low tax rates under extreme displacement). Does real work connecting the baseline model to the transfers extension.
+### Equations
 
-**Proposition 2 (Extinction attenuation):** Key comparative static linking to Jones (2024). Verified quantitatively in Table 1. The proof is detailed (semi-elasticity argument, $A^j > 1/2$ condition), but the paper spec requires all propositions to be explicitly proved (Style Req 9). The proof's content is substantive, not ceremonial.
+| Eq. | Content | Where used |
+|-----|---------|------------|
+| (1) | Aggregate consumption growth | Euler equation derivation, all pricing results |
+| (2) | Displacement $\alpha_{t+1} = \phi\alpha_t$ | Core mechanism; Propositions 1–3, calibration |
+| (3) | AI share expansion | Drives $\Gamma^{AI} \neq \Gamma^{N}$; Proposition 1, Table 1 |
+| (4) | CRRA utility | Euler equation, veto analysis |
+| (5)–(6) | P/D ratio closed forms | Quantitative table, comparative statics, Extension 2 |
+| (7) | Existence condition $A^j < 1$ | Proposition 2 proof, Extension 2 (infinite prices) |
+| (8)–(9) | Euler equation expansion | Appendix proof of Proposition 1 |
+| (10) | $\Delta u(\gamma)$ | Proof of Proposition 3 |
+| (11) | Transfer consumption | Core of Extension 2, derives $\phi_\text{eff}$ |
+| (12) | $\phi_\text{eff}$ | Links transfers to P/D formula; Figure 3 |
+| (13) | Transfer ratio | Key insight: benefit independent of $\eta$; robustness discussion |
 
-**Proposition 3 (Veto):** Establishes that market incompleteness distorts real decisions, not just prices. Both parts (incomplete vs complete markets) are used, and a numerical example sharpens the quantitative intuition. Central to the paper's argument about AI development distortions.
+No equation is introduced without being used in a subsequent result, calibration, or figure.
 
-**Equations 9-11 (Transfer analysis):** Eq 9 defines post-transfer consumption, Eq 10 derives the effective displacement parameter (used to connect back to Prop 1's pricing formula), Eq 11 shows the transfer ratio is independent of $\eta$ (key economic insight for the "explosive growth overwhelms deadweight costs" argument). All three do distinct work.
+### Propositions and Remark
 
-## Potential concerns examined and dismissed
+- **Proposition 1** (P/D ratios): The core pricing result. Closed-form expressions are needed for the quantitative table and the $\Gamma^{AI}$ vs. $\Gamma^{N}$ comparison that drives the entire hedging argument. Cannot be replaced with plain English.
+- **Remark 1** (Existence condition): Introduces $A^j < 1$, which is used in the Proposition 2 proof and is the economic linchpin of Extension 2 (the transition from infinite to finite prices under transfers). It does real narrative and analytical work.
+- **Proposition 2** (Extinction attenuation): Delivers a non-obvious comparative static (extinction narrows the spread, including the *ratio*). The inline proof is one paragraph and uses the semi-elasticity argument. While the economic intuition is clear from prose, the formal statement and proof are needed because the ratio result is not obvious and the paper's quantitative table relies on it. The proof is compact enough to remain inline.
+- **Proposition 3** (Veto): Both parts (incomplete vs. complete markets) do distinct economic work. Part (i) establishes that the household vetoes despite social efficiency; part (ii) shows complete markets eliminate the veto. The inline proof is necessary for the argument.
 
-1. **Kaldor-Hicks efficiency definition:** Brief, defines "socially efficient" before Prop 3 uses it. The condition $(1+\eta) > 1$ is trivially satisfied, but the sentence is definitional rather than formal — it clarifies terminology for the reader in one line.
+### Check for ceremonial or pompous formalism
 
-2. **AI owners' consumption $(1-\alpha_t)C_t$:** Mentioned in setup but AI owners never optimize. This is correct: they are not the marginal investor, so their preferences are irrelevant to pricing. Stating their consumption share is necessary to define the economic environment and the transfer base in Extension 2.
+- The "Kaldor-Hicks" efficiency definition (Section 4.1) is a standard economics label, immediately explained in plain English, and brief. It is not ceremonial—it clarifies what "socially efficient" means in this context and sets up the veto argument.
+- The paper does not introduce lemmas, corollaries, or definitions beyond the three propositions and one remark. This is lean for a theory paper.
+- The appendix contains only the proof of Proposition 1 (the Euler equation derivation), which is the standard location for such proofs.
 
-3. **Equation 1 ($C_{t+1} = (1+g)C_t$):** Trivially simple, but numbered display equations are required by spec (Style Req 8), and it establishes notation used in every subsequent derivation.
+### Check for auxiliary detours
 
-4. **Proof of Proposition 2:** Lengthy relative to the intuitive result, but required by spec. The proof is substantive (the semi-elasticity argument is non-obvious and the $A^j > 1/2$ condition is necessary for the proportional-decline claim).
-
-5. **$\alpha^+$, $V_\text{veto}$, $V_\text{develop}$, $V_\text{develop}^{CM}$:** All appear only in Extension 1 and its proof/numerical example. Each is used where introduced.
+No section or subsection departs from the main argument. The model setup feeds directly into the pricing results; the extensions address incompleteness consequences (veto, transfers) that are previewed in the introduction. The quantitative section illustrates the propositions without becoming a calibration exercise. The discussion subsection contextualizes the model relative to GKP (2012) and the existence condition, both of which are referenced later.
 
 ## Conclusion
 
-The paper maintains tight formalism-to-content discipline. Every formal object advances the economic argument — either through a proposition, calibration, figure, or economic interpretation. No variables, parameters, or formal detours are introduced and then abandoned. No formalism is ceremonial or could be replaced by plain English without weakening the paper's claims.
+The paper's formalism is well-targeted: every parameter, equation, and proposition contributes to either the economic claims, the quantitative illustrations, or the narrative arc. No formal object is introduced and abandoned, no qualitative statement could replace a formal result without weakening the paper, and no formalism is ceremonial or constitutes an auxiliary detour.
