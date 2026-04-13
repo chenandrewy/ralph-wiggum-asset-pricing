@@ -1,68 +1,52 @@
 # tests/theory-deadweight.py
-Started: 2026-04-12 15:47:40 EDT
-Runtime: 2m 9s
-[ralph-garage/agent-logs/20260412T154740.738942-0400_theory-deadweight_claude_opus.log](../ralph-garage/agent-logs/20260412T154740.738942-0400_theory-deadweight_claude_opus.log)
+Started: 2026-04-12 20:00:23 EDT
+Runtime: 2m 17s
+[ralph-garage/agent-logs/20260412T200023.655364-0400_theory-deadweight_claude_opus.log](../ralph-garage/agent-logs/20260412T200023.655364-0400_theory-deadweight_claude_opus.log)
 
 # theory-deadweight
 VERDICT: PASS
-REASON: Every formal object, parameter, and equation contributes to economic claims, quantitative analysis, or necessary proofs; no abandoned, ceremonial, or deadweight formalism found.
+REASON: Every formal object in the paper serves at least one result, calibration, or economic interpretation; no formalism is introduced and abandoned, ceremonial, or replaceable by plain English without weakening the paper's claims.
 
-## Audit methodology
+## Detailed Audit
 
-Checked every parameter, variable, equation, proposition, remark, and proof in `paper/paper.tex` against four criteria: (1) introduced then abandoned, (2) replaceable by plain English without weakening claims, (3) unused in any result/calibration/interpretation, (4) pompous or ceremonial.
+### Parameters and Variables
+All parameters and variables are used in at least one proposition, calibration (Table 1), or figure:
 
-## Parameters and variables
+- **Baseline model**: $g, \beta, \gamma, p, \xi, \eta, \phi, \theta, \Delta\theta, \alpha_t$ — all appear in the P/D formulas (Prop 1) and the quantitative table.
+- **Extension 1**: $q$ (positive singularity probability), $\kappa$ (veto cost), $\alpha^+$ (post-positive share) — all used in Prop 3 and its proof.
+- **Extension 2**: $\tau$ (tax rate), $\delta$ (deadweight cost severity), $\phi_\text{eff}$ (effective displacement) — all used in the transfer equations and figure.
+- **No orphan variables**: every symbol introduced is referenced in a result or calibration.
 
-All parameters appear in results, calibrations, or both:
+### Equations
+1. **Eq (1)** — Aggregate consumption growth $C_{t+1} = (1+g)C_t$: feeds into the SDF and all pricing expressions.
+2. **Eq (2)** — Displacement $\alpha_{t+1} = \phi\alpha_t$: central to the model's mechanism.
+3. **Eq (3)** — CRRA utility: required to derive the household SDF that prices both assets.
+4. **Eqs (4)–(5)** — P/D ratio formulas (Prop 1): the paper's main quantitative result, used in the table, discussed throughout, and reused in Extension 2 via $\phi_\text{eff}$.
+5. **Eq (6)** — Existence condition $A^j < 1$ (Remark 1): does triple duty — used in Prop 2 proof (decomposes $A^j$), Extension 2 (explains infinite prices at low $\tau$), and the figure caption.
+6. **Eq (7)** — Veto utility gain $\Delta u(\gamma)$: used in Prop 3 proof to show the negative-singularity term dominates as $\gamma \to \infty$.
+7. **Eq (8)** — Post-transfer household consumption: foundation of Extension 2, feeds into $\phi_\text{eff}$ and the figure.
+8. **Eq (9)** — Effective displacement $\phi_\text{eff}$: connects transfers back to the baseline pricing formula (Prop 1), avoiding the need to re-derive prices.
+9. **Eq (10)** — Transfer ratio: carries the key economic insight that the proportional benefit of transfers is independent of the productivity jump $\eta$, while the level benefit grows without bound. This cannot be stated qualitatively without losing the precision of the claim.
+10. **Appendix Eqs (11)–(13)** — Euler equation expansion and solution: required for the proof of Prop 1 (the spec mandates explicit proofs).
 
-| Parameter | Introduced | Used in |
-|-----------|-----------|---------|
-| $g, \beta, \gamma$ | Setup (§2.1) | P/D formulas, calibration table, veto proof, transfer analysis |
-| $p, \xi$ | Singularity (§2.1) | P/D formulas, Prop 2, calibration, veto numerics |
-| $\eta, \phi$ | Singularity (§2.1) | P/D formulas, calibration, displacement severity, transfer equation |
-| $\alpha_t$ | Consumption (§2.1) | Veto analysis, transfer equation, $\phi_\text{eff}$ |
-| $\theta_t, \Delta\theta$ | Assets (§2.1) | $\Gamma^{AI}$, $\Gamma^N$ factors, calibration, approximation discussion |
-| $\Gamma^{AI}, \Gamma^N$ | Prop 1 (§2.2) | Key economic comparison (hedging channel), Prop 2 proof |
-| $q$ | Extension 1 (§4.1) | Veto proposition, numerical example |
-| $\kappa$ | Extension 1 (§4.1) | Veto proposition (both parts), numerical example |
-| $\tau, \delta$ | Extension 2 (§4.2) | Transfer consumption, $\phi_\text{eff}$, transfer ratio, figure |
-| $\phi_\text{eff}$ | Extension 2 (§4.2) | Bridges transfers to baseline P/D formula |
-| $A^j$ | Remark 1 (§2.2) | Existence condition, Prop 2 proof, Extension 2 discussion |
+### Propositions and Formal Results
+- **Proposition 1** (P/D ratios): The paper's main result. The closed-form formulas drive the quantitative table, and the $\Gamma^{AI}$ vs $\Gamma^{N}$ comparison is the economic heart of the hedging channel.
+- **Remark 1** (Existence condition): Not merely a technical aside — it motivates the infinite-price phenomenon in Extension 2 and is explicitly used in the figure discussion.
+- **Proposition 2** (Extinction attenuation): Establishes that extinction risk narrows the valuation spread, connecting the model to Jones (2024). The inline proof is somewhat involved (semi-elasticity of $A/(1-A)$) but provides the mechanism, not just the sign. The proof does economic work: it shows that the result holds for the *ratio* of P/D ratios, which is stronger than the level result and non-obvious.
+- **Proposition 3** (Veto): The two-part structure (incomplete vs. complete markets) is essential — without part (ii), the veto could reflect high risk aversion alone rather than market incompleteness specifically.
 
-No parameter is introduced and then abandoned. No variable is unused in downstream results.
+### Checks Against Specific Criteria
 
-## Equations
+**Formalism introduced and abandoned?** No. Every equation and proposition is referenced later in the text, either in a proof, calibration, or economic discussion.
 
-| Equation | Role | Deadweight? |
-|----------|------|-------------|
-| (1) Agg consumption growth | Defines $g$ notation | Borderline—could be prose—but standard in asset pricing and sets up notation used in proofs. No. |
-| (2) Displacement | Defines core mechanism ($\phi$) | Essential. No. |
-| (3) Utility | Establishes CRRA preferences | Required for SDF derivation. No. |
-| (4)–(5) P/D ratios | Core results | Essential—drive Table 1, Prop 2, extension analysis. No. |
-| (6) Existence condition | Defines $A^j < 1$ | Referenced in Extension 2 (infinite prices at $\tau=0$), figure caption. Does real work. No. |
-| (7) Veto $\Delta u$ | Used in Prop 3 proof | Necessary for the proof. No. |
-| (8) Transfer consumption | Defines transfer mechanism | Essential for Extension 2. No. |
-| (9) $\phi_\text{eff}$ | Connects transfers to P/D | Key bridging result. No. |
-| (10) Transfer ratio | Shows $\eta$-independence | Delivers economic insight (transfers always help regardless of $\eta$). No. |
-| (11)–(13) Euler expansion (Appendix) | Proof of Prop 1 | Required by spec (explicit proofs). No. |
+**Qualitative takeaway replaceable by plain English?** No object can be removed without weakening the paper:
+- The P/D formulas are needed for the table's quantitative magnitudes.
+- The existence condition is needed to explain the infinite-price phenomenon in Extension 2.
+- The transfer ratio's $\eta$-independence is a precise quantitative claim.
+- Prop 3 requires formal statement to distinguish risk aversion from market incompleteness.
 
-## Propositions and proofs
+**Variables introduced and unused?** None found. All parameters appear in at least one result or calibration.
 
-- **Proposition 1 (P/D ratios)**: Core result. Proof in appendix as required.
-- **Remark 1 (existence condition)**: Not ceremonial—it motivates Extension 2's infinite-price result and is referenced in the figure caption and discussion.
-- **Proposition 2 (extinction attenuation)**: Delivers a non-obvious comparative static. The inline proof is somewhat technical (convexity/semi-elasticity argument) but provides genuine insight into *why* the ratio decreases, not just that it does. The proof is self-contained and not excessively long.
-- **Proposition 3 (veto)**: Both parts do economic work. Part (i) shows incompleteness distorts real decisions. Part (ii) provides the key contrast: complete markets eliminate the veto. Neither part is ceremonial.
+**Pompous or ceremonial formalism?** None found. The paper uses standard notation (CRRA, Euler equation, SDF) and does not over-formalize simple ideas. The "Kaldor-Hicks" efficiency definition is one sentence and sets up the tension with the veto — not ceremonial.
 
-## Potential borderline items examined
-
-1. **Equation (1)**: $C_{t+1} = (1+g)C_t$ is a display equation for constant growth, which could be stated in prose. However, it's brief, standard in asset pricing, and the spec requires numbered display equations. Not deadweight.
-
-2. **Kaldor-Hicks efficiency paragraph** (§4.1): Names a well-known economic concept for a trivially true observation ($\eta > 0$ implies surplus is positive). But the naming does narrative work: it establishes that the problem is distributional, not allocative, which is the entire point of the extensions.
-
-3. **AI owners' consumption share $(1-\alpha_t)C_t$**: Introduced once in setup, later appears implicitly in the transfer equation as $(1-\phi\alpha)$. Not abandoned.
-
-4. **The $\min(1, \alpha/\phi)$ detail** in the positive singularity: A small technical bound, but necessary to prevent $\alpha > 1$. Not ceremonial—it's a one-token fix for a real issue.
-
-## Conclusion
-
-The paper is lean. Each formal object contributes to either (a) the core pricing results and their calibration, (b) the extension arguments about veto and transfers, or (c) necessary proofs. No formalism is introduced and abandoned. No auxiliary formal detour is present. The formal apparatus is proportionate to the economic claims.
+**Auxiliary formal detours?** None found. The paper moves linearly from setup to pricing to extensions, with no side results that fail to connect back to the main argument.

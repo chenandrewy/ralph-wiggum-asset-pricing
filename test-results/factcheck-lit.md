@@ -1,79 +1,76 @@
 # tests/factcheck-lit.py
-Started: 2026-04-12 15:47:40 EDT
-Runtime: 4m 9s
-[ralph-garage/agent-logs/20260412T154740.740234-0400_factcheck-lit_claude_opus.log](../ralph-garage/agent-logs/20260412T154740.740234-0400_factcheck-lit_claude_opus.log)
+Started: 2026-04-12 20:00:23 EDT
+Runtime: 4m 43s
+[ralph-garage/agent-logs/20260412T200023.667745-0400_factcheck-lit_claude_opus.log](../ralph-garage/agent-logs/20260412T200023.667745-0400_factcheck-lit_claude_opus.log)
 
 # factcheck-lit
 VERDICT: PASS
-REASON: All 11 cited works are externally verified with accurate metadata and faithful in-text characterizations; only minor journal-name formatting issues found.
+REASON: All 11 cited works are externally verified with accurate metadata and supported in-text claims; only one MINOR issue found.
 
 ## 1. Citation inventory audited
 
-All 11 citation keys that appear in the paper text were audited:
+All citation keys appearing in the paper text were audited:
 
-| # | Citation Key | Context of Use |
-|---|---|---|
-| 1 | GKP2012 | Primary foundation; displacement risk, incomplete markets, future innovators |
-| 2 | Jones2024 | AI growth vs. existential risk; extinction channel |
-| 3 | KoganPapanikolaou2014 | Creative destruction and displacement risk premia |
-| 4 | KoganPapanikolaouStoffman2020 | Creative destruction, inequality, and stock market |
-| 5 | Knesl2023 | Automation, labor displacement, and asset pricing |
-| 6 | AghionJonesJones2019 | Macroeconomics of AI growth |
-| 7 | Acemoglu2025 | Macroeconomics of AI |
-| 8 | Barro2006 | Rare disasters literature |
-| 9 | Wachter2013 | Rare disasters literature |
-| 10 | PastorVeronesi2009 | Technological revolutions and stock prices |
-| 11 | Nordhaus2021 | Critical examination of economic singularity / explosive growth |
+1. GKP2012
+2. Jones2024
+3. KoganPapanikolaou2014
+4. KoganPapanikolaouStoffman2020
+5. Knesl2023
+6. AghionJonesJones2019
+7. Acemoglu2025
+8. Barro2006
+9. Wachter2013
+10. PastorVeronesi2009
+11. Nordhaus2021
 
 No bibliography entries are unused; all 11 bib entries are cited in the paper.
 
 ## 2. External verification coverage
 
-| Citation Key | Status | External Sources |
-|---|---|---|
-| GKP2012 | VERIFIED | ScienceDirect, EconPapers, Crossref DOI 10.1016/j.jfineco.2012.04.002 |
-| Jones2024 | VERIFIED | AEA journal page, Stanford author PDF, Crossref DOI 10.1257/aeri.20230570 |
-| KoganPapanikolaou2014 | VERIFIED | Crossref DOI 10.1111/jofi.12136 |
-| KoganPapanikolaouStoffman2020 | VERIFIED | Crossref DOI 10.1086/704619 |
-| Knesl2023 | VERIFIED | ScienceDirect, Crossref DOI 10.1016/j.jfineco.2022.11.003 |
-| AghionJonesJones2019 | VERIFIED | NBER chapter page, De Gruyter / UChicago Press |
-| Acemoglu2025 | VERIFIED | Crossref DOI 10.1093/epolic/eiae042 |
-| Barro2006 | VERIFIED | Crossref DOI 10.1162/qjec.121.3.823 |
-| Wachter2013 | VERIFIED | Crossref DOI 10.1111/jofi.12018, NBER |
-| PastorVeronesi2009 | VERIFIED | Crossref DOI 10.1257/aer.99.4.1451, NBER |
-| Nordhaus2021 | VERIFIED | Crossref DOI 10.1257/mac.20170105, NBER |
+| # | Key | Status | External sources |
+|---|-----|--------|-----------------|
+| 1 | GKP2012 | VERIFIED | EconPapers/RePEc, ScienceDirect, MIT DSpace, IDEAS/RePEc |
+| 2 | Jones2024 | VERIFIED | AEA, IDEAS/RePEc, Stanford GSB, EA Forum |
+| 3 | KoganPapanikolaou2014 | VERIFIED | Wiley/Journal of Finance, IDEAS/RePEc, EconPapers, NBER |
+| 4 | KoganPapanikolaouStoffman2020 | VERIFIED | UChicago Press/JPE, IDEAS/RePEc, MIT DSpace, Kellogg |
+| 5 | Knesl2023 | VERIFIED | ScienceDirect, IDEAS/RePEc, SSRN |
+| 6 | AghionJonesJones2019 | VERIFIED | De Gruyter/UChicago Press, NBER WP 23928, Stanford |
+| 7 | Acemoglu2025 | VERIFIED | Oxford Academic/Economic Policy, IDEAS/RePEc, NBER WP 32487 |
+| 8 | Barro2006 | VERIFIED | Oxford Academic/QJE, EconPapers/RePEc, Harvard DASH |
+| 9 | Wachter2013 | VERIFIED | Wiley Online Library, EconPapers/RePEc |
+| 10 | PastorVeronesi2009 | VERIFIED | AEA, EconPapers/RePEc |
+| 11 | Nordhaus2021 | VERIFIED | AEA, IDEAS/RePEc, author website |
 
-**Coverage: 11/11 VERIFIED (100%)**
+Coverage: 11/11 cited works externally verified (100%).
 
 ## 3. Metadata accuracy findings
 
-All 11 entries have materially correct metadata (authors, year, title, journal/outlet, volume, number, pages) verified against Crossref and publisher records.
-
-**Minor formatting notes:**
-- Wachter2013 and KoganPapanikolaou2014 list the journal as "Journal of Finance" rather than the official "The Journal of Finance." This is a common BibTeX convention and most citation styles handle it automatically. No substantive error.
+All 11 entries have accurate bibliographic metadata (author names, year, title, journal/outlet, volume, number, pages). No errors found. Minor conventions (e.g., "Journal of Finance" vs. "The Journal of Finance") are immaterial and standard in BibTeX usage.
 
 ## 4. In-text description accuracy findings
 
-All in-text characterizations are materially accurate and supported by the cited works:
+All in-text descriptions of cited works are materially accurate and supported:
 
-- **GKP2012** (~10 uses): All descriptions of the displacement-risk framework, future innovators, incomplete markets, growth-stock return implications, and dynastic-altruism observation are faithful to the original paper.
-- **Jones2024** (~6 uses): The AI growth-vs-extinction trade-off, correlation between AI power and existential risk, bounded-utility argument, and preference channels are all accurately characterized.
-- **KoganPapanikolaou2014, KoganPapanikolaouStoffman2020, Knesl2023**: Grouped under "creative destruction and displacement risk premia" -- accurate for all three.
-- **AghionJonesJones2019, Acemoglu2025**: Grouped under "macroeconomics of AI growth" -- accurate for both.
-- **Barro2006, Wachter2013**: Grouped under "rare disasters literature" -- accurate for both.
-- **PastorVeronesi2009**: Described as an "analysis of technological revolutions" -- accurate.
-- **Nordhaus2021**: Described as having "examined critically" explosive AI-driven growth -- accurate; Nordhaus concludes "the Singularity is not near."
+- **GKP2012:** Correctly described as modeling innovation-driven displacement under incomplete markets, with future innovators' rents being non-tradeable. The paper's attribution that GKP "explicitly mention intergenerational transfers mandated by the government" is plausible and consistent with GKP's discussion but could not be confirmed at the sentence level from external abstracts alone.
+- **Jones2024:** Correctly described as studying the trade-off between AI-driven growth and existential risk, with the extinction channel, bounded utility, and two preference channels all confirmed.
+- **KoganPapanikolaou2014:** Correctly grouped under "creative destruction and displacement risk premia."
+- **KoganPapanikolaouStoffman2020:** Correctly grouped under "creative destruction and displacement risk premia."
+- **Knesl2023:** Correctly grouped under "creative destruction and displacement risk premia."
+- **AghionJonesJones2019:** Correctly grouped under "macroeconomics of AI growth."
+- **Acemoglu2025:** Correctly grouped under "macroeconomics of AI growth."
+- **Barro2006:** Correctly grouped under "rare disasters literature."
+- **Wachter2013:** Correctly grouped under "rare disasters literature."
+- **PastorVeronesi2009:** Correctly described as an "analysis of technological revolutions."
+- **Nordhaus2021:** Correctly described as critically examining the singularity hypothesis; "examined critically" is a fair characterization of Nordhaus's skeptical assessment.
 
 ## 5. Flagged issues by citation key and severity
 
-| Citation Key | Severity | Issue |
-|---|---|---|
-| Wachter2013 | MINOR | BibTeX journal field says "Journal of Finance" instead of "The Journal of Finance" |
-| KoganPapanikolaou2014 | MINOR | Same journal-name formatting as above |
-| All others | NONE | No issues found |
+| Key | Severity | Issue |
+|-----|----------|-------|
+| GKP2012 | MINOR | The paper attributes to GKP2012 the specific claim that they "explicitly mention 'intergenerational transfers mandated by the government.'" This sentence-level attribution could not be confirmed or denied from externally available abstracts and summaries. It is consistent with GKP2012's broader theme of intergenerational risk-sharing under incomplete markets and is plausible, but remains unverified at the granular level. Per the guidelines, a concern that lacks adequate external support is not treated as an error. |
 
-No CRITICAL or IMPORTANT issues found for any citation.
+No CRITICAL or IMPORTANT issues found for any citation key.
 
 ## 6. Overall reliability of the paper's citations
 
-The paper's citations are highly reliable. All 11 cited works were externally verified against Crossref, publisher pages, and institutional repositories. Bibliographic metadata is accurate across all entries (authors, years, titles, journals, volumes, pages). Every in-text characterization -- including the extensive and detailed descriptions of GKP2012 and Jones2024 -- is materially faithful to the cited works. The only issues are two instances of a minor journal-name formatting convention ("Journal of Finance" vs. "The Journal of Finance"), which is standard BibTeX practice and does not affect the rendered citation in most styles.
+The paper's citations are highly reliable. All 11 cited works are real, published in the stated outlets with correct metadata, and used in ways that accurately reflect their content. The literature review correctly groups papers into appropriate thematic buckets (displacement risk, AI growth, rare disasters, technological revolutions). The more substantive attributions to GKP2012 and Jones2024 -- the two most heavily cited works -- are well-supported by external sources. The single MINOR issue (a granular sentence-level attribution to GKP2012 about government transfers) is plausible and does not affect the paper's overall citation integrity.

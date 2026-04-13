@@ -1,45 +1,50 @@
 # Improvement Plan
-AUTHOR PLAN — 2026-04-12 15:44:31 EDT
+AUTHOR PLAN — 2026-04-12 19:58:22 EDT
 
-## Current Status
-- **22/25 tests pass**; 3 fail: `factcheck-freely`, `factcheck-theory`, `writing-intro`
-- No overhaul needed — the model is internally consistent and mathematically correct
+## Status Summary
 
-## Failing Tests
+- **Tests:** 21 pass, 4 fail
+- **Failing tests:** `visual-figures-image-only`, `visual-figures`, `visual-pages`, `writing-intro`
+- **No overhaul needed.** All theory tests pass. Proofs are correct. Model section is sound.
 
-### 1. `factcheck-freely` — GKP misattribution and Jones imprecision
+## Issues and Fixes
 
-**Issue A (material):** Line ~237 of `paper.tex` misattributes claims to GKP (2012). The paper says GKP discuss "government mandates" and claim transfers affect "magnitude but not functional form" of the displacement factor. GKP actually only discuss voluntary bequests/gifts within an altruistic dynasty (footnote 14) and only analyze the extreme case (full altruism → displacement factor = 1). They never mention government mandates or intermediate transfer levels.
+### Priority 1: Fix failing tests
 
-**Fix:** Rewrite the GKP attribution paragraph in Section 4.2 (~line 237). Accurately state what GKP say: that in an altruistically-linked dynasty, bequests eliminate displacement entirely (footnote 14), and that they abstract from intergenerational transfers as future work (conclusion). Frame the paper's government transfer analysis as extending beyond GKP's observation, not as building on a GKP insight about government policy.
+**A. fig-extension-panels visual defects (3 tests)**
 
-**Issue B (minor):** Lines ~229-231 conflate two separate channels from Jones (2024) — the curvature parameter γ and consumption levels — into a single "wealthier, more risk-averse" characterization.
+All three visual test failures stem from the same figure: `fig-extension-panels.pdf`.
 
-**Fix:** Separate the two channels explicitly: (1) agents with higher risk aversion γ, and (2) agents with higher consumption levels, noting Jones treats these as distinct mechanisms.
+Defects:
+1. Panel (b) title truncated at "Consumption Grow" — the title string is too long for the plot area.
+2. Shared legend entries run together with no spacing between them.
+3. Panel (b) x-axis tick labels are cramped.
 
-### 2. `factcheck-theory` — α subscript inconsistency
+Fix in `code/generate-exhibits.R`:
+- Shorten Panel (b) title. Current: `"(b) Consumption Growth"`. The `plot.title` text size is 31 and the panel is half the figure width, causing truncation. Either shorten the title (e.g., `"(b) Cons. Growth in Singularity"` is worse; better: just reduce title font or use `"\n"`) or reduce `base_size`/`plot.title` size for this figure. Simplest fix: shorten to `"(b) Cons. Growth in Singularity"` or abbreviate, but cleaner: reduce `plot.title` size to ~26 so the full title fits.
+- Add spacing between legend entries: add `legend.spacing.x = unit(1, "cm")` or similar to `theme_paper`.
+- Fix cramped x-axis: use `scale_x_continuous(breaks = seq(0, 0.50, by = 0.10), ...)` to reduce the number of tick marks, or increase `axis.text` spacing.
 
-**Issue:** α_t is introduced as a time-varying state variable in Section 2.1 but is used without subscript in the Extensions alongside subscripted C_t. This creates notational ambiguity.
+After fixing code, regenerate the figure with `Rscript code/generate-exhibits.R`, then recompile the paper.
 
-**Fix:** Add a notational convention sentence at the start of Section 4: "To simplify notation, we write α for the household's current consumption share α_t." This is the minimal change — it preserves existing equations while resolving ambiguity.
+**B. writing-intro: Complete-markets counterfactual missing from skimmable position**
 
-### 3. `writing-intro` — double "yet" and buried incomplete-markets argument
+The introduction explains that markets are incomplete but never states the counterfactual — that complete markets would eliminate the premium. The word "complete" does not appear in the introduction.
 
-**Issue A (critical):** Paragraph 5 of the introduction contains "yet...yet" — a grammatical error.
+Fix in `paper/paper.tex`, paragraph P2 (line 49): Add a clause making the complete-markets benchmark explicit. The test suggests appending to the hedging-channel sentence something like: "...pushing valuations above those of non-AI stocks — a premium that would vanish if markets were complete."
 
-**Fix:** Rewrite the sentence. Replace the double-yet with a cleaner adversative structure, e.g., split into two sentences or use "but" for one clause.
+### Priority 2: Presentation improvements (from passing tests with notes)
 
-**Issue B:** Incomplete markets argument is buried — the word "incomplete" doesn't appear until paragraph 4, and topic sentences don't foreground it for skimming readers.
+**C. Delta parameter inconsistency (factcheck-bysection note)**
 
-**Fix:** Add a sentence naming incomplete markets earlier in the introduction (paragraphs 2-3), and make paragraph 4's opening sentence explicitly flag incomplete markets as the structural driver.
+The in-text numerical example (line 261) uses $\delta = 0.9$ to show that even grossly inefficient transfers work, but the figure caption (line 269) and code use $\delta = 0.5$. This is not wrong (they are different parameterizations) but could confuse readers.
 
-**Issue C (minor):** Paragraph 7 recaps results redundantly before the section roadmap.
-
-**Fix:** Trim the recap to a single sentence that connects to the section roadmap without repeating points already made in paragraphs 3-6.
+Fix: Add a brief clarifying phrase to the text, e.g., "To illustrate the robustness to even more severe waste, raising the deadweight cost parameter to $\delta = 0.9$ (compared with the $\delta = 0.5$ used in Figure 2)..." — making explicit that this is a separate, more extreme parameterization.
 
 ## Execution Order
 
-1. Fix GKP misattribution in Section 4.2 (factcheck-freely Issue A) — highest priority, material factual error
-2. Fix α subscript convention at start of Section 4 (factcheck-theory)
-3. Fix introduction: double-yet, bury fix, recap trim (writing-intro)
-4. Fix Jones characterization in Section 4.1 (factcheck-freely Issue B)
+1. Fix `code/generate-exhibits.R` for Panel (b) title, legend spacing, and x-axis ticks.
+2. Run `Rscript code/generate-exhibits.R` to regenerate figures.
+3. Edit `paper/paper.tex` P2 to add complete-markets counterfactual.
+4. Edit `paper/paper.tex` Extension 2 text to clarify delta inconsistency.
+5. Recompile paper PDF.

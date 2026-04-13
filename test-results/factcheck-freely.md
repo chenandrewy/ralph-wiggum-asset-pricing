@@ -1,30 +1,31 @@
 # tests/factcheck-freely.py
-Started: 2026-04-12 15:47:40 EDT
-Runtime: 13m 5s
-[ralph-garage/agent-logs/20260412T154740.756567-0400_factcheck-freely_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260412T154740.756567-0400_factcheck-freely_claude_claude-opus-4-6.log)
+Started: 2026-04-12 20:00:23 EDT
+Runtime: 7m 44s
+[ralph-garage/agent-logs/20260412T200023.655624-0400_factcheck-freely_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260412T200023.655624-0400_factcheck-freely_claude_claude-opus-4-6.log)
 
 # factcheck-freely
-VERDICT: FAIL
-REASON: One factually incorrect verbal description of a mathematical expression in the transfers section.
+VERDICT: PASS
+REASON: No factual errors or logical inconsistencies found; the paper's derivations, propositions, and literature citations are all correct.
 
-## Detail
+## Review Details
 
-### Issue: Incorrect description of net transfer expression (Section 4.2)
+An independent Opus-level review examined the paper for factual errors, logical inconsistencies, and internal contradictions. The review covered:
 
-**Location:** Section 4.2 (Extension 2: Government transfers), the illustrative paragraph following equation (12).
+- All three propositions and their proofs
+- The closed-form P/D ratio derivation and its approximation
+- Budget constraints and consumption accounting
+- Characterizations of GKP (2012), Jones (2024), and all other cited literature
+- The extinction utility normalization and its interaction with the veto analysis
+- Quantitative claims in the text vs. model outputs
 
-**Text:** "...so that net transfers per dollar taxed are only $\tau(1 - \delta\tau)$, e.g., $0.219$ at $\tau = 0.30$"
+### Findings
 
-**Problem:** The expression $\tau(1 - \delta\tau)$ is the net transfer as a fraction of the AI surplus (the transfer base), not "per dollar taxed." Per dollar taxed would be $(1 - \delta\tau) = 1 - 0.9 \times 0.30 = 0.73$. The numerical value $0.219$ is correct for $\tau(1 - \delta\tau) = 0.30 \times 0.73$, but the verbal label "per dollar taxed" does not match the expression. A correct phrasing would be something like "the net transfer rate is only $\tau(1 - \delta\tau) = 0.219$" or "net transfers amount to only 21.9% of the AI surplus."
+**No genuine factual errors or logical inconsistencies were found.**
 
-**Severity:** Minor. The mathematical expression and numerical value are correct; only the English description is inaccurate. A reader following the math would not be misled, but the verbal description is factually wrong as stated.
+Two minor expositional items were noted (neither constitutes an error):
 
-### Items verified as correct
+1. **Extinction utility normalization**: Setting $U_\text{ext} = 0$ with $\gamma > 1$ implies the household prefers extinction to any finite consumption stream. The paper correctly labels this "conservative" (it makes the veto harder to trigger), and this is standard in the disasters literature (Barro 2006). Not an error, but the economic implication is not fully surfaced for the reader.
 
-- **Proposition 1 (P/D ratios):** Euler equation derivation in Appendix A is correct. Dividend growth factors $\Gamma^{AI}$ and $\Gamma^{N}$ are correct. The approximation is properly disclosed.
-- **Proposition 2 (Extinction attenuation):** The proof logic (convexity of $f(A) = A/(1-A)$, semi-elasticity argument, larger absolute reduction at higher $A$) is correct.
-- **Proposition 3 (Veto):** Proof structure is correct. The dominance of the negative-singularity term as $\gamma \to \infty$ when $\phi(1+\eta) < 1$ is valid. Complete markets claim in part (ii) is correct.
-- **Numerical claims:** $\phi(1+\eta) = 0.75$ giving 25% consumption fall, P/D ratios roughly doubling at $p = 1\%$, $\phi^{-\gamma} = 160{,}000$ for $\phi = 0.05$ and $\gamma = 4$, consumption multiple of $3.5\times$ under the large singularity with transfers -- all verified.
-- **Transfer equations:** Equations (10), (11), and (12) are internally consistent. The transfer ratio (12) is indeed independent of $\eta$.
-- **Literature citations:** GKP (2012) and Jones (2024) are accurately represented based on the source papers.
-- **Internal consistency:** Parameters are used consistently throughout. All cross-references are correct.
+2. **"Roughly double" claim ambiguity**: The introduction states that at $p = 1\%$, AI P/D ratios "roughly double" relative to non-AI stocks. This holds precisely at $\xi = 0$ but understates the ratio at other extinction probabilities. The paper does not specify which $\xi$ applies. This is minor imprecision, not a factual error.
+
+All literature citations were verified as accurate, including the characterizations of GKP (2012) on displacement risk and government transfers, Jones (2024) on the growth-existential risk trade-off, and the broader lit review references.

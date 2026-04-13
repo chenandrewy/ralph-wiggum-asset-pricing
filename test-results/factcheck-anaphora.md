@@ -1,28 +1,28 @@
 # tests/factcheck-anaphora.py
-Started: 2026-04-12 15:47:40 EDT
-Runtime: 2m 8s
-[ralph-garage/agent-logs/20260412T154740.749503-0400_factcheck-anaphora_claude_opus.log](../ralph-garage/agent-logs/20260412T154740.749503-0400_factcheck-anaphora_claude_opus.log)
+Started: 2026-04-12 20:00:23 EDT
+Runtime: 1m 6s
+[ralph-garage/agent-logs/20260412T200023.677241-0400_factcheck-anaphora_claude_opus.log](../ralph-garage/agent-logs/20260412T200023.677241-0400_factcheck-anaphora_claude_opus.log)
 
 # factcheck-anaphora
 VERDICT: PASS
-REASON: All demonstratives near cross-references resolve to meanings consistent with their referenced targets.
+REASON: All demonstratives near cross-references resolve correctly to their referenced targets.
 
 ## Findings by section
 
-### Introduction (lines 38--70)
-No issues. Cross-references to `fig:ai-valuations`, `prop:comp-statics`, `prop:veto`, `sec:model`, `sec:quant`, and `sec:extensions` all use bare noun phrases without demonstratives, or have demonstratives that resolve to prior noun phrases rather than to the cross-reference target.
+### Introduction (lines 38–70)
+No issues. Proposition refs (`prop:comp-statics`, `prop:veto`) and section refs (`sec:model`, `sec:quant`, `sec:extensions`) all match their surrounding prose accurately.
 
-### Model (lines 71--175)
-No issues. The potentially tricky case is "This discontinuity" (line 171) following "(Remark~\ref{rem:existence})": it refers to the finite-to-infinite price jump, which is precisely what Remark 1's existence condition describes. References to `prop:pd-ratios`, `eq:existence`, `sec:ext2`, and `rem:existence` all resolve correctly.
+### Model (lines 71–175)
+No issues. References to `prop:pd-ratios`, `rem:existence`, `sec:ext2`, `tab:pd-ratios`, and `eq:existence` all resolve correctly. Demonstratives like "this condition" (line 148) refer to the immediately preceding existence condition, not to the cross-reference target.
 
-### Quantitative Analysis (lines 176--193)
-No issues. Cross-references to `tab:pd-ratios`, `prop:comp-statics`, and `fig:ai-valuations` appear without adjacent demonstratives.
+### Quantitative Analysis (lines 176–193)
+No issues. References to `tab:pd-ratios`, `prop:comp-statics`, and `fig:ai-valuations` use nominal descriptions without ambiguous demonstratives.
 
-### Extensions (lines 194--278)
-No issues. References to `prop:veto`, `eq:transfer-consumption`, `eq:phi-eff`, `prop:pd-ratios`, and `rem:existence` all use definite articles or bare labels rather than demonstratives, and the prose accurately describes each target's content.
+### Extensions (lines 194–278)
+No issues. References to `prop:pd-ratios`, `eq:transfer-consumption`, `eq:phi-eff`, `rem:existence`, `prop:veto`, and `fig:extension-panels` all match their prose context. Panel references ("left panel" = P/D ratios = Panel a; "right panel" = consumption = Panel b) are consistent with the figure caption.
 
-### Conclusion (lines 279--289)
-No cross-references appear in this section, so no anaphora resolution errors are possible.
+### Conclusion (lines 279–289)
+No issues. No cross-references appear in this section.
 
-### Proof of Proposition 1 (lines 290--321)
-No issues. "This can be rewritten as equation~\eqref{eq:pd-ai}" (line 320): "This" refers to the solved formula on line 317, which is the same mathematical object as `eq:pd-ai`. References to `tab:pd-ratios` and `prop:pd-ratios` have no adjacent demonstratives.
+### Proof of Proposition 1 (lines 290–321)
+No issues. "This can be rewritten as equation (eq:pd-ai)" on line 320 correctly refers to the immediately preceding derived equation, which matches the referenced target.

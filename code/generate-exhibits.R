@@ -201,11 +201,12 @@ theme_paper <- theme_bw(base_size = 32) +
     legend.position = "bottom",
     legend.title = element_blank(),
     legend.text = element_text(size = 28),
+    legend.spacing.x = unit(1, "cm"),
     axis.text = element_text(size = 28),
     axis.title = element_text(size = 30),
-    plot.title = element_text(size = 31),
+    plot.title = element_text(size = 26),
     panel.grid.minor = element_blank(),
-    panel.grid.major = element_line(color = "gray55")
+    panel.grid.major = element_line(color = "gray40")
   )
 
 scenario_labels <- c(
@@ -265,7 +266,7 @@ panel_b <- ggplot(df_ext, aes(x = tau, y = cons_growth, color = scenario, linety
            label = paste0("Catastrophe:\n", round((1 - cons_large_0) * 100), "% loss"),
            color = "#1B4F99", size = 7, hjust = 0, fontface = "bold", vjust = 0) +
   annotate("point", x = 0, y = cons_base_0, shape = 16, size = 4, color = "#B22222") +
-  annotate("text", x = 0.06, y = cons_base_0 * 0.75,
+  annotate("text", x = 0.06, y = cons_base_0 * 1.15,
            label = paste0(round((1 - cons_base_0) * 100), "% loss"),
            color = "#B22222", size = 6, hjust = 0, fontface = "bold") +
   # Baseline trajectory annotations showing numeric values
@@ -281,7 +282,7 @@ panel_b <- ggplot(df_ext, aes(x = tau, y = cons_growth, color = scenario, linety
   labs(x = expression("Tax rate " * tau),
        y = "Household Consumption Growth\nin Singularity",
        title = "(b) Consumption Growth") +
-  scale_x_continuous(labels = scales::percent_format(), limits = c(0, 0.50)) +
+  scale_x_continuous(breaks = seq(0, 0.50, by = 0.10), labels = scales::percent_format(), limits = c(0, 0.50)) +
   scale_y_log10(breaks = c(0.5, 0.75, 1, 1.5, 2, 5), limits = c(0.4, 6)) +
   scale_color_manual(values = scenario_colors, labels = scenario_labels) +
   scale_linetype_manual(values = scenario_linetypes, labels = scenario_labels) +
@@ -304,7 +305,7 @@ fig <- arrangeGrob(
   shared_legend,
   nrow = 2, heights = c(10, 1)
 )
-ggsave(file.path(outdir, "fig-extension-panels.pdf"), fig, width = 14, height = 9)
+ggsave(file.path(outdir, "fig-extension-panels.pdf"), fig, width = 14, height = 9, device = cairo_pdf)
 cat("Wrote", file.path(outdir, "fig-extension-panels.pdf"), "\n")
 
 # =============================================================================
@@ -407,7 +408,7 @@ panel_val_b <- ggplot(df_pd, aes(x = Date, y = Ratio_norm)) +
         panel.grid.major = element_blank())
 
 fig_val <- arrangeGrob(panel_val_a, panel_val_b, ncol = 2)
-ggsave(file.path(outdir, "fig-ai-valuations.pdf"), fig_val, width = 12, height = 4.5)
+ggsave(file.path(outdir, "fig-ai-valuations.pdf"), fig_val, width = 12, height = 4.5, device = cairo_pdf)
 cat("Wrote", file.path(outdir, "fig-ai-valuations.pdf"), "\n")
 
 # =============================================================================
