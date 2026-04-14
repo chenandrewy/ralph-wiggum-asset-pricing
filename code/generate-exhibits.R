@@ -207,7 +207,7 @@ theme_paper <- theme_bw(base_size = 32) +
     axis.title = element_text(size = 30),
     plot.title = element_text(size = 26),
     panel.grid.minor = element_blank(),
-    panel.grid.major = element_line(color = "gray55")
+    panel.grid.major = element_line(color = "gray75")
   )
 
 scenario_labels <- c(
@@ -223,7 +223,7 @@ scenario_linewidths <- c("Baseline" = 1.5, "Large singularity" = 1.6)
 scenario_colors <- c("Baseline" = "#B22222", "Large singularity" = "#1B4F99")
 
 # Compute y-axis bounds for Panel A: tighten to data range
-pd_data_a <- df_ext %>% filter(!is.na(pd_ai) & tau <= 0.40)
+pd_data_a <- df_ext %>% filter(!is.na(pd_ai) & tau <= 0.50)
 y_min_a <- 7
 baseline_max_a <- max(pd_data_a$pd_ai[pd_data_a$scenario == "Baseline"], na.rm = TRUE)
 y_cap_a <- ceiling(baseline_max_a)
@@ -238,7 +238,7 @@ panel_a <- ggplot(pd_data_a,
   labs(x = expression("Tax rate " * tau),
        y = "P/D Ratio (AI Stocks)",
        title = "(a) AI Stock Valuations") +
-  scale_x_continuous(labels = scales::percent_format(), limits = c(0, 0.40)) +
+  scale_x_continuous(breaks = seq(0, 0.50, by = 0.20), labels = scales::percent_format(), limits = c(0, 0.50)) +
   scale_y_continuous(limits = c(y_min_a, y_cap_a)) +
   annotate("label", x = exit_tau + 0.01, y = y_cap_a * 0.95,
            label = expression(P/D %->% infinity ~ "as" ~ tau %->% 0),
@@ -275,13 +275,13 @@ panel_b <- ggplot(df_ext, aes(x = tau, y = cons_growth, color = scenario, linety
   annotate("label", x = 0.30, y = cons_base_30 * 1.25,
            label = paste0(sprintf("%.1f", cons_base_30), "\u00d7"),
            color = "#B22222", size = 5.5, fontface = "bold", fill = "white") +
-  annotate("point", x = 0.50, y = cons_base_50, shape = 16, size = 3, color = "#B22222") +
-  annotate("label", x = 0.50, y = cons_base_50 * 1.25,
-           label = paste0(sprintf("%.1f", cons_base_50), "\u00d7"),
+  annotate("point", x = 0.47, y = consumption_growth(0.47, 0.5, phi), shape = 16, size = 3, color = "#B22222") +
+  annotate("label", x = 0.47, y = consumption_growth(0.47, 0.5, phi) * 1.25,
+           label = paste0(sprintf("%.1f", consumption_growth(0.47, 0.5, phi)), "\u00d7"),
            color = "#B22222", size = 5.5, fontface = "bold", fill = "white") +
-  annotate("text", x = 0.42, y = 1.15, label = "No change", color = "black", size = 6.5, fontface = "bold") +
+  annotate("text", x = 0.38, y = 1.15, label = "No change", color = "black", size = 6.5, fontface = "bold") +
   labs(x = expression("Tax rate " * tau),
-       y = "Household Consumption Growth\nin Singularity",
+       y = "Consumption Multiple\nin Singularity",
        title = "(b) Consumption Growth") +
   scale_x_continuous(breaks = seq(0, 0.50, by = 0.20), labels = scales::percent_format(), limits = c(0, 0.50)) +
   scale_y_log10(breaks = c(0.5, 0.75, 1, 1.5, 2, 5), limits = c(0.4, 6)) +

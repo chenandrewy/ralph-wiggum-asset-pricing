@@ -1,35 +1,28 @@
 # tests/theory-intro-payoff.py
-Started: 2026-04-12 20:26:02 EDT
-Runtime: 1m 7s
-[ralph-garage/agent-logs/20260412T202602.581487-0400_theory-intro-payoff_claude_opus.log](../ralph-garage/agent-logs/20260412T202602.581487-0400_theory-intro-payoff_claude_opus.log)
+Started: 2026-04-14 10:23:26 EDT
+Runtime: 1m 10s
+[ralph-garage/agent-logs/20260414T102326.825454-0400_theory-intro-payoff_claude_opus.log](../ralph-garage/agent-logs/20260414T102326.825454-0400_theory-intro-payoff_claude_opus.log)
 
 # theory-intro-payoff
 VERDICT: PASS
-REASON: Every substantive modeling feature maps to an economic result that is previewed in the introduction.
+REASON: Every modeling feature in the paper leads to an economic result that is discussed in the introduction.
 
-## Modeling features and their introduction payoffs
+## Detailed Findings
+
+### Mapping of modeling features to introduction payoffs
 
 | Modeling Feature | Intro Payoff |
 |---|---|
-| Singularity probability $p$ | "at a singularity probability of one percent, P/D ratios for AI stocks roughly double" (P2) |
-| Displacement parameter $\phi$ | "investors use AI stocks to partially insure against displacement from AI" — drives the hedging channel (P2) |
-| Market incompleteness (restricted equity) | "Because markets are incomplete...AI stocks command a premium" and "distorts the development of AI itself" (P2, P4) |
-| Two public assets with $\Delta\theta$ | "pushing valuations above those of non-AI stocks — a premium that would vanish if markets were complete" (P2) |
-| Extinction risk $\xi$ | "Extinction risk partially offsets this premium...narrowing the valuation spread (Proposition 2)" (P3) |
-| Productivity jump $\eta$ | "singularity-driven growth overwhelms deadweight costs" — enables the transfers result (P6) |
-| Positive singularity probability $q$ | "AI development is socially efficient, yet a risk-averse household...may rationally choose to block it" (P4) |
-| Veto mechanism with cost $\kappa$ | "Calls to slow or halt AI development may partly reflect investors' inability to hedge" (P4) |
-| Government transfers $\tau$ with deadweight $\delta$ | "Government transfers can substitute for missing markets...even grossly inefficient transfers become effective" (P5-P6) |
-| CRRA risk aversion $\gamma > 1$ | "risk-averse household that cannot hedge displacement" — enables both the hedging premium and veto results (P2, P4) |
+| Incomplete markets (household cannot trade restricted AI equity) | "Because markets are incomplete---investors cannot trade private AI capital---AI stocks command a premium." (P2) |
+| Discrete AI singularity (probability p, displacement phi, productivity eta) | "investors use AI stocks to hedge against an AI singularity that displaces their consumption" (P2); "at a singularity probability of one percent, P/D ratios for AI stocks roughly double relative to non-AI stocks" (P3) |
+| Extinction risk (xi) | "Extinction risk partially offsets this premium: the states in which AI is powerful enough to produce enormous growth are also those in which existential risk is highest, narrowing the valuation spread" (P3) |
+| AI dividend share dynamics (theta, Delta-theta) | Implicit in the hedging mechanism: AI stocks grow as a share of the economy with each singularity, making them a partial hedge (P3) |
+| Positive singularity (q) and veto mechanism (kappa) | "When the positive singularity is more likely than the negative one, AI development is socially efficient, yet a risk-averse household that cannot hedge displacement may rationally choose to block it" (P4) |
+| Government transfers (tau) with deadweight costs (delta) | "Government transfers can substitute for missing markets, but standard fiscal tools are limited by deadweight costs that scale with the size of transfers, making them ineffective in ordinary settings" (P5); "if a singularity produces the kind of explosive output growth...even grossly inefficient transfers become effective, because the resource base overwhelms the deadweight costs" (P6) |
+| CRRA preferences (gamma, beta) | Standard preference specification; risk aversion gamma drives all results and is referenced via "risk-averse household" in P4 |
 
-## Assessment
+### Notes
 
-The introduction previews five main results, and every modeling ingredient contributes to at least one of them:
-
-1. **Hedging premium** (from $p$, $\phi$, incompleteness, $\Delta\theta$, $\gamma$)
-2. **Quantitative magnitudes** (from calibrated $p$, $\phi$, $\eta$, $\theta$, $\Delta\theta$)
-3. **Extinction attenuation** (from $\xi$)
-4. **Veto distortion** (from $q$, $\kappa$, incompleteness, $\gamma$)
-5. **Transfers overcome deadweight costs** (from $\tau$, $\delta$, $\eta$)
-
-No modeling feature is introduced without a corresponding economic payoff in the introduction, and no introduction claim lacks a corresponding modeling ingredient. Standard preference/technology parameters ($\beta$, $g$) are not distinctive features requiring separate payoffs.
+- All three propositions (P/D ratios, extinction attenuation, veto under incomplete markets) are previewed in the introduction.
+- The existence condition (Remark 1, where P/D ratios can become infinite under severe displacement) is not explicitly mentioned in the introduction, but this is a technical boundary result rather than a standalone modeling feature. It connects to the transfers discussion, which IS in the introduction.
+- The wealth-heterogeneity channel (households with larger consumption shares have stronger veto incentives, discussed in Extension 1's final paragraph) is a secondary implication that goes beyond the intro's scope, but the core veto result it elaborates is fully previewed.

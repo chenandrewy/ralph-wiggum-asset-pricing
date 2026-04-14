@@ -1,22 +1,18 @@
 # tests/element-opening-fig.py
-Started: 2026-04-12 20:26:02 EDT
-Runtime: 1m 7s
-[ralph-garage/agent-logs/20260412T202602.606280-0400_element-opening-fig_claude_opus.log](../ralph-garage/agent-logs/20260412T202602.606280-0400_element-opening-fig_claude_opus.log)
+Started: 2026-04-14 10:23:26 EDT
+Runtime: 49s
+[ralph-garage/agent-logs/20260414T102326.828650-0400_element-opening-fig_claude_opus.log](../ralph-garage/agent-logs/20260414T102326.828650-0400_element-opening-fig_claude_opus.log)
 
 # element-opening-fig
 VERDICT: PASS
-REASON: The two-panel empirical figure effectively documents elevated AI/tech valuations using public data and directly supports the introduction's motivating claim.
+REASON: The opening figure is empirical, compares AI-heavy vs. broad-market valuations, directly supports the intro's motivating claim, and is publication-quality.
 
 ## Findings
 
-### Requirement 1: Empirical, not theoretical
-PASS. Both panels plot real financial data: Panel (a) uses the Shiller S&P 500 trailing price-dividend ratio; Panel (b) uses the NASDAQ Composite price relative to the S&P 500 from FRED. No model output is involved.
+**Requirement 1 — Empirical, not theoretical.** PASS. The figure uses real market data: the Shiller dataset for S&P 500 price-dividend ratios and FRED for the NASDAQ Composite index. No model output is involved.
 
-### Requirement 2: Compares AI and non-AI public-stock valuations
-PASS. Panel (b) explicitly compares the NASDAQ Composite (heavily weighted toward AI and technology firms) against the S&P 500 (broader market), normalized to January 2015 = 100. The rising ratio, especially post-2023, shows the AI/tech valuation premium. Panel (a) provides context by showing the overall market P/D has also reached historically elevated levels. While NASDAQ is a proxy rather than a hand-picked AI portfolio, the caption and text acknowledge this, and the proxy is standard and defensible for a theory paper.
+**Requirement 2 — Compares AI and non-AI public-stock valuations.** PASS with caveat. Panel (b) plots the NASDAQ Composite relative to the S&P 500, using NASDAQ as a proxy for AI/technology-heavy stocks. This is a reasonable proxy—the caption explicitly notes NASDAQ is "heavily weighted toward AI and technology firms." A more direct comparison (e.g., a portfolio of AI-classified firms vs. the rest, constructed from CRSP) would be stronger, but the NASDAQ/S&P ratio is a standard, defensible, and immediately legible measure for the target audience. The widening gap since 2023 is clearly visible and aligns with the generative-AI timeline.
 
-### Requirement 3: Supports the intro's motivating claim
-PASS. The introduction's opening paragraph directly references the figure: "Figure 1 illustrates: the S&P 500's price-dividend ratio has reached historically elevated levels, and the AI- and technology-heavy NASDAQ Composite has sharply outpaced the broader market since 2015, with the valuation gap widening since 2023." This ties directly to the paper's central argument that AI stocks command a premium due to their hedging value against displacement risk.
+**Requirement 3 — Supports the intro's motivating claim.** PASS. The intro's opening paragraph directly references the figure: elevated S&P 500 P/D ratios and the NASDAQ sharply outpacing the broader market. Panel (a) establishes that overall valuations are historically elevated; Panel (b) shows the AI/tech-heavy index pulling away. Together they motivate the paper's central question—why AI-exposed stocks command such a premium—which the model then answers with the hedging mechanism.
 
-### Requirement 4: Clear and publication-quality
-PASS. The rendered figure (page 2) is clean and professional. Two well-sized panels with distinct colors (red for P/D, blue for relative price), clear axis labels, readable tick marks, and an informative caption with data sources. The panel titles use the (a)/(b) convention. Layout is appropriately sized at full text width.
+**Requirement 4 — Clear and publication-quality.** PASS. The rendered figure (page 2) has clean two-panel layout, legible axis labels, appropriate time-series range (roughly 2000–2025), and a well-written caption with source attribution. Panels are labeled (a) and (b) with descriptive titles. Visual formatting is consistent with top finance journals.

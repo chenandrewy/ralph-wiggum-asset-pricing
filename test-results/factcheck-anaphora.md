@@ -1,28 +1,28 @@
 # tests/factcheck-anaphora.py
-Started: 2026-04-12 20:26:02 EDT
-Runtime: 2m 34s
-[ralph-garage/agent-logs/20260412T202602.579973-0400_factcheck-anaphora_claude_opus.log](../ralph-garage/agent-logs/20260412T202602.579973-0400_factcheck-anaphora_claude_opus.log)
+Started: 2026-04-14 10:23:26 EDT
+Runtime: 4m 14s
+[ralph-garage/agent-logs/20260414T102326.828367-0400_factcheck-anaphora_claude_opus.log](../ralph-garage/agent-logs/20260414T102326.828367-0400_factcheck-anaphora_claude_opus.log)
 
 # factcheck-anaphora
 VERDICT: PASS
-REASON: All demonstratives near cross-references resolve to meanings consistent with their referenced targets.
+REASON: All demonstratives near cross-references resolve correctly to their intended targets.
 
 ## Findings by section
 
 ### Introduction (lines 38–70)
-No demonstrative+cross-reference pairs found. The two propositions cited parenthetically (prop:comp-statics, prop:veto) use definite noun phrases, not demonstratives, and the prose claims match the targets.
+No issues. Demonstratives such as "this premium" (line 49), "such gains" (line 40), and "these ideas" (line 59) all resolve unambiguously. Cross-references to Proposition 2 (comp-statics) and Proposition 3 (veto) accurately describe the content of those targets.
 
 ### Model (lines 71–181)
-One pair found. Line 154: "violate this condition" near `Section~\ref{sec:ext2}`. The demonstrative "this condition" correctly resolves to the existence condition $A^j < 1$ defined two lines earlier, not to sec:ext2. The section reference is locative ("as we discuss in..."). No mismatch.
+No issues. Demonstratives near equations and propositions (e.g., "This is the expression that drives…" after eq:theta-update; "this condition" near Remark 1; "This discontinuity" near Remark 1 in the Discussion) all resolve to the correct referents.
 
 ### Quantitative Analysis (lines 182–199)
-No demonstrative+cross-reference pairs found. All three cross-references use explicit noun labels ("Table", "Proposition", "Figure").
+No issues. References to Table 1, Proposition 2, and Figure 1 are introduced without ambiguous demonstratives.
 
 ### Extensions (lines 200–284)
-No demonstrative+cross-reference mismatches. Cross-references use definite descriptions ("the existence condition," "the P/D formula"). The one demonstrative near a cross-reference (line 235: "This connects to...Proposition~\ref{prop:veto}") correctly refers to the surrounding argument, with the proposition cited as support.
+No issues. Demonstratives near Proposition 3 ("this distortion" on line 235), equation references (eqref to eq:transfer-consumption, eq:phi-eff), Proposition 1, and Remark 1 all resolve correctly to their targets.
 
 ### Conclusion (lines 285–295)
-No cross-references present in this section.
+No issues. No cross-references appear in this section.
 
 ### Proof of Proposition 1 (lines 296–327)
-One pair found. Line 326: "This can be rewritten as equation~\eqref{eq:pd-ai}." The demonstrative "This" correctly resolves to the solved P/D ratio in eq:pd-ai-solve (line 323), and eq:pd-ai is algebraically the same formula. No mismatch.
+No issues. "This approximation" correctly refers to the stationarity approximation; "This can be rewritten as equation (3)" correctly refers to the derived formula on the preceding line.

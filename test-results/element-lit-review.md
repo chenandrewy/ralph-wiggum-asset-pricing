@@ -1,93 +1,98 @@
 # tests/element-lit-review.py
-Started: 2026-04-12 20:26:02 EDT
-Runtime: 4m 51s
-[ralph-garage/agent-logs/20260412T202602.588617-0400_element-lit-review_claude_opus.log](../ralph-garage/agent-logs/20260412T202602.588617-0400_element-lit-review_claude_opus.log)
+Started: 2026-04-14 10:23:26 EDT
+Runtime: 6m 7s
+[ralph-garage/agent-logs/20260414T102326.827606-0400_element-lit-review_claude_opus.log](../ralph-garage/agent-logs/20260414T102326.827606-0400_element-lit-review_claude_opus.log)
 
 # element-lit-review
 VERDICT: PASS
-REASON: The bibliography adequately covers the paper's primary and secondary topics with no critical gaps and at most one important gap; the literature review is well under half a page.
+REASON: The paper cites the key displacement risk, rare disasters, technology/asset pricing, and AI growth papers with no critical gaps and at most one important gap.
 
-## 1. Scope extracted from spec and paper
+## 1. Scope Extracted from Spec and Paper
 
-**Primary topic**: AI stock valuations as hedging against displacement risk under incomplete markets, building on Garleanu, Kogan, and Panageas (2012 JFE).
+The paper is an asset pricing theory paper with the following themes:
 
-**Key themes**:
-- Displacement risk from AI/technology and asset pricing (PRIMARY)
-- Incomplete markets — specifically, inability to trade restricted AI equity / future innovators' capital
-- AI singularity and explosive output growth
-- Extinction risk from AI
-- Creative destruction and technology shocks in asset pricing
-- Government transfers as a partial remedy for displacement under incomplete markets
-- Rare disasters
+- **Primary topic**: Displacement risk from AI and asset pricing under incomplete markets. AI stocks command a valuation premium because investors use them to hedge against an AI singularity that displaces their consumption. Builds directly on Gârleanu, Kogan, and Panageas (2012).
+- **Secondary themes**: Extinction/existential risk from AI (Jones 2024); rare disasters; technological revolutions and stock prices; macroeconomics of AI growth; government transfers under explosive growth.
+- **Contribution claims**: Connects GKP's displacement risk framework to AI singularity; shows extinction risk attenuates rather than amplifies the valuation premium; examines how government transfers interact with singularity-driven growth.
 
-**Contribution claims**:
-1. Connects GKP's displacement-risk framework to the AI singularity
-2. Shows extinction risk attenuates (not amplifies) the displacement premium
-3. Market incompleteness can distort real AI development decisions (veto result)
-4. Government transfers become effective when singularity-driven growth overwhelms deadweight costs
+The spec requires the lit review to be at most half a page, centered on the most relevant papers from top finance and economics journals.
 
-## 2. Current bibliography summary
+## 2. Current Bibliography Summary
 
 The paper cites 11 references:
 
 | Citation | Journal | Theme |
-|----------|---------|-------|
-| Garleanu, Kogan, Panageas (2012) | JFE | Displacement risk and asset returns (direct foundation) |
-| Jones (2024) | AER: Insights | AI growth vs. existential risk |
-| Barro (2006) | QJE | Rare disasters |
+|---|---|---|
+| Gârleanu, Kogan, Panageas (2012) | JFE | Displacement risk and asset returns (core foundation) |
+| Jones (2024) | AER: Insights | AI dilemma: growth vs. existential risk |
+| Barro (2006) | QJE | Rare disasters and asset markets |
 | Wachter (2013) | JF | Time-varying rare disaster risk |
-| Pastor & Veronesi (2009) | AER | Technological revolutions and stock prices |
-| Acemoglu (2025) | Economic Policy | Macroeconomics of AI |
-| Nordhaus (2021) | AEJ: Macro | Economic singularity |
-| Kogan & Papanikolaou (2014) | JF | Growth opportunities, technology shocks, asset prices |
-| Kogan, Papanikolaou & Stoffman (2020) | JPE | Creative destruction, inequality, stock market |
+| Pástor and Veronesi (2009) | AER | Technological revolutions and stock prices |
+| Acemoglu (2025) | Economic Policy | Simple macroeconomics of AI |
+| Nordhaus (2021) | AEJ: Macro | Economic singularity and IT |
+| Kogan and Papanikolaou (2014) | JF | Growth opportunities, technology shocks, asset prices |
+| Kogan, Papanikolaou, Stoffman (2020) | JPE | Creative destruction, inequality, stock market |
 | Knesl (2023) | JFE | Automation, labor displacement, asset pricing |
-| Aghion, Jones & Jones (2019) | UChicago Press | AI and economic growth |
+| Aghion, Jones, Jones (2019) | U. Chicago Press | AI and economic growth |
 
-Coverage by theme:
-- **Displacement risk / creative destruction**: GKP 2012, KP 2014, KPS 2020, Knesl 2023 — strong coverage
-- **Technology and asset prices**: Pastor & Veronesi 2009 — adequate
-- **AI and economic growth**: Jones 2024, Aghion et al. 2019, Acemoglu 2025, Nordhaus 2021 — strong coverage
-- **Rare disasters**: Barro 2006, Wachter 2013 — adequate
+## 3. Missing References by Topic Area
 
-## 3. Missing references by topic area
+### Displacement risk / creative destruction and asset pricing (PRIMARY)
+
+The paper already cites the four most prominent papers in this area: GKP (2012), Kogan-Papanikolaou (2014), Kogan-Papanikolaou-Stoffman (2020), and Knesl (2023). No critical gaps identified on the primary topic.
+
+- **Eisfeldt and Papanikolaou (2013)** — "Organization Capital and the Cross-Section of Expected Returns," JF. Organization capital exposed to displacement risk from creative destruction. Same research program as Kogan-Papanikolaou (2014), which is already cited. **MINOR** — already covered by the cited papers in this line.
+
+### Rare disasters
+
+Barro (2006) and Wachter (2013) are cited. The third major paper in this literature is missing:
+
+- **Gabaix (2012)** — "Variable Rare Disasters: An Exactly Solved Framework for Ten Puzzles in Macro-Finance," QJE. Introduces time-varying disaster intensity, analogous to the paper's stochastic singularity probability. **IMPORTANT** — a well-known paper in a secondary theme. However, the paper already cites two of the three pillars of the rare disasters literature, and rare disasters is secondary to the paper's main argument.
 
 ### Incomplete markets and asset pricing
-- **Constantinides and Duffie (1996, JPE)** — "Asset Pricing with Heterogeneous Consumers." Canonical theoretical paper on incomplete markets and idiosyncratic risk in asset pricing.
-  - **Classification: IMPORTANT.** This is the foundational paper on incomplete markets in asset pricing. However, the paper's specific form of incompleteness (inability to trade restricted AI equity / future innovators' capital, per GKP) is fundamentally different from the Constantinides-Duffie mechanism (uninsurable idiosyncratic income shocks). The paper does not claim to contribute to the general incomplete-markets asset pricing literature — its incompleteness channel is directly inherited from GKP (2012), which is prominently cited. A referee might note the omission but would recognize the distinction in mechanism.
 
-### Technology displacement and stock prices
-- **Hobijn and Jovanovic (2001, AER)** — "The Information-Technology Revolution and the Stock Market: Evidence." Studies how the IT revolution caused stock market declines for incumbents displaced by entrants with new technology.
-  - **Classification: MINOR.** While thematically adjacent (technology displacement and stock valuations), the paper's mechanism — incumbents cannot adopt new technology — is distinct from the hedging/incomplete-markets mechanism here. The technology-and-stock-prices theme is already covered by Pastor and Veronesi (2009), and the displacement/creative destruction theme by GKP (2012), KP (2014), and KPS (2020). Omission is understandable given scope.
+The paper's core mechanism relies on market incompleteness (household cannot trade restricted AI equity). The paper does not cite foundational incomplete-markets asset pricing papers, but instead relies on GKP (2012) for the incomplete-markets framing, which is appropriate given the half-page constraint.
 
-### Innovation-driven growth and asset pricing
-- **Kung and Schmid (2015, JF)** — "Innovation, Growth, and Asset Prices." Endogenous growth through R&D and asset pricing with recursive preferences.
-  - **Classification: MINOR.** Related to the innovation-asset pricing nexus, but the paper's focus on long-run risk through R&D-driven growth is tangential. The innovation-and-asset-pricing theme is already represented by KP (2014) and KPS (2020).
+- **Basak and Cuoco (1998)** — "An Equilibrium Model with Restricted Stock Market Participation," RFS. Models asset pricing when some agents cannot trade certain assets. Relevant to the restricted-equity mechanism. **MINOR** — the paper's incomplete-markets concept is more about non-tradeable future capital (GKP's framing) than restricted participation per se, and space is limited.
 
-### AI and firm-level outcomes
-- **Babina, Fedyk, He, and Hodson (2024, JFE)** — "Artificial Intelligence, Firm Growth, and Product Innovation." Leading empirical paper on AI adoption and firm outcomes.
-  - **Classification: MINOR.** Empirical focus on firm-level AI adoption is tangential to this theory paper's specific asset pricing mechanism. The paper deliberately limits its empirical scope.
+- **Constantinides and Duffie (1996)** — "Asset Pricing with Heterogeneous Consumers," JPE. Foundational paper on uninsurable idiosyncratic risk and asset pricing. **MINOR** — the paper's incomplete markets operate through non-tradeable assets rather than idiosyncratic income shocks.
 
-## 4. Focus on the target journal set
+### AI, automation, and economics
 
-The bibliography is well-focused on relevant papers from the target finance and economics journals:
+The paper cites Jones (2024), Aghion-Jones-Jones (2019), Acemoglu (2025), and Nordhaus (2021).
 
-- **Finance journals**: JFE (GKP 2012, Knesl 2023), JF (Wachter 2013, KP 2014), JPE (KPS 2020) — 5 papers
-- **Economics journals**: QJE (Barro 2006), AER (Pastor & Veronesi 2009), AER: Insights (Jones 2024), AEJ: Macro (Nordhaus 2021) — 4 papers
-- **Other**: Economic Policy (Acemoglu 2025), UChicago Press (Aghion et al. 2019) — 2 items
+- **Acemoglu and Restrepo (2018)** — "The Race between Man and Machine: Implications of Technology for Growth, Factor Shares, and Employment," AER. The leading automation-and-labor framework. **MINOR** — the paper already cites Acemoglu (2025) on AI macro and Knesl (2023) on automation and asset pricing; this is more labor economics than asset pricing.
 
-The literature review appropriately emphasizes papers most relevant to the paper's specific contribution: displacement risk (GKP, KP, KPS, Knesl), technology and asset pricing (Pastor-Veronesi), AI singularity economics (Jones, Nordhaus, Acemoglu, Aghion et al.), and rare disasters (Barro, Wachter). The balance across finance and economics journals is appropriate. Not every listed target journal needs to appear; the key is that the most relevant work from these journals is covered, and it is.
+### Technology and asset pricing
 
-## 5. Literature review length check
+Pástor and Veronesi (2009) is cited.
 
-The literature review appears at the end of the introduction under the heading "Related literature." on page 3 of the compiled PDF. It consists of two short paragraphs (approximately 8-10 lines of text) and wraps up at the top of page 4 with the final citation to Pastor and Veronesi (2009). This is clearly well under half a page — roughly one quarter of a page. **PASS on length.**
+- **Hobijn and Jovanovic (2001)** — "The Information-Technology Revolution and the Stock Market: Evidence," AER. IT revolution's effect on incumbents through creative destruction. **MINOR** — empirical paper on a different technology revolution; Pástor-Veronesi (2009) already covers technology revolutions and stock prices.
 
-## 6. Suggested additions
+- **Kung and Schmid (2015)** — "Innovation, Growth, and Asset Prices," JF. Endogenous innovation driving long-run risk. **MINOR** — related but not central to the displacement risk mechanism.
+
+## 4. Focus on the Target Journal Set
+
+The bibliography is well focused on the target journal set. Of the 11 citations:
+- **Finance journals**: 4 papers (JFE: 2, JF: 2)
+- **Economics journals**: 4 papers (QJE: 1, AER: 1, AER: Insights: 1, JPE: 1)
+- **Adjacent journals**: AEJ: Macro (1), Economic Policy (1)
+- **Book chapter**: 1 (U. Chicago Press)
+
+The literature review covers the most relevant strands: displacement risk (GKP, Kogan-Papanikolaou, KPS, Knesl), rare disasters (Barro, Wachter), technological revolutions (Pástor-Veronesi), and AI growth (Jones, Aghion-Jones-Jones, Acemoglu). The emphasis is appropriately proportioned to the paper's primary topic — displacement risk papers form the largest group.
+
+No requirement that every listed target journal appear in the bibliography. The coverage reflects the paper's focused theoretical contribution.
+
+## 5. Literature Review Length Check
+
+The "Related literature" section begins approximately two-thirds down page 3 and ends with two lines at the top of page 4. The total length is approximately **one-third of a page** — well within the half-page limit specified by the spec.
+
+## 6. Suggested Additions
 
 | Author(s) | Year | Title | Journal | Relevance |
-|-----------|------|-------|---------|-----------|
-| Constantinides & Duffie | 1996 | Asset Pricing with Heterogeneous Consumers | JPE | Canonical incomplete-markets asset pricing theory; would strengthen the theoretical grounding for the paper's central incomplete-markets mechanism, though the specific form of incompleteness differs. |
-| Hobijn & Jovanovic | 2001 | The IT Revolution and the Stock Market | AER | Foundational paper on how technological revolutions displace incumbents and affect stock valuations; thematically close but mechanism differs and theme is covered by existing cites. |
-| Kung & Schmid | 2015 | Innovation, Growth, and Asset Prices | JF | Connects endogenous innovation-driven growth to asset pricing; would complement the existing Kogan-Papanikolaou citations but is tangential to the paper's specific mechanism. |
+|---|---|---|---|---|
+| Gabaix | 2012 | Variable Rare Disasters: An Exactly Solved Framework for Ten Puzzles in Macro-Finance | QJE | Third pillar of the rare disasters literature; time-varying disaster intensity is analogous to the paper's stochastic singularity |
 
-None of these are critical omissions. The Constantinides and Duffie (1996) citation would be the strongest addition, as incomplete markets are central to the paper's argument, but its specific mechanism (idiosyncratic income risk) differs meaningfully from the paper's mechanism (restricted equity / future cohorts per GKP).
+This is the only paper whose omission rises to the IMPORTANT level. It could be added to the existing parenthetical "(Barro, 2006; Wachter, 2013)" with no additional text. All other candidates are MINOR and their inclusion is optional given the half-page lit review constraint.
+
+**Gap summary**: 0 CRITICAL, 1 IMPORTANT, 5 MINOR. Passes the threshold (no critical gaps and at most one important gap).

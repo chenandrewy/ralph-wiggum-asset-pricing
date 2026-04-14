@@ -1,38 +1,49 @@
 # tests/factcheck-freely.py
-Started: 2026-04-12 20:26:02 EDT
-Runtime: 7m 31s
-[ralph-garage/agent-logs/20260412T202602.581824-0400_factcheck-freely_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260412T202602.581824-0400_factcheck-freely_claude_claude-opus-4-6.log)
+Started: 2026-04-14 10:23:26 EDT
+Runtime: 8m 7s
+[ralph-garage/agent-logs/20260414T102326.820961-0400_factcheck-freely_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260414T102326.820961-0400_factcheck-freely_claude_claude-opus-4-6.log)
 
 # factcheck-freely
 VERDICT: PASS
-REASON: No factually incorrect statements or logical inconsistencies found; issues identified are modeling choices and minor exposition looseness, not errors.
+REASON: No factual errors or logical inconsistencies found after thorough section-by-section review.
 
-## Review Summary
+## Review Details
 
-A thorough review of the paper found **no mathematical errors** in propositions or proofs, **no incorrect numerical claims**, and **no logical contradictions** between sections. All verified claims (P/D ratios, consumption multiples, transfer formulas, veto computations) match the code output. Citation details check out against the literature.
+A full review of every section, equation, proposition, numerical claim, and literature citation was conducted. The findings:
 
-## Issues Identified (None Rise to Factual Error or Logical Inconsistency)
+### Section 1 (Introduction)
+- Figure 1 data descriptions match the code and sources (Shiller dataset, FRED).
+- Characterizations of GKP (2012), Jones (2024), and other cited works are accurate.
+- All 11 references in the bibliography have correct journal, volume, pages, and year.
 
-### 1. Budget constraint / market structure ambiguity (lines 112–118)
-The model defines total public dividends as $D^{AI} + D^N = C_t$ and introduces restricted equity, but never explicitly constructs the household's portfolio or verifies that a consistent portfolio supports both the consumption allocation and the pricing equations. This is standard practice in reduced-form displacement models and is not an error, but a referee might request clarification.
+### Section 2 (Model)
+- Equations (1)–(6) verified algebraically. The consumption growth process, displacement factor, AI share dynamics, and P/D closed forms are correct.
+- Proposition 1 re-derived from the Euler equation; closed-form expressions confirmed.
+- Proposition 2 (extinction attenuation) verified analytically and numerically.
+- Claims about $\Gamma^{AI} > 1+\eta$ and $\Gamma^{N} < 1+\eta$ follow directly from $\Delta\theta > 0$.
+- Complete-markets discussion correctly qualified ("largely collapses" with "small residual spread").
 
-### 2. Complete markets thought experiment (lines 212, 230)
-Proposition 3(ii) assumes the same consumption share $\alpha$ under both incomplete and complete markets. This is the standard approach for such comparisons with CRRA preferences, but strictly speaking, moving to complete markets would change equilibrium wealth and thus potentially $\alpha$. Again, a modeling convention rather than an error.
+### Section 3 (Quantitative Analysis)
+- Parameter values match between paper and code ($\beta=0.96$, $g=0.02$, $\gamma=4$, $\phi=0.5$, $\eta=0.5$, $\theta=0.15$, $\Delta\theta=0.2$).
+- Numerical claims verified: AI P/D of ~15.5 at p=0.5%, ratio of ~1.4; ratio of ~2 at p=1%.
+- Backward recursion code correctly implements the Euler equation.
 
-### 3. Proposition 2 qualification clarity (lines 163–168)
-The first claim (valuation spread decreasing in $\xi$) is unconditionally true for $A^j < 1$. The second claim (ratio decreasing) requires $A^j > 1/2$. The proof correctly identifies this condition, but the proposition statement could be clearer about which result is general vs. conditional. Not an inconsistency — just an exposition choice.
+### Section 4.1 (Veto Extension)
+- Proposition 3 parts (i) and (ii) verified analytically and numerically.
+- Numerical veto example ($\gamma=10$, $p=1\%$, $\kappa=1\%$, $\alpha=0.70$, $q=0.70$) confirmed: veto under incomplete markets, develop under complete markets.
+- Extinction utility normalization correctly described as "conservative."
+- Kaldor-Hicks efficiency claim correct.
 
-### 4. GKP characterization slightly loose (lines 173, 243)
-The paper focuses on GKP's firm-variety displacement channel and omits GKP's human capital channel. The "future work" attribution regarding government transfers is defensible but slightly overstates GKP's specificity. These characterizations are directionally correct and not factually wrong.
+### Section 4.2 (Transfers Extension)
+- Equations (11)–(13) verified algebraically.
+- GKP transfers characterization accurately matches the source text.
+- Numerical claims verified: $\phi_\text{large}^{-\gamma} = 160{,}000$; robustness at $\delta=0.9$, $\tau=0.30$ confirmed.
+- Figure 2 description consistent with model predictions.
 
-### 5. Constant singularity probability (line 87)
-The model uses a constant $p$ even after a singularity has occurred. This is a modeling assumption, not an error, and the paper explicitly allows repeated singularities (line 98).
+### Appendix A
+- Proof of Proposition 1 verified step by step. Euler equation expansion, algebra, and backward recursion formula all correct.
 
-## Verified Numerical Claims
-- P/D ratios at $p=0.5\%$, $\xi=0$: AI = 15.5, Non-AI = 11.1, ratio = 1.40 ✓
-- $\phi(1+\eta) = 0.75$ and household consumption falls by 25% ✓
-- $\phi^{-\gamma} = 160{,}000$ for $\phi=0.05$, $\gamma=4$ ✓
-- Transfer robustness: $\tau(1-\delta\tau) = 0.219$ at $\tau=0.30$, $\delta=0.9$ ✓
-- Consumption multiple of $3.5\times$ at $\tau=0.30$ under large singularity ✓
-- Veto computation correct ✓
-- All citation metadata verified ✓
+### Cross-Cutting Checks
+- No notation inconsistencies across sections.
+- No contradictions between theoretical claims and numerical results.
+- Literature characterizations are accurate and appropriately qualified throughout.

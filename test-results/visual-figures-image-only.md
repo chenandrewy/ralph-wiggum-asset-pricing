@@ -1,13 +1,13 @@
 # tests/visual-figures-image-only.py
-Started: 2026-04-12 20:26:02 EDT
-Runtime: 1m 39s
-[ralph-garage/agent-logs/20260412T202602.587099-0400_visual-figures-image-only_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260412T202602.587099-0400_visual-figures-image-only_claude_claude-opus-4-6.log)
+Started: 2026-04-14 10:23:26 EDT
+Runtime: 1m 27s
+[ralph-garage/agent-logs/20260414T102326.830251-0400_visual-figures-image-only_claude_claude-opus-4-6.log](../ralph-garage/agent-logs/20260414T102326.830251-0400_visual-figures-image-only_claude_claude-opus-4-6.log)
 
 # visual-figures-image-only
 
 VERDICT: FAIL
 
-REASON: fig-extension-panels fails on contrast (light gray grid lines) and has a minor readability issue (clipped label); fig-ai-valuations passes all requirements.
+REASON: fig-extension-panels grid lines use gray75, which fails the contrast requirement.
 
 ---
 
@@ -15,24 +15,23 @@ REASON: fig-extension-panels fails on contrast (light gray grid lines) and has a
 
 VERDICT: PASS
 
-REASON: Both panels are readable, distinguishable, high-contrast, and use space efficiently.
+REASON: Both panels are readable, distinguishable, use space efficiently, and clearly convey the intended message.
 
 ### Panel (a) — S&P 500 P/D Ratio
 
-- **Readability: PASS.** Panel title, axis labels, and tick labels are all clearly legible. No text is overlapping or cut off.
-- **Distinguishability: PASS.** Single dark-red line on white background; no ambiguity.
-- **Contrast: PASS.** Dark-red line is thick and high-contrast. No light-gray or low-opacity elements.
-- **Use of space: PASS.** Y-axis spans ~20–90, data ranges ~25–90. X-axis covers the full sample. All four edges pass the 20% test.
+- **Readability: PASS.** Panel title, y-axis label ("Price / Trailing Dividend"), x-axis ticks (2003–2023), and y-axis ticks (40, 60, 80) are all clearly legible with no overlapping or clipped text.
+- **Distinguishability: PASS.** Single dark red line on a white background. No legend needed; no ambiguity.
+- **Contrast: PASS.** Dark red line is thick and strongly contrasts against white. No grid lines are drawn, so no low-contrast elements exist.
+- **Use of space: PASS.** Y-axis spans ~25–90 matching the data range. X-axis runs from 2000 to ~2024 matching the data filter. Minimal padding; no large empty regions.
+- **Narrative clarity: PASS.** Clearly shows the S&P 500 P/D ratio rising to historically elevated levels by end of sample.
 
 ### Panel (b) — NASDAQ vs. S&P 500
 
-- **Readability: PASS.** Panel title, axis labels, and tick labels are clearly legible. No overlapping or truncated text.
-- **Distinguishability: PASS.** Blue data line and dashed black reference line at 100 are trivially distinguishable via color, style, and orientation.
-- **Contrast: PASS.** Blue line is dark and clearly visible. Dashed black reference line is thick and high-contrast.
-- **Use of space: PASS.** Y-axis spans ~60–150, data ranges ~65–150. All four edges pass.
-
-### Main message
-U.S. equity valuations have risen to historically elevated levels (Panel a), and this increase is disproportionately concentrated in technology- and AI-heavy firms, as the NASDAQ's growing premium over the broad market since ~2015 shows (Panel b).
+- **Readability: PASS.** Panel title, y-axis label ("NASDAQ / S&P 500 (Jan 2015 = 100)"), and all tick labels are legible and well-spaced.
+- **Distinguishability: PASS.** Dark blue data line plus black dashed reference line at 100 are immediately identifiable and serve distinct roles.
+- **Contrast: PASS.** Blue line is thick with strong contrast. Reference line is black and dashed — clearly visible.
+- **Use of space: PASS.** Y-axis spans ~65–150 matching data range ~70–145. Minimal padding; no wasted space.
+- **Narrative clarity: PASS.** Clearly shows the NASDAQ outperforming the S&P 500 dramatically post-2020, indicating growing relative valuations for tech/AI firms.
 
 ---
 
@@ -40,29 +39,20 @@ U.S. equity valuations have risen to historically elevated levels (Panel a), and
 
 VERDICT: FAIL
 
-REASON: Light gray grid lines in both panels lack sufficient contrast against the white background, and the "1.3x" label in Panel (b) is slightly clipped at the panel edge.
+REASON: Grid lines use gray75 which provides insufficient contrast against the background.
 
 ### Panel (a) — AI Stock Valuations
 
-- **Readability: PASS.** Panel title, axis labels ("P/D Ratio (AI Stocks)", "Tax rate tau"), tick labels, and annotation box are all readable and appropriately sized.
-- **Distinguishability: PASS.** Solid red (Baseline) and dashed blue (Large singularity) lines are clearly distinguishable by color and style.
-- **Contrast: FAIL.** Grid lines are light gray with weak contrast against the white background. They do not meet the "immediately visible" standard.
-- **Use of space: PASS.** Y-axis spans 8–16, data spans ~9–15.5; gaps are within 20%. X-axis range is appropriate given the economic content (blue line is undefined at low tau).
+- **Readability: PASS.** Panel title, axis labels ("P/D Ratio (AI Stocks)", "Tax rate tau"), tick labels (8–16 on y-axis, 0%–40% on x-axis), and the annotation box are all clearly readable.
+- **Distinguishability: PASS.** Solid red (Baseline) and dashed blue (Large singularity) lines are clearly distinct in both color and line style. Shared legend is unambiguous.
+- **Contrast: FAIL.** Major grid lines are gray75 — too light to meet the strong visual contrast requirement. Every drawn element must be dark and high-contrast enough to see immediately.
+- **Use of space: PASS.** Y-axis runs 8–16 with data spanning ~8.5–15.5. Gaps are well under 20% of the data range. X-axis covers 0%–50% matching the data.
+- **Narrative clarity: PASS.** Clearly shows that higher tax rates compress AI P/D ratios, with the large-singularity scenario declining steeply from an undefined/infinite value.
 
 ### Panel (b) — Consumption Growth
 
-- **Readability: BORDERLINE.** Most text is clear. However, the "1.3x" endpoint annotation at the far right edge is slightly clipped or crowded against the panel boundary.
-- **Distinguishability: PASS.** Solid red and dashed blue lines are clearly distinguishable. Black dashed reference line at 1.00 is dark and visible. Labeled endpoints with dots aid interpretation.
-- **Contrast: FAIL.** Same light gray grid line issue as Panel (a).
-- **Use of space: PASS.** Y-axis spans 0.50–5.00 on a log scale matching the data range. X-axis extends to ~50%, justified by the blue curve still rising meaningfully through that range.
-
-### Shared Legend
-
-- **Readability: PASS.** Legend entries ("Baseline (eta = 0.5, phi = 0.5)" and "Large singularity (eta = 9, phi = 0.05)") are clearly readable and well-positioned below the plot area.
-
-### Main message
-AI stock valuations and household consumption growth at the singularity depend critically on the tax rate and the assumed singularity magnitude, with larger singularity scenarios producing more extreme valuations and consumption outcomes.
-
-### Summary of defects
-1. **Grid lines (both panels):** Light gray grid lines lack sufficient contrast. They should be darkened to be immediately visible.
-2. **"1.3x" label clipping (Panel b):** The rightmost annotation is slightly crowded against the panel edge.
+- **Readability: PASS.** Panel title, axis labels, log-scaled y-axis ticks (0.50–5.00), and endpoint annotations ("Catastrophe: 50% loss", "25% loss", "1.1x", "1.3x", "No change") are all readable and well-placed.
+- **Distinguishability: PASS.** Solid red and dashed blue lines are clearly distinct. Black dashed reference line at 1.00 is thick and visible. Colored dot markers at tau=0 are clear.
+- **Contrast: FAIL.** Same gray75 grid lines as Panel (a) — too light for the contrast requirement.
+- **Use of space: PASS.** Y-axis runs 0.50–5.00 on a log scale. The large-singularity curve reaches ~5.0x justifying the upper bound; the log scale compresses the range appropriately. The dual-series comparison justifies the shared axis range.
+- **Narrative clarity: PASS.** Clearly communicates that without transfers (tau=0) both scenarios produce consumption catastrophes; with transfers, the large singularity recovers dramatically while the baseline gains modestly.
