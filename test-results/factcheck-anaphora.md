@@ -1,28 +1,30 @@
 # tests/factcheck-anaphora.py
-Started: 2026-04-14 10:23:26 EDT
-Runtime: 4m 14s
-[ralph-garage/agent-logs/20260414T102326.828367-0400_factcheck-anaphora_claude_opus.log](../ralph-garage/agent-logs/20260414T102326.828367-0400_factcheck-anaphora_claude_opus.log)
+Started: 2026-04-14 10:33:09 EDT
+Runtime: 1m 59s
+[ralph-garage/agent-logs/20260414T103310.002405-0400_factcheck-anaphora_claude_opus.log](../ralph-garage/agent-logs/20260414T103310.002405-0400_factcheck-anaphora_claude_opus.log)
 
 # factcheck-anaphora
 VERDICT: PASS
-REASON: All demonstratives near cross-references resolve correctly to their intended targets.
+REASON: All demonstratives near cross-references resolve correctly to their intended targets; one minor clarity note does not constitute a mismatch.
 
-## Findings by section
+## Findings by Section
 
 ### Introduction (lines 38–70)
-No issues. Demonstratives such as "this premium" (line 49), "such gains" (line 40), and "these ideas" (line 59) all resolve unambiguously. Cross-references to Proposition 2 (comp-statics) and Proposition 3 (veto) accurately describe the content of those targets.
+No issues. Three cross-references checked (Figure 1, Proposition 2, Proposition 3). All demonstratives ("this premium," "it," "the uninsurable downside") resolve correctly to the prose antecedents, and the referenced targets confirm the claims.
 
 ### Model (lines 71–181)
-No issues. Demonstratives near equations and propositions (e.g., "This is the expression that drives…" after eq:theta-update; "this condition" near Remark 1; "This discontinuity" near Remark 1 in the Discussion) all resolve to the correct referents.
+No mismatch. One minor clarity note:
+
+- **Line 154:** "As we discuss in Section~\ref{sec:ext2}, sufficiently severe displacement can violate **this condition**…" — "this condition" refers to the existence condition ($A^j < 1$) stated in the Remark on line 152. Section \ref{sec:ext2} does eventually reference that condition (line 271: "the existence condition in Remark~\ref{rem:existence} is violated"), so the forward pointer is accurate. The anaphora resolves correctly, though a reader following the cross-reference must scan forward in the target section to find the connection.
 
 ### Quantitative Analysis (lines 182–199)
-No issues. References to Table 1, Proposition 2, and Figure 1 are introduced without ambiguous demonstratives.
+No issues. Three cross-references checked (Table 1, Proposition 2, Figure 1). No demonstratives appear near any cross-reference.
 
 ### Extensions (lines 200–284)
-No issues. Demonstratives near Proposition 3 ("this distortion" on line 235), equation references (eqref to eq:transfer-consumption, eq:phi-eff), Proposition 1, and Remark 1 all resolve correctly to their targets.
+No issues. All demonstratives ("this distortion," "this expression," "this approximation," "the existence condition in Remark~\ref{rem:existence}") resolve correctly to their intended targets.
 
 ### Conclusion (lines 285–295)
 No issues. No cross-references appear in this section.
 
-### Proof of Proposition 1 (lines 296–327)
-No issues. "This approximation" correctly refers to the stationarity approximation; "This can be rewritten as equation (3)" correctly refers to the derived formula on the preceding line.
+### Proof of Proposition (lines 296–327)
+No issues. One demonstrative checked: line 326 "This can be rewritten as equation~\eqref{eq:pd-ai}" — "This" correctly refers to equation (eq:pd-ai-solve) on line 323, and the two equations are mathematically equivalent.

@@ -1,32 +1,40 @@
 # tests/writing-intuition.py
-Started: 2026-04-14 10:23:26 EDT
-Runtime: 1m 2s
-[ralph-garage/agent-logs/20260414T102326.826884-0400_writing-intuition_claude_opus.log](../ralph-garage/agent-logs/20260414T102326.826884-0400_writing-intuition_claude_opus.log)
+Started: 2026-04-14 10:33:09 EDT
+Runtime: 1m 11s
+[ralph-garage/agent-logs/20260414T103309.986592-0400_writing-intuition_claude_opus.log](../ralph-garage/agent-logs/20260414T103309.986592-0400_writing-intuition_claude_opus.log)
 
 # writing-intuition
 VERDICT: PASS
-REASON: Every proposition and key formula is accompanied by intuition grounded in the mathematical objects of the respective result.
+REASON: All proposition and formula discussions explain intuition in terms of the mathematical objects they use.
 
 ## Detailed Findings
 
-### Proposition 1 (P/D ratios, lines 131--143)
-The discussion immediately following (lines 159--161) explains the hedging channel directly through the comparison of $\Gamma^{AI}$ and $\Gamma^{N}$: since $\Delta\theta > 0$, AI dividends grow faster upon a singularity. The role of $\phi^{-\gamma}$ (marginal utility in singularity states), the condition $\phi(1+\eta) < 1$ (household consumption falls despite the productivity boost), and the weight $p$ on singularity states are all invoked to explain why the AI P/D exceeds the non-AI P/D. The discussion ties each comparative static to the specific term in the formula it operates through.
+### Proposition 1 (Price-dividend ratios)
+The discussion after Proposition 1 explains the hedging channel by referencing the specific mathematical objects in the P/D formulas:
+- $\Gamma^{AI}$ vs $\Gamma^{N}$: explains that $\Delta\theta > 0$ drives $\Gamma^{AI} > 1+\eta$ and $\Gamma^{N} < 1+\eta$, so AI dividends grow faster upon singularity.
+- $\phi^{-\gamma}$: explains that decreasing $\phi$ raises marginal utility in singularity states, widening the spread.
+- $\phi(1+\eta) < 1$: the condition under which displacement is severe enough that household consumption falls despite aggregate gains.
+- $p$: explains that higher singularity probability puts more weight on states where the dividend advantage operates.
 
-### Remark 1 (Existence condition, lines 149--155)
-The existence condition $A^j < 1$ is explained as "the SDF-weighted expected dividend growth exceeds the discount rate and the geometric pricing sum diverges." The economic interpretation---"the hedging value of the asset is so extreme that no finite price can clear the market"---is directly tied to the mathematical object $A^j$.
+### Proposition 2 (Extinction attenuation)
+The proof directly references the $(1-\xi)$ factor in each P/D ratio and explains that higher $\xi$ reduces weight on non-extinction states—the only states where $\Gamma^{AI} > \Gamma^{N}$ operates. The mathematical mechanism is transparent.
 
-### Proposition 2 (Extinction attenuation, lines 163--169)
-The proof doubles as intuition: higher $\xi$ reduces weight on non-extinction states via the factor $(1-\xi)$, and these are the only states where the dividend advantage $\Gamma^{AI} > \Gamma^{N}$ operates. The mathematical mechanism is the explanation.
+### Remark 1 (Existence condition)
+Explains the $A^j < 1$ condition using the concept of SDF-weighted expected dividend growth exceeding the discount rate, causing the geometric pricing sum to diverge. Connects to infinite hedging demand.
 
-### Proposition 3 (Veto, lines 214--231)
-The proof walks through $\Delta u(\gamma)$ (equation 7) term by term, showing how the negative-singularity term with $\phi\alpha(1+\eta) < \alpha$ dominates as $\gamma \to \infty$. The subsequent discussion (lines 233--237) reinforces the intuition with a numerical example that maps back to the proposition's parameters ($\phi$, $\eta$, $\gamma$, $q$, $\kappa$). The complete-markets contrast is explained through the household consuming $\alpha(1+\eta)C_t(1+g)$ in both states, directly from the proposition's mathematical setup.
+### Proposition 3 (Veto under incomplete markets)
+- Uses $\Delta u(\gamma)$ from Eq (6) to explain how the negative-singularity term dominates as $\gamma \to \infty$ when $\phi(1+\eta) < 1$.
+- Contrasts incomplete-markets consumption $\phi\alpha(1+\eta)C_t(1+g)$ with complete-markets consumption $\alpha(1+\eta)C_t(1+g)$.
+- Provides numerical examples with specific parameter values ($\phi=0.5$, $\eta=0.5$, $\gamma=10$, etc.) to sharpen the intuition.
 
-### Transfer equations (lines 245--267)
-- Equation (8), $\phi_\text{eff}$: explained as arising from factoring equation (7), with the first term contributing $\phi$ and the transfer term the remainder. The connection to Proposition 1 (replacing $\phi$ with $\phi_\text{eff}$) is explicit.
-- Equation (9), the transfer ratio: the discussion explains that it exceeds one whenever $\tau > 0$ and $\delta\tau < 1$, and that the economic content is in the levels---both numerator and denominator grow with $\eta$, so even inefficient transfers deliver large gains when the resource base is large.
+### Extension 2 formulas (Eqs 7–9)
+- Eq (7): transfer consumption is decomposed into displaced consumption (first term) and net transfer (second term), with each component explained.
+- Eq (8): $\phi_\text{eff}$ is derived by factoring Eq (7), and the discussion explains how it enters the SDF identically to $\phi$.
+- Eq (9): the transfer ratio is shown to be independent of $\eta$, with explanation that the economic content is in the *levels*—as $\eta$ grows, even inefficient transfers deliver large absolute gains.
 
-### Figure 2 discussion (lines 269--271)
-The transition from infinite to finite P/D ratios is explained through $\phi^{-\gamma} = 160{,}000$ (the household's marginal utility) causing the pricing sum to diverge, directly connecting to Remark 1's existence condition.
+### Discussion section (Section 2.3)
+- Uses $\phi_\text{eff} \to 1$ to explain how complete markets would collapse the premium.
+- References the residual spread from $\Gamma^{AI} \neq \Gamma^{N}$ that remains even with hedging.
+- Connects the existence condition (Remark 1) to GKP's continuous-displacement framework, noting the discrete singularity can violate $A^j < 1$ while GKP's gradual displacement cannot.
 
-## Summary
-Throughout the paper, intuition is consistently built from the mathematical objects in each result rather than from verbal hand-waving or appeals to generic economic logic. Parameters ($\phi$, $\gamma$, $\xi$, $p$, $\eta$, $\Delta\theta$), key expressions ($\Gamma^{AI}$, $\Gamma^{N}$, $A^j$, $\phi_\text{eff}$), and conditions ($\phi(1+\eta) < 1$, $A^j < 1$) are the language in which the intuition is delivered.
+All discussions ground their intuition in the specific mathematical objects of the propositions and formulas they reference.

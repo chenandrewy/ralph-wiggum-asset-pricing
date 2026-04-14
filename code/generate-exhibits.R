@@ -207,7 +207,7 @@ theme_paper <- theme_bw(base_size = 32) +
     axis.title = element_text(size = 30),
     plot.title = element_text(size = 26),
     panel.grid.minor = element_blank(),
-    panel.grid.major = element_line(color = "gray75")
+    panel.grid.major = element_line(color = "gray55")
   )
 
 scenario_labels <- c(

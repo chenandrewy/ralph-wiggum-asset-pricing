@@ -1,7 +1,7 @@
 # tests/element-opening-fig.py
-Started: 2026-04-14 10:23:26 EDT
-Runtime: 49s
-[ralph-garage/agent-logs/20260414T102326.828650-0400_element-opening-fig_claude_opus.log](../ralph-garage/agent-logs/20260414T102326.828650-0400_element-opening-fig_claude_opus.log)
+Started: 2026-04-14 10:33:09 EDT
+Runtime: 55s
+[ralph-garage/agent-logs/20260414T103309.987469-0400_element-opening-fig_claude_opus.log](../ralph-garage/agent-logs/20260414T103309.987469-0400_element-opening-fig_claude_opus.log)
 
 # element-opening-fig
 VERDICT: PASS
@@ -9,10 +9,10 @@ REASON: The opening figure is empirical, compares AI-heavy vs. broad-market valu
 
 ## Findings
 
-**Requirement 1 — Empirical, not theoretical.** PASS. The figure uses real market data: the Shiller dataset for S&P 500 price-dividend ratios and FRED for the NASDAQ Composite index. No model output is involved.
+**Requirement 1 (Empirical, not theoretical):** PASS. The figure uses real data: Shiller dataset for S&P 500 P/D ratios and FRED for NASDAQ prices. Sources are cited in the caption.
 
-**Requirement 2 — Compares AI and non-AI public-stock valuations.** PASS with caveat. Panel (b) plots the NASDAQ Composite relative to the S&P 500, using NASDAQ as a proxy for AI/technology-heavy stocks. This is a reasonable proxy—the caption explicitly notes NASDAQ is "heavily weighted toward AI and technology firms." A more direct comparison (e.g., a portfolio of AI-classified firms vs. the rest, constructed from CRSP) would be stronger, but the NASDAQ/S&P ratio is a standard, defensible, and immediately legible measure for the target audience. The widening gap since 2023 is clearly visible and aligns with the generative-AI timeline.
+**Requirement 2 (Compares AI and non-AI valuations):** PASS. Panel (a) shows the S&P 500 trailing P/D ratio at historically elevated levels. Panel (b) shows the NASDAQ Composite (AI- and tech-heavy) price relative to the S&P 500, normalized to Jan 2015 = 100. The rising ratio in Panel (b) directly illustrates the growing valuation gap between AI/tech stocks and the broader market, with a visible acceleration post-2023. Using NASDAQ as an AI proxy is reasonable for a theory paper.
 
-**Requirement 3 — Supports the intro's motivating claim.** PASS. The intro's opening paragraph directly references the figure: elevated S&P 500 P/D ratios and the NASDAQ sharply outpacing the broader market. Panel (a) establishes that overall valuations are historically elevated; Panel (b) shows the AI/tech-heavy index pulling away. Together they motivate the paper's central question—why AI-exposed stocks command such a premium—which the model then answers with the hedging mechanism.
+**Requirement 3 (Supports intro's motivating claim):** PASS. The intro's opening sentence states "The publicly traded stocks most exposed to artificial intelligence have reached remarkable valuations." The figure immediately follows and illustrates exactly this: elevated P/D ratios and a widening NASDAQ/S&P gap since generative AI advances accelerated in 2023. The intro text explicitly references the figure ("Figure 1 illustrates"). The spec calls for "a single figure in the introduction illustrating how the high valuation ratios of publicly traded AI stocks are higher than those of other stocks" — this is precisely what Panel (b) delivers.
 
-**Requirement 4 — Clear and publication-quality.** PASS. The rendered figure (page 2) has clean two-panel layout, legible axis labels, appropriate time-series range (roughly 2000–2025), and a well-written caption with source attribution. Panels are labeled (a) and (b) with descriptive titles. Visual formatting is consistent with top finance journals.
+**Requirement 4 (Clear and publication-quality):** PASS. From the rendered page image: clean two-panel layout with labeled axes, readable fonts, proper time-series formatting, and a detailed caption with data sources. Axis labels are clear ("Price / Trailing Dividend" for Panel a, "NASDAQ / S&P 500" for Panel b). The figure integrates well into the page layout.

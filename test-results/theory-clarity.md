@@ -1,50 +1,50 @@
 # tests/theory-clarity.py
-Started: 2026-04-14 10:23:26 EDT
-Runtime: 1m 0s
-[ralph-garage/agent-logs/20260414T102326.820712-0400_theory-clarity_claude_opus.log](../ralph-garage/agent-logs/20260414T102326.820712-0400_theory-clarity_claude_opus.log)
+Started: 2026-04-14 10:33:09 EDT
+Runtime: 2m 9s
+[ralph-garage/agent-logs/20260414T103309.985159-0400_theory-clarity_claude_opus.log](../ralph-garage/agent-logs/20260414T103309.985159-0400_theory-clarity_claude_opus.log)
 
 # theory-clarity
 VERDICT: PASS
-REASON: All key model assumptions and expressions are clearly introduced in dedicated setup paragraphs or display math before they are used in results.
+REASON: All critical model expressions appear in display math, and new assumptions are introduced in clearly labeled setup paragraphs or structured lists; minor prose-placement issues do not impede readability.
 
 ## Key items identified
 
-### Display math in main text (all present)
-1. Aggregate consumption growth $C_{t+1} = (1+g)C_t$ — eq (1), line 80
-2. Displacement $\alpha_{t+1} = \phi\alpha_t$ — eq (2), line 92
-3. AI share update $\theta_{t+1} = \theta_t + \Delta\theta(1-\theta_t)$ — eq (3), line 106
-4. CRRA utility — eq (4), line 123
-5. P/D ratio for AI stocks — eq (5), line 134
-6. P/D ratio for non-AI stocks — eq (6), line 138
-7. Existence condition $A^j < 1$ — eq (7), line 152
-8. Veto utility gain $\Delta u(\gamma)$ — eq (8), line 225
-9. Transfer consumption $c^H_{post}$ — eq (9), line 248
-10. Effective displacement $\phi_\text{eff}$ — eq (10), line 256
-11. Transfer ratio — eq (11), line 264
+### Should appear in display math (all confirmed present)
+1. Aggregate consumption growth: $C_{t+1} = (1+g)C_t$ — eq (1)
+2. Displacement rule: $\alpha_{t+1} = \phi\,\alpha_t$ — eq (2)
+3. AI dividend-share update: $\theta_{t+1} = \theta_t + \Delta\theta(1-\theta_t)$ — eq (3)
+4. P/D ratios for AI and non-AI stocks, including $\Gamma^{AI}$, $\Gamma^{N}$ — eqs (4)–(5)
+5. Existence condition: $A^j < 1$ — eq (6), Remark 1
+6. Veto utility gain: $\Delta u(\gamma)$ — eq (7)
+7. Transfer consumption equation — eq (8)
+8. Effective displacement: $\phi_\text{eff}$ — eq (9)
+9. Transfer ratio (eta-independence) — eq (10)
+10. CRRA utility function — eq (utility)
 
-### Prose assumptions (all at or near paragraph starts)
-- $c_t^H = \alpha_t C_t$: Consumption paragraph, line 83
-- Singularity probability $p$: Singularity paragraph, line 86
-- Extinction probability $\xi$: enumerated item within Singularity paragraph, line 94
-- Productivity boost $\eta > 0$: enumerated item within Singularity paragraph, line 89
-- $D_t^{AI} = \theta_t C_t$ and $D_t^{N} = (1-\theta_t)C_t$: Assets paragraph items, lines 103/110
-- $\gamma > 1$, $\beta \in (0,1)$: Preferences paragraph, line 120
-- Positive singularity probability $q$, veto cost $\kappa$: Extension 1 setup, lines 206/210
-- Tax rate $\tau$, deadweight parameter $\delta$: Extension 2 setup, line 245
+### May remain in prose (should be at/near paragraph start)
+- Household consumption share $c_t^H = \alpha_t C_t$
+- Singularity probability $p$
+- Extinction probability $\xi$
+- Productivity boost $1+\eta$
+- Market incompleteness (cannot trade restricted AI equity)
+- Hedging-channel condition $\phi(1+\eta) < 1$
+- Positive singularity probability $q > 1/2$
+- Veto cost $\kappa > 0$
+- Deadweight cost structure $\delta\tau$
 
 ## Section-level findings
 
 ### Section 2 (Model)
-No issues. The Setup subsection (2.1) uses clearly labeled \paragraph blocks (Consumption, Singularity, Assets, Preferences) that each introduce their assumptions at the start. All critical expressions appear in display math. The distinction between $\alpha_t$ (consumption share) and $\theta_t$ (dividend share) is made explicit in the Assets paragraph.
-
-### Section 2.2 (Equilibrium prices)
-P/D ratios and growth factors $\Gamma^{AI}$, $\Gamma^{N}$ are in display math within Proposition 1. The existence condition is displayed in Remark 1. The condition $\phi(1+\eta) < 1$ for the hedging channel is introduced in the discussion paragraph following the proposition — appropriate since it is an interpretation of the model rather than a new assumption.
+- **Setup (2.1):** Well-organized with labeled \paragraph blocks (Consumption, Singularity, Assets, Preferences). Key expressions (eqs 1–3, utility) are in display math. Prose assumptions like household share, singularity probability, extinction, and productivity boost are introduced within their respective labeled paragraphs or structured enumerated lists, which is clear. Market incompleteness gets its own paragraph (lines 115–116). No issues.
+- **Equilibrium prices (2.2):** P/D ratios in display math within Proposition 1. Existence condition in display math within Remark 1. The hedging-channel condition $\phi(1+\eta) < 1$ is introduced mid-paragraph in the discussion (line 159), but this is a derived condition from existing parameters rather than a new assumption, and it is re-stated in Proposition 3 where it is formally needed. Acceptable.
+- **Discussion (2.3):** Recalls and interprets earlier assumptions. No new assumptions introduced.
 
 ### Section 3 (Quantitative Analysis)
-No new model assumptions. Calibration values are stated clearly at the start of the section.
+- Calibration parameters are stated clearly at the start of the section. No new model assumptions.
 
-### Section 4.1 (Veto extension)
-New assumptions (positive singularity with probability $q$, veto cost $\kappa$, complete-markets benchmark) are introduced in clear setup paragraphs before Proposition 3. The condition $\phi(1+\eta) < 1$ appears as a stated condition within the proposition, which is appropriate.
+### Section 4 (Extensions)
+- **Extension 1 (4.1):** The positive singularity augmentation ($q$, $\alpha^+$) is introduced at the start of the subsection's first paragraph (line 206). The assumption $q > 1/2$ appears at the end of the same paragraph — slightly buried but acceptable given the paragraph is short and entirely devoted to this setup. Veto cost $\kappa$ gets its own paragraph (line 210). Kaldor-Hicks efficiency is defined in its own short paragraph (line 208). Complete markets benchmark has its own paragraph (line 212). No issues.
+- **Extension 2 (4.2):** Transfer mechanism ($\tau$, $\delta$) is introduced in a clear setup paragraph followed immediately by display math (eq 8). $\phi_\text{eff}$ and the transfer ratio are both in display math. Well-structured.
 
-### Section 4.2 (Transfers extension)
-Transfer mechanics ($\tau$, $\delta$, post-transfer consumption) are introduced in a setup paragraph with the key expression in display math (eq 9) before the analysis. The effective displacement parameter $\phi_\text{eff}$ is derived in display math (eq 10) and clearly connected back to Proposition 1.
+### Appendix A
+- Proof of Proposition 1. No new assumptions; uses established model elements. Clear.
