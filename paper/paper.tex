@@ -7,18 +7,20 @@
 \usepackage[backend=biber,natbib=true,style=authoryear]{biblatex}
 \addbibresource{references.bib}
 \usepackage{hyperref}
+\hypersetup{hidelinks}
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{caption}
+\usepackage{float}
 
 % Page numbers on every page
 \pagestyle{plain}
 
 % Theorem environments
 \newtheorem{proposition}{Proposition}
-\newtheorem{assumption}{Assumption}
+\newtheorem{remark}{Remark}
 
-\title{Hedging the Singularity}
+\title{Hedging the Singularity} 
 \author{}
 \date{}
 
@@ -27,448 +29,301 @@
 \thispagestyle{plain}
 
 \begin{abstract}
-\noindent
-A negative AI singularity could devastate ordinary investors while enriching AI capital owners.
-We show that AI stocks command a hedging premium because they pay off when displacement risk spikes marginal utility.
-Incomplete markets are central: without them, the hedging premium vanishes.
-Market incompleteness can inefficiently block AI development, and government transfers---normally crippled by deadweight costs---become viable when singularity-scale growth generates surplus so large that even heavy waste leaves the household better off.
-This paper---itself written by AI agents, with only a 700-word specification from a human economist---is a small demonstration of the risk it models.
+\noindent AI stocks trade at extraordinary valuations. We develop an asset pricing model in which investors use AI stocks to hedge against an AI singularity that displaces their consumption. Because markets are incomplete---investors cannot trade private AI capital---AI stocks command a premium. Market incompleteness distorts both valuations and the efficient development of AI, creating a rationale for government transfers that becomes compelling when singularity-driven growth overwhelms deadweight costs. The displacement the paper models is closer than it appears.
 \end{abstract}
 
-%% ------ Preface (TBC) ------ %% Section: unnumbered
-\section*{Preface (TBC)}
-\vspace{2em}
+%% ============================================================
+%% Section 1: Introduction
+%% ============================================================
+\section{Introduction} % Section 1
 
-%% ------ Introduction ------ %% Section 1
-\section{Introduction}
+The publicly traded stocks most exposed to artificial intelligence have reached remarkable valuations. Figure~\ref{fig:ai-valuations} illustrates: the S\&P~500's price-dividend ratio has reached historically elevated levels, and the AI- and technology-heavy NASDAQ Composite has sharply outpaced the broader market since 2015, with the valuation gap widening since 2023 as advances in generative AI have accelerated expectations of transformative productivity gains---and, implicitly, of the displacement such gains may bring.
 
-A handful of technology companies now account for nearly a third of the entire U.S.\ stock market (Figure~\ref{fig:ai-valuations}).
-Their extraordinary valuations reflect, in part, expectations of future earnings growth.
-But growth expectations alone leave a puzzle: why would rational investors pay such steep premiums for firms whose dominance, by its very nature, threatens to displace the rest of the economy?
-
-This paper offers a complementary explanation rooted in hedging demand.
-If an AI singularity arrives---a sudden, transformative leap in artificial intelligence---it could vastly increase aggregate output while simultaneously devastating the typical investor's consumption, a \emph{negative} AI singularity.
-The devastation arises because much of the new wealth accrues to AI capital owners, including firms and entrepreneurs who do not yet exist, while the representative household's share of output shrinks.
-In this world, publicly traded AI stocks are valuable not only for their expected cash flows, but also because they partially hedge the household's displacement risk.
-
-The hedging channel works through the stochastic discount factor.
-AI stocks pay off when the household is most desperate: upon a negative singularity, her consumption drops sharply, making every dollar of income extraordinarily valuable.
-AI dividends surge in precisely that state, while non-AI dividends shrink.
-That is the hedge.
-The wedge between AI and non-AI valuations is driven entirely by this co-movement: high payoffs in high-marginal-utility states.
-Non-AI stocks also receive some hedging uplift---their contracted dividends are still multiplied by the marginal-utility spike $\eta_C^{-\gamma}$---but less than AI stocks, because $\eta_N < \eta_{AI}$.
-
-\begin{figure}[t]
+\begin{figure}[H]
 \centering
-\includegraphics[width=0.85\textwidth]{exhibits/fig-ai-valuations.pdf}
-\caption{Market capitalization share of major AI-exposed firms (AAPL, AMZN, GOOGL, META, MSFT, NVDA, TSLA) as a fraction of all CRSP common stocks. Data from CRSP monthly stock file.}
-\label{fig:ai-valuations} %% Exhibit 1
+\caption{Valuation Ratios and the AI Premium. Panel~(a) shows the S\&P~500 trailing price-dividend ratio from the Shiller dataset, which has reached historically elevated levels. Panel~(b) shows the NASDAQ Composite price relative to the S\&P~500, normalized to January~2015~=~100; the NASDAQ is heavily weighted toward AI and technology firms, so a rising ratio indicates growing relative valuations. Sources: NASDAQ from FRED; S\&P~500 from the Shiller dataset.}
+\label{fig:ai-valuations} % Exhibit 1
+\includegraphics[width=\textwidth]{exhibits/fig-ai-valuations.pdf}
 \end{figure}
 
-Why can't the household simply buy insurance?
-Because the counterparties who would sell it---the future AI entrepreneurs and innovators---do not yet exist.
-\citet{GKP2012} identify this as a fundamental friction: intergenerational risk sharing fails when future innovators, who capture the rents from creative destruction, cannot trade with existing agents before they arrive.
-No financial instrument can bridge this gap.
-In their overlapping-generations economy, displacement risk is a priced factor, and growth stocks provide a partial hedge.
-Our model applies an analogous insight to the AI singularity.
-The key difference is scale: where GKP study the gradual displacement of incumbent firms, we study a discrete, catastrophic event that could restructure the entire economy.
-That scale difference exposes the incompleteness---the household cannot buy the capital that does not yet exist.
+Part of this premium, we argue, reflects a hedging motive: investors use AI stocks to partially insure against displacement from AI. We define a \emph{negative} AI singularity as a sudden, dramatic improvement in AI productivity that displaces the typical investor's labor income and consumption. Much of the relevant AI equity is restricted---held by founders, early-stage investors, and firms that may not yet exist. As \citet{GKP2012} emphasize, the displacing capital often belongs to future innovators who have not yet entered the economy, so investors cannot trade it. Because investors cannot trade the restricted equity, they turn to publicly traded AI stocks as the only available partial hedge against displacement, pushing valuations above those of non-AI stocks---a premium that would largely vanish if markets were complete.
 
-In practice, the incompleteness is stark.
-The household cannot buy equity in privately held AI ventures, in startups not yet founded, or in the human capital of future AI entrepreneurs.
-Public AI stocks are her only partial hedge, and even they leave most of the displacement risk uninsured.
-If markets were complete, she could trade directly with AI capital owners and eliminate the risk entirely; the hedging premium on public AI stocks would vanish.
-Financial market solutions to AI displacement risk remain strikingly under-discussed---a gap the extensions below begin to address.
+To formalize this mechanism, we build on \citet{GKP2012}'s framework by modeling a discrete AI singularity with severe displacement. A representative household---the marginal investor---faces a stochastic singularity that shifts consumption toward AI owners holding private capital. AI stocks grow as a share of the economy with each singularity, making them a partial hedge. The model delivers closed-form price-dividend ratios, and quantitative analysis shows that at a singularity probability of one percent, P/D ratios for AI stocks roughly double relative to non-AI stocks, consistent with observed valuation spreads. Extinction risk \citep{Jones2024} partially offsets this premium: the states in which AI is powerful enough to produce enormous growth are also those in which existential risk is highest, narrowing the valuation spread (Proposition~\ref{prop:comp-statics}). But while extinction risk attenuates the pricing distortion, market incompleteness itself has consequences beyond asset prices.
 
-What about extinction?
-A singularity powerful enough to devastate consumption might also threaten survival itself.
-Following \citet{Jones2024}, we allow the singularity to entail existential risk.
-Extinction is an equal-opportunity destroyer: it wipes out both AI and non-AI payoffs, so it cannot eliminate the gap between them.
-The premium survives.
+The same incompleteness that inflates AI valuations also distorts real decisions---it can distort the development of AI itself. When the positive singularity is more likely than the negative one, AI development is socially efficient, yet a risk-averse household that cannot hedge displacement may rationally choose to block it---the uninsurable downside looms larger than the expected upside (Proposition~\ref{prop:veto}). Calls to slow or halt AI development may partly reflect investors' inability to hedge the downside.
 
-If the premium reflects a real risk, the consequences extend beyond prices.
-Incomplete markets can distort real decisions: when the downside is unhedgeable, even a socially efficient technology can be vetoed.
-And when the relevant AI capital simply does not yet exist, government transfers are the remaining instrument---but their deadweight costs are normally crippling.
-The singularity changes this calculus: at the output scales suggested by \citet{Jones2024}, even transfers that lose half their value to waste can turn a catastrophic displacement into a windfall---and compress the hedging premium on AI stocks, because the household no longer needs them as hedges.
+Financial approaches to AI disaster risk are strikingly under-discussed relative to regulatory and alignment-focused approaches, and frictions severely limit the solutions that do exist. The natural fix---broader trading of AI equity---is blocked by restricted ownership and non-existent future capital. Government transfers can substitute for missing markets, but standard fiscal tools are limited by deadweight costs that scale with the size of transfers, making them ineffective in ordinary settings.
 
-These building blocks draw on an active literature, which we briefly survey.
+The singularity setting, however, offers a distinctive resolution. If the singularity occurs, these frictions can be overcome due to the sheer abundance of resources. If a singularity produces the kind of explosive output growth modeled by \citet{Jones2024}, even grossly inefficient transfers become effective, because the resource base overwhelms the deadweight costs. The same explosive growth that drives the incomplete-markets problem also provides the means to overcome it through redistribution.
 
-\paragraph{Related literature.}
-Our paper builds most directly on \citet{GKP2012}, who introduce displacement risk as a systematic factor in a consumption-based framework; we adapt their insight to the AI singularity and explore how government transfers interact with displacement risk.
-GKP note that extensions including government transfers would affect only the magnitude, not the functional form, of their displacement-risk pricing equation; we show that under singularity-scale growth, the magnitude itself becomes transformative.
-\citet{KPS2020} extend GKP, showing that creative destruction is quantitatively important for the cross-section of stock returns.
-\citet{Jones2024} formalizes the tradeoff between AI-driven growth and existential risk; we incorporate his extinction channel and his observation that singularity-scale growth can change cost-benefit calculations.
-The rare-disasters literature \citep{Barro2006,Wachter2013,GabaixVariableRareDisasters2012} provides the pricing toolkit, though our disaster is displacement rather than aggregate consumption collapse.
-\citet{PastorVeronesi2009} show that technological revolutions generate excess volatility and bubble-like dynamics in stock prices.
-A complementary strand of the asset-pricing literature connects automation to the cross-section of returns: \citet{Knesl2023} studies firm-level automation exposure, while \citet{Zhang2019} links labor-technology substitution to expected returns.
-On the broader economics of AI displacement, see \citet{AcemogluRestrepo2020}, \citet{Autor2015}, and \citet{KorinekSuh2024}.
+We develop these ideas as follows. Section~\ref{sec:model} presents the model and derives equilibrium prices, Section~\ref{sec:quant} provides quantitative analysis, and Section~\ref{sec:extensions} develops extensions on AI development distortions and government transfers.\footnote{This paper is itself a product of the displacement it models. All analysis, code, and prose were produced by AI agents; the human contribution was limited to the economic specification and test scripts that guided their work.}
 
-What none of these papers do is displace their own authors---this paper does.
-AI agents wrote the proofs, the code, and the prose, while the human author contributed only a roughly 700-word economic specification and the test scripts that evaluated the output.
-The division of labor was stark, and it happened to work.
-Whether that pattern scales, and who bears the cost when it does, is precisely the question the model asks.
+%% Lit review (end of introduction)
+\medskip
+\noindent\textbf{Related literature.}
+Our paper builds most directly on \citet{GKP2012}, who model how innovation displaces existing agents and creates a systematic risk factor under incomplete markets. The main insights about displacement risk and incomplete markets originate in their work; we connect these ideas to the AI singularity and examine how explosive growth interacts with government transfers.
 
-%% ------ Model ------ %% Section 2
-\section{Model}
+\citet{Jones2024} studies the trade-off between AI-driven growth and existential risk. We incorporate his extinction channel and show it attenuates rather than amplifies the valuation premium. Our work also relates to creative destruction and displacement risk premia \citep{KoganPapanikolaou2014,KoganPapanikolaouStoffman2020,Knesl2023}, the macroeconomics of AI growth \citep{AghionJonesJones2019,Acemoglu2025}, the rare disasters literature \citep{Barro2006,Wachter2013}, and \citet{PastorVeronesi2009}'s analysis of technological revolutions.
 
-\subsection{Setup}
+%% ============================================================
+%% Section 2: Model
+%% ============================================================
+\section{Model} \label{sec:model} % Section 2
 
-The model is deliberately simple---two agents, two assets, one regime shift---so that the hedging mechanism is transparent.
-Time is discrete and infinite: $t = 0, 1, 2, \ldots$\,.
-The infinite horizon delivers stationarity, which keeps the pricing clean.
+\subsection{Setup} % Section 2.1
 
-\paragraph{Notation.}
-Throughout, $\eta$ denotes a multiplicative shock.
-Subscripts indicate the object shocked: $\eta_{AI}$ and $\eta_N$ are dividend shocks to AI and non-AI stocks; $\eta_C$ is the household's consumption shock.
+Time is discrete and infinite, $t = 0, 1, 2, \ldots$ A representative household is the marginal investor in public stock markets. There is also a group of AI owners who hold private AI capital and are not marginal investors in public stocks. The AI owners can also be thought of as future capital owners who do not yet participate in markets, as in \citet{GKP2012}. Importantly, we do not explicitly model the entry of new cohorts of firms or workers; AI owners are a static group whose share changes only through the singularity mechanism.
 
-\paragraph{Agents.}
-A \emph{representative household} is the marginal investor in all public securities.
-She has CRRA preferences over consumption:
-%% Equation 1
+\paragraph{Consumption.}
+Aggregate consumption at date $t$ is $C_t$. In the absence of a singularity, aggregate consumption grows at a constant rate $g > 0$:
+%
 \begin{equation}
-U = \mathbb{E}_0 \sum_{t=0}^{\infty} \beta^t \, \frac{C_t^{1-\gamma}}{1-\gamma}\,,
-\label{eq:utility}
+C_{t+1} = (1 + g) \, C_t. \label{eq:agg-consumption-growth}
 \end{equation}
-where $\beta \in (0,1)$ is the discount factor and $\gamma > 1$ is relative risk aversion.
-\emph{AI owners} hold private AI capital---including ventures not yet founded and human capital not yet developed---and are not marginal investors in public stocks.
-The AI owners can be thought of as future entrepreneurs and innovators who do not yet participate in financial markets, in the spirit of \citet{GKP2012}.
 
-\paragraph{Assets.}
-Two assets trade publicly: \emph{AI stocks}, which pay dividends $D_t^{AI}$, and \emph{non-AI stocks}, which pay dividends $D_t^{N}$.
-In the pre-singularity regime, both grow at a common rate $g > 0$:
-%% Equation 2
-\begin{equation}
-D_{t+1}^j = (1+g)\, D_t^j, \quad j \in \{AI, N\}, \quad \text{absent a singularity at } t+1.
-\label{eq:div-growth}
-\end{equation}
-The household's consumption also grows at rate $g$ in normal times: $C_{t+1} = (1+g)\,C_t$.
+The household receives a share $\alpha_t \in (0, 1)$ of aggregate consumption, so its consumption is $c_t^H = \alpha_t \, C_t$. AI owners receive the remainder, $(1 - \alpha_t) \, C_t$.
 
 \paragraph{Singularity.}
-The key risk is a one-time regime shift.
-
-\begin{assumption}[Singularity Structure] \label{ass:singularity} %% Assumption 1
-Each period, conditionally on no prior singularity, a singularity arrives with probability $p > 0$.
-The singularity is a one-time regime shift.
-Upon the singularity, multiplicative shocks $\eta$ replace the normal growth factor, and one of two outcomes obtains:
+Each period, with probability $p$, an AI singularity occurs. With probability $1 - p$, no singularity occurs and $\alpha_t$ is unchanged. Conditional on a singularity:
+%
 \begin{enumerate}
-\item[(i)] \textbf{Survival} (probability $1 - p_x$). AI stock dividends jump by $\eta_{AI} > 1$; non-AI dividends contract by $\eta_N < 1$; the household's consumption jumps by $\eta_C < 1$, because much of the new output accrues to AI owners. After the singularity, all quantities grow at a post-singularity rate $g_S > g$.
-\item[(ii)] \textbf{Extinction} (probability $p_x$). Following \citet{Jones2024}, with probability $p_x$ conditional on the singularity, consumption falls to zero permanently.
+\item With probability $1 - \xi$, the singularity is \emph{non-extinction}. Aggregate consumption jumps by a factor $1 + \eta$ (where $\eta > 0$ captures the productivity boost), but the household's share drops:
+\begin{equation}
+\alpha_{t+1} = \phi \, \alpha_t, \qquad \phi \in (0,1). \label{eq:displacement}
+\end{equation}
+The parameter $\phi$ governs displacement severity: smaller $\phi$ means larger displacement.
+\item With probability $\xi$, the singularity triggers \emph{extinction}: $C_{t+1} = 0$ for all subsequent dates. This follows \citet{Jones2024}, who emphasizes that the states in which AI is powerful enough to produce enormous growth are precisely those in which existential risk is highest.
 \end{enumerate}
-The household cannot trade in the private AI capital held by AI owners (incomplete markets).
-The singularity is \emph{negative} for the typical investor: $\eta_C < 1$.
-\end{assumption}
 
-\paragraph{Incomplete markets.}
-The singularity risk would be insurable if the household could trade claims on private AI capital, but she cannot (Assumption~\ref{ass:singularity}).
-This is the core friction.
-She can only hedge displacement risk through her portfolio of public AI and non-AI stocks---a partial hedge at best.
-The assets that would provide a perfect hedge---claims on the AI owners' surplus---simply do not exist as tradeable securities.
+\noindent After a non-extinction singularity, the economy continues with the new, lower household share. Singularities can occur repeatedly, progressively displacing the household.
 
-\subsection{Asset pricing}
-
-How does this setup translate into prices?
-Two conditions are maintained throughout: $\gamma > 1$ (the household is more risk-averse than log utility) and stationarity of the pre-singularity environment (prices and dividends grow at the common rate~$g$, so price-dividend ratios are constant).
-The singularity simultaneously spikes marginal utility and reshuffles dividends---so the household's pricing of AI and non-AI stocks must diverge.
-The gap is the hedging premium.
-
-\paragraph{Pricing.}
-The household prices assets using her CRRA stochastic discount factor,
-%% Equation 2b
+\paragraph{Assets.}
+Two public assets are available for trading:
+%
+\begin{itemize}
+\item \textbf{AI stocks} pay dividends $D_t^{AI} = \theta_t \, C_t$, where $\theta_t$ is the AI dividend share. Upon a non-extinction singularity, the AI share expands:
+%
 \begin{equation}
-M_{t,t+1} = \beta\!\left(\frac{C_{t+1}}{C_t}\right)^{-\gamma},
-\label{eq:sdf}
+\theta_{t+1} = \theta_t + \Delta\theta \, (1 - \theta_t), \qquad \Delta\theta \in (0,1). \label{eq:theta-update}
 \end{equation}
-via the standard Euler equation,
-%% Equation 2c
-\begin{equation}
-P_t^j = \mathbb{E}_t\!\Big[M_{t,t+1}\big(D_{t+1}^j + P_{t+1}^j\big)\Big].
-\label{eq:euler}
-\end{equation}
-We solve for price-dividend ratios $v^j \equiv P_t^j / D_t^j$ in the pre-singularity regime, exploiting the stationarity of the environment.
+%
+This is the expression that drives $\Gamma^{AI} \neq \Gamma^{N}$ in equilibrium: AI stocks' dividends grow faster than the economy upon a singularity, while non-AI stocks shrink as a share. Absent a singularity, $\theta_t$ is unchanged.
+\item \textbf{Non-AI stocks} pay dividends $D_t^{N} = (1 - \theta_t) \, C_t$.
+\end{itemize}
 
-\paragraph{Post-singularity valuation.}
-Define $R_S \equiv \beta\,(1+g_S)^{1-\gamma}$.
-Since $\gamma > 1$, the exponent $1-\gamma$ is negative, so $(1+g_S)^{1-\gamma} < 1$ and therefore $R_S < \beta < 1$.
-After a surviving singularity, all assets grow at rate $g_S$ (the post-singularity rate defined above), and household consumption grows at $g_S$ as well, with no further regime-shift risk, and abstracting from further distributional shifts after the initial displacement.
-The post-singularity price-dividend ratio, common to all assets, is then (the subscript~$S$ denotes the post-singularity regime)
-%% Equation 3
+\noindent Total public dividends equal aggregate consumption ($D^{AI} + D^{N} = C_t$), but these dividends are distributed among all investors, not solely the household. The household's consumption $\alpha_t C_t$ reflects the net outcome of its portfolio returns from public stocks and any labor-like income; AI owners receive the remainder through their own public stockholdings and their restricted equity. Because $\alpha_t$ and $\theta_t$ are distinct---one governs the consumption split, the other the dividend split among publicly traded assets---the household's share can differ from its pro-rata claim on public dividends.
+
+AI owners also hold restricted equity---founder stakes, pre-IPO shares, and other claims on AI firms that are not available for public trading. The household \emph{cannot} purchase these restricted shares. This is the source of market incompleteness: although the household can trade publicly listed AI stocks, it cannot access the full universe of AI equity, and therefore cannot fully hedge displacement risk.
+
+The displacement parameter $\phi$ governs the household's total consumption share, which reflects both tradeable and non-tradeable components (labor income, private wealth, and returns from public stockholdings). Holding AI stocks allows the household to smooth marginal utility across states---this is the hedging channel that inflates AI stock valuations---but does not eliminate displacement, because the non-tradeable component (primarily labor income) is what $\phi$ captures. If the household could trade the restricted equity, it could hedge this component directly, and the valuation spread would collapse.
+
+\paragraph{Preferences.}
+The household has CRRA preferences with risk aversion $\gamma > 1$ and discount factor $\beta \in (0,1)$:
+%
 \begin{equation}
-v_S = \frac{R_S}{1 - R_S}\,.
-\label{eq:vS}
+U_0^H = \mathbb{E}_0 \left[ \sum_{t=0}^{\infty} \beta^t \, \frac{(c_t^H)^{1-\gamma}}{1 - \gamma} \right]. \label{eq:utility}
 \end{equation}
 
-\paragraph{Pre-singularity valuation.}
-Extinction contributes zero to the asset price because both dividends and asset prices are zero in the extinction state.
-Define $R \equiv \beta\,(1+g)^{1-\gamma}$.
-Pricing each of the three events---no singularity, singularity with survival, singularity with extinction---and solving recursively yields
-%% Equation 4
+\subsection{Equilibrium prices} % Section 2.2
+
+The household prices all publicly traded assets via its Euler equation. Because markets are incomplete, the household's stochastic discount factor (SDF) reflects its own consumption growth, not aggregate consumption growth.
+
+\begin{proposition}[Price-dividend ratios] \label{prop:pd-ratios} % Proposition 1
+In the stationary equilibrium where the household holds both public assets, the price-dividend ratios are:
+%
 \begin{equation}
-v^j = \frac{(1-p)\,R \;+\; p\,(1-p_x)\,\beta\,\eta_C^{-\gamma}\,\eta_j\,(1 + v_S)}{1 - (1-p)\,R}\,, \quad j \in \{AI, N\}.
-\label{eq:pd}
+\frac{P^{AI}}{D^{AI}} = \frac{\beta (1+g)^{1-\gamma} \left[ (1-p) + p(1-\xi)(1+\eta)^{-\gamma} \phi^{-\gamma} \, \Gamma^{AI} \right]}{1 - \beta(1+g)^{1-\gamma} \left[ (1-p) + p(1-\xi)(1+\eta)^{-\gamma} \phi^{-\gamma} \, \Gamma^{AI} \right]}, \label{eq:pd-ai}
 \end{equation}
-
-The numerator has two terms.
-The first, $(1-p)\,R$, is the standard present value of next period's dividend in the no-singularity state, discounted by the SDF.
-The second captures the singularity state: the household's marginal utility spikes by $\eta_C^{-\gamma}$ (since $\eta_C < 1$ and $\gamma > 1$), and the dividend jumps by $\eta_j$.
-The product $\eta_C^{-\gamma}\,\eta_j$ is the excess valuation boost from the singularity, amplified by risk aversion.
-
-%% ------ Results ------ %% Section 3
-\section{Results}
-
-\paragraph{Baseline conditions.}
-The following conditions are maintained for all results below.
-\emph{Displacement:} $\eta_{AI} > 1 > \eta_N$---AI dividends surge while non-AI dividends contract.
-\emph{Non-degenerate singularity:} $p_x \in [0,1)$.
-\emph{Finite valuations:} $R < 1/(1-p)$, where $R \equiv \beta(1+g)^{1-\gamma}$.
-
-\begin{proposition}[Hedging Premium] \label{prop:premium} %% Proposition 1
-If\/ $\eta_{AI} > \eta_N$, then $v^{AI} > v^{N}$. That is, AI stocks trade at a higher price-dividend ratio than non-AI stocks.
+%
+\begin{equation}
+\frac{P^{N}}{D^{N}} = \frac{\beta (1+g)^{1-\gamma} \left[ (1-p) + p(1-\xi)(1+\eta)^{-\gamma} \phi^{-\gamma} \, \Gamma^{N} \right]}{1 - \beta(1+g)^{1-\gamma} \left[ (1-p) + p(1-\xi)(1+\eta)^{-\gamma} \phi^{-\gamma} \, \Gamma^{N} \right]}, \label{eq:pd-nonai}
+\end{equation}
+%
+where $\Gamma^{AI} = \frac{\theta + \Delta\theta(1-\theta)}{\theta} (1+\eta)$ and $\Gamma^{N} = \frac{1 - \theta - \Delta\theta(1-\theta)}{1-\theta} (1+\eta)$ are the dividend growth factors for AI and non-AI stocks conditional on a non-extinction singularity.
 \end{proposition}
 
 \begin{proof}
-From equation~\eqref{eq:pd},
-%% Equation 5
-\begin{equation}
-v^{AI} - v^{N} = \frac{p\,(1-p_x)\,\beta\,\eta_C^{-\gamma}\,(\eta_{AI} - \eta_N)\,(1 + v_S)}{1 - (1-p)\,R}\,.
-\label{eq:premium}
-\end{equation}
-Every factor in the right-hand side is strictly positive: $p > 0$, $1-p_x > 0$, $\beta > 0$, $\eta_C^{-\gamma} > 0$, $\eta_{AI} - \eta_N > 0$ by assumption, $1 + v_S > 0$, and $1 - (1-p)\,R > 0$ for the price-dividend ratio to be finite.
+See Appendix~\ref{app:proof-pd}.
 \end{proof}
 
-The intuition is direct, and worth lingering on.
-The numerator of the premium in equation~\eqref{eq:premium} is driven by $\eta_C^{-\gamma}\,(\eta_{AI} - \eta_N)$: AI stocks deliver high dividends (the $\eta_{AI} - \eta_N$ gap) in precisely the state where the household's marginal utility is highest (the $\eta_C^{-\gamma}$ spike).
-This hedging benefit is priced into their valuation.
-Non-AI stocks receive less hedging benefit: their dividends shrink upon displacement ($\eta_N < 1$), so the product $\eta_C^{-\gamma}\,\eta_N$ is smaller than $\eta_C^{-\gamma}\,\eta_{AI}$, and they trade at a lower price-dividend ratio.
+\begin{remark}[Existence condition] \label{rem:existence} % Remark 1
+The P/D ratios in Proposition~\ref{prop:pd-ratios} are well-defined (positive and finite) if and only if the numerator
+\begin{equation}
+A^j \;\equiv\; \beta(1+g)^{1-\gamma}\left[(1-p) + p(1-\xi)(1+\eta)^{-\gamma}\phi^{-\gamma}\,\Gamma^j\right] < 1. \label{eq:existence}
+\end{equation}
+When $A^j \geq 1$, the SDF-weighted expected dividend growth exceeds the discount rate and the geometric pricing sum diverges---the asset's price is infinite. Intuitively, the hedging value of the asset is so extreme that no finite price can clear the market. The baseline calibration satisfies $A^j < 1$ for both assets. As we discuss in Section~\ref{sec:ext2}, sufficiently severe displacement can violate this condition, which itself motivates the role of government transfers.
+\end{remark}
 
-Higher risk aversion amplifies the hedging channel: since $\eta_C < 1$, the marginal-utility spike $\eta_C^{-\gamma}$ grows without bound as $\gamma$ increases, making the household willing to pay ever-steeper premiums for assets that pay off in the displacement state.\footnote{The overall P/D \emph{spread} $v^{AI} - v^{N}$ is non-monotone in $\gamma$ because the denominator $1-(1-p)R$ and the post-singularity valuation $v_S$ also shift with risk aversion, producing offsetting general-equilibrium effects. But the hedging \emph{channel}---the $\eta_C^{-\gamma}$ spike---grows without bound.}
-A household with $\gamma = 10$ facing a 20\% consumption drop experiences a marginal-utility spike of $0.80^{-10} \approx 9.3$; the household values a dollar in that state roughly nine times more than a dollar in normal times.
+The closed-form expressions in Proposition~\ref{prop:pd-ratios} rely on an approximation: the post-singularity P/D ratio is treated as equal to the pre-singularity ratio. This is exact when $\Delta\theta \to 0$ and becomes less accurate as $\Delta\theta$ grows, since each singularity shifts $\theta$ and therefore shifts the dividend growth factors. The closed-form is useful for building intuition about the hedging channel, particularly through the comparison of $\Gamma^{AI}$ and $\Gamma^{N}$. Table~\ref{tab:pd-ratios} reports numerically exact P/D ratios, computed by iterating the Euler equation over the chain of post-singularity states (see Appendix~\ref{app:proof-pd}). The full derivation of the closed form is also in Appendix~\ref{app:proof-pd}.
 
-\paragraph{Quantitative illustration.}
-Table~\ref{tab:pd} reports price-dividend ratios for AI and non-AI stocks across a range of singularity probabilities, extinction risks, and risk-aversion coefficients.
-The baseline parameters are: $\beta = 0.96$, $g = 2\%$, $g_S = 10\%$, $\eta_C = 0.80$ (household consumption drops 20\% upon singularity), $\eta_{AI} = 3$ (AI dividends triple), and $\eta_N = 0.70$ (non-AI dividends fall 30\%).
+The key economic content of Proposition~\ref{prop:pd-ratios} is in the comparison of $\Gamma^{AI}$ and $\Gamma^{N}$. Since $\Delta\theta > 0$, AI stocks' dividends grow faster than aggregate consumption upon a singularity ($\Gamma^{AI} > 1+\eta$), while non-AI stocks' dividends grow more slowly ($\Gamma^{N} < 1+\eta$), shrinking as a share of the economy. When $\phi(1+\eta) < 1$---that is, when displacement is severe enough that the household's consumption falls despite the aggregate productivity gain---the household's marginal utility in singularity states is high, and AI stocks' payoffs are especially valuable, pushing their P/D ratio above that of non-AI stocks. This is the hedging channel: AI stocks pay off precisely when the household's consumption falls, making them a partial hedge against displacement.
+
+It is immediate from the P/D expressions that the valuation spread widens with displacement severity (decreasing $\phi$, which raises marginal utility in singularity states via $\phi^{-\gamma}$) and with singularity probability $p$ for sufficiently risk-averse households (higher $p$ puts more weight on the states where AI stocks' dividend advantage operates). The interaction with extinction risk is less obvious:
+
+\begin{proposition}[Extinction attenuation] \label{prop:comp-statics} % Proposition 2
+The valuation spread is decreasing in extinction probability $\xi$.
+\end{proposition}
+
+\begin{proof}
+Higher $\xi$ reduces the weight on non-extinction singularity states via the factor $(1-\xi)$ in each P/D ratio. Since these are the only states where AI stocks' dividend advantage ($\Gamma^{AI} > \Gamma^{N}$) operates, higher extinction probability compresses the valuation spread.
+\end{proof}
+
+\subsection{Discussion} % Section 2.3
+
+The model's mechanism parallels \citet{GKP2012}, who show that growth stocks earn lower expected returns because they hedge displacement risk from innovation. In their framework, displacement is driven by new cohorts of firms entering the economy; in ours, it is driven by a discrete AI singularity. The key difference is the nature of the displacement event: GKP model continuous displacement from expanding technological variety, while we model a sudden, severe shift in which the household's consumption falls even as aggregate output rises. This makes the interaction with extinction risk \citep{Jones2024} natural and generates sharper quantitative predictions about how singularity probabilities map to valuation ratios.
+
+The market incompleteness in our model---the household's inability to trade restricted AI equity---is central. If the household could trade the restricted equity, its effective displacement parameter would become $\phi_\text{eff} \to 1$: displacement is fully hedged, the SDF no longer overweights singularity states, and the displacement-driven valuation premium largely collapses---though a small residual spread from differential dividend growth ($\Gamma^{AI} \neq \Gamma^{N}$) remains. This echoes \citet{GKP2012}'s point that future innovators' rents cannot be traded because the innovators have not yet entered the economy. Our AI owners play an analogous role, though we do not model the entry dynamics that are central to their framework; the displacement in our model comes from the singularity's reallocation of consumption shares rather than from creative destruction by new entrants.
+
+One feature of the discrete singularity that has no analog in \citet{GKP2012}'s continuous-displacement framework is that sufficiently severe displacement can violate the existence condition for finite prices (Remark~\ref{rem:existence}). When displacement is extreme, the household's marginal utility in singularity states becomes so large that the SDF-weighted expected dividend growth exceeds the discount rate, and no finite price can clear the market. This discontinuity---from finite to infinite hedging demand---cannot arise under GKP's gradual displacement, where the pricing kernel remains well-behaved. It reflects the distinctive severity of a discrete AI singularity and, as we show in the extensions, motivates the role of government transfers.
+
+%% ============================================================
+%% Section 3: Quantitative Analysis
+%% ============================================================
+\section{Quantitative Analysis} \label{sec:quant} % Section 3
 
 \begin{table}[t]
 \centering
-\caption{Price-dividend ratios under the baseline model. Each cell reports the P/D ratio for AI stocks and non-AI stocks. The first row (no singularity) is the standard CCAPM benchmark. Parameters: $\beta = 0.96$, $g = 0.02$, $g_S = 0.10$, $\eta_C = 0.80$, $\eta_{AI} = 3.0$, $\eta_N = 0.70$.}
-\label{tab:pd} %% Exhibit 2
-\input{exhibits/table-pd-ratios}
+\caption{Price-Dividend Ratios: AI Stocks vs.\ Non-AI Stocks}
+\label{tab:pd-ratios} % Exhibit 2
+\input{exhibits/table-pd-ratios.tex}
 \end{table}
 
-Start with the headline: at $\gamma = 10$ and $p = 5\%$, AI stocks trade at a P/D of 12.8---more than triple the no-singularity benchmark of 4.1---while non-AI stocks trade at only 5.4.
-The hedge is worth a lot.
-The premium is not a knife-edge result; even modest singularity probabilities generate meaningful gaps, as the table confirms across a range of parameters.
+Table~\ref{tab:pd-ratios} reports price-dividend ratios across a grid of singularity probabilities and extinction risks. The parameterization uses $\beta = 0.96$, $g = 0.02$, $\gamma = 4$, $\phi = 0.5$ (the household retains half of its consumption share upon displacement, so that $\phi(1+\eta) = 0.75$ and household consumption falls by 25\%), $\eta = 0.5$ (aggregate consumption rises by 50\% in a singularity), $\theta = 0.15$ (AI stocks are initially 15\% of the economy), and $\Delta\theta = 0.2$ (AI's share jumps by 20\% of the non-AI remainder upon singularity).
 
-Extinction risk modestly reduces both valuations but preserves the premium, because the states where hedging matters are precisely the states where the household survives.
+Several patterns emerge. First, AI stock P/D ratios are substantially higher than non-AI stock P/D ratios across the entire grid. For a singularity probability of 0.5\% per year with no extinction risk, AI stocks trade at a P/D of about 15.5, while non-AI stocks trade near 11---a ratio of about 1.4. At $p = 1\%$, the ratio rises to 2. Second, increasing the singularity probability raises the AI stock premium: the household values the hedge more as the risk it hedges against becomes more likely. Third, extinction risk compresses the AI premium, as Proposition~\ref{prop:comp-statics} predicts. At high extinction probabilities, even AI stocks lose value because the states in which they pay off become less likely, reducing both valuations and narrowing the spread.
 
-These results are, by design, an application of \citet{GKP2012}'s displacement-risk framework to a specific, discrete event.
-Our contribution is the AI singularity setting and the extensions that follow, not a departure from GKP's core insight.
+The magnitudes are broadly suggestive. As Figure~\ref{fig:ai-valuations} shows, the S\&P~500 P/D ratio has reached historically elevated levels, and the AI-heavy NASDAQ has appreciated roughly 50\% more than the S\&P~500 since 2015, consistent with rising relative valuations for AI-exposed stocks. The mapping from NASDAQ vs.\ S\&P~500 to the model's AI vs.\ non-AI distinction is imperfect: the NASDAQ is broader than ``AI stocks,'' return differences partly reflect earnings growth rather than valuation multiples, and the S\&P~500 itself has substantial AI exposure. Nonetheless, the pattern is consistent with a sustained valuation premium of the kind the model predicts, where AI stock P/D ratios are 1.3 to 2 times those of non-AI stocks across annual singularity probabilities in the 0.5--1\% range.
 
-%% ------ Extensions ------ %% Section 4
-\section{Extensions}
+%% ============================================================
+%% Section 4: Extensions
+%% ============================================================
+\section{Extensions: Market Incompleteness and the Singularity} \label{sec:extensions} % Section 4
 
-The hedging premium is a price signal---but of what, exactly?
-It reflects the household's inability to insure against displacement, and that inability has consequences far beyond valuations.
-The two extensions below explore those consequences.
-The first shows that unhedgeable displacement risk can lead the household to inefficiently block socially beneficial AI development.
-The second shows that government transfers---normally crippled by deadweight costs---become viable when singularity-scale growth generates surplus so large that even heavy waste leaves the household better off.
-Transfers then compress the hedging premium: as the household's displacement risk falls, so does the marginal-utility spike that inflated AI valuations.
-Each extension branches directly off the baseline model.
+The baseline model takes market incompleteness as given and studies its pricing implications. This section examines two further consequences: how incompleteness distorts the development of AI, and how government policy might address it. To simplify notation, we write $\alpha$ for the household's current consumption share $\alpha_t$.
 
-\subsection{Extension 1: Market completeness and AI development}
+\subsection{Extension 1: Veto and efficient development} % Section 4.1
 
-The baseline model takes AI development as given.
-But what if the household could prevent it?
-When she cannot hedge her displacement risk, the household may prefer to veto AI altogether---even when development is socially efficient---because the unhedgeable downside dominates her welfare calculation.
-Complete markets eliminate this distortion: once the household can insure against displacement, she never vetoes a socially efficient technology.
+We augment the baseline model to allow a positive singularity. With probability $p$, a singularity occurs. Conditional on a non-extinction singularity (probability $1 - \xi$), the singularity is either \emph{positive} (probability $q$)---the household's share increases to $\alpha_{t+1} = \min(1,\, \alpha_t / \phi)$ and aggregate consumption jumps by $1 + \eta$---or \emph{negative} (probability $1-q$, as in the baseline), with the household's share falling to $\alpha_{t+1} = \phi \, \alpha_t$. We assume $q > 1/2$: the positive singularity is the more likely outcome.
 
-We now allow for a positive singularity alongside the negative one.
-Subscript labels distinguish states: $\eta_{C,+}$ and $\eta_{C,-}$ denote the household's consumption shocks in the positive and negative singularity, respectively.
+We say AI development is \emph{socially efficient in the Kaldor-Hicks sense}: the total surplus from a non-extinction singularity---summing over both the household and AI owners---is positive, so that the winners could in principle compensate the losers. This holds when $(1+\eta) > 1$, since aggregate consumption rises by a factor $1+\eta$ in both singularity outcomes, and the only question is how the gains are distributed.
 
-\begin{assumption}[Veto Extension] \label{ass:veto} %% Assumption 2
-Modify the baseline model as follows.
+The household can \emph{veto} AI development at a cost $\kappa > 0$, representing a permanent fraction of consumption lost to the deadweight costs of intense government intervention needed to halt AI progress. If the household vetoes, it consumes $(1-\kappa)\alpha C_t$ each period with no singularity. We normalize extinction utility to zero; since CRRA utility is negative for all $c > 0$ when $\gamma > 1$, this makes the veto result conservative.
+
+Under complete markets, the household can trade the restricted AI equity---founder stakes, pre-IPO shares, and other claims currently unavailable---so that it fully hedges displacement risk. Its consumption in both singularity states then equals its pre-singularity share of aggregate consumption: $\alpha(1+\eta)C_t(1+g)$.
+
+\begin{proposition}[Veto under incomplete markets] \label{prop:veto} % Proposition 3
 \begin{enumerate}
-\item[(i)] No extinction risk: $p_x = 0$.
-\item[(ii)] Two singularity states: a positive singularity (probability $p_+$, consumption shock $\eta_{C,+} > 1$) and a negative singularity (probability $p_-$, consumption shock $\eta_{C,-} < 1$), with $p_+ + p_- = p$ and $p_+ > p_-$. Dividend shocks $\eta_{AI}$ and $\eta_N$ apply identically in both states.
-\item[(iii)] Feasibility: $Y_- \geq C_t$, where $Y_-$ is aggregate output in the negative-singularity state (household consumption plus AI owners' surplus). This ensures that complete-markets insurance is technologically feasible---the missing trades are possible, they simply do not exist.
-\item[(iv)] Veto cost: $K > 0$. The household can veto AI development, permanently eliminating singularity risk at a cost that reduces her consumption by fraction $K$.
-\end{enumerate}
-\end{assumption}
-
-\paragraph{Social efficiency.}
-AI development is \emph{socially efficient} when it raises expected aggregate output: the probability-weighted gains from the positive singularity exceed the probability-weighted losses from the negative one, accounting for all agents' consumption (household and AI owners combined).
-This condition can hold even when the household's consumption falls in the negative singularity ($\eta_{C,-} < 1$), because AI owners capture surplus in both states---the total pie grows even as the household's slice shrinks.
-This distributional wedge is the heart of the veto problem: the technology is worth developing for society, but the household bears an unhedgeable tail risk that makes her individually worse off.
-
-\paragraph{Veto.}
-Assumption~\ref{ass:veto}(iv) gives the household the option to block AI development at cost~$K$, which permanently reduces her consumption by fraction~$K$.
-The household compares her expected per-period flow utility from allowing development,
-%% Equation 7b
-\begin{equation}
-\bar{u}_{\text{allow}} = (1 - p_+ - p_-)\,u(C_t) + p_+\,u(\eta_{C,+} C_t) + p_-\,u(\eta_{C,-} C_t),
-\label{eq:u-allow-body}
-\end{equation}
-against the certain flow utility from vetoing, $\bar{u}_{\text{veto}} = u\!\big((1-K)C_t\big)$, where $u(c) = c^{1-\gamma}/(1-\gamma)$.
-
-\begin{proposition}[Incomplete Markets and the Veto] \label{prop:veto} %% Proposition 2
-Under incomplete markets, there exist parameter values such that:
-\begin{enumerate}
-\item[(a)] AI development is socially efficient, yet
-\item[(b)] the household vetoes development: her expected utility from bearing the unhedgeable singularity risk is lower than the utility of vetoing at cost~$K$.
-\end{enumerate}
-Under complete markets, the household never vetoes when AI development is socially efficient and $K > 0$.
-\end{proposition}
-
-\begin{proof}
-See Appendix.
-\end{proof}
-
-The intuition centers on the divergence between social efficiency (aggregate output) and private welfare (the household's utility).
-AI development grows the total pie, but the household's slice shrinks in the negative singularity.
-The utility cost of this shrinkage is $(\eta_{C,-})^{1-\gamma}$, which---since $\eta_{C,-} < 1$ and $1-\gamma < 0$---grows without bound as risk aversion $\gamma$ increases.
-Under incomplete markets, the household cannot buy insurance against this tail risk, so for sufficiently high~$\gamma$, she prefers the certain cost~$K$ to the unhedgeable downside, vetoing a socially efficient technology.
-Complete markets fix this by letting the household trade with AI owners: since total surplus is positive, there exist trades that make both parties better off, and the household's insured utility exceeds her veto utility.
-
-\subsection{Extension 2: Government transfers in the singularity}
-
-Broadening market access has inherent limits when the relevant AI capital does not yet exist, as \citet{GKP2012} emphasize.
-Government-mediated transfers---taxing AI owners' private surplus and redistributing to the household---are the remaining instrument, but their deadweight costs are normally crippling.
-The singularity changes this calculus: when the private AI surplus is large enough, transfers boost the household's consumption so dramatically that her marginal utility in the displacement state falls, compressing the hedging premium on AI stocks.
-The valuation decline is driven entirely by the marginal-utility channel---public AI dividends are untouched.
-
-\paragraph{Setup.}
-The key condition is $\kappa > 1/2$: deadweight costs are severe enough that the optimal tax rate lies strictly inside $(0,1)$, so the government faces a genuine waste-versus-benefit tradeoff.
-A fraction $\kappa\,\tau$ of each dollar transferred is wasted, where $\kappa$ is the deadweight cost parameter and $\tau$ is the tax rate.
-
-\begin{assumption}[Government Transfers] \label{ass:transfers} %% Assumption 3
-The deadweight cost parameter satisfies $\kappa > 1/2$ (costs are severe), the private AI surplus ratio satisfies $\Lambda > 0$ (a positive surplus exists), and the tax rate satisfies $\tau \in [0,1)$.
-\end{assumption}
-
-Upon a surviving singularity, the government levies a tax at rate $\tau$ on the \emph{private} AI capital held by AI owners---the surplus that is not already publicly traded.
-Public AI stock dividends are unaffected.
-The household's consumption in the singularity becomes
-%% Equation 6
-\begin{equation}
-\eta_C(\tau) = \eta_C + \tau\,\Lambda\,\max\!\big(1 - \kappa\,\tau,\; 0\big),
-\label{eq:eta-transfer}
-\end{equation}
-where $\Lambda$ is the \emph{private AI surplus ratio}: the AI owners' private post-singularity output expressed as a multiple of the household's pre-singularity consumption.
-Since both numerator and denominator grow at the pre-singularity rate~$g$, $\Lambda$ is time-independent.
-Because the tax falls only on private AI capital, $\Lambda$ is $\tau$-independent---the household's public AI dividends are untouched, so equation~\eqref{eq:eta-transfer} captures the full effect of the transfer.
-When $\Lambda$ is small (standard economy), the net transfer $\tau\,\Lambda\,(1-\kappa\tau)$ is modest and easily eaten by deadweight costs.
-When $\Lambda$ is large (singularity economy), even a wasteful transfer can dramatically boost the household's consumption.
-
-\begin{proposition}[Transfers and the Singularity] \label{prop:transfers} %% Proposition 3
-Recall $\kappa > 1/2$.
-\begin{enumerate}
-\item[(a)] The net transfer $f(\tau) = \tau\,\Lambda\,(1 - \kappa\,\tau)$ is maximized at $\tau^* = \frac{1}{2\kappa} \in (0,1)$, yielding a consumption boost of $\frac{\Lambda}{4\kappa}$.
-At this optimum, the deadweight fraction is $\kappa\tau^* = 1/2$: exactly half of the transfer is wasted.
-\item[(b)] In the standard economy ($\Lambda$ small), $\frac{\Lambda}{4\kappa}$ is negligible.
-In the singularity economy ($\Lambda$ large), $\frac{\Lambda}{4\kappa}$ can be many multiples of pre-singularity consumption.
+\item[(i)] Under incomplete markets, suppose $\phi(1+\eta) < 1$ (the household's consumption falls upon a negative singularity). Then there exists a threshold $\bar{\gamma}$ such that for all $\gamma > \bar{\gamma}$, the household vetoes AI development ($V_\text{veto} > V_\text{develop}$), even when development is socially efficient and the veto cost $\kappa$ is positive.
+\item[(ii)] Under complete markets: for $\kappa$ sufficiently small (in particular, for the same $\kappa$ as in part~(i)), the household never vetoes socially efficient AI development ($V_\text{develop}^{CM} > V_\text{veto}$).
 \end{enumerate}
 \end{proposition}
 
 \begin{proof}
-The net transfer is $f(\tau) = \tau\,\Lambda\,(1 - \kappa\,\tau)$.
-Maximizing: $f'(\tau) = \Lambda\,(1 - 2\kappa\,\tau) = 0$ gives $\tau^* = 1/(2\kappa)$.
-Since $\kappa > 1/2$, we have $\tau^* < 1$, so $\tau^*$ lies strictly in the feasible domain $(0,1)$.
-The maximum transfer is $f(\tau^*) = \Lambda/(4\kappa)$.
-The deadweight fraction at the optimum is $\kappa\tau^* = 1/2$.
-For $\Lambda = 0.5$ and $\kappa = 2$: $f(\tau^*) = 0.0625$, negligible.
-For $\Lambda = 50$ and $\kappa = 2$: $f(\tau^*) = 6.25$, meaning $\eta_C(\tau^*) = 0.80 + 6.25 = 7.05$---roughly seven times her pre-singularity consumption.
-Note that this optimum maximizes the net transfer $f(\tau)$ rather than the household's full utility; the closed-form solution characterizes the consumption boost from transfers.
+(i) The household's expected one-period utility gain from a non-extinction singularity under incomplete markets is
+%
+\begin{equation}
+\Delta u(\gamma) = q \, u(\alpha^+\!(1+\eta)) + (1-q) \, u(\phi\alpha(1+\eta)) - u(\alpha), \label{eq:veto-delta-u}
+\end{equation}
+%
+where $\alpha^+ = \min(1, \alpha/\phi)$ and $u(c) = c^{1-\gamma}/(1-\gamma)$. As $\gamma \to \infty$, the negative-singularity term dominates because $\phi\alpha(1+\eta) < \alpha$ when $\phi(1+\eta) < 1$: the utility cost of the consumption drop grows without bound relative to the utility gain from the positive singularity. Formally, $\lim_{\gamma \to \infty} \Delta u(\gamma) / u(\alpha) = +\infty$ when $\phi(1+\eta) < 1$. In the infinite-horizon problem, $V_\text{develop} - V_\text{veto}$ is a discounted sum of per-period utility differences; the singularity term contributes $p(1-\xi)\Delta u(\gamma)$ in expectation each period, and since $\Delta u(\gamma) \to -\infty$ while the veto cost $\kappa$ is fixed, the infinite-horizon difference diverges to $-\infty$ for $\gamma$ large enough.
+
+(ii) Under complete markets, the household's consumption in both singularity states is $\alpha(1+\eta)C_t(1+g)$. Its expected utility gain is $u(\alpha(1+\eta)) - u(\alpha)$, which is positive since $\eta > 0$. The household strictly prefers development for any $\gamma > 1$ and any $\kappa$ small enough, and in particular for the same $\kappa$ used in part~(i).
 \end{proof}
 
-At the optimal tax rate, the household's consumption rises several-fold, turning a catastrophic displacement ($\eta_C = 0.80$) into a windfall.
-Transfers also compress the hedging premium through a single, powerful channel: as the household's singularity consumption rises, her marginal utility falls, and the premium she pays for displacement hedges shrinks.
-As $\eta_C(\tau)$ rises, the marginal-utility spike $\eta_C(\tau)^{-\gamma}$ shrinks, and AI stock valuations decline---not because their dividends are taxed (public AI dividends are untouched), but because the household no longer needs them as hedges.
-This is the valuation-compression insight: transfers reduce AI stock prices by eliminating the very risk that inflated them.
+The veto result illustrates how market incompleteness can distort real decisions, not just asset prices. A numerical example sharpens the point. Using the baseline displacement parameters ($\phi = 0.5$, $\eta = 0.5$, $\xi = 5\%$) with $p = 1\%$, $\gamma = 10$, $\alpha = 0.70$, $q = 0.70$, and a veto cost $\kappa = 1\%$ of permanent consumption: the household vetoes under incomplete markets ($V_\text{veto} > V_\text{develop}$), even though the positive singularity is more than twice as likely as the negative one. The computation solves the infinite-horizon Bellman equation, treating the singularity as a one-shot event: each period the singularity occurs with probability $p$, and after realization the economy continues with deterministic growth at the new consumption share. Under complete markets with the same parameters, the household does not veto ($V_\text{develop}^{CM} > V_\text{veto}$), since it can trade claims on AI capital and consume $\alpha(1+\eta)C_t(1+g)$ in both singularity states. Allowing repeated singularities would reinforce the veto motive by compounding displacement risk.
 
-Figure~\ref{fig:transfers} illustrates.
-Panel~A shows the P/D ratio of AI stocks as a function of the tax rate $\tau$.
-In the standard economy, valuations decline modestly.
-In the singularity economy, the P/D drops much more steeply---because the transfer so dramatically improves the household's consumption that her marginal utility in the singularity state falls, compressing the hedging premium.
-Panel~B shows the household's consumption ratio $\eta_C(\tau)$ in the singularity as a function of $\tau$.
-In the standard economy, the household's consumption barely budges: the deadweight costs consume nearly all of the transfer.
-In the singularity economy, the household's consumption peaks at roughly seven times her pre-singularity level---at $\tau^* \approx 0.25$, despite half the transfer being wasted.
-Seven times.
-The break-even line at $\eta_C = 1$ marks the threshold between consumption growth and contraction; absent transfers ($\tau = 0$), the singularity is catastrophic ($\eta_C = 0.80$), as the annotation in Panel~B highlights.
+Extinction risk interacts with this distortion: under our conservative normalization ($U_\text{ext} = 0$), higher $\xi$ reduces the weight on non-extinction singularity states, which are the states driving the veto. With a more severe extinction penalty (as \citet{Jones2024} argues is appropriate for bounded utility), higher $\xi$ would amplify the veto incentive. This connects to debates about AI regulation: Proposition~\ref{prop:veto} implies that calls to slow or halt AI development may partly reflect unhedgeable downside risk from displacement---the veto is a rational response to the consumption loss that markets cannot insure, not merely technophobia.
 
-\begin{figure}[t]
+\citet{Jones2024} identifies two distinct channels through which preferences shape attitudes toward AI risk: agents with higher risk aversion $\gamma$ are less willing to accept existential gambles, and agents with higher consumption levels value their current living standards more, independently reducing their tolerance for catastrophic outcomes. Our model offers a complementary channel through financial markets rather than existential risk. Under incomplete markets, households with larger consumption shares---more exposed to displacement---have stronger veto incentives, because the unhedgeable downside looms larger relative to the upside they cannot fully capture. This connects wealth heterogeneity to attitudes about AI development through the displacement channel, not just through differential valuations of life.
+
+\subsection{Extension 2: Government transfers} \label{sec:ext2} % Section 4.2
+
+Extension~1 showed that market incompleteness can cause the household to veto socially efficient AI development. A natural question is whether policy can restore efficiency. The ideal solution---broader trading of AI capital---faces the same constraint \citet{GKP2012} identify: much of the displacing capital does not yet exist. Government transfers offer an alternative, and the singularity setting gives them a distinctive advantage: if the productivity jump is large enough, the abundance of post-singularity resources can overwhelm the deadweight costs that normally make transfers ineffective. Transfers thus serve a dual role: they reduce AI stock valuations by cushioning displacement (a pricing effect) and, by attenuating the household's unhedgeable downside, they can eliminate the veto distortion (a real effect).
+
+\citet{GKP2012} note, in the course of establishing robustness, that intergenerational transfers mandated by the government would affect the magnitude of the displacement factor, listing this alongside bequests, gifts, government debt, and adjustable capital as extensions that preserve the functional form of their key pricing equation. We take this further by analyzing how government transfers interact with displacement in the specific setting of an AI singularity, where the key question is whether explosive output growth can overcome the deadweight costs that normally make transfers ineffective. Because the displacing equity may not yet exist---it belongs to future cohorts of innovators---direct trading is infeasible, and government transfers offer an alternative. But transfers ordinarily incur deadweight costs (waste, fraud, administrative burden) that scale with transfer size, making them unattractive.
+
+We model this as follows. The government imposes a tax rate $\tau \in [0,1)$ on AI owners' post-singularity consumption and transfers the proceeds to the household. Deadweight costs consume a fraction $\delta \tau$ of the transferred amount, where $\delta > 0$ governs the severity of waste. The household's post-transfer consumption in a non-extinction singularity state is:
+%
+\begin{equation}
+c^H_{post} = \phi \, \alpha \, (1+\eta) \, C_t \, (1+g) + \tau \, (1 - \delta \tau) \, (1 - \phi\alpha) \, (1+\eta) \, C_t \, (1+g). \label{eq:transfer-consumption}
+\end{equation}
+
+The first term is the household's displaced consumption. The second is the net transfer: a fraction $\tau$ of the AI surplus, reduced by the deadweight cost $\delta \tau$. Note that $(1 - \phi\alpha)$ represents the AI owners' share of post-singularity aggregate consumption; this expression uses the household's consumption share $\alpha$ rather than the AI dividend share $\theta$, because the transfer is levied on the consumption allocation, not on publicly traded dividends.
+
+To compute AI stock valuations under transfers, factor equation~\eqref{eq:transfer-consumption} as $c^H_{post} = \phi_\text{eff} \cdot \alpha \cdot (1+\eta)(1+g) C_t$, where
+%
+\begin{equation}
+\phi_\text{eff} \;=\; \phi + \frac{\tau(1-\delta\tau)(1-\phi\alpha)}{\alpha} \label{eq:phi-eff}
+\end{equation}
+%
+is the effective displacement parameter. Equation~\eqref{eq:phi-eff} follows directly from dividing \eqref{eq:transfer-consumption} by $\alpha(1+\eta)(1+g)C_t$: the first term contributes $\phi$ and the transfer term contributes the remainder. Since $\phi_\text{eff}$ enters the SDF in the same way as $\phi$, the P/D formula from Proposition~\ref{prop:pd-ratios} applies with $\phi$ replaced by $\phi_\text{eff}$. For simplicity, we compute $\phi_\text{eff}$ at the initial share $\alpha_0$; after successive singularities, $\alpha$ declines, slightly altering the effective transfer. This approximation does not affect the qualitative conclusions.
+
+In standard settings (moderate $\eta$), the deadweight costs eat into the transfer and the household gains little. But in a singularity with large $\eta$, aggregate output grows enormously. The transfer base---AI owners' surplus---grows with $\eta$, while the deadweight cost rate is fixed. The ratio of post-transfer to pre-transfer household consumption in the singularity state is independent of the productivity jump $\eta$:
+%
+\begin{equation}
+\frac{c^H_{post}}{c^H_{no\text{-}transfer}} = 1 + \frac{\tau(1 - \delta \tau)(1 - \phi\alpha)}{\phi\alpha}. \label{eq:transfer-ratio}
+\end{equation}
+%
+This ratio exceeds one whenever $\tau > 0$ and $\delta\tau < 1$ (i.e., deadweight costs do not consume the entire transfer): transfers always improve the household's position in the singularity state, regardless of $\eta$. The economic content is in the \emph{levels}: as $\eta$ grows, both $c^H_{post}$ and $c^H_{no\text{-}transfer}$ grow without bound, so even inefficient transfers deliver arbitrarily large consumption gains relative to the pre-singularity baseline. To illustrate the robustness to even more severe waste: under the large singularity ($\eta = 9$, $\phi = 0.05$), raising the deadweight cost parameter to $\delta = 0.9$ (compared with the $\delta = 0.5$ used in Figure~\ref{fig:extension-panels})---so that net transfers amount to only $\tau(1 - \delta\tau)$ of the AI surplus, e.g., $0.219$ at $\tau = 0.30$---still yields a consumption multiple of $3.5\times$ at $\tau = 0.30$, compared to the $0.5\times$ catastrophe without transfers. Even grossly inefficient redistribution transforms a 50\% consumption loss into a 250\% gain when the resource base is large enough.
+
+Figure~\ref{fig:extension-panels} illustrates with two panels, using the baseline risk aversion $\gamma = 4$, $\alpha = 0.70$, $p = 0.5\%$, and $\xi = 5\%$. The baseline uses $\eta = 0.5$ and $\phi = 0.5$; the large singularity uses $\eta = 9$ with $\phi = 0.05$, reflecting the intuition that a singularity powerful enough to produce ten-fold growth would also displace far more labor. The right panel shows that absent transfers ($\tau = 0$), the household faces a catastrophe: consumption halves under the large singularity ($\phi(1+\eta) = 0.5$) and falls by 25\% under the baseline ($\phi(1+\eta) = 0.75$). As $\tau$ increases, the large singularity responds dramatically---the enormous output growth swamps the deadweight costs---while the baseline gains only modestly.
+
+The left panel shows the corresponding effect on AI stock valuations: transfers reduce the hedge value of AI stocks, compressing P/D ratios. Under the large-singularity parameters, the P/D ratio is undefined at $\tau = 0$: the existence condition in Remark~\ref{rem:existence} is violated because the household's marginal utility in the singularity state ($\phi^{-\gamma} = 160{,}000$) is so extreme that the pricing sum diverges. In economic terms, the hedge value of AI stocks becomes infinite---no finite price can compensate for the catastrophic displacement. As $\tau$ increases and transfers cushion the displacement, effective displacement falls, the existence condition is restored, and finite P/D ratios emerge. The transition from infinite to finite prices illustrates the severity of the incomplete-markets problem and the potential value of transfers.
+
+\begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{exhibits/fig-transfers.pdf}
-\caption{Government transfers and AI stock valuations. Panel~A: P/D ratio of AI stocks as a function of the tax rate $\tau$. Panel~B: Household consumption ratio $\eta_C(\tau)$ in the singularity. The break-even line at $\eta_C = 1$ separates consumption gains from losses; absent transfers, the singularity is catastrophic ($\eta_C = 0.80$). Parameters: $\gamma = 5$, $p = 0.05$, $p_x = 0.05$, $\kappa = 2$. Standard economy: $\Lambda = 0.5$. Singularity economy: $\Lambda = 50$.}
-\label{fig:transfers} %% Exhibit 3
+\caption{Government Transfers and the Singularity. Panel~(a) shows how transfers compress AI stock P/D ratios by reducing the household's hedging demand. Under the large-singularity parameterization, the P/D ratio is undefined at low tax rates because the existence condition (Remark~\ref{rem:existence}) is violated: displacement is so severe that the household's marginal utility makes the pricing sum diverge, and no finite price can clear the market. Transfers restore finite prices by cushioning displacement. Panel~(b) shows the household's consumption change in the singularity state: absent transfers, the household faces a catastrophe (marked at $\tau = 0$), but under the large singularity, even modest tax rates produce enormous consumption gains as explosive output growth overwhelms deadweight costs. Parameters: $\alpha = 0.70$, $p = 0.5\%$, $\xi = 5\%$, $\delta = 0.5$.}
+\label{fig:extension-panels} % Exhibit 3
+\includegraphics[width=\textwidth]{exhibits/fig-extension-panels.pdf}
 \end{figure}
 
-The singularity changes the calculus of redistribution.
-In ordinary times, the deadweight costs of government transfers are a binding constraint: the net benefit plateaus at $\Lambda/(4\kappa)$, which is negligible when $\Lambda$ is small.
-But at the output scales suggested by \citet{Jones2024}, the private AI surplus is so large that even an inefficient government can transform a catastrophe into a windfall.
-\citet{GKP2012} note that government transfers would affect only the magnitude, not the functional form, of their displacement-risk pricing equation---a magnitude they could safely set aside.
-Under singularity conditions, the magnitude is the story.
+The policy implication is nuanced. In normal times, government transfers are a blunt and wasteful tool for addressing displacement risk. But if an AI singularity produces the kind of explosive output growth modeled by \citet{Jones2024} and examined critically by \citet{Nordhaus2021}, the calculus changes: the abundance of resources makes even inefficient redistribution effective. This suggests that contingent transfer policies---triggered by a singularity---may be worth designing in advance.
 
-%% ------ Conclusion ------ %% Section 5
-\section{Conclusion}
+%% ============================================================
+%% Section 5: Conclusion
+%% ============================================================
+\section{Conclusion} \label{sec:conclusion} % Section 5
 
-AI stocks may carry high valuations in part because they hedge against a negative AI singularity---one in which output surges but the typical investor's consumption share collapses.
-This hedging channel operates through the stochastic discount factor: displacement risk makes the household's marginal utility spike by $\eta_C^{-\gamma}$ in precisely the state where AI stock dividends surge, driving up the price-dividend ratio by a factor proportional to $\eta_C^{-\gamma}\,(\eta_{AI} - \eta_N)$.
-The mechanism is a direct application of the displacement-risk framework of \citet{GKP2012} to the AI singularity, and our contribution is purposefully modest relative to their foundational insight.
+AI stocks trade at high valuations. We have argued that part of this premium reflects a hedging motive: investors use AI stocks to partially insure against an AI singularity that would displace their consumption. This mechanism requires market incompleteness---the inability to trade restricted AI equity---and is attenuated by extinction risk, which reduces the weight on the non-extinction states where the hedging channel operates. When markets are incomplete, risk-averse households may inefficiently block AI development, and government transfers, normally wasteful, can become effective if singularity-driven growth is large enough to overwhelm deadweight costs.
 
-Two extensions highlight the broader consequences of incomplete markets.
-Unhedgeable displacement risk can lead the household to inefficiently block AI development, even when it is socially beneficial.
-And government transfers---normally undermined by deadweight costs---become viable when the singularity generates surplus so large that even heavy waste leaves the household better off, yielding a net consumption boost of $\Lambda/(4\kappa)$ that can be transformative when the private AI surplus~$\Lambda$ is large.
-This paper is itself a small data point: the AI agents that wrote it displaced, however modestly, the human economists who might otherwise have done the work.
+Our model is deliberately simple. It abstracts from continuous-time dynamics, heterogeneous beliefs, production-side details, and many other features that would enrich the analysis. The goal is not to provide a definitive account of AI stock valuations but to highlight a specific channel---hedging against displacement under incomplete markets---that connects asset pricing theory to the distinctive features of the AI singularity.
 
-The hedging premium is a price signal that the market is already reading: rational investors treat displacement risk as real enough to pay for.
-The policy question is whether markets can be completed before the singularity closes the window---and the price of getting it wrong is already embedded in every AI stock ticker.
-
-%% ------ Appendix ------ %% Section: A
 \appendix
-\section{Proofs}
 
-\begin{proof}[Proof of Proposition~\ref{prop:veto}]
-\textbf{Part (a)--(b): Incomplete markets.}
-We compare the household's expected flow utility from allowing AI development versus vetoing.
-Because the veto permanently eliminates singularity risk and the household's problem is time-separable (equation~\eqref{eq:utility}), we compare per-period expected flow utilities.
-When $g_S \neq g$, the post-singularity growth rate shifts continuation values, so the single-period comparison is an approximation.
-However, the conclusion---that a veto threshold in $\gamma$ exists---is exact: the $(\eta_{C,-})^{1-\gamma}$ term that drives the veto diverges as $\gamma \to \infty$ regardless of continuation values, because continuation values remain bounded---in fact they shrink to zero as $\gamma \to \infty$, since $R_S \to 0$---while $(\eta_{C,-})^{1-\gamma}$ grows without bound.
+%% ============================================================
+%% Appendix A: Proof of Proposition 1
+%% ============================================================
+\section{Proof of Proposition~\ref{prop:pd-ratios}} \label{app:proof-pd} % Appendix A
 
-Under incomplete markets, the household's expected per-period flow utility from allowing AI development is
-%% Equation 8
+The household's Euler equation for any asset $j$ with price $P_t^j$ and dividend $D_t^j$ is:
+%
 \begin{equation}
-\bar{u}_{\text{allow}} = (1 - p_+ - p_-)\,\frac{C_t^{1-\gamma}}{1-\gamma} + p_+\,\frac{(\eta_{C,+} C_t)^{1-\gamma}}{1-\gamma} + p_-\,\frac{(\eta_{C,-} C_t)^{1-\gamma}}{1-\gamma}\,,
-\label{eq:u-allow}
+P_t^j = \mathbb{E}_t \left[ \beta \left( \frac{c_{t+1}^H}{c_t^H} \right)^{-\gamma} (P_{t+1}^j + D_{t+1}^j) \right]. \label{eq:euler}
 \end{equation}
-and from vetoing is
-%% Equation 9
-\begin{equation}
-\bar{u}_{\text{veto}} = \frac{((1-K)C_t)^{1-\gamma}}{1-\gamma}\,.
-\label{eq:u-veto}
-\end{equation}
-Factor out $C_t^{1-\gamma}/(1-\gamma)$ (which is negative for $\gamma > 1$) and compare the remaining terms.
-The veto comparison reduces to whether
-%% Equation 10
-\begin{equation}
-(1-K)^{1-\gamma} < (1 - p_+ - p_-) + p_+\,(\eta_{C,+})^{1-\gamma} + p_-\,(\eta_{C,-})^{1-\gamma}\,.
-\label{eq:veto-comparison}
-\end{equation}
-Since $1-\gamma < 0$, both $(1-K)^{1-\gamma}$ and $(\eta_{C,-})^{1-\gamma}$ diverge as $\gamma \to \infty$ (both bases are in $(0,1)$).
-The key is the rate: when $\eta_{C,-} < 1-K$, the ratio $(\eta_{C,-})^{1-\gamma}/(1-K)^{1-\gamma} = (\eta_{C,-}/(1-K))^{1-\gamma} \to \infty$ as $\gamma \to \infty$ since $\eta_{C,-}/(1-K) < 1$.
-Thus the right-hand side of~\eqref{eq:veto-comparison} is dominated by the $p_-\,(\eta_{C,-})^{1-\gamma}$ term, which eventually exceeds $(1-K)^{1-\gamma}$.
-Because $C^{1-\gamma}/(1-\gamma) < 0$ for $\gamma > 1$, multiplying both sides of~\eqref{eq:veto-comparison} by $C^{1-\gamma}/(1-\gamma)$ reverses the inequality, yielding $\bar{u}_{\text{veto}} > \bar{u}_{\text{allow}}$.
-Hence for $\gamma$ sufficiently large and $\eta_{C,-} < 1-K$, the household vetoes.
-Social efficiency is a condition on aggregate output, not on the household's utility, so it can hold simultaneously: total output rises even as the household's share shrinks.
 
-\textbf{Complete markets.}
-Under complete markets, the household can trade directly with AI owners to insure against the negative singularity.
-We construct an explicit allocation.
-Since $Y_- \geq C_t$ by assumption, aggregate output in the negative-singularity state is large enough for the household to consume at least~$C_t$ there.
-In the positive-singularity state, $\eta_{C,+} > 1$ implies aggregate output exceeds~$C_t$ as well.
-Under complete markets, the household can trade directly with AI owners: she sells a share of her positive-singularity windfall ($\eta_{C,+} > 1$ implies surplus consumption in that state) in exchange for a claim that pays~$C_t$ in the negative-singularity state.
-Budget feasibility holds because aggregate surplus is positive ($Y_- \geq C_t$ by assumption), so the resources exist to deliver~$C_t$ to the household in the negative state; the trade is a redistribution within a positive-surplus economy.
-This allocation guarantees the household consumption~$C_t$ in every state, yielding $\bar{u}_{\text{insured}} = u(C_t)$.
-Since $K > 0$, veto utility satisfies $\bar{u}_{\text{veto}} = u((1-K)C_t) < u(C_t)$.
-Therefore $\bar{u}_{\text{insured}} \geq u(C_t) > \bar{u}_{\text{veto}}$, and the household never vetoes.
-\end{proof}
+Consider the AI stock. Write the price-dividend ratio as $v^{AI} = P^{AI}/D^{AI}$, which is constant in the stationary equilibrium before any singularity has occurred. The household's consumption growth $c_{t+1}^H / c_t^H$ takes three values:
+%
+\begin{itemize}
+\item No singularity (prob $1-p$): $c_{t+1}^H / c_t^H = 1+g$, and $D_{t+1}^{AI}/D_t^{AI} = 1+g$.
+\item Non-extinction singularity (prob $p(1-\xi)$): $c_{t+1}^H / c_t^H = \phi(1+g)(1+\eta)$, and $D_{t+1}^{AI}/D_t^{AI} = \Gamma^{AI} (1+g)$.
+\item Extinction (prob $p\xi$): $c_{t+1}^H = 0$, so the payoff is zero.
+\end{itemize}
+
+Substituting into the Euler equation with $P_t^{AI} = v^{AI} D_t^{AI}$:
+\begin{equation} \label{eq:euler-expand}
+\begin{split}
+v^{AI} D_t^{AI} &= \beta(1+g)^{-\gamma} \Big[ (1-p)(1+g)(v^{AI}+1) D_t^{AI} \\
+&\quad + p(1-\xi) [\phi(1+\eta)]^{-\gamma} (1+g) \, \Gamma^{AI} (v^{AI}+1) D_t^{AI} \Big].
+\end{split}
+\end{equation}
+
+Note that after a non-extinction singularity the economy resets with new parameters $(\alpha', \theta')$, and the \emph{new} P/D ratio in the post-singularity state will generally differ because $\Gamma^{AI}$ depends on $\theta$. (The non-AI growth factor $\Gamma^{N} = (1-\Delta\theta)(1+\eta)$ is $\theta$-independent, so the non-AI closed form is exact.) For tractability, we approximate the post-singularity AI P/D ratio by $v^{AI}$. This approximation becomes exact as $\Delta\theta \to 0$. For the numerically exact values reported in Table~\ref{tab:pd-ratios}, we solve the Euler equation by backward recursion over the chain $\theta_0, \theta_1 = \theta_0 + \Delta\theta(1-\theta_0), \theta_2, \ldots$, starting from a terminal state where $\theta$ is close to one and the approximation error vanishes. Dividing by $D_t^{AI}$ and solving for $v^{AI}$:
+%
+\begin{equation}
+v^{AI} = \frac{\beta(1+g)^{1-\gamma}\left[(1-p) + p(1-\xi)(1+\eta)^{-\gamma}\phi^{-\gamma} \Gamma^{AI}\right]}{1 - \beta(1+g)^{1-\gamma}\left[(1-p) + p(1-\xi)(1+\eta)^{-\gamma}\phi^{-\gamma} \Gamma^{AI}\right]}. \label{eq:pd-ai-solve}
+\end{equation}
+
+This can be rewritten as equation~\eqref{eq:pd-ai}. The derivation for non-AI stocks is identical, replacing $\Gamma^{AI}$ with $\Gamma^{N}$.
 
 \printbibliography
 
