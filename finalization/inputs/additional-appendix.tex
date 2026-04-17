@@ -1,4 +1,103 @@
 \clearpage
-\section{Ralph Iteration Log} \label{appendix:iter-log}
+\section{Appendix: Ralph's Work by Iteration (Human-Written)} \label{appendix:iter-log}
 
-This appendix will describe how the Ralph loop revised the paper over successive iterations.
+\providecommand{\rloopcommit}[2]{\href{https://github.com/chenandrewy/ralph-wiggum-asset-pricing/commit/#2}{\textcolor{blue}{\texttt{#1}}}}
+\providecommand{\testresult}[1]{\href{https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/42ce3a298a6c9e9ec144949346034b8af9055646/test-results/#1.md}{\textcolor{blue}{\texttt{#1}}}}
+\providecommand{\penultimatetestresult}[1]{\href{https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/36c13367ef5980dcf1e7e4963d89a7722c8377d0/test-results/#1.md}{\textcolor{blue}{\texttt{#1}}}}
+\providecommand{\finaltestresult}[1]{\href{https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/bf0af226ad2d15302dbe1c2878a1c2f66192e340/test-results/#1.md}{\textcolor{blue}{\texttt{#1}}}}
+
+Full disclosure: this appendix is mostly human-written.
+
+Before starting the loop, I used \href{https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/main/check-ralph-direction.sh}{\textcolor{blue}{\texttt{check-ralph-direction.sh}}}, which runs only the author plan and improve steps of the loop, to generate \href{https://github.com/chenandrewy/ralph-wiggum-asset-pricing/tree/human-preface/ralph-garage/check-direction}{\textcolor{blue}{\texttt{several paper drafts}}}. I picked the most promising draft and initialized the Ralph loop with it.
+
+The \href{https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/main/ralph/ralph-loop.sh}{\textcolor{blue}{\texttt{Ralph loop}}} runs on its own branch, and commits after each iteration. So you can see in painstaking detail how the paper progressed on \href{https://github.com/chenandrewy/ralph-wiggum-asset-pricing/commits/ralph/run-final/}{\textcolor{blue}{\texttt{ralph/run-final}}}.
+
+Usually, the very first \href{https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/main/ralph/author-plan.py}{\textcolor{blue}{\texttt{author-plan}}} and \href{https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/main/ralph/author-improve.py}{\textcolor{blue}{\texttt{author-improve}}} prompts generate a \href{https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/final-pass/ralph-garage/history/001-paper.pdf}{\textcolor{blue}{fairly complete paper}}. Then, the first 3--4 iterations catch the major issues. This was evident in the final run:
+
+\begin{itemize}
+\item \rloopcommit{iter 1}{5a7ff8dbb034cb39fa80637bf98d40c202c27fb8} fixed:
+\begin{itemize}
+\item Missing core literature on displacement risk and asset pricing, especially Kogan--Papanikolaou line of work.
+\item Opening figure uses fabricated data.
+\item Inconsistencies between paper's displayed P/D formulas and code.
+\item Abstract/body mismatch on extinction risk distorting AI development.
+\item Model inconsistency in treatment of private AI capital dividends and unused risk-free-rate notation.
+\item Abstract exceeding the 100-word limit.
+\item Missing clarification that paper does not model GKP-style entry of future innovators.
+\end{itemize}
+
+\item \rloopcommit{iter 2}{d82fa4ab58155f78336ca6634ff92529bdea5319} fixed:
+\begin{itemize}
+\item Overstatement of what GKP say about broader trading solving displacement risk.
+\item Introduction overusing AI-authorship device in a repetitive, awkward way.
+\item Verbal claims around valuation spreads and Proposition 3 not matching the paper's own results.
+\item Appendix/proof material being mostly ceremonial rather than doing real argumentative work.
+\end{itemize}
+
+\item \rloopcommit{iter 3}{3b369029a115df6ac8cadb918510cd21f06bc96b} fixed:
+\begin{itemize}
+\item Lit review exceeding half-page spec limit.
+\item Wrong attribution of JPE 2020 displacement/inequality paper and inconsistent terminology in transfer section.
+\item Long proof of Proposition 1 appearing inline instead of being moved to the appendix.
+\item Figure 2 text being too small to read.
+\item Colored hyperlink boxes showing up in compiled PDF.
+\end{itemize}
+
+\item \rloopcommit{iter 4}{42ce3a298a6c9e9ec144949346034b8af9055646} fixed:
+\begin{itemize}
+\item Opening figure still using fabricated data.
+\item Transfer figure not clearly showing that households are badly harmed with zero transfers.
+\item Citation errors around Kogan-Papanikolaou-related authorship and overly favorable framing of Nordhaus.
+\item Missing existence condition for Proposition 1, which made some Extension 2 valuations mathematically undefined.
+\end{itemize}
+\end{itemize}
+
+After the \texttt{iter 4} fixes, the remaining test failures were:
+
+\begin{itemize}
+\item \testresult{element-gkp-cites}: Mischaracterization of GKP's mechanism, inaccurate/insensitive ``inessential extension'' language.
+\item \testresult{element-lit-review}: Missing Knesl from lit review.
+\item \testresult{factcheck-bysection}: Text says non-AI dividends ``shrink'' but they only shrink relative to the economy.
+\item \testresult{factcheck-freely}: Remaining bibliography problem around ``Left Behind''.
+\item \testresult{visual-figures-image-only}: Figure-formatting issues.
+\item \testresult{visual-pages}: Float / page-layout issue.
+\item \testresult{writing-intro}: Unneeded filler paragraphs, misplaced key material, tonal break caused by AI-authorship disclosure, main argument hard to follow on a skim.
+\end{itemize}
+
+These are minor, with the exception of \texttt{element-gkp-cites}. I totally would \textbf{not} put my name on a paper that mis-characterizes the key closely-related paper. \rloopcommit{iter 5}{57aae1aafc11092d83f50f3f87c1b2fb5abdccd2} fixed the problem.
+
+The later iterations were focused on minor issues. For example:
+
+\begin{itemize}
+\item \rloopcommit{iter 10}{668bb0e9dbe8ec1ac84ab514a849cb722be275a9}
+\begin{itemize}
+\item Attempted but failed: Tighten intro flow.
+\item Fixed: Figure 2 readability, Prop 2 (iii) stationarity discussion.
+\end{itemize}
+
+\item \rloopcommit{iter 11}{012e41ad24eea1f8175d8db39d9b9565a811ff1e}
+\begin{itemize}
+\item Attempted but failed: Fix extension figure whitespace.
+\item Fixed: Seru is not a co-author on Kogan-Papanikolaou-Stoffman 2020, negative dividend accounting problem, \texttt{writing-intro} flow and contribution clarity.
+\end{itemize}
+\end{itemize}
+
+The next 25 iterations were mostly failure churn. There would be 1-4 failures that would bounce around across tests, though \texttt{writing-intro} was a consistent blocker. The failures were rarely factchecks, so I feel one could have stopped the loop at any point after \texttt{iter 10} and just polished the rest by hand.
+
+The final iterations were:
+
+\begin{itemize}
+\item \rloopcommit{iter 35}{36c13367ef5980dcf1e7e4963d89a7722c8377d0}
+\begin{itemize}
+\item Remaining failure: \penultimatetestresult{visual-figures-image-only}, because the extension figure still had visual-formatting issues.
+\end{itemize}
+
+\item \rloopcommit{iter 36}{bf0af226ad2d15302dbe1c2878a1c2f66192e340}
+\begin{itemize}
+\item Remaining failures: \finaltestresult{spec-paper}, because Proposition 3's proof was still too long to remain inline; and \finaltestresult{writing-intro}, because the complete-markets counterfactual was still not visible enough to a skimming reader.
+\end{itemize}
+\end{itemize}
+
+At this point, I gave up. On my two \$200/month Claude Code subscriptions, I could only run about 6-8 iterations per day, and it was unclear these iterations were going to pass all tests. 
+
+In fact, I felt I had to intervene in the ``final'' paper draft, as the abstract had this bizarre sentence ``The displacement the paper models is closer than it appears.'' It also overclaimed in saying ``All analysis, code and prose were produced by AI agents.'' This last, final edit is documented in \href{https://github.com/chenandrewy/ralph-wiggum-asset-pricing/commit/4bed451b406d6c1190ef42e33517946c980d822d}{\textcolor{blue}{this commit}}.
