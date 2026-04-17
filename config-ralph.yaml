@@ -1,8 +1,8 @@
 # == Basic loop configuration ==
 # Internal-use note for this Ralph stretch; not included in iteration commit subjects.
 run-note: revamp check-direction
-startup-source: ralph-garage/check-direction/run-01
-max-iter: 30
+startup-source: ralph/research-template/
+max-iter: 5
 
 # Optional pre-loop baseline test run
 test-before-loop: off
@@ -11,31 +11,12 @@ test-before-loop: off
 test-mode: selected
 
 selected-tests:
-  - element-gkp-cites
-  - element-lit-review
-  - element-opening-fig
-  - element-rhetoric-meta
-  - element-transfers-fig
-  - factcheck-anaphora
-  - factcheck-bysection
   - factcheck-code
-  - factcheck-exhibits
   - factcheck-freely
   - factcheck-lit
-  - factcheck-narrative
-  - factcheck-theory
-  - spec-economic
   - spec-paper
-  - spec-scope
-  - theory-clarity
-  - theory-deadweight
-  - theory-intro-payoff
-  - theory-unmodeled-channels
   - visual-figures
   - visual-figures-image-only
-  - visual-pages
-  - writing-intro
-  - writing-intuition
 
 # Agent log verbosity
 agent-log-mode: verbose
@@ -45,9 +26,9 @@ quota-preflight: false
 claude-5h-utilization-limit: 0.67
 
 # == Referees and continual-improvement mode ==
-continual-improvement: false
+continual-improvement: true
 
-referees: false
+referees: true
 
 selected-referees:
-  - []
+  - referee-top3
