@@ -70,13 +70,13 @@ def render_inline_markdown_tex(text: str, monochrome: bool = False) -> str:
             "LINK",
             (
                 (
-                    rf"\hyperlink{{{tex_escape(target[1:])}}}{{{tex_escape(label)}}}"
+                    rf"\hyperref[{target[1:]}]{{{tex_escape(label)}}}"
                     if target.startswith("#")
                     else rf"\href{{{target}}}{{{tex_escape(label)}}}"
                 )
                 if monochrome
                 else (
-                    rf"\hyperlink{{{tex_escape(target[1:])}}}{{\textcolor{{blue}}{{{tex_escape(label)}}}}}"
+                    rf"\hyperref[{target[1:]}]{{\textcolor{{blue}}{{{tex_escape(label)}}}}}"
                     if target.startswith("#")
                     else rf"\href{{{target}}}{{\textcolor{{blue}}{{{tex_escape(label)}}}}}"
                 )
@@ -199,7 +199,7 @@ def render_fenced_block_line_tex(text: str) -> str:
     def render_link(label: str, target: str) -> str:
         if target.startswith("#"):
             return stash(
-                rf"\hyperlink{{{tex_escape(target[1:])}}}{{\textcolor{{blue}}{{{tex_escape(label)}}}}}"
+                rf"\hyperref[{target[1:]}]{{\textcolor{{blue}}{{{tex_escape(label)}}}}}"
             )
         return stash(rf"\href{{{target}}}{{\textcolor{{blue}}{{{tex_escape(label)}}}}}")
 
