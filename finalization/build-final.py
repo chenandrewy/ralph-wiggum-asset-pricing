@@ -1,22 +1,29 @@
 #!/usr/bin/env python3
 # How to run: python3 finalization/build-final.py
 # Inputs: paper/paper.tex, finalization/inputs/*, finalization/templates/*
-# Outputs: finalization/output/preface.tex, finalization/output/acknowledgments.tex,
-#     finalization/output/final-appendix.tex, finalization/output/paper-anonymous.tex,
-#     finalization/output/paper-named.tex
+# Outputs: finalization/output-anon/paper.tex, finalization/output-named/paper.tex,
+#     plus local bibliography and exhibit dependencies in each output folder
 from __future__ import annotations
 
 import pathlib
 import re
+import shutil
 import tomllib
 
 
 REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent
 FINALIZATION_DIR = REPO_ROOT / "finalization"
 INPUTS_DIR = FINALIZATION_DIR / "inputs"
-OUTPUT_DIR = FINALIZATION_DIR / "output"
+OUTPUT_ANON_DIR = FINALIZATION_DIR / "output-anon"
+OUTPUT_NAMED_DIR = FINALIZATION_DIR / "output-named"
 TEMPLATES_DIR = FINALIZATION_DIR / "templates"
 PAPER_PATH = REPO_ROOT / "paper" / "paper.tex"
+REFERENCES_PATH = REPO_ROOT / "paper" / "references.bib"
+EXHIBIT_PATHS = [
+    REPO_ROOT / "paper" / "exhibits" / "fig-ai-valuations.pdf",
+    REPO_ROOT / "paper" / "exhibits" / "fig-extension-panels.pdf",
+    REPO_ROOT / "paper" / "exhibits" / "table-pd-ratios.tex",
+]
 
 
 def load_toml(path: pathlib.Path) -> dict[str, object]:
@@ -678,12 +685,6 @@ def inject_final_packages(tex_source: str) -> str:
     return tex_source.replace(marker, replacement, 1)
 
 
-def rewrite_paths_for_output(tex_source: str) -> str:
-    updated = tex_source.replace(r"\addbibresource{references.bib}", r"\addbibresource{../../paper/references.bib}")
-    updated = updated.replace("{exhibits/", "{../../paper/exhibits/")
-    return updated
-
-
 def build_acknowledgments_tex(markdown: str) -> str:
     """Render acknowledgments markdown to a single TeX blob for a \\thanks footnote.
 
@@ -751,32 +752,37 @@ def build_variant(
     updated = inject_final_packages(tex_source)
     if named:
         updated = set_named_metadata(updated, author_info, acknowledgments_tex)
-    return rewrite_paths_for_output(updated)
+    return updated
+
+
+def write_output_bundle(bundle_dir: pathlib.Path, tex_source: str) -> None:
+    bundle_dir.mkdir(parents=True, exist_ok=True)
+    exhibits_dir = bundle_dir / "exhibits"
+    exhibits_dir.mkdir(parents=True, exist_ok=True)
+
+    (bundle_dir / "paper.tex").write_text(tex_source + "\n", encoding="utf-8")
+    shutil.copy2(REFERENCES_PATH, bundle_dir / REFERENCES_PATH.name)
+    for exhibit_path in EXHIBIT_PATHS:
+        shutil.copy2(exhibit_path, exhibits_dir / exhibit_path.name)
 
 
 def main() -> None:
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-
-    manifest = load_toml(INPUTS_DIR / "appendix-manifest.toml")
     author_info = load_toml(INPUTS_DIR / "author-info.toml")
     preface_markdown = (INPUTS_DIR / "preface.md").read_text(encoding="utf-8")
+    appendix_tex = (INPUTS_DIR / "additional-appendix.tex").read_text(encoding="utf-8")
     acknowledgments_path = INPUTS_DIR / "acknowledgments.md"
     acknowledgments_markdown = acknowledgments_path.read_text(encoding="utf-8") if acknowledgments_path.exists() else ""
     canonical_tex = PAPER_PATH.read_text(encoding="utf-8")
 
     preface_tex = build_preface_tex(preface_markdown)
-    appendix_tex = build_appendix_tex(manifest)
     acknowledgments_tex = build_acknowledgments_tex(acknowledgments_markdown)
 
     shared_tex = inject_appendix(inject_preface(canonical_tex, preface_tex), appendix_tex)
     anonymous_tex = build_variant(shared_tex, author_info, acknowledgments_tex, named=False)
     named_tex = build_variant(shared_tex, author_info, acknowledgments_tex, named=True)
 
-    (OUTPUT_DIR / "preface.tex").write_text(preface_tex + "\n", encoding="utf-8")
-    (OUTPUT_DIR / "acknowledgments.tex").write_text(acknowledgments_tex + "\n", encoding="utf-8")
-    (OUTPUT_DIR / "final-appendix.tex").write_text(appendix_tex + "\n", encoding="utf-8")
-    (OUTPUT_DIR / "paper-anonymous.tex").write_text(anonymous_tex + "\n", encoding="utf-8")
-    (OUTPUT_DIR / "paper-named.tex").write_text(named_tex + "\n", encoding="utf-8")
+    write_output_bundle(OUTPUT_ANON_DIR, anonymous_tex)
+    write_output_bundle(OUTPUT_NAMED_DIR, named_tex)
 
 
 if __name__ == "__main__":

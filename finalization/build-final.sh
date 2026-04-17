@@ -1,18 +1,16 @@
 #!/usr/bin/env bash
 # How to run: bash finalization/build-final.sh
 # Inputs: paper/paper.tex, paper/references.bib, paper/exhibits/*, finalization/inputs/*
-# Outputs: finalization/output/preface.tex, finalization/output/acknowledgments.tex,
-#     finalization/output/final-appendix.tex,
-#     finalization/output/paper-anonymous.tex, finalization/output/paper-named.tex,
-#     finalization/output/paper-anonymous.pdf, finalization/output/paper-named.pdf
+# Outputs: finalization/output-anon/paper.tex, finalization/output-anon/paper.pdf,
+#     finalization/output-named/paper.tex, finalization/output-named/paper.pdf
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 FINAL_DIR="$REPO_ROOT/finalization"
-OUTPUT_DIR="$FINAL_DIR/output"
-BUILD_LOG="$OUTPUT_DIR/.latex-build.log"
+OUTPUT_ANON_DIR="$FINAL_DIR/output-anon"
+OUTPUT_NAMED_DIR="$FINAL_DIR/output-named"
+BUILD_LOG="$FINAL_DIR/.latex-build.log"
 
-mkdir -p "$OUTPUT_DIR"
 python3 "$FINAL_DIR/build-final.py"
 
 run_quiet() {
@@ -27,22 +25,22 @@ run_quiet() {
 }
 
 compile_tex() {
-    local tex_file="$1"
-    local base_name="$2"
+    local output_dir="$1"
+    local label="$2"
 
     (
-        cd "$OUTPUT_DIR"
-        run_quiet "pdflatex pass 1 ($tex_file)" pdflatex -interaction=nonstopmode -halt-on-error "$tex_file"
-        run_quiet "biber ($base_name)" biber --output-safechars "$base_name"
-        run_quiet "pdflatex pass 2 ($tex_file)" pdflatex -interaction=nonstopmode -halt-on-error "$tex_file"
-        run_quiet "pdflatex pass 3 ($tex_file)" pdflatex -interaction=nonstopmode -halt-on-error "$tex_file"
+        cd "$output_dir"
+        run_quiet "pdflatex pass 1 ($label)" pdflatex -interaction=nonstopmode -halt-on-error paper.tex
+        run_quiet "biber ($label)" biber --output-safechars paper
+        run_quiet "pdflatex pass 2 ($label)" pdflatex -interaction=nonstopmode -halt-on-error paper.tex
+        run_quiet "pdflatex pass 3 ($label)" pdflatex -interaction=nonstopmode -halt-on-error paper.tex
     )
 }
 
 : > "$BUILD_LOG"
 
-compile_tex "paper-anonymous.tex" "paper-anonymous"
-compile_tex "paper-named.tex" "paper-named"
+compile_tex "$OUTPUT_ANON_DIR" "anonymous"
+compile_tex "$OUTPUT_NAMED_DIR" "named"
 
-echo "[build-final] built finalization/output/paper-anonymous.pdf"
-echo "[build-final] built finalization/output/paper-named.pdf"
+echo "[build-final] built finalization/output-anon/paper.pdf"
+echo "[build-final] built finalization/output-named/paper.pdf"

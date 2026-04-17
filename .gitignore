@@ -33,6 +33,11 @@ paper/*.toc
 # Generated PDFs (commit only for milestones)
 paper/paper.pdf
 
+# Finalization output bundles
+finalization/.latex-build.log
+finalization/output-anon/
+finalization/output-named/
+
 # ralph garage temp items
 ralph-garage/history/
 ralph-garage/check-spec-direction/

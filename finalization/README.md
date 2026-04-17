@@ -9,22 +9,23 @@ The Ralph loop should continue to target only the canonical anonymous manuscript
 
 - inject a human-written preface
 - inject acknowledgments as a `\thanks` footnote on the named variant's title
-- generate a transparency appendix from selected spec sections and test/referee prompts
-- build two final PDF variants:
-  - anonymous
-  - named
+- inject an additional human-written LaTeX appendix
+- build two self-contained final PDF/source bundles:
+  - `output-anon/`
+  - `output-named/`
 
-All generated artifacts live in `finalization/output/`.
+Generated final paper bundles live in `finalization/output-anon/` and
+`finalization/output-named/`.
 
 ## Files
 
 - `inputs/preface.md` — human-authored preface text
 - `inputs/acknowledgments.md` — acknowledgments; injected as `\thanks` on the
   title of the named variant only (anonymous variant is left clean)
-- `inputs/appendix-manifest.toml` — allowlist of spec sections and prompt files
-  with optional internal link anchors for Preface jump links
+- `inputs/additional-appendix.tex` — raw LaTeX appendix material inserted before
+  the bibliography
 - `inputs/author-info.toml` — author metadata for the named variant
-- `build-final.sh` — generates derived TeX files in `output/` and compiles both PDFs
+- `build-final.sh` — generates self-contained output bundles and compiles both PDFs
 
 ## How to run
 
@@ -38,21 +39,19 @@ bash finalization/build-final.sh
 
 The build writes:
 
-- `output/preface.tex`
-- `output/acknowledgments.tex`
-- `output/final-appendix.tex`
-- `output/paper-anonymous.tex`
-- `output/paper-named.tex`
-- `output/paper-anonymous.pdf`
-- `output/paper-named.pdf`
+- `output-anon/paper.tex`
+- `output-anon/paper.pdf`
+- `output-anon/references.bib`
+- `output-anon/exhibits/*`
+- `output-named/paper.tex`
+- `output-named/paper.pdf`
+- `output-named/references.bib`
+- `output-named/exhibits/*`
 
 ## Notes
 
 - The generator derives both final papers from `paper/paper.tex`.
-- It rewrites bibliography and exhibit paths so the derived papers compile from
-  `finalization/output/`.
-- The appendix is manifest-driven on purpose. Do not auto-include all tests or
-  all Ralph prompts.
-- Preface markdown supports internal jump links of the form
-  `[link text](#anchor-name)` when the corresponding appendix manifest item sets
-  `anchor = "anchor-name"`.
+- It copies bibliography and exhibit dependencies into each output bundle so the
+  derived papers compile from inside that folder.
+- The additional appendix is inlined into each generated `paper.tex` so each
+  output bundle is self-contained.
