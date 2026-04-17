@@ -2,11 +2,11 @@
 
 This preface is mostly human-written. Please forgive typos and errors.
 
-- Andrew Chen, April 9, 2026.
+- Andrew Chen, April 2026.
 
 ## Background
 
-On March 8, 2025, I thought I should write a paper about hedging the singularity.
+In March 2025, I thought I should write a paper about hedging the singularity.
 
 I was worked up. I was using AI to prove theorems, do lit reviews, and vibe code in my daily life. Six months ago, I had thought each of these things is impossible.
 
@@ -16,7 +16,7 @@ But I did know that if there are huge AI disruptions, then tech stocks would mos
 
 I asked a friend if he would be interested in working on this paper. Unfortunately, he was busy. So, I thought I should use AI to do it.
 
-This project was inspired by [Novy-Marx and Velikov (2025)](https://www.nber.org/papers/w33363)  and [Chris Lu et al. (2024)](https://arxiv.org/abs/2408.06292). These projects use AI to generate massive amounts of academic research. My goal differs in quality over quantity. I want to generate just one paper, but one paper that (I hope) people find is worth reading.
+This project was inspired by [Novy-Marx and Velikov (2026)](https://www.aeaweb.org/articles?id=10.1257/jel.20251821)  and [Chris Lu et al. (2024)](https://arxiv.org/abs/2408.06292). These projects use AI to generate massive amounts of academic research. My goal differs in quality over quantity. I want to generate just one paper, but one paper that (I hope) people find is worth reading.
 
 This project was also inspired by [Garleanu, Kogan, and Panageas's (2012)](https://www.sciencedirect.com/science/article/abs/pii/S0304405X12000621) (GKP's) beautiful model of innovation and displacement risk. I read Garleanu et al. back when I was a PhD student and it has stuck with me. 
 
@@ -39,17 +39,15 @@ Clockmaker Ralph Loop:
     4. If any test fails, go back to 1.
 ```    
 
-Like [Ralph Wiggum](https://en.wikipedia.org/wiki/Ralph_Wiggum) (from [the Simpsons](https://en.wikipedia.org/wiki/The_Simpsons)), the agents don't seem to mind iterating on this loop, day and night. Unlike Ralph, the agents won't keep going unless you feed them money.
+Like [Ralph Wiggum](https://en.wikipedia.org/wiki/Ralph_Wiggum) (from [the Simpsons](https://en.wikipedia.org/wiki/The_Simpsons)), the agents don't seem to mind doing the same thing, over and over again. Unlike Ralph, the agents won't keep going unless you feed them money.
 
 With unlimited money, this Ralph loop is all you need. If the output is bad, just add more tests. 
 
 But after adding 25 tests, I would still find random minor problems (e.g. Opus used SIC codes to characterize AI stocks, why?!). At this point, the Ralph loop was eating straight through two $200/month Claude Code subscriptions. 
 
-So I ultimately went with a hybrid approach. I would first "set the direction" of the loop, by running the author agents five times, independently. Then I'd pick the best draft, and initialize the loop with it. 
+So I ultimately went with a hybrid approach. I would first "set the direction" of the loop, by running the author agents five times, independently. Then I'd pick the best draft, and initialize the loop with it. Even then, I had to [edit two sentences for accuracy](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/commit/4bed451b406d6c1190ef42e33517946c980d822d) after the run ended.
 
-(TBC: did we have to clean up at the end too?)
-
-Typically, the first 5 or so iterations would provide a mostly-complete paper. But it would take many many iterations to pass all 25 tests at once. You can see in painstaking detail how the paper progressed on the [ralph/run-final branch](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/commits/ralph/run-final/) on Github.
+For most runs, the first 5 or so iterations produce a mostly-complete paper. But it would take many, many iterations to pass all tests. In fact, I declared victory on iteration 37, since only two minor tests were failing. [Appendix B](#appendix:iter-log) provides more details, as does the [ralph/run-final branch](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/commits/ralph/run-final/) on Github.
 
 ### The Paper Specification
 
@@ -109,7 +107,7 @@ Basically, I held AI's hand as we walked step-by-step through writing the paper.
 
 Back then, the question was: [did AI even write the paper](https://github.com/chenandrewy/Prompts-to-Paper?tab=readme-ov-file#the-paper-generation-process)? My conclusion was that, if they were human, I would have to give them credit as co-authors. After all, they did the math, writing, and lit reviews.
 
-12 months later, this has entirely changed. AI is so useful that, paradoxically, there's no need to credit them at all. Crediting an LLM would be like crediting a statistical software package. Most readers should assume that LLMs were used throughout the process, and would not be interested in which model was used where.
+12 months later, this has entirely changed. Now, AI is so useful that it seems like there's no need to credit AI at all. Crediting an AI would be like crediting a statistical software package. Most readers should assume that AI were used throughout the process, and would not be interested in which model was used where.
 
 But some things haven't changed. 12 months ago, I complained that AI has sub-par economic reasoning:
 
@@ -126,10 +124,10 @@ Right now, AI is like a cognitive power tool, or cognitive [heavy equipment](htt
 The artisanal elements of research, like
 
 - making connections across distant literatures
-- turning dry results into compelling and accurate figures and text
+- turning dry economics into compelling narratives
 - **responding to referees and editors**
 
-these are still best done with humans in the loop. 
+these are still best done with humans in the loop. I might even add citing literature to this list. The [element-lit-review](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/main/tests/element-lit-review.py) test failed to cite some critical papers, including [Korinek and Suh (2024)](https://arxiv.org/abs/2403.12107v1); [Zhang (2019, JF)](https://onlinelibrary.wiley.com/doi/abs/10.1111/jofi.12766); and [Babina et al. (2024)](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4868770).
 
 I was hoping otherwise. I had an R&R in hand, and my dream was to have the AIs respond to the referee and editor. I attempted this by adding a `referee-cfr-r1` agent to the Ralph loop:
 
@@ -152,15 +150,19 @@ Ultimately, I hard-coded the extension details. For example, the final `paper-sp
     - ii. Government transfers may help resolve this deeper incompleteness problem, as mentioned in `spec/lit/GKP-2012.md`. But they incur sizeable deadweight costs (waste, fraud, abuse) that scale with the size of the transfers, making this solution ineffective and unattractive in standard settings. 
     - iii. But in a singularity, with potentially infinite output growth (`spec/lit/Jones-2024-AERI.md`), the government solution is worth considering, even in the face of immense deadweight costs. This possibility is analyzed quantitatively.         
 
-Even with this hard coding, I found the AI's modeling lacked finesse. 
+Even with this hard coding, I found the Ralph loop's [Extension 2](#sec:ext2) lacked finesse. The deadweight cost scales linearly with the size of the transfer, while a nonlinear cost could have really emphasized the drama of the singularity. The writing lacks the pull and rhythm that I strive for in my papers. I tried using a [writing-flow](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/0858ce2834650706baf808ec0452564005803a51/tests/writing-flow.py) test to enforce this quality but it was a disaster. It would constantly get into fights with [element-gkp-cites](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/main/tests/element-gkp-cites.py), [theory-clarity](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/main/tests/theory-clarity.py), and other tests. Ultimately, I deemed that automating finesse is out of the reach of current AI. 
 
-Part of the issue is that I'm writing an unusual theory paper. When I used a [Ralph loop to write a straightforward empirical paper](https://github.com/chenandrewy/HumanxAI-ChenAY), the AIs did much better. In fact, for empirical work I found that having an [open ended referee review](https://github.com/chenandrewy/HumanxAI-ChenAY/blob/main/ralph/reviews/top3-referee.py) in the loop significantly improved the paper. The author AIs were able to assemble the feedback into coherent improvements, without limited human oversight.
+It was both disappointing and relieving.
 
-Perhaps theory is just "harder". Or perhaps, there's just much more empirical work in the training data. I think both issues are at play, and that additionally, theory exemplifies the subtle, artisanal aspects of research. 
+Perhaps these struggles come from writing an unusual theory paper. The AIs did much better in my [Ralph loop for a straightforward empirical paper](https://github.com/chenandrewy/HumanxAI-ChenAY). There, I found that looping with an [open ended referee review](https://github.com/chenandrewy/HumanxAI-ChenAY/blob/main/ralph/reviews/top3-referee.py) significantly improved the paper. Unlike the AI theorists, the AIs empiricists were able to assemble the feedback into coherent improvements, with limited human oversight.
+
+Perhaps theory is just "harder". Or perhaps, there's just much more empirical work in the training data. I think both are at play, and that additionally, theory exemplifies the subtle, artisanal aspects of research. 
+
+Overall, I think [ralph-wiggum-asset-pricing](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/tree/main) generates a paper that is good enough for me to put my name on it, but not much more. To be honest, it's not my proudest work. I hope this preface helps make up for it.
 
 ## The Future of AI and Economics Research (Speculative)
 
-A common response to [Novy-Marx and Velikov (2025)](https://www.nber.org/papers/w33363) was: "people are not ready for this." I heard concerns that peer review will be inundated with AI-generated slop.
+When [Novy-Marx and Velikov (2026)](https://www.aeaweb.org/articles?id=10.1257/jel.20251821) was first circulated (early 2025), a common response was "people are not ready for this." I heard concerns that peer review will be inundated with AI-generated slop.
 
 Working on this paper gave me a different perspective. It made me think about the drivers of demand for research. I think the drivers are:
 
@@ -170,21 +172,21 @@ Working on this paper gave me a different perspective. It made me think about th
 
 3. A system of author reputations makes 1 and 2 possible.
 
-The current generation of AI does not fundamentally alter these drivers. Critically, driver 3 made me quite wary of putting my name on AI slop. As a result, I don't see  the journals becoming overwelmed by AI-generated submissions.
+The current AI does not fundamentally alter these drivers. Critically, driver 3 made me quite wary of putting my name on AI slop. As a result, I don't see  the journals becoming overwelmed by AI-generated submissions.
 
-Instead, I see AI pushing the frontier of what is "interesting" and "true".  Questions that can be answered by asking AI, or even by running a Ralph loop for a few days---these will soon be uninteresting. To get in the top journals---to be declared "interesting" by the reputation system, that will require doing more. Accordingly, it will be come harder to check the work. The top journals will shoot for publications that can only be certified as "true" by combining expert human labor *with* AI. 
+Instead, I see AI pushing the frontier of what is "interesting" and "true".  Questions that can be answered by asking AI, or even by running a Ralph loop for a few days---these will soon be uninteresting. To get in the top journals---to be declared "interesting" by the reputation system, that will require doing more. Accordingly, it will become harder to check the work, and verify a paper as "true".
 
 As a result, even if I could crank out papers that would have been publishable in 2025 with Ralph loops---I won't. I have a reputation to maintain!
 
-I worry a bit that AI will push what is "interesting" so far that for most readers economics research will be unintelligible, or worse irrelevant. But [I fear](https://arxiv.org/pdf/2212.10317) that we've already reached this point, without the help of AI.
+I worry a bit that AI will push what is "interesting" so far that most peer-reviewed research becomes unintelligible and/or irrelevant. But [I fear](https://arxiv.org/pdf/2212.10317) that we've already reached this point, without the help of AI.
 
 My main worry is about the labor market for economists. The key issue is how AI affects the supply of research:
 
 1. Economists use AI and labor to produce research of a certain quality. 
 2. Reputable authors use their attention to combine economists' research into papers that are read.
 
-The optimistic case is that AI *complements* economists' labor. Then the number of economists would remain the same, but our research output increases in terms of both quantity and quality. 
+My base case is that AI *complements* economists' labor. As described above, LLMs still struggle with the artisanal aspects of economics research. And I don't see this changing unless there's a paradigm shift. So in my base case, the number of economists remains the same, but our research output increases in terms of both quantity and quality. 
 
-But there are reasons why total research output is limited. For example, if the number of reputable authors is fixed (perhaps due to limited attention of readers), and if AI does not expand the attention capacity of reputable authors, then we could see a strong substitution away from economists' labor. Even worse, if certain AIs *become* the reputable authors (if Claude "Fama-Lucas" starts its own journal), I shudder to think about the labor market disaster.
+But there are reasons why total research output is limited. Readers can only pay attention to so many reputable authors. These authors, in turn, can only pay attention to so many projects. Even worse, if certain AIs *become* the reputable authors, I shudder to think about the resulting job market.
 
-I'm not saying that I *expect* a disaster.  But even if it's highly unlikely, it's still a scenario that economists should consider.
+To be clear, I don't *expect* a disaster.  But even if it's highly unlikely, it's still a scenario that economists should consider.
