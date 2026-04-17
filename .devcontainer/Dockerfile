@@ -121,6 +121,7 @@ RUN chmod -R a+w /usr/local/lib/R/site-library
 # Keep a tiny late convenience layer for likely document-tooling tweaks.
 RUN apt-get update && apt-get install -y --no-install-recommends \
   pandoc \
+  rsync \
   && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 ARG GIT_DELTA_VERSION=0.18.2
