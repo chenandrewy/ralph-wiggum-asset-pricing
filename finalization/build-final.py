@@ -24,6 +24,16 @@ EXHIBIT_PATHS = [
     REPO_ROOT / "paper" / "exhibits" / "fig-extension-panels.pdf",
     REPO_ROOT / "paper" / "exhibits" / "table-pd-ratios.tex",
 ]
+PREFACE_REFERENCE_KEYS = [
+    "NovyMarxVelikov2025",
+    "LuEtAl2024",
+    "HadfieldMenellHadfield2018",
+    "Bengio2023",
+    "KorinekSuh2024",
+    "Zhang2019",
+    "BabinaEtAl2024",
+    "ChenLopezLiraZimmermann2022",
+]
 
 
 def load_toml(path: pathlib.Path) -> dict[str, object]:
@@ -540,7 +550,8 @@ def inject_preface(tex_source: str, preface_tex: str) -> str:
 
 def inject_appendix(tex_source: str, appendix_tex: str) -> str:
     marker = "\\printbibliography"
-    replacement = appendix_tex + "\n\n" + marker
+    preface_nocite = "\\nocite{" + ",".join(PREFACE_REFERENCE_KEYS) + "}"
+    replacement = appendix_tex + "\n\n" + preface_nocite + "\n" + marker
     if marker not in tex_source:
         raise ValueError("could not locate bibliography marker in paper.tex")
     return tex_source.replace(marker, replacement, 1)
@@ -635,6 +646,13 @@ def build_variant(
     return updated
 
 
+def scrub_anonymous_identifiers(tex_source: str) -> str:
+    updated = tex_source.replace("chenandrewy", "redacted")
+    if "chenandrewy" in updated:
+        raise ValueError("anonymous output still contains author-identifying GitHub owner")
+    return updated
+
+
 def write_output_bundle(bundle_dir: pathlib.Path, tex_source: str) -> None:
     bundle_dir.mkdir(parents=True, exist_ok=True)
     exhibits_dir = bundle_dir / "exhibits"
@@ -658,7 +676,9 @@ def main() -> None:
     acknowledgments_tex = build_acknowledgments_tex(acknowledgments_markdown)
 
     shared_tex = inject_appendix(inject_preface(canonical_tex, preface_tex), appendix_tex)
-    anonymous_tex = build_variant(shared_tex, author_info, acknowledgments_tex, named=False)
+    anonymous_tex = scrub_anonymous_identifiers(
+        build_variant(shared_tex, author_info, acknowledgments_tex, named=False)
+    )
     named_tex = build_variant(shared_tex, author_info, acknowledgments_tex, named=True)
 
     write_output_bundle(OUTPUT_ANON_DIR, anonymous_tex)

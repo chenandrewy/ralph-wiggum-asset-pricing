@@ -18,9 +18,13 @@ I asked a friend if he would be interested in working on this paper. Unfortunate
 
 This project was inspired by [Novy-Marx and Velikov (2026)](https://www.aeaweb.org/articles?id=10.1257/jel.20251821)  and [Chris Lu et al. (2024)](https://arxiv.org/abs/2408.06292). These projects use AI to generate massive amounts of academic research. My goal differs in quality over quantity. I want to generate just one paper, but one paper that (I hope) people find is worth reading.
 
-This project was also inspired by [Garleanu, Kogan, and Panageas's (2012)](https://www.sciencedirect.com/science/article/abs/pii/S0304405X12000621) (GKP's) beautiful model of innovation and displacement risk. I read Garleanu et al. back when I was a PhD student and it has stuck with me. 
+This project was also inspired by [Garleanu, Kogan, and Panageas's (2012)](https://www.sciencedirect.com/science/article/abs/pii/S0304405X12000621) beautiful model of innovation and displacement risk. I read Garleanu et al. back when I was a PhD student and it has stuck with me. 
 
 Last, I drew from [Hadfield-Menell and Hadfield (2018)](https://arxiv.org/abs/1804.04268) and [Bengio (2023)](https://www.journalofdemocracy.org/ai-and-catastrophic-risk/), who apply ideas from economics to AI catastrophe risk. [Hadfield-Menell and Hadfield (2018)](https://arxiv.org/abs/1804.04268) explains the connection between incomplete contracting and AI alignment. [Bengio (2023)](https://www.journalofdemocracy.org/ai-and-catastrophic-risk/) frames AI catastrophe risk in terms of what I would call decision theory and human incentives---though the essay is written in plain English. 
+
+Previously, I dismissed "AI safety" as a politicized, activist cause. I still don't like the term "AI safety." "Safety" is such an excuse for exercising power over others. 
+
+But then the nature of AI changed. Things were progressing much faster than I expected. The [Jan 15, 2025 episode of Machine Learning Street Talk with Yoshua Bengio](https://podcasts.apple.com/ca/podcast/yoshua-bengio-designing-out-agency-for-safe-ai/id1510472996?i=1000684132955) left an impression on me. Bengio talked about AI catastrophe risk with no activism, no fear mongering. It was a straight, rational discussion of the seriousness of AI catastrophe risk. 
 
 ## The Paper Generation Process (April 2026)
 
@@ -47,7 +51,7 @@ But after adding 25 tests, I would still find random minor problems (e.g. Opus u
 
 So I ultimately went with a hybrid approach. I would first "set the direction" of the loop, by running the author agents five times, independently. Then I'd pick the best draft, and initialize the loop with it. Even then, I had to [edit two sentences for accuracy](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/commit/4bed451b406d6c1190ef42e33517946c980d822d) after the run ended.
 
-For most runs, the first 5 or so iterations produce a mostly-complete paper. But it would take many, many iterations to pass all tests. In fact, I declared victory on iteration 37, since only two minor tests were failing. [Appendix B](#appendix:iter-log) provides more details, as does the [ralph/run-final branch](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/commits/ralph/run-final/) on Github.
+The first 5 or so iterations produce a mostly-complete paper. But it would take many, many iterations to pass all tests. In fact, I declared victory at iteration 36, since only two minor tests were failing. [Appendix B](#appendix:iter-log) provides more details, as does the [ralph/run-final branch](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/commits/ralph/run-final/) on Github.
 
 ### The Paper Specification
 
@@ -61,9 +65,9 @@ For most runs, the first 5 or so iterations produce a mostly-complete paper. But
     - e. Incomplete markets may distort not only valuations, but also the development of AI.
 
 
-If you believe that the [25 tests](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/tree/main/tests) are sufficient, you don't need to read the paper at all. The spec is all you need. 
+If you believe that the final test results are sufficient, you don't need to read the paper at all. [paper-spec.md](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/main/spec/paper-spec.md) is all you need. 
 
-I wonder if, in the future, we will be submitting our paper specs and test results, to conferences and journals.
+I wonder if, in the future, we will be submitting our paper specs and test results to conferences and journals.
 
 ### The 25 Tests
 
@@ -76,13 +80,7 @@ I was hoping for just a few tests.  A test suite with only
 
 would have been beautiful. 
 
-But there so many more ways for a paper to be ugly. For example, none of these tests found the problem with this text:
-
-> Part (iii) [of Proposition 2] captures the interaction: existential risk *attenuates* the sensitivity of AI valuations to singularity beliefs.
-
-> If the singularity also accelerates growth Jones (2024), AI owners' resources could grow large enough to make the cost of compensating the household negligible---the friction becomes self-resolving. Section 4 quantifies this attenuation.
-
-"this attenuation" should refer to how the friction is self-resolving, but Section 4 does not show this. Instead, Section 4 shows attenuation in valuations. This nightmarish passage led to the [factcheck-anaphora](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/main/tests/factcheck-anaphora.py) test, which fails the paper if there are "anaphora resolution problems". 
+But there so many more ways for a paper to be ugly. For example, I found that [factcheck-anaphora](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/main/tests/factcheck-anaphora.py) was required to ensure the claims that are proved by reference are actually proved in the references.
 
 I also found that having many tests is a good design. Like [Ralph Wiggum](https://en.wikipedia.org/wiki/Ralph_Wiggum), the AIs are easily distracted, and breaking up tests into smaller tasks helps them focus. 
 
@@ -97,17 +95,14 @@ Algo April 2025:
 - LLM Prompt  1: draft the model description based on human-specified 
                  functional forms and motivations
 - LLM Prompt  2: find the price/dividend ratio
-- LLM Prompt  3: generate a table based on human-specified
-                 parameter values
+- LLM Prompt  3: generate a table using human-selected parameter values 
 ...             
-- LLM Prompt 10: write the full paper, based on the prose generated 
-                 by previous prompts
 ```
-Basically, I held AI's hand as we walked step-by-step through writing the paper. This is an absurdly impractical way of writing a paper. 
+Basically, I held AI's hand as we walked step-by-step through writing the paper. It was absurdly impractical.
 
 Back then, the question was: [did AI even write the paper](https://github.com/chenandrewy/Prompts-to-Paper?tab=readme-ov-file#the-paper-generation-process)? My conclusion was that, if they were human, I would have to give them credit as co-authors. After all, they did the math, writing, and lit reviews.
 
-12 months later, this has entirely changed. Now, AI is so useful that it seems like there's no need to credit AI at all. Crediting an AI would be like crediting a statistical software package. Most readers should assume that AI were used throughout the process, and would not be interested in which model was used where.
+12 months later, this has entirely changed. Now, AI is so useful that it seems like there's no need to credit AI at all. Crediting an AI would be like crediting a statistical software package. Most readers should assume that AI were used throughout the research process, and would not be interested in which model was used where.
 
 But some things haven't changed. 12 months ago, I complained that AI has sub-par economic reasoning:
 
@@ -115,9 +110,9 @@ But some things haven't changed. 12 months ago, I complained that AI has sub-par
 
 This is still true, even with Claude Opus 4.6. 
 
-What has changed is that we now have powerful ways to automate AI. We can instruct an LLM to [test for cautious discussions of unmodeled channels](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/main/tests/theory-unmodeled-channels.py), and have them keep working until the test passes. These improvements may not give AI the economic theory abilities of a decent Ph.D. student, but they did give them the persistence of [Ralph Wiggum](https://en.wikipedia.org/wiki/Ralph_Wiggum).
+What has changed is that we now can easily automate AI. It's easy to have an AI [test for cautious discussions of unmodeled channels](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/main/tests/theory-unmodeled-channels.py), and to have the other AIs keep working until the test passes. These improvements may not give AI the economic theory abilities of a decent Ph.D. student, but they do give them the persistence of [Ralph Wiggum](https://en.wikipedia.org/wiki/Ralph_Wiggum).
 
-## Limitations of the Current AI (April 12, 2025)
+## Limitations of the Current AI (April 2025)
 
 Right now, AI is like a cognitive power tool, or cognitive [heavy equipment](https://en.wikipedia.org/wiki/Heavy_equipment). It can plow forward on just about any knowledge task. But it's difficult to wield it with subtlety or artistry. 
 
@@ -144,25 +139,19 @@ That report is at `spec/CFR-R1-report`.
 
 `referee-cfr-r1` produced decent suggestions, but the author agents struggled to assemble the advice into a convincing response. The resulting extensions had inconsistent assumptions, theoretical dead ends, and weak economic takeaways. 
 
-Ultimately, I hard-coded the extension details. For example, the final `paper-spec` specified
-- d. Extension 2: Government transfers could attenuate the incomplete markets problem, despite their deadweight costs.
-    - i. The ideal resolution of market incompleteness is to allow broader trading of AI capital. But as pointed out by `spec/lit/GKP-2012.md`, this capital may not yet exist, and thus this ideal solution has limits.
-    - ii. Government transfers may help resolve this deeper incompleteness problem, as mentioned in `spec/lit/GKP-2012.md`. But they incur sizeable deadweight costs (waste, fraud, abuse) that scale with the size of the transfers, making this solution ineffective and unattractive in standard settings. 
-    - iii. But in a singularity, with potentially infinite output growth (`spec/lit/Jones-2024-AERI.md`), the government solution is worth considering, even in the face of immense deadweight costs. This possibility is analyzed quantitatively.         
+Ultimately, I hard-coded the extension details. The final [paper-spec.md](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/main/spec/paper-spec.md) specifies both the key modeling elements as well as the narrative takeaways. 
 
-Even with this hard coding, I found the Ralph loop's [Extension 2](#sec:ext2) lacked finesse. The deadweight cost scales linearly with the size of the transfer, while a nonlinear cost could have really emphasized the drama of the singularity. The writing lacks the pull and rhythm that I strive for in my papers. I tried using a [writing-flow](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/0858ce2834650706baf808ec0452564005803a51/tests/writing-flow.py) test to enforce this quality but it was a disaster. It would constantly get into fights with [element-gkp-cites](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/main/tests/element-gkp-cites.py), [theory-clarity](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/main/tests/theory-clarity.py), and other tests. Ultimately, I deemed that automating finesse is out of the reach of current AI. 
+Even with this hard coding, I found the Ralph loop's [Extension 2](#sec:ext2) lacked finesse. I would have used a nonlinear deadweight cost to emphasize the drama of the singularity. The writing lacks the pull and rhythm that I strive for. I tried using [writing-flow](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/0858ce2834650706baf808ec0452564005803a51/tests/writing-flow.py) and similar tests to generate the pull but it was a disaster. The writing quality tests would constantly get into fights with [element-gkp-cites](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/main/tests/element-gkp-cites.py), [theory-clarity](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/main/tests/theory-clarity.py), and other tests. Ultimately, I deemed that automating finesse is out of the reach of current AI. 
 
 It was both disappointing and relieving.
 
-Perhaps these struggles come from writing an unusual theory paper. The AIs did much better in my [Ralph loop for a straightforward empirical paper](https://github.com/chenandrewy/HumanxAI-ChenAY). There, I found that looping with an [open ended referee review](https://github.com/chenandrewy/HumanxAI-ChenAY/blob/main/ralph/reviews/top3-referee.py) significantly improved the paper. Unlike the AI theorists, the AIs empiricists were able to assemble the feedback into coherent improvements, with limited human oversight.
+Part of these struggles come from writing an unusual theory paper. The AIs did much better in my [Ralph loop for a straightforward empirical paper](https://github.com/chenandrewy/HumanxAI-ChenAY). It's likely that there's much more empirical work in the training data. But additionally, I think theory exemplifies the subtle, artisanal aspects of research. 
 
-Perhaps theory is just "harder". Or perhaps, there's just much more empirical work in the training data. I think both are at play, and that additionally, theory exemplifies the subtle, artisanal aspects of research. 
-
-Overall, I think [ralph-wiggum-asset-pricing](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/tree/main) generates a paper that is good enough for me to put my name on it, but not much more. To be honest, it's not my proudest work. I hope this preface helps make up for it.
+Overall, [ralph-wiggum-asset-pricing](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/tree/main) generates a paper that is good enough for me to put my name on it, but not much more. To be honest, it's not my proudest work. I hope this preface helps make up for it.
 
 ## The Future of AI and Economics Research (Speculative)
 
-When [Novy-Marx and Velikov (2026)](https://www.aeaweb.org/articles?id=10.1257/jel.20251821) was first circulated (early 2025), a common response was "people are not ready for this." I heard concerns that peer review will be inundated with AI-generated slop.
+A common response to [Novy-Marx and Velikov (2026)](https://www.aeaweb.org/articles?id=10.1257/jel.20251821): was "people are not ready for this." I heard concerns that peer review will be inundated with AI-generated slop.
 
 Working on this paper gave me a different perspective. It made me think about the drivers of demand for research. I think the drivers are:
 
@@ -174,19 +163,21 @@ Working on this paper gave me a different perspective. It made me think about th
 
 The current AI does not fundamentally alter these drivers. Critically, driver 3 made me quite wary of putting my name on AI slop. As a result, I don't see  the journals becoming overwelmed by AI-generated submissions.
 
-Instead, I see AI pushing the frontier of what is "interesting" and "true".  Questions that can be answered by asking AI, or even by running a Ralph loop for a few days---these will soon be uninteresting. To get in the top journals---to be declared "interesting" by the reputation system, that will require doing more. Accordingly, it will become harder to check the work, and verify a paper as "true".
+Instead, I see AI pushing the frontier of what is "interesting" and "true".  Questions that can be answered by asking AI, or even by running a Ralph loop for a few days---these will soon be uninteresting. To get in the top journals---to be declared "interesting" by the reputation system, that will require doing more. Accordingly, it will become harder to verify a paper is "true".
 
 As a result, even if I could crank out papers that would have been publishable in 2025 with Ralph loops---I won't. I have a reputation to maintain!
 
 I worry a bit that AI will push what is "interesting" so far that most peer-reviewed research becomes unintelligible and/or irrelevant. But [I fear](https://arxiv.org/pdf/2212.10317) that we've already reached this point, without the help of AI.
 
-My main worry is about the labor market for economists. The key issue is how AI affects the supply of research:
+My main worry is how AI affects the supply of research:
 
 1. Economists use AI and labor to produce research of a certain quality. 
 2. Reputable authors use their attention to combine economists' research into papers that are read.
 
-My base case is that AI *complements* economists' labor. As described above, LLMs still struggle with the artisanal aspects of economics research. And I don't see this changing unless there's a paradigm shift. So in my base case, the number of economists remains the same, but our research output increases in terms of both quantity and quality. 
+My base case is that AI *complements* economists' labor.  As demonstrated by this repo, LLMs still struggle with the artisanal aspects of economics research, and I don't see this changing unless there's a paradigm shift. So in my base case, the number of economists remains the same, but our research output increases in terms of both quantity and quality. 
 
-But there are reasons why total research output is limited. Readers can only pay attention to so many reputable authors. These authors, in turn, can only pay attention to so many projects. Even worse, if certain AIs *become* the reputable authors, I shudder to think about the resulting job market.
+But there are reasons why total research output is limited. Readers can only pay attention to so many reputable authors. These authors, in turn, can only pay attention to so many projects. 
+
+And of course, I might find myself shocked by AI progress, just as I was shocked 12 months ago. If AI progresses so much that certain models *become* the reputable authors, I shudder to think about the resulting job market.
 
 To be clear, I don't *expect* a disaster.  But even if it's highly unlikely, it's still a scenario that economists should consider.
