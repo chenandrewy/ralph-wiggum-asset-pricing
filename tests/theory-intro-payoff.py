@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-How to run: python tests/writing-intro-payoff.py
+How to run: python tests/theory-intro-payoff.py
 Inputs: paper/paper.tex
-Outputs: test-results/writing-intro-payoff.md and process exit code (0=PASS, 1=FAIL)
+Outputs: test-results/theory-intro-payoff.md and process exit code (0=PASS, 1=FAIL)
 """
 
 from __future__ import annotations

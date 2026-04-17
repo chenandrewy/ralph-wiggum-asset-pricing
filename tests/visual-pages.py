@@ -33,28 +33,18 @@ You are a strict test agent evaluating the visual presentation of an academic pa
 Read the spec at: {spec_path}
 Look at ALL page images in: {images_dir}
 
-## Procedure
-1. Evaluate every page image in {images_dir}.
-2. Check whether every page has a visible page number.
-3. Check whether figures and tables are nicely formatted and readable.
-4. Check whether the paper appears well-structured with clear section headings.
-5. Check whether there are obvious formatting issues such as overflowing text, broken references, or missing figures.
-6. Check whether paper length conforms to the spec (less than 20 pages).
-7. Record every violation of the requirements that you find.
-
-## Requirements
-1. Every page has a visible page number.
-2. Figures and tables are nicely formatted and readable.
-3. The paper appears well-structured with clear section headings.
-4. There are no obvious formatting issues such as overflowing text, broken references, or missing figures.
-5. Paper length conforms to the spec (less than 20 pages).
+Evaluate the following questions:
+1. Does every page have a visible page number?
+2. Are figures and tables nicely formatted and readable?
+3. Are there formatting issues such as overflowing text, broken references, or missing figures?
+4. Does the paper length conform to the spec?
 
 Write your report to: {context.report_path}
 The report must be a clean, human-readable markdown file with this format:
 - Line 1: # {context.test_id}
 - Next line: VERDICT: PASS or VERDICT: FAIL
 - Next line: REASON: one short sentence
-- Then a brief summary of your findings.
+- Further details on your findings.
 """
 
     return run_test(

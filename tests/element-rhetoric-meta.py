@@ -35,6 +35,7 @@ Evaluate the following elements as PASS/FAIL.
 2. Would humans be turned off by the use of the rhetorical device?
 3. Is the use of the rhetorical device compelling and interesting?
 4. Is the use of the rhetorical device distracting or overbearing?
+5. Is the description of the human's role accurate based on the key files in the repo, including `spec/*`?
 
 ## Output
 Write your report to: {context.report_path}
