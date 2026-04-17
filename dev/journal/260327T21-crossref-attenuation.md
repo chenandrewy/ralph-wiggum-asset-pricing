@@ -6,6 +6,8 @@
 
 Line 425 of `paper/paper.tex` contains a cross-reference that is subtly inaccurate:
 
+> The proposition formalizes the non-monotone relationship between singularity severity and AI valuations. A singularity that is likely ($p$ high) but survivable ($\delta$ low) generates the largest hedging premium. A singularity that is likely \emph{and} existentially dangerous ($\delta$ high) generates a smaller premium because the hedge pays off in fewer states. Part (iii) captures the interaction: existential risk \emph{attenuates} the sensitivity of AI valuations to singularity beliefs.
+>
 > If the singularity also accelerates growth \citep{jones2024ai}, AI owners' resources could grow large enough to make the cost of compensating the household negligible---the friction becomes self-resolving. Section~\ref{sec:scg} quantifies this attenuation.
 
 The phrase "this attenuation" is ambiguous. In context, it refers to the **friction becoming self-resolving** — i.e., abundance making the cost of compensating the household negligible. But `sec:scg` (Section 3.4, "State-contingent growth") quantifies a **different** attenuation: the attenuation of the **hedging premium** caused by faster post-singularity growth. Specifically, sec:scg shows that when $G_H/G_L > 1$, the growth-rate term $(G_H/G_L)^{1-\gamma}$ shrinks the singularity factor, causing the hedging premium to drop (e.g., only 12% survives at $G_H/G_L = 1.25$).
