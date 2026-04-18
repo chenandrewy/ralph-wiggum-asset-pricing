@@ -1,6 +1,8 @@
 # ralph-wiggum-asset-pricing
 
-This repo uses Geoffrey Huntley's Ralph Wiggum (a.k.a. ralph) loop to generate an academic asset pricing theory paper: ["Hedging the Singularity"](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/human-preface/finalization/output-named/paper.pdf).  There was a touch of human intervention, as described in the Preface.
+This repo uses [Geoff Huntley's Ralph Wiggum loop](https://ghuntley.com/ralph/) to generate an academic asset pricing theory paper. 
+
+The default setup generates something like ["Hedging the Singularity"](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/human-preface/finalization/output-named/paper.pdf).
 
 If you want Ralph to write a different paper, update:
 - `spec/paper-spec.md`
@@ -9,33 +11,48 @@ If you want Ralph to write a different paper, update:
 and perhaps
 - `tests/*.py`
 
-Then as long as you feel comfortable with agents in Yolo mode and have some Claude or Codex credits
+Then as long as you feel comfortable with agents in Yolo mode and have some Claude or Codex credits,
 - `go-ralph-go.sh` 
 
-will write your paper.
+will have the AIs start working on your paper.
 
-**Note on the config on this branch:** the `config-ralph.yaml` and `spec/paper-spec.md` on `main` are a minimal quick-start setup, not the configuration that actually produced ["Hedging the Singularity"](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/human-preface/finalization/output-named/paper.pdf). For that, see the [`ralph/run-final`](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/tree/ralph/run-final) branch.
+
+**How "Hedging the Singularity" was actually generated:** the `config-ralph.yaml` and `spec/paper-spec.md` on `main` are a minimal quick-start setup, not what produced the paper. The automated Ralph loop that wrote the paper ran on the [`ralph/run-final`](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/tree/ralph/run-final) branch — that's where you'll find the real config, paper-spec, and full `rloop-NN:` commit history. A human-written preface and edits of two sentences were then added on the [`human-preface`](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/tree/human-preface) branch, which is where [the final PDF](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/human-preface/finalization/output-named/paper.pdf) lives.
+
+## How Ralph Works
+
+Each iteration of the loop:
+
+1. `ralph/author-plan.py` reads the latest test results and `spec/paper-spec.md`, and writes `ralph-garage/improvement-plan.md`.
+2. `ralph/author-improve.py` executes that plan against the paper and code.
+3. Scripts in `tests/` evaluate the result.
+4. If any test fails, go back to step 1.
+
+Ralph is *human on the loop*, not *human out of the loop*. While it runs, watch `ralph-garage/loop.log` and inspect the iteration history (see [Watching a Run](#watching-a-run)), then adjust `config-ralph.yaml` between stretches — turning tests on or off, raising or lowering the iteration budget — based on what you see. The branch model (see [Git Branching](#git-branching)) makes stopping, resuming, and discarding stretches cheap.
+
+For another paper built with this same method, and a different set of tests to crib from, see [HumanxAI-ChenAY](https://github.com/chenandrewy/HumanxAI-ChenAY) (an empirical paper).
 
 ## Environment Setup and Safety Model
 
 Ralph runs coding agents in YOLO mode. The agent wrapper invokes Claude with `--dangerously-skip-permissions` and Codex with `--sandbox danger-full-access`. I recommend running Ralph inside the dev container for safety.
 
-The simplest way is to open this repo in VS Code and use "Reopen in Container" (requires [Docker Desktop](https://docs.docker.com/desktop/) and the [Dev Containers extension](https://code.visualstudio.com/docs/devcontainers/create-dev-container)). See `.devcontainer/README.md` for container and credential details.
+The simplest way is to open this repo in VS Code and use "Reopen in Container" (requires [Docker Desktop](https://docs.docker.com/desktop/) and the [Dev Containers extension](https://code.visualstudio.com/docs/devcontainers/create-dev-container)). See `.devcontainer/README.md` for container and credential details. I develop on macOS; Windows users (untested) should clone into WSL2 rather than the Windows filesystem (for file I/O, line endings, and symlinks like `AGENTS.md`) and run `Install-Module CredentialManager` in PowerShell so `.credentials/get-credentials.py` can read Windows Credential Manager.
 
-I develop on macOS, where the above is straightforward. **On Windows**, you'll additionally want to:
-
-- Install WSL2 (Docker Desktop requires it anyway) and clone this repo *inside* WSL2 rather than on the Windows filesystem (`C:\...`). This avoids slow file I/O, CRLF line-ending issues in shell scripts, and problems with `AGENTS.md` (a symlink to `CLAUDE.md`).
-- For WRDS or other host credentials (see below), install the PowerShell CredentialManager module once: `Install-Module CredentialManager`. `.credentials/get-credentials.py` uses it to read from Windows Credential Manager.
-
-I haven't tested the Windows path personally, so treat these as starting points.
-
-If your paper needs WRDS data, save credentials once per machine on the host (not inside the container) so they can be resolved from your OS keychain:
+To use WRDS, I recommend saving your WRDS credentials once per machine on the host (not inside the container):
 
 ```bash
 python .credentials/setup.py
 ```
 
-Rebuild the container afterward so it picks up the credentials, then run `python .credentials/check-wrds.py` to verify. To add other credentials (e.g. API keys), edit `.credentials/credentials-map.json` — see `.devcontainer/README.md`.
+Rebuild the container afterward so it picks up the credentials. Verify with:
+
+```bash
+python .credentials/check-wrds.py
+```
+
+Inside the container, credentials are exposed as environment variables — `WRDS_USERNAME` and `WRDS_PASSWORD`. Read them from your code with `Sys.getenv("WRDS_USERNAME")` in R or `os.environ["WRDS_USERNAME"]` in Python. If you use `ralph/research-template` as your `startup-source`, Ralph inherits `code/query-wrds-example.R` as a working example to adapt.
+
+To add other credentials (e.g. API keys), edit `.credentials/credentials-map.json` — see `.devcontainer/README.md`.
 
 ## Selecting Claude vs Codex
 
