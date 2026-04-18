@@ -19,8 +19,8 @@ probe_agent() {
 }
 
 echo "--- agent auth check (informational; loop will continue regardless) ---"
-probe_agent "Claude" claude claude -p "ok"
-probe_agent "Codex"  codex  codex exec "ok"
+probe_agent "Claude" claude claude auth status
+probe_agent "Codex"  codex  codex login status
 echo
 
 exec bash "$(dirname "$0")/ralph/ralph-loop.sh" "$@"
