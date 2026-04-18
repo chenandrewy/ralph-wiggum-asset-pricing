@@ -102,7 +102,6 @@ else
     require_clean_committed_config
     log "--- setup check (fresh main start) ---"
     python3 ralph/check-setup.py --fresh-main-start || { log "ERROR: setup check failed"; exit 1; }
-    startup_paths=()
     if git show-ref --verify --quiet refs/heads/ralph/run; then
         APPEND_LOOP_LOG=1
         log "--- switch to existing ralph/run and fast-forward from $CURRENT_BRANCH ---"
@@ -127,10 +126,6 @@ else
     mkdir -p ralph-garage ralph-garage/history ralph-garage/page-images test-results ralph-garage/agent-logs
     log "--- wipe agent logs for fresh Ralph stretch from $CURRENT_BRANCH ---"
     clear_dir ralph-garage/agent-logs
-    log "--- install startup baseline from $STARTUP_SOURCE ---"
-    python3 ralph/install_startup_source.py "$STARTUP_SOURCE" || {
-        log "ERROR: could not install startup baseline from $STARTUP_SOURCE"; exit 1
-    }
 fi
 
 log "--- setup check ---"
@@ -138,14 +133,7 @@ python3 ralph/check-setup.py || { log "ERROR: setup check failed"; exit 1; }
 
 if [ "$CURRENT_BRANCH" != "ralph/run" ]; then
     log "--- commit startup state before author steps ---"
-    for path in paper code; do
-        if [ -e "$path" ] || has_tracked_files "$path"; then
-            startup_paths+=("$path")
-        fi
-    done
-    if [ "${#startup_paths[@]}" -gt 0 ]; then
-        git add -A -- "${startup_paths[@]}"
-    fi
+    git add -A -- paper code
     git -c user.name="Ralph Loop" -c user.email="noreply@gmail.com" commit --allow-empty \
         -m "rloop start: record initial condition before author steps"
 fi

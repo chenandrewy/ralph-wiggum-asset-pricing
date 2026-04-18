@@ -3,7 +3,6 @@
 # Optional description of the run's settings
 run-note: lightweight version of Hedging the Singularity
 
-startup-source: ralph/research-template/
 max-iter: 5
 
 # Optional pre-loop baseline test run

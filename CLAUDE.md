@@ -63,7 +63,7 @@ Wipe these folders before making disposable code
 - Top comment in every script: how to run, inputs, outputs.
 - Do not create fallback or try-catch statements unless they are strictly necessary.
 - if the user says "what do you think?" it means explain and do not modify any files.
-- Check `ralph/research-template/` for starter paper and code examples, including `ralph/research-template/code/query-wrds-example.R` for WRDS access.
+- Check `paper/` and `code/` for starter paper and code examples, including `code/query-wrds-example.R` for WRDS access.
 
 ## Git Usage
 - For commits that update the ralph algorithm, start with "algo update:"

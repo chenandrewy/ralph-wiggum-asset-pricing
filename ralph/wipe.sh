@@ -3,7 +3,7 @@
 # Inputs: none
 # Outputs: empties author working directories, empties test-results/, removes ralph-garage/
 #
-# Manual cleanup helper. Does not install a startup baseline.
+# Manual cleanup helper. Does not restore the checked-in paper/code baseline.
 
 set -euo pipefail
 
@@ -44,3 +44,4 @@ echo "Removing: ralph-garage"
 rm -rf "$REPO_ROOT/ralph-garage"
 
 echo "Done."
+echo "paper/ and code/ are now empty directories. Restore or replace them before starting Ralph from main."

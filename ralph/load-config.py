@@ -22,11 +22,11 @@ DEFAULTS = {
     "quota-preflight": "off",
     "claude-5h-utilization-limit": "0.67",
     "run-note": "",
-    "startup-source": "",
 }
 
 VALID_AGENT_LOG_MODES = {"off", "verbose", "all", "1", "true", "yes"}
 VALID_BOOLEANS = {"off", "on", "1", "true", "yes", "false", "no", "0"}
+DEPRECATED_CONFIG_KEYS = {"startup-source"}
 
 
 def fail(msg: str) -> int:
@@ -50,6 +50,14 @@ def main() -> int:
         return fail(f"missing config file: {CONFIG_PATH}")
 
     config = load_config(CONFIG_PATH, list_keys=set())
+    deprecated_keys = sorted(key for key in DEPRECATED_CONFIG_KEYS if key in config)
+    if deprecated_keys:
+        return fail(
+            "deprecated config key(s): "
+            + ", ".join(deprecated_keys)
+            + "; Ralph now starts from committed live paper/ and code/. "
+            "Copy any startup candidate into paper/ and code/, commit it on main, and remove the deprecated key."
+        )
 
     def get(key: str) -> str:
         val = config.get(key, DEFAULTS.get(key, ""))
@@ -80,7 +88,6 @@ def main() -> int:
     except ValueError as exc:
         return fail(str(exc))
     run_note = str(config.get("run-note", "")).strip()
-    startup_source = str(config.get("startup-source", "")).strip()
 
     print(f"MAX_ITER={max_iter}")
     print(f"AGENT_LOG_MODE={agent_log_mode}")
@@ -90,7 +97,6 @@ def main() -> int:
     print(f"QUOTA_PREFLIGHT={quota_preflight}")
     print(f"CLAUDE_5H_UTILIZATION_LIMIT={claude_5h_utilization_limit}")
     print(f"RUN_NOTE={shlex.quote(run_note)}")
-    print(f"STARTUP_SOURCE={shlex.quote(startup_source)}")
     return 0
 
 

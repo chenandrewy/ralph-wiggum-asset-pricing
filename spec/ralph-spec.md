@@ -52,29 +52,21 @@ The author steps (`author-plan.py`, `author-improve.py`) may modify files in the
 - `config-ralph.yaml` may optionally enable a baseline pre-loop test run with `test-before-loop`.
 - `config-ralph.yaml` may optionally specify a `run-note` for internal traceability in loop logs and config history.
 - `config-ralph.yaml` may optionally enable a Claude quota preflight with `quota-preflight` and may set its stop threshold with `claude-5h-utilization-limit`.
-- `config-ralph.yaml` also defines the startup-only setting `startup-source`, which is read when Ralph is started from `main` to begin a fresh stretch.
+- Paper/code initialization is not controlled by `config-ralph.yaml`; Ralph starts from the committed live `paper/` and `code/` directories on `main`.
+- Deprecated startup initialization keys such as `startup-source` must cause setup to fail with instructions to copy the desired baseline into live `paper/` and `code/` and commit it on `main`.
 
 ## Initialization
 
 - Initialization is only relevant when Ralph is started from `main` to begin a fresh Ralph stretch.
-- A fresh Ralph stretch from `main` begins with an explicit initialization choice before `go-ralph-go.sh` is run.
-- Initialization is controlled by `config-ralph.yaml`.
-- `config-ralph.yaml` selects the startup baseline through a `startup-source` setting.
-- `startup-source` must be a repo-relative path.
-- There are exactly two approved `startup-source` values for a fresh Ralph stretch from `main`:
-  - `ralph/research-template`
-  - a candidate directory under `ralph-garage/check-direction/run-*`
-- On `main`, live `paper/` and `code/` must not already be present before a fresh Ralph stretch begins.
-- Fresh starts from `main` must not rely on live `paper/` and `code/` as authoritative author state; Ralph initializes those directories from `startup-source`.
-- On a fresh Ralph stretch from `main`, Ralph auto-installs live `paper/` and `code/` from the configured `startup-source` before creating the startup commit.
-- Live `paper/` and `code/` are the author working directories that hold the installed startup baseline.
-- Live `paper/` and `code/` are not an independent third startup source for a fresh Ralph stretch from `main`.
-- Ralph must not create the startup commit for a fresh Ralph stretch from `main` unless `startup-source` is explicit, valid, and unambiguous.
+- A fresh Ralph stretch from `main` starts from the committed live `paper/` and `code/` directories already present on `main`.
+- The checked-in default `paper/` and `code/` directories are a blank template.
+- The human may manually replace live `paper/` and `code/` before starting Ralph, for example with a chosen check-direction candidate.
+- On a fresh Ralph stretch from `main`, setup validation must require live `paper/` and `code/` to exist, be tracked, and have no staged, unstaged, or untracked changes before creating the startup commit.
+- Ralph must not auto-install, overwrite, or delete live `paper/` and `code/` as part of startup.
 
-### Template Initialization
+### Default Blank Template
 
-- Template initialization uses `startup-source: ralph/research-template`.
-- `ralph/research-template/` contains both `paper/` and `code/` as the canonical blank-slate startup baseline.
+- The default checked-in live `paper/` and `code/` directories are the canonical blank-slate startup baseline.
 - `ralph/wipe.sh` is a separate cleanup utility and is not part of the authoritative initialization contract.
 
 ### Candidate Generation Via Check-Direction
@@ -84,7 +76,9 @@ The author steps (`author-plan.py`, `author-improve.py`) may modify files in the
 - This stage is not itself the initialization choice.
 - This stage is outside the Ralph iteration lifecycle and outside the Ralph commit count.
 - The human-facing entry point for this stage is `bash check-ralph-direction.sh`.
-- The check-direction stage may run several isolated preliminary author runs in parallel from the current git state.
+- The check-direction stage may run several isolated preliminary author runs in parallel from the committed base ref, `HEAD` by default.
+- The check-direction stage must fail if its live inputs have staged, unstaged, or untracked changes, because those changes would not be present in the trial worktrees. Inputs include `paper/`, `code/`, `config-ralph.yaml`, `spec/`, `tests/`, agent instructions, and Ralph author tooling under `ralph/`.
+- The selected base ref must contain the committed check-direction inputs.
 - Each preliminary run executes:
   1. `ralph/author-plan.py`
   2. `ralph/author-improve.py`
@@ -93,7 +87,7 @@ The author steps (`author-plan.py`, `author-improve.py`) may modify files in the
   - `paper/`
   - `code/`
 - After preliminary runs finish, the human chooses one candidate.
-- The chosen candidate is selected by setting `startup-source` in `config-ralph.yaml` to the candidate's repo-relative directory, such as `ralph-garage/check-direction/run-01`.
+- The chosen candidate is selected by replacing live `paper/` and `code/` with the candidate's `paper/` and `code/` directories before starting Ralph.
 - The check-direction stage does not create `rloop-*` commits.
 - Preliminary outputs under `ralph-garage/check-direction/` are transient artifacts, not canonical source files.
 
@@ -115,17 +109,17 @@ The author steps (`author-plan.py`, `author-improve.py`) may modify files in the
 - Initialization runs before Ralph branch setup for a new stretch from `main` and does not itself require switching to `ralph/run`.
 - When Ralph is started from `main`, it treats that startup as a fresh Ralph stretch and wipes old files from `ralph-garage/agent-logs/` before any pre-loop test or referee phase begins.
 - When Ralph is started from `ralph/run`, it treats that startup as a continuation and does not wipe the full agent log directory at startup.
-- On a fresh Ralph stretch from `main`, setup validation must validate `startup-source` before the startup commit is created.
-- On a fresh Ralph stretch from `main`, Ralph reads `startup-source` from `config-ralph.yaml`, installs `paper/` and `code/` from that source, and only then creates the startup commit on `ralph/run`.
-- On a fresh Ralph stretch from `main`, Ralph must not silently treat the current live working tree as an independent startup baseline outside the approved initialization paths.
-- On a fresh Ralph stretch from `main`, Ralph must stop before the startup commit if `startup-source` is missing, invalid, or inconsistent with the required source structure.
+- On a fresh Ralph stretch from `main`, setup validation must verify committed, clean live `paper/` and `code/` before the startup commit is created.
+- On a fresh Ralph stretch from `main`, Ralph records the current live `paper/` and `code/` baseline on `ralph/run` and only then starts author steps.
+- On a fresh Ralph stretch from `main`, Ralph must stop before the startup commit if live `paper/` or `code/` is missing or inconsistent with the required source structure.
 
 ## Manual Intervention Model
 
 - The human may stop Ralph at any time.
 - The human may edit `config-ralph.yaml` at any time, including during an active step; Ralph should not treat that as an author-step failure.
 - The human may manually edit `spec/`, `tests/`, `ralph/`, or other repo files between or during Ralph runs.
-- Ralph does not require a clean working tree before starting or resuming.
+- Fresh starts from `main` require committed, clean `paper/`, `code/`, and `config-ralph.yaml`.
+- Resumes from `ralph/run` do not require a clean working tree.
 
 ## Iteration Workspace
 

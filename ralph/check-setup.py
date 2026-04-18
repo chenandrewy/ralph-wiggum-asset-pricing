@@ -13,8 +13,11 @@ import subprocess
 import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
-from install_startup_source import require_source_layout, validate_startup_source
 from utils import is_truthy, load_config
+
+
+AUTHOR_BASELINE_PATHS = ("paper", "code")
+DEPRECATED_CONFIG_KEYS = ("startup-source",)
 
 
 def parse_args() -> argparse.Namespace:
@@ -28,7 +31,7 @@ def parse_args() -> argparse.Namespace:
 
 
 def main() -> int:
-    print("Checking setup...")
+    print("Checking setup...", flush=True)
     args = parse_args()
 
     config_path = pathlib.Path("config-ralph.yaml")
@@ -37,6 +40,16 @@ def main() -> int:
         return 2
 
     raw = load_config(config_path)
+    deprecated_keys = [key for key in DEPRECATED_CONFIG_KEYS if key in raw]
+    if deprecated_keys:
+        print(
+            "FAIL: deprecated config key(s): "
+            + ", ".join(deprecated_keys)
+            + "; Ralph now starts from committed live paper/ and code/. "
+            "Copy any startup candidate into paper/ and code/, commit it on main, and remove the deprecated key.",
+            file=sys.stderr,
+        )
+        return 2
     config_values = {k: v.lower() if isinstance(v, str) else v for k, v in raw.items()}
 
     try:
@@ -52,7 +65,7 @@ def main() -> int:
 
     # --- required files ---
     required_files = [pathlib.Path("spec/paper-spec.md")]
-    if current_branch == "ralph/run":
+    if current_branch == "ralph/run" or args.fresh_main_start:
         required_files.append(pathlib.Path("paper/paper.tex"))
     for path in required_files:
         if not path.is_file():
@@ -64,18 +77,57 @@ def main() -> int:
             print("FAIL: --fresh-main-start requires starting from main", file=sys.stderr)
             return 2
         for path in (pathlib.Path("paper"), pathlib.Path("code")):
-            if path.exists():
+            if not path.is_dir():
                 print(
-                    f"FAIL: {path} must not exist on main before a fresh Ralph stretch; startup installs it from startup-source",
+                    f"FAIL: {path} must exist on main before a fresh Ralph stretch; Ralph starts from live paper/ and code/",
                     file=sys.stderr,
                 )
                 return 2
-        startup_source_raw = str(raw.get("startup-source", "")).strip()
-        try:
-            startup_source = validate_startup_source(startup_source_raw)
-            require_source_layout(pathlib.Path(startup_source), startup_source_raw)
-        except ValueError as exc:
-            print(f"FAIL: {exc}", file=sys.stderr)
+        tracked = subprocess.run(
+            ["git", "ls-files", "--", *AUTHOR_BASELINE_PATHS],
+            check=False,
+            capture_output=True,
+            text=True,
+        ).stdout.splitlines()
+        missing_tracked = [
+            path
+            for path in AUTHOR_BASELINE_PATHS
+            if not any(item == path or item.startswith(f"{path}/") for item in tracked)
+        ]
+        if missing_tracked:
+            print(
+                "FAIL: paper/ and code/ must be tracked and committed on main before starting Ralph; "
+                "missing tracked path(s): "
+                + ", ".join(f"{path}/" for path in missing_tracked),
+                file=sys.stderr,
+            )
+            return 2
+        unstaged = subprocess.run(["git", "diff", "--quiet", "--", *AUTHOR_BASELINE_PATHS])
+        if unstaged.returncode != 0:
+            print(
+                "FAIL: paper/ and code/ have unstaged changes; commit them on main before starting Ralph",
+                file=sys.stderr,
+            )
+            return 2
+        staged = subprocess.run(["git", "diff", "--cached", "--quiet", "--", *AUTHOR_BASELINE_PATHS])
+        if staged.returncode != 0:
+            print(
+                "FAIL: paper/ and code/ have staged but uncommitted changes; commit them on main before starting Ralph",
+                file=sys.stderr,
+            )
+            return 2
+        untracked = subprocess.run(
+            ["git", "ls-files", "--others", "--exclude-standard", "--", *AUTHOR_BASELINE_PATHS],
+            check=False,
+            capture_output=True,
+            text=True,
+        ).stdout.splitlines()
+        if untracked:
+            print(
+                "FAIL: paper/ and code/ contain untracked files; commit them on main before starting Ralph: "
+                + ", ".join(untracked),
+                file=sys.stderr,
+            )
             return 2
 
     ci = str(config_values.get("continual-improvement", "false"))

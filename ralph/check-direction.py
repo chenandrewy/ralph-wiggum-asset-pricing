@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # How to run: python3 ralph/check-direction.py [--runs 5] [--base-ref HEAD] [--keep-worktrees]
-# Inputs: current git state, ralph/install_startup_source.py, ralph/author-plan.py, ralph/author-improve.py
+# Inputs: committed paper/, code/, config-ralph.yaml, spec/, tests/, agent instructions, and ralph/ author tooling
 # Outputs: ralph-garage/check-direction/run-XX/{paper/, code/}
 
 from __future__ import annotations
@@ -17,6 +17,23 @@ from dataclasses import dataclass
 REPO_ROOT = pathlib.Path(__file__).resolve().parents[1]
 OUTPUT_DIR = REPO_ROOT / "ralph-garage" / "check-direction"
 WORKTREES_ROOT = REPO_ROOT / "worktrees" / "check-direction"
+CHECK_DIRECTION_INPUT_PATHS = ("paper", "code", "config-ralph.yaml", "spec", "tests", "ralph", "CLAUDE.md", "AGENTS.md")
+AUTHOR_BASELINE_PATHS = ("paper", "code")
+BASE_REF_REQUIRED_PATHS = (
+    "paper/paper.tex",
+    "code",
+    "config-ralph.yaml",
+    "spec/paper-spec.md",
+    "tests",
+    "CLAUDE.md",
+    "AGENTS.md",
+    "ralph/author-plan.py",
+    "ralph/author-improve.py",
+    "ralph/agent_wrapper.py",
+    "ralph/utils.py",
+)
+
+
 @dataclass(frozen=True)
 class RunContext:
     index: int
@@ -41,9 +58,63 @@ def run_cmd(cmd: list[str], *, cwd: pathlib.Path, check: bool = False) -> subpro
     return result
 
 
-def validate_inputs() -> None:
+def git_stdout(args: list[str]) -> list[str]:
+    result = run_cmd(["git", *args], cwd=REPO_ROOT, check=True)
+    return result.stdout.splitlines()
+
+
+def require_clean_committed_inputs() -> None:
+    tracked = git_stdout(["ls-files", "--", *CHECK_DIRECTION_INPUT_PATHS])
+    missing = [
+        path
+        for path in AUTHOR_BASELINE_PATHS
+        if not any(item == path or item.startswith(f"{path}/") for item in tracked)
+    ]
+    if missing:
+        raise ValueError(
+            "paper/ and code/ must be tracked and committed before running check-direction; "
+            "missing tracked path(s): "
+            + ", ".join(f"{path}/" for path in missing)
+        )
+
+    unstaged = run_cmd(["git", "diff", "--quiet", "--", *CHECK_DIRECTION_INPUT_PATHS], cwd=REPO_ROOT)
+    if unstaged.returncode != 0:
+        raise ValueError(
+            "check-direction inputs have unstaged changes; commit paper/, code/, config-ralph.yaml, spec/, tests/, agent instructions, and ralph/ before running check-direction"
+        )
+
+    staged = run_cmd(["git", "diff", "--cached", "--quiet", "--", *CHECK_DIRECTION_INPUT_PATHS], cwd=REPO_ROOT)
+    if staged.returncode != 0:
+        raise ValueError(
+            "check-direction inputs have staged but uncommitted changes; commit paper/, code/, config-ralph.yaml, spec/, tests/, agent instructions, and ralph/ before running check-direction"
+        )
+
+    untracked = git_stdout(["ls-files", "--others", "--exclude-standard", "--", *CHECK_DIRECTION_INPUT_PATHS])
+    if untracked:
+        raise ValueError(
+            "check-direction inputs contain untracked files; commit them before running check-direction: "
+            + ", ".join(untracked)
+        )
+
+
+def require_base_ref_author_dirs(base_ref: str) -> None:
+    missing = []
+    for path in BASE_REF_REQUIRED_PATHS:
+        result = run_cmd(["git", "cat-file", "-e", f"{base_ref}:{path}"], cwd=REPO_ROOT)
+        if result.returncode != 0:
+            missing.append(path)
+    if missing:
+        raise ValueError(
+            f"--base-ref does not contain the committed check-direction inputs ({base_ref} missing: "
+            + ", ".join(missing)
+            + ")"
+        )
+
+
+def validate_inputs(base_ref: str) -> None:
     required_paths = [
-        REPO_ROOT / "ralph" / "install_startup_source.py",
+        REPO_ROOT / "paper" / "paper.tex",
+        REPO_ROOT / "code",
         REPO_ROOT / "ralph" / "author-plan.py",
         REPO_ROOT / "ralph" / "author-improve.py",
         REPO_ROOT / "spec" / "paper-spec.md",
@@ -53,6 +124,8 @@ def validate_inputs() -> None:
         missing_str = ", ".join(str(path.relative_to(REPO_ROOT)) for path in missing)
         raise FileNotFoundError(f"missing required path(s): {missing_str}")
     run_cmd(["git", "rev-parse", "--show-toplevel"], cwd=REPO_ROOT, check=True)
+    require_clean_committed_inputs()
+    require_base_ref_author_dirs(base_ref)
 
 
 def prepare_worktrees(base_ref: str, runs: int) -> list[RunContext]:
@@ -91,7 +164,6 @@ def reset_trial_workspace(worktree_path: pathlib.Path) -> None:
 def run_single(context: RunContext) -> tuple[int, bool, str]:
     reset_trial_workspace(context.worktree_path)
     steps = [
-        [sys.executable, "ralph/install_startup_source.py", "ralph/research-template"],
         [sys.executable, "ralph/author-plan.py"],
         [sys.executable, "ralph/author-improve.py"],
     ]
@@ -170,19 +242,23 @@ def main() -> int:
         print("ERROR: --runs must be positive", file=sys.stderr)
         return 2
 
+    resolved_base = run_cmd(
+        ["git", "rev-parse", "--verify", args.base_ref],
+        cwd=REPO_ROOT,
+        check=True,
+    ).stdout.strip()
+    try:
+        validate_inputs(resolved_base)
+    except (FileNotFoundError, ValueError) as exc:
+        print(f"ERROR: {exc}", file=sys.stderr)
+        return 2
+
     print(
         f"Running {args.runs} isolated direction-check trial(s) in parallel from {args.base_ref}. "
         "Progress will appear here as each run finishes; outputs are written to "
         "ralph-garage/check-direction/run-XX/. Expect roughly 30 to 60 minutes per run. Temporary worktrees are under "
         "/workspace/worktrees/check-direction/ and will be removed unless --keep-worktrees is set."
     )
-
-    validate_inputs()
-    resolved_base = run_cmd(
-        ["git", "rev-parse", "--verify", args.base_ref],
-        cwd=REPO_ROOT,
-        check=True,
-    ).stdout.strip()
     if OUTPUT_DIR.exists():
         shutil.rmtree(OUTPUT_DIR)
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)

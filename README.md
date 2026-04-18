@@ -2,7 +2,7 @@
 
 This repo uses Geoff Huntley's [Ralph Wiggum loop](https://ghuntley.com/ralph/) to generate an academic asset pricing paper. 
 
-The default setup generates something like my asset pricing theory paper, ["Hedging the Singularity"](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/human-preface/finalization/output-named/paper.pdf).
+The default starting point is the checked-in blank template in `paper/` and `code/`. The checked-in paper specification is a worked example modeled on my asset pricing theory paper, ["Hedging the Singularity"](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/human-preface/finalization/output-named/paper.pdf).
 
 If you want Ralph to write a different paper, update:
 - `spec/paper-spec.md`
@@ -12,7 +12,7 @@ If you want Ralph to write a different paper, update:
 and perhaps
 - `tests/*.py`
 
-Before running, use the dev container or install the tools below, authenticate with Claude and/or Codex (default uses Claude only), start from `main`, commit your setup changes (including `config-ralph.yaml` and any edits to `spec/` or `tests/`), and make sure `paper/` and `code/` do not already exist on `main`. Then, as long as you feel comfortable with agents in Yolo mode and have credits for the configured agent (Claude by default),
+Before running, use the dev container or install the tools below, authenticate with Claude and/or Codex (default uses Claude only), start from `main`, and commit your setup (including `config-ralph.yaml`, `paper/`, `code/`, and any edits to `spec/` or `tests/`). The default live `paper/` and `code/` are already a blank template; see [Initializing `paper/` and `code/`](#initializing-paper-and-code) if you want to replace them with a check-direction candidate. Ralph refuses to start from `main` if `paper/` or `code/` are untracked, staged, or dirty. Then, as long as you feel comfortable with agents in Yolo mode and have credits for the configured agent (Claude by default),
 ```bash 
 bash go-ralph-go.sh
 ```
@@ -58,7 +58,7 @@ Rebuild the container afterward so it picks up the credentials. Verify with:
 python .credentials/check-wrds.py
 ```
 
-Inside the container, credentials are exposed as environment variables — `WRDS_USERNAME` and `WRDS_PASSWORD`. Read them from your code with `Sys.getenv("WRDS_USERNAME")` in R or `os.environ["WRDS_USERNAME"]` in Python. If you use `ralph/research-template` as your `startup-source`, Ralph inherits `code/query-wrds-example.R` as a working example to adapt.
+Inside the container, credentials are exposed as environment variables — `WRDS_USERNAME` and `WRDS_PASSWORD`. Read them from your code with `Sys.getenv("WRDS_USERNAME")` in R or `os.environ["WRDS_USERNAME"]` in Python. The checked-in blank template includes `code/query-wrds-example.R` as a working example to adapt.
 
 To add other credentials (e.g. API keys), edit `.credentials/credentials-map.json` — see `.devcontainer/README.md`.
 
@@ -109,10 +109,7 @@ selected-referees:
 ```
 Continual improvement means Ralph will keep going even if all tests pass. The referees are not pass/fail: they generate open-ended feedback. I couldn't get this to work well for ["Hedging the Singularity"](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/human-preface/finalization/output-named/paper.pdf). But once again, I hope your agents do better.
 
-The last key config is `startup-source`, which tells Ralph where to begin. It takes one of two values:
-
-- `ralph/research-template` — a folder with minimal `code/` and `paper/` templates.
-- `ralph-garage/check-direction/run-NN` — a folder with `code/` and `paper/` filled out by `check-ralph-direction.sh` (see below).
+Paper/code initialization is intentionally outside `config-ralph.yaml`. Ralph starts from the committed live `paper/` and `code/` directories on `main`; the default checked-in versions are a blank template. The old `startup-source` key is deprecated and now causes setup to fail.
 
 ### `tests/*.py` — Tests and Referees
 
@@ -120,36 +117,42 @@ Scripts in `tests/` with no prefix are tests; scripts prefixed `referee-` are re
 
 ### `go-ralph-go.sh` — Running Ralph
 
-The main entry point. See [Git Branching](#git-branching) for how it behaves on each branch. The full workflow is specified in `spec/ralph-spec.md`.
+The main entry point. See [Git Branching](#git-branching) for how it behaves on each branch.
 
-## Setting Ralph's "Direction" (Recommended)
+## Initializing `paper/` and `code/`
 
-The first iteration is important for setting the "direction" of the ralph loop. I recommend generating 5 versions of the first iteration using
+Ralph always starts from committed live `paper/` and `code/`. On a fresh clone, these are very minimal templates. You can, alternatively, copy in your own `paper/` and `code/` before the first run. Commit whichever baseline you choose on `main` before starting Ralph.
+
+Another option is to have the AIs generate candidate starting points based on the spec by running
 
 ```bash
 bash check-ralph-direction.sh
 ```
-The candidates land under `ralph-garage/check-direction/run-NN/`. Pick one, then set `startup-source` in `config-ralph.yaml` to that path, e.g.
+The candidates land under `ralph-garage/check-direction/run-NN/`, with preview PDFs copied to `ralph-garage/check-direction/paper-NN.pdf`. Pick the one you prefer, and copy over the `paper/` and `code/` folders.
 
-```yaml
-startup-source: ralph-garage/check-direction/run-03
-```
+`check-ralph-direction.sh` also runs from committed inputs. It creates isolated worktrees from `HEAD` by default, so uncommitted edits to `paper/`, `code/`, `spec/`, `config-ralph.yaml`, `tests/`, agent instructions, or Ralph author tooling are not included and will cause the preflight to fail.
 
 ## Git Branching
 
-Ralph uses two branches:
+Ralph is *human on the loop*: the human works freely on `main`, and Ralph works only on `ralph/run`. That split keeps cleanup cheap — you can always throw `ralph/run` away without touching your own edits.
 
-- **`main`** — the baseline settings. Edit `paper-spec.md`, `config-ralph.yaml`, `tests/`, and everything else here.
-- **`ralph/run`** — where Ralph commits each iteration. Every iteration is one commit with an `rloop-NN:` prefix.
+- **`main`** — the human's branch. Edit anything: `paper/`, `code/`, `spec/`, `config-ralph.yaml`, `tests/`, `ralph/`. Commit at your own pace. Ralph never commits here.
+- **`ralph/run`** — Ralph's working branch. Every iteration is one commit prefixed `rloop-NN:`. This is a reusable label, not a one-time run identifier.
 
-`go-ralph-go.sh` behaves differently depending on which of the two branches you run it from:
+`go-ralph-go.sh` behaves differently depending on which branch you run it from:
 
-- **From `main`** — start a fresh stretch. Ralph installs the startup baseline from `startup-source`, wipes `ralph-garage/agent-logs/`, and creates `ralph/run` (or fast-forwards an existing `ralph/run` from `main`) before looping. Any setup changes you want in the stretch (e.g. `config-ralph.yaml`, `spec/`, `tests/`) must be committed first, and `paper/` and `code/` should not already exist on `main`.
+- **From `main`** — start (or extend) a Ralph stretch. Ralph requires committed, clean `paper/` and `code/` on `main`; if either is missing, untracked, staged, or dirty, Ralph exits with an error. Otherwise Ralph wipes `ralph-garage/agent-logs/`, creates `ralph/run` off `main` (or fast-forwards an existing `ralph/run` to `main`), records the current paper/code baseline, and begins looping.
 - **From `ralph/run`** — resume the existing stretch. The loop log is appended rather than wiped.
 
-If `ralph/run` has commits that `main` hasn't seen and you try to start a fresh stretch from `main`, Ralph refuses. Switch to `ralph/run` to continue that stretch, or merge `ralph/run` into `main` first if you want to absorb it and move on.
+If `ralph/run` has commits that `main` hasn't seen and you try to start from `main`, Ralph refuses. Switch to `ralph/run` to continue that stretch, or merge `ralph/run` into `main` first if you want to absorb it and move on.
 
-When you're happy with a stretch, merge `ralph/run` back into `main` (or cherry-pick the pieces you want). To throw it away, delete the branch and start a fresh stretch from `main`.
+Typical lifecycle:
+
+1. Set up on `main`: edit `paper-spec.md`, `config-ralph.yaml`, `tests/`, and prepare `paper/` and `code/` (see [Initializing `paper/` and `code/`](#initializing-paper-and-code)). Commit everything needed for the baseline.
+2. Run `bash go-ralph-go.sh`. Ralph creates `ralph/run` and iterates.
+3. Watch the run. To intervene, stop Ralph, hand-edit where needed, and restart — Ralph tolerates a dirty tree when it resumes.
+4. When you're happy with a stretch, merge `ralph/run` back into `main` (or cherry-pick). `paper/` and `code/` now live on `main`.
+5. To start the next stretch, just run `go-ralph-go.sh` from `main` again. Ralph picks up the current `paper/` and `code/` as the new baseline. To throw a stretch away, delete `ralph/run` and restart.
 
 ## Watching a Run
 
@@ -202,8 +205,8 @@ The point is not to turn on every possible test. Pick the tests that match the p
 
 These are the paper and its supporting materials.
 
-- `paper/` — canonical LaTeX source for the referee-ready paper (`paper.tex`, references, and only exhibits used by that paper); created during a run or after merging a run back
-- `code/` — R scripts and analysis code (if needed); created during a run or after merging a run back
+- `paper/` — canonical LaTeX source for the referee-ready paper (`paper.tex`, references, and only exhibits used by that paper); checked in as the default blank template
+- `code/` — R scripts and analysis code (if needed); checked in as the default blank template
 - `data/` — datasets (if needed)
 - `dev/` — scratch work, journals, experiments
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # How to run: bash check-ralph-direction.sh [--runs 5] [--base-ref HEAD] [--keep-worktrees]
-# Inputs: current git state, ralph/check-direction.py
-# Outputs: candidate directories under ralph-garage/check-direction/ and a suggested startup-source value
+# Inputs: committed check-direction inputs, ralph/check-direction.py
+# Outputs: candidate directories under ralph-garage/check-direction/ and suggested copy commands
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -43,6 +43,10 @@ if "${cmd[@]}"; then
 else
     check_direction_rc=$?
 fi
+if [ "$check_direction_rc" -eq 2 ]; then
+    echo "ERROR: check-direction preflight failed; not listing existing candidates." >&2
+    exit "$check_direction_rc"
+fi
 
 OUTPUT_ROOT="$REPO_ROOT/ralph-garage/check-direction"
 if [ ! -d "$OUTPUT_ROOT" ]; then
@@ -71,7 +75,7 @@ for run_dir in "${run_dirs[@]}"; do
     printf '  %s\n' "$(basename "$run_dir")"
 done
 
-read -r -p "Choose a candidate to use as startup-source (example: run-03): " selection
+read -r -p "Choose a candidate to copy into live paper/ and code/ (example: run-03): " selection
 SELECTED_DIR="$OUTPUT_ROOT/$selection"
 if [ ! -d "$SELECTED_DIR" ]; then
     echo "ERROR: candidate not found: $selection" >&2
@@ -83,6 +87,9 @@ if [ ! -d "$SELECTED_DIR/paper" ] || [ ! -d "$SELECTED_DIR/code" ]; then
     exit 1
 fi
 
-STARTUP_SOURCE="ralph-garage/check-direction/$selection"
-printf '\nSet this in config-ralph.yaml before starting Ralph from main:\n'
-printf 'startup-source: %s\n' "$STARTUP_SOURCE"
+SELECTED_SOURCE="ralph-garage/check-direction/$selection"
+printf '\nTo use this candidate before starting Ralph from main, run:\n'
+printf 'rm -rf paper code\n'
+printf 'cp -R %s/paper paper\n' "$SELECTED_SOURCE"
+printf 'cp -R %s/code code\n' "$SELECTED_SOURCE"
+printf 'git add -A -- paper code && git commit -m "Update Ralph startup baseline"\n'
