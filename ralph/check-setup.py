@@ -78,9 +78,6 @@ def main() -> int:
             print(f"FAIL: {exc}", file=sys.stderr)
             return 2
 
-    paper_spec_path = pathlib.Path("spec/paper-spec.md")
-    paper_spec_text = paper_spec_path.read_text(encoding="utf-8")
-
     ci = str(config_values.get("continual-improvement", "false"))
     referees = str(config_values.get("referees", "false"))
     if is_truthy(ci) and not is_truthy(referees):
@@ -152,23 +149,21 @@ def main() -> int:
             )
             return 2
 
-    # --- validate WRDS availability when the spec requires WRDS-backed data ---
-    if "CRSP and Compustat data" in paper_spec_text:
-        wrds_check = pathlib.Path(".credentials/check-wrds.py")
-        if not wrds_check.is_file():
-            print(f"FAIL: missing WRDS checker: {wrds_check}", file=sys.stderr)
-            return 2
-
-        print("Spec requires WRDS-backed data; checking WRDS availability...")
-        wrds_result = subprocess.run([sys.executable, str(wrds_check)])
+    # --- WRDS availability (advisory) ---
+    wrds_check = pathlib.Path(".credentials/check-wrds.py")
+    if wrds_check.is_file():
+        wrds_result = subprocess.run(
+            [sys.executable, str(wrds_check)], capture_output=True
+        )
         if wrds_result.returncode != 0:
             print(
-                "FAIL: WRDS is required by spec/paper-spec.md but is not available. "
-                "Rerun `python .credentials/setup.py` on your host/local machine, "
+                "WARNING: WRDS is not available. If the paper needs WRDS data, "
+                "rerun `python .credentials/setup.py` on your host/local machine, "
                 "then reopen or rebuild the devcontainer before starting Ralph.",
                 file=sys.stderr,
             )
-            return 2
+    else:
+        print(f"WARNING: missing WRDS checker: {wrds_check}", file=sys.stderr)
 
     # Agent auth check. The loop may use Claude or Codex depending on ralph/author-*.py,
     # so at least one must be logged in.

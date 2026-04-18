@@ -108,7 +108,11 @@ else
         log "--- switch to existing ralph/run and fast-forward from $CURRENT_BRANCH ---"
         if ! git merge-base --is-ancestor ralph/run "$CURRENT_BRANCH"; then
             log "ERROR: branch 'ralph/run' has commits not merged into '$CURRENT_BRANCH'"
-            log "Hint: switch to 'ralph/run' to resume that work, or merge it into '$CURRENT_BRANCH' first."
+            log "You have three options:"
+            log "  - Resume the previous run (switch to 'ralph/run' and re-launch)"
+            log "  - Keep the run's work on '$CURRENT_BRANCH' (merge 'ralph/run' into '$CURRENT_BRANCH')"
+            log "  - Discard the run (delete 'ralph/run')"
+            log "Not sure? Ask Claude Code or Codex to help you choose."
             exit 1
         fi
         git switch ralph/run && git merge --ff-only "$CURRENT_BRANCH" || {
