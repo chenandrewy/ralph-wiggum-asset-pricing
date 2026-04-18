@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 
-# How to run: WRDS_USERNAME=<username> WRDS_PASSWORD=<password> Rscript ralph/research-template/code/query-wrds-example.R
+# How to run: WRDS_USERNAME=<username> WRDS_PASSWORD=<password> Rscript code/query-wrds-example.R
 # Inputs: WRDS connection settings from environment variables or libpq defaults.
 # Outputs: Prints 5 rows from crsp.dsf and exits 0 if the WRDS setup works.
 
