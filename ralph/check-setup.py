@@ -170,6 +170,23 @@ def main() -> int:
             )
             return 2
 
+    # Agent auth check. The loop may use Claude or Codex depending on ralph/author-*.py,
+    # so at least one must be logged in.
+    claude_auth = subprocess.run(
+        ["claude", "auth", "status"], check=False, capture_output=True
+    )
+    if claude_auth.returncode != 0:
+        print("WARNING: Claude is not logged in", file=sys.stderr)
+    codex_auth = subprocess.run(
+        ["codex", "login", "status"], check=False, capture_output=True
+    )
+    if codex_auth.returncode != 0:
+        print("WARNING: Codex is not logged in", file=sys.stderr)
+
+    if claude_auth.returncode != 0 and codex_auth.returncode != 0:
+        print("FAIL: neither Claude nor Codex is logged in", file=sys.stderr)
+        return 2
+
     print("Setup check passed.")
     return 0
 

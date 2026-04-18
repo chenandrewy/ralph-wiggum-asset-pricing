@@ -3,24 +3,4 @@
 # Inputs: config-ralph.yaml
 # Outputs: runs the ralph loop (see ralph/ralph-loop.sh)
 
-probe_agent() {
-    local label="$1"
-    local cmd="$2"
-    shift 2
-    if ! command -v "$cmd" >/dev/null 2>&1; then
-        echo "  $label: CLI not found ($cmd not on PATH)"
-        return
-    fi
-    if timeout 30 "$@" >/dev/null 2>&1; then
-        echo "  $label: authorized"
-    else
-        echo "  $label: NOT authorized (auth probe failed)"
-    fi
-}
-
-echo "--- agent auth check (informational; loop will continue regardless) ---"
-probe_agent "Claude" claude claude auth status
-probe_agent "Codex"  codex  codex login status
-echo
-
 exec bash "$(dirname "$0")/ralph/ralph-loop.sh" "$@"
