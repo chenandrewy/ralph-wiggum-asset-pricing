@@ -12,7 +12,7 @@ If you want Ralph to write a different paper, update:
 and perhaps
 - `tests/*.py`
 
-Before running, use the dev container or install the tools below, authenticate the configured agent CLI, start from `main`, commit your setup changes (including `config-ralph.yaml` and any edits to `spec/` or `tests/`), and make sure `paper/` and `code/` do not already exist on `main`. Then, as long as you feel comfortable with agents in Yolo mode and have credits for the configured agent (Claude by default),
+Before running, use the dev container or install the tools below, authenticate with Claude and/or Codex (default uses Claude only), start from `main`, commit your setup changes (including `config-ralph.yaml` and any edits to `spec/` or `tests/`), and make sure `paper/` and `code/` do not already exist on `main`. Then, as long as you feel comfortable with agents in Yolo mode and have credits for the configured agent (Claude by default),
 ```bash 
 bash go-ralph-go.sh
 ```
@@ -155,15 +155,17 @@ When you're happy with a stretch, merge `ralph/run` back into `main` (or cherry-
 
 Everything Ralph produces while running lands under `ralph-garage/`. None of it is committed on normal commits — it's all transient scratch space. The durable artifacts are in `paper/`, `code/`, and the `rloop-NN:` commits on `ralph/run`.
 
-Useful entry points:
+If you're impatient, watch:
+
+- **`ralph-garage/agent-logs/`** — raw per-invocation agent logs. For debugging unexpected agent behavior. Or being antsy about whether the agents are working.
+
+Human-friendly entry points:
 
 - **`ralph-garage/loop.log`** — the running console log. `tail -f ralph-garage/loop.log` during a stretch to watch progress.
 - **`ralph-garage/improvement-plan.md`** — the current iteration's plan, overwritten each iteration. Peek here to see what Ralph thinks it's doing right now.
 - **`ralph-garage/history/`** — per-iteration snapshots (PDFs named `NNN-paper.pdf`, plus plan and test compilations). Diff across iterations here.
 - **`ralph-garage/page-images/`** — PNG renders of the current compiled paper, shared across tests. Not usually read directly, but tests reference these.
-- **`ralph-garage/agent-logs/`** — raw per-invocation agent logs. For debugging unexpected agent behavior.
 
-For reference, "Hedging the Singularity" was mostly complete after ~5 iterations; I declared victory at iteration 36 with two minor tests still failing.
 
 ## Test Suite
 
