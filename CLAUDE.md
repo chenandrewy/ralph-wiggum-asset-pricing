@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-The goal of the project is to write an academic asset pricing theory paper. You are either an author or a referee.
+The goal of the project is to generate an academic economics or finance paper. 
 
 Always read `spec/paper-spec.md` before doing work.
 
@@ -8,15 +8,12 @@ See `README.md` for the full repo structure and how Ralph (a.k.a. RALF, ralph, t
 
 Import `.agent-guidelines/README.md` for shared agent coding, git, and interaction rules.
 
-## Asset Pricing Background
-- Target audience is readers of top finance journals.
-- See `spec/economic-background.md` for how to use asset pricing terms.
-
 ## Prompt Design Guidelines
 - Keep prompts general. Do not use examples to patch current holes in the system.
 
 ## Key Files
 - `spec/paper-spec.md`: paper specification
+- `spec/economic-background.md`: shared economic terminology and background conventions for the current paper; update it when changing the paper topic.
 
 ## Folder Structure (Quick Reference)
 
@@ -66,7 +63,7 @@ Wipe these folders before making disposable code
 - Top comment in every script: how to run, inputs, outputs.
 - Do not create fallback or try-catch statements unless they are strictly necessary.
 - if the user says "what do you think?" it means explain and do not modify any files.
-- Check `ralph/code-templates/**` for examples, including for WRDS access
+- Check `ralph/research-template/` for starter paper and code examples, including `ralph/research-template/code/query-wrds-example.R` for WRDS access.
 
 ## Git Usage
 - For commits that update the ralph algorithm, start with "algo update:"
