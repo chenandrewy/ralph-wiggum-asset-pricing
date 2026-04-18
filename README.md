@@ -1,23 +1,24 @@
 # ralph-wiggum-asset-pricing
 
-This repo uses [Geoff Huntley's Ralph Wiggum loop](https://ghuntley.com/ralph/) to generate an academic asset pricing theory paper. 
+This repo uses [Geoff Huntley's Ralph Wiggum loop](https://ghuntley.com/ralph/) to generate an academic asset pricing paper. 
 
-The default setup generates something like ["Hedging the Singularity"](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/human-preface/finalization/output-named/paper.pdf).
+The default setup generates something like my ["Hedging the Singularity"](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/human-preface/finalization/output-named/paper.pdf) paper.
 
 If you want Ralph to write a different paper, update:
 - `spec/paper-spec.md`
+- `spec/economic-background.md`
 - `config-ralph.yaml`
 
 and perhaps
 - `tests/*.py`
 
-Then as long as you feel comfortable with agents in Yolo mode and have some Claude or Codex credits,
+Then as long as you feel comfortable with agents in Yolo mode and have Claude or Codex credits,
 - `go-ralph-go.sh` 
 
 will have the AIs start working on your paper.
 
 
-**How "Hedging the Singularity" was actually generated:** the `config-ralph.yaml` and `spec/paper-spec.md` on `main` are a minimal quick-start setup, not what produced the paper. The automated Ralph loop that wrote the paper ran on the [`ralph/run-final`](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/tree/ralph/run-final) branch — that's where you'll find the real config, paper-spec, and full `rloop-NN:` commit history. A human-written preface and edits of two sentences were then added on the [`human-preface`](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/tree/human-preface) branch, which is where [the final PDF](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/human-preface/finalization/output-named/paper.pdf) lives.
+**How "Hedging the Singularity" was actually generated:** the files on `main` are a lightweight setup. The heavier setup used for the paper included literature and a referee report specific to "Hedging the Singularity". See  the [`ralph/run-final`](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/tree/ralph/run-final) branch for the full setup. The human-written preface was added on the [`human-preface`](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/tree/human-preface) branch, which is where [the final PDF](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/human-preface/finalization/output-named/paper.pdf) lives.
 
 ## How Ralph Works
 
@@ -70,9 +71,9 @@ You'll need credits with whichever provider you choose. See `ralph/agent_wrapper
 
 ### `spec/paper-spec.md` — Paper Specification
 
-Basically the paper in bullet point form. You can leave it to be open ended, if you have confidence in your tests. As explained in the preface of ["Hedging the Singularity"](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/human-preface/finalization/output-named/paper.pdf), I found that I needed to make `paper-spec.md` rather tight. 
+Basically the paper in bullet point form. On `main`, this file ships with the Hedging paper-spec as a worked example — **replace it with your own paper's spec** before running Ralph. `spec/economic-background.md` follows the same pattern: it holds shared vocabulary (key terms and conventions the paper depends on) and ships pre-filled with Hedging terms like AI singularity and incomplete markets, so edit it to match your paper.
 
-But hopefully your agents are more up for your task.
+You can leave `paper-spec.md` open-ended if you have confidence in your tests. As explained in the preface of ["Hedging the Singularity"](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/blob/human-preface/finalization/output-named/paper.pdf), I found that I needed to make it rather tight. But hopefully your agents are more up for your task.
 
 ### `config-ralph.yaml` — Ralph Config
 
@@ -160,7 +161,11 @@ Useful entry points:
 
 ## Test Suite
 
-The 25 PASS/FAIL tests on the [`ralph/run-final`](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/tree/ralph/run-final/tests) branch group into six families:
+This repo's `tests/` folder is the test suite for the asset-pricing theory
+example in this repo. The fuller 25-test version used for "Hedging the
+Singularity" lives on the
+[`ralph/run-final`](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/tree/ralph/run-final/tests)
+branch and groups into six families:
 
 - **`element-*`** (5) — required elements exist in the paper (specific figures, citations, meta-rhetoric).
 - **`factcheck-*`** (8) — claims match code output, literature, and each other.
@@ -171,7 +176,40 @@ The 25 PASS/FAIL tests on the [`ralph/run-final`](https://github.com/chenandrewy
 
 Plus a `build-latex` infrastructure check that the paper compiles.
 
-For a different mix geared toward empirical work, see [`ralph/tests/`](https://github.com/chenandrewy/HumanxAI-ChenAY/tree/main/ralph/tests) in [HumanxAI-ChenAY](https://github.com/chenandrewy/HumanxAI-ChenAY) — notably `story-*` tests for narrative structure (`story-narrative`, `story-exhibit-coherence`, `story-exhibit-structure`) and `transparency-calibration` for empirical calibration choices.
+For empirical papers, you probably want a different mix. See
+[`ralph/tests/`](https://github.com/chenandrewy/HumanxAI-ChenAY/tree/main/ralph/tests)
+in [HumanxAI-ChenAY](https://github.com/chenandrewy/HumanxAI-ChenAY), which was
+built for an empirical finance paper. Those tests are not part of this repo's
+current `tests/` folder, and their paths/helper imports differ, so treat them as
+source material to port rather than files to copy blindly. Claude or Codex can
+usually port them quickly if you ask it to adapt the paths, helper imports, and
+report locations to this repo.
+
+Tests from HumanxAI-ChenAY that are especially worth considering:
+
+- **`factcheck-econ`** — checks whether the abstract, introduction, and central
+  claims are actually supported by the empirical evidence; useful for catching
+  causal or mechanism overreach.
+- **`story-narrative`** — checks whether every section contributes to one clear
+  main story, rather than accumulating disconnected robustness checks or side
+  arguments.
+- **`story-exhibit-coherence`** — reviews exhibit-bearing pages and asks whether
+  the figures and tables tell a coherent empirical story with consistent visual
+  logic.
+- **`story-exhibit-structure`** — checks whether exhibits are numbered,
+  ordered, nonredundant, and tied to a primary empirical metric.
+- **`transparency-calibration`** — checks whether calibration inputs,
+  assumptions, fitted quantities, and imposed quantities are transparent to a
+  careful reader.
+- **`writing-natural`** — reviews section-level prose for compressed,
+  jargon-heavy, or stat-stuffed writing; useful but relatively expensive because
+  it uses section-level subreviews.
+- **`visual-tables`** — checks table formatting, readability, page fit, and row
+  ordering from rendered page images.
+
+The point is not to turn on every possible test. Pick the tests that match the
+paper's failure modes, run Ralph for a stretch, inspect what the tests catch and
+miss, then revise the test mix.
 
 ## Repo Structure
 
@@ -215,4 +253,3 @@ Working artifacts generated during a Ralph run.
 Non-canonical debugging output.
 
 - `ralph-garage/agent-logs/` — logs from agent invocations
-
