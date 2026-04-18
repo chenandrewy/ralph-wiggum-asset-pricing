@@ -56,6 +56,7 @@ Inspect local data or cached outputs under: {data_dir}
 5. The canonical analysis path handles per-share data carefully. When the code combines per-share quantities with share counts drawn from different sources, it verifies that the construction is valid despite differences in timing, split adjustment, or source conventions.
 6. Any paper output that is not reproducible from the canonical local analysis path is clearly labeled in the paper as external, nonlocal, unreproducible from repo inputs, or illustrative/non-canonical.
 7. The repo does not depend on hidden or unnecessary auxiliary files for the claimed local workflow.
+8. All empirical results must derive from actual data. "Illustrative values" are not allowed.
 
 Rules:
 - Judge the canonical path against the execution model required by the paper spec. If the spec requires from-scratch execution, do not treat cache-only reruns as sufficient.
