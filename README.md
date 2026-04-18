@@ -158,6 +158,21 @@ Useful entry points:
 - **`ralph-garage/page-images/`** — PNG renders of the current compiled paper, shared across tests. Not usually read directly, but tests reference these.
 - **`ralph-garage/agent-logs/`** — raw per-invocation agent logs. For debugging unexpected agent behavior.
 
+## Test Suite
+
+The 25 PASS/FAIL tests on the [`ralph/run-final`](https://github.com/chenandrewy/ralph-wiggum-asset-pricing/tree/ralph/run-final/tests) branch group into six families:
+
+- **`element-*`** (5) — required elements exist in the paper (specific figures, citations, meta-rhetoric).
+- **`factcheck-*`** (8) — claims match code output, literature, and each other.
+- **`spec-*`** (3) — paper matches `spec/paper-spec.md`, economic background, and stated scope.
+- **`theory-*`** (4) — theory-paper quality: clarity, no deadweight content, intro pay-off, cautious treatment of unmodeled channels.
+- **`visual-*`** (3) — figures and page-level visuals render well.
+- **`writing-*`** (2) — introduction and intuition sections read well.
+
+Plus a `build-latex` infrastructure check that the paper compiles.
+
+For a different mix geared toward empirical work, see [`ralph/tests/`](https://github.com/chenandrewy/HumanxAI-ChenAY/tree/main/ralph/tests) in [HumanxAI-ChenAY](https://github.com/chenandrewy/HumanxAI-ChenAY) — notably `story-*` tests for narrative structure (`story-narrative`, `story-exhibit-coherence`, `story-exhibit-structure`) and `transparency-calibration` for empirical calibration choices.
+
 ## Repo Structure
 
 ### Research Project
@@ -167,7 +182,6 @@ These are the paper and its supporting materials.
 - `paper/` — canonical LaTeX source for the referee-ready paper (`paper.tex`, references, and only exhibits used by that paper)
 - `code/` — R scripts and analysis code (if needed)
 - `data/` — datasets (if needed)
-- `spec/lit/` — literature for reference
 - `dev/` — scratch work, journals, experiments
 
 ### Specification

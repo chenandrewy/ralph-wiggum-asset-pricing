@@ -17,8 +17,6 @@ Import `.agent-guidelines/README.md` for shared agent coding, git, and interacti
 
 ## Key Files
 - `spec/paper-spec.md`: paper specification
-- `spec/CFR-R1-report.md`: referee report to address
-- `spec/lit/`: literature for reference as needed
 
 ## Folder Structure (Quick Reference)
 
@@ -26,7 +24,6 @@ Import `.agent-guidelines/README.md` for shared agent coding, git, and interacti
 - `paper/` — LaTeX source
 - `code/` — R scripts and analysis
 - `data/` — datasets
-- `spec/lit/` — literature for reference
 - `dev/` — scratch work, journals
 
 ### Specification
@@ -35,6 +32,7 @@ Import `.agent-guidelines/README.md` for shared agent coding, git, and interacti
 ### Tests
 - `tests/` — test and referee definitions (referee scripts prefixed `referee-`)
 - `test-results/` — latest test and referee outputs
+
 
 ### Ralph (Permanent)
 - `ralph/` — loop script, agent wrapper, prompts
