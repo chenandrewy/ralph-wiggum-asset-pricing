@@ -69,7 +69,7 @@
     "LC_ALL": "C.UTF-8",
     "LANG": "C.UTF-8"
   },
-  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=delegated",
+  "workspaceMount": "type=bind,\"source=${localWorkspaceFolder}\",target=/workspace,consistency=delegated",
   "workspaceFolder": "/workspace",
   "postCreateCommand": "sudo /usr/local/bin/init-firewall.sh"
 }
