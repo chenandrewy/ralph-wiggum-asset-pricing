@@ -45,7 +45,7 @@ def main() -> int:
     print(f"Credentials written to {ENV_FILE}: {', '.join(found.keys())}")
 
     subprocess.Popen(
-        ["bash", "-c", f"sleep 600 && rm -f {ENV_FILE}"],
+        ["bash", "-c", f"sleep 600 && : > {ENV_FILE}"],
         start_new_session=True,
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL,

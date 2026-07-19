@@ -2,6 +2,15 @@
 set -euo pipefail  # Exit on error, undefined vars, and pipeline failures
 IFS=$'\n\t'       # Stricter word splitting
 
+# Fail closed: everything below flushes the rules before rebuilding them, so a
+# mid-script failure would otherwise leave the container wide open (default ACCEPT)
+trap 'status=$?; if [ "$status" -ne 0 ]; then
+    iptables -P INPUT DROP
+    iptables -P FORWARD DROP
+    iptables -P OUTPUT DROP
+    echo "ERROR: firewall setup failed (exit $status) - default policies set to DROP" >&2
+fi' EXIT
+
 # 1. Extract Docker DNS info BEFORE any flushing
 DOCKER_DNS_RULES=$(iptables-save -t nat | grep "127\.0\.0\.11" || true)
 
@@ -63,12 +72,24 @@ while read -r cidr; do
     ipset add allowed-domains "$cidr"
 done < <(echo "$gh_ranges" | jq -r '(.web + .api + .git)[]' | aggregate -q)
 
-# Resolve and add other allowed domains
+# Resolve and add other allowed domains.
+# The *.gallerycdn.vsassets.io entries are the per-publisher VS Code extension
+# download CDN: one entry per publisher in devcontainer.json "extensions".
+# Adding an extension from a new publisher requires a new entry here, or its
+# install will silently fail inside the container.
 for domain in \
     "registry.npmjs.org" \
     "marketplace.visualstudio.com" \
     "open-vsx.org" \
     "ms-vscode.gallery.vsassets.io" \
+    "anthropic.gallerycdn.vsassets.io" \
+    "github.gallerycdn.vsassets.io" \
+    "dbaeumer.gallerycdn.vsassets.io" \
+    "esbenp.gallerycdn.vsassets.io" \
+    "eamodio.gallerycdn.vsassets.io" \
+    "tomoki1207.gallerycdn.vsassets.io" \
+    "james-yu.gallerycdn.vsassets.io" \
+    "donjayamanne.gallerycdn.vsassets.io" \
     "copilot-proxy.githubusercontent.com" \
     "origin-tracker.githubusercontent.com" \
     "copilot-telemetry.githubusercontent.com" \
